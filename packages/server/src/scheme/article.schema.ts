@@ -11,29 +11,29 @@ export class Article extends Document {
   @Prop()
   title: string;
 
-  @Prop()
-  author: string;
-
-  @Prop()
+  @Prop({ default: '' })
   content: string;
 
   @Prop()
   tags: string[];
 
   @Prop()
-  categories: string[];
+  category: string;
 
-  @Prop()
+  @Prop({ default: false })
   hiden: boolean;
 
-  @Prop()
+  @Prop({ default: false })
   private: boolean;
 
-  @Prop()
+  @Prop({ default: '' })
   password: string;
 
   @Prop()
   desc: string;
+
+  @Prop({ defualt: false })
+  deleted: boolean;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

@@ -30,6 +30,9 @@ export class Meta extends Document {
 
   @Prop()
   siteInfo: SiteInfo;
+
+  @Prop()
+  categories: string[];
 }
 
 export const MetaSchema = SchemaFactory.createForClass(Meta);
