@@ -21,6 +21,12 @@ export class AritcleProvider {
     return this.articleModel.find({ hiden: false, deleted: false }).exec();
   }
 
+  async getById(id: number): Promise<Article> {
+    return this.articleModel
+      .findOne({ id, hiden: false, deleted: false })
+      .exec();
+  }
+
   async searchByString(str: string): Promise<Article[]> {
     return this.articleModel
       .find({
