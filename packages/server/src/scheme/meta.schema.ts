@@ -9,21 +9,19 @@ export type MetaDocument = Meta & Document;
 
 @Schema()
 export class Meta extends Document {
-  @Prop()
-  id: number;
-
-  @Prop()
+  @Prop({ default: [] })
   links: LinkItem[];
 
-  @Prop()
+  @Prop({ default: [] })
   socials: SocialItem[];
 
-  @Prop()
+  @Prop({ default: [] })
   rewards: RewardItem[];
 
-  @Prop()
+  @Prop({
+    default: { updatedAt: new Date(), content: '' },
+  })
   about: {
-    createdAt: Date;
     updatedAt: Date;
     content: string;
   };
@@ -31,7 +29,7 @@ export class Meta extends Document {
   @Prop()
   siteInfo: SiteInfo;
 
-  @Prop()
+  @Prop({ default: [] })
   categories: string[];
 }
 

@@ -30,4 +30,21 @@ export class CategoryProvider {
     const d = await this.getCategoriesWirhArticle();
     return d[name] ?? [];
   }
+
+  async addOne(name: string) {
+    const allMeta = await this.metaProvider.getAll();
+    const newCategories = allMeta.categories;
+    newCategories.push(name);
+    this.metaProvider.update({ categories: newCategories });
+  }
+  async deleteOne(name: string) {
+    const allMeta = await this.metaProvider.getAll();
+    const newCategories = [];
+    allMeta.categories.forEach((c) => {
+      if (c !== name) {
+        newCategories.push(c);
+      }
+    });
+    this.metaProvider.update({ categories: newCategories });
+  }
 }

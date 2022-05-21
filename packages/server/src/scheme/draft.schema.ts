@@ -11,17 +11,14 @@ export class Draft extends Document {
   @Prop()
   title: string;
 
-  @Prop()
-  author: string;
-
-  @Prop()
+  @Prop({ default: '' })
   content: string;
 
-  @Prop()
+  @Prop({ default: [] })
   tags: string[];
 
   @Prop()
-  categories: string[];
+  category: string;
 
   @Prop()
   desc: string;

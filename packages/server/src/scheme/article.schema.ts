@@ -14,7 +14,7 @@ export class Article extends Document {
   @Prop({ default: '' })
   content: string;
 
-  @Prop()
+  @Prop({ default: [] })
   tags: string[];
 
   @Prop()
