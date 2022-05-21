@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { AboutDto } from 'src/dto/about.dto';
 import { LinkItem } from 'src/dto/link.dto';
 import { RewardItem } from 'src/dto/reward.dto';
 import { SiteInfo } from 'src/dto/site.dto';
@@ -21,10 +22,7 @@ export class Meta extends Document {
   @Prop({
     default: { updatedAt: new Date(), content: '' },
   })
-  about: {
-    updatedAt: Date;
-    content: string;
-  };
+  about: AboutDto;
 
   @Prop()
   siteInfo: SiteInfo;
