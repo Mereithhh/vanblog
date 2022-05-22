@@ -26,6 +26,9 @@ export class AritcleProvider {
       .findOne({ id, hiden: false, deleted: false })
       .exec();
   }
+  async findById(id: number): Promise<Article> {
+    return this.articleModel.findOne({ id }).exec();
+  }
 
   async searchByString(str: string): Promise<Article[]> {
     return this.articleModel

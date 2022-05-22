@@ -48,24 +48,22 @@ export class MetaProvider {
     return this.metaModel.updateOne({}, { siteInfo: updateSiteInfoDto });
   }
 
-  async addReward(addReward: Partial<RewardItem>) {
+  async addOrUpdateReward(addReward: Partial<RewardItem>) {
     const meta = await this.getAll();
     const toAdd: RewardItem = {
       updatedAt: new Date(),
       value: addReward.value,
       name: addReward.name,
     };
-    const newRewards = meta.rewards;
-    let ok = true;
+    const newRewards = [];
     meta.rewards.forEach((r) => {
       if (r.name === toAdd.name) {
-        ok = false;
+        newRewards.push(addReward);
+      } else {
+        newRewards.push(r);
       }
     });
-    if (ok) {
-      newRewards.push(toAdd);
-      return this.metaModel.updateOne({}, { rewards: newRewards });
-    }
+    return this.metaModel.updateOne({}, { rewards: newRewards });
   }
 
   async deleteReward(name: string) {

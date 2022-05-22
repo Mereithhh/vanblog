@@ -22,6 +22,9 @@ export class Draft extends Document {
 
   @Prop()
   desc: string;
+
+  @Prop({ default: false })
+  deleted: boolean;
 }
 
 export const DraftSchema = SchemaFactory.createForClass(Draft);

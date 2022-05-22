@@ -4,3 +4,7 @@ export class SocialItem {
   value: string;
   type: SocialType;
 }
+export class SocialDto {
+  value: string;
+  type: SocialType;
+}

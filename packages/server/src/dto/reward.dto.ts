@@ -3,3 +3,7 @@ export class RewardItem {
   value: string;
   name: string;
 }
+export class RewardDto {
+  value: string;
+  name: string;
+}

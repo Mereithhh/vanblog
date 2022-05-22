@@ -3,3 +3,7 @@ export class LinkItem {
   url: string;
   name: string;
 }
+export class LinkDto {
+  url: string;
+  name: string;
+}
