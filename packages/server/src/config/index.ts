@@ -7,6 +7,6 @@ export interface Config {
 export const config: Config = {
   mongoUrl: loadConfig(
     'database.url',
-    `mongodb://authing:authing@localhost:27017/vanBlog?authSource=admin`,
+    `mongodb://localhost:27017/vanBlog?authSource=admin`,
   ),
 };

@@ -4,8 +4,8 @@ import * as fs from 'fs';
 import * as _ from 'lodash';
 // 解析配置文件
 let rawConfigs = [];
-if (process.env.AUTHING_CONFIG_FILE) {
-  rawConfigs = [path.resolve(process.env.AUTHING_CONFIG_FILE)];
+if (process.env.VAN_BLOG_CONFIG_FILE) {
+  rawConfigs = [path.resolve(process.env.VAN_BLOG_CONFIG_FILE)];
 } else {
   rawConfigs = [
     path.resolve('/etc/van-blog/config.yaml'),
