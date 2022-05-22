@@ -7,8 +7,10 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { SocialDto, SocialType } from 'src/dto/social.dto';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+@ApiTags('social')
 @Controller('/api/admin/meta/social')
 export class SocialMetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

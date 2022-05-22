@@ -1,9 +1,11 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 
+@ApiTags('public')
 @Controller('/api/public/')
 export class PublicController {
   constructor(

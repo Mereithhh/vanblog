@@ -7,8 +7,10 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { AritcleProvider } from 'src/provider/article/article.provider';
+@ApiTags('article')
 @Controller('/api/admin/article')
 export class ArticleController {
   constructor(private readonly articleProvider: AritcleProvider) {}

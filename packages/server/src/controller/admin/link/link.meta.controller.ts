@@ -7,9 +7,10 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { LinkDto } from 'src/dto/link.dto';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
-
+@ApiTags('link')
 @Controller('/api/admin/meta/link')
 export class LinkMetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

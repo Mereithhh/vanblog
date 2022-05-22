@@ -666,6 +666,11 @@
     tslib "2.4.0"
     uuid "8.3.2"
 
+"@nestjs/mapped-types@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/mapped-types/-/mapped-types-1.0.1.tgz#78b62041c7a407db4a90eb140567321602bed18e"
+  integrity sha512-NFvofzSinp00j5rzUd4tf+xi9od6383iY0JP7o0Bnu1fuItAUkWBgc4EKuIQ3D+c2QI3i9pG1kDWAeY27EMGtg==
+
 "@nestjs/mongoose@^9.0.3":
   version "9.0.3"
   resolved "https://registry.yarnpkg.com/@nestjs/mongoose/-/mongoose-9.0.3.tgz#0b7d1829051c2f1441142070077fdbd060bdfe5a"
@@ -692,6 +697,15 @@
     fs-extra "10.1.0"
     jsonc-parser "3.0.0"
     pluralize "8.0.0"
+
+"@nestjs/swagger@^5.2.1":
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/@nestjs/swagger/-/swagger-5.2.1.tgz#0fbd5dbc84aeebc2912009cce1309d4bebe9a52c"
+  integrity sha512-7dNa08WCnTsW/oAk3Ujde+z64JMfNm19DhpXasFR8oJp/9pggYAbYU927HpA+GJsSFJX6adjIRZsCKUqaGWznw==
+  dependencies:
+    "@nestjs/mapped-types" "1.0.1"
+    lodash "4.17.21"
+    path-to-regexp "3.2.0"
 
 "@nestjs/testing@^8.0.0":
   version "8.4.5"
@@ -3324,7 +3338,7 @@ lodash.sortby@^4.7.0:
   resolved "https://registry.yarnpkg.com/lodash.sortby/-/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
   integrity sha1-7dFMgk4sycHgsKG0K7UhBRakJDg=
 
-lodash@^4.17.19, lodash@^4.17.21:
+lodash@4.17.21, lodash@^4.17.19, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -4377,6 +4391,18 @@ supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/supports-preserve-symlinks-flag/-/supports-preserve-symlinks-flag-1.0.0.tgz#6eda4bd344a3c94aea376d4cc31bc77311039e09"
   integrity sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==
+
+swagger-ui-dist@>=4.11.0:
+  version "4.11.1"
+  resolved "https://registry.yarnpkg.com/swagger-ui-dist/-/swagger-ui-dist-4.11.1.tgz#1e9c0e62bdac632f7b206c95ef9cbe986097606a"
+  integrity sha512-pf3kfSTYdF9mYFY2VnfJ51wnXlSVhEGdtymhpHzfbFw2jTbiEWgBoVz5EB9aW2EaJvUGTM1YHAXYZX7Jk4RdAQ==
+
+swagger-ui-express@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.yarnpkg.com/swagger-ui-express/-/swagger-ui-express-4.4.0.tgz#4c50c51a092075588f173b2c3a5c830f07b6b44e"
+  integrity sha512-1CzRkHG386VQMVZK406jcpgnW2a9A5A/NiAjKhsFTQqUBWRF+uGbXTU/mA7WSV3mTzyOQDvjBdWP/c2qd5lqKw==
+  dependencies:
+    swagger-ui-dist ">=4.11.0"
 
 symbol-observable@4.0.0:
   version "4.0.0"

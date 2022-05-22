@@ -7,8 +7,10 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { RewardDto } from 'src/dto/reward.dto';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+@ApiTags('reward')
 @Controller('/api/admin/meta/reward')
 export class RewardMetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

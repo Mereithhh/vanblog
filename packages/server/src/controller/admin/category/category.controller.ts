@@ -8,9 +8,11 @@ import {
   Put,
   Query,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateCategoryDto } from 'src/dto/category.dto';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 
+@ApiTags('category')
 @Controller('/api/admin/category/')
 export class CategoryController {
   constructor(private readonly categoryProvider: CategoryProvider) {}

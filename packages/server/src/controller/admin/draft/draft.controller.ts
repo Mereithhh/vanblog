@@ -7,9 +7,11 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
+import { ApiTags } from '@nestjs/swagger';
 import { CreateDraftDto, UpdateDraftDto } from 'src/dto/draft.dto';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 
+@ApiTags('draft')
 @Controller('/api/admin/draft')
 export class DraftController {
   constructor(private readonly draftProvider: DraftProvider) {}
