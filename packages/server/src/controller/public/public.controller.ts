@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { AritcleProvider } from 'src/provider/article.provider';
-import { CategoryProvider } from 'src/provider/category.provider';
-import { MetaProvider } from 'src/provider/meta.provider';
-import { TagProvider } from 'src/provider/tag.provider';
+import { AritcleProvider } from 'src/provider/article/article.provider';
+import { CategoryProvider } from 'src/provider/category/category.provider';
+import { MetaProvider } from 'src/provider/meta/meta.provider';
+import { TagProvider } from 'src/provider/tag/tag.provider';
 
 @Controller('/api/public/')
 export class PublicController {

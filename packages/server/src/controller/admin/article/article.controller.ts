@@ -10,7 +10,7 @@ import {
 import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 @Controller('/api/admin/article')
-export class ArticleMetaController {
+export class ArticleController {
   constructor(private readonly articleProvider: AritcleProvider) {}
 
   @Get('/')

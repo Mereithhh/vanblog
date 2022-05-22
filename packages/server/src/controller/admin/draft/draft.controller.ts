@@ -11,7 +11,7 @@ import { CreateDraftDto, UpdateDraftDto } from 'src/dto/draft.dto';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 
 @Controller('/api/admin/draft')
-export class DraftMetaController {
+export class DraftController {
   constructor(private readonly draftProvider: DraftProvider) {}
 
   @Get('/')
