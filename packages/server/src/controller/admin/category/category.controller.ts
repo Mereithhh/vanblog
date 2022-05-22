@@ -9,19 +9,11 @@ import {
   Query,
 } from '@nestjs/common';
 import { CreateCategoryDto } from 'src/dto/category.dto';
-import { AritcleProvider } from 'src/provider/article.provider';
-import { CategoryProvider } from 'src/provider/category.provider';
-import { MetaProvider } from 'src/provider/meta.provider';
-import { TagProvider } from 'src/provider/tag.provider';
+import { CategoryProvider } from 'src/provider/category/category.provider';
 
 @Controller('/api/admin/category/')
 export class CategoryController {
-  constructor(
-    private readonly articleProvider: AritcleProvider,
-    private readonly categoryProvider: CategoryProvider,
-    private readonly tagProvider: TagProvider,
-    private readonly metaProvider: MetaProvider,
-  ) {}
+  constructor(private readonly categoryProvider: CategoryProvider) {}
 
   @Get('/all')
   async getAllTags() {

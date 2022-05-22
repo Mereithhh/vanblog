@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { AritcleProvider } from './article.provider';
+import { AritcleProvider } from '../article/article.provider';
 
 @Injectable()
 export class TagProvider {

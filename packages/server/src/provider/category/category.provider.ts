@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { AritcleProvider } from './article.provider';
-import { MetaProvider } from './meta.provider';
+import { AritcleProvider } from '../article/article.provider';
+import { MetaProvider } from '../meta/meta.provider';
 
 @Injectable()
 export class CategoryProvider {
