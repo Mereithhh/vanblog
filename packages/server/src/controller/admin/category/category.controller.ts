@@ -19,22 +19,38 @@ export class CategoryController {
 
   @Get('/all')
   async getAllTags() {
-    return await this.categoryProvider.getAllCategories();
+    const data = await this.categoryProvider.getAllCategories();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('/:name')
   async getArticlesByName(@Param('name') name: string) {
-    return await this.categoryProvider.getArticlesByCategory(name);
+    const data = await this.categoryProvider.getArticlesByCategory(name);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Post()
   async createCategory(@Body() body: CreateCategoryDto) {
-    return await this.categoryProvider.addOne(body.name);
+    const data = await this.categoryProvider.addOne(body.name);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Delete('/:name')
   async deleteCategory(@Param('name') name: string) {
-    return await this.categoryProvider.deleteOne(name);
+    const data = await this.categoryProvider.deleteOne(name);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put('/:name')
@@ -42,6 +58,13 @@ export class CategoryController {
     @Param('name') name: string,
     @Query('value') newValue: string,
   ) {
-    return await this.categoryProvider.updateCategoryByName(name, newValue);
+    const data = await this.categoryProvider.updateCategoryByName(
+      name,
+      newValue,
+    );
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

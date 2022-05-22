@@ -9,11 +9,19 @@ export class AboutMetaController {
 
   @Get()
   async getAbout() {
-    return await this.metaProvider.getAbout();
+    const data = await this.metaProvider.getAbout();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put()
   async updateAbout(@Body() updateAboutDto: { content: string }) {
-    return await this.metaProvider.updateAbout(updateAboutDto.content);
+    const data = await this.metaProvider.updateAbout(updateAboutDto.content);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

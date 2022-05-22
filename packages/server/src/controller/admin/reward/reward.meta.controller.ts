@@ -17,21 +17,37 @@ export class RewardMetaController {
 
   @Get()
   async get() {
-    return await this.metaProvider.getRewards();
+    const data = await this.metaProvider.getRewards();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put()
   async update(@Body() updateDto: RewardDto) {
-    return await this.metaProvider.addOrUpdateReward(updateDto);
+    const data = await this.metaProvider.addOrUpdateReward(updateDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Post()
   async create(@Body() updateDto: RewardDto) {
-    return await this.metaProvider.addOrUpdateReward(updateDto);
+    const data = await this.metaProvider.addOrUpdateReward(updateDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Delete('/:name')
   async delete(@Param('name') name: string) {
-    return await this.metaProvider.deleteReward(name);
+    const data = await this.metaProvider.deleteReward(name);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

@@ -17,21 +17,37 @@ export class SocialMetaController {
 
   @Get()
   async get() {
-    return await this.metaProvider.getSocials();
+    const data = await this.metaProvider.getSocials();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put()
   async update(@Body() updateDto: SocialDto) {
-    return await this.metaProvider.addOrUpdateSocial(updateDto);
+    const data = await this.metaProvider.addOrUpdateSocial(updateDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Post()
   async create(@Body() updateDto: SocialDto) {
-    return await this.metaProvider.addOrUpdateSocial(updateDto);
+    const data = await this.metaProvider.addOrUpdateSocial(updateDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Delete('/:type')
   async delete(@Param('type') type: SocialType) {
-    return await this.metaProvider.deleteSocial(type);
+    const data = await this.metaProvider.deleteSocial(type);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

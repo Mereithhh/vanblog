@@ -18,25 +18,45 @@ export class DraftController {
 
   @Get('/')
   async getAll() {
-    return await this.draftProvider.getAll();
+    const data = await this.draftProvider.getAll();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('/:id')
   async getOne(@Param('id') id: number) {
-    return await this.draftProvider.findById(id);
+    const data = await this.draftProvider.findById(id);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put('/:id')
   async update(@Param('id') id: number, @Body() updateDto: UpdateDraftDto) {
-    return await this.draftProvider.updateById(id, updateDto);
+    const data = await this.draftProvider.updateById(id, updateDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Post()
   async create(@Body() createDto: CreateDraftDto) {
-    return await this.draftProvider.create(createDto);
+    const data = await this.draftProvider.create(createDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
   @Delete('/:id')
   async delete(@Param('id') id: number) {
-    return await this.draftProvider.deleteById(id);
+    const data = await this.draftProvider.deleteById(id);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

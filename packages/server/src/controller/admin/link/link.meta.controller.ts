@@ -17,20 +17,36 @@ export class LinkMetaController {
 
   @Get()
   async get() {
-    return await this.metaProvider.getLinks();
+    const data = await this.metaProvider.getLinks();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put()
   async update(@Body() updateLinkDto: LinkDto) {
-    return await this.metaProvider.addOrUpdateLink(updateLinkDto);
+    const data = await this.metaProvider.addOrUpdateLink(updateLinkDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Post()
   async create(@Body() updateLinkDto: LinkDto) {
-    return await this.metaProvider.addOrUpdateLink(updateLinkDto);
+    const data = await this.metaProvider.addOrUpdateLink(updateLinkDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
   @Delete('/:name')
   async delete(@Param('name') name: string) {
-    return await this.metaProvider.deleteLink(name);
+    const data = await this.metaProvider.deleteLink(name);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

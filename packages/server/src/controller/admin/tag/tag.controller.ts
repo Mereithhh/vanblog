@@ -8,11 +8,19 @@ export class TagController {
 
   @Get('/all')
   async getAllTags() {
-    return await this.tagProvider.getAllTags();
+    const data = await this.tagProvider.getAllTags();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('/:name')
   async getArticlesByTagName(@Param('name') name: string) {
-    return await this.tagProvider.getArticlesByTag(name);
+    const data = await this.tagProvider.getArticlesByTag(name);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

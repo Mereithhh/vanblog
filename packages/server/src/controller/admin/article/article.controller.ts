@@ -17,25 +17,45 @@ export class ArticleController {
 
   @Get('/')
   async getAll() {
-    return await this.articleProvider.getAll();
+    const data = await this.articleProvider.getAll();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('/:id')
   async getOne(@Param('id') id: number) {
-    return await this.articleProvider.findById(id);
+    const data = await this.articleProvider.findById(id);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put('/:id')
   async update(@Param('id') id: number, @Body() updateDto: UpdateArticleDto) {
-    return await this.articleProvider.updateById(id, updateDto);
+    const data = await this.articleProvider.updateById(id, updateDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Post()
   async create(@Body() createDto: CreateArticleDto) {
-    return await this.articleProvider.create(createDto);
+    const data = await this.articleProvider.create(createDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
   @Delete('/:id')
   async delete(@Param('id') id: number) {
-    return await this.articleProvider.deleteById(id);
+    const data = await this.articleProvider.deleteById(id);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

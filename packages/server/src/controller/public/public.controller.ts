@@ -17,17 +17,29 @@ export class PublicController {
 
   @Get('/article/:id')
   async getArticleById(@Param('id') id: number) {
-    return await this.articleProvider.getById(id);
+    const data = await this.articleProvider.getById(id);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('/article/search')
   async searchArticle(@Query('value') search: string) {
-    return await this.articleProvider.searchByString(search);
+    const data = await this.articleProvider.searchByString(search);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('/tag/:name')
   async getArticlesByTagName(@Param('name') name: string) {
-    return await this.tagProvider.getArticlesByTag(name);
+    const data = await this.tagProvider.getArticlesByTag(name);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Get('/all')
@@ -36,11 +48,15 @@ export class PublicController {
     const categories = await this.categoryProvider.getAllCategories();
     const tags = await this.tagProvider.getAllTags();
     const meta = await this.metaProvider.getAll();
-    return {
+    const data = {
       articles,
       categories,
       tags,
       meta,
+    };
+    return {
+      statusCode: 200,
+      data,
     };
   }
 }

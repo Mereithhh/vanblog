@@ -9,11 +9,19 @@ export class SiteMetaController {
 
   @Get()
   async get() {
-    return await this.metaProvider.getSiteInfo();
+    const data = await this.metaProvider.getSiteInfo();
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 
   @Put()
   async update(@Body() updateDto: Partial<SiteInfo>) {
-    return await this.metaProvider.updateSiteInfo(updateDto);
+    const data = await this.metaProvider.updateSiteInfo(updateDto);
+    return {
+      statusCode: 200,
+      data,
+    };
   }
 }

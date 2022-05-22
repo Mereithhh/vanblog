@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { AritcleProvider } from '../article/article.provider';
 import { MetaProvider } from '../meta/meta.provider';
 
@@ -23,6 +23,9 @@ export class CategoryProvider {
 
   async getAllCategories() {
     const d = await this.metaProvider.getAll();
+    if (!d) {
+      throw new NotFoundException();
+    }
     return d.categories;
   }
 
