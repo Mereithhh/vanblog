@@ -1,7 +1,9 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 @ApiTags('tag')
+@UseGuards(AdminGuard)
 @Controller('/api/admin/tag/')
 export class TagController {
   constructor(private readonly tagProvider: TagProvider) {}

@@ -6,11 +6,14 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { AritcleProvider } from 'src/provider/article/article.provider';
+import { AdminGuard } from 'src/provider/auth/auth.guard';
 @ApiTags('article')
+@UseGuards(AdminGuard)
 @Controller('/api/admin/article')
 export class ArticleController {
   constructor(private readonly articleProvider: AritcleProvider) {}

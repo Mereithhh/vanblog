@@ -3,3 +3,7 @@ export class UpdateUserDto {
   name: string;
   password: string;
 }
+export class LoginDto {
+  username: string;
+  password: string;
+}

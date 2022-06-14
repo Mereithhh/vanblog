@@ -6,11 +6,14 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { SocialDto, SocialType } from 'src/dto/social.dto';
+import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('social')
+@UseGuards(AdminGuard)
 @Controller('/api/admin/meta/social')
 export class SocialMetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

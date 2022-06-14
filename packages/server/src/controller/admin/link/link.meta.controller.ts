@@ -6,11 +6,14 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { LinkDto } from 'src/dto/link.dto';
+import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('link')
+@UseGuards(AdminGuard)
 @Controller('/api/admin/meta/link')
 export class LinkMetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

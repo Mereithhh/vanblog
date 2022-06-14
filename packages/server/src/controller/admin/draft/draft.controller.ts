@@ -6,12 +6,15 @@ import {
   Param,
   Post,
   Put,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateDraftDto, UpdateDraftDto } from 'src/dto/draft.dto';
+import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 
 @ApiTags('draft')
+@UseGuards(AdminGuard)
 @Controller('/api/admin/draft')
 export class DraftController {
   constructor(private readonly draftProvider: DraftProvider) {}

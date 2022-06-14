@@ -1,8 +1,10 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 
 @ApiTags('about')
+@UseGuards(AdminGuard)
 @Controller('/api/admin/meta/about')
 export class AboutMetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

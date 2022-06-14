@@ -36,4 +36,12 @@ export class InitProvider {
       throw new Error('初始化失败');
     }
   }
+
+  async checkHasInited() {
+    const user = await this.userModel.findOne({}).exec();
+    if (!user) {
+      return false;
+    }
+    return true;
+  }
 }

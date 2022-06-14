@@ -13,6 +13,8 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
   await app.listen(3000);
-  Logger.log('应用已启动，端口 3000');
+  console.log('应用已启动，端口: 3000');
+  console.log('API 端点地址: http://localhost:3000/api');
+  console.log('swagger 地址: http://localhost:3000/swagger');
 }
 bootstrap();

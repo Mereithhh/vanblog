@@ -21,6 +21,15 @@ import { TagController } from './controller/admin/tag/tag.controller';
 import { ArticleController } from './controller/admin/article/article.controller';
 import { DraftController } from './controller/admin/draft/draft.controller';
 import { CategoryController } from './controller/admin/category/category.controller';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthController } from './controller/admin/auth/auth.controller';
+import { UserProvider } from './provider/user/user.provider';
+import { AuthProvider } from './provider/auth/auth.provider';
+import { User, UserSchema } from './scheme/user.schema';
+import { LocalStrategy } from './provider/auth/local.strategy';
+import { JwtStrategy } from './provider/auth/jwt.strategy';
+import { InitController } from './controller/admin/init/init.controller';
+import { InitProvider } from './provider/init/init.provider';
 
 @Module({
   imports: [
@@ -29,7 +38,14 @@ import { CategoryController } from './controller/admin/category/category.control
       { name: Article.name, schema: ArticleSchema },
       { name: Draft.name, schema: DraftSchema },
       { name: Meta.name, schema: MetaSchema },
+      { name: User.name, schema: UserSchema },
     ]),
+    JwtModule.register({
+      secret: config.jwtSecret,
+      signOptions: {
+        expiresIn: 3600 * 24 * 7,
+      },
+    }),
   ],
   controllers: [
     AppController,
@@ -43,6 +59,8 @@ import { CategoryController } from './controller/admin/category/category.control
     ArticleController,
     DraftController,
     CategoryController,
+    AuthController,
+    InitController,
   ],
   providers: [
     AppService,
@@ -51,6 +69,11 @@ import { CategoryController } from './controller/admin/category/category.control
     DraftProvider,
     MetaProvider,
     TagProvider,
+    UserProvider,
+    AuthProvider,
+    LocalStrategy,
+    JwtStrategy,
+    InitProvider,
   ],
 })
 export class AppModule {}
