@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  NotAcceptableException,
+  NotFoundException,
+} from '@nestjs/common';
 import { AritcleProvider } from '../article/article.provider';
 import { MetaProvider } from '../meta/meta.provider';
 
@@ -47,7 +51,7 @@ export class CategoryProvider {
     // 先检查一下有没有这个分类的文章
     const d = await this.getArticlesByCategory(name);
     if (d && d.length) {
-      throw Error('分类已有文章，无法删除！');
+      throw new NotAcceptableException('分类已有文章，无法删除！');
     }
 
     const allMeta = await this.metaProvider.getAll();

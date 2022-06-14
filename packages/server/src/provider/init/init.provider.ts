@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { InitDto } from 'src/dto/init.dto';
@@ -33,7 +33,7 @@ export class InitProvider {
       });
       return '初始化成功!';
     } catch (err) {
-      throw new Error('初始化失败');
+      throw new BadRequestException('初始化失败');
     }
   }
 
