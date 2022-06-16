@@ -10,7 +10,10 @@ export class InitMiddleware implements NestMiddleware {
       if (hasInit) {
         next();
       } else {
-        res.redirect('/admin/init');
+        res.json({
+          statusCode: 233,
+          message: '未初始化!',
+        });
       }
     });
   }
