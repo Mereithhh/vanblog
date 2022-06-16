@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "removeComments": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationDir": "types",
+    "noEmitOnError": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@docs/*":["docs/*"],
+      "@public/*":["public/*"],
+      "@test/*":["test/*"]
+    }
+  },
+  "include": ["src/**/*","test/**/*"],
+  "exclude": ["node_modules"]
+}
+

@@ -1,0 +1,16 @@
+# EditorConfig is awesome: https://EditorConfig.org
+
+# top-most EditorConfig file
+root = true
+
+[*]                   # 表示所有文件都要遵循
+indent_style = space              # 缩进风格，可选配置有space和tab
+indent_size = 2                   # 缩进大小
+end_of_line = lf                  # 换行符，可选配置有lf、cr和crlf
+charset = utf-8                   # 编码格式，通常都是选utf-8
+trim_trailing_whitespace = true   # 去除多余的空格
+insert_final_newline = true       # 在尾部插入一行
+
+[*.md]                # 表示仅 md 文件适用
+insert_final_newline = false      # 在尾部插入一行
+trim_trailing_whitespace = false  # 去除多余的空格

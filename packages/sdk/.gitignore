@@ -1,0 +1,19 @@
+# npm包
+/node_modules
+package-lock.json
+
+# build产物
+dist
+/types
+
+# eslint
+.eslintcache
+
+# jest
+/coverage
+
+# cache缓存
+.cache
+
+# temp
+.temp
