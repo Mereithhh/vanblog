@@ -23,6 +23,7 @@ export class AuthProvider {
     const payload = { username: user.name, sub: user.id };
     return {
       token: this.jwtService.sign(payload),
+      user,
     };
   }
 }

@@ -1,13 +1,15 @@
 const Settings = {
   navTheme: 'light',
-  // 拂晓蓝
-  primaryColor: '#1890ff',
-  layout: 'mix',
+  // 明青色
+  primaryColor: '#13C2C2',
+  layout: 'side',
   contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: 'Van Nav',
+  headerHeight: 48,
+  splitMenus: false,
   pwa: false,
   logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
   iconfontUrl: '',
