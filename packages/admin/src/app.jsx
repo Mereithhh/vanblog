@@ -18,19 +18,22 @@ export const initialStateConfig = {
 
 export async function getInitialState() {
   console.log("init")
-  const fetchInitData = async () => {
+  const fetchInitData = async (option) => {
     try {
-      const msg = await fetchAll();
+      const msg = await fetchAll(option);
       return msg.data;
     } catch (error) {
-      console.log(error)
+      console.log("error",error)
       history.push(loginPath);
     }
 
     return undefined;
   }; // 如果不是登录页面，执行
-
-    const initData = await fetchInitData();
+  let option = {};
+  if (location.pathname == loginPath) {
+    option.skipErrorHandler = true
+  }
+    const initData = await fetchInitData(option);
     return {
       fetchInitData,
       ...initData,
@@ -94,6 +97,15 @@ export const layout = ({ initialState, setInitialState }) => {
   };
 };
 export const request = {
+  errorConfig: {
+    adaptor: (resData) => {
+      return {
+        ...resData,
+        success: resData?.statusCode == 200,
+        errorMessage: resData.message,
+      };
+    },
+  },
   requestInterceptors: [
     (url, options) => {
       return {

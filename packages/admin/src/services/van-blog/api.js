@@ -3,9 +3,10 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-export async function fetchAll() {
+export async function fetchAll(options) {
   return request('/api/admin/all', {
     method: 'GET',
+    ...(options || {}),
   });
 }
 

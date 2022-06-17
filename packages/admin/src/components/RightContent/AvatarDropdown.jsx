@@ -1,6 +1,5 @@
-import { outLogin } from '@/services/ant-design-pro/api';
 import { LogoutOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
-import { Avatar, Menu, Spin } from 'antd';
+import { Menu, Spin } from 'antd';
 import { stringify } from 'querystring';
 import { useCallback } from 'react';
 import { history, useModel } from 'umi';
@@ -11,7 +10,7 @@ import styles from './index.less';
  * 退出登录，并且将当前的 url 保存
  */
 const loginOut = async () => {
-  await outLogin();
+  window.localStorage.removeItem('token')
   const { query = {}, search, pathname } = history.location;
   const { redirect } = query; // Note: There may be security issues, please note
 
@@ -32,7 +31,7 @@ const AvatarDropdown = ({ menu }) => {
       const { key } = event;
 
       if (key === 'logout') {
-        setInitialState((s) => ({ ...s, currentUser: undefined }));
+        setInitialState((s) => ({ ...s, user: undefined }));
         loginOut();
         return;
       }
@@ -57,9 +56,8 @@ const AvatarDropdown = ({ menu }) => {
     return loading;
   }
 
-  const { currentUser } = initialState;
-
-  if (!currentUser || !currentUser.name) {
+  const { user } = initialState;
+  if (!user) {
     return loading;
   }
 
@@ -88,8 +86,8 @@ const AvatarDropdown = ({ menu }) => {
   return (
     <HeaderDropdown overlay={menuHeaderDropdown}>
       <span className={`${styles.action} ${styles.account}`}>
-        <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-        <span className={`${styles.name} anticon`}>{currentUser.name}</span>
+        {/* <Avatar size="small" className={styles.avatar} src={user?.avatar || ''} alt="avatar" /> */}
+        <span className={`${styles.name} anticon`}>{user?.name || user?.username || 'nobody'}</span>
       </span>
     </HeaderDropdown>
   );
