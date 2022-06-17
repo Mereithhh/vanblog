@@ -3,14 +3,11 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-export async function getInitData() {
-  return request('/api/currentUser', {
+export async function fetchAll() {
+  return request('/api/admin/all', {
     method: 'GET',
-    ...(options || {}),
   });
 }
-
-
 
 /** 获取当前的用户 GET /api/currentUser */
 

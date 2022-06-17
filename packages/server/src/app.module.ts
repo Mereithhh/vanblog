@@ -31,6 +31,7 @@ import { JwtStrategy } from './provider/auth/jwt.strategy';
 import { InitController } from './controller/admin/init/init.controller';
 import { InitProvider } from './provider/init/init.provider';
 import { InitMiddleware } from './provider/auth/init.middleware';
+import { AllController } from './controller/admin/all/all.controller';
 
 @Module({
   imports: [
@@ -62,6 +63,7 @@ import { InitMiddleware } from './provider/auth/init.middleware';
     CategoryController,
     AuthController,
     InitController,
+    AllController,
   ],
   providers: [
     AppService,

@@ -4,8 +4,8 @@
 import { request } from 'umi';
 /** 获取当前的用户 GET /api/currentUser */
 
-export async function currentUser(options) {
-  return request('/api/currentUser', {
+export async function fetchInitData() {
+  return request('/api/admin/all', {
     method: 'GET',
     ...(options || {}),
   });

@@ -4,7 +4,7 @@ import { BookOutlined, LinkOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';
-import { currentUser as queryCurrentUser } from './services/ant-design-pro/api';
+import { fetchAll } from './services/van-blog/api';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -17,30 +17,25 @@ export const initialStateConfig = {
  * */
 
 export async function getInitialState() {
-  const fetchUserInfo = async () => {
+  console.log("init")
+  const fetchInitData = async () => {
     try {
-      const msg = await queryCurrentUser();
+      const msg = await fetchAll();
       return msg.data;
     } catch (error) {
+      console.log(error)
       history.push(loginPath);
     }
 
     return undefined;
   }; // 如果不是登录页面，执行
 
-  if (history.location.pathname !== loginPath) {
-    const currentUser = await fetchUserInfo();
+    const initData = await fetchInitData();
     return {
-      fetchUserInfo,
-      currentUser,
+      fetchInitData,
+      ...initData,
       settings: defaultSettings,
     };
-  }
-
-  return {
-    fetchUserInfo,
-    settings: defaultSettings,
-  };
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
 
 export const layout = ({ initialState, setInitialState }) => {
@@ -53,9 +48,12 @@ export const layout = ({ initialState, setInitialState }) => {
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
-
-      if (!initialState?.currentUser && location.pathname !== loginPath) {
+      console.log('onchange,',location,initialState)
+      if (!initialState?.user && location.pathname !== loginPath) {
         history.push(loginPath);
+      }
+      if (location.pathname == loginPath && Boolean(initialState?.user)) {
+        history.push('/')
       }
     },
     links: isDev
@@ -94,4 +92,19 @@ export const layout = ({ initialState, setInitialState }) => {
     },
     ...initialState?.settings,
   };
+};
+export const request = {
+  requestInterceptors: [
+    (url, options) => {
+      return {
+        url: url,
+        options: { ...options, interceptors: true,headers: {
+          token: (() => {
+            return window.localStorage.getItem('token') || 'null'
+          })()
+        } },
+      };
+    }
+  ]
+
 };

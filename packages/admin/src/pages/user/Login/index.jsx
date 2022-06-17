@@ -11,7 +11,7 @@ import {
 } from '@ant-design/icons';
 import { LoginForm, ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { Alert, message, Tabs } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FormattedMessage, history, SelectLang, useIntl, useModel } from 'umi';
 import styles from './index.less';
 
@@ -26,19 +26,13 @@ const LoginMessage = ({ content }) => (
   />
 );
 
+
+
 const Login = () => {
   const [userLoginState, setUserLoginState] = useState({});
   const type = 'account';
   const { initialState, setInitialState } = useModel('@@initialState');
   const intl = useIntl();
-
-  const fetchUserInfo = async () => {
-    const userInfo = await initialState?.fetchUserInfo?.();
-
-    if (userInfo) {
-      await setInitialState((s) => ({ ...s, currentUser: userInfo }));
-    }
-  };
 
   const handleSubmit = async (values) => {
     try {
@@ -53,8 +47,10 @@ const Login = () => {
         message.success(defaultLoginSuccessMessage);
         const token = msg.data.token;
         window.localStorage.setItem('token',token)
-        await setInitialState((s) => ({...s,token: token}))
-        await fetchUserInfo();
+        await setInitialState((s) => ({...s,token: token, user: msg.data.user}))
+        const data = await initialState?.fetchInitData?.();
+        await setInitialState((s) => ({...s,...data}))
+
         /** 此方法会跳转到 redirect 参数所在的位置 */
 
         if (!history) return;

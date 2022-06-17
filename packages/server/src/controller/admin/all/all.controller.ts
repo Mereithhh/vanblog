@@ -6,17 +6,19 @@ import { CategoryProvider } from 'src/provider/category/category.provider';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
+import { UserProvider } from 'src/provider/user/user.provider';
 
 @ApiTags('about')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/all')
-export class AboutMetaController {
+export class AllController {
   constructor(
     private readonly articleProvider: AritcleProvider,
     private readonly categoryProvider: CategoryProvider,
     private readonly tagProvider: TagProvider,
     private readonly metaProvider: MetaProvider,
     private readonly draftProvider: DraftProvider,
+    private readonly userProvider: UserProvider,
   ) {}
 
   @Get()
@@ -26,12 +28,14 @@ export class AboutMetaController {
     const tags = await this.tagProvider.getAllTags();
     const meta = await this.metaProvider.getAll();
     const drafts = await this.draftProvider.getAll();
+    const user = await this.userProvider.getUser();
     const data = {
       articles,
       tags,
       meta,
       drafts,
       categories,
+      user,
     };
     return {
       statusCode: 200,
