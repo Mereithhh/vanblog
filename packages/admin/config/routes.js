@@ -24,29 +24,41 @@ export default [
     icon: 'smile',
     component: './Welcome',
   },
+  // {
+  //   path: '/admin',
+  //   name: 'admin',
+  //   icon: 'crown',
+  //   access: 'canAdmin',
+  //   component: './Admin',
+  //   routes: [
+  //     {
+  //       path: '/admin/sub-page',
+  //       name: 'sub-page',
+  //       icon: 'smile',
+  //       component: './Welcome',
+  //     },
+  //     {
+  //       component: './404',
+  //     },
+  //   ],
+  // },
   {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
-    routes: [
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
-      },
-      {
-        component: './404',
-      },
-    ],
+    name: 'articles',
+    icon: 'form',
+    path: '/article',
+    component: './Article',
   },
   {
-    name: 'list.table-list',
-    icon: 'table',
-    path: '/list',
-    component: './TableList',
+    name: 'drafts',
+    icon: 'container',
+    path: '/draft',
+    component: './Welcome',
+  },
+  {
+    name: 'siteInfo',
+    icon: 'tool',
+    path: '/site',
+    component: './Welcome',
   },
   {
     path: '/',

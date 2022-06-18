@@ -18,13 +18,11 @@ export class AritcleProvider {
   }
 
   async getAll(): Promise<Article[]> {
-    return this.articleModel.find({ hiden: false, deleted: false }).exec();
+    return this.articleModel.find({ hiden: false }).exec();
   }
 
   async getById(id: number): Promise<Article> {
-    return this.articleModel
-      .findOne({ id, hiden: false, deleted: false })
-      .exec();
+    return this.articleModel.findOne({ id, hiden: false }).exec();
   }
   async findById(id: number): Promise<Article> {
     return this.articleModel.findOne({ id }).exec();
@@ -53,9 +51,12 @@ export class AritcleProvider {
   }
 
   async getNewId() {
-    const maxObj = await this.articleModel.findOne().sort('createdAt').exec();
-    if (maxObj) {
-      return maxObj.id + 1;
+    const maxObj = await this.articleModel
+      .find({})
+      .sort({ createdAt: -1 })
+      .exec();
+    if (maxObj.length) {
+      return maxObj[0].id + 1;
     } else {
       return 1;
     }

@@ -1,5 +1,8 @@
 export default {
   'menu.welcome': '欢迎',
+  'menu.articles': '文章管理',
+  'menu.drafts': '草稿管理',
+  'menu.siteInfo': '站点管理',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
   'menu.admin': '管理页',

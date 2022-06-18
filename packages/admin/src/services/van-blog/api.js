@@ -28,12 +28,12 @@ export async function login(body, options) {
     ...(options || {}),
   });
 }
-/** 此处后端没有提供注释 GET /api/notices */
 
-export async function getNotices(options) {
-  return request('/api/notices', {
-    method: 'GET',
-    ...(options || {}),
+
+export async function createArticle(body) {
+  return request('/api/admin/article', {
+    method: 'POST',
+    data: body
   });
 }
 /** 获取规则列表 GET /api/rule */

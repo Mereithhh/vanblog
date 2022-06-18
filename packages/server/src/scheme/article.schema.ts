@@ -34,6 +34,13 @@ export class Article extends Document {
 
   @Prop({ defualt: false })
   deleted: boolean;
+
+  @Prop({
+    default: () => {
+      return new Date();
+    },
+  })
+  createdAt: Date;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);

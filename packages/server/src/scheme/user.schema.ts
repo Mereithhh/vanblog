@@ -13,6 +13,13 @@ export class User extends Document {
 
   @Prop()
   password: string;
+
+  @Prop({
+    default: () => {
+      return new Date();
+    },
+  })
+  createdAt: Date;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

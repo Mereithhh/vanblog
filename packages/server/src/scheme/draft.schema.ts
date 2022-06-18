@@ -25,6 +25,13 @@ export class Draft extends Document {
 
   @Prop({ default: false })
   deleted: boolean;
+
+  @Prop({
+    default: () => {
+      return new Date();
+    },
+  })
+  createdAt: Date;
 }
 
 export const DraftSchema = SchemaFactory.createForClass(Draft);
