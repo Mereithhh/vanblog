@@ -1,7 +1,8 @@
-import { createArticle } from '@/services/van-blog/api';
+import { createArticle, deleteArticle } from '@/services/van-blog/api';
+import { mutiSearch } from '@/services/van-blog/search';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
-import { Button } from 'antd';
+import { Button, message, Modal } from 'antd';
 import moment from 'moment';
 import { useRef } from 'react';
 import { useModel } from 'umi';
@@ -118,7 +119,14 @@ const columns = [
       <a
         key={'deleteArticle' + record.id}
         onClick={() => {
-          console.log('edit!');
+          Modal.confirm({
+            title: `确定删除 "${record.title}"吗？`,
+            onOk: async () => {
+              await deleteArticle(record.id);
+              message.success('删除成功!');
+              action?.reload();
+            },
+          });
           // action?.startEditable?.(record.id);
         }}
       >
@@ -172,8 +180,20 @@ export default () => {
           }
         }
         // 搜索
-        if (params && filter.length) {
+
+        const { current, pageSize, ...searchObj } = params;
+        if (searchObj) {
+          for (const [targetName, target] of Object.entries(searchObj)) {
+            switch (targetName) {
+              case 'title':
+                data = data.filter((eachRecord) => {
+                  return mutiSearch(eachRecord.title, target);
+                });
+                break;
+            }
+          }
         }
+
         return {
           data,
           // success 请返回 true，

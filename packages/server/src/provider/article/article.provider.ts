@@ -18,11 +18,21 @@ export class AritcleProvider {
   }
 
   async getAll(): Promise<Article[]> {
-    return this.articleModel.find({ hiden: false }).exec();
+    const articles = await this.articleModel.find({ hiden: false }).exec();
+    return articles.filter((each) => {
+      return !each?.deleted;
+    });
   }
 
   async getById(id: number): Promise<Article> {
-    return this.articleModel.findOne({ id, hiden: false }).exec();
+    const article = await this.articleModel
+      .findOne({ id, hiden: false })
+      .exec();
+    if (article?.deleted === true) {
+      return null;
+    } else {
+      return article;
+    }
   }
   async findById(id: number): Promise<Article> {
     return this.articleModel.findOne({ id }).exec();
@@ -40,7 +50,7 @@ export class AritcleProvider {
   }
 
   async findAll(): Promise<Article[]> {
-    return this.articleModel.find().exec();
+    return this.articleModel.find({}).exec();
   }
   async deleteById(id: number) {
     return this.articleModel.updateOne({ id }, { deleted: true }).exec();

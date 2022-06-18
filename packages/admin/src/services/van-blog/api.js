@@ -13,7 +13,7 @@ export async function fetchAll(options) {
 export async function fetchInit(body) {
   return request('/api/admin/init', {
     method: 'POST',
-    data: body
+    data: body,
   });
 }
 /** 登录接口 POST /api/login/account */
@@ -29,14 +29,23 @@ export async function login(body, options) {
   });
 }
 
-
 export async function createArticle(body) {
   return request('/api/admin/article', {
     method: 'POST',
-    data: body
+    data: body,
   });
 }
-/** 获取规则列表 GET /api/rule */
+
+export async function deleteArticle(id) {
+  return request(`/api/admin/article/${id}`, {
+    method: 'DELETE',
+  });
+}
+export async function updateArticle(id) {
+  return request(`/api/admin/article/${id}`, {
+    method: 'DELETE',
+  });
+}
 
 export async function rule(params, options) {
   return request('/api/rule', {

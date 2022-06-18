@@ -5,7 +5,7 @@ import { AritcleProvider } from '../article/article.provider';
 export class TagProvider {
   constructor(private readonly articleProvider: AritcleProvider) {}
   async getTagsWirhArticle() {
-    const allArticles = await this.articleProvider.findAll();
+    const allArticles = await this.articleProvider.getAll();
     const data = {};
     allArticles.forEach((a) => {
       a.tags.forEach((t) => {
