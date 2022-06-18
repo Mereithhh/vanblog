@@ -10,20 +10,10 @@ export async function fetchAll(options) {
   });
 }
 
-/** 获取当前的用户 GET /api/currentUser */
-
-export async function currentUser(options) {
-  return request('/api/currentUser', {
-    method: 'GET',
-    ...(options || {}),
-  });
-}
-/** 退出登录接口 POST /api/login/outLogin */
-
-export async function outLogin(options) {
-  return request('/api/admin/auth', {
+export async function fetchInit(body) {
+  return request('/api/admin/init', {
     method: 'POST',
-    ...(options || {}),
+    data: body
   });
 }
 /** 登录接口 POST /api/login/account */

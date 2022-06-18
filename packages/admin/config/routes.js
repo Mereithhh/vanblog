@@ -14,6 +14,11 @@ export default [
     ],
   },
   {
+    path: '/init',
+    layout: false,
+    component: './InitPage',
+  },
+  {
     path: '/welcome',
     name: 'welcome',
     icon: 'smile',

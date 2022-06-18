@@ -6,15 +6,18 @@ import { InitProvider } from '../init/init.provider';
 export class InitMiddleware implements NestMiddleware {
   constructor(private readonly initProvider: InitProvider) {}
   async use(req: Request, res: Response, next: NextFunction) {
-    // const hasInit = await this.initProvider.checkHasInited();
-    // if (hasInit) {
-    //   next();
-    // } else {
-    //   res.json({
-    //     statusCode: 233,
-    //     message: '未初始化!',
-    //   });
-    // }
-    next();
+    if (req.path == '/api/admin/init') {
+      next();
+    } else {
+      const hasInit = await this.initProvider.checkHasInited();
+      if (hasInit) {
+        next();
+      } else {
+        res.json({
+          statusCode: 233,
+          message: '未初始化!',
+        });
+      }
+    }
   }
 }

@@ -7,6 +7,7 @@ import routes from './routes';
 const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
+  base: '/admin',
   antd: {},
   dva: {
     hmr: true,

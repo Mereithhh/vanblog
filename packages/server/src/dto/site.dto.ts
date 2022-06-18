@@ -1,6 +1,7 @@
 export class SiteInfo {
   author: string;
   authorLogo: string;
+  authDesc: string;
   siteLogo: string;
   favicon: string;
   siteName: string;

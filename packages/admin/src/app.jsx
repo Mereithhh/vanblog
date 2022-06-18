@@ -7,6 +7,7 @@ import defaultSettings from '../config/defaultSettings';
 import { fetchAll } from './services/van-blog/api';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
+const basePath = '/';
 /** 获取用户信息比较慢的时候会展示一个 loading */
 
 export const initialStateConfig = {
@@ -21,7 +22,16 @@ export async function getInitialState() {
   const fetchInitData = async (option) => {
     try {
       const msg = await fetchAll(option);
-      return msg.data;
+
+      console.log(msg,window.location.pathname)
+      if (msg.statusCode == 233) {
+        history.push('/init');
+      } else if (window.location.pathname == '/init' && msg.statusCode == 200) {
+        history.push('/')
+      }
+      else {
+        return msg.data;
+      }
     } catch (error) {
       console.log("error",error)
       history.push(loginPath);
@@ -30,7 +40,7 @@ export async function getInitialState() {
     return undefined;
   }; // 如果不是登录页面，执行
   let option = {};
-  if (location.pathname == loginPath) {
+  if (location.pathname == loginPath || location.pathname == '/init') {
     option.skipErrorHandler = true
   }
     const initData = await fetchInitData(option);
@@ -52,6 +62,9 @@ export const layout = ({ initialState, setInitialState }) => {
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
       console.log('onchange,',location,initialState)
+      if (location.pathname === '/init' && !initialState?.user) {
+        return
+      }
       if (!initialState?.user && location.pathname !== loginPath) {
         history.push(loginPath);
       }
@@ -117,6 +130,20 @@ export const request = {
         } },
       };
     }
-  ]
+  ],
+  // responseInterceptors: [
+  //   response => {
+  //     if (response.statusCode === 233) {
+  //       console.log("go to init!")
+  //       // window.location.pathname = '/init'
+  //       history.push('/init')
+  //       return response
+  //     } else {
+  //       return response
+  //     }
+
+  //   }
+  // ]
+
 
 };
