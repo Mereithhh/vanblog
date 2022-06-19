@@ -13,12 +13,12 @@ const columns = [
   {
     title: '操作',
     valueType: 'option',
-    key: 'option',
     width: 200,
     render: (text, record, _, action) => [
       <ModalForm
+        key={`editCateoryC%{${record.name}}`}
         title={`修改分类 "${record.name}"`}
-        trigger={<a key={'edit' + record.name}>修改</a>}
+        trigger={<a key={'editC' + record.name}>修改</a>}
         autoFocusFirstInput
         submitTimeout={3000}
         onFinish={async (values) => {
@@ -46,7 +46,7 @@ const columns = [
       </ModalForm>,
 
       <a
-        key={'deleteCategory' + record.name}
+        key={'deleteCategoryC' + record.name}
         onClick={() => {
           Modal.confirm({
             title: `确定删除分类 "${record.name}"吗？`,
@@ -73,7 +73,7 @@ export default function () {
     <>
       <ProTable
         // dataSource={tableListDataSource}
-        rowKey="key"
+        rowKey="name"
         // pagination={{
         //   showQuickJumper: true,
         // }}
@@ -85,9 +85,9 @@ export default function () {
         toolBarRender={() => [
           <ModalForm
             title="新建分类"
-            key="newCategory"
+            key="newCategoryN"
             trigger={
-              <Button key="button" icon={<PlusOutlined />} type="primary">
+              <Button key="buttonCN" icon={<PlusOutlined />} type="primary">
                 新建分类
               </Button>
             }
@@ -109,6 +109,7 @@ export default function () {
               id="nameC"
               name="name"
               label="分类名称"
+              key="nameCCCC"
               placeholder="请输入分类名称"
               rules={[{ required: true, message: '这是必填项' }]}
             />

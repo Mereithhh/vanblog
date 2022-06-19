@@ -56,13 +56,20 @@ export class MetaProvider {
       name: addReward.name,
     };
     const newRewards = [];
+    let pushed = false;
+
     meta.rewards.forEach((r) => {
       if (r.name === toAdd.name) {
-        newRewards.push(addReward);
+        pushed = true;
+        newRewards.push(toAdd);
       } else {
         newRewards.push(r);
       }
     });
+    if (!pushed) {
+      newRewards.push(toAdd);
+    }
+
     return this.metaModel.updateOne({}, { rewards: newRewards });
   }
 

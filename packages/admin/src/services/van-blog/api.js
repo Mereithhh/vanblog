@@ -90,6 +90,23 @@ export async function publishDraft(id, body) {
     data: body,
   });
 }
+export async function createDonate(body) {
+  return request(`/api/admin/meta/reward`, {
+    method: 'POST',
+    data: body,
+  });
+}
+export async function updateDonate(body) {
+  return request(`/api/admin/meta/reward`, {
+    method: 'PUT',
+    data: body,
+  });
+}
+export async function deleteDonate(name) {
+  return request(`/api/admin/meta/reward/${name}`, {
+    method: 'DELETE',
+  });
+}
 
 export async function rule(params, options) {
   return request('/api/rule', {

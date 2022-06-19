@@ -3,11 +3,13 @@ import { Button, message } from 'antd';
 import { useState } from 'react';
 import { useModel } from 'umi';
 import Category from './tabs/Category';
+import Donate from './tabs/Donate';
 import SiteInfo from './tabs/SiteInfo';
 export default function () {
   const tabMap = {
     category: <Category />,
     siteInfo: <SiteInfo />,
+    donateInfo: <Donate />,
   };
   const [currTabKey, setCurrTabKey] = useState('category');
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -21,6 +23,18 @@ export default function () {
         {
           tab: '站点配置',
           key: 'siteInfo',
+        },
+        {
+          tab: '捐赠管理',
+          key: 'donateInfo',
+        },
+        {
+          tab: '友情链接',
+          key: 'links',
+        },
+        {
+          tab: '联系方式',
+          key: 'socials',
         },
       ]}
       extra={[
