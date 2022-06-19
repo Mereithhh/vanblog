@@ -46,6 +46,15 @@ export async function updateArticle(id) {
     method: 'DELETE',
   });
 }
+export async function getAllCategories() {
+  return request(`/api/admin/category/all`, {
+    method: 'GET',
+  });
+}
+
+
+
+
 
 export async function rule(params, options) {
   return request('/api/rule', {

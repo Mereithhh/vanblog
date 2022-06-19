@@ -1,4 +1,4 @@
-import { createArticle, deleteArticle } from '@/services/van-blog/api';
+import { createArticle, deleteArticle, getAllCategories } from '@/services/van-blog/api';
 import { mutiSearch } from '@/services/van-blog/search';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
@@ -37,21 +37,12 @@ const columns = [
     search: false,
     onFilter: true,
     valueType: 'select',
-    valueEnum: {
-      all: { text: '全部', status: 'Default' },
-      open: {
-        text: '未解决',
-        status: 'Error',
-      },
-      closed: {
-        text: '已解决',
-        status: 'Success',
-        disabled: true,
-      },
-      processing: {
-        text: '解决中',
-        status: 'Processing',
-      },
+    request: async () => {
+      const res = await getAllCategories();
+      return res?.data?.map((each) => ({
+        label: each,
+        value: each,
+      }));
     },
   },
   {
@@ -195,6 +186,14 @@ export default () => {
                     return eachRecord.tags.some((eachTag) => mutiSearch(eachTag, target));
                   });
                 }
+                break;
+              case 'endTime':
+                data = data.filter((eachRecord) => {
+                  const t = moment(eachRecord.createdAt);
+                  const t0 = moment(searchObj?.startTime);
+                  const t1 = moment(searchObj?.endTime);
+                  return t.isBetween(t0, t1, 'day', '[]');
+                });
                 break;
             }
           }
