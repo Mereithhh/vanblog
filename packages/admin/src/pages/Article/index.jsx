@@ -2,7 +2,7 @@ import { createArticle, deleteArticle } from '@/services/van-blog/api';
 import { mutiSearch } from '@/services/van-blog/search';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
-import { Button, message, Modal } from 'antd';
+import { Button, message, Modal, Tag } from 'antd';
 import moment from 'moment';
 import { useRef } from 'react';
 import { useModel } from 'umi';
@@ -66,15 +66,12 @@ const columns = [
       if (!record?.tags?.length) {
         return '-';
       } else {
-        return <div>1</div>;
+        return record?.tags?.map((each) => (
+          <Tag style={{ marginBottom: 4 }} key={`tag-${each}`}>
+            {each}
+          </Tag>
+        ));
       }
-      //   return <Space>
-      //   {/* {record?.labels?.map(({ name, color }) => (
-      //     <Tag color={color} key={name}>
-      //       {name}
-      //     </Tag>
-      //   ))} */}
-      // </Space>
     },
   },
   {
@@ -186,9 +183,18 @@ export default () => {
           for (const [targetName, target] of Object.entries(searchObj)) {
             switch (targetName) {
               case 'title':
-                data = data.filter((eachRecord) => {
-                  return mutiSearch(eachRecord.title, target);
-                });
+                if (target != '') {
+                  data = data.filter((eachRecord) => {
+                    return mutiSearch(eachRecord.title, target);
+                  });
+                }
+                break;
+              case 'tags':
+                if (target != '') {
+                  data = data.filter((eachRecord) => {
+                    return eachRecord.tags.some((eachTag) => mutiSearch(eachTag, target));
+                  });
+                }
                 break;
             }
           }
@@ -262,7 +268,14 @@ export default () => {
             placeholder="请输入标题"
             rules={[{ required: true, message: '这是必填项' }]}
           />
-          <ProFormText width="md" name="tags" label="标签" placeholder="请输入标签" />
+          <ProFormSelect
+            mode="tags"
+            tokenSeparators={[',']}
+            width="md"
+            name="tags"
+            label="标签"
+            placeholder="请输入标签"
+          />
           <ProFormText
             width="md"
             required
