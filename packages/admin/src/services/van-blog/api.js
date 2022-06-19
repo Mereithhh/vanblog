@@ -73,6 +73,23 @@ export async function deleteCategory(name) {
     method: 'DELETE',
   });
 }
+export async function deleteDraft(id) {
+  return request(`/api/admin/draft/${id}`, {
+    method: 'DELETE',
+  });
+}
+export async function createDraft(body) {
+  return request(`/api/admin/draft`, {
+    method: 'POST',
+    data: body,
+  });
+}
+export async function publishDraft(id, body) {
+  return request(`/api/admin/draft/publish?id=${id}`, {
+    method: 'POST',
+    data: body,
+  });
+}
 
 export async function rule(params, options) {
   return request('/api/rule', {

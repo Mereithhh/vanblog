@@ -6,10 +6,15 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateDraftDto, UpdateDraftDto } from 'src/dto/draft.dto';
+import {
+  CreateDraftDto,
+  PublishDraftDto,
+  UpdateDraftDto,
+} from 'src/dto/draft.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 
@@ -49,6 +54,14 @@ export class DraftController {
   @Post()
   async create(@Body() createDto: CreateDraftDto) {
     const data = await this.draftProvider.create(createDto);
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+  @Post('/publish')
+  async publish(@Query('id') id: number, @Body() publishDto: PublishDraftDto) {
+    const data = await this.draftProvider.publish(id, publishDto);
     return {
       statusCode: 200,
       data,

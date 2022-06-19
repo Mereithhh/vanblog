@@ -52,7 +52,7 @@ export default [
     name: 'drafts',
     icon: 'container',
     path: '/draft',
-    component: './Welcome',
+    component: './Draft',
   },
   {
     name: 'siteInfo',

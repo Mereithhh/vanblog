@@ -1,7 +1,7 @@
 export class CreateArticleDto {
   title: string;
   content?: string;
-  tags?: string;
+  tags?: string[];
   category: string;
   hiden?: boolean;
   private?: boolean;
