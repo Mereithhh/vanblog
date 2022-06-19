@@ -13,14 +13,14 @@ export class CategoryProvider {
     private readonly metaProvider: MetaProvider,
   ) {}
   async getCategoriesWirhArticle() {
-    const allArticles = await this.articleProvider.findAll();
+    const allArticles = await this.articleProvider.getAll();
     const categories = await this.getAllCategories();
     const data = {};
     categories.forEach((c) => {
       data[c] = [];
     });
     allArticles.forEach((a) => {
-      data[a.category].push(a);
+      data[a.category]?.push(a);
     });
     return data;
   }

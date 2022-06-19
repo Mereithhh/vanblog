@@ -58,7 +58,7 @@ export default [
     name: 'siteInfo',
     icon: 'tool',
     path: '/site',
-    component: './Welcome',
+    component: './SiteConfig',
   },
   {
     path: '/',

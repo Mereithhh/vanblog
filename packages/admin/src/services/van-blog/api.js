@@ -51,10 +51,28 @@ export async function getAllCategories() {
     method: 'GET',
   });
 }
-
-
-
-
+export async function updateSiteInfo(body) {
+  return request(`/api/admin/meta/site`, {
+    method: 'PUT',
+    data: body,
+  });
+}
+export async function createCategory(body) {
+  return request(`/api/admin/category/`, {
+    method: 'POST',
+    data: body,
+  });
+}
+export async function updateCategory(name, value) {
+  return request(`/api/admin/category/${name}?value=${value}`, {
+    method: 'PUT',
+  });
+}
+export async function deleteCategory(name) {
+  return request(`/api/admin/category/${name}`, {
+    method: 'DELETE',
+  });
+}
 
 export async function rule(params, options) {
   return request('/api/rule', {

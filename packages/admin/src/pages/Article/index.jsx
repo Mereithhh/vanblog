@@ -5,7 +5,7 @@ import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro
 import { Button, message, Modal, Tag } from 'antd';
 import moment from 'moment';
 import { useRef } from 'react';
-import { useModel } from 'umi';
+import { history, useModel } from 'umi';
 const columns = [
   {
     dataIndex: 'id',
@@ -30,19 +30,18 @@ const columns = [
     },
   },
   {
-    disable: true,
     title: '分类',
     dataIndex: 'category',
-    filters: true,
-    search: false,
-    onFilter: true,
+
     valueType: 'select',
     request: async () => {
       const res = await getAllCategories();
-      return res?.data?.map((each) => ({
+      const data = res?.data?.map((each) => ({
         label: each,
         value: each,
       }));
+
+      return data;
     },
   },
   {
@@ -95,13 +94,17 @@ const columns = [
       <a
         key={'editable' + record.id}
         onClick={() => {
-          console.log('edit!');
-          // action?.startEditable?.(record.id);
+          history.push(`/editor?type=article&id=${record.id}`);
         }}
       >
         编辑
       </a>,
-      <a href={record.url} target="_blank" rel="noopener noreferrer" key={'view' + record.id}>
+      <a
+        href={`/article/${record.id}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        key={'view' + record.id}
+      >
         查看
       </a>,
       <a
@@ -115,30 +118,17 @@ const columns = [
               action?.reload();
             },
           });
-          // action?.startEditable?.(record.id);
+
         }}
       >
         删除
       </a>,
-      // <TableDropdown
-      //   key="actionGroup"
-      //   onSelect={() => action?.reload()}
-      //   menus={[
-      //     { key: 'copy', name: '复制' },
-      //     { key: 'delete', name: '删除' },
-      //   ]}
-      // />,
+
     ],
   },
 ];
 
-// const menu = (
-//   <Menu>
-//     <Menu.Item key="1">1st item</Menu.Item>
-//     <Menu.Item key="2">2nd item</Menu.Item>
-//     <Menu.Item key="3">3rd item</Menu.Item>
-//   </Menu>
-// );
+
 
 export default () => {
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -150,13 +140,13 @@ export default () => {
       cardBordered
       request={async (params = {}, sort, filter) => {
         // console.log(sort, filter);
-        console.log(params, sort, filter);
+
         let data = await initialState?.fetchInitData?.();
         await setInitialState((s) => ({ ...s, ...data }));
         data = data.articles;
         // 排序
         if (sort && sort.createdAt) {
-          console.log(data);
+
           if (sort.createdAt == 'ascend') {
             data = data.sort((a, b) => {
               return moment(a.createdAt).unix() - moment(b.createdAt).unix();
@@ -195,6 +185,11 @@ export default () => {
                   return t.isBetween(t0, t1, 'day', '[]');
                 });
                 break;
+              case 'category':
+                data = data.filter((eachRecord) => {
+                  return mutiSearch(eachRecord.category, target);
+                });
+                break;
             }
           }
         }
@@ -213,25 +208,15 @@ export default () => {
         persistenceKey: 'pro-table-singe-demos',
         persistenceType: 'localStorage',
         onChange(value) {
-          console.log('value: ', value);
+
         },
       }}
       rowKey="id"
       search={{
         labelWidth: 'auto',
+        span: 6,
       }}
-      // form={{
-      //   // 由于配置了 transform，提交的参与与定义的不同这里需要转化一下
-      //   syncToUrl: (values, type) => {
-      //     if (type === 'get') {
-      //       return {
-      //         ...values,
-      //         created_at: [values.startTime, values.endTime],
-      //       };
-      //     }
-      //     return values;
-      //   },
-      // }}
+
       pagination={{
         pageSize: 5,
         onChange: (page) => console.log(page),
@@ -250,7 +235,12 @@ export default () => {
           autoFocusFirstInput
           submitTimeout={3000}
           onFinish={async (values) => {
-            const res = await createArticle(values);
+            const washedValues = {};
+            for (const [k, v] of Object.entries(values)) {
+              washedValues[k.replace('C', '')] = v;
+            }
+
+            await createArticle(washedValues);
             actionRef?.current?.reload();
             return true;
           }}
@@ -262,7 +252,7 @@ export default () => {
             width="md"
             required
             id="titleC"
-            name="title"
+            name="titleC"
             label="文章标题"
             placeholder="请输入标题"
             rules={[{ required: true, message: '这是必填项' }]}
@@ -271,22 +261,30 @@ export default () => {
             mode="tags"
             tokenSeparators={[',']}
             width="md"
-            name="tags"
+            name="tagsC"
             label="标签"
-            placeholder="请输入标签"
-          />
-          <ProFormText
-            width="md"
-            required
-            id="categoryC"
-            name="category"
-            label="分类"
-            placeholder="请输入分类"
-            rules={[{ required: true, message: '这是必填项' }]}
+            placeholder="请选择或输入标签"
           />
           <ProFormSelect
             width="md"
-            name="private"
+            required
+            id="categoryC"
+            name="categoryC"
+            label="分类"
+            placeholder="请选择分类"
+            rules={[{ required: true, message: '这是必填项' }]}
+            request={async () => {
+              return initialState?.categories?.map((e) => {
+                return {
+                  label: e,
+                  value: e,
+                };
+              });
+            }}
+          />
+          <ProFormSelect
+            width="md"
+            name="privateC"
             id="privateC"
             label="是否加密"
             placeholder="是否加密"
@@ -307,13 +305,13 @@ export default () => {
             label="密码"
             width="md"
             id="passwordC"
-            name="password"
+            name="passwordC"
             placeholder="请输入密码"
             dependencies={['private']}
           />
           <ProFormSelect
             width="md"
-            name="hiden"
+            name="hidenC"
             id="hidenC"
             label="是否隐藏"
             placeholder="是否隐藏"
@@ -332,11 +330,6 @@ export default () => {
           />
         </ModalForm>,
 
-        // <Dropdown key="menu" overlay={menu}>
-        //   <Button>
-        //     <EllipsisOutlined />
-        //   </Button>
-        // </Dropdown>,
       ]}
     />
   );
