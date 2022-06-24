@@ -1,5 +1,6 @@
 import { deleteDonate, updateDonate } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
+import { Modal } from 'antd';
 import { useState } from 'react';
 import { useModel } from 'umi';
 
@@ -8,6 +9,12 @@ export default function () {
   // const actionRef = useRef();
   const [editableKeys, setEditableRowKeys] = useState([]);
   const [dataSource, setDataSource] = useState([]);
+  const fetchData = async () => {
+    let data = await initialState?.fetchInitData?.();
+    await setInitialState((s) => ({ ...s, ...data }));
+    data = data?.meta?.rewards;
+    return data;
+  };
   const columns = [
     {
       title: '捐赠人',
@@ -31,6 +38,7 @@ export default function () {
     {
       title: '最后捐赠时间',
       valueType: 'time',
+      editable: false,
       dataIndex: 'createdAt',
       formItemProps: (form, { rowIndex }) => {
         return {
@@ -47,7 +55,7 @@ export default function () {
         <a
           key="editable"
           onClick={() => {
-            action?.startEditable?.(record.id);
+            action?.startEditable?.(record.name);
           }}
         >
           编辑
@@ -55,9 +63,14 @@ export default function () {
         <a
           key="delete"
           onClick={async () => {
-            await deleteDonate(record.name);
-            console.log(deleteDonate);
-            setDataSource(dataSource.filter((item) => item.id !== record.id));
+            Modal.confirm({
+              onOk: async () => {
+                await deleteDonate(record.name);
+                const data = await fetchData();
+                setDataSource(data);
+              },
+              title: `确认删除"${record.name}"的捐赠吗?`,
+            });
           }}
         >
           删除
@@ -68,7 +81,7 @@ export default function () {
   return (
     <>
       <EditableProTable
-        rowKey="id"
+        rowKey="name"
         headerTitle="捐赠详情"
         maxLength={5}
         scroll={{
@@ -76,21 +89,23 @@ export default function () {
         }}
         recordCreatorProps={{
           position: 'bottom',
-          record: () => ({ id: (Math.random() * 1000000).toFixed(0) }),
+          record: () => ({ name: '请输入捐赠者' }),
         }}
         loading={false}
         columns={columns}
         request={async () => {
-          let data = await initialState?.fetchInitData?.();
-          await setInitialState((s) => ({ ...s, ...data }));
-          data = data?.meta?.rewards;
+          let data = await fetchData();
+
           return {
             data,
             success: true,
           };
         }}
         value={dataSource}
-        onChange={setDataSource}
+        onChange={async (values) => {
+          const data = await fetchData();
+          setDataSource(data);
+        }}
         editable={{
           type: 'multiple',
           editableKeys,
@@ -100,7 +115,6 @@ export default function () {
               value: data.value,
             };
             await updateDonate(data);
-            console.log(toSaveObj);
             // await waitTime(2000);
           },
           onChange: setEditableRowKeys,
