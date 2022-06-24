@@ -26,6 +26,14 @@ export class SocialMetaController {
       data,
     };
   }
+  @Get('/types')
+  async getTypes() {
+    const data = await this.metaProvider.getSocialTypes();
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
 
   @Put()
   async update(@Body() updateDto: SocialDto) {

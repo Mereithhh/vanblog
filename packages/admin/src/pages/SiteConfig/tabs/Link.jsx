@@ -1,4 +1,4 @@
-import { deleteDonate, updateDonate } from '@/services/van-blog/api';
+import { deleteLink, updateLink } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal } from 'antd';
 import { useState } from 'react';
@@ -12,12 +12,12 @@ export default function () {
   const fetchData = async () => {
     let data = await initialState?.fetchInitData?.();
     await setInitialState((s) => ({ ...s, ...data }));
-    data = data?.meta?.rewards;
+    data = data?.meta?.links;
     return data;
   };
   const columns = [
     {
-      title: '捐赠人',
+      title: '伙伴名',
       dataIndex: 'name',
       formItemProps: (form, { rowIndex }) => {
         return {
@@ -26,9 +26,8 @@ export default function () {
       },
     },
     {
-      title: '金额',
-      valueType: 'money',
-      dataIndex: 'value',
+      title: '地址',
+      dataIndex: 'url',
       formItemProps: (form, { rowIndex }) => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
@@ -36,7 +35,7 @@ export default function () {
       },
     },
     {
-      title: '最后捐赠时间',
+      title: '最后设置时间',
       valueType: 'date',
       editable: false,
       dataIndex: 'updatedAt',
@@ -65,11 +64,11 @@ export default function () {
           onClick={async () => {
             Modal.confirm({
               onOk: async () => {
-                await deleteDonate(record.name);
+                await deleteLink(record.name);
                 const data = await fetchData();
                 setDataSource(data);
               },
-              title: `确认删除"${record.name}"的捐赠吗?`,
+              title: `确认删除"${record.name}"吗?`,
             });
           }}
         >
@@ -82,14 +81,14 @@ export default function () {
     <>
       <EditableProTable
         rowKey="name"
-        headerTitle="捐赠详情"
+        headerTitle="友情链接"
         maxLength={5}
         scroll={{
           x: 960,
         }}
         recordCreatorProps={{
           position: 'bottom',
-          record: () => ({ name: '请输入捐赠者' }),
+          record: () => ({ name: '请输入伙伴名' }),
         }}
         loading={false}
         columns={columns}
@@ -112,9 +111,9 @@ export default function () {
           onSave: async (rowKey, data, row) => {
             const toSaveObj = {
               name: data.name,
-              value: data.value,
+              url: data.url,
             };
-            await updateDonate(data);
+            await updateLink(toSaveObj);
             // await waitTime(2000);
           },
           onChange: setEditableRowKeys,

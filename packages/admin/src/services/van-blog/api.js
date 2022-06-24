@@ -96,6 +96,23 @@ export async function createDonate(body) {
     data: body,
   });
 }
+export async function updateLink(body) {
+  return request(`/api/admin/meta/link`, {
+    method: 'PUT',
+    data: body,
+  });
+}
+export async function deleteLink(name) {
+  return request(`/api/admin/meta/link/${name}`, {
+    method: 'DELETE',
+  });
+}
+export async function createLink(body) {
+  return request(`/api/admin/meta/link`, {
+    method: 'POST',
+    data: body,
+  });
+}
 export async function updateDonate(body) {
   return request(`/api/admin/meta/reward`, {
     method: 'PUT',
@@ -104,6 +121,22 @@ export async function updateDonate(body) {
 }
 export async function deleteDonate(name) {
   return request(`/api/admin/meta/reward/${name}`, {
+    method: 'DELETE',
+  });
+}
+export async function updateSocial(body) {
+  return request(`/api/admin/meta/social`, {
+    method: 'PUT',
+    data: body,
+  });
+}
+export async function getSocialTypes() {
+  return request(`/api/admin/meta/social/types`, {
+    method: 'GET',
+  });
+}
+export async function deleteSocial(name) {
+  return request(`/api/admin/meta/social/${name}`, {
     method: 'DELETE',
   });
 }

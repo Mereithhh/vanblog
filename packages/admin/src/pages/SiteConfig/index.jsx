@@ -4,12 +4,16 @@ import { useEffect, useMemo, useState } from 'react';
 import { history, useModel } from 'umi';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
+import Link from './tabs/Link';
 import SiteInfo from './tabs/SiteInfo';
+import Social from './tabs/Social';
 export default function () {
   const tabMap = {
     category: <Category />,
     siteInfo: <SiteInfo />,
     donateInfo: <Donate />,
+    links: <Link />,
+    socials: <Social />,
   };
   const [currTabKey, setCurrTabKey] = useState('category');
   const { initialState, setInitialState } = useModel('@@initialState');

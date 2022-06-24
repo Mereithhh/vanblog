@@ -10,8 +10,29 @@ import { LinkItem } from 'src/dto/link.dto';
 export class MetaProvider {
   constructor(@InjectModel('Meta') private metaModel: Model<MetaDocument>) {}
 
-  async getAll(): Promise<Meta> {
+  async getAll(): Promise<any> {
     return this.metaModel.findOne().exec();
+  }
+
+  async getSocialTypes() {
+    return [
+      {
+        label: '哔哩哔哩',
+        value: 'bilibili',
+      },
+      {
+        label: '邮箱',
+        value: 'email',
+      },
+      {
+        label: 'GitHub',
+        value: 'github',
+      },
+      {
+        label: '微信',
+        value: 'wechat',
+      },
+    ];
   }
 
   async update(updateMetaDto: Partial<Meta>) {
@@ -103,13 +124,18 @@ export class MetaProvider {
       type: addSocial.type,
     };
     const newSocials = [];
+    let pushed = false;
     meta.socials.forEach((r) => {
       if (r.type === toAdd.type) {
+        pushed = true;
         newSocials.push(toAdd);
       } else {
         newSocials.push(r);
       }
     });
+    if (!pushed) {
+      newSocials.push(toAdd);
+    }
 
     return this.metaModel.updateOne({}, { socials: newSocials });
   }
@@ -121,13 +147,19 @@ export class MetaProvider {
       name: addLinkDto.name,
     };
     const newLinks = [];
+    let pushed = false;
+
     meta.links.forEach((r) => {
       if (r.name === toAdd.name) {
+        pushed = true;
         newLinks.push(toAdd);
       } else {
         newLinks.push(r);
       }
     });
+    if (!pushed) {
+      newLinks.push(toAdd);
+    }
 
     return this.metaModel.updateOne({}, { links: newLinks });
   }

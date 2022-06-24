@@ -1,4 +1,4 @@
-import { deleteDonate, updateDonate } from '@/services/van-blog/api';
+import { deleteSocial, getSocialTypes, updateSocial } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal } from 'antd';
 import { useState } from 'react';
@@ -12,22 +12,25 @@ export default function () {
   const fetchData = async () => {
     let data = await initialState?.fetchInitData?.();
     await setInitialState((s) => ({ ...s, ...data }));
-    data = data?.meta?.rewards;
+    data = data?.meta?.socials;
     return data;
   };
   const columns = [
     {
-      title: '捐赠人',
-      dataIndex: 'name',
+      title: '类型',
+      dataIndex: 'type',
       formItemProps: (form, { rowIndex }) => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
         };
       },
+      request: async () => {
+        const { data } = await getSocialTypes();
+        return data || [];
+      },
     },
     {
-      title: '金额',
-      valueType: 'money',
+      title: '值',
       dataIndex: 'value',
       formItemProps: (form, { rowIndex }) => {
         return {
@@ -36,7 +39,7 @@ export default function () {
       },
     },
     {
-      title: '最后捐赠时间',
+      title: '最后设置时间',
       valueType: 'date',
       editable: false,
       dataIndex: 'updatedAt',
@@ -55,7 +58,7 @@ export default function () {
         <a
           key="editable"
           onClick={() => {
-            action?.startEditable?.(record.name);
+            action?.startEditable?.(record.type);
           }}
         >
           编辑
@@ -65,11 +68,11 @@ export default function () {
           onClick={async () => {
             Modal.confirm({
               onOk: async () => {
-                await deleteDonate(record.name);
+                await deleteSocial(record.type);
                 const data = await fetchData();
                 setDataSource(data);
               },
-              title: `确认删除"${record.name}"的捐赠吗?`,
+              title: `确认删除"${record.type}"吗?`,
             });
           }}
         >
@@ -81,15 +84,15 @@ export default function () {
   return (
     <>
       <EditableProTable
-        rowKey="name"
-        headerTitle="捐赠详情"
+        rowKey="type"
+        headerTitle="联系方式"
         maxLength={5}
         scroll={{
           x: 960,
         }}
         recordCreatorProps={{
           position: 'bottom',
-          record: () => ({ name: '请输入捐赠者' }),
+          record: () => ({ type: '选择类型' }),
         }}
         loading={false}
         columns={columns}
@@ -111,10 +114,10 @@ export default function () {
           editableKeys,
           onSave: async (rowKey, data, row) => {
             const toSaveObj = {
-              name: data.name,
+              type: data.type,
               value: data.value,
             };
-            await updateDonate(data);
+            await updateSocial(toSaveObj);
             // await waitTime(2000);
           },
           onChange: setEditableRowKeys,
