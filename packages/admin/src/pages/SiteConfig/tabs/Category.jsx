@@ -122,7 +122,7 @@ export default function () {
             key: item,
             name: item,
           }));
-          console.log(data);
+          // console.log(data);
           return {
             data,
             // success 请返回 true，

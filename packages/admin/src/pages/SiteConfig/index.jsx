@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
-import { useState } from 'react';
-import { useModel } from 'umi';
+import { useEffect, useMemo, useState } from 'react';
+import { history, useModel } from 'umi';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
 import SiteInfo from './tabs/SiteInfo';
@@ -13,8 +13,16 @@ export default function () {
   };
   const [currTabKey, setCurrTabKey] = useState('category');
   const { initialState, setInitialState } = useModel('@@initialState');
+  const currTab = useMemo(() => {
+    return history.location.query?.tab || 'category';
+  }, [history]);
+  useEffect(() => {
+    setCurrTabKey(currTab);
+  }, [currTab]);
+
   return (
     <PageContainer
+      tabActiveKey={currTabKey}
       tabList={[
         {
           tab: '分类管理',
@@ -58,6 +66,7 @@ export default function () {
       // ]}
       onTabChange={(tab) => {
         setCurrTabKey(tab);
+        history.push(`${history.location.pathname}?tab=${tab}`);
       }}
     >
       {tabMap[currTabKey] || tabMap['category']}
