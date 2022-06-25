@@ -6,7 +6,6 @@ export class CreateArticleDto {
   hiden?: boolean;
   private?: boolean;
   password?: string;
-  desc: string;
 }
 export class UpdateArticleDto {
   title?: string;
@@ -16,5 +15,4 @@ export class UpdateArticleDto {
   hiden?: boolean;
   private?: boolean;
   password?: string;
-  desc?: string;
 }

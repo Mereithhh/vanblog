@@ -57,7 +57,10 @@ export class AritcleProvider {
   }
 
   async updateById(id: number, updateArticleDto: UpdateArticleDto) {
-    return this.articleModel.updateOne({ id }, updateArticleDto);
+    return this.articleModel.updateOne(
+      { id },
+      { ...updateArticleDto, updatedAt: new Date() },
+    );
   }
 
   async getNewId() {

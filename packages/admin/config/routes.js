@@ -49,6 +49,13 @@ export default [
     component: './Article',
   },
   {
+    name: 'editor',
+    icon: 'form',
+    path: '/editor',
+    component: './Editor',
+    hideInMenu: true,
+  },
+  {
     name: 'drafts',
     icon: 'container',
     path: '/draft',

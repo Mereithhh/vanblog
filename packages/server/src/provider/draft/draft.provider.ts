@@ -30,7 +30,6 @@ export class DraftProvider {
       content: draft.content,
       tags: draft.tags,
       category: draft.category,
-      desc: draft.desc,
     };
     for (const [k, v] of Object.entries(options || {})) {
       createArticleDto[k] = v;
@@ -70,7 +69,10 @@ export class DraftProvider {
   }
 
   async updateById(id: number, updateDraftDto: UpdateDraftDto) {
-    return this.draftModel.updateOne({ id }, updateDraftDto);
+    return this.draftModel.updateOne(
+      { id },
+      { ...updateDraftDto, updatedAt: new Date() },
+    );
   }
 
   async getNewId() {

@@ -20,9 +20,6 @@ export class Draft extends Document {
   @Prop()
   category: string;
 
-  @Prop()
-  desc: string;
-
   @Prop({ default: false })
   deleted: boolean;
 
@@ -32,6 +29,13 @@ export class Draft extends Document {
     },
   })
   createdAt: Date;
+
+  @Prop({
+    default: () => {
+      return new Date();
+    },
+  })
+  updatedAt: Date;
 }
 
 export const DraftSchema = SchemaFactory.createForClass(Draft);

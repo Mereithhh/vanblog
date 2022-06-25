@@ -18,22 +18,21 @@ export const initialStateConfig = {
  * */
 
 export async function getInitialState() {
-  console.log("init")
+  // console.log("init")
   const fetchInitData = async (option) => {
     try {
       const msg = await fetchAll(option);
 
-      console.log(msg,window.location.pathname)
+      // console.log(msg,window.location.pathname)
       if (msg.statusCode == 233) {
         history.push('/init');
       } else if (window.location.pathname == '/init' && msg.statusCode == 200) {
-        history.push('/')
-      }
-      else {
+        history.push('/');
+      } else {
         return msg.data;
       }
     } catch (error) {
-      console.log("error",error)
+      // console.log("error",error)
       history.push(loginPath);
     }
 
@@ -41,14 +40,14 @@ export async function getInitialState() {
   }; // 如果不是登录页面，执行
   let option = {};
   if (location.pathname == loginPath || location.pathname == '/init') {
-    option.skipErrorHandler = true
+    option.skipErrorHandler = true;
   }
-    const initData = await fetchInitData(option);
-    return {
-      fetchInitData,
-      ...initData,
-      settings: defaultSettings,
-    };
+  const initData = await fetchInitData(option);
+  return {
+    fetchInitData,
+    ...initData,
+    settings: defaultSettings,
+  };
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
 
 export const layout = ({ initialState, setInitialState }) => {
@@ -61,15 +60,15 @@ export const layout = ({ initialState, setInitialState }) => {
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
-      console.log('onchange,',location,initialState)
+      // console.log('onchange,',location,initialState)
       if (location.pathname === '/init' && !initialState?.user) {
-        return
+        return;
       }
       if (!initialState?.user && location.pathname !== loginPath) {
         history.push(loginPath);
       }
       if (location.pathname == loginPath && Boolean(initialState?.user)) {
-        history.push('/')
+        history.push('/');
       }
     },
     links: isDev
@@ -123,13 +122,17 @@ export const request = {
     (url, options) => {
       return {
         url: url,
-        options: { ...options, interceptors: true,headers: {
-          token: (() => {
-            return window.localStorage.getItem('token') || 'null'
-          })()
-        } },
+        options: {
+          ...options,
+          interceptors: true,
+          headers: {
+            token: (() => {
+              return window.localStorage.getItem('token') || 'null';
+            })(),
+          },
+        },
       };
-    }
+    },
   ],
   // responseInterceptors: [
   //   response => {
@@ -144,6 +147,4 @@ export const request = {
 
   //   }
   // ]
-
-
 };

@@ -29,9 +29,6 @@ export class Article extends Document {
   @Prop({ default: '' })
   password: string;
 
-  @Prop()
-  desc: string;
-
   @Prop({ defualt: false })
   deleted: boolean;
 
@@ -41,6 +38,13 @@ export class Article extends Document {
     },
   })
   createdAt: Date;
+
+  @Prop({
+    default: () => {
+      return new Date();
+    },
+  })
+  updatedAt: Date;
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
