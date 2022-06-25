@@ -29,6 +29,17 @@ export async function getInitialState() {
       } else if (window.location.pathname == '/init' && msg.statusCode == 200) {
         history.push('/');
       } else {
+        const result = msg.data;
+        if (result.articles && result.meta && result.meta.about) {
+          // 把 about 加进去
+          result.articles?.push({
+            id: 0,
+            category: '关于',
+            tag: ['关于'],
+            content: result.meta.about.content,
+            updatedAt: result.meta.about.updatedAt,
+          });
+        }
         return msg.data;
       }
     } catch (error) {

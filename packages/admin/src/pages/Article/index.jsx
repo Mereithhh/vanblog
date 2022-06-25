@@ -1,4 +1,4 @@
-import { createArticle, deleteArticle, getAllCategories } from '@/services/van-blog/api';
+import { createArticle, deleteArticle, getAllCategories, getTags } from '@/services/van-blog/api';
 import { mutiSearch } from '@/services/van-blog/search';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
@@ -118,17 +118,13 @@ const columns = [
               action?.reload();
             },
           });
-
         }}
       >
         删除
       </a>,
-
     ],
   },
 ];
-
-
 
 export default () => {
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -146,7 +142,6 @@ export default () => {
         data = data.articles;
         // 排序
         if (sort && sort.createdAt) {
-
           if (sort.createdAt == 'ascend') {
             data = data.sort((a, b) => {
               return moment(a.createdAt).unix() - moment(b.createdAt).unix();
@@ -207,16 +202,13 @@ export default () => {
       columnsState={{
         persistenceKey: 'pro-table-singe-demos',
         persistenceType: 'localStorage',
-        onChange(value) {
-
-        },
+        onChange(value) {},
       }}
       rowKey="id"
       search={{
         labelWidth: 'auto',
         span: 6,
       }}
-
       pagination={{
         pageSize: 5,
         onChange: (page) => console.log(page),
@@ -264,6 +256,10 @@ export default () => {
             name="tagsC"
             label="标签"
             placeholder="请选择或输入标签"
+            request={async () => {
+              const msg = await getTags();
+              return msg?.data?.map((item) => ({ label: item, value: item })) || [];
+            }}
           />
           <ProFormSelect
             width="md"
@@ -329,7 +325,6 @@ export default () => {
             }}
           />
         </ModalForm>,
-
       ]}
     />
   );

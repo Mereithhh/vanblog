@@ -1,12 +1,19 @@
 import Editor from '@/components/Editor';
 import Tags from '@/components/Tags';
+import {
+  getTags,
+  publishDraft,
+  updateAbout,
+  updateArticle,
+  updateDraft,
+} from '@/services/van-blog/api';
 import { formatTimes } from '@/services/van-blog/tool';
 import { useQuery } from '@/services/van-blog/useQuery';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Descriptions, Space, Tag } from 'antd';
+import { Button, Descriptions, Modal, Space, Tag } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
-import { useModel } from 'umi';
+import { history, useModel } from 'umi';
 
 export default function () {
   const [vd, setVd] = useState();
@@ -30,8 +37,8 @@ export default function () {
         });
         break;
       case 'draft':
-        array = initialState?.draft;
-        obj = array.find((item) => {
+        array = initialState?.drafts;
+        obj = array?.find((item) => {
           return String(item.id) == query.id;
         });
         break;
@@ -45,6 +52,10 @@ export default function () {
       vd.setValue(currObj?.content || '');
     }
   }, [vd, currObj]);
+  const reload = async () => {
+    const data = await initialState?.fetchInitData?.();
+    await setInitialState((s) => ({ ...s, ...data }));
+  };
   return (
     <div>
       <PageContainer
@@ -56,27 +67,47 @@ export default function () {
                 <Descriptions.Item label="修改时间">
                   {formatTimes(currObj?.updatedAt, currObj?.createdAt)}
                 </Descriptions.Item>
-                <Descriptions.Item label="标签">
-                  <Tags tags={currObj?.tags}></Tags>
-                </Descriptions.Item>
-                <Descriptions.Item label="分类">{currObj?.category || '-'}</Descriptions.Item>
+                {type != 'about' && (
+                  <Descriptions.Item label="标签">
+                    <Tags tags={currObj?.tags}></Tags>
+                  </Descriptions.Item>
+                )}
+                {type != 'about' && (
+                  <Descriptions.Item label="分类">{currObj?.category || '-'}</Descriptions.Item>
+                )}
               </Descriptions>
             </>
           ),
           title: (
             <Space>
               <Tag style={{ marginBottom: '5px' }} color="blue">
-                {currObj?.id || '未知'}
+                {type == 'about' ? '关于' : currObj?.id || '未知'}
               </Tag>
-              <span>{currObj?.title || '未知'}</span>
+              <span>{type != 'about' ? currObj?.title : ''}</span>
             </Space>
           ),
           extra: [
             <Button
               type="primary"
               key="saveButton"
-              onClick={() => {
-                console.log(vd?.getValue());
+              onClick={async () => {
+                Modal.confirm({
+                  title: `确定保存吗？`,
+                  onOk: async () => {
+                    const v = vd?.getValue();
+                    if (type == 'article') {
+                      await updateArticle(currObj?.id, { content: v });
+                      reload();
+                    } else if (type == 'draft') {
+                      await updateDraft(currObj?.id, { content: v });
+                      reload();
+                    } else if (type == 'about') {
+                      await updateAbout({ content: v });
+                      await reload();
+                    } else {
+                    }
+                  },
+                });
               }}
             >
               保存
@@ -90,18 +121,31 @@ export default function () {
               重置
             </Button>,
             <ModalForm
-              title="新建文章"
+              title="修改信息"
               trigger={
-                <Button key="button" type="primary">
-                  编辑信息
-                </Button>
+                type != 'about' && (
+                  <Button key="button" type="primary">
+                    修改信息
+                  </Button>
+                )
               }
               width={450}
               autoFocusFirstInput
               submitTimeout={3000}
               initialValues={currObj || {}}
               onFinish={async (values) => {
-                console.log(values);
+                if (!currObj || !currObj.id) {
+                  return false;
+                }
+                if (type == 'article') {
+                  await updateArticle(currObj?.id, values);
+                  reload();
+                } else if (type == 'draft') {
+                  await updateDraft(currObj?.id, values);
+                  reload();
+                } else {
+                  return false;
+                }
                 return true;
               }}
               layout="horizontal"
@@ -125,6 +169,10 @@ export default function () {
                 name="tags"
                 label="标签"
                 placeholder="请选择或输入标签"
+                request={async () => {
+                  const msg = await getTags();
+                  return msg?.data?.map((item) => ({ label: item, value: item })) || [];
+                }}
               />
               <ProFormSelect
                 width="md"
@@ -194,6 +242,72 @@ export default function () {
                 </>
               )}
             </ModalForm>,
+            type == 'draft' && (
+              <ModalForm
+                title={`发布草稿: ${currObj?.title}`}
+                key="publishModal"
+                trigger={<Button key={'publish' + currObj?.id}>发布草稿</Button>}
+                width={450}
+                autoFocusFirstInput
+                submitTimeout={3000}
+                onFinish={async (values) => {
+                  await publishDraft(currObj?.id, values);
+                  await reload();
+                  history.push('/article');
+                  return true;
+                }}
+                layout="horizontal"
+                labelCol={{ span: 6 }}
+                // wrapperCol: { span: 14 },
+              >
+                <ProFormSelect
+                  width="md"
+                  name="private"
+                  id="private"
+                  label="是否加密"
+                  placeholder="是否加密"
+                  request={async () => {
+                    return [
+                      {
+                        label: '否',
+                        value: false,
+                      },
+                      {
+                        label: '是',
+                        value: true,
+                      },
+                    ];
+                  }}
+                />
+                <ProFormText.Password
+                  label="密码"
+                  width="md"
+                  id="password"
+                  name="password"
+                  placeholder="请输入密码"
+                  dependencies={['private']}
+                />
+                <ProFormSelect
+                  width="md"
+                  name="hiden"
+                  id="hiden"
+                  label="是否隐藏"
+                  placeholder="是否隐藏"
+                  request={async () => {
+                    return [
+                      {
+                        label: '否',
+                        value: false,
+                      },
+                      {
+                        label: '是',
+                        value: true,
+                      },
+                    ];
+                  }}
+                />
+              </ModalForm>
+            ),
           ],
           breadcrumb: {},
         }}

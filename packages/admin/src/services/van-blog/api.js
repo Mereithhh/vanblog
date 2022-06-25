@@ -41,11 +41,7 @@ export async function deleteArticle(id) {
     method: 'DELETE',
   });
 }
-export async function updateArticle(id) {
-  return request(`/api/admin/article/${id}`, {
-    method: 'DELETE',
-  });
-}
+
 export async function getAllCategories() {
   return request(`/api/admin/category/all`, {
     method: 'GET',
@@ -135,40 +131,31 @@ export async function getSocialTypes() {
     method: 'GET',
   });
 }
+export async function getTags() {
+  return request(`/api/admin/tag/all`, {
+    method: 'GET',
+  });
+}
 export async function deleteSocial(name) {
   return request(`/api/admin/meta/social/${name}`, {
     method: 'DELETE',
   });
 }
-
-export async function rule(params, options) {
-  return request('/api/rule', {
-    method: 'GET',
-    params: { ...params },
-    ...(options || {}),
-  });
-}
-/** 新建规则 PUT /api/rule */
-
-export async function updateRule(options) {
-  return request('/api/rule', {
+export async function updateArticle(id, body) {
+  return request(`/api/admin/article/${id}`, {
     method: 'PUT',
-    ...(options || {}),
+    data: body,
   });
 }
-/** 新建规则 POST /api/rule */
-
-export async function addRule(options) {
-  return request('/api/rule', {
-    method: 'POST',
-    ...(options || {}),
+export async function updateDraft(id, body) {
+  return request(`/api/admin/draft/${id}`, {
+    method: 'PUT',
+    data: body,
   });
 }
-/** 删除规则 DELETE /api/rule */
-
-export async function removeRule(options) {
-  return request('/api/rule', {
-    method: 'DELETE',
-    ...(options || {}),
+export async function updateAbout(body) {
+  return request(`/api/admin/meta/about`, {
+    method: 'PUT',
+    data: body,
   });
 }

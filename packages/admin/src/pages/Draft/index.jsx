@@ -1,4 +1,10 @@
-import { createDraft, deleteDraft, getAllCategories, publishDraft } from '@/services/van-blog/api';
+import {
+  createDraft,
+  deleteDraft,
+  getAllCategories,
+  getTags,
+  publishDraft,
+} from '@/services/van-blog/api';
 import { mutiSearch } from '@/services/van-blog/search';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
@@ -312,6 +318,10 @@ export default () => {
             name="tagsC"
             label="标签"
             placeholder="请选择或输入标签"
+            request={async () => {
+              const msg = await getTags();
+              return msg?.data?.map((item) => ({ label: item, value: item })) || [];
+            }}
           />
           <ProFormSelect
             width="md"
