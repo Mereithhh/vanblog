@@ -1,5 +1,5 @@
 import { updateSiteInfo } from '@/services/van-blog/api';
-import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
+import { ProCard, ProForm, ProFormDatePicker, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 import { useModel } from 'umi';
 export default function () {
@@ -112,6 +112,7 @@ export default function () {
           placeholder={'请输入微信打赏图片 Url'}
           rules={[{ required: true, message: '这是必填项' }]}
         ></ProFormText>
+        <ProFormDatePicker width="lg" name="since" label="起始时间日期" />
       </ProForm>
     </ProCard>
   );

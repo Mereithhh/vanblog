@@ -94,7 +94,7 @@ const columns = [
       <a
         key={'editable' + record.id}
         onClick={() => {
-          history.push(`/editor?type=article&id=${record.id}`);
+          history.push(`/editor?type=${record?.about ? 'about' : 'article'}&id=${record.id}`);
         }}
       >
         编辑

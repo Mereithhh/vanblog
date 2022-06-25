@@ -32,13 +32,20 @@ export async function getInitialState() {
         const result = msg.data;
         if (result.articles && result.meta && result.meta.about) {
           // 把 about 加进去
-          result.articles?.push({
-            id: 0,
-            category: '关于',
-            tag: ['关于'],
-            content: result.meta.about.content,
-            updatedAt: result.meta.about.updatedAt,
-          });
+          result.articles = [
+            {
+              id: 0,
+              category: '关于',
+              title: '关于',
+              tag: ['关于'],
+              about: true,
+              content: result.meta.about.content,
+              updatedAt:
+                result.meta.about.updatedAt || result.meta?.siteInfo?.since || '2022-06-26',
+              createdAt: result.meta?.siteInfo?.since || '2022-06-26',
+            },
+            ...result.articles,
+          ];
         }
         return msg.data;
       }
