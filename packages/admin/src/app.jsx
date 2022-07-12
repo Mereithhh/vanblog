@@ -22,7 +22,7 @@ export async function getInitialState() {
   const fetchInitData = async (option) => {
     try {
       const msg = await fetchAll(option);
-
+      // console.log(msg);
       // console.log(msg,window.location.pathname)
       if (msg.statusCode == 233) {
         history.push('/init');
@@ -131,7 +131,7 @@ export const request = {
     adaptor: (resData) => {
       return {
         ...resData,
-        success: resData?.statusCode == 200,
+        success: resData?.statusCode == 200 || resData?.statusCode == 233,
         errorMessage: resData.message,
       };
     },

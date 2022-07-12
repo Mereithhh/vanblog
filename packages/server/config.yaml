@@ -1,4 +1,2 @@
 database:
-  url: mongodb://authing:authing@localhost:27017/vanBlog?authSource=admin
-jwt:
-  secret: "boynextdoor"
+  url: mongodb://mereith:vanlusg2!@tx.mereith.top:27017/vanBlog?authSource=admin
