@@ -43,6 +43,8 @@ const Home = (props: IndexProps) => {
           title="测试"
           createdAt={new Date()}
           catelog="魔法上网"
+          content={""}
+          type={"overview"}
         ></PostCard>
       </div>
     </Layout>

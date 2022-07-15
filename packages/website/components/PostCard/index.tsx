@@ -1,10 +1,13 @@
 import dayjs from "dayjs";
 import Link from "next/link";
+import Markdown from "../Markdown";
 
 export default function (props: {
   title: string;
   createdAt: Date;
   catelog: string;
+  content: string;
+  type: "overview" | "article";
 }) {
   return (
     <div className="bg-white border py-4 px-3 md:py-6 md:px-5">
@@ -23,6 +26,7 @@ export default function (props: {
         <span className="inline-block px-2"> {`阅读数 ${0}`}</span>
         <span className="inline-block px-2"> {`评论数 ${0}`}</span>
       </div>
+      <Markdown content={props.content}></Markdown>
       <div></div>
     </div>
   );
