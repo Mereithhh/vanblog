@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "dayjs": "^1.11.3",
     "next": "latest",
     "react": "18.1.0",
     "react-dom": "18.1.0"
