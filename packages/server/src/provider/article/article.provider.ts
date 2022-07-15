@@ -10,6 +10,18 @@ export class AritcleProvider {
     @InjectModel('Article') private articleModel: Model<ArticleDocument>,
   ) {}
 
+  toPublic(oldArticles: Article[]) {
+    return oldArticles.map((item) => {
+      return {
+        title: item.title,
+        content: item.content,
+        tags: item.tags,
+        category: item.category,
+        updatedAt: item.updatedAt,
+        createdAt: item.createdAt,
+      };
+    });
+  }
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     const createdData = new this.articleModel(createArticleDto);
     const newId = await this.getNewId();

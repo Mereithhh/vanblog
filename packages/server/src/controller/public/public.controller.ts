@@ -20,7 +20,7 @@ export class PublicController {
     const data = await this.articleProvider.getById(id);
     return {
       statusCode: 200,
-      data,
+      data: data ? this.articleProvider.toPublic([data])[0] : null,
     };
   }
 
@@ -29,7 +29,7 @@ export class PublicController {
     const data = await this.articleProvider.searchByString(search);
     return {
       statusCode: 200,
-      data,
+      data: this.articleProvider.toPublic(data),
     };
   }
 
@@ -38,13 +38,14 @@ export class PublicController {
     const data = await this.tagProvider.getArticlesByTag(name);
     return {
       statusCode: 200,
-      data,
+      data: this.articleProvider.toPublic(data),
     };
   }
 
   @Get('/all')
   async getAllPublicData() {
-    const articles = await this.articleProvider.getAll();
+    let articles = await this.articleProvider.getAll();
+    articles = this.articleProvider.toPublic(articles) as any;
     const categories = await this.categoryProvider.getAllCategories();
     const tags = await this.tagProvider.getAllTags();
     const meta = await this.metaProvider.getAll();
