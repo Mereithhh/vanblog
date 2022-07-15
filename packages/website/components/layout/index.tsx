@@ -10,19 +10,25 @@ export default function (props: {
   ipcHref: string;
   logo: string;
   categories: string[];
+  sideBar: any;
 }) {
   return (
     <>
       <NavBar logo={props.logo} categories={props.categories}></NavBar>
-      <div className="container mx-auto text-gray-600 mt-14 md:mt-24">
+      <div className="container mx-auto  md:px-6  md:py-6 py-2 px-2 text-gray-600 mt-14 md:mt-24">
         {props?.title && (
           <Head>
             <title>{props.title}</title>
           </Head>
         )}
 
-        {props.children}
-        <footer className="text-center text-sm">
+        {
+          <div className="flex max-w-5xl mx-auto">
+            <div className="flex-grow">{props.children}</div>
+            <div className="hidden lg:block">{props.sideBar}</div>
+          </div>
+        }
+        <footer className="text-center text-sm space-y-1 mt-8 md:mt-12">
           <p>
             IPC 编号:{" "}
             <a
