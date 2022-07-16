@@ -37,7 +37,7 @@ const Home = (props: IndexProps) => {
         ></AuthorCard>
       }
     >
-      <div>
+      <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
             key={article.title}

@@ -16,7 +16,7 @@ export default function (props: {
   return (
     <>
       <NavBar logo={props.logo} categories={props.categories}></NavBar>
-      <div className="container mx-auto  md:px-6  md:py-6 py-2 px-2 text-gray-600 mt-14 md:mt-24">
+      <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-600 ">
         {props?.title && (
           <Head>
             <title>{props.title}</title>

@@ -26,7 +26,7 @@ export default function (props: {
       <div className="text-lg md:text-xl text-center font-medium mb-2">
         {props.title}
       </div>
-      <div className="text-center text-xs md:text-sm divide-x divide-gray-500 text-gray-500">
+      <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400">
         <span className="inline-block px-2">
           {`发表于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`}
         </span>
