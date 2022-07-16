@@ -20,6 +20,9 @@
     @apply transition cursor-pointer flex items-center h-full px-2 md:px-4 hover:border-cyan-400 hover:text-cyan-400 border-b-2 border-white;
   }
 }
+.svg-gray {
+  color: rgb(30, 30, 30);
+}
 
 .headroom {
   will-change: transform;
