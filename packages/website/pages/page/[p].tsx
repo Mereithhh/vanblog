@@ -1,6 +1,7 @@
 import { getPublicAll } from "../../api/getMeta";
 import AuthorCard from "../../components/AuthorCard";
 import Layout from "../../components/layout";
+import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import { Article } from "../../types/article";
 interface IndexProps {
@@ -16,6 +17,7 @@ interface IndexProps {
   catelogNum: number;
   tagNum: number;
   articles: Article[];
+  currPage: number;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -37,9 +39,10 @@ const Home = (props: IndexProps) => {
         ></AuthorCard>
       }
     >
-      <div>
+      <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
+            id={article.id}
             key={article.title}
             title={article.title}
             createdAt={new Date(article.createdAt)}
@@ -49,22 +52,64 @@ const Home = (props: IndexProps) => {
           ></PostCard>
         ))}
       </div>
+      <PageNav
+        total={props.postNum}
+        current={props.currPage}
+        base={"/"}
+        more={"/page"}
+      ></PageNav>
     </Layout>
   );
 };
 
 export default Home;
-export async function getStaticProps(): Promise<{ props: IndexProps }> {
+
+export async function getStaticPaths() {
+  const data = await getPublicAll();
+  const total = Math.ceil(data.articles.length / 5);
+  const paths = [];
+  for (let i = 1; i <= total; i++) {
+    paths.push({
+      params: {
+        p: String(i),
+      },
+    });
+  }
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+export async function getStaticProps({
+  params,
+}: any): Promise<{ props: IndexProps }> {
+  const curPage = parseInt(params.p);
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
   const { beianUrl, beianNumber, since, siteLogo } = siteInfo;
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
-  // 只需要10个文章
-  const articles = data.articles.slice(0, 1);
+  // 只需要5个文章
+  const articles = [];
+  // 前面的不要
+  for (let j = 0; j < curPage - 1; j++) {
+    for (let i = 0; i < 5; i++) {
+      data.articles.pop();
+    }
+  }
+  //后面的要5个。
+  for (let i = 0; i < 5; i++) {
+    const a = data.articles.pop();
+    if (a) {
+      articles.push(a);
+    }
+  }
+
   return {
     props: {
+      currPage: curPage,
       ipcHref: beianUrl,
       ipcNumber: beianNumber,
       since: since,
