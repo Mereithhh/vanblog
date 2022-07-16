@@ -22,7 +22,7 @@ interface IndexProps {
 const Home = (props: IndexProps) => {
   return (
     <Layout
-      title="Mereith's Blog"
+      title={props.article.title}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
