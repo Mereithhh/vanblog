@@ -1,6 +1,7 @@
 import { getPublicAll } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
+import PageNav from "../components/PageNav";
 import PostCard from "../components/PostCard";
 import { Article } from "../types/article";
 interface IndexProps {
@@ -16,6 +17,7 @@ interface IndexProps {
   catelogNum: number;
   tagNum: number;
   articles: Article[];
+  currPage: number;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -50,6 +52,12 @@ const Home = (props: IndexProps) => {
           ></PostCard>
         ))}
       </div>
+      <PageNav
+        total={props.postNum}
+        current={props.currPage}
+        base={"/"}
+        more={"/page"}
+      ></PageNav>
     </Layout>
   );
 };
@@ -62,10 +70,14 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
-  // 只需要10个文章
-  const articles = data.articles.slice(0, 4);
+  // 只需要5个文章
+  const articles = [];
+  for (let i = 0; i < 5; i++) {
+    articles.push(data.articles.pop());
+  }
   return {
     props: {
+      currPage: 1,
       ipcHref: beianUrl,
       ipcNumber: beianNumber,
       since: since,
