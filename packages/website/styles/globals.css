@@ -8,7 +8,7 @@
   }
   pre,
   code {
-    white-space: pre-wrap;
+    white-space: pre-wrap !important;
   }
   a {
     word-wrap: break-word;
