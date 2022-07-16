@@ -40,6 +40,7 @@ const Home = (props: IndexProps) => {
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
+            id={article.id}
             key={article.title}
             title={article.title}
             createdAt={new Date(article.createdAt)}

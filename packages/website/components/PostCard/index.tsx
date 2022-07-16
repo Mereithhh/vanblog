@@ -3,6 +3,7 @@ import Link from "next/link";
 import Markdown from "../Markdown";
 
 export default function (props: {
+  id: number;
   title: string;
   createdAt: Date;
   catelog: string;
@@ -33,7 +34,7 @@ export default function (props: {
 
         <span className="inline-block px-2">
           {`分类于 `}
-          <Link href={""}>
+          <Link href={`/category/${props.catelog}`}>
             <a className="cursor-pointer hover:text-cyan-400">{`${props.catelog}`}</a>
           </Link>
         </span>
@@ -43,6 +44,15 @@ export default function (props: {
       <div className="text-sm md:text-base  text-gray-600 mt-4 mx-2">
         <Markdown content={getContent(props.content)}></Markdown>
       </div>
+
+      <div className="w-full flex justify-center mt-4">
+        <Link href={`/post/${props.id}`}>
+          <a className=" hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded-sm">
+            阅读全文
+          </a>
+        </Link>
+      </div>
+
       <div></div>
     </div>
   );

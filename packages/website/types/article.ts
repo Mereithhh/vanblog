@@ -5,4 +5,5 @@ export interface Article {
   createdAt: string;
   title: string;
   updatedAt: string;
+  id: number;
 }

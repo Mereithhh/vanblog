@@ -19,6 +19,7 @@ export class AritcleProvider {
         category: item.category,
         updatedAt: item.updatedAt,
         createdAt: item.createdAt,
+        id: item.id,
       };
     });
   }
