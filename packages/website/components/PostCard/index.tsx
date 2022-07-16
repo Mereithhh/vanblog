@@ -11,8 +11,10 @@ export default function (props: {
 }) {
   return (
     <div className="bg-white border py-4 px-3 md:py-6 md:px-5">
-      <div className="text-2xl text-center font-medium mb-2">{props.title}</div>
-      <div className="text-center text-sm divide-x divide-gray-500 text-gray-500">
+      <div className="text-lg md:text-xl text-center font-medium mb-2">
+        {props.title}
+      </div>
+      <div className="text-center text-xs md:text-sm divide-x divide-gray-500 text-gray-500">
         <span className="inline-block px-2">
           {`发表于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`}
         </span>
@@ -26,7 +28,9 @@ export default function (props: {
         <span className="inline-block px-2"> {`阅读数 ${0}`}</span>
         <span className="inline-block px-2"> {`评论数 ${0}`}</span>
       </div>
-      <Markdown content={props.content}></Markdown>
+      <div className="text-sm md:text-base  text-gray-600 mt-4 mx-2">
+        <Markdown content={props.content}></Markdown>
+      </div>
       <div></div>
     </div>
   );

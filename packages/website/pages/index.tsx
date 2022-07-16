@@ -5,6 +5,7 @@ import { getPublicAll } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
 import PostCard from "../components/PostCard";
+import { Article } from "../types/article";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -17,7 +18,7 @@ interface IndexProps {
   postNum: number;
   catelogNum: number;
   tagNum: number;
-  articles: any[];
+  articles: Article[];
 }
 const Home = (props: IndexProps) => {
   console.log(props.articles);
@@ -41,13 +42,16 @@ const Home = (props: IndexProps) => {
       }
     >
       <div>
-        <PostCard
-          title="测试"
-          createdAt={new Date()}
-          catelog="魔法上网"
-          content={""}
-          type={"overview"}
-        ></PostCard>
+        {props.articles.map((article) => (
+          <PostCard
+            key={article.title}
+            title={article.title}
+            createdAt={new Date(article.createdAt)}
+            catelog={article.category}
+            content={article.content}
+            type={"overview"}
+          ></PostCard>
+        ))}
       </div>
     </Layout>
   );
@@ -62,7 +66,7 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
   // 只需要10个文章
-  const articles = data.articles.slice(0, 9);
+  const articles = data.articles.slice(0, 1);
   return {
     props: {
       ipcHref: beianUrl,

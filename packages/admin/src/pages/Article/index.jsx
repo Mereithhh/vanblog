@@ -307,8 +307,8 @@ export default () => {
           />
           <ProFormSelect
             width="md"
-            name="hidenC"
-            id="hidenC"
+            name="hiddenC"
+            id="hiddenC"
             label="是否隐藏"
             placeholder="是否隐藏"
             request={async () => {

@@ -3,7 +3,7 @@ export class CreateArticleDto {
   content?: string;
   tags?: string[];
   category: string;
-  hiden?: boolean;
+  hidden?: boolean;
   private?: boolean;
   password?: string;
 }
@@ -12,7 +12,7 @@ export class UpdateArticleDto {
   content?: string;
   tags?: string;
   category?: string;
-  hiden?: boolean;
+  hidden?: boolean;
   private?: boolean;
   password?: string;
 }

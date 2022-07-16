@@ -3,10 +3,10 @@ import Link from "next/link";
 
 export default function (props: { logo: string; categories: string[] }) {
   return (
-    <div className="fixed top-0 left-0 bg-white w-full">
+    <div className="fixed top-0 left-0 bg-white w-full z-50">
       {/* 上面的导航栏 */}
       <div
-        className=" flex  items-center w-full border-b h-14"
+        className=" flex  items-center w-full border-b border-gray-200 h-14"
         style={{ height: 56 }}
       >
         <div className="mx-4 flex items-center">
@@ -51,7 +51,7 @@ export default function (props: { logo: string; categories: string[] }) {
           </div>
         </div>
       </div>
-      <div className="h-10 items-center hidden md:flex">
+      <div className="h-10 items-center hidden md:flex border-b border-gray-200">
         <div className="mx-5" style={{ width: 52 }}></div>
         <ul className="flex h-full items-center text-sm text-gray-600">
           {props.categories.map((catelog) => {

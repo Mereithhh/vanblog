@@ -23,9 +23,13 @@ export default function (props: {
         )}
 
         {
-          <div className="flex max-w-5xl mx-auto">
-            <div className="flex-grow">{props.children}</div>
-            <div className="hidden lg:block">{props.sideBar}</div>
+          <div className="flex mx-auto justify-center">
+            <div className="flex-shrink flex-grow max-w-3xl ">
+              {props.children}
+            </div>
+            <div className="hidden lg:block flex-shrink-0 flex-grow-0">
+              {props.sideBar}
+            </div>
           </div>
         }
         <footer className="text-center text-sm space-y-1 mt-8 md:mt-12">

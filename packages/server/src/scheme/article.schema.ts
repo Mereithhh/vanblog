@@ -21,7 +21,7 @@ export class Article extends Document {
   category: string;
 
   @Prop({ default: false })
-  hiden: boolean;
+  hidden: boolean;
 
   @Prop({ default: false })
   private: boolean;

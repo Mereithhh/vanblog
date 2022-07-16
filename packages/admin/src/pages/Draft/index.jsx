@@ -150,8 +150,8 @@ const columns = [
         />
         <ProFormSelect
           width="md"
-          name="hiden"
-          id="hiden"
+          name="hidden"
+          id="hidden"
           label="是否隐藏"
           placeholder="是否隐藏"
           request={async () => {

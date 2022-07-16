@@ -11,7 +11,7 @@ export class UpdateDraftDto {
   category?: string;
 }
 export class PublishDraftDto {
-  hiden?: boolean;
+  hidden?: boolean;
   private?: boolean;
   password?: string;
 }

@@ -30,15 +30,19 @@ export class AritcleProvider {
   }
 
   async getAll(): Promise<Article[]> {
-    const articles = await this.articleModel.find({ hiden: false }).exec();
+    const articles = await this.articleModel.find({ hidden: false }).exec();
     return articles.filter((each) => {
-      return !each?.deleted;
+      if (!each.deleted) {
+        return true;
+      } else {
+        return !each.deleted;
+      }
     });
   }
 
   async getById(id: number): Promise<Article> {
     const article = await this.articleModel
-      .findOne({ id, hiden: false })
+      .findOne({ id, hidden: false })
       .exec();
     if (article?.deleted === true) {
       return null;
