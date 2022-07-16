@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/markdown-navbar": "^1.4.0",
     "dayjs": "^1.11.3",
     "headroom.js": "^0.12.0",
     "markdown-navbar": "^1.4.3",
