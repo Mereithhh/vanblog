@@ -22,23 +22,28 @@
 }
 
 .headroom {
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1;
-}
-.headroom--unfixed {
-  position: relative;
-  transform: translateY(0);
-}
-.headroom--scrolled {
-  transition: transform 200ms ease-in-out;
-}
-.headroom--unpinned {
-  position: fixed;
-  transform: translateY(-56px);
+  will-change: transform;
+  transition: transform 200ms linear;
+  z-index: 999;
 }
 .headroom--pinned {
-  position: fixed;
   transform: translateY(0%);
+}
+.headroom--unpinned {
+  transform: translateY(-56px);
+}
+.side-bar {
+  will-change: top;
+  transition: top 200ms linear;
+}
+/* 一定的 */
+.side-bar-top {
+  top: 112px;
+}
+
+.side-bar-not-top {
+  top: 56px;
+}
+.side-bar-not-top.side-bar-pinned {
+  top: 112px;
 }
