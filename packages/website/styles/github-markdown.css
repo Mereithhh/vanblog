@@ -80,7 +80,7 @@
   --color-fg-muted: #57606a;
   --color-fg-subtle: #6e7781;
   --color-canvas-default: #ffffff;
-  --color-canvas-subtle: #f6f8fa;
+  --color-canvas-subtle: hsl(230, 1%, 98%);
   --color-border-default: #d0d7de;
   --color-border-muted: hsla(210, 18%, 87%, 1);
   --color-neutral-muted: rgba(175, 184, 193, 0.2);
