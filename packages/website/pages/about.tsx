@@ -16,6 +16,7 @@ interface IndexProps {
   postNum: number;
   catelogNum: number;
   tagNum: number;
+  favicon: string;
   about: {
     updatedAt: string;
     content: string;
@@ -30,6 +31,7 @@ const Home = (props: IndexProps) => {
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
+      favicon={props.favicon}
       sideBar={
         <AuthorCard
           catelogNum={props.catelogNum}
@@ -65,6 +67,7 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   const about = data.meta.about;
   return {
     props: {
+      favicon: siteInfo.favicon,
       ipcHref: beianUrl,
       ipcNumber: beianNumber,
       since: since,

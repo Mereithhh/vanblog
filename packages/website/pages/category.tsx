@@ -18,10 +18,12 @@ interface IndexProps {
   tagNum: number;
   articles: Record<string, Article[]>;
   wordTotal: number;
+  favicon: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      favicon={props.favicon}
       title="Mereith's Blog"
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
@@ -98,6 +100,7 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   return {
     props: {
       wordTotal,
+      favicon: siteInfo.favicon,
       ipcHref: beianUrl,
       ipcNumber: beianNumber,
       since: since,

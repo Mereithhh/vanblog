@@ -18,6 +18,7 @@ interface IndexProps {
   tagNum: number;
   articles: Record<string, Article[]>;
   wordTotal: number;
+  favicon: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -28,6 +29,7 @@ const Home = (props: IndexProps) => {
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
+      favicon={props.favicon}
       sideBar={
         <AuthorCard
           catelogNum={props.catelogNum}
@@ -107,6 +109,7 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
       ipcNumber: beianNumber,
       since: since,
       logo: siteLogo,
+      favicon: siteInfo.favicon,
       categories: data.categories,
       author: siteInfo.author,
       desc: siteInfo.authorDesc,

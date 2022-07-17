@@ -18,11 +18,13 @@ interface IndexProps {
   catelogNum: number;
   tagNum: number;
   tags: string[];
+  favicon: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
       title="标签"
+      favicon={props.favicon}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
@@ -68,6 +70,7 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   return {
     props: {
       ipcHref: beianUrl,
+      favicon: siteInfo.favicon,
       ipcNumber: beianNumber,
       since: since,
       logo: siteLogo,

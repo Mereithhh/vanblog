@@ -19,6 +19,7 @@ interface IndexProps {
   articles: Record<string, Article[]>;
   wordTotal: number;
   curTag: string;
+  favicon: string;
   curNum: number;
 }
 const Home = (props: IndexProps) => {
@@ -30,6 +31,7 @@ const Home = (props: IndexProps) => {
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
+      favicon={props.favicon}
       sideBar={
         <AuthorCard
           catelogNum={props.catelogNum}
@@ -136,6 +138,7 @@ export async function getStaticProps({
       catelogNum: catelogNum,
       articles: articles,
       curTag,
+      favicon: siteInfo.favicon,
       curNum,
     },
   };

@@ -24,10 +24,12 @@ interface IndexProps {
   curId: number;
   pre: { id: number; title: string };
   next: { id: number; title: string };
+  favicon: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      favicon={props.favicon}
       title={props.article.title}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
@@ -109,6 +111,7 @@ export async function getStaticProps({
       ipcNumber: beianNumber,
       since: since,
       logo: siteLogo,
+      favicon: siteInfo.favicon,
       categories: data.categories,
       author: siteInfo.author,
       desc: siteInfo.authorDesc,

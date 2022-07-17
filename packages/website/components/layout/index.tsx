@@ -12,6 +12,7 @@ export default function (props: {
   logo: string;
   categories: string[];
   sideBar: any;
+  favicon: string;
 }) {
   return (
     <>
@@ -20,6 +21,7 @@ export default function (props: {
         {props?.title && (
           <Head>
             <title>{props.title}</title>
+            <link rel="icon" href={props.favicon}></link>
           </Head>
         )}
 

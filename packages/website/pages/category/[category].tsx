@@ -20,10 +20,12 @@ interface IndexProps {
   wordTotal: number;
   curCategory: string;
   curNum: number;
+  favicon: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      favicon={props.favicon}
       title={props.curCategory}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
@@ -125,6 +127,7 @@ export async function getStaticProps({
   return {
     props: {
       wordTotal,
+      favicon: siteInfo.favicon,
       ipcHref: beianUrl,
       ipcNumber: beianNumber,
       since: since,
