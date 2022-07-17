@@ -1,8 +1,9 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
 import { config } from "../../utils/loadConfig";
+import { useRouter } from "next/router";
 export default function (props: {
   aliPay: string;
   weChatPay: string;
@@ -10,6 +11,12 @@ export default function (props: {
   id: number;
 }) {
   const [show, setShow] = useState(false);
+  const [url, setUrl] = useState("");
+  const router = useRouter();
+  useEffect(() => {
+    setUrl(window.location.href);
+  }, [setUrl]);
+
   return (
     <div className="mt-8">
       <div className="text-center  select-none text-sm md:text-base mb-2">
@@ -39,7 +46,7 @@ export default function (props: {
         <p>
           <span className="mr-2">本文链接:</span>
           <CopyToClipboard
-            text={`${config.baseUrl}post/${props.id}`}
+            text={url}
             onCopy={() => {
               Swal.fire({
                 position: "center",
@@ -50,7 +57,9 @@ export default function (props: {
               });
             }}
           >
-            <a className="cursor-pointer border-b border-white hover:border-gray-500">{`${config.baseUrl}post/${props.id}`}</a>
+            <span className="cursor-pointer border-b border-white hover:border-gray-500">
+              {url}
+            </span>
           </CopyToClipboard>
         </p>
         <p>
