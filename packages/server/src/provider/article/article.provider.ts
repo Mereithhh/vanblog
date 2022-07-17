@@ -55,15 +55,45 @@ export class AritcleProvider {
     return this.articleModel.findOne({ id }).exec();
   }
 
+  toSearchResult(articles: Article[]) {
+    return articles.map((each) => ({
+      title: each.title,
+      id: each.id,
+      category: each.category,
+      tags: each.tags,
+      updatedAt: each.updatedAt,
+      createdAt: each.createdAt,
+    }));
+  }
+
   async searchByString(str: string): Promise<Article[]> {
-    return this.articleModel
+    const rawData = await this.articleModel
       .find({
         $or: [
-          { content: { $regex: `*${str}*`, $options: '$i' } },
-          { title: { $regex: `*${str}*`, $options: '$i' } },
+          { content: { $regex: `${str}`, $options: '$i' } },
+          { title: { $regex: `${str}`, $options: '$i' } },
+          { category: { $regex: `${str}`, $options: '$i' } },
+          { tags: { $regex: `${str}`, $options: '$i' } },
         ],
       })
       .exec();
+    const titleData = rawData.filter((each) => each.title.includes(str));
+    const contentData = rawData.filter((each) => each.content.includes(str));
+    const categoryData = rawData.filter((each) => each.category.includes(str));
+    const tagData = rawData.filter((each) => each.tags.includes(str));
+    const sortedData = [
+      ...titleData,
+      ...contentData,
+      ...tagData,
+      ...categoryData,
+    ];
+    const resData = [];
+    for (const e of sortedData) {
+      if (!resData.includes(e)) {
+        resData.push(e);
+      }
+    }
+    return resData;
   }
 
   async findAll(): Promise<Article[]> {

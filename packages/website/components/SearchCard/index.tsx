@@ -1,10 +1,11 @@
 import { useRef } from "react";
-
+import Image from "next/image";
 export default function (props: {
   visible: boolean;
   setVisible: (v: boolean) => void;
 }) {
   const innerRef = useRef(null);
+  const inputRef = useRef(null);
   return (
     <div
       className="fixed w-full h-full top-0 left-0 right-0 bottom-0  justify-center items-center flex"
@@ -12,8 +13,6 @@ export default function (props: {
         zIndex: 1000,
         backgroundColor: "rgba(0,0,0,0.4)",
         visibility: props.visible ? "visible" : "hidden",
-        // display: props.visible ? "flex" : "none",
-        // transform: props.visible ? "scale(100%)" : "scale(0)",
       }}
       onClick={(ev) => {
         if (innerRef.current) {
@@ -36,7 +35,22 @@ export default function (props: {
             : "translateY(-30%) scale(0)",
         }}
       >
-        sdf
+        <div className="flex items-center">
+          <Image src="/zoom.svg" width={24} height={24}></Image>
+          <input
+            autoFocus={true}
+            placeholder={"搜索内容"}
+            className="w-full ml-2 text-base "
+            style={{
+              height: 32,
+              appearance: "none",
+              border: "none",
+              outline: "medium",
+            }}
+            ref={inputRef}
+          ></input>
+        </div>
+        <hr className="my-2"></hr>
       </div>
     </div>
   );

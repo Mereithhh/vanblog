@@ -24,12 +24,16 @@ export class PublicController {
     };
   }
 
-  @Get('/article/search')
+  @Get('/search')
   async searchArticle(@Query('value') search: string) {
     const data = await this.articleProvider.searchByString(search);
+
     return {
       statusCode: 200,
-      data: this.articleProvider.toPublic(data),
+      data: {
+        total: data.length,
+        data: this.articleProvider.toSearchResult(data),
+      },
     };
   }
 
