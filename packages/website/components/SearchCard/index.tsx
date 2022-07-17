@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { searchArticles, searchWithApiRoute } from "../../api/search";
 import { useDebounce } from "react-use";
+import ArticleList from "../ArticleList";
 
 export default function (props: {
   visible: boolean;
@@ -60,12 +61,21 @@ export default function (props: {
         }
       }
     }
-    return (
-      <div className="mt-16 text-center">
-        <div className="text-gray-600">{text}</div>
-      </div>
-    );
+    if (text == "有结果") {
+      return (
+        <div>
+          <ArticleList showYear={true} articles={result}></ArticleList>
+        </div>
+      );
+    } else {
+      return (
+        <div className="mt-16 text-center">
+          <div className="text-gray-600">{text}</div>
+        </div>
+      );
+    }
   };
+
   return (
     <div
       className="fixed w-full h-full top-0 left-0 right-0 bottom-0  justify-center items-center flex"
@@ -90,9 +100,7 @@ export default function (props: {
           minHeight: "280px",
           minWidth: 400,
           maxWidth: "710px",
-          transform: props.visible
-            ? "translateY(-30%) scale(100%)"
-            : "translateY(-30%) scale(0)",
+          transform: props.visible ? "scale(100%)" : "scale(0)",
         }}
       >
         <div className="flex items-center">
@@ -137,7 +145,9 @@ export default function (props: {
           </div>
         </div>
         <hr className="my-2"></hr>
-        <div className="">{renderResult()}</div>
+        <div className="" style={{ maxHeight: 400, overflowY: "auto" }}>
+          {renderResult()}
+        </div>
       </div>
     </div>
   );
