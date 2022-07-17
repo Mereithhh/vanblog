@@ -70,10 +70,16 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
+  const sortedArticles = data.articles.sort(
+    (a, b) => new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
+  );
   // 只需要5个文章
   const articles = [];
   for (let i = 0; i < 5; i++) {
-    articles.push(data.articles.pop());
+    const t = sortedArticles.pop();
+    if (t) {
+      articles.push(t);
+    }
   }
   return {
     props: {

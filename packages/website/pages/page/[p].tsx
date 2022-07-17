@@ -91,17 +91,20 @@ export async function getStaticProps({
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
+  const sortedArticles = data.articles.sort(
+    (a, b) => new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
+  );
   // 只需要5个文章
   const articles = [];
   // 前面的不要
   for (let j = 0; j < curPage - 1; j++) {
     for (let i = 0; i < 5; i++) {
-      data.articles.pop();
+      sortedArticles.pop();
     }
   }
   //后面的要5个。
   for (let i = 0; i < 5; i++) {
-    const a = data.articles.pop();
+    const a = sortedArticles.pop();
     if (a) {
       articles.push(a);
     }
