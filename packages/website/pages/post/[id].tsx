@@ -1,14 +1,10 @@
-import { useState, useEffect } from "react";
 import { getPublicAll } from "../../api/getMeta";
-import AuthorCard from "../../components/AuthorCard";
 import Layout from "../../components/layout";
-import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
-import Reward from "../../components/Reward";
 import Toc from "../../components/Toc";
+import WaLine from "../../components/WaLine";
 import { Article } from "../../types/article";
 import { hasToc } from "../../utils/hasToc";
-import { init } from "@waline/client";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -30,16 +26,6 @@ interface IndexProps {
   walineUrl: string;
 }
 const Home = (props: IndexProps) => {
-  const [hasInit, setHasInit] = useState(false);
-  useEffect(() => {
-    if (!hasInit) {
-      setHasInit(true);
-      init({
-        el: "#waline",
-        serverURL: props.walineUrl,
-      });
-    }
-  }, [hasInit, setHasInit]);
   return (
     <Layout
       favicon={props.favicon}
@@ -69,7 +55,7 @@ const Home = (props: IndexProps) => {
         pre={props.pre}
         next={props.next}
       ></PostCard>
-      <div id="waline" className="mt-2"></div>
+      <WaLine serverUrl={props.walineUrl}></WaLine>
     </Layout>
   );
 };

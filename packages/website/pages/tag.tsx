@@ -2,9 +2,7 @@ import Link from "next/link";
 import { getPublicAll } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
-import PageNav from "../components/PageNav";
-import PostCard from "../components/PostCard";
-import { Article } from "../types/article";
+
 interface IndexProps {
   ipcNumber: string;
   since: string;

@@ -1,13 +1,8 @@
 import { getPublicAll } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
-import PageNav from "../components/PageNav";
 import PostCard from "../components/PostCard";
-import { Article } from "../types/article";
-import { init } from "@waline/client";
-
-import "@waline/client/dist/waline.css";
-import { useEffect, useState } from "react";
+import WaLine from "../components/WaLine";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -28,16 +23,6 @@ interface IndexProps {
   walineUrl: string;
 }
 const Home = (props: IndexProps) => {
-  const [hasInit, setHasInit] = useState(false);
-  useEffect(() => {
-    if (!hasInit) {
-      setHasInit(true);
-      init({
-        el: "#waline",
-        serverURL: props.walineUrl,
-      });
-    }
-  }, [hasInit, setHasInit]);
   return (
     <Layout
       title="Mereith's Blog"
@@ -67,7 +52,7 @@ const Home = (props: IndexProps) => {
         content={props.about.content}
         type={"about"}
       ></PostCard>
-      <div id="waline" className="mt-2"></div>
+      <WaLine serverUrl={props.walineUrl} />
     </Layout>
   );
 };
