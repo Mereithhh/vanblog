@@ -5,6 +5,7 @@ import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
 import { Article } from "../../types/article";
+import { hasToc } from "../../utils/hasToc";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -28,7 +29,11 @@ const Home = (props: IndexProps) => {
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
-      sideBar={<Toc content={props.article.content} />}
+      sideBar={
+        hasToc(props.article.content) ? (
+          <Toc content={props.article.content} />
+        ) : null
+      }
     >
       <PostCard
         id={props.article.id}

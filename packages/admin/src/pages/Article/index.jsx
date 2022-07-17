@@ -151,6 +151,10 @@ export default () => {
               return moment(b.createdAt).unix() - moment(a.createdAt).unix();
             });
           }
+        } else {
+          data = data.sort((a, b) => {
+            return moment(b.createdAt).unix() - moment(a.createdAt).unix();
+          });
         }
         // 搜索
 

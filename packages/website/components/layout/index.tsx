@@ -28,7 +28,11 @@ export default function (props: {
             <div className="flex-shrink flex-grow max-w-3xl ">
               {props.children}
             </div>
-            <div className="hidden lg:block flex-shrink-0 flex-grow-0 w-52">
+            <div
+              className={`hidden lg:block flex-shrink-0 flex-grow-0 ${
+                Boolean(props.sideBar) ? "w-52" : ""
+              }`}
+            >
               {props.sideBar}
             </div>
           </div>
