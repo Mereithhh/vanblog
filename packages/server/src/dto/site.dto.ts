@@ -11,4 +11,6 @@ export class SiteInfo {
   payAliPay: string;
   payWechat: string;
   since: Date;
+  baseUrl: string;
+  walineServerUrl: string;
 }

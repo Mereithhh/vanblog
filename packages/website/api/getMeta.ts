@@ -24,6 +24,8 @@ export interface PublicAllProp {
       payAliPay: string;
       payWechat: string;
       since: string;
+      walineServerUrl: string;
+      baseUrl: string;
     };
   };
 }

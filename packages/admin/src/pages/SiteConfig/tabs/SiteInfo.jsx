@@ -112,6 +112,22 @@ export default function () {
           placeholder={'请输入微信打赏图片 Url'}
           rules={[{ required: true, message: '这是必填项' }]}
         ></ProFormText>
+        <ProFormText
+          width="lg"
+          name="baseUrl"
+          required
+          label="网站 Url"
+          placeholder={'请输入网站 Url'}
+          rules={[{ required: true, message: '这是必填项' }]}
+        ></ProFormText>
+        <ProFormText
+          width="lg"
+          name="walineServerUrl"
+          required
+          label="WaLine 服务端 Url"
+          placeholder={'请输入 WaLine 服务端 Url'}
+          rules={[{ required: true, message: '这是必填项' }]}
+        ></ProFormText>
         <ProFormDatePicker width="lg" name="since" label="起始时间日期" />
       </ProForm>
     </ProCard>

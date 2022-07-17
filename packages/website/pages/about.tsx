@@ -25,6 +25,7 @@ interface IndexProps {
     updatedAt: string;
     content: string;
   };
+  walineUrl: string;
 }
 const Home = (props: IndexProps) => {
   const [hasInit, setHasInit] = useState(false);
@@ -33,7 +34,7 @@ const Home = (props: IndexProps) => {
       setHasInit(true);
       init({
         el: "#waline",
-        serverURL: "https://waline.mereith.com",
+        serverURL: props.walineUrl,
       });
     }
   }, [hasInit, setHasInit]);
@@ -82,6 +83,7 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   const about = data.meta.about;
   return {
     props: {
+      walineUrl: siteInfo.walineServerUrl,
       favicon: siteInfo.favicon,
       ipcHref: beianUrl,
       ipcNumber: beianNumber,
