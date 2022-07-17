@@ -35,7 +35,7 @@ export default function (props: { logo: string; categories: string[] }) {
               </Link>
             </li>
             <li className="nav-item">
-              <Link href={"/catelog"}>
+              <Link href={"/category"}>
                 <a>分类</a>
               </Link>
             </li>
@@ -70,7 +70,7 @@ export default function (props: { logo: string; categories: string[] }) {
                 key={catelog}
                 className="flex items-center h-full md:px-2 hover:text-cyan-400 cursor-pointer transition"
               >
-                <Link href={`/catelog/${catelog}`}>
+                <Link href={`/category/${catelog}`}>
                   <a>{catelog}</a>
                 </Link>
               </li>

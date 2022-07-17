@@ -8,7 +8,7 @@ export default function (props: {
   createdAt: Date;
   catelog: string;
   content: string;
-  type: "overview" | "article";
+  type: "overview" | "article" | "about";
 }) {
   function getContent(content: string) {
     if (props.type == "overview") {
@@ -29,15 +29,19 @@ export default function (props: {
       </div>
       <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400">
         <span className="inline-block px-2">
-          {`发表于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`}
+          {props.type != "about"
+            ? `发表于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`
+            : `修改于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`}
         </span>
 
-        <span className="inline-block px-2">
-          {`分类于 `}
-          <Link href={`/category/${props.catelog}`}>
-            <a className="cursor-pointer hover:text-cyan-400">{`${props.catelog}`}</a>
-          </Link>
-        </span>
+        {props.type != "about" && (
+          <span className="inline-block px-2">
+            {`分类于 `}
+            <Link href={`/category/${props.catelog}`}>
+              <a className="cursor-pointer hover:text-cyan-400">{`${props.catelog}`}</a>
+            </Link>
+          </span>
+        )}
         <span className="inline-block px-2"> {`阅读数 ${0}`}</span>
         <span className="inline-block px-2"> {`评论数 ${0}`}</span>
       </div>
@@ -45,13 +49,15 @@ export default function (props: {
         <Markdown content={getContent(props.content)}></Markdown>
       </div>
 
-      <div className="w-full flex justify-center mt-4">
-        <Link href={`/post/${props.id}`}>
-          <a className=" hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded">
-            阅读全文
-          </a>
-        </Link>
-      </div>
+      {props.type == "overview" && (
+        <div className="w-full flex justify-center mt-4">
+          <Link href={`/post/${props.id}`}>
+            <a className=" hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded">
+              阅读全文
+            </a>
+          </Link>
+        </div>
+      )}
 
       <div></div>
     </div>

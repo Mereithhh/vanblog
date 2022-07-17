@@ -1,7 +1,7 @@
 import { Article } from "../../types/article";
 import dayjs from "dayjs";
 import Link from "next/link";
-export default function (props: { articles: Article[] }) {
+export default function (props: { articles: Article[]; showYear?: boolean }) {
   return (
     <div className="space-y-2">
       {props.articles.map((article) => {
@@ -12,7 +12,9 @@ export default function (props: { articles: Article[] }) {
               key={article.id}
             >
               <div className="text-gray-400 text-base group-hover:text-gray-600">
-                {dayjs(article.createdAt).format("MM-DD")}
+                {dayjs(article.createdAt).format(
+                  props.showYear ? "YYYY-MM-DD" : "MM-DD"
+                )}
               </div>
               <div className="ml-4 text-lg text-gray-600 group-hover:text-gray-800">
                 {article.title}

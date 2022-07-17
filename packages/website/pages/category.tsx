@@ -22,7 +22,7 @@ interface IndexProps {
 const Home = (props: IndexProps) => {
   return (
     <Layout
-      title={"时间线"}
+      title="Mereith's Blog"
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
@@ -42,23 +42,22 @@ const Home = (props: IndexProps) => {
       <div className="bg-white border py-4 px-8 md:py-6 md:px-8">
         <div>
           <div className="text-2xl md:text-3xl text-gray-700 text-center">
-            时间线
+            分类
           </div>
           <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light">{`${props.catelogNum} 分类 × ${props.postNum} 文章 × ${props.tagNum} 标签 × ${props.wordTotal} 字`}</div>
         </div>
         <div className="flex flex-col mt-2">
-          {Object.keys(props.articles)
-            .sort((a, b) => parseInt(b) - parseInt(a))
-            .map((eachDate: string) => {
-              return (
-                <TimeLineItem
-                  defaultOpen={true}
-                  key={eachDate}
-                  date={eachDate}
-                  articles={props.articles[eachDate]}
-                ></TimeLineItem>
-              );
-            })}
+          {Object.keys(props.articles).map((key: string) => {
+            return (
+              <TimeLineItem
+                defaultOpen={false}
+                key={key}
+                date={key}
+                articles={props.articles[key]}
+                showYear={true}
+              ></TimeLineItem>
+            );
+          })}
         </div>
       </div>
     </Layout>
@@ -78,13 +77,10 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
     wordTotal = wordTotal + wordCount(a.content);
   });
   const articles = {} as any;
-  const dates = Array.from(
-    new Set(data.articles.map((a) => new Date(a.createdAt).getFullYear()))
-  );
-  for (const date of dates) {
-    const curDateArticles = data.articles
+  for (const category of data.categories) {
+    let curDateArticles = data.articles
       .filter((each) => {
-        return new Date(each.createdAt).getFullYear() == date;
+        return each.category == category;
       })
       .map((each) => {
         return {
@@ -94,7 +90,10 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
           updatedAt: each.updatedAt,
         };
       });
-    articles[String(date)] = curDateArticles;
+    curDateArticles = curDateArticles.sort((a, b) => {
+      return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
+    });
+    articles[String(category)] = curDateArticles;
   }
   return {
     props: {

@@ -2,9 +2,14 @@ import { Article } from "../../types/article";
 import { useState } from "react";
 import ArticleList from "../ArticleList";
 
-export default function (props: { date: string; articles: Article[] }) {
-  const [visible, setVisible] = useState(false);
-  const calMaxHeight = props.articles.length * 40;
+export default function (props: {
+  date: string;
+  articles: Article[];
+  defaultOpen?: boolean;
+  showYear?: boolean;
+}) {
+  const [visible, setVisible] = useState(Boolean(props.defaultOpen));
+  const calMaxHeight = props.articles.length * 50;
   return (
     <div className="mb-4 overflow-hidden">
       <div className="flex items-center mb-4 z-50 ">
@@ -22,7 +27,7 @@ export default function (props: { date: string; articles: Article[] }) {
         </div>
       </div>
       <div
-        className="transition-all z-0 ml-3 "
+        className="transition-all z-0 "
         style={{ maxHeight: visible ? `${calMaxHeight}px` : "0" }}
         // style={{
         //   maxHeight: visible ? "max-content" : "0",
@@ -30,7 +35,10 @@ export default function (props: { date: string; articles: Article[] }) {
         //   transition: "max-height .4s linear",
         // }}
       >
-        <ArticleList articles={props.articles}></ArticleList>
+        <ArticleList
+          articles={props.articles}
+          showYear={props.showYear}
+        ></ArticleList>
       </div>
     </div>
   );

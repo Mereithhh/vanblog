@@ -40,7 +40,7 @@ export default function (props: {
         </div>
         <div className="text-sm text-gray-500 mb-2">{props.desc}</div>
         <div className="flex">
-          <Link href="">
+          <Link href="/timeline">
             <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1">
               <div className="font-bold group-hover:text-cyan-400">
                 {props.postNum}
@@ -50,7 +50,7 @@ export default function (props: {
               </div>
             </a>
           </Link>
-          <Link href="">
+          <Link href="/category">
             <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1">
               <div className="font-bold group-hover:text-cyan-400">
                 {props.catelogNum}
@@ -60,7 +60,7 @@ export default function (props: {
               </div>
             </a>
           </Link>
-          <Link href="">
+          <Link href="/tag">
             <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1">
               <div className="group-hover:text-cyan-400 font-bold">
                 {props.tagNum}

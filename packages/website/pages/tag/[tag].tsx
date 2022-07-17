@@ -1,9 +1,9 @@
-import { getPublicAll } from "../api/getMeta";
-import AuthorCard from "../components/AuthorCard";
-import Layout from "../components/layout";
-import TimeLineItem from "../components/TimeLineItem";
-import { Article } from "../types/article";
-import { wordCount } from "../utils/wordCount";
+import { getPublicAll } from "../../api/getMeta";
+import AuthorCard from "../../components/AuthorCard";
+import Layout from "../../components/layout";
+import TimeLineItem from "../../components/TimeLineItem";
+import { Article } from "../../types/article";
+import { wordCount } from "../../utils/wordCount";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -18,11 +18,13 @@ interface IndexProps {
   tagNum: number;
   articles: Record<string, Article[]>;
   wordTotal: number;
+  curTag: string;
+  curNum: number;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
-      title={"时间线"}
+      title={props.curTag}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
@@ -42,9 +44,9 @@ const Home = (props: IndexProps) => {
       <div className="bg-white border py-4 px-8 md:py-6 md:px-8">
         <div>
           <div className="text-2xl md:text-3xl text-gray-700 text-center">
-            时间线
+            {props.curTag}
           </div>
-          <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light">{`${props.catelogNum} 分类 × ${props.postNum} 文章 × ${props.tagNum} 标签 × ${props.wordTotal} 字`}</div>
+          <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light">{`${props.curNum} 文章 × ${props.wordTotal} 字`}</div>
         </div>
         <div className="flex flex-col mt-2">
           {Object.keys(props.articles)
@@ -66,7 +68,24 @@ const Home = (props: IndexProps) => {
 };
 
 export default Home;
-export async function getStaticProps(): Promise<{ props: IndexProps }> {
+export async function getStaticPaths() {
+  const data = await getPublicAll();
+
+  const paths = data.tags.map((tag) => ({
+    params: {
+      tag: tag,
+    },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+export async function getStaticProps({
+  params,
+}: any): Promise<{ props: IndexProps }> {
+  const curTag = params.tag;
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
   const { beianUrl, beianNumber, since, siteLogo } = siteInfo;
@@ -74,15 +93,20 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
   let wordTotal = 0;
-  data.articles.forEach((a) => {
+
+  const articlesInThisTag = data.articles.filter((item) => {
+    return item.tags.includes(curTag);
+  });
+  const curNum = articlesInThisTag.length;
+  articlesInThisTag.forEach((a) => {
     wordTotal = wordTotal + wordCount(a.content);
   });
   const articles = {} as any;
   const dates = Array.from(
-    new Set(data.articles.map((a) => new Date(a.createdAt).getFullYear()))
+    new Set(articlesInThisTag.map((a) => new Date(a.createdAt).getFullYear()))
   );
   for (const date of dates) {
-    const curDateArticles = data.articles
+    const curDateArticles = articlesInThisTag
       .filter((each) => {
         return new Date(each.createdAt).getFullYear() == date;
       })
@@ -111,6 +135,8 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
       tagNum: tagNum,
       catelogNum: catelogNum,
       articles: articles,
+      curTag,
+      curNum,
     },
   };
 }
