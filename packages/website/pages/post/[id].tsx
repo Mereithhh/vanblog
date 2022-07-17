@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { getPublicAll } from "../../api/getMeta";
 import AuthorCard from "../../components/AuthorCard";
 import Layout from "../../components/layout";
@@ -7,6 +8,7 @@ import Reward from "../../components/Reward";
 import Toc from "../../components/Toc";
 import { Article } from "../../types/article";
 import { hasToc } from "../../utils/hasToc";
+import { init } from "@waline/client";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -27,6 +29,16 @@ interface IndexProps {
   favicon: string;
 }
 const Home = (props: IndexProps) => {
+  const [hasInit, setHasInit] = useState(false);
+  useEffect(() => {
+    if (!hasInit) {
+      setHasInit(true);
+      init({
+        el: "#waline",
+        serverURL: "https://waline.mereith.com",
+      });
+    }
+  }, [hasInit, setHasInit]);
   return (
     <Layout
       favicon={props.favicon}
@@ -56,6 +68,7 @@ const Home = (props: IndexProps) => {
         pre={props.pre}
         next={props.next}
       ></PostCard>
+      <div id="waline" className="mt-2"></div>
     </Layout>
   );
 };

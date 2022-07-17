@@ -66,3 +66,10 @@
   background: #ccc;
   -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
+:root {
+  --waline-bgcolor-light: #fff !important;
+}
+body .wl-panel {
+  margin: 0.5em 0;
+  border-radius: 0;
+}
