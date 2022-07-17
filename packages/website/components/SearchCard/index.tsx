@@ -1,11 +1,31 @@
-import { useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { searchArticles, searchWithApiRoute } from "../../api/search";
+import { useDebounce } from "react-use";
+
 export default function (props: {
   visible: boolean;
   setVisible: (v: boolean) => void;
 }) {
+  const [result, setResult] = useState<any>([]);
+  const [search, setSearch] = useState("");
+  const onSearch = async (search: string) => {
+    const resultFromServer = await searchWithApiRoute(search);
+    console.log(resultFromServer);
+  };
+  useDebounce(
+    () => {
+      if (search.trim() !== "") {
+        onSearch(search);
+      }
+    },
+    500,
+    [search]
+  );
   const innerRef = useRef(null);
-  const inputRef = useRef(null);
+  const showClear = useMemo(() => {
+    return search.trim() !== "";
+  }, [search]);
   return (
     <div
       className="fixed w-full h-full top-0 left-0 right-0 bottom-0  justify-center items-center flex"
@@ -38,7 +58,11 @@ export default function (props: {
         <div className="flex items-center">
           <Image src="/zoom.svg" width={24} height={24}></Image>
           <input
+            value={search}
             autoFocus={true}
+            onChange={(ev) => {
+              setSearch(ev.currentTarget.value);
+            }}
             placeholder={"搜索内容"}
             className="w-full ml-2 text-base "
             style={{
@@ -47,8 +71,25 @@ export default function (props: {
               border: "none",
               outline: "medium",
             }}
-            ref={inputRef}
           ></input>
+
+          <div
+            className="transition-all transform hover:scale-125"
+            style={{
+              visibility: showClear ? "visible" : "hidden",
+            }}
+            onClick={() => {
+              setSearch("");
+            }}
+          >
+            <Image
+              src="/clear.svg"
+              width={20}
+              height={20}
+              className="cursor-pointer"
+              color="#aaa"
+            ></Image>
+          </div>
         </div>
         <hr className="my-2"></hr>
       </div>

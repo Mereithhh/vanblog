@@ -17,6 +17,7 @@
     "react-dom": "18.1.0",
     "react-markdown": "^8.0.3",
     "react-syntax-highlighter": "^15.5.0",
+    "react-use": "^17.4.0",
     "remark-gfm": "^3.0.1",
     "sweetalert2": "^11.4.23"
   },
