@@ -9,9 +9,17 @@ export default function (props: {
 }) {
   const [result, setResult] = useState<any>([]);
   const [search, setSearch] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [typing, setTyping] = useState(false);
+  const innerRef = useRef(null);
+  const inputRef = useRef(null);
   const onSearch = async (search: string) => {
+    setTyping(false);
+    setLoading(true);
     const resultFromServer = await searchWithApiRoute(search);
     console.log(resultFromServer);
+    setResult(resultFromServer);
+    setLoading(false);
   };
   useDebounce(
     () => {
@@ -22,10 +30,42 @@ export default function (props: {
     500,
     [search]
   );
-  const innerRef = useRef(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      (inputRef.current as any).focus();
+    }
+  }, [inputRef]);
+
   const showClear = useMemo(() => {
     return search.trim() !== "";
   }, [search]);
+  const renderResult = () => {
+    let text = "";
+    if (loading) {
+      text = "搜索中...";
+    } else {
+      if (search.trim() == "") {
+        text = "请输入并搜索";
+      } else {
+        // 有数字，有结果
+        if (result.length) {
+          text = "有结果";
+        } else {
+          // 可能是暂无结果或者输入中
+          if (typing) {
+            text = "输入中";
+          } else {
+            text = "暂无结果";
+          }
+        }
+      }
+    }
+    return (
+      <div className="mt-16 text-center">
+        <div className="text-gray-600">{text}</div>
+      </div>
+    );
+  };
   return (
     <div
       className="fixed w-full h-full top-0 left-0 right-0 bottom-0  justify-center items-center flex"
@@ -58,10 +98,14 @@ export default function (props: {
         <div className="flex items-center">
           <Image src="/zoom.svg" width={24} height={24}></Image>
           <input
+            ref={inputRef}
             value={search}
-            autoFocus={true}
             onChange={(ev) => {
+              setTyping(true);
               setSearch(ev.currentTarget.value);
+              if (ev.currentTarget.value.trim() == "") {
+                setResult([]);
+              }
             }}
             placeholder={"搜索内容"}
             className="w-full ml-2 text-base "
@@ -80,6 +124,7 @@ export default function (props: {
             }}
             onClick={() => {
               setSearch("");
+              setResult([]);
             }}
           >
             <Image
@@ -92,6 +137,7 @@ export default function (props: {
           </div>
         </div>
         <hr className="my-2"></hr>
+        <div className="">{renderResult()}</div>
       </div>
     </div>
   );
