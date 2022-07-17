@@ -53,7 +53,7 @@ const Home = (props: IndexProps) => {
               return (
                 <TimeLineItem
                   defaultOpen={true}
-                  key={eachDate}
+                  key={Math.floor(Math.random() * 1000000)}
                   date={eachDate}
                   articles={props.articles[eachDate]}
                 ></TimeLineItem>
@@ -82,7 +82,7 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
     new Set(data.articles.map((a) => new Date(a.createdAt).getFullYear()))
   );
   for (const date of dates) {
-    const curDateArticles = data.articles
+    let curDateArticles = data.articles
       .filter((each) => {
         return new Date(each.createdAt).getFullYear() == date;
       })
@@ -94,6 +94,10 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
           updatedAt: each.updatedAt,
         };
       });
+    curDateArticles = curDateArticles.sort(
+      (a, b) =>
+        new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
+    );
     articles[String(date)] = curDateArticles;
   }
   return {

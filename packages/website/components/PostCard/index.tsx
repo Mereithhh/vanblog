@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import Link from "next/link";
 import Markdown from "../Markdown";
+import Reward from "../Reward";
 
 export default function (props: {
   id: number;
@@ -9,6 +10,11 @@ export default function (props: {
   catelog: string;
   content: string;
   type: "overview" | "article" | "about";
+  pay?: string[];
+  author?: string;
+  tags?: string[];
+  next?: { id: number; title: string };
+  pre?: { id: number; title: string };
 }) {
   function getContent(content: string) {
     if (props.type == "overview") {
@@ -24,7 +30,7 @@ export default function (props: {
   }
   return (
     <div className="bg-white border py-4 px-3 md:py-6 md:px-5">
-      <div className="text-lg md:text-xl text-center font-medium mb-2">
+      <div className="text-lg md:text-xl text-center font-medium mb-2 mt-2">
         {props.title}
       </div>
       <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400">
@@ -58,8 +64,45 @@ export default function (props: {
           </Link>
         </div>
       )}
+      {props.type == "article" && props.pay && (
+        <Reward
+          aliPay={props.pay[0]}
+          weChatPay={props.pay[1]}
+          author={props.author as any}
+          id={props.id}
+        ></Reward>
+      )}
 
-      <div></div>
+      {props.type == "article" && props.tags && (
+        <div className="mt-4">
+          <div className="text-sm  text-gray-500 flex justify-center space-x-2 select-none ">
+            {props.tags.map((tag) => (
+              <div key={Math.floor(Math.random() * 100000)}>
+                <Link href={`/tag/${tag}`}>
+                  <a className=" border-b border-white hover:border-gray-500">{`#${tag}`}</a>
+                </Link>
+              </div>
+            ))}
+          </div>
+          <hr className="mt-3" />
+          <div className="flex justify-between text-sm mt-2 whitespace-nowrap overflow-hidden ">
+            <div>
+              {props.pre?.id && (
+                <Link href={`/post/${props.pre?.id}`}>
+                  <a className="border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800">{`< ${props.pre?.title}`}</a>
+                </Link>
+              )}
+            </div>
+            <div>
+              {props.next?.id && (
+                <Link href={`/post/${props.next?.id}`}>
+                  <a className="border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800">{`${props.next?.title} >`}</a>
+                </Link>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

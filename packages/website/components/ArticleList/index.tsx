@@ -6,7 +6,7 @@ export default function (props: { articles: Article[]; showYear?: boolean }) {
     <div className="space-y-2">
       {props.articles.map((article) => {
         return (
-          <Link href={`/post/${article.id}`}>
+          <Link href={`/post/${article.id}`} key={article.id}>
             <a
               className="flex items-center border-b pb-1 border-dashed cursor-pointer group border-gray-200 hover:border-gray-400"
               key={article.id}
