@@ -6,6 +6,7 @@ export default function (props: {
   current: number;
   base: string;
   more: string;
+  pageSize?: number;
 }) {
   const router = useRouter();
   const [page, setPage] = useState(props.current);
@@ -14,7 +15,7 @@ export default function (props: {
       <Pagination
         className="text-center"
         total={props.total}
-        defaultPageSize={5}
+        defaultPageSize={props.pageSize || 5}
         current={page}
         onChange={(p) => {
           if (p == props.current) {
