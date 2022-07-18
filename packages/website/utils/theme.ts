@@ -5,9 +5,11 @@ export const initTheme = () => {
     if (new Date().getHours() > 17) {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
+      return "dark";
     } else {
       document.documentElement.classList.remove("dark");
       document.documentElement.classList.add("light");
+      return "light";
     }
   } else {
     if (
