@@ -47,6 +47,12 @@
     fill: rgb(158, 158, 158);
     color: rgb(158, 158, 158);
   }
+  .text-dark-r {
+    color: #26282c;
+  }
+  .bg-dark-light {
+    background-color: rgb(158, 158, 158);
+  }
   .text-dark-light {
     color: rgb(153, 153, 153);
   }

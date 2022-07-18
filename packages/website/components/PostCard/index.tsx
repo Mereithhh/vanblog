@@ -73,9 +73,9 @@ export default function (props: {
         </div>
 
         {props.type == "overview" && (
-          <div className="w-full flex justify-center mt-4">
+          <div className="w-full flex justify-center mt-4 ">
             <Link href={`/post/${props.id}`}>
-              <a className=" hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded">
+              <a className=" dark:bg-dark dark:hover:bg-dark-light dark:hover:text-dark-r dark:border-dark dark:text-dark hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded">
                 阅读全文
               </a>
             </Link>
