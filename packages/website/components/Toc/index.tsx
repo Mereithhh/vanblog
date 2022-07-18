@@ -1,5 +1,4 @@
 import MarkdownNavbar from "markdown-navbar";
-// The default style of markdown-navbar should be imported additionally
 import { useEffect } from "react";
 import Headroom from "headroom.js";
 export default function (props: { content: string }) {
@@ -20,7 +19,7 @@ export default function (props: { content: string }) {
   });
   return (
     <div className="fixed" id="author-card">
-      <div className="bg-white w-60 border ml-2">
+      <div className="bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark">
         <MarkdownNavbar source={props.content} headingTopOffset={56} />
       </div>
     </div>

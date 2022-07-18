@@ -29,45 +29,47 @@ export default function (props: {
   });
   return (
     <div id="author-card" className="fixed ">
-      <div className="w-52 flex flex-col justify-center items-center bg-white py-6 px-10 border ml-2 ">
+      <div className="w-52 flex flex-col justify-center items-center bg-white py-6 px-10 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
         <Image
-          className="rounded-full hover:rotate-180 duration-500 transition-all"
+          className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
           src={props.logo}
           width={120}
           height={120}
         ></Image>
 
-        <div className="mt-2 font-semibold text-gray-600 mb-2">
+        <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">
           {props.author}
         </div>
-        <div className="text-sm text-gray-500 mb-2">{props.desc}</div>
+        <div className="text-sm text-gray-500 mb-2 dark:text-dark-light">
+          {props.desc}
+        </div>
         <div className="flex">
           <Link href="/timeline">
-            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1">
+            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
               <div className="font-bold group-hover:text-cyan-400">
                 {props.postNum}
               </div>
-              <div className="group-hover:text-cyan-400 text-gray-500">
+              <div className="group-hover:text-cyan-400 text-gray-500 dark:text-dark-light">
                 日志
               </div>
             </a>
           </Link>
           <Link href="/category">
-            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1">
+            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
               <div className="font-bold group-hover:text-cyan-400">
                 {props.catelogNum}
               </div>
-              <div className="group-hover:text-cyan-400 text-gray-500">
+              <div className="group-hover:text-cyan-400 text-gray-500 dark:text-dark-light">
                 分类
               </div>
             </a>
           </Link>
           <Link href="/tag">
-            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1">
+            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
               <div className="group-hover:text-cyan-400 font-bold">
                 {props.tagNum}
               </div>
-              <div className=" group-hover:text-cyan-400 text-gray-500">
+              <div className=" group-hover:text-cyan-400 text-gray-500 dark:text-dark-light">
                 标签
               </div>
             </a>
