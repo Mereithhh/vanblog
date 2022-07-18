@@ -53,8 +53,8 @@ const Home = (props: IndexProps) => {
         catelog={"about"}
         content={props.about.content}
         type={"about"}
+        walineServerUrl={props.walineServerUrl}
       ></PostCard>
-      <WaLine serverUrl={props.walineServerUrl} />
     </Layout>
   );
 };

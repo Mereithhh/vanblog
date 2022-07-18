@@ -2,8 +2,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
-import { config } from "../../utils/loadConfig";
-import { useRouter } from "next/router";
 export default function (props: {
   aliPay: string;
   weChatPay: string;
@@ -12,7 +10,6 @@ export default function (props: {
 }) {
   const [show, setShow] = useState(false);
   const [url, setUrl] = useState("");
-  const router = useRouter();
   useEffect(() => {
     setUrl(window.location.href);
   }, [setUrl]);

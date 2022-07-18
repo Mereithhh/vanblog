@@ -56,8 +56,8 @@ const Home = (props: IndexProps) => {
         tags={props.article.tags}
         pre={props.pre}
         next={props.next}
+        walineServerUrl={props.walineServerUrl}
       ></PostCard>
-      <WaLine serverUrl={props.walineServerUrl}></WaLine>
     </Layout>
   );
 };

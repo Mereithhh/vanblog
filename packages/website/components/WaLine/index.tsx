@@ -1,11 +1,11 @@
 import "@waline/client/dist/waline.css";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { init } from "@waline/client";
-export default function (props: { serverUrl: string }) {
-  const [hasInit, setHasInit] = useState(false);
+export default function (props: { serverUrl: string; visible: boolean }) {
+  const { current } = useRef<any>({ hasInit: false });
   useEffect(() => {
-    if (!hasInit) {
-      setHasInit(true);
+    if (!current.hasInit) {
+      current.hasInit = true;
       init({
         el: "#waline",
         serverURL: props.serverUrl,
@@ -13,6 +13,14 @@ export default function (props: { serverUrl: string }) {
         pageview: true,
       });
     }
-  }, [hasInit, setHasInit]);
-  return <div id="waline" className="mt-2"></div>;
+  }, [current]);
+  return (
+    <div
+      id="waline"
+      className="mt-2"
+      style={{
+        display: props.visible ? "block" : "none",
+      }}
+    ></div>
+  );
 }
