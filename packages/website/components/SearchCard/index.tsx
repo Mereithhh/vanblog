@@ -70,7 +70,7 @@ export default function (props: {
     } else {
       return (
         <div className="mt-16 text-center">
-          <div className="text-gray-600">{text}</div>
+          <div className="text-gray-600 dark:text-dark select-none">{text}</div>
         </div>
       );
     }
@@ -96,7 +96,7 @@ export default function (props: {
     >
       <div
         ref={innerRef}
-        className="bg-white w-2/3  p-4 rounded-xl card-shadow dark:card-shadow-dark transition-all"
+        className="bg-white w-2/3  p-4 rounded-xl card-shadow dark:card-shadow-dark transition-all dark:bg-dark"
         style={{
           minHeight: "280px",
           minWidth: 400,
@@ -104,8 +104,24 @@ export default function (props: {
           transform: props.visible ? "scale(100%)" : "scale(0)",
         }}
       >
-        <div className="flex items-center">
-          <Image src="/zoom.svg" width={24} height={24}></Image>
+        <div className="flex items-center dark:text-dark">
+          <svg
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="2305"
+            width="24"
+            height="24"
+          >
+            <path
+              d="M789.804097 737.772047 742.865042 784.699846 898.765741 940.600545 945.704796 893.672746Z"
+              p-id="2306"
+            ></path>
+            <path
+              d="M456.92259 82.893942c-209.311143 0-379.582131 170.282245-379.582131 379.582131s170.270988 379.570875 379.582131 379.570875c209.287607 0 379.558595-170.270988 379.558595-379.570875S666.210197 82.893942 456.92259 82.893942zM770.128989 462.477097c0 172.721807-140.508127 313.229934-313.206398 313.229934-172.720783 0-313.229934-140.508127-313.229934-313.229934s140.508127-313.229934 313.229934-313.229934C629.620861 149.247162 770.128989 289.75529 770.128989 462.477097z"
+              p-id="2307"
+            ></path>
+          </svg>
           <input
             ref={inputRef}
             value={search}
@@ -123,6 +139,7 @@ export default function (props: {
               appearance: "none",
               border: "none",
               outline: "medium",
+              backgroundColor: "inherit",
             }}
           ></input>
 
@@ -136,17 +153,28 @@ export default function (props: {
               setResult([]);
             }}
           >
-            <Image
-              src="/clear.svg"
-              width={20}
-              height={20}
+            <svg
+              viewBox="0 0 1024 1024"
+              version="1.1"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="inherit"
+              p-id="2258"
+              width="20"
+              height="20"
               className="cursor-pointer"
-              color="#aaa"
-            ></Image>
+            >
+              <path
+                d="M512 39.384615C250.092308 39.384615 39.384615 250.092308 39.384615 512s210.707692 472.615385 472.615385 472.615385 472.615385-210.707692 472.615385-472.615385S773.907692 39.384615 512 39.384615z m96.492308 488.369231l153.6 153.6c7.876923 7.876923 7.876923 19.692308 0 27.569231l-55.138462 55.138461c-7.876923 7.876923-19.692308 7.876923-27.569231 0L525.784615 610.461538c-7.876923-7.876923-19.692308-7.876923-27.56923 0l-153.6 153.6c-7.876923 7.876923-19.692308 7.876923-27.569231 0L261.907692 708.923077c-7.876923-7.876923-7.876923-19.692308 0-27.569231l153.6-153.6c7.876923-7.876923 7.876923-19.692308 0-27.569231l-155.56923-155.56923c-7.876923-7.876923-7.876923-19.692308 0-27.569231l55.138461-55.138462c7.876923-7.876923 19.692308-7.876923 27.569231 0l155.569231 155.569231c7.876923 7.876923 19.692308 7.876923 27.56923 0l153.6-153.6c7.876923-7.876923 19.692308-7.876923 27.569231 0l55.138462 55.138462c7.876923 7.876923 7.876923 19.692308 0 27.56923l-153.6 153.6c-5.907692 7.876923-5.907692 19.692308 0 27.569231z"
+                p-id="2259"
+              ></path>
+            </svg>
           </div>
         </div>
-        <hr className="my-2"></hr>
-        <div className="" style={{ maxHeight: 400, overflowY: "auto" }}>
+        <hr className="my-2 dark:border-hr-dark"></hr>
+        <div
+          className="dark:text-dark"
+          style={{ maxHeight: 400, overflowY: "auto" }}
+        >
           {renderResult()}
         </div>
       </div>

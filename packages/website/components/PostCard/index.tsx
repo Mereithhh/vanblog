@@ -101,7 +101,7 @@ export default function (props: {
                 </div>
               ))}
             </div>
-            <hr className="mt-3 dark:border-nav-dark" />
+            <hr className="mt-3 dark:border-hr-dark" />
             <div className="flex justify-between text-sm mt-2 whitespace-nowrap overflow-hidden ">
               <div>
                 {props.pre?.id && (

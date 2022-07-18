@@ -34,6 +34,9 @@
   .card-shadow-dark {
     box-shadow: 0 2px 8px rgb(0, 0, 0, 0.3);
   }
+  .border-hr-dark {
+    border-color: rgb(50, 50, 50);
+  }
   .filter-dark {
     filter: grayscale(0.2);
   }
