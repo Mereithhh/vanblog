@@ -22,11 +22,13 @@ interface IndexProps {
     content: string;
   };
   walineServerUrl: string;
+  siteName: string;
+  siteDesc: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
-      title="Mereith's Blog"
+      title="关于我"
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
@@ -34,6 +36,8 @@ const Home = (props: IndexProps) => {
       categories={props.categories}
       favicon={props.favicon}
       walineServerUrl={props.walineServerUrl}
+      siteDesc={props.siteDesc}
+      siteName={props.siteName}
       sideBar={
         <AuthorCard
           catelogNum={props.catelogNum}

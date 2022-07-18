@@ -23,6 +23,8 @@ interface IndexProps {
   favicon: string;
   curNum: number;
   walineServerUrl: string;
+  siteName: string;
+  siteDesc: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -34,6 +36,8 @@ const Home = (props: IndexProps) => {
       logo={props.logo}
       categories={props.categories}
       favicon={props.favicon}
+      siteDesc={props.siteDesc}
+      siteName={props.siteName}
       walineServerUrl={props.walineServerUrl}
       sideBar={
         <AuthorCard

@@ -18,11 +18,14 @@ export default function (props: {
   sideBar: any;
   favicon: string;
   walineServerUrl: string;
+  siteName: string;
+  siteDesc: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
       <NavBar
+        siteName={props.siteName}
         logo={props.logo}
         categories={props.categories}
         isOpen={isOpen}
@@ -46,35 +49,35 @@ export default function (props: {
             setIsOpen(state.isOpen);
           }}
         >
-          <ul className=" sm:flex h-full items-center  text-sm text-gray-600 hidden">
-            <li className="side-bar-item ">
+          <ul className=" sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed">
+            <li className="side-bar-item">
               <Link href={"/"}>
-                <a>首页</a>
+                <a className="w-full inline-block">主页</a>
               </Link>
             </li>
             <li className="side-bar-item">
               <Link href={"/tag"}>
-                <a>标签</a>
+                <a className="w-full inline-block">标签</a>
               </Link>
             </li>
             <li className="side-bar-item">
               <Link href={"/category"}>
-                <a>分类</a>
+                <a className="w-full inline-block">分类</a>
               </Link>
             </li>
             <li className="side-bar-item">
               <Link href={"/timeline"}>
-                <a>时间线</a>
+                <a className="w-full inline-block">时间线</a>
               </Link>
             </li>
             <li className="side-bar-item">
               <Link href={"https://tools.mereith.com"} target="_blank">
-                <a>工具站</a>
+                <a className="w-full inline-block">工具站</a>
               </Link>
             </li>
             <li className="side-bar-item">
               <Link href={"/about"}>
-                <a>关于</a>
+                <a className="w-full inline-block">关于</a>
               </Link>
             </li>
           </ul>

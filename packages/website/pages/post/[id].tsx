@@ -25,6 +25,8 @@ interface IndexProps {
   next: { id: number; title: string };
   favicon: string;
   walineServerUrl: string;
+  siteName: string;
+  siteDesc: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -37,6 +39,8 @@ const Home = (props: IndexProps) => {
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
+      siteDesc={props.siteDesc}
+      siteName={props.siteName}
       sideBar={
         hasToc(props.article.content) ? (
           <Toc content={props.article.content} />

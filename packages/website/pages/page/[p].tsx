@@ -21,18 +21,22 @@ interface IndexProps {
   currPage: number;
   favicon: string;
   walineServerUrl: string;
+  siteName: string;
+  siteDesc: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
       walineServerUrl={props.walineServerUrl}
       favicon={props.favicon}
-      title="Mereith's Blog"
+      title={props.siteName}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
+      siteDesc={props.siteDesc}
+      siteName={props.siteName}
       sideBar={
         <AuthorCard
           catelogNum={props.catelogNum}

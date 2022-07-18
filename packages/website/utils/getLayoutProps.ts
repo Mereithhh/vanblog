@@ -9,5 +9,7 @@ export function getLayoutProps(siteInfo: any) {
     author: siteInfo.author,
     desc: siteInfo.authorDesc,
     authorLogo: siteInfo.authorLogo,
+    siteName: siteInfo.siteName,
+    siteDesc: siteInfo.siteDesc,
   };
 }

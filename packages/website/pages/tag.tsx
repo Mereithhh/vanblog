@@ -19,6 +19,8 @@ interface IndexProps {
   tags: string[];
   favicon: string;
   walineServerUrl: string;
+  siteName: string;
+  siteDesc: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -29,6 +31,8 @@ const Home = (props: IndexProps) => {
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
       logo={props.logo}
+      siteDesc={props.siteDesc}
+      siteName={props.siteName}
       categories={props.categories}
       walineServerUrl={props.walineServerUrl}
       sideBar={

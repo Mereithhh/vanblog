@@ -9,6 +9,7 @@ export default function (props: {
   categories: string[];
   setOpen: (open: boolean) => void;
   isOpen: boolean;
+  siteName: string;
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
@@ -72,7 +73,9 @@ export default function (props: {
           </div>
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow ">
-            <div className="block sm:hidden" id="outer-container"></div>
+            <div className=" sm:hidden flex-grow text-center  flex items-center justify-center select-none">
+              <div>{props.siteName}</div>
+            </div>
             <ul className=" sm:flex h-full items-center  text-sm text-gray-600 hidden">
               <li className="nav-item ">
                 <Link href={"/"}>
