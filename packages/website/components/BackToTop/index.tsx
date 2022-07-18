@@ -45,7 +45,7 @@ const BackToTopBtn: React.FC<BackToTopBtnProps> = (props) => {
       {visibleBackTopBtn && (
         <div
           onClick={backToTopHandle}
-          className={`${style.backToTop}  rounded-xl transform  transition-all  dark:bg-dark hover:scale-110 fill-dark dark:text-dark`}
+          className={`${style.backToTop} dark:nav-shadow-dark rounded-xl transform  transition-all  dark:bg-dark hover:scale-110 fill-dark dark:text-dark`}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

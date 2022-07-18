@@ -46,6 +46,10 @@ Note: Beware of modifying this element as it can break the animations - you shou
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
   z-index: 1002;
 }
+.dark .bm-menu {
+  background: #26282c;
+  box-shadow: 2px 0 8px rgba(0, 0, 0, 0.3);
+}
 
 /* Morph shape necessary with bubble or elastic */
 .bm-morph-shape {

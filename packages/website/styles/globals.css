@@ -50,6 +50,12 @@
   .border-nav-dark {
     border-color: #26282c;
   }
+  .border-dark-2 {
+    border-color: #1b1c1f;
+  }
+  .bg-dark-2 {
+    background-color: #1b1c1f;
+  }
   .border-dark {
     border-color: rgb(158, 158, 158);
   }

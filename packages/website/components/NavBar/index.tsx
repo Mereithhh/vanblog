@@ -56,6 +56,7 @@ export default function (props: {
                   p-id="1340"
                   width="24"
                   height="24"
+                  className="dark:text-dark"
                 >
                   <path
                     d="M904 160H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 784H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 472H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8z"
@@ -64,16 +65,13 @@ export default function (props: {
                 </svg>
               </span>
             </div>
-            <Image
-              src={props.logo}
-              width={52}
-              height={52}
-              className="invisible sm:visible"
-            ></Image>
+            <div className="hidden sm:block">
+              <Image src={props.logo} width={52} height={52}></Image>
+            </div>
           </div>
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow ">
-            <div className=" sm:hidden flex-grow text-center  flex items-center justify-center select-none">
+            <div className=" sm:hidden flex-grow text-center  flex items-center justify-center select-none dark:text-dark">
               <div>{props.siteName}</div>
             </div>
             <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
