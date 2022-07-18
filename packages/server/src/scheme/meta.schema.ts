@@ -27,6 +27,9 @@ export class Meta extends Document {
   @Prop()
   siteInfo: SiteInfo;
 
+  @Prop({ default: 0 })
+  viewer: number;
+
   @Prop({ default: [] })
   categories: string[];
 }

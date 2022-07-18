@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
@@ -33,6 +33,16 @@ export class PublicController {
       data: {
         total: data.length,
         data: this.articleProvider.toSearchResult(data),
+      },
+    };
+  }
+  @Post('/viewer')
+  async addViewer() {
+    const data = await this.metaProvider.addViewer();
+    return {
+      statusCode: 200,
+      data: {
+        data,
       },
     };
   }

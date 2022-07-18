@@ -10,7 +10,15 @@ import { LinkItem } from 'src/dto/link.dto';
 export class MetaProvider {
   constructor(@InjectModel('Meta') private metaModel: Model<MetaDocument>) {}
 
-  async getAll(): Promise<any> {
+  async addViewer() {
+    const old = await this.getAll();
+    const ov = old.viewer || 0;
+    const newViewer = ov + 1;
+    await this.update({ viewer: newViewer });
+    return newViewer;
+  }
+
+  async getAll() {
     return this.metaModel.findOne().exec();
   }
 

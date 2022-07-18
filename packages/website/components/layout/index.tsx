@@ -2,6 +2,7 @@ import Head from "next/head";
 
 import { getRunTimeOfDays } from "../../utils/getRunTile";
 import NavBar from "../NavBar";
+import Viewer from "../Viewer";
 export default function (props: {
   title?: string;
   children: any;
@@ -65,9 +66,9 @@ export default function (props: {
           </p>
           <p>本站居然运行了 {getRunTimeOfDays(props.since)} 天</p>
           <p>
-            居然有 &nbsp;
-            {/* <span className="waline-pageview-count" data-path="" /> */}
-            &nbsp; 人访问了本站
+            全站访问量 &nbsp;
+            <Viewer></Viewer>
+            {/* <span className="waline-pageview-count" data-path="/*" /> */}
           </p>
         </footer>
       </div>
