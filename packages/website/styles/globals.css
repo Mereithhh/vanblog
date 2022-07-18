@@ -156,3 +156,7 @@ body .wl-panel {
 .dark .swal2-title {
   color: rgb(158, 158, 158);
 }
+.wl-git-popup input {
+  background-color: inherit;
+  outline: none;
+}
