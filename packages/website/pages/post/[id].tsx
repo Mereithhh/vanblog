@@ -4,6 +4,7 @@ import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
 import WaLine from "../../components/WaLine";
 import { Article } from "../../types/article";
+import { getLayoutProps } from "../../utils/getLayoutProps";
 import { hasToc } from "../../utils/hasToc";
 interface IndexProps {
   ipcNumber: string;
@@ -23,11 +24,12 @@ interface IndexProps {
   pre: { id: number; title: string };
   next: { id: number; title: string };
   favicon: string;
-  walineUrl: string;
+  walineServerUrl: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      walineServerUrl={props.walineServerUrl}
       favicon={props.favicon}
       title={props.article.title}
       ipcNumber={props.ipcNumber}
@@ -55,7 +57,7 @@ const Home = (props: IndexProps) => {
         pre={props.pre}
         next={props.next}
       ></PostCard>
-      <WaLine serverUrl={props.walineUrl}></WaLine>
+      <WaLine serverUrl={props.walineServerUrl}></WaLine>
     </Layout>
   );
 };
@@ -83,7 +85,6 @@ export async function getStaticProps({
   const id = parseInt(params.id);
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
-  const { beianUrl, beianNumber, since, siteLogo } = siteInfo;
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
@@ -106,17 +107,9 @@ export async function getStaticProps({
   }
   return {
     props: {
-      walineUrl: siteInfo.walineServerUrl,
+      ...getLayoutProps(siteInfo),
       curId: id,
-      ipcHref: beianUrl,
-      ipcNumber: beianNumber,
-      since: since,
-      logo: siteLogo,
-      favicon: siteInfo.favicon,
       categories: data.categories,
-      author: siteInfo.author,
-      desc: siteInfo.authorDesc,
-      authorLogo: siteInfo.authorLogo,
       postNum: postNum,
       tagNum: tagNum,
       catelogNum: catelogNum,

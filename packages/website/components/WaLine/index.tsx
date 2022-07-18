@@ -9,6 +9,8 @@ export default function (props: { serverUrl: string }) {
       init({
         el: "#waline",
         serverURL: props.serverUrl,
+        comment: true,
+        pageview: true,
       });
     }
   }, [hasInit, setHasInit]);

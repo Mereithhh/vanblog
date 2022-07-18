@@ -1,8 +1,9 @@
 import Head from "next/head";
-import { useEffect } from "react";
+
 import { getRunTimeOfDays } from "../../utils/getRunTile";
 import NavBar from "../NavBar";
-
+import { useEffect, useState } from "react";
+import { pageviewCount } from "@waline/client";
 export default function (props: {
   title?: string;
   children: any;
@@ -13,7 +14,18 @@ export default function (props: {
   categories: string[];
   sideBar: any;
   favicon: string;
+  walineServerUrl: string;
 }) {
+  // const [hasInit, setHasInit] = useState(false);
+  // useEffect(() => {
+  //   if (!hasInit) {
+  //     setHasInit(true);
+  //     pageviewCount({
+  //       serverURL: props.walineServerUrl,
+  //       path: "/",
+  //     });
+  //   }
+  // }, [hasInit, setHasInit]);
   return (
     <>
       <NavBar logo={props.logo} categories={props.categories}></NavBar>
@@ -54,6 +66,11 @@ export default function (props: {
             © {props.since.getFullYear()} - {new Date().getFullYear()}
           </p>
           <p>本站居然运行了 {getRunTimeOfDays(props.since)} 天</p>
+          <p>
+            居然有 &nbsp;
+            <span className="waline-pageview-count" data-path="/" />
+            &nbsp; 人访问了本站
+          </p>
         </footer>
       </div>
     </>

@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import PageNav from "../components/PageNav";
 import PostCard from "../components/PostCard";
 import { Article } from "../types/article";
+import { getLayoutProps } from "../utils/getLayoutProps";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -19,6 +20,7 @@ interface IndexProps {
   articles: Article[];
   currPage: number;
   favicon: string;
+  walineServerUrl: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -30,6 +32,7 @@ const Home = (props: IndexProps) => {
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
+      walineServerUrl={props.walineServerUrl}
       sideBar={
         <AuthorCard
           catelogNum={props.catelogNum}
@@ -68,7 +71,6 @@ export default Home;
 export async function getStaticProps(): Promise<{ props: IndexProps }> {
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
-  const { beianUrl, beianNumber, since, siteLogo } = siteInfo;
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
@@ -86,15 +88,8 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
   return {
     props: {
       currPage: 1,
-      favicon: siteInfo.favicon,
-      ipcHref: beianUrl,
-      ipcNumber: beianNumber,
-      since: since,
-      logo: siteLogo,
+      ...getLayoutProps(siteInfo),
       categories: data.categories,
-      author: siteInfo.author,
-      desc: siteInfo.authorDesc,
-      authorLogo: siteInfo.authorLogo,
       postNum: postNum,
       tagNum: tagNum,
       catelogNum: catelogNum,

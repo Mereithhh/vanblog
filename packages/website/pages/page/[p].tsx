@@ -4,6 +4,7 @@ import Layout from "../../components/layout";
 import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import { Article } from "../../types/article";
+import { getLayoutProps } from "../../utils/getLayoutProps";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -19,10 +20,12 @@ interface IndexProps {
   articles: Article[];
   currPage: number;
   favicon: string;
+  walineServerUrl: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      walineServerUrl={props.walineServerUrl}
       favicon={props.favicon}
       title="Mereith's Blog"
       ipcNumber={props.ipcNumber}
@@ -89,7 +92,6 @@ export async function getStaticProps({
   const curPage = parseInt(params.p);
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
-  const { beianUrl, beianNumber, since, siteLogo } = siteInfo;
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
@@ -115,17 +117,12 @@ export async function getStaticProps({
   return {
     props: {
       currPage: curPage,
-      ipcHref: beianUrl,
-      ipcNumber: beianNumber,
-      since: since,
-      logo: siteLogo,
+      ...getLayoutProps(siteInfo),
       categories: data.categories,
-      author: siteInfo.author,
-      desc: siteInfo.authorDesc,
-      authorLogo: siteInfo.authorLogo,
+
       postNum: postNum,
       tagNum: tagNum,
-      favicon: siteInfo.favicon,
+
       catelogNum: catelogNum,
       articles: articles,
     },

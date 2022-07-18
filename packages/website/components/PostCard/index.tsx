@@ -1,5 +1,6 @@
 import dayjs from "dayjs";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 import Markdown from "../Markdown";
 import Reward from "../Reward";
 
@@ -16,6 +17,10 @@ export default function (props: {
   next?: { id: number; title: string };
   pre?: { id: number; title: string };
 }) {
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    setUrl(window.location.pathname);
+  }, [setUrl]);
   function getContent(content: string) {
     if (props.type == "overview") {
       const r = content.split("<!-- more -->");
@@ -48,8 +53,18 @@ export default function (props: {
             </Link>
           </span>
         )}
-        <span className="inline-block px-2"> {`阅读数 ${0}`}</span>
-        <span className="inline-block px-2"> {`评论数 ${0}`}</span>
+        <span className="inline-block px-2">
+          {`阅读数 `}
+          {url != "" && (
+            <span className="waline-pageview-count" data-path={url}></span>
+          )}
+        </span>
+        <span className="inline-block px-2">
+          {`评论数 `}
+          {url != "" && (
+            <span className="waline-comment-count" data-path={url}></span>
+          )}
+        </span>
       </div>
       <div className="text-sm md:text-base  text-gray-600 mt-4 mx-2">
         <Markdown content={getContent(props.content)}></Markdown>
