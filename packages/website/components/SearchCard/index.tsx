@@ -96,10 +96,10 @@ export default function (props: {
     >
       <div
         ref={innerRef}
-        className="bg-white w-2/3  p-4 rounded-xl card-shadow dark:card-shadow-dark transition-all dark:bg-dark"
+        className="bg-white w-3/4  p-4 rounded-xl card-shadow dark:card-shadow-dark transition-all dark:bg-dark"
         style={{
           minHeight: "280px",
-          minWidth: 400,
+          minWidth: 360,
           maxWidth: "710px",
           transform: props.visible ? "scale(100%)" : "scale(0)",
         }}
