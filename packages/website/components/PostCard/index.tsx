@@ -40,11 +40,11 @@ export default function (props: {
   }
   return (
     <div>
-      <div className="bg-white border py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark dark:border-gray-700">
+      <div className="bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark">
         <div className="text-lg md:text-xl text-center font-medium mb-2 mt-2 dark:text-dark">
           {props.title}
         </div>
-        <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400 dark:text-dark-light">
+        <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400 dark:text-dark">
           <span className="inline-block px-2">
             {props.type != "about"
               ? `${dayjs(props.createdAt).format("YYYY-MM-DD")}`
@@ -92,7 +92,7 @@ export default function (props: {
 
         {props.type == "article" && props.tags && (
           <div className="mt-4">
-            <div className="text-sm  text-gray-500 flex justify-center space-x-2 select-none dark:text-dark-light">
+            <div className="text-sm  text-gray-500 flex justify-center space-x-2 select-none dark:text-dark">
               {props.tags.map((tag) => (
                 <div key={Math.floor(Math.random() * 100000)}>
                   <Link href={`/tag/${tag}`}>

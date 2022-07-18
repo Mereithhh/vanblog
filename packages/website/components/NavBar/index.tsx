@@ -29,7 +29,7 @@ export default function (props: {
       <SearchCard visible={showSearch} setVisible={setShowSearch}></SearchCard>
       <div
         id="nav"
-        className=" bg-white sticky top-0 dark:bg-nav-dark nav-shadow dark:nav-shadow-dark"
+        className=" bg-white sticky top-0 dark:bg-dark nav-shadow dark:nav-shadow-dark"
         style={{ zIndex: 9999 }}
       >
         {/* 上面的导航栏 */}
@@ -76,33 +76,33 @@ export default function (props: {
             <div className=" sm:hidden flex-grow text-center  flex items-center justify-center select-none">
               <div>{props.siteName}</div>
             </div>
-            <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:gray-666 hidden">
-              <li className="nav-item  dark:border-nav-dark">
+            <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
+              <li className="nav-item  dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/"}>
                   <a>首页</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark">
+              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/tag"}>
                   <a>标签</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark">
+              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/category"}>
                   <a>分类</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark">
+              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/timeline"}>
                   <a>时间线</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark">
+              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"https://tools.mereith.com"} target="_blank">
                   <a>工具站</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark">
+              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/about"}>
                   <a>关于</a>
                 </Link>
@@ -114,7 +114,7 @@ export default function (props: {
                   setShowSearch(true);
                   document.body.style.overflow = "hidden";
                 }}
-                className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all dark:gray-666"
+                className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all dark:text-dark"
               >
                 <svg
                   viewBox="0 0 1024 1024"
@@ -141,7 +141,7 @@ export default function (props: {
 
         <div className="h-10 items-center hidden md:flex border-b border-gray-200 dark:border-nav-dark">
           <div className="mx-5" style={{ width: 52 }}></div>
-          <ul className="flex h-full items-center text-sm text-gray-600 dark:gray-666 ">
+          <ul className="flex h-full items-center text-sm text-gray-600 dark:text-dark ">
             {props.categories.map((catelog) => {
               return (
                 <li
