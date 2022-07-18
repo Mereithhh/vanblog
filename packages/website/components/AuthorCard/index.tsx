@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import Headroom from "headroom.js";
+// import RecentComment from "../RecentComment";
 export default function (props: {
   author: string;
   desc: string;
@@ -9,6 +10,7 @@ export default function (props: {
   postNum: number;
   catelogNum: number;
   tagNum: number;
+  walineServerUrl: string;
 }) {
   useEffect(() => {
     const el = document.querySelector("#author-card");
@@ -72,6 +74,10 @@ export default function (props: {
           </Link>
         </div>
       </div>
+      {/* <RecentComment
+        walineServerUrl={props.walineServerUrl}
+        count={10}
+      ></RecentComment> */}
     </div>
   );
 }

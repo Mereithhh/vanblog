@@ -42,6 +42,7 @@ const Home = (props: IndexProps) => {
           catelogNum={props.catelogNum}
           postNum={props.postNum}
           tagNum={props.tagNum}
+          walineServerUrl={props.walineServerUrl}
           author={props.author}
           logo={props.authorLogo}
           desc={props.desc}

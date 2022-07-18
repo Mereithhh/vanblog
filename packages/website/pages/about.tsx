@@ -44,6 +44,7 @@ const Home = (props: IndexProps) => {
           postNum={props.postNum}
           tagNum={props.tagNum}
           author={props.author}
+          walineServerUrl={props.walineServerUrl}
           logo={props.authorLogo}
           desc={props.desc}
         ></AuthorCard>

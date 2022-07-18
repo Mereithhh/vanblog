@@ -41,6 +41,7 @@ const Home = (props: IndexProps) => {
         <AuthorCard
           catelogNum={props.catelogNum}
           postNum={props.postNum}
+          walineServerUrl={props.walineServerUrl}
           tagNum={props.tagNum}
           author={props.author}
           logo={props.authorLogo}

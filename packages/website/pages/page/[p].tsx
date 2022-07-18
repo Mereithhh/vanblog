@@ -45,6 +45,7 @@ const Home = (props: IndexProps) => {
           author={props.author}
           logo={props.authorLogo}
           desc={props.desc}
+          walineServerUrl={props.walineServerUrl}
         ></AuthorCard>
       }
     >
