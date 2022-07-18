@@ -11,6 +11,7 @@ export default function (props: { serverUrl: string; visible: boolean }) {
         serverURL: props.serverUrl,
         comment: true,
         pageview: true,
+        dark: ".dark",
       });
     }
   }, [current]);

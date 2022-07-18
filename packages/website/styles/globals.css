@@ -6,6 +6,9 @@
   html {
     @apply bg-slate-100;
   }
+  html.dark {
+    background-color: #1d2025;
+  }
   pre,
   code {
     white-space: pre-wrap !important;
@@ -21,6 +24,37 @@
   }
   .side-bar-item {
     @apply text-base leading-9 w-full px-4 hover:bg-gray-100 cursor-pointer;
+  }
+  .dark-border-hover {
+    @apply dark:hover:text-gray-300 dark:hover:border-gray-300;
+  }
+  .bg-nav-dark {
+    background-color: #1d2025;
+  }
+  .gray-666 {
+    color: #666666;
+    fill: #666666;
+  }
+  .bg-dark {
+    background-color: rgb(13, 17, 23);
+  }
+  .text-dark {
+    color: rgb(158, 158, 158);
+  }
+  .text-dark-light {
+    color: rgb(153, 153, 153);
+  }
+  .border-nav-dark {
+    border-color: #1d2025;
+  }
+  .border-dark {
+    border-color: rgb(158, 158, 158);
+  }
+  .nav-shadow {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+  .nav-shadow-dark {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 }
 .svg-gray {

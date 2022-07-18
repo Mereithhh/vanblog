@@ -16,13 +16,13 @@ export default function (props: {
 
   return (
     <div className="mt-8">
-      <div className="text-center  select-none text-sm md:text-base mb-2">
+      <div className="text-center  select-none text-sm md:text-base mb-2 dark:text-dark-light">
         如果对你有用的话，可以打赏哦
       </div>
       <div className="flex justify-center mb-6 ">
         <div
           onClick={() => [setShow(!show)]}
-          className="text-sm md:text-base  text-gray-100 bg-red-600 rounded px-4 select-none cursor-pointer hover:bg-red-400 py-1"
+          className="text-sm md:text-base   text-gray-100 bg-red-600 rounded px-4 select-none cursor-pointer hover:bg-red-400 py-1"
         >
           打赏
         </div>
@@ -35,7 +35,7 @@ export default function (props: {
         <div className="w-4 inline-block"></div>
         <Image src={props.aliPay} width={180} height={250}></Image>
       </div>
-      <div className=" bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1">
+      <div className=" bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-nav-dark ">
         <p>
           <span className="mr-2">本文作者:</span>
           <span>{props.author}</span>
@@ -54,7 +54,7 @@ export default function (props: {
               });
             }}
           >
-            <span className="cursor-pointer border-b border-white hover:border-gray-500">
+            <span className="cursor-pointer border-b border-white hover:border-gray-500 dark:text-dark dark-border-hover dark:border-nav-dark">
               {url}
             </span>
           </CopyToClipboard>

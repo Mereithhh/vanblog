@@ -29,12 +29,12 @@ export default function (props: {
       <SearchCard visible={showSearch} setVisible={setShowSearch}></SearchCard>
       <div
         id="nav"
-        className=" bg-white sticky top-0"
-        style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.15);", zIndex: 9999 }}
+        className=" bg-white sticky top-0 dark:bg-nav-dark nav-shadow dark:nav-shadow-dark"
+        style={{ zIndex: 9999 }}
       >
         {/* 上面的导航栏 */}
         <div
-          className=" flex  items-center w-full border-b border-gray-200 h-14"
+          className=" flex  items-center w-full border-b border-gray-200 h-14 dark:border-nav-dark"
           style={{ height: 56 }}
         >
           <div className="mx-4 flex items-center">
@@ -76,33 +76,33 @@ export default function (props: {
             <div className=" sm:hidden flex-grow text-center  flex items-center justify-center select-none">
               <div>{props.siteName}</div>
             </div>
-            <ul className=" sm:flex h-full items-center  text-sm text-gray-600 hidden">
-              <li className="nav-item ">
+            <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:gray-666 hidden">
+              <li className="nav-item  dark:border-nav-dark">
                 <Link href={"/"}>
                   <a>首页</a>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item dark:border-nav-dark">
                 <Link href={"/tag"}>
                   <a>标签</a>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item dark:border-nav-dark">
                 <Link href={"/category"}>
                   <a>分类</a>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item dark:border-nav-dark">
                 <Link href={"/timeline"}>
                   <a>时间线</a>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item dark:border-nav-dark">
                 <Link href={"https://tools.mereith.com"} target="_blank">
                   <a>工具站</a>
                 </Link>
               </li>
-              <li className="nav-item">
+              <li className="nav-item dark:border-nav-dark">
                 <Link href={"/about"}>
                   <a>关于</a>
                 </Link>
@@ -114,18 +114,34 @@ export default function (props: {
                   setShowSearch(true);
                   document.body.style.overflow = "hidden";
                 }}
-                className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all"
+                className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all dark:gray-666"
               >
-                <Image src="/zoom.svg" width={20} height={20}></Image>
+                <svg
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="2305"
+                  width="20"
+                  height="20"
+                >
+                  <path
+                    d="M789.804097 737.772047 742.865042 784.699846 898.765741 940.600545 945.704796 893.672746Z"
+                    p-id="2306"
+                  ></path>
+                  <path
+                    d="M456.92259 82.893942c-209.311143 0-379.582131 170.282245-379.582131 379.582131s170.270988 379.570875 379.582131 379.570875c209.287607 0 379.558595-170.270988 379.558595-379.570875S666.210197 82.893942 456.92259 82.893942zM770.128989 462.477097c0 172.721807-140.508127 313.229934-313.206398 313.229934-172.720783 0-313.229934-140.508127-313.229934-313.229934s140.508127-313.229934 313.229934-313.229934C629.620861 149.247162 770.128989 289.75529 770.128989 462.477097z"
+                    p-id="2307"
+                  ></path>
+                </svg>
               </div>
               <ThemeButton />
             </div>
           </div>
         </div>
 
-        <div className="h-10 items-center hidden md:flex border-b border-gray-200">
+        <div className="h-10 items-center hidden md:flex border-b border-gray-200 dark:border-nav-dark">
           <div className="mx-5" style={{ width: 52 }}></div>
-          <ul className="flex h-full items-center text-sm text-gray-600">
+          <ul className="flex h-full items-center text-sm text-gray-600 dark:gray-666 ">
             {props.categories.map((catelog) => {
               return (
                 <li

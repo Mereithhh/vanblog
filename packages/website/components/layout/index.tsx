@@ -105,7 +105,7 @@ export default function (props: {
             </div>
           </div>
         }
-        <footer className="text-center text-sm space-y-1 mt-8 md:mt-12">
+        <footer className="text-center text-sm space-y-1 mt-8 md:mt-12 dark:text-dark">
           <p className="select-none">
             IPC 编号:{" "}
             <a
