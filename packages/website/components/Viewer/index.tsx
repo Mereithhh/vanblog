@@ -14,5 +14,5 @@ export default function () {
     }
   }, [current, fetchViewer]);
   // 全站浏览量统计
-  return <span>{num}</span>;
+  return <span className="select-none">{num}</span>;
 }

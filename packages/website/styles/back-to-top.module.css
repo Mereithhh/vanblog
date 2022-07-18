@@ -1,0 +1,28 @@
+.backToTop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  right: 1rem;
+  bottom: 2rem;
+  width: 42px;
+  height: 42px;
+  background-color: #fff;
+  color: #ffffff;
+  font-size: 40px;
+  z-index: 999;
+  cursor: pointer;
+  text-align: center;
+  box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.15);
+}
+/* .backToTop::before {
+  content: "^";
+  display: block;
+
+  font-family: serif, "Times New Roman", Times;
+}
+.backToTop:hover::before {
+  font-size: 12px;
+  content: "回顶部";
+  line-height: 42px;
+} */

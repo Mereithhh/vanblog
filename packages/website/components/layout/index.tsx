@@ -1,6 +1,7 @@
 import Head from "next/head";
 
 import { getRunTimeOfDays } from "../../utils/getRunTile";
+import BackToTopBtn from "../BackToTop";
 import NavBar from "../NavBar";
 import Viewer from "../Viewer";
 export default function (props: {
@@ -28,6 +29,7 @@ export default function (props: {
   return (
     <>
       <NavBar logo={props.logo} categories={props.categories}></NavBar>
+      <BackToTopBtn></BackToTopBtn>
       <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-600 ">
         {props?.title && (
           <Head>
@@ -51,7 +53,7 @@ export default function (props: {
           </div>
         }
         <footer className="text-center text-sm space-y-1 mt-8 md:mt-12">
-          <p>
+          <p className="select-none">
             IPC 编号:{" "}
             <a
               href={props.ipcHref}
@@ -61,11 +63,11 @@ export default function (props: {
               {props.ipcNumber}
             </a>
           </p>
-          <p>
+          <p className="select-none">
             © {props.since.getFullYear()} - {new Date().getFullYear()}
           </p>
           <p>本站居然运行了 {getRunTimeOfDays(props.since)} 天</p>
-          <p>
+          <p className="select-none">
             全站访问量 &nbsp;
             <Viewer></Viewer>
             {/* <span className="waline-pageview-count" data-path="/*" /> */}
