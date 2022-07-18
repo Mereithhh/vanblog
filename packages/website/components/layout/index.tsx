@@ -4,6 +4,8 @@ import { getRunTimeOfDays } from "../../utils/getRunTile";
 import BackToTopBtn from "../BackToTop";
 import NavBar from "../NavBar";
 import Viewer from "../Viewer";
+import { slide as Menu } from "react-burger-menu";
+import { useState } from "react";
 export default function (props: {
   title?: string;
   children: any;
@@ -16,20 +18,36 @@ export default function (props: {
   favicon: string;
   walineServerUrl: string;
 }) {
-  // const [hasInit, setHasInit] = useState(false);
-  // useEffect(() => {
-  //   if (!hasInit) {
-  //     setHasInit(true);
-  //     pageviewCount({
-  //       serverURL: props.walineServerUrl,
-  //       path: "/",
-  //     });
-  //   }
-  // }, [hasInit, setHasInit]);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <NavBar logo={props.logo} categories={props.categories}></NavBar>
+      <NavBar
+        logo={props.logo}
+        categories={props.categories}
+        isOpen={isOpen}
+        setOpen={setIsOpen}
+      ></NavBar>
       <BackToTopBtn></BackToTopBtn>
+      <div>
+        <Menu
+          customCrossIcon={false}
+          customBurgerIcon={false}
+          isOpen={isOpen}
+          onStateChange={(state) => {
+            setIsOpen(state.isOpen);
+          }}
+        >
+          <a id="home" className="menu-item" href="/">
+            Home
+          </a>
+          <a id="about" className="menu-item" href="/about">
+            About
+          </a>
+          <a id="contact" className="menu-item" href="/contact">
+            Contact
+          </a>
+        </Menu>
+      </div>
       <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-600 ">
         {props?.title && (
           <Head>

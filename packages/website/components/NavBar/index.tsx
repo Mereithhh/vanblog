@@ -4,7 +4,12 @@ import Headroom from "headroom.js";
 import { useEffect, useState } from "react";
 import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
-export default function (props: { logo: string; categories: string[] }) {
+export default function (props: {
+  logo: string;
+  categories: string[];
+  setOpen: (open: boolean) => void;
+  isOpen: boolean;
+}) {
   const [showSearch, setShowSearch] = useState(false);
   useEffect(() => {
     const el = document.querySelector("#nav");
@@ -23,11 +28,20 @@ export default function (props: { logo: string; categories: string[] }) {
           style={{ height: 56 }}
         >
           <div className="mx-4 flex items-center">
+            <div
+              className="cursor-pointer block sm:hidden"
+              onClick={() => {
+                props.setOpen(!props.isOpen);
+              }}
+            >
+              开
+            </div>
             <Image src={props.logo} width={52} height={52}></Image>
           </div>
           {/* 第二个flex */}
-          <div className="flex justify-between h-full flex-grow">
-            <ul className=" flex h-full items-center  text-sm text-gray-600">
+          <div className="flex justify-between h-full flex-grow ">
+            <div className="block sm:hidden" id="outer-container"></div>
+            <ul className=" sm:flex h-full items-center  text-sm text-gray-600 hidden">
               <li className="nav-item ">
                 <Link href={"/"}>
                   <a>首页</a>
