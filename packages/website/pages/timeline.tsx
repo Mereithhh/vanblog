@@ -45,15 +45,16 @@ const Home = (props: IndexProps) => {
           author={props.author}
           logo={props.authorLogo}
           desc={props.desc}
+          walineServerUrl={props.walineServerUrl}
         ></AuthorCard>
       }
     >
-      <div className="bg-white border py-4 px-8 md:py-6 md:px-8">
+      <div className="bg-white card-shadow dark:bg-dark dark:card-shadow-dark py-4 px-8 md:py-6 md:px-8">
         <div>
-          <div className="text-2xl md:text-3xl text-gray-700 text-center">
+          <div className="text-2xl md:text-3xl text-gray-700 text-center dark:text-dark">
             时间线
           </div>
-          <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light">{`${props.catelogNum} 分类 × ${props.postNum} 文章 × ${props.tagNum} 标签 × ${props.wordTotal} 字`}</div>
+          <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light dark:text-dark">{`${props.catelogNum} 分类 × ${props.postNum} 文章 × ${props.tagNum} 标签 × ${props.wordTotal} 字`}</div>
         </div>
         <div className="flex flex-col mt-2">
           {Object.keys(props.articles)

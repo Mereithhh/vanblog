@@ -46,8 +46,10 @@ const Home = (props: IndexProps) => {
         ></AuthorCard>
       }
     >
-      <div className="bg-white border py-4 px-8 md:py-6 md:px-8">
-        <div className="text-lg md:text-xl text-gray-700">标签</div>
+      <div className="bg-white card-shadow dark:bg-dark dark:card-shadow-dark py-4 px-8 md:py-6 md:px-8">
+        <div className="text-lg md:text-xl text-gray-700 dark:text-dark">
+          标签
+        </div>
         <div className="flex flex-wrap mt-2">
           {props.tags.map((tag) => (
             <Link

@@ -40,6 +40,9 @@
   .bg-dark {
     background-color: #26282c;
   }
+  .bg-dark-1 {
+    background-color: #232428;
+  }
   .fill-dark {
     fill: #333333;
   }
@@ -49,6 +52,9 @@
   }
   .text-dark-r {
     color: #26282c;
+  }
+  .text-dark-400 {
+    color: rgb(110, 110, 110);
   }
   .bg-dark-light {
     background-color: rgb(158, 158, 158);

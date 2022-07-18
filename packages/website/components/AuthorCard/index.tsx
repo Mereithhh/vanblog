@@ -10,7 +10,7 @@ export default function (props: {
   postNum: number;
   catelogNum: number;
   tagNum: number;
-  walineServerUrl: string;
+  walineServerUrl?: string;
 }) {
   useEffect(() => {
     const el = document.querySelector("#author-card");
