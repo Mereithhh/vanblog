@@ -87,7 +87,8 @@ export default function (props: {
       onClick={(ev) => {
         if (innerRef.current) {
           if (!(innerRef.current as any).contains(ev.target as any)) {
-            // 在内
+            // 外
+            document.body.style.overflow = "auto";
             props.setVisible(false);
           }
         }

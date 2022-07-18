@@ -11,17 +11,26 @@ export default function (props: {
   isOpen: boolean;
 }) {
   const [showSearch, setShowSearch] = useState(false);
+  const [headroom, setHeadroom] = useState<Headroom>();
   useEffect(() => {
     const el = document.querySelector("#nav");
-    if (el) {
+    if (el && !headroom) {
       const headroom = new Headroom(el);
       headroom.init();
+      setHeadroom(headroom);
     }
-  });
+    return () => {
+      headroom?.destroy();
+    };
+  }, [headroom, setHeadroom]);
   return (
     <>
       <SearchCard visible={showSearch} setVisible={setShowSearch}></SearchCard>
-      <div id="nav" className=" bg-white sticky top-0">
+      <div
+        id="nav"
+        className=" bg-white sticky top-0"
+        style={{ boxShadow: "0 2px 8px rgba(0,0,0,0.15);", zIndex: 9999 }}
+      >
         {/* 上面的导航栏 */}
         <div
           className=" flex  items-center w-full border-b border-gray-200 h-14"
@@ -31,12 +40,35 @@ export default function (props: {
             <div
               className="cursor-pointer block sm:hidden"
               onClick={() => {
+                if (!props.isOpen) {
+                  // 要打开
+                  headroom?.pin();
+                }
                 props.setOpen(!props.isOpen);
               }}
             >
-              开
+              <span>
+                <svg
+                  viewBox="0 0 1024 1024"
+                  version="1.1"
+                  xmlns="http://www.w3.org/2000/svg"
+                  p-id="1340"
+                  width="24"
+                  height="24"
+                >
+                  <path
+                    d="M904 160H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 784H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8zM904 472H120c-4.4 0-8 3.6-8 8v64c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-64c0-4.4-3.6-8-8-8z"
+                    p-id="1341"
+                  ></path>
+                </svg>
+              </span>
             </div>
-            <Image src={props.logo} width={52} height={52}></Image>
+            <Image
+              src={props.logo}
+              width={52}
+              height={52}
+              className="invisible sm:visible"
+            ></Image>
           </div>
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow ">
@@ -77,6 +109,7 @@ export default function (props: {
               <div
                 onClick={() => {
                   setShowSearch(true);
+                  document.body.style.overflow = "hidden";
                 }}
                 className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all"
               >

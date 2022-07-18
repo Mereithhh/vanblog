@@ -6,6 +6,7 @@ import NavBar from "../NavBar";
 import Viewer from "../Viewer";
 import { slide as Menu } from "react-burger-menu";
 import { useState } from "react";
+import Link from "next/link";
 export default function (props: {
   title?: string;
   children: any;
@@ -30,22 +31,53 @@ export default function (props: {
       <BackToTopBtn></BackToTopBtn>
       <div>
         <Menu
+          disableAutoFocus={true}
           customCrossIcon={false}
           customBurgerIcon={false}
           isOpen={isOpen}
           onStateChange={(state) => {
+            if (state.isOpen) {
+              // 要打开
+              document.body.style.overflow = "hidden";
+            } else {
+              document.body.style.overflow = "auto";
+            }
+
             setIsOpen(state.isOpen);
           }}
         >
-          <a id="home" className="menu-item" href="/">
-            Home
-          </a>
-          <a id="about" className="menu-item" href="/about">
-            About
-          </a>
-          <a id="contact" className="menu-item" href="/contact">
-            Contact
-          </a>
+          <ul className=" sm:flex h-full items-center  text-sm text-gray-600 hidden">
+            <li className="side-bar-item ">
+              <Link href={"/"}>
+                <a>首页</a>
+              </Link>
+            </li>
+            <li className="side-bar-item">
+              <Link href={"/tag"}>
+                <a>标签</a>
+              </Link>
+            </li>
+            <li className="side-bar-item">
+              <Link href={"/category"}>
+                <a>分类</a>
+              </Link>
+            </li>
+            <li className="side-bar-item">
+              <Link href={"/timeline"}>
+                <a>时间线</a>
+              </Link>
+            </li>
+            <li className="side-bar-item">
+              <Link href={"https://tools.mereith.com"} target="_blank">
+                <a>工具站</a>
+              </Link>
+            </li>
+            <li className="side-bar-item">
+              <Link href={"/about"}>
+                <a>关于</a>
+              </Link>
+            </li>
+          </ul>
         </Menu>
       </div>
       <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-600 ">

@@ -40,31 +40,31 @@ export default function (props: {
   }
   return (
     <div>
-      <div className="bg-white border py-4 px-3 md:py-6 md:px-5">
+      <div className="bg-white border py-4 px-1 sm:px-3 md:py-6 md:px-5">
         <div className="text-lg md:text-xl text-center font-medium mb-2 mt-2">
           {props.title}
         </div>
         <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400">
           <span className="inline-block px-2">
             {props.type != "about"
-              ? `发表于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`
+              ? `${dayjs(props.createdAt).format("YYYY-MM-DD")}`
               : `修改于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`}
           </span>
 
           {props.type != "about" && (
             <span className="inline-block px-2">
-              {`分类于 `}
+              {` 分类于 `}
               <Link href={`/category/${props.catelog}`}>
                 <a className="cursor-pointer hover:text-cyan-400">{`${props.catelog}`}</a>
               </Link>
             </span>
           )}
           <span className="inline-block px-2">
-            {`阅读数 `}
+            {`阅读 `}
             <span className="waline-pageview-count" data-path={dataPath}></span>
           </span>
           <span className="inline-block px-2">
-            {`评论数 `}
+            {`评论 `}
             <span className="waline-comment-count" data-path={dataPath}></span>
           </span>
         </div>
