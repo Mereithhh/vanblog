@@ -3,6 +3,7 @@ import Link from "next/link";
 import Headroom from "headroom.js";
 import { useEffect, useState } from "react";
 import SearchCard from "../SearchCard";
+import ThemeButton from "../ThemeButton";
 export default function (props: { logo: string; categories: string[] }) {
   const [showSearch, setShowSearch] = useState(false);
   useEffect(() => {
@@ -58,13 +59,16 @@ export default function (props: { logo: string; categories: string[] }) {
                 </Link>
               </li>
             </ul>
-            <div
-              onClick={() => {
-                setShowSearch(true);
-              }}
-              className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all"
-            >
-              <Image src="/zoom.svg" width={20} height={20}></Image>
+            <div className="flex">
+              <div
+                onClick={() => {
+                  setShowSearch(true);
+                }}
+                className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all"
+              >
+                <Image src="/zoom.svg" width={20} height={20}></Image>
+              </div>
+              <ThemeButton />
             </div>
           </div>
         </div>

@@ -11,6 +11,7 @@ export const initTheme = () => {
     document.documentElement.classList.remove("dark");
     localStorage.theme = "light";
   }
+  return localStorage.theme;
 };
 
 export const switchTheme = (to: string) => {
