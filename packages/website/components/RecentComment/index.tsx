@@ -22,7 +22,6 @@ export default function (props: { walineServerUrl: string; count: number }) {
         count: props.count,
       }).then(({ comments }) => {
         setData(comments);
-        console.log(comments);
       });
     }
   }, [current, setData]);

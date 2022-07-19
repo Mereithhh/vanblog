@@ -25,13 +25,18 @@ export default function (props: {
   const onKeyDown = (ev: KeyboardEvent) => {
     if (ev.key == "Escape") {
       props.setVisible(false);
+      event?.preventDefault();
     }
+    if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == "k") {
+      props.setVisible(true);
+      event?.preventDefault();
+    }
+    return false;
   };
   const onSearch = async (search: string) => {
     setTyping(false);
     setLoading(true);
     const resultFromServer = await searchWithApiRoute(search);
-    console.log(resultFromServer);
     setResult(resultFromServer);
     setLoading(false);
   };
