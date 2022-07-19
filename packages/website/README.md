@@ -31,4 +31,8 @@
 - [x] icon 都统一颜色
 - [x] 搜索卡片点击后不关闭的 bug
 - [] 搜索可以快捷键选择
-- [] markdown 支持数学公式和 html
+- [x] markdown 支持数学公式和 html
+- [x] 目录超长的溢出展示
+- [] markdown 颜色字体大小样式
+- [] 可能存在的搜索点击后无法滑动 bug
+- [] markdown 标题 hash
