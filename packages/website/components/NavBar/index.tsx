@@ -65,7 +65,7 @@ export default function (props: {
                 </svg>
               </span>
             </div>
-            <div className="hidden sm:block">
+            <div className="hidden sm:block transform translate-x-2">
               <Image src={props.logo} width={52} height={52}></Image>
             </div>
           </div>
