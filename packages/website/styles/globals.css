@@ -164,3 +164,7 @@ body .wl-panel {
   background-color: inherit;
   outline: none;
 }
+.popover-arrow {
+  opacity: 1 !important;
+  bottom: 2px !important;
+}
