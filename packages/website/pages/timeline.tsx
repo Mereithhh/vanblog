@@ -7,6 +7,7 @@ import { getLayoutProps } from "../utils/getLayoutProps";
 import { wordCount } from "../utils/wordCount";
 interface IndexProps {
   ipcNumber: string;
+  authorLogoDark: string;
   since: string;
   ipcHref: string;
   logo: string;
@@ -49,6 +50,7 @@ const Home = (props: IndexProps) => {
           catelogNum={props.catelogNum}
           postNum={props.postNum}
           tagNum={props.tagNum}
+          logoDark={props.authorLogoDark}
           author={props.author}
           logo={props.authorLogo}
           desc={props.desc}

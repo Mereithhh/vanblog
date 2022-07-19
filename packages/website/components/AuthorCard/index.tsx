@@ -1,20 +1,29 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import Headroom from "headroom.js";
 import { SocialItem } from "../../api/getMeta";
 import SocialCard from "../SocialCard";
+import { ThemeContext } from "../../utils/themeContext";
 // import RecentComment from "../RecentComment";
 export default function (props: {
   author: string;
   desc: string;
   logo: string;
+  logoDark: string;
   postNum: number;
   catelogNum: number;
   tagNum: number;
   walineServerUrl?: string;
   socials: SocialItem[];
 }) {
+  const { theme } = useContext(ThemeContext);
+  const logoUrl = useMemo(() => {
+    if (theme.includes("dark") && props.logoDark && props.logoDark != "") {
+      return props.logoDark;
+    }
+    return props.logo;
+  }, [theme, props]);
   useEffect(() => {
     const el = document.querySelector("#author-card");
     if (el) {
@@ -36,7 +45,7 @@ export default function (props: {
         <div className="px-10 flex flex-col justify-center items-center">
           <Image
             className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
-            src={props.logo}
+            src={logoUrl}
             width={120}
             height={120}
           ></Image>

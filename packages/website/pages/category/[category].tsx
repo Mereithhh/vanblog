@@ -13,6 +13,7 @@ interface IndexProps {
   categories: string[];
   author: string;
   desc: string;
+  authorLogoDark: string;
   authorLogo: string;
   postNum: number;
   catelogNum: number;
@@ -51,6 +52,7 @@ const Home = (props: IndexProps) => {
           catelogNum={props.catelogNum}
           postNum={props.postNum}
           tagNum={props.tagNum}
+          logoDark={props.authorLogoDark}
           author={props.author}
           logo={props.authorLogo}
           socials={props.socials}

@@ -9,6 +9,7 @@ export function getLayoutProps(siteInfo: any) {
     author: siteInfo.author,
     desc: siteInfo.authorDesc,
     authorLogo: siteInfo.authorLogo,
+    authorLogoDark: siteInfo.authorLogoDark || "",
     siteName: siteInfo.siteName,
     siteDesc: siteInfo.siteDesc,
     baiduAnalysisID: siteInfo?.baiduAnalysisId || "",

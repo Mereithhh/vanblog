@@ -14,6 +14,7 @@ interface IndexProps {
   desc: string;
   authorLogo: string;
   postNum: number;
+  authorLogoDark: string;
   catelogNum: number;
   tagNum: number;
   favicon: string;
@@ -27,11 +28,13 @@ interface IndexProps {
   socials: SocialItem[];
   baiduAnalysisID: string;
   gaAnalysisID: string;
+  logoDark: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
       title="关于我"
+      logoDark={props.logoDark}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
@@ -50,6 +53,7 @@ const Home = (props: IndexProps) => {
           tagNum={props.tagNum}
           socials={props.socials}
           author={props.author}
+          logoDark={props.authorLogoDark}
           walineServerUrl={props.walineServerUrl}
           logo={props.authorLogo}
           desc={props.desc}

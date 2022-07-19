@@ -14,6 +14,7 @@ interface IndexProps {
   author: string;
   desc: string;
   authorLogo: string;
+  authorLogoDark: string;
   postNum: number;
   catelogNum: number;
   tagNum: number;
@@ -53,6 +54,7 @@ const Home = (props: IndexProps) => {
           walineServerUrl={props.walineServerUrl}
           author={props.author}
           logo={props.authorLogo}
+          logoDark={props.authorLogoDark}
           desc={props.desc}
         ></AuthorCard>
       }
