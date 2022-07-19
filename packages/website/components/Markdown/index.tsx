@@ -5,10 +5,16 @@ import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
 import Image from "next/image";
+import rehypeRaw from "rehype-raw";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+import "katex/dist/katex.min.css";
 export default function (props: { content: string }) {
   return (
     <>
       <ReactMarkdown
+        rehypePlugins={[rehypeKatex, rehypeRaw]}
+        remarkPlugins={[remarkMath, remarkGfm]}
         components={{
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
@@ -58,7 +64,6 @@ export default function (props: { content: string }) {
         }}
         className="markdown-body"
         children={props.content}
-        remarkPlugins={[remarkGfm]}
       />
     </>
   );
