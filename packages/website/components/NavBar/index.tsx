@@ -4,6 +4,7 @@ import Headroom from "headroom.js";
 import { useEffect, useState } from "react";
 import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
+import KeyCard from "../KeyCard";
 export default function (props: {
   logo: string;
   categories: string[];
@@ -113,26 +114,32 @@ export default function (props: {
                   setShowSearch(true);
                   document.body.style.overflow = "hidden";
                 }}
-                className="flex items-center mx-4 hover:cursor-pointer hover:scale-125 transform transition-all dark:text-dark"
+                className="flex group transform hover:scale-110 transition-all select-none cursor-pointer"
               >
-                <svg
-                  viewBox="0 0 1024 1024"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  p-id="2305"
-                  width="20"
-                  height="20"
-                >
-                  <path
-                    d="M789.804097 737.772047 742.865042 784.699846 898.765741 940.600545 945.704796 893.672746Z"
-                    p-id="2306"
-                  ></path>
-                  <path
-                    d="M456.92259 82.893942c-209.311143 0-379.582131 170.282245-379.582131 379.582131s170.270988 379.570875 379.582131 379.570875c209.287607 0 379.558595-170.270988 379.558595-379.570875S666.210197 82.893942 456.92259 82.893942zM770.128989 462.477097c0 172.721807-140.508127 313.229934-313.206398 313.229934-172.720783 0-313.229934-140.508127-313.229934-313.229934s140.508127-313.229934 313.229934-313.229934C629.620861 149.247162 770.128989 289.75529 770.128989 462.477097z"
-                    p-id="2307"
-                  ></path>
-                </svg>
+                <div className="flex items-center mr-0 sm:mr-2 hover:cursor-pointer   transition-all dark:text-dark">
+                  <svg
+                    viewBox="0 0 1024 1024"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    p-id="2305"
+                    width="20"
+                    height="20"
+                  >
+                    <path
+                      d="M789.804097 737.772047 742.865042 784.699846 898.765741 940.600545 945.704796 893.672746Z"
+                      p-id="2306"
+                    ></path>
+                    <path
+                      d="M456.92259 82.893942c-209.311143 0-379.582131 170.282245-379.582131 379.582131s170.270988 379.570875 379.582131 379.570875c209.287607 0 379.558595-170.270988 379.558595-379.570875S666.210197 82.893942 456.92259 82.893942zM770.128989 462.477097c0 172.721807-140.508127 313.229934-313.206398 313.229934-172.720783 0-313.229934-140.508127-313.229934-313.229934s140.508127-313.229934 313.229934-313.229934C629.620861 149.247162 770.128989 289.75529 770.128989 462.477097z"
+                      p-id="2307"
+                    ></path>
+                  </svg>
+                </div>
+                <div className="flex items-center ">
+                  <KeyCard type="search"></KeyCard>
+                </div>
               </div>
+
               <ThemeButton />
             </div>
           </div>

@@ -3,6 +3,7 @@ import Image from "next/image";
 import { searchArticles, searchWithApiRoute } from "../../api/search";
 import { useDebounce } from "react-use";
 import ArticleList from "../ArticleList";
+import KeyCard from "../KeyCard";
 
 export default function (props: {
   visible: boolean;
@@ -181,6 +182,7 @@ export default function (props: {
               ></path>
             </svg>
           </div>
+          <KeyCard type="esc"></KeyCard>
         </div>
         <hr className="my-2 dark:border-hr-dark"></hr>
         <div

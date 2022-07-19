@@ -23,7 +23,7 @@ export default function (props: any) {
   };
   return (
     <div
-      className="flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4"
+      className="flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 ml-2  "
       onClick={handleSwitch}
     >
       <div
