@@ -1,4 +1,4 @@
-import { getPublicAll } from "../../api/getMeta";
+import { getPublicAll, SocialItem } from "../../api/getMeta";
 import AuthorCard from "../../components/AuthorCard";
 import Layout from "../../components/layout";
 import TimeLineItem from "../../components/TimeLineItem";
@@ -25,6 +25,7 @@ interface IndexProps {
   walineServerUrl: string;
   siteName: string;
   siteDesc: string;
+  socials: SocialItem[];
 }
 const Home = (props: IndexProps) => {
   return (
@@ -44,6 +45,7 @@ const Home = (props: IndexProps) => {
           catelogNum={props.catelogNum}
           postNum={props.postNum}
           tagNum={props.tagNum}
+          socials={props.socials}
           author={props.author}
           logo={props.authorLogo}
           desc={props.desc}
@@ -139,6 +141,7 @@ export async function getStaticProps({
       articles: articles,
       curTag,
       curNum,
+      socials: data.meta.socials,
     },
   };
 }

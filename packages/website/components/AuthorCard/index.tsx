@@ -2,6 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
 import Headroom from "headroom.js";
+import { SocialItem } from "../../api/getMeta";
+import SocialCard from "../SocialCard";
 // import RecentComment from "../RecentComment";
 export default function (props: {
   author: string;
@@ -11,6 +13,7 @@ export default function (props: {
   catelogNum: number;
   tagNum: number;
   walineServerUrl?: string;
+  socials: SocialItem[];
 }) {
   useEffect(() => {
     const el = document.querySelector("#author-card");
@@ -29,51 +32,57 @@ export default function (props: {
   });
   return (
     <div id="author-card" className="fixed ">
-      <div className="w-52 flex flex-col justify-center items-center bg-white py-6 px-10 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
-        <Image
-          className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
-          src={props.logo}
-          width={120}
-          height={120}
-        ></Image>
+      <div className="w-52 flex flex-col justify-center items-center bg-white pt-6  pb-4 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
+        <div className="px-10 flex flex-col justify-center items-center">
+          <Image
+            className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
+            src={props.logo}
+            width={120}
+            height={120}
+          ></Image>
 
-        <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">
-          {props.author}
+          <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">
+            {props.author}
+          </div>
+          <div className="text-sm text-gray-500 mb-2 dark:text-dark-light">
+            {props.desc}
+          </div>
+          <div className="flex">
+            <Link href="/timeline">
+              <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark ">
+                <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
+                  {props.postNum}
+                </div>
+                <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
+                  日志
+                </div>
+              </a>
+            </Link>
+            <Link href="/category">
+              <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
+                <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
+                  {props.catelogNum}
+                </div>
+                <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
+                  分类
+                </div>
+              </a>
+            </Link>
+            <Link href="/tag">
+              <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
+                <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
+                  {props.tagNum}
+                </div>
+                <div className=" group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
+                  标签
+                </div>
+              </a>
+            </Link>
+          </div>
         </div>
-        <div className="text-sm text-gray-500 mb-2 dark:text-dark-light">
-          {props.desc}
-        </div>
-        <div className="flex">
-          <Link href="/timeline">
-            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark ">
-              <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
-                {props.postNum}
-              </div>
-              <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
-                日志
-              </div>
-            </a>
-          </Link>
-          <Link href="/category">
-            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
-              <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
-                {props.catelogNum}
-              </div>
-              <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
-                分类
-              </div>
-            </a>
-          </Link>
-          <Link href="/tag">
-            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
-              <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
-                {props.tagNum}
-              </div>
-              <div className=" group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
-                标签
-              </div>
-            </a>
-          </Link>
+
+        <div className="mt-4 w-full">
+          <SocialCard socials={props.socials}></SocialCard>
         </div>
       </div>
       {/* <RecentComment

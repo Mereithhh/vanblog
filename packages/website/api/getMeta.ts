@@ -1,11 +1,17 @@
 import { config } from "../utils/loadConfig";
+export type SocialType = "bilibili" | "email" | "github" | "wechat";
+export interface SocialItem {
+  updatedAt: string;
+  type: SocialType;
+  value: string;
+}
 export interface PublicAllProp {
   articles: any[];
   categories: any[];
   tags: string[];
   meta: {
     links: any[];
-    socials: any[];
+    socials: SocialItem[];
     rewards: any[];
     about: {
       updatedAt: Date;

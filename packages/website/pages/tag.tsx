@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPublicAll } from "../api/getMeta";
+import { getPublicAll, SocialItem } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
 import { getLayoutProps } from "../utils/getLayoutProps";
@@ -21,6 +21,7 @@ interface IndexProps {
   walineServerUrl: string;
   siteName: string;
   siteDesc: string;
+  socials: SocialItem[];
 }
 const Home = (props: IndexProps) => {
   return (
@@ -43,6 +44,7 @@ const Home = (props: IndexProps) => {
           author={props.author}
           logo={props.authorLogo}
           desc={props.desc}
+          socials={props.socials}
         ></AuthorCard>
       }
     >
@@ -77,12 +79,11 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
     props: {
       ...getLayoutProps(siteInfo),
       categories: data.categories,
-      author: siteInfo.author,
-      desc: siteInfo.authorDesc,
       postNum: postNum,
       tagNum: tagNum,
       catelogNum: catelogNum,
       tags,
+      socials: data.meta.socials,
     },
   };
 }
