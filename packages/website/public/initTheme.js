@@ -1,9 +1,8 @@
 window.onload = function () {
+  const d = new Date().getHours();
+  const night = d > 17 || d < 8;
   if (!("theme" in localStorage) || localStorage.theme == "auto") {
-    if (
-      new Date().getHours() > 17 ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches
-    ) {
+    if (night || window.matchMedia("(prefers-color-scheme: dark)").matches) {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
     } else {

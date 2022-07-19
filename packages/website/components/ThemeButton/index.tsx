@@ -12,10 +12,9 @@ export default function (props: {}) {
   };
   const setTimer = () => {
     currentTimer.timer = setInterval(() => {
-      if (
-        new Date().getHours() > 17 ||
-        window.matchMedia("(prefers-color-scheme: dark)").matches
-      ) {
+      const d = new Date().getHours();
+      const night = d > 17 || d < 8;
+      if (night || window.matchMedia("(prefers-color-scheme: dark)").matches) {
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
       } else {
@@ -108,7 +107,6 @@ export default function (props: {}) {
           width={20}
           height={20}
           viewBox="0 0 1024 1024"
-          fill="currentColor"
           aria-label="auto icon"
         >
           <path d="M512 992C246.92 992 32 777.08 32 512S246.92 32 512 32s480 214.92 480 480-214.92 480-480 480zm0-840c-198.78 0-360 161.22-360 360 0 198.84 161.22 360 360 360s360-161.16 360-360c0-198.78-161.22-360-360-360zm0 660V212c165.72 0 300 134.34 300 300 0 165.72-134.28 300-300 300z"></path>

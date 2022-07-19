@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { SocialItem, SocialType } from "../../api/getMeta";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";
 import Image from "next/image";
+import { ThemeContext } from "../../utils/themeContext";
 
 export default function (props: { item: SocialItem }) {
+  const { theme } = useContext(ThemeContext);
+  const weChatUrl = useMemo(() => {
+    if (props.item.type == "wechat") {
+      if (theme.includes("dark") && props.item.dark && props.item.dark != "") {
+        return props.item.dark;
+      }
+      return props.item.value;
+    }
+    return "";
+  }, [theme, props]);
+  const arrowColor = useMemo(() => {
+    if (theme.includes("dark")) {
+      return "#232428";
+    } else {
+      return "white";
+    }
+  }, [theme]);
   // 链接、二维码、邮箱 三个类别
   const [show, setShow] = useState(false);
   const iconSize = 20;
@@ -43,14 +61,17 @@ export default function (props: { item: SocialItem }) {
               position={position}
               childRect={childRect}
               popoverRect={popoverRect}
-              arrowColor={"white"}
+              arrowColor={arrowColor}
               arrowSize={10}
               arrowStyle={{ opacity: 0.7 }}
               className=" "
               arrowClassName="popover-arrow "
             >
-              <div className="card-shadow" style={{ height: 280 }}>
-                <Image src={props.item.value} width={200} height={280}></Image>
+              <div
+                className="card-shadow bg-white dark:bg-dark-1 dark:card-shadow-dark"
+                style={{ height: 280 }}
+              >
+                <Image src={weChatUrl} width={200} height={280}></Image>
               </div>
             </ArrowContainer>
           );

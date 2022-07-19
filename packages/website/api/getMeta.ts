@@ -1,9 +1,15 @@
 import { config } from "../utils/loadConfig";
-export type SocialType = "bilibili" | "email" | "github" | "wechat";
+export type SocialType =
+  | "bilibili"
+  | "email"
+  | "github"
+  | "wechat"
+  | "wechat-dark";
 export interface SocialItem {
   updatedAt: string;
   type: SocialType;
   value: string;
+  dark?: string;
 }
 export interface PublicAllProp {
   articles: any[];

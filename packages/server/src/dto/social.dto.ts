@@ -1,4 +1,9 @@
-export type SocialType = 'bilibili' | 'email' | 'github' | 'wechat';
+export type SocialType =
+  | 'bilibili'
+  | 'email'
+  | 'github'
+  | 'wechat'
+  | 'wechat-dark';
 export class SocialItem {
   updatedAt: Date;
   value: string;

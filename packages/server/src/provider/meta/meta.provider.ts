@@ -52,6 +52,10 @@ export class MetaProvider {
         label: '微信',
         value: 'wechat',
       },
+      {
+        label: '微信（暗色模式）',
+        value: 'wechat-dark',
+      },
     ];
   }
 
