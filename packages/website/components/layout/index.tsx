@@ -111,7 +111,7 @@ export default function (props: {
             <a
               href={props.ipcHref}
               target="_blank"
-              className="hover:text-cyan-400 transition"
+              className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
             >
               {props.ipcNumber}
             </a>

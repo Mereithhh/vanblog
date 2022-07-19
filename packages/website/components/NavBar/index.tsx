@@ -75,32 +75,32 @@ export default function (props: {
               <div>{props.siteName}</div>
             </div>
             <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
-              <li className="nav-item  dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
+              <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/"}>
                   <a>首页</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
+              <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/tag"}>
                   <a>标签</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
+              <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/category"}>
                   <a>分类</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
+              <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/timeline"}>
                   <a>时间线</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
+              <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"https://tools.mereith.com"} target="_blank">
                   <a>工具站</a>
                 </Link>
               </li>
-              <li className="nav-item dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
+              <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/about"}>
                   <a>关于</a>
                 </Link>
@@ -144,7 +144,7 @@ export default function (props: {
               return (
                 <li
                   key={catelog}
-                  className="flex items-center h-full md:px-2 hover:text-cyan-400 cursor-pointer transition"
+                  className="flex items-center h-full md:px-2 hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 cursor-pointer transition-all"
                 >
                   <Link href={`/category/${catelog}`}>
                     <a>{catelog}</a>

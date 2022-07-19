@@ -56,7 +56,7 @@ const Home = (props: IndexProps) => {
               href={`/tag/${tag}`}
               key={Math.floor(Math.random() * 1000000)}
             >
-              <a className="my-2 text-gray-500 block hover:text-cyan-400 transition-all mr-5 dark:text-dark-light dark:hover:text-dark-400">{`#${tag}`}</a>
+              <a className="my-2 text-gray-500 block hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 transition-all mr-5 dark:text-dark-400 ">{`#${tag}`}</a>
             </Link>
           ))}
         </div>

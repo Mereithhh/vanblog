@@ -55,7 +55,7 @@ export default function (props: {
             <span className="inline-block px-2">
               {` 分类于 `}
               <Link href={`/category/${props.catelog}`}>
-                <a className="cursor-pointer hover:text-cyan-400">{`${props.catelog}`}</a>
+                <a className="cursor-pointer hover:text-gray-900 dark:hover:text-dark-hover hover:font-medium transition-all">{`${props.catelog}`}</a>
               </Link>
             </span>
           )}

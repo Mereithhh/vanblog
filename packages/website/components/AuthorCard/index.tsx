@@ -45,31 +45,31 @@ export default function (props: {
         </div>
         <div className="flex">
           <Link href="/timeline">
-            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
-              <div className="font-bold group-hover:text-cyan-400">
+            <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark ">
+              <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
                 {props.postNum}
               </div>
-              <div className="group-hover:text-cyan-400 text-gray-500 dark:text-dark-light">
+              <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
                 日志
               </div>
             </a>
           </Link>
           <Link href="/category">
             <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
-              <div className="font-bold group-hover:text-cyan-400">
+              <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
                 {props.catelogNum}
               </div>
-              <div className="group-hover:text-cyan-400 text-gray-500 dark:text-dark-light">
+              <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
                 分类
               </div>
             </a>
           </Link>
           <Link href="/tag">
             <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
-              <div className="group-hover:text-cyan-400 font-bold">
+              <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
                 {props.tagNum}
               </div>
-              <div className=" group-hover:text-cyan-400 text-gray-500 dark:text-dark-light">
+              <div className=" group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
                 标签
               </div>
             </a>
