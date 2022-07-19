@@ -1,6 +1,6 @@
 export function getLayoutProps(siteInfo: any) {
   return {
-    walineServerUrl: siteInfo.walineServerUrl,
+    walineServerUrl: siteInfo?.walineServerUrl || "",
     ipcHref: siteInfo.beianUrl,
     ipcNumber: siteInfo.beianNumber,
     since: siteInfo.since,
@@ -13,5 +13,6 @@ export function getLayoutProps(siteInfo: any) {
     siteDesc: siteInfo.siteDesc,
     baiduAnalysisID: siteInfo?.baiduAnalysisId || "",
     gaAnalysisID: siteInfo?.gaAnalysisId || "",
+    logoDark: siteInfo?.siteLogoDark || "",
   };
 }

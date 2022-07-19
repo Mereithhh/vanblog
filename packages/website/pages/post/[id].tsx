@@ -29,6 +29,7 @@ interface IndexProps {
   siteDesc: string;
   baiduAnalysisID: string;
   gaAnalysisID: string;
+  logoDark: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -36,6 +37,7 @@ const Home = (props: IndexProps) => {
       walineServerUrl={props.walineServerUrl}
       favicon={props.favicon}
       title={props.article.title}
+      logoDark={props.logoDark}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
       since={new Date(props.since)}

@@ -26,6 +26,7 @@ interface IndexProps {
   socials: SocialItem[];
   baiduAnalysisID: string;
   gaAnalysisID: string;
+  logoDark: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -33,6 +34,7 @@ const Home = (props: IndexProps) => {
       title={"时间线"}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
+      logoDark={props.logoDark}
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}

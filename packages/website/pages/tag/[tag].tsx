@@ -28,6 +28,7 @@ interface IndexProps {
   socials: SocialItem[];
   baiduAnalysisID: string;
   gaAnalysisID: string;
+  logoDark: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -37,6 +38,7 @@ const Home = (props: IndexProps) => {
       ipcHref={props.ipcHref}
       since={new Date(props.since)}
       logo={props.logo}
+      logoDark={props.logoDark}
       categories={props.categories}
       favicon={props.favicon}
       siteDesc={props.siteDesc}

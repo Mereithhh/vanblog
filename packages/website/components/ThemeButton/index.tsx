@@ -2,7 +2,11 @@ import Image from "next/image";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { initTheme, switchTheme } from "../../utils/theme";
 
-export default function (props: any) {
+export default function (props: {
+  logo: string;
+  logoDark: string;
+  setLogo: (logo: string) => void;
+}) {
   const { current } = useRef<any>({ hasInit: false });
   const [theme, setTheme] = useState("light");
   useEffect(() => {
@@ -10,14 +14,23 @@ export default function (props: any) {
       current.hasInit = true;
       const iTheme = initTheme();
       setTheme(iTheme);
+      if (iTheme == "dark" && props.logoDark && props.logoDark != "") {
+        props.setLogo(props.logoDark);
+      } else {
+        props.setLogo(props.logo);
+      }
     }
-  }, [current, setTheme]);
+  }, [current, setTheme, props]);
   const handleSwitch = () => {
     if (theme == "light") {
       setTheme("dark");
+      if (props.logoDark && props.logoDark != "") {
+        props.setLogo(props.logoDark);
+      }
       switchTheme("dark");
     } else {
       setTheme("light");
+      props.setLogo(props.logo);
       switchTheme("light");
     }
   };

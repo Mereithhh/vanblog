@@ -28,12 +28,14 @@ interface IndexProps {
   socials: SocialItem[];
   baiduAnalysisID: string;
   gaAnalysisID: string;
+  logoDark: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
       walineServerUrl={props.walineServerUrl}
       favicon={props.favicon}
+      logoDark={props.logoDark}
       title={props.curCategory}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}

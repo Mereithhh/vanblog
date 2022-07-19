@@ -1,12 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import Headroom from "headroom.js";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
 export default function (props: {
   logo: string;
+  logoDark: string;
   categories: string[];
   setOpen: (open: boolean) => void;
   isOpen: boolean;
@@ -14,7 +15,7 @@ export default function (props: {
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
-
+  const [picUrl, setPicUrl] = useState(props.logo);
   useEffect(() => {
     const el = document.querySelector("#nav");
     if (el && !headroom) {
@@ -68,7 +69,7 @@ export default function (props: {
               </span>
             </div>
             <div className="hidden sm:block transform translate-x-2">
-              <Image src={props.logo} width={52} height={52}></Image>
+              <Image src={picUrl} width={52} height={52}></Image>
             </div>
           </div>
           {/* 第二个flex */}
@@ -140,7 +141,13 @@ export default function (props: {
                 </div>
               </div>
 
-              <ThemeButton />
+              <ThemeButton
+                logo={props.logo}
+                logoDark={props.logoDark}
+                setLogo={(logo: string) => {
+                  setPicUrl(logo);
+                }}
+              />
             </div>
           </div>
         </div>

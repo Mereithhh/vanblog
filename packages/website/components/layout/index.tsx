@@ -24,6 +24,7 @@ export default function (props: {
   siteDesc: string;
   baiduAnalysisID: string;
   gaAnalysisID: string;
+  logoDark: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
@@ -36,6 +37,7 @@ export default function (props: {
         categories={props.categories}
         isOpen={isOpen}
         setOpen={setIsOpen}
+        logoDark={props.logoDark}
       ></NavBar>
       <BackToTopBtn></BackToTopBtn>
       <div>
