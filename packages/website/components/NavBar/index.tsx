@@ -77,32 +77,32 @@ export default function (props: {
             <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/"}>
-                  <a>首页</a>
+                  <a className="h-full flex items-center">首页</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/tag"}>
-                  <a>标签</a>
+                  <a className="h-full flex items-center">标签</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/category"}>
-                  <a>分类</a>
+                  <a className="h-full flex items-center">分类</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/timeline"}>
-                  <a>时间线</a>
+                  <a className="h-full flex items-center">时间线</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"https://tools.mereith.com"} target="_blank">
-                  <a>工具站</a>
+                  <a className="h-full flex items-center">工具站</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/about"}>
-                  <a>关于</a>
+                  <a className="h-full flex items-center">关于</a>
                 </Link>
               </li>
             </ul>
