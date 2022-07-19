@@ -1,62 +1,84 @@
 import { PageContainer } from '@ant-design/pro-layout';
-import { Alert, Card, Typography } from 'antd';
-import { FormattedMessage, useIntl } from 'umi';
 import styles from './Welcome.less';
-
-const CodePreview = ({ children }) => (
-  <pre className={styles.pre}>
-    <code>
-      <Typography.Text copyable>{children}</Typography.Text>
-    </code>
-  </pre>
-);
+import { StatisticCard } from '@ant-design/pro-components';
+import { useModel } from 'umi';
+import { wordCount } from '@/services/van-blog/wordCount';
+import { useMemo } from 'react';
+import { Button, Space } from 'antd';
 
 const Welcome = () => {
-  const intl = useIntl();
+  const { initialState, setInitialState } = useModel('@@initialState');
+  const totalWords = useMemo(() => {
+    const articles = initialState?.articles || [];
+    let t = 0;
+    articles.forEach((a) => {
+      t = t + wordCount(a?.content || '');
+    });
+    return t;
+  }, [initialState]);
   return (
-    <PageContainer>
-      <Card>
-        <Alert
-          message={intl.formatMessage({
-            id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
-          })}
-          type="success"
-          showIcon
-          banner
-          style={{
-            margin: -12,
-            marginBottom: 24,
+    <PageContainer
+      title={'Hi，今天写了没？'}
+      extra={
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => {
+              const urlRaw = initialState?.meta?.siteInfo?.walineServerUrl || '';
+              if (urlRaw == '') {
+                return;
+              }
+              const u = new URL(urlRaw).toString();
+
+              window.open(`${u}ui`, '_blank');
+            }}
+          >
+            评论管理
+          </Button>
+          <Button
+            type="primary"
+            onClick={() => {
+              const urlRaw = initialState?.meta?.siteInfo?.baseUrl || '';
+              if (urlRaw == '') {
+                return;
+              }
+
+              window.open(`${urlRaw}`, '_blank');
+            }}
+          >
+            前往主站
+          </Button>
+        </Space>
+      }
+    >
+      {/* <Card> */}
+      <StatisticCard.Group>
+        <StatisticCard
+          statistic={{
+            title: '总文章数',
+            value: initialState?.articles?.length || 0,
           }}
         />
-        <Typography.Text strong>
-          <FormattedMessage id="pages.welcome.advancedComponent" defaultMessage="Advanced Form" />{' '}
-          <a
-            href="https://procomponents.ant.design/components/table"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-table</CodePreview>
-        <Typography.Text
-          strong
-          style={{
-            marginBottom: 12,
+        <StatisticCard
+          statistic={{
+            title: '总字数',
+            value: totalWords,
           }}
-        >
-          <FormattedMessage id="pages.welcome.advancedLayout" defaultMessage="Advanced layout" />{' '}
-          <a
-            href="https://procomponents.ant.design/components/layout"
-            rel="noopener noreferrer"
-            target="__blank"
-          >
-            <FormattedMessage id="pages.welcome.link" defaultMessage="Welcome" />
-          </a>
-        </Typography.Text>
-        <CodePreview>yarn add @ant-design/pro-layout</CodePreview>
-      </Card>
+        />
+        <StatisticCard
+          statistic={{
+            title: '总访客数',
+            value: initialState?.meta?.visited || 0,
+          }}
+        />
+        <StatisticCard
+          statistic={{
+            title: '总访问量',
+            value: initialState?.meta?.viewer || 0,
+          }}
+        />
+      </StatisticCard.Group>
+      {/* </Card> */}
     </PageContainer>
   );
 };

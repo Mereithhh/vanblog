@@ -1,8 +1,10 @@
 export class SiteInfo {
   author: string;
   authorLogo: string;
+  authorLogoDark: string;
   authDesc: string;
   siteLogo: string;
+  siteLogoDark: string;
   favicon: string;
   siteName: string;
   siteDesc: string;
@@ -10,6 +12,8 @@ export class SiteInfo {
   beianUrl: string;
   payAliPay: string;
   payWechat: string;
+  payAliPayDark: string;
+  payWechatDark: string;
   since: Date;
   baseUrl: string;
   walineServerUrl: string;
