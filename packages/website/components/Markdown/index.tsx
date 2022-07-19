@@ -19,7 +19,7 @@ export default function (props: { content: string }) {
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
 
-            return (
+            return !inline ? (
               <div className="relative">
                 <CopyToClipboard
                   text={String(children)}
@@ -55,6 +55,10 @@ export default function (props: { content: string }) {
                   {...props}
                 />
               </div>
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
             );
           },
         }}
