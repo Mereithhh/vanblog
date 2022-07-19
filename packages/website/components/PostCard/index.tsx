@@ -8,7 +8,7 @@ import WaLine from "../WaLine";
 export default function (props: {
   id: number;
   title: string;
-  createdAt: Date;
+  updatedAt: Date;
   catelog: string;
   content: string;
   type: "overview" | "article" | "about";
@@ -47,8 +47,8 @@ export default function (props: {
         <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400 dark:text-dark">
           <span className="inline-block px-2">
             {props.type != "about"
-              ? `${dayjs(props.createdAt).format("YYYY-MM-DD")}`
-              : `修改于 ${dayjs(props.createdAt).format("YYYY-MM-DD")}`}
+              ? `${dayjs(props.updatedAt).format("YYYY-MM-DD")}`
+              : `修改于 ${dayjs(props.updatedAt).format("YYYY-MM-DD")}`}
           </span>
 
           {props.type != "about" && (

@@ -57,7 +57,7 @@ const Home = (props: IndexProps) => {
             id={article.id}
             key={article.title}
             title={article.title}
-            createdAt={new Date(article.createdAt)}
+            updatedAt={new Date(article.updatedAt)}
             catelog={article.category}
             content={article.content}
             type={"overview"}
