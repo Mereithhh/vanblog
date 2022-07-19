@@ -5,10 +5,11 @@ import BackToTopBtn from "../BackToTop";
 import NavBar from "../NavBar";
 import Viewer from "../Viewer";
 import { slide as Menu } from "react-burger-menu";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
+import BaiduAnalysis from "../baiduAnalysis";
 export default function (props: {
-  title?: string;
+  title: string;
   children: any;
   ipcNumber: string;
   since: Date;
@@ -20,10 +21,13 @@ export default function (props: {
   walineServerUrl: string;
   siteName: string;
   siteDesc: string;
+  baiduAnalysisID: string;
+  gaAnalysisID: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
+      <BaiduAnalysis id={props.baiduAnalysisID}></BaiduAnalysis>
       <NavBar
         siteName={props.siteName}
         logo={props.logo}
@@ -84,12 +88,10 @@ export default function (props: {
         </Menu>
       </div>
       <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-600 ">
-        {props?.title && (
-          <Head>
-            <title>{props.title}</title>
-            <link rel="icon" href={props.favicon}></link>
-          </Head>
-        )}
+        <Head>
+          <title>{props.title}</title>
+          <link rel="icon" href={props.favicon}></link>
+        </Head>
 
         {
           <div className="flex mx-auto justify-center">

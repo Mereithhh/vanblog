@@ -24,6 +24,8 @@ interface IndexProps {
   siteName: string;
   siteDesc: string;
   socials: SocialItem[];
+  baiduAnalysisID: string;
+  gaAnalysisID: string;
 }
 const Home = (props: IndexProps) => {
   return (
@@ -35,6 +37,8 @@ const Home = (props: IndexProps) => {
       since={new Date(props.since)}
       logo={props.logo}
       categories={props.categories}
+      baiduAnalysisID={props.baiduAnalysisID}
+      gaAnalysisID={props.gaAnalysisID}
       siteDesc={props.siteDesc}
       siteName={props.siteName}
       walineServerUrl={props.walineServerUrl}
