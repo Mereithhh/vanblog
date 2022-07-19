@@ -1,8 +1,8 @@
 import { config } from "../utils/loadConfig";
 
-export async function addViewer(): Promise<any> {
+export async function addViewer(isNew: string): Promise<any> {
   try {
-    const url = `${config.baseUrl}api/public/viewer`;
+    const url = `${config.baseUrl}api/public/viewer?isNew=${isNew}`;
     const res = await fetch(url, {
       method: "POST",
     });
@@ -14,10 +14,16 @@ export async function addViewer(): Promise<any> {
   }
 }
 export async function addViewerWithApiRoute() {
+  let isNew = true;
+  if (window.localStorage.getItem("visited")) {
+    isNew = false;
+  } else {
+    window.localStorage.setItem("visited", "true");
+  }
   try {
-    const url = `/api/viewer`;
+    const url = `/api/viewer?isNew=${isNew}`;
     const res = await fetch(url);
-    const { data } = await res.json();
+    const data = await res.json();
     return data;
   } catch (err) {
     console.log(err);

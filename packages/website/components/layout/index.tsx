@@ -133,7 +133,6 @@ export default function (props: {
             © {props.since.getFullYear()} - {new Date().getFullYear()}
           </p>
           <p className="select-none">
-            全站访问量 &nbsp;
             <Viewer></Viewer>
             {/* <span className="waline-pageview-count" data-path="/*" /> */}
           </p>

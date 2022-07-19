@@ -30,6 +30,9 @@ export class Meta extends Document {
   @Prop({ default: 0 })
   viewer: number;
 
+  @Prop({ default: 0 })
+  visited: number;
+
   @Prop({ default: [] })
   categories: string[];
 }

@@ -37,13 +37,11 @@ export class PublicController {
     };
   }
   @Post('/viewer')
-  async addViewer() {
-    const data = await this.metaProvider.addViewer();
+  async addViewer(@Query('isNew') isNew: boolean) {
+    const data = await this.metaProvider.addViewer(isNew);
     return {
       statusCode: 200,
-      data: {
-        data,
-      },
+      data: data,
     };
   }
 

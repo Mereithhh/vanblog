@@ -10,12 +10,24 @@ import { LinkItem } from 'src/dto/link.dto';
 export class MetaProvider {
   constructor(@InjectModel('Meta') private metaModel: Model<MetaDocument>) {}
 
-  async addViewer() {
+  async addViewer(isNew: boolean) {
     const old = await this.getAll();
     const ov = old.viewer || 0;
+    const oldVisited = old.visited || 0;
     const newViewer = ov + 1;
-    await this.update({ viewer: newViewer });
-    return newViewer;
+    let newVisited = oldVisited;
+    if (typeof isNew == 'string') {
+      if (isNew == 'true') {
+        newVisited += 1;
+      }
+    }
+    if (typeof isNew == 'boolean') {
+      if (isNew == true) {
+        newVisited += 1;
+      }
+    }
+    await this.update({ viewer: newViewer, visited: newVisited });
+    return { visited: newVisited, viewer: newViewer };
   }
 
   async getAll() {
