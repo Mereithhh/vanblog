@@ -12,6 +12,6 @@ export default function (props: { id: string }) {
         s.parentNode?.insertBefore(hm, s);
       })();
     }
-  }, [current]);
+  }, [current, props]);
   return <></>;
 }

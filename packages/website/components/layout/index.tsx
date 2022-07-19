@@ -8,6 +8,7 @@ import { slide as Menu } from "react-burger-menu";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import BaiduAnalysis from "../baiduAnalysis";
+import GaAnalysis from "../gaAnalysis";
 export default function (props: {
   title: string;
   children: any;
@@ -28,6 +29,7 @@ export default function (props: {
   return (
     <>
       <BaiduAnalysis id={props.baiduAnalysisID}></BaiduAnalysis>
+      <GaAnalysis id={props.gaAnalysisID}></GaAnalysis>
       <NavBar
         siteName={props.siteName}
         logo={props.logo}
