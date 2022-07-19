@@ -1,7 +1,9 @@
 window.onload = function () {
-  if (!("theme" in localStorage)) {
-    // 按照时间算吧
-    if (new Date().getHours() > 17) {
+  if (!("theme" in localStorage) || localStorage.theme == "auto") {
+    if (
+      new Date().getHours() > 17 ||
+      window.matchMedia("(prefers-color-scheme: dark)").matches
+    ) {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
     } else {
@@ -9,11 +11,7 @@ window.onload = function () {
       document.documentElement.classList.add("light");
     }
   } else {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+    if (localStorage.theme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
       localStorage.theme = "dark";
@@ -23,4 +21,4 @@ window.onload = function () {
       localStorage.theme = "light";
     }
   }
-}
+};

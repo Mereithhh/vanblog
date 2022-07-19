@@ -1,22 +1,23 @@
-export const initTheme = () => {
-  // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-  if (!("theme" in localStorage)) {
-    // 按照时间算吧
-    if (new Date().getHours() > 17) {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
-      return "dark";
-    } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
-      return "light";
-    }
+function setThemeAuto() {
+  if (
+    new Date().getHours() > 17 ||
+    window.matchMedia("(prefers-color-scheme: dark)").matches
+  ) {
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
+    return "dark";
   } else {
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
+    document.documentElement.classList.remove("dark");
+    document.documentElement.classList.add("light");
+    return "light";
+  }
+}
+export const initTheme = () => {
+  // 2种情况： 1. 自动。 2.手动
+  if (!("theme" in localStorage) || localStorage.theme == "auto") {
+    return "auto-" + setThemeAuto();
+  } else {
+    if (localStorage.theme === "dark") {
       document.documentElement.classList.add("dark");
       document.documentElement.classList.remove("light");
     } else {
@@ -30,10 +31,10 @@ export const initTheme = () => {
 export const switchTheme = (to: string) => {
   if (to == "light") {
     localStorage.theme = "light";
-  } else if (to == "system") {
-    localStorage.removeItem("theme");
+  } else if (to == "auto") {
+    localStorage.theme = "auto";
   } else {
     localStorage.theme = "dark";
   }
-  initTheme();
+  return initTheme();
 };
