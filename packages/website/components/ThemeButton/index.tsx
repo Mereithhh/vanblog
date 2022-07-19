@@ -23,7 +23,7 @@ export default function (props: any) {
   };
   return (
     <div
-      className="flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 ml-2  "
+      className="flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 ml-2   "
       onClick={handleSwitch}
     >
       <div
@@ -31,9 +31,10 @@ export default function (props: any) {
           display: theme == "light" ? "block" : "none",
           height: 20,
         }}
-        className="dark:text-dark"
+        className="dark:text-dark "
       >
         <svg
+          className="fill-gray-600"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
           fill="currentColor"
@@ -45,7 +46,7 @@ export default function (props: any) {
         </svg>
       </div>
       <div
-        className="dark:text-dark"
+        className="dark:text-dark fill-gray-600"
         style={{
           display: theme == "dark" ? "block" : "none",
           height: 20,

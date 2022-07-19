@@ -116,7 +116,7 @@ export default function (props: {
                 }}
                 className="flex group transform hover:scale-110 transition-all select-none cursor-pointer"
               >
-                <div className="flex items-center mr-0 sm:mr-2 hover:cursor-pointer   transition-all dark:text-dark">
+                <div className="flex items-center mr-0 sm:mr-2 hover:cursor-pointer   transition-all dark:text-dark fill-gray-600">
                   <svg
                     viewBox="0 0 1024 1024"
                     version="1.1"

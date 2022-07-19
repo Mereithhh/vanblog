@@ -122,7 +122,7 @@ export default function (props: {
           }
         }}
       >
-        <div className="flex items-center dark:text-dark">
+        <div className="flex items-center dark:text-dark text-gray-600">
           <svg
             viewBox="0 0 1024 1024"
             version="1.1"
@@ -130,6 +130,7 @@ export default function (props: {
             p-id="2305"
             width="24"
             height="24"
+            fill="currentColor"
           >
             <path
               d="M789.804097 737.772047 742.865042 784.699846 898.765741 940.600545 945.704796 893.672746Z"
@@ -162,7 +163,7 @@ export default function (props: {
           ></input>
 
           <div
-            className="transition-all transform hover:scale-125"
+            className="transition-all transform hover:scale-125 text-gray-600 dark:text-dark"
             style={{
               visibility: showClear ? "visible" : "hidden",
             }}
@@ -175,7 +176,7 @@ export default function (props: {
               viewBox="0 0 1024 1024"
               version="1.1"
               xmlns="http://www.w3.org/2000/svg"
-              fill="inherit"
+              fill="currentColor"
               p-id="2258"
               width="20"
               height="20"
