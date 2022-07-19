@@ -14,7 +14,7 @@ export default function (props: {
   const [loading, setLoading] = useState(false);
   const [typing, setTyping] = useState(false);
   const innerRef = useRef(null);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     window.addEventListener("keydown", onKeyDown);
@@ -49,11 +49,6 @@ export default function (props: {
     500,
     [search]
   );
-  useEffect(() => {
-    if (inputRef.current) {
-      (inputRef.current as any).focus();
-    }
-  }, [inputRef]);
 
   const showClear = useMemo(() => {
     return search.trim() !== "";
@@ -120,6 +115,11 @@ export default function (props: {
           minWidth: 360,
           maxWidth: "710px",
           transform: props.visible ? "scale(100%)" : "scale(0)",
+        }}
+        onTransitionEnd={() => {
+          if (props.visible) {
+            inputRef.current?.focus();
+          }
         }}
       >
         <div className="flex items-center dark:text-dark">
