@@ -170,17 +170,23 @@ export default function (props: {
             </div>
             <hr className="mt-3 dark:border-hr-dark" />
             <div className="flex justify-between text-sm mt-2 whitespace-nowrap overflow-hidden ">
-              <div>
+              <div className="" style={{ maxWidth: "50%" }}>
                 {props.pre?.id && (
                   <Link href={`/post/${props.pre?.id}`}>
-                    <a className="dark:text-dark dark:border-dark dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800">{`< ${props.pre?.title}`}</a>
+                    <a
+                      style={{ whiteSpace: "break-spaces" }}
+                      className="dark:text-dark dark:border-dark dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"
+                    >{`< ${props.pre?.title}`}</a>
                   </Link>
                 )}
               </div>
-              <div>
+              <div className="" style={{ maxWidth: "50%" }}>
                 {props.next?.id && (
                   <Link href={`/post/${props.next?.id}`}>
-                    <a className="dark:text-dark dark:border-dark  dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800">{`${props.next?.title} >`}</a>
+                    <a
+                      style={{ whiteSpace: "break-spaces" }}
+                      className="dark:text-dark dark:border-dark  dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"
+                    >{`${props.next?.title} >`}</a>
                   </Link>
                 )}
               </div>

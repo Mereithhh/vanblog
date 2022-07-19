@@ -1,7 +1,7 @@
 {
   "private": true,
   "scripts": {
-    "dev": "next dev -p 3001",
+    "dev": "next dev -p 3001 --hostname 0.0.0.0",
     "build": "next build",
     "start": "next start"
   },
