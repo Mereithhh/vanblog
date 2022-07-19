@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { initTheme, switchTheme } from "../../utils/theme";
 import { ThemeContext } from "../../utils/themeContext";
 

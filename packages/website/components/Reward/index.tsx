@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
+import { ThemeContext } from "../../utils/themeContext";
 export default function (props: {
   aliPay: string;
   weChatPay: string;
@@ -11,6 +12,21 @@ export default function (props: {
   id: number;
 }) {
   const [show, setShow] = useState(false);
+  const { theme } = useContext(ThemeContext);
+  const payUrl = useMemo(() => {
+    const r = [];
+    if (theme.includes("dark") && props.aliPayDark != "") {
+      r.push(props.aliPayDark);
+    } else {
+      r.push(props.aliPay);
+    }
+    if (theme.includes("dark") && props.weChatPayDark != "") {
+      r.push(props.weChatPayDark);
+    } else {
+      r.push(props.weChatPay);
+    }
+    return r;
+  }, [theme, props]);
   const [url, setUrl] = useState("");
   useEffect(() => {
     setUrl(window.location.href);
@@ -33,9 +49,9 @@ export default function (props: {
         className="text-center transition-all overflow-hidden"
         style={{ maxHeight: show ? "300px" : "0px" }}
       >
-        <Image src={props.weChatPay} width={180} height={250}></Image>
+        <Image src={payUrl[0]} width={180} height={250}></Image>
         <div className="w-4 inline-block"></div>
-        <Image src={props.aliPay} width={180} height={250}></Image>
+        <Image src={payUrl[1]} width={180} height={250}></Image>
       </div>
       <div className=" bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-dark ">
         <p>
