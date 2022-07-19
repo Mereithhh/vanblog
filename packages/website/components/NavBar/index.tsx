@@ -13,6 +13,7 @@ export default function (props: {
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
+
   useEffect(() => {
     const el = document.querySelector("#nav");
     if (el && !headroom) {

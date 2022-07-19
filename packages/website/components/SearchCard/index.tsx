@@ -14,6 +14,18 @@ export default function (props: {
   const [typing, setTyping] = useState(false);
   const innerRef = useRef(null);
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, []);
+  const onKeyDown = (ev: KeyboardEvent) => {
+    if (ev.key == "Escape") {
+      props.setVisible(false);
+    }
+  };
   const onSearch = async (search: string) => {
     setTyping(false);
     setLoading(true);
