@@ -150,6 +150,18 @@ const InitPage = () => {
               placeholder={'请输入 WaLine 服务端 Url'}
               rules={[{ required: true, message: '这是必填项' }]}
             ></ProFormText>
+            <ProFormText
+              width="lg"
+              name="gaAnalysisId"
+              label="Google Analysis ID"
+              placeholder={'请输入 Google Analysis ID'}
+            ></ProFormText>
+            <ProFormText
+              width="lg"
+              name="baiduAnalysisId"
+              label="Baidu 分析 ID"
+              placeholder={'请输入 Baidu 分析 ID'}
+            ></ProFormText>
             <ProFormDatePicker
               required
               rules={[{ required: true, message: '这是必填项' }]}

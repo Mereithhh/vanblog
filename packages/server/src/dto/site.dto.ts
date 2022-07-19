@@ -13,4 +13,6 @@ export class SiteInfo {
   since: Date;
   baseUrl: string;
   walineServerUrl: string;
+  gaAnalysisId: string;
+  baiduAnalysisId: string;
 }

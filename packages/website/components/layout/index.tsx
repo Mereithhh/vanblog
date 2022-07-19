@@ -106,7 +106,7 @@ export default function (props: {
           </div>
         }
         <footer className="text-center text-sm space-y-1 mt-8 md:mt-12 dark:text-dark">
-          <p className="select-none">
+          <p className="">
             IPC 编号:{" "}
             <a
               href={props.ipcHref}
@@ -118,7 +118,7 @@ export default function (props: {
           </p>
 
           <p>本站居然运行了 {getRunTimeOfDays(props.since)} 天</p>
-          <p className="select-none">
+          <p className="">
             Powered By{" "}
             <a
               href="https://github.com/Mereithhh/van-blog"

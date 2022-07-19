@@ -122,6 +122,18 @@ export default function () {
         ></ProFormText>
         <ProFormText
           width="lg"
+          name="gaAnalysisId"
+          label="Google Analysis ID"
+          placeholder={'请输入 Google Analysis ID'}
+        ></ProFormText>
+        <ProFormText
+          width="lg"
+          name="baiduAnalysisId"
+          label="Baidu 分析 ID"
+          placeholder={'请输入 Baidu 分析 ID'}
+        ></ProFormText>
+        <ProFormText
+          width="lg"
           name="walineServerUrl"
           required
           label="WaLine 服务端 Url"
