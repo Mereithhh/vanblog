@@ -26,8 +26,6 @@ const LoginMessage = ({ content }) => (
   />
 );
 
-
-
 const Login = () => {
   const [userLoginState, setUserLoginState] = useState({});
   const type = 'account';
@@ -38,7 +36,7 @@ const Login = () => {
     try {
       // 登录
       const msg = await login({ ...values, type });
-      console.log(msg)
+      console.log(msg);
       if (msg.statusCode === 200) {
         const defaultLoginSuccessMessage = intl.formatMessage({
           id: 'pages.login.success',
@@ -46,10 +44,10 @@ const Login = () => {
         });
         message.success(defaultLoginSuccessMessage);
         const token = msg.data.token;
-        window.localStorage.setItem('token',token)
-        await setInitialState((s) => ({...s,token: token, user: msg.data.user}))
+        window.localStorage.setItem('token', token);
+        await setInitialState((s) => ({ ...s, token: token, user: msg.data.user }));
         const data = await initialState?.fetchInitData?.();
-        await setInitialState((s) => ({...s,...data}))
+        await setInitialState((s) => ({ ...s, ...data }));
 
         /** 此方法会跳转到 redirect 参数所在的位置 */
 
@@ -81,7 +79,7 @@ const Login = () => {
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/logo.svg" />}
-          title="Van Nav"
+          title="Van Blog"
           subTitle={intl.formatMessage({
             id: 'pages.layouts.userLayout.title',
           })}
@@ -156,7 +154,6 @@ const Login = () => {
             <ProFormCheckbox noStyle name="autoLogin">
               <FormattedMessage id="pages.login.rememberMe" defaultMessage="自动登录" />
             </ProFormCheckbox>
-
           </div>
         </LoginForm>
       </div>
