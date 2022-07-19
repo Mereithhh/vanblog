@@ -7,7 +7,6 @@ import Image from "next/image";
 
 export default function (props: { item: SocialItem }) {
   // 链接、二维码、邮箱 三个类别
-  const [hover, setHover] = useState(false);
   const [show, setShow] = useState(false);
   const iconSize = 20;
   const qrCode = ["wechat"];
@@ -58,6 +57,7 @@ export default function (props: { item: SocialItem }) {
         }}
       >
         <a
+          target={"_blank"}
           style={{
             display: "inline-flex",
             width: "100%",
@@ -65,12 +65,6 @@ export default function (props: { item: SocialItem }) {
           }}
           onClick={() => {
             setShow(!show);
-          }}
-          onMouseEnter={() => {
-            setHover(false);
-          }}
-          onMouseLeave={() => {
-            setHover(false);
           }}
         >
           <span style={iconStyle} className={iconClass}>
@@ -91,6 +85,7 @@ export default function (props: { item: SocialItem }) {
           justifyContent: "start",
         }}
         href={props.item.value}
+        target="_blank"
       >
         <span style={iconStyle} className={iconClass}>
           {getIcon(props.item.type, iconSize)}
