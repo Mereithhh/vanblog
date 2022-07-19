@@ -3,24 +3,13 @@ import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { initTheme, switchTheme } from "../../utils/theme";
 import { ThemeContext } from "../../utils/themeContext";
 
-export default function (props: {
-  logo: string;
-  logoDark: string;
-  setLogo: (logo: string) => void;
-}) {
+export default function (props: {}) {
   const { current } = useRef<any>({ hasInit: false });
   const { current: currentTimer } = useRef<any>({ timer: null });
   const { theme, setTheme } = useContext(ThemeContext);
   const clearTimer = () => {
     clearInterval(currentTimer.timer);
     currentTimer.timer = null;
-  };
-  const setLogoDark = () => {
-    if (props.logoDark && props.logoDark != "") {
-      props.setLogo(props.logoDark);
-    } else {
-      props.setLogo(props.logo);
-    }
   };
   const setTimer = () => {
     currentTimer.timer = setInterval(() => {
@@ -30,11 +19,9 @@ export default function (props: {
       ) {
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
-        setLogoDark();
       } else {
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
-        props.setLogo(props.logo);
       }
     }, 1000);
   };
@@ -49,34 +36,22 @@ export default function (props: {
         clearTimer();
       }
       setTheme(iTheme);
-      if (iTheme.includes("dark") && props.logoDark && props.logoDark != "") {
-        props.setLogo(props.logoDark);
-      } else {
-        props.setLogo(props.logo);
-      }
     }
   }, [current, setTheme, props, currentTimer]);
   const handleSwitch = () => {
     if (theme == "light") {
       setTheme("dark");
-      setLogoDark();
       switchTheme("dark");
       clearTimer();
     } else if (theme == "dark") {
-      setTheme("auto");
       const r = switchTheme("auto");
-      if (r.includes("dark") && props.logoDark && props.logoDark != "") {
-        props.setLogo(props.logoDark);
-      } else {
-        props.setLogo(props.logo);
-      }
+      setTheme(r);
       if (!currentTimer.timer) {
         setTimer();
       }
     } else {
       clearTimer();
       setTheme("light");
-      props.setLogo(props.logo);
       switchTheme("light");
     }
   };

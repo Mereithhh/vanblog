@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import Headroom from "headroom.js";
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
+import { ThemeContext } from "../../utils/themeContext";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -15,7 +16,13 @@ export default function (props: {
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
-  const [picUrl, setPicUrl] = useState(props.logo);
+  const { theme } = useContext(ThemeContext);
+  const picUrl = useMemo(() => {
+    if (theme.includes("dark") && props.logoDark && props.logoDark != "") {
+      return props.logoDark;
+    }
+    return props.logo;
+  }, [theme, props]);
   useEffect(() => {
     const el = document.querySelector("#nav");
     if (el && !headroom) {
@@ -141,13 +148,7 @@ export default function (props: {
                 </div>
               </div>
 
-              <ThemeButton
-                logo={props.logo}
-                logoDark={props.logoDark}
-                setLogo={(logo: string) => {
-                  setPicUrl(logo);
-                }}
-              />
+              <ThemeButton />
             </div>
           </div>
         </div>
