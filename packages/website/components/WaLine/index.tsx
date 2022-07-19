@@ -4,7 +4,7 @@ import { init } from "@waline/client";
 export default function (props: { serverUrl: string; visible: boolean }) {
   const { current } = useRef<any>({ hasInit: false });
   useEffect(() => {
-    if (!current.hasInit) {
+    if (!current.hasInit && props.serverUrl && props.serverUrl != "") {
       current.hasInit = true;
       init({
         el: "#waline",
@@ -15,6 +15,9 @@ export default function (props: { serverUrl: string; visible: boolean }) {
       });
     }
   }, [current]);
+  if (!props.serverUrl || props.serverUrl == "") {
+    return null;
+  }
   return (
     <div
       id="waline"
