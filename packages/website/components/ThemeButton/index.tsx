@@ -8,12 +8,43 @@ export default function (props: {
   setLogo: (logo: string) => void;
 }) {
   const { current } = useRef<any>({ hasInit: false });
+  const { current: currentTimer } = useRef<any>({ timer: null });
   const [theme, setTheme] = useState("auto");
+  const clearTimer = () => {
+    clearInterval(currentTimer.timer);
+    currentTimer.timer = null;
+  };
+  const setTimer = () => {
+    currentTimer.timer = setInterval(() => {
+      if (
+        new Date().getHours() > 17 ||
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        document.documentElement.classList.add("dark");
+        document.documentElement.classList.remove("light");
+        if (props.logoDark && props.logoDark != "") {
+          props.setLogo(props.logoDark);
+        } else {
+          props.setLogo(props.logo);
+        }
+      } else {
+        document.documentElement.classList.add("light");
+        document.documentElement.classList.remove("dark");
+        props.setLogo(props.logo);
+      }
+    }, 1000);
+  };
+
   useEffect(() => {
     if (!current.hasInit) {
       current.hasInit = true;
       const iTheme = initTheme();
       const toSet = iTheme.includes("auto") ? "auto" : iTheme;
+      if (toSet == "auto" && !currentTimer.timer) {
+        setTimer();
+      } else {
+        clearTimer();
+      }
       setTheme(toSet);
       if (iTheme.includes("dark") && props.logoDark && props.logoDark != "") {
         props.setLogo(props.logoDark);
@@ -21,7 +52,7 @@ export default function (props: {
         props.setLogo(props.logo);
       }
     }
-  }, [current, setTheme, props]);
+  }, [current, setTheme, props, currentTimer]);
   const handleSwitch = () => {
     if (theme == "light") {
       setTheme("dark");
@@ -31,6 +62,7 @@ export default function (props: {
         props.setLogo(props.logo);
       }
       switchTheme("dark");
+      clearTimer();
     } else if (theme == "dark") {
       setTheme("auto");
       const r = switchTheme("auto");
@@ -39,7 +71,11 @@ export default function (props: {
       } else {
         props.setLogo(props.logo);
       }
+      if (!currentTimer.timer) {
+        setTimer();
+      }
     } else {
+      clearTimer();
       setTheme("light");
       props.setLogo(props.logo);
       switchTheme("light");
