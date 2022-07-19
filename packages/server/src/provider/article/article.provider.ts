@@ -77,10 +77,19 @@ export class AritcleProvider {
         ],
       })
       .exec();
-    const titleData = rawData.filter((each) => each.title.includes(str));
-    const contentData = rawData.filter((each) => each.content.includes(str));
-    const categoryData = rawData.filter((each) => each.category.includes(str));
-    const tagData = rawData.filter((each) => each.tags.includes(str));
+    const s = str.toLocaleLowerCase();
+    const titleData = rawData.filter((each) =>
+      each.title.toLocaleLowerCase().includes(s),
+    );
+    const contentData = rawData.filter((each) =>
+      each.content.toLocaleLowerCase().includes(s),
+    );
+    const categoryData = rawData.filter((each) =>
+      each.category.toLocaleLowerCase().includes(s),
+    );
+    const tagData = rawData.filter((each) =>
+      each.tags.map((t) => t.toLocaleLowerCase()).includes(s),
+    );
     const sortedData = [
       ...titleData,
       ...contentData,
