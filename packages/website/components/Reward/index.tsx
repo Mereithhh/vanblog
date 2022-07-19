@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 export default function (props: {
   aliPay: string;
   weChatPay: string;
+  aliPayDark: string;
+  weChatPayDark: string;
   author: string;
   id: number;
 }) {

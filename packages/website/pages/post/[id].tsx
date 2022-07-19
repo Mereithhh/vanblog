@@ -6,6 +6,7 @@ import WaLine from "../../components/WaLine";
 import { Article } from "../../types/article";
 import { getLayoutProps } from "../../utils/getLayoutProps";
 import { hasToc } from "../../utils/hasToc";
+
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -20,6 +21,7 @@ interface IndexProps {
   tagNum: number;
   article: Article;
   pay: string[];
+  payDark: string[];
   curId: number;
   pre: { id: number; title: string };
   next: { id: number; title: string };
@@ -62,6 +64,7 @@ const Home = (props: IndexProps) => {
         content={props.article.content}
         type={"article"}
         pay={props.pay}
+        payDark={props.payDark}
         author={props.author}
         tags={props.article.tags}
         pre={props.pre}
@@ -125,6 +128,7 @@ export async function getStaticProps({
       catelogNum: catelogNum,
       article,
       pay: [siteInfo.payAliPay, siteInfo.payWechat],
+      payDark: [siteInfo?.payAliPayDark || "", siteInfo?.payWechatDark || ""],
       pre,
       next,
     },

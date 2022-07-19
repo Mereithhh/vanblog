@@ -1,6 +1,7 @@
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { initTheme, switchTheme } from "../../utils/theme";
+import { ThemeContext } from "../../utils/themeContext";
 
 export default function (props: {
   logo: string;
@@ -9,10 +10,17 @@ export default function (props: {
 }) {
   const { current } = useRef<any>({ hasInit: false });
   const { current: currentTimer } = useRef<any>({ timer: null });
-  const [theme, setTheme] = useState("auto");
+  const { theme, setTheme } = useContext(ThemeContext);
   const clearTimer = () => {
     clearInterval(currentTimer.timer);
     currentTimer.timer = null;
+  };
+  const setLogoDark = () => {
+    if (props.logoDark && props.logoDark != "") {
+      props.setLogo(props.logoDark);
+    } else {
+      props.setLogo(props.logo);
+    }
   };
   const setTimer = () => {
     currentTimer.timer = setInterval(() => {
@@ -22,11 +30,7 @@ export default function (props: {
       ) {
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");
-        if (props.logoDark && props.logoDark != "") {
-          props.setLogo(props.logoDark);
-        } else {
-          props.setLogo(props.logo);
-        }
+        setLogoDark();
       } else {
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
@@ -39,13 +43,12 @@ export default function (props: {
     if (!current.hasInit) {
       current.hasInit = true;
       const iTheme = initTheme();
-      const toSet = iTheme.includes("auto") ? "auto" : iTheme;
-      if (toSet == "auto" && !currentTimer.timer) {
+      if (iTheme.includes("auto") && !currentTimer.timer) {
         setTimer();
       } else {
         clearTimer();
       }
-      setTheme(toSet);
+      setTheme(iTheme);
       if (iTheme.includes("dark") && props.logoDark && props.logoDark != "") {
         props.setLogo(props.logoDark);
       } else {
@@ -56,11 +59,7 @@ export default function (props: {
   const handleSwitch = () => {
     if (theme == "light") {
       setTheme("dark");
-      if (props.logoDark && props.logoDark != "") {
-        props.setLogo(props.logoDark);
-      } else {
-        props.setLogo(props.logo);
-      }
+      setLogoDark();
       switchTheme("dark");
       clearTimer();
     } else if (theme == "dark") {
@@ -126,7 +125,7 @@ export default function (props: {
       <div
         className="dark:text-dark fill-gray-600"
         style={{
-          display: theme == "auto" ? "block" : "none",
+          display: theme.includes("auto") ? "block" : "none",
           height: 20,
         }}
       >

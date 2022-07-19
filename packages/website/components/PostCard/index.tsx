@@ -13,6 +13,7 @@ export default function (props: {
   content: string;
   type: "overview" | "article" | "about";
   pay?: string[];
+  payDark?: string[];
   author?: string;
   tags?: string[];
   next?: { id: number; title: string };
@@ -152,6 +153,8 @@ export default function (props: {
           <Reward
             aliPay={props.pay[0]}
             weChatPay={props.pay[1]}
+            aliPayDark={(props?.payDark || ["", ""])[0]}
+            weChatPayDark={(props?.payDark || ["", ""])[1]}
             author={props.author as any}
             id={props.id}
           ></Reward>

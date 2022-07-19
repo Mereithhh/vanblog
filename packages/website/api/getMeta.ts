@@ -29,6 +29,8 @@ export interface PublicAllProp {
       beianUrl: string;
       payAliPay: string;
       payWechat: string;
+      payAliPayDark?: string;
+      payWechatDark?: string;
       since: string;
       walineServerUrl: string;
       baseUrl: string;
