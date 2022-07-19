@@ -19,7 +19,7 @@ export default function (props: { content: string }) {
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
 
-            return !inline && match ? (
+            return (
               <div className="relative">
                 <CopyToClipboard
                   text={String(children)}
@@ -50,15 +50,11 @@ export default function (props: { content: string }) {
                 <SyntaxHighlighter
                   children={String(children).replace(/\n$/, "")}
                   style={vscDarkPlus as any}
-                  language={match[1]}
+                  language={match?.length ? match[1] : undefined}
                   PreTag="pre"
                   {...props}
                 />
               </div>
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
             );
           },
         }}
