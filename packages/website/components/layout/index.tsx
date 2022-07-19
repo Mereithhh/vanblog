@@ -116,10 +116,22 @@ export default function (props: {
               {props.ipcNumber}
             </a>
           </p>
+
+          <p>本站居然运行了 {getRunTimeOfDays(props.since)} 天</p>
+          <p className="select-none">
+            Powered By{" "}
+            <a
+              href="https://github.com/Mereithhh/van-blog"
+              target={"_blank"}
+              className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
+            >
+              Van Blog
+            </a>
+          </p>
+
           <p className="select-none">
             © {props.since.getFullYear()} - {new Date().getFullYear()}
           </p>
-          <p>本站居然运行了 {getRunTimeOfDays(props.since)} 天</p>
           <p className="select-none">
             全站访问量 &nbsp;
             <Viewer></Viewer>
