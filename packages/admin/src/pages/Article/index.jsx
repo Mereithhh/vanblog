@@ -3,6 +3,7 @@ import { mutiSearch } from '@/services/van-blog/search';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, message, Modal, Tag } from 'antd';
+import { each } from 'lodash';
 import moment from 'moment';
 import { useRef } from 'react';
 import { history, useModel } from 'umi';
@@ -171,7 +172,11 @@ export default () => {
                 break;
               case 'tags':
                 if (target != '') {
+                  console.log(target);
                   data = data.filter((eachRecord) => {
+                    if (!eachRecord.tags || eachRecord.tags.length == 0) {
+                      return false;
+                    }
                     return eachRecord.tags.some((eachTag) => mutiSearch(eachTag, target));
                   });
                 }

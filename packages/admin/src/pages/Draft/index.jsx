@@ -230,6 +230,9 @@ export default () => {
               case 'tags':
                 if (target != '') {
                   data = data.filter((eachRecord) => {
+                    if (!eachRecord.tags || eachRecord.tags.length == 0) {
+                      return false;
+                    }
                     return eachRecord.tags.some((eachTag) => mutiSearch(eachTag, target));
                   });
                 }
