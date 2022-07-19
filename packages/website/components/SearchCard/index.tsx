@@ -77,7 +77,14 @@ export default function (props: {
     if (text == "有结果") {
       return (
         <div>
-          <ArticleList showYear={true} articles={result}></ArticleList>
+          <ArticleList
+            showYear={true}
+            articles={result}
+            onClick={() => {
+              props.setVisible(false);
+              document.body.style.overflow = "auto";
+            }}
+          ></ArticleList>
         </div>
       );
     } else {

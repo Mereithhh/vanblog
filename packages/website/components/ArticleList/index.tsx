@@ -1,9 +1,13 @@
 import { Article } from "../../types/article";
 import dayjs from "dayjs";
 import Link from "next/link";
-export default function (props: { articles: Article[]; showYear?: boolean }) {
+export default function (props: {
+  articles: Article[];
+  showYear?: boolean;
+  onClick?: () => void;
+}) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" onClick={props.onClick}>
       {props.articles.map((article) => {
         return (
           <Link href={`/post/${article.id}`} key={article.id}>
