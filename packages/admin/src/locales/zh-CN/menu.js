@@ -1,5 +1,5 @@
 export default {
-  'menu.welcome': '欢迎',
+  'menu.welcome': '概览',
   'menu.articles': '文章管理',
   'menu.drafts': '草稿管理',
   'menu.siteInfo': '站点管理',

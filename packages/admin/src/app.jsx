@@ -89,18 +89,17 @@ export const layout = ({ initialState, setInitialState }) => {
         history.push('/');
       }
     },
-    links: isDev
-      ? [
-          <Link key="openapi" to="/umi/plugin/openapi" target="_blank">
-            <LinkOutlined />
-            <span>OpenAPI 文档</span>
-          </Link>,
-          <Link to="/~docs" key="docs">
-            <BookOutlined />
-            <span>业务组件文档</span>
-          </Link>,
-        ]
-      : [],
+    links: [
+      <Link key="mainSite" to="/" target="_blank">
+        <LinkOutlined />
+        <span>主站</span>
+      </Link>,
+      <a key="mainSite" href="https://github.com/mereithhh/van-blog" target="_blank">
+        <LinkOutlined />
+        <span>帮助文档</span>
+      </a>,
+    ],
+
     menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
