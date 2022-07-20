@@ -15,6 +15,7 @@ const rewites =
 
 module.exports = {
   reactStrictMode: true,
+  output: "standalone",
   images: {
     domains: ["www.mereith.com", "pic.mereith.com"],
   },

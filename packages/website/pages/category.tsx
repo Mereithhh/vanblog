@@ -85,7 +85,10 @@ const Home = (props: IndexProps) => {
 };
 
 export default Home;
-export async function getStaticProps(): Promise<{ props: IndexProps }> {
+export async function getStaticProps(): Promise<{
+  props: IndexProps;
+  revalidate: number;
+}> {
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
   const postNum = data.articles.length;
@@ -125,5 +128,6 @@ export async function getStaticProps(): Promise<{ props: IndexProps }> {
       articles: articles,
       socials: data.meta.socials,
     },
+    revalidate: 60,
   };
 }

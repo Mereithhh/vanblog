@@ -103,7 +103,7 @@ export async function getStaticPaths() {
 }
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: IndexProps }> {
+}: any): Promise<{ props: IndexProps; revalidate: number }> {
   const curCategory = params.category;
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
@@ -153,5 +153,6 @@ export async function getStaticProps({
       curCategory,
       curNum,
     },
+    revalidate: 60,
   };
 }
