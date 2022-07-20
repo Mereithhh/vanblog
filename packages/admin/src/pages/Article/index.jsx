@@ -258,6 +258,13 @@ export default () => {
             placeholder="请输入标题"
             rules={[{ required: true, message: '这是必填项' }]}
           />
+          <ProFormText
+            width="md"
+            id="topC"
+            name="topC"
+            label="置顶优先级"
+            placeholder="留空或0表示不置顶，其余数字越大表示优先级越高"
+          />
           <ProFormSelect
             mode="tags"
             tokenSeparators={[',']}

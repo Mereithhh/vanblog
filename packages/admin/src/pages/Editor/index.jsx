@@ -193,6 +193,13 @@ export default function () {
               />
               {type == 'article' && (
                 <>
+                  <ProFormText
+                    width="md"
+                    id="top"
+                    name="top"
+                    label="置顶优先级"
+                    placeholder="留空或0表示不置顶，其余数字越大表示优先级越高"
+                  />
                   <ProFormSelect
                     width="md"
                     name="private"

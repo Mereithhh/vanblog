@@ -2,6 +2,7 @@ export class CreateArticleDto {
   title: string;
   content?: string;
   tags?: string[];
+  top?: number;
   category: string;
   hidden?: boolean;
   private?: boolean;
@@ -13,6 +14,7 @@ export class UpdateArticleDto {
   tags?: string;
   category?: string;
   hidden?: boolean;
+  top?: number;
   private?: boolean;
   password?: string;
 }

@@ -17,6 +17,8 @@ export class Article extends Document {
   @Prop({ default: [] })
   tags: string[];
 
+  @Prop({ default: 0 })
+  top: number;
   @Prop()
   category: string;
 
