@@ -26,6 +26,7 @@ COPY . .
 # ENV NEXT_TELEMETRY_DISABLED 1
 
 ENV isBuild=t
+ENV VAN_BLOG_REVALIDATE_TIME=10
 RUN yarn build
 
 # If using npm comment out above and use below instead
@@ -51,6 +52,8 @@ COPY --from=builder /app/package.json ./package.json
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+RUN yarn add sharp
 
 USER nextjs
 

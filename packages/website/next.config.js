@@ -16,6 +16,11 @@ const rewites =
 module.exports = {
   reactStrictMode: true,
   output: "standalone",
+  experimental: {
+    images: {
+      allowFutureImage: true,
+    },
+  },
   images: {
     domains: ["www.mereith.com", "pic.mereith.com"],
   },

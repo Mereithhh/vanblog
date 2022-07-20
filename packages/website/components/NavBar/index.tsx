@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image from "next/future/image";
 import Link from "next/link";
 import Headroom from "headroom.js";
 import { useContext, useEffect, useMemo, useState } from "react";

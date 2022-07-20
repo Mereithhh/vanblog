@@ -3,7 +3,7 @@ import { SocialItem, SocialType } from "../../api/getMeta";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";
-import Image from "next/image";
+import Image from "next/future/image";
 import { ThemeContext } from "../../utils/themeContext";
 
 export default function (props: { item: SocialItem }) {
