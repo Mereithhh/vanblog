@@ -6,6 +6,8 @@ COPY package.json ./
 RUN yarn
 COPY ./ ./
 ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
+# RUN sed -i 's/\/assets/\/admin\/assets/g' dist/admin/index.html
+ENV EEE=production
 RUN yarn build
 
 FROM nginx
