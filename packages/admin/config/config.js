@@ -8,6 +8,7 @@ const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
   base: '/admin',
+  publicPath: '/admin/',
   antd: {},
   dva: {
     hmr: true,

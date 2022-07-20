@@ -5,7 +5,7 @@
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {
     "analyze": "cross-env ANALYZE=1 umi build",
-    "build": "umi build",
+    "build": " umi build",
     "deploy": "npm run build && npm run gh-pages",
     "dev": "npm run start:dev",
     "gh-pages": "gh-pages -d dist",
@@ -23,7 +23,7 @@
     "prepare": "echo 'pre'",
     "prettier": "prettier -c --write \"src/**/*\"",
     "serve": "umi-serve",
-    "start": "SET NODE_OPTIONS=--openssl-legacy-provider && cross-env MOCK=none UMI_ENV=dev umi dev",
+    "start": " cross-env MOCK=none UMI_ENV=dev NODE_OPTIONS=--openssl-legacy-provider  umi dev",
     "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev umi dev",
     "start:no-mock": "cross-env MOCK=none UMI_ENV=dev umi dev",
     "start:no-ui": "cross-env UMI_UI=none UMI_ENV=dev umi dev",

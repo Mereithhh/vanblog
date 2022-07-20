@@ -1,4 +1,16 @@
-# TODO
+# 运行指令
+
+server:
+
+```
+docker run -d --name server  -v $(pwd)/config.yaml:/usr/src/app/config.yaml -p 3000:3000  server:0
+```
+
+admin:
+
+```
+  docker run -d --name admin -p 3003:80 admin
+```
 
 ---
 
