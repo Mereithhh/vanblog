@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { searchArticles, searchWithApiRoute } from "../../api/search";
+import { searchArticles } from "../../api/search";
 import { useDebounce } from "react-use";
 import ArticleList from "../ArticleList";
 import KeyCard from "../KeyCard";
@@ -36,7 +36,7 @@ export default function (props: {
   const onSearch = async (search: string) => {
     setTyping(false);
     setLoading(true);
-    const resultFromServer = await searchWithApiRoute(search);
+    const resultFromServer = await searchArticles(search);
     setResult(resultFromServer);
     setLoading(false);
   };

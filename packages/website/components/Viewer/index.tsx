@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { addViewerWithApiRoute } from "../../api/addViewer";
+import { addViewer } from "../../api/addViewer";
 export default function () {
   const [viewer, setViewer] = useState(0);
   const [visited, setVisited] = useState(0);
   const { current } = useRef<any>({ hasInit: false });
   const fetchViewer = useCallback(async () => {
-    const result = await addViewerWithApiRoute();
+    const result = await addViewer();
     setViewer(result.viewer);
     setVisited(result.visited);
   }, [setViewer, setVisited]);
