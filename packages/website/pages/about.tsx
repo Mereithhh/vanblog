@@ -69,6 +69,7 @@ const Home = (props: IndexProps) => {
         content={props.about.content}
         type={"about"}
         walineServerUrl={props.walineServerUrl}
+        top={0}
       ></PostCard>
     </Layout>
   );

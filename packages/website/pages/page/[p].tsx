@@ -5,6 +5,7 @@ import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import { Article } from "../../types/article";
 import { getLayoutProps } from "../../utils/getLayoutProps";
+import { sortArticleWithTop } from "../../utils/sortArticles";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -62,6 +63,7 @@ const Home = (props: IndexProps) => {
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
+            top={article.top || 0}
             id={article.id}
             key={article.title}
             title={article.title}
@@ -111,9 +113,7 @@ export async function getStaticProps({
   const postNum = data.articles.length;
   const tagNum = data.tags.length;
   const catelogNum = data.categories.length;
-  const sortedArticles = data.articles.sort(
-    (a, b) => new Date(a.createdAt).valueOf() - new Date(b.createdAt).valueOf()
-  );
+  const sortedArticles = sortArticleWithTop(data.articles);
   // 只需要5个文章
   const articles = [];
   // 前面的不要

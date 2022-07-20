@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import Markdown from "../Markdown";
 import Reward from "../Reward";
+import TopPinIcon from "../TopPinIcon";
 import WaLine from "../WaLine";
 
 export default function (props: {
@@ -19,6 +20,7 @@ export default function (props: {
   next?: { id: number; title: string };
   pre?: { id: number; title: string };
   walineServerUrl: string;
+  top: number;
 }) {
   const iconSize = "16";
   const iconClass = "mr-1 fill-gray-400 dark:text-dark";
@@ -43,7 +45,11 @@ export default function (props: {
   }
   return (
     <div>
-      <div className="bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark">
+      <div
+        style={{ position: "relative" }}
+        className="overflow-hidden  bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
+      >
+        {props.top != 0 && <TopPinIcon></TopPinIcon>}
         <div className="text-lg md:text-xl text-center font-medium mb-2 mt-2 dark:text-dark">
           {props.title}
         </div>

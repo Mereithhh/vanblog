@@ -20,6 +20,7 @@ export class AritcleProvider {
         updatedAt: item.updatedAt,
         createdAt: item.createdAt,
         id: item.id,
+        top: item.top,
       };
     });
   }

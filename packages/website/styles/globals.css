@@ -28,6 +28,9 @@
   .dark-border-hover {
     @apply dark:hover:text-gray-300 dark:hover:border-gray-300;
   }
+  .right-xs {
+    right: 2px;
+  }
   .card-shadow {
     box-shadow: 0 2px 8px rgb(0, 0, 0, 0.15);
   }
@@ -62,6 +65,7 @@
   }
   .text-dark-400 {
     color: rgb(110, 110, 110);
+    fill: rgb(110, 110, 110);
   }
   .bg-dark-light {
     background-color: rgb(158, 158, 158);

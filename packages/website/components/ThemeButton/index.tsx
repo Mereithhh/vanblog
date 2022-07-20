@@ -14,6 +14,7 @@ export default function (props: {}) {
     currentTimer.timer = setInterval(() => {
       const d = new Date().getHours();
       const night = d > 17 || d < 8;
+      console.log("auto theme timer running");
       if (night || window.matchMedia("(prefers-color-scheme: dark)").matches) {
         document.documentElement.classList.add("dark");
         document.documentElement.classList.remove("light");

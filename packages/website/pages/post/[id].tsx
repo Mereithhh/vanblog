@@ -56,6 +56,7 @@ const Home = (props: IndexProps) => {
       }
     >
       <PostCard
+        top={props.article.top || 0}
         id={props.article.id}
         key={props.article.title}
         title={props.article.title}

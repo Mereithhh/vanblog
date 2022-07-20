@@ -6,4 +6,5 @@ export interface Article {
   title: string;
   updatedAt: string;
   id: number;
+  top?: number;
 }
