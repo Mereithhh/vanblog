@@ -3,6 +3,7 @@ import { getPublicAll, SocialItem } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
 import { getLayoutProps } from "../utils/getLayoutProps";
+import { revalidate } from "../utils/loadConfig";
 
 interface IndexProps {
   ipcNumber: string;
@@ -78,7 +79,7 @@ const Home = (props: IndexProps) => {
 export default Home;
 export async function getStaticProps(): Promise<{
   props: IndexProps;
-  revalidate: number;
+  revalidate?: number;
 }> {
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
@@ -96,6 +97,6 @@ export async function getStaticProps(): Promise<{
       tags,
       socials: data.meta.socials,
     },
-    revalidate: 60,
+    ...revalidate,
   };
 }

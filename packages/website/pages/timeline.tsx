@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import TimeLineItem from "../components/TimeLineItem";
 import { Article } from "../types/article";
 import { getLayoutProps } from "../utils/getLayoutProps";
+import { revalidate } from "../utils/loadConfig";
 import { wordCount } from "../utils/wordCount";
 interface IndexProps {
   ipcNumber: string;
@@ -88,7 +89,7 @@ const Home = (props: IndexProps) => {
 export default Home;
 export async function getStaticProps(): Promise<{
   props: IndexProps;
-  revalidate: number;
+  revalidate?: number;
 }> {
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
@@ -133,6 +134,6 @@ export async function getStaticProps(): Promise<{
       catelogNum: catelogNum,
       articles: articles,
     },
-    revalidate: 60,
+    ...revalidate,
   };
 }

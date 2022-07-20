@@ -5,6 +5,7 @@ import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import { Article } from "../../types/article";
 import { getLayoutProps } from "../../utils/getLayoutProps";
+import { revalidate } from "../../utils/loadConfig";
 import { sortArticleWithTop } from "../../utils/sortArticles";
 interface IndexProps {
   ipcNumber: string;
@@ -106,7 +107,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: IndexProps; revalidate: number }> {
+}: any): Promise<{ props: IndexProps; revalidate?: number }> {
   const curPage = parseInt(params.p);
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
@@ -142,6 +143,6 @@ export async function getStaticProps({
       catelogNum: catelogNum,
       articles: articles,
     },
-    revalidate: 60,
+    ...revalidate,
   };
 }

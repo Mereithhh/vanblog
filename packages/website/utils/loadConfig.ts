@@ -8,3 +8,7 @@ function washUrl(url: string) {
   const u = new URL(url);
   return u.toString();
 }
+
+export const revalidate = process.env.VAN_BLOG_REVALIDATE_TIME
+  ? { revalidate: parseInt(process.env.VAN_BLOG_REVALIDATE_TIME) }
+  : {};

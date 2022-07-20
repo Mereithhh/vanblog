@@ -6,6 +6,7 @@ import WaLine from "../../components/WaLine";
 import { Article } from "../../types/article";
 import { getLayoutProps } from "../../utils/getLayoutProps";
 import { hasToc } from "../../utils/hasToc";
+import { revalidate } from "../../utils/loadConfig";
 
 interface IndexProps {
   ipcNumber: string;
@@ -95,7 +96,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: IndexProps; revalidate: number }> {
+}: any): Promise<{ props: IndexProps; revalidate?: number }> {
   const id = parseInt(params.id);
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
@@ -133,6 +134,6 @@ export async function getStaticProps({
       pre,
       next,
     },
-    revalidate: 60,
+    ...revalidate,
   };
 }

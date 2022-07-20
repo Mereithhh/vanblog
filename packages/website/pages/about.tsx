@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import PostCard from "../components/PostCard";
 import WaLine from "../components/WaLine";
 import { getLayoutProps } from "../utils/getLayoutProps";
+import { revalidate } from "../utils/loadConfig";
 interface IndexProps {
   ipcNumber: string;
   since: string;
@@ -78,7 +79,7 @@ const Home = (props: IndexProps) => {
 export default Home;
 export async function getStaticProps(): Promise<{
   props: IndexProps;
-  revalidate: number;
+  revalidate?: number;
 }> {
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
@@ -96,6 +97,6 @@ export async function getStaticProps(): Promise<{
       catelogNum: catelogNum,
       about: about as any,
     },
-    revalidate: 60,
+    ...revalidate,
   };
 }

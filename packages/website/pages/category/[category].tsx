@@ -4,6 +4,7 @@ import Layout from "../../components/layout";
 import TimeLineItem from "../../components/TimeLineItem";
 import { Article } from "../../types/article";
 import { getLayoutProps } from "../../utils/getLayoutProps";
+import { revalidate } from "../../utils/loadConfig";
 import { wordCount } from "../../utils/wordCount";
 interface IndexProps {
   ipcNumber: string;
@@ -103,7 +104,7 @@ export async function getStaticPaths() {
 }
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: IndexProps; revalidate: number }> {
+}: any): Promise<{ props: IndexProps; revalidate?: number }> {
   const curCategory = params.category;
   const data = await getPublicAll();
   const siteInfo = data.meta.siteInfo;
@@ -153,6 +154,6 @@ export async function getStaticProps({
       curCategory,
       curNum,
     },
-    revalidate: 60,
+    ...revalidate,
   };
 }
