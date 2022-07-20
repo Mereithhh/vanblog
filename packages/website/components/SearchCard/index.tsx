@@ -26,10 +26,12 @@ export default function (props: {
     if (ev.key == "Escape") {
       props.setVisible(false);
       event?.preventDefault();
+      document.body.style.overflow = "auto";
     }
     if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == "k") {
       props.setVisible(true);
       event?.preventDefault();
+      document.body.style.overflow = "hidden";
     }
     return false;
   };
