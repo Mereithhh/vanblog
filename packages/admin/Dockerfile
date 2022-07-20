@@ -12,4 +12,4 @@ FROM nginx
 WORKDIR /usr/share/nginx/html/
 COPY --from=BUILD_IMAGE /usr/src/app/dist/ ./
 COPY default.conf /etc/nginx/conf.d/
-EXPOSE 80
+EXPOSE 3002

@@ -1,2 +1,0 @@
-database:
-  url: mongodb://mereith:vanlusg2!@tx.mereith.top:27017/vanBlog?authSource=admin

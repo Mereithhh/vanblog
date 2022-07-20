@@ -1,18 +1,14 @@
-# 运行指令
+## 简介
 
-server:
+一个一站式的博客系统。刚开发完，文档慢慢补吧。。目前自用中。
 
-```
-docker run -d --name server  -v $(pwd)/config.yaml:/usr/src/app/config.yaml -p 3000:3000  server:0
-```
+## docker-compose 部署
 
-admin:
+目前只做了 `docker-compose` 部署的教程，以后慢慢加。
 
-```
-  docker run -d --name admin -p 3003:80 admin
-```
+编排文件在 `docker-compose` 文件夹中。
 
----
+## 更新记录
 
 2022-07-19 todo
 
@@ -48,7 +44,7 @@ admin:
 - [x] 后台 logo 修改
 - [x] 后台概览页面
 - [x] 文章顶置功能
-- [] docker 部署方案
+- [x] docker 部署方案
 - [x] API 开发 proxy
 - [] 简单的 README
 - [x] 滚动条优化

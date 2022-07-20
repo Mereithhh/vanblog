@@ -20,9 +20,8 @@ rawConfigs = rawConfigs
   .map((content) => yaml.parse(content));
 
 if (rawConfigs.length === 0) {
-  console.log('缺少配置文件，将采用默认数据库配置');
+  console.log('缺少配置文件,尝试从 env 中读取或采用默认配置');
   rawConfigs.push([]);
-  //throw new Error('缺少配置文件: /etc/steamory360/config.yaml');
 }
 
 // 递归合并
@@ -37,9 +36,10 @@ const config = [...rawConfigs].reduce((prev, curr) => {
  * @param defaultValue 默认值
  */
 export const loadConfig = (key: string, defaultValue?: any) => {
-  const envKey = key
+  const envKey ="VAN_BLOG_" + key
     .split('.')
     .map((x) => x.toUpperCase())
     .join('_');
+
   return process.env[envKey] || _.get(config, key, defaultValue);
 };
