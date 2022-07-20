@@ -1,6 +1,6 @@
 // 从环境变量中读取.
 export const config = {
-  baseUrl: washUrl(process.env.VAN_BLOG_BASE_URL ?? "http://localhost:3000"),
+  baseUrl: washUrl(process.env.VAN_BLOG_SERVER_URL ?? "http://localhost:3000"),
 };
 
 function washUrl(url: string) {

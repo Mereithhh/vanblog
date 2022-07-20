@@ -20,7 +20,7 @@ export interface PublicAllProp {
     socials: SocialItem[];
     rewards: any[];
     about: {
-      updatedAt: Date;
+      updatedAt: string;
       content: string;
     };
     siteInfo: {
@@ -50,7 +50,43 @@ export async function getPublicAll(): Promise<PublicAllProp> {
     const { data } = await res.json();
     return data;
   } catch (err) {
-    console.log(err);
-    throw err;
+    if (process.env.isBuild == "t") {
+      console.log("无法连接，采用默认值");
+      // 给一个默认的吧。
+      return {
+        articles: [],
+        categories: [],
+        tags: [],
+        meta: {
+          links: [],
+          socials: [],
+          rewards: [],
+          about: {
+            updatedAt: new Date().toISOString(),
+            content: "",
+          },
+          siteInfo: {
+            author: "mereith",
+            authorDesc: "Life is strange.",
+            authorLogo: "",
+            siteLogo: "https://pic.mereith.com/2022/07/19/62d5ff079e73e.png",
+            favicon: "https://pic.mereith.com/logo.svg",
+            siteName: "van blog",
+            siteDesc: "van blog",
+            beianNumber: "123",
+            beianUrl: "",
+            payAliPay: "",
+            payWechat: "",
+            payAliPayDark: "",
+            payWechatDark: "",
+            since: "",
+            walineServerUrl: "",
+            baseUrl: "",
+          },
+        },
+      };
+    } else {
+      throw err;
+    }
   }
 }
