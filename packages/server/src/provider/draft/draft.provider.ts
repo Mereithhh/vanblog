@@ -23,6 +23,23 @@ export class DraftProvider {
     createdData.id = newId;
     return createdData.save();
   }
+  async importDrafts(drafts: Draft[]) {
+    // 题目相同就合并，以导入的优先
+    // for (let i = 0; i < drafts.length; i++) {
+    //   const newId = await this.getNewId();
+    //   drafts[i].id = newId;
+    // }
+    for (const draft of drafts) {
+      const { id, ...createDto } = draft;
+      const title = draft.title;
+      const oldDraft = await this.findOneByTitle(title);
+      if (oldDraft) {
+        this.updateById(oldDraft.id, { ...createDto, deleted: false });
+      } else {
+        await this.create(createDto);
+      }
+    }
+  }
   async publish(id: number, options: PublishDraftDto) {
     const draft = await this.getById(id);
     const createArticleDto: CreateArticleDto = {
@@ -48,6 +65,9 @@ export class DraftProvider {
   }
   async findById(id: number): Promise<Draft> {
     return this.draftModel.findOne({ id }).exec();
+  }
+  async findOneByTitle(title: string): Promise<Draft> {
+    return this.draftModel.findOne({ title }).exec();
   }
 
   async searchByString(str: string): Promise<Draft[]> {

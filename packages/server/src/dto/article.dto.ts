@@ -11,10 +11,11 @@ export class CreateArticleDto {
 export class UpdateArticleDto {
   title?: string;
   content?: string;
-  tags?: string;
+  tags?: string[];
   category?: string;
   hidden?: boolean;
   top?: number;
   private?: boolean;
   password?: string;
+  deleted?: boolean;
 }

@@ -60,6 +60,14 @@ export class AllController {
   async importAll(@UploadedFile() file: Express.Multer.File) {
     const json = file.buffer.toString();
     const data = JSON.parse(json);
-    const { articles, tags, meta, drafts, categories, user } = data;
+    const { articles, meta, drafts, user } = data;
+    await this.articleProvider.importArticles(articles);
+    await this.draftProvider.importDrafts(drafts);
+    await this.userProvider.updateUser(user);
+    await this.metaProvider.update(meta);
+    return {
+      statusCode: 200,
+      data: '导入成功！',
+    };
   }
 }

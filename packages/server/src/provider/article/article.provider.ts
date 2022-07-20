@@ -31,6 +31,26 @@ export class AritcleProvider {
     return createdData.save();
   }
 
+  async importArticles(articles: Article[]) {
+    // 先获取一遍新的 id
+    // for (let i = 0; i < articles.length; i++) {
+    //   const newId = await this.getNewId();
+    //   articles[i].id = newId;
+    // }
+
+    // 题目相同就合并，以导入的优先
+    for (const a of articles) {
+      const { id, ...createDto } = a;
+      const title = a.title;
+      const oldArticle = await this.findOneByTitle(title);
+      if (oldArticle) {
+        this.updateById(oldArticle.id, { ...createDto, deleted: false });
+      } else {
+        await this.create(createDto);
+      }
+    }
+  }
+
   async getAll(): Promise<Article[]> {
     const articles = await this.articleModel.find({ hidden: false }).exec();
     return articles.filter((each) => {
@@ -54,6 +74,9 @@ export class AritcleProvider {
   }
   async findById(id: number): Promise<Article> {
     return this.articleModel.findOne({ id }).exec();
+  }
+  async findOneByTitle(title: string): Promise<Article> {
+    return this.articleModel.findOne({ title }).exec();
   }
 
   toSearchResult(articles: Article[]) {
