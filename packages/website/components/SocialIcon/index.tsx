@@ -19,7 +19,7 @@ export default function (props: { item: SocialItem }) {
   }, [theme, props]);
   const arrowColor = useMemo(() => {
     if (theme.includes("dark")) {
-      return "#232428";
+      return "#1b1c1f";
     } else {
       return "white";
     }
@@ -68,7 +68,7 @@ export default function (props: { item: SocialItem }) {
               arrowClassName="popover-arrow "
             >
               <div
-                className="card-shadow bg-white dark:bg-dark-1 dark:card-shadow-dark"
+                className="card-shadow bg-white dark:bg-dark-2 dark:card-shadow-dark"
                 style={{ height: 280 }}
               >
                 <Image src={weChatUrl} width={200} height={280}></Image>
