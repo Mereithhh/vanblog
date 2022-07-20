@@ -2,6 +2,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { Button, message } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { history, useModel } from 'umi';
+import Backup from './tabs/Backup';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
 import Link from './tabs/Link';
@@ -14,6 +15,7 @@ export default function () {
     donateInfo: <Donate />,
     links: <Link />,
     socials: <Social />,
+    io: <Backup></Backup>,
   };
   const [currTabKey, setCurrTabKey] = useState('category');
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -47,6 +49,10 @@ export default function () {
         {
           tab: '联系方式',
           key: 'socials',
+        },
+        {
+          tab: '导入导出',
+          key: 'io',
         },
       ]}
       extra={[

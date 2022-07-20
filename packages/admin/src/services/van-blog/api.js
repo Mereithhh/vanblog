@@ -136,6 +136,11 @@ export async function getTags() {
     method: 'GET',
   });
 }
+export async function importAll() {
+  return request(`/api/admin/all/import`, {
+    method: 'POST',
+  });
+}
 export async function deleteSocial(name) {
   return request(`/api/admin/meta/social/${name}`, {
     method: 'DELETE',

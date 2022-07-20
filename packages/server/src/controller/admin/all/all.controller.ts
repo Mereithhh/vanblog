@@ -1,5 +1,16 @@
-import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  Put,
+  Res,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
@@ -7,6 +18,8 @@ import { DraftProvider } from 'src/provider/draft/draft.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 import { UserProvider } from 'src/provider/user/user.provider';
+import * as fs from 'fs';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @ApiTags('about')
 @UseGuards(AdminGuard)
@@ -41,5 +54,12 @@ export class AllController {
       statusCode: 200,
       data,
     };
+  }
+  @Post('/import')
+  @UseInterceptors(FileInterceptor('file'))
+  async importAll(@UploadedFile() file: Express.Multer.File) {
+    const json = file.buffer.toString();
+    const data = JSON.parse(json);
+    const { articles, tags, meta, drafts, categories, user } = data;
   }
 }

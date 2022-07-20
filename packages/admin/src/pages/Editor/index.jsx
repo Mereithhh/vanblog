@@ -83,7 +83,7 @@ export default function () {
               <Tag style={{ marginBottom: '5px' }} color="blue">
                 {type == 'about' ? '关于' : currObj?.id || '未知'}
               </Tag>
-              <span>{type == 'about' ? '关于' : ''}</span>
+              <span>{type == 'about' ? '关于' : currObj.title}</span>
             </Space>
           ),
           extra: [
