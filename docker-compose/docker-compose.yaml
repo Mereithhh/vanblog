@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+  server:
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:server-1.0.0
+    restart: always
+    volumes:
+      - /var/docker/waline/data:/app/data
+    environment:
+      TZ: "Asia/Shanghai"
+      VAN_BLOG_DATABASE_URL: "mongodb://mereith:vanlusg2!@tx.mereith.top:27017/vanBlog?authSource=admin"
+      VAN_BLOG_JWT_SECRET: "AnyString"
+  admin:
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:admin-1.0.0
+    restart: always
+    environment:
+      TZ: "Asia/Shanghai"
+  website:
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:website-1.0.0
+    restart: always
+    environment:
+      TZ: "Asia/Shanghai"
+      VAN_BLOG_SERVER_URL: "http://server:3000"
+      #VAN_BLOG_REVALIDATE_TIME: 10
+  proxy:
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:proxy-1.0.0
+    restart: always
+    ports:
+      - 8360:80
