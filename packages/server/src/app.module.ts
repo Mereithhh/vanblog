@@ -37,6 +37,7 @@ import { InitController } from './controller/admin/init/init.controller';
 import { InitProvider } from './provider/init/init.provider';
 import { InitMiddleware } from './provider/auth/init.middleware';
 import { AllController } from './controller/admin/all/all.controller';
+import { MenuMetaController } from './controller/admin/menu/menu.meta.controller';
 
 @Module({
   imports: [
@@ -68,6 +69,7 @@ import { AllController } from './controller/admin/all/all.controller';
     CategoryController,
     AuthController,
     InitController,
+    MenuMetaController,
     AllController,
   ],
   providers: [

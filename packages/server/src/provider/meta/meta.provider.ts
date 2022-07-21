@@ -7,6 +7,7 @@ import { RewardItem } from 'src/dto/reward.dto';
 import { SocialItem, SocialType } from 'src/dto/social.dto';
 import { LinkItem } from 'src/dto/link.dto';
 import { UserProvider } from '../user/user.provider';
+import { MenuItem } from 'src/dto/menu.dto';
 @Injectable()
 export class MetaProvider {
   constructor(
@@ -88,6 +89,9 @@ export class MetaProvider {
   }
   async getLinks() {
     return (await this.getAll()).links;
+  }
+  async getMenus() {
+    return (await this.getAll()).menus;
   }
   async updateAbout(newContent: string) {
     return this.metaModel.updateOne(
@@ -205,6 +209,29 @@ export class MetaProvider {
 
     return this.metaModel.updateOne({}, { links: newLinks });
   }
+  async addOrUpdateMemu(addMenuItemDto: Partial<MenuItem>) {
+    const meta = await this.getAll();
+    const toAdd: MenuItem = {
+      value: addMenuItemDto.value,
+      name: addMenuItemDto.name,
+    };
+    const newMenus = [];
+    let pushed = false;
+
+    meta.menus.forEach((r) => {
+      if (r.name === toAdd.name) {
+        pushed = true;
+        newMenus.push(toAdd);
+      } else {
+        newMenus.push(r);
+      }
+    });
+    if (!pushed) {
+      newMenus.push(toAdd);
+    }
+
+    return this.metaModel.updateOne({}, { menus: newMenus });
+  }
   async deleteLink(name: string) {
     const meta = await this.getAll();
     const newLinks = [];
@@ -214,5 +241,15 @@ export class MetaProvider {
       }
     });
     return this.metaModel.updateOne({}, { links: newLinks });
+  }
+  async deleteMenuItem(name: string) {
+    const meta = await this.getAll();
+    const newMemus = [];
+    meta.menus.forEach((r) => {
+      if (r.name !== name) {
+        newMemus.push(r);
+      }
+    });
+    return this.metaModel.updateOne({}, { menus: newMemus });
   }
 }
