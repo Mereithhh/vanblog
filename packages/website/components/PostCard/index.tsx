@@ -202,6 +202,7 @@ export default function (props: {
             </div>
           </div>
         )}
+        <div style={{ height: props.type == "about" ? "16px" : "0" }}></div>
       </div>
       <WaLine
         serverUrl={props.walineServerUrl}
