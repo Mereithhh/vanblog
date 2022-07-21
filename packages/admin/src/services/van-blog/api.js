@@ -98,8 +98,19 @@ export async function updateLink(body) {
     data: body,
   });
 }
+export async function updateMenu(body) {
+  return request(`/api/admin/meta/menu`, {
+    method: 'PUT',
+    data: body,
+  });
+}
 export async function deleteLink(name) {
   return request(`/api/admin/meta/link/${name}`, {
+    method: 'DELETE',
+  });
+}
+export async function deleteMenu(name) {
+  return request(`/api/admin/meta/menu/${name}`, {
     method: 'DELETE',
   });
 }

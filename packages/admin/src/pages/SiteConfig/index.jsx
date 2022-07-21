@@ -6,6 +6,7 @@ import Backup from './tabs/Backup';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
 import Link from './tabs/Link';
+import Menu from './tabs/Menu';
 import SiteInfo from './tabs/SiteInfo';
 import Social from './tabs/Social';
 export default function () {
@@ -16,6 +17,7 @@ export default function () {
     links: <Link />,
     socials: <Social />,
     io: <Backup></Backup>,
+    menuConfig: <Menu></Menu>,
   };
   const [currTabKey, setCurrTabKey] = useState('category');
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -34,9 +36,14 @@ export default function () {
           tab: '分类管理',
           key: 'category',
         },
+
         {
           tab: '站点配置',
           key: 'siteInfo',
+        },
+        {
+          tab: '导航配置',
+          key: 'menuConfig',
         },
         {
           tab: '捐赠管理',
