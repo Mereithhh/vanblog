@@ -50,7 +50,7 @@ export default function (props: {
         className="overflow-hidden  bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
       >
         {props.top != 0 && <TopPinIcon></TopPinIcon>}
-        <div className="text-lg md:text-2xl text-center font-medium mb-2 mt-2 dark:text-dark">
+        <div className="text-lg md:text-2xl text-center font-medium mb-2 mt-2 dark:text-dark text-gray-700 ">
           {props.title}
         </div>
         <div className="text-center text-xs md:text-base divide-x divide-gray-400 text-gray-400 dark:text-dark">

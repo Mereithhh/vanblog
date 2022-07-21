@@ -76,7 +76,7 @@
   --color-prettylights-syntax-brackethighlighter-angle: #57606a;
   --color-prettylights-syntax-sublimelinter-gutter-mark: #8c959f;
   --color-prettylights-syntax-constant-other-reference-link: #0a3069;
-  --color-fg-default: #24292f;
+  --color-fg-default: rgb(55, 65, 81);
   --color-fg-muted: #57606a;
   --color-fg-subtle: #6e7781;
   --color-canvas-default: #ffffff;
@@ -741,10 +741,6 @@
   margin-bottom: 0;
 }
 
-.markdown-body li > p {
-  margin-top: 16px;
-}
-
 .markdown-body li + li {
   margin-top: 0.25em;
 }
@@ -1046,4 +1042,8 @@
 
 .markdown-body ::-webkit-calendar-picker-indicator {
   filter: invert(50%);
+}
+.markdown-body li > p {
+  margin-top: 0px;
+  margin-bottom: 0;
 }

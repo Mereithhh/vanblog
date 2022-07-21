@@ -112,7 +112,7 @@ export default function (props: {
           </ul>
         </Menu>
       </div>
-      <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-600 ">
+      <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-700 ">
         <Head>
           <title>{props.title}</title>
           <link rel="icon" href={props.favicon}></link>
