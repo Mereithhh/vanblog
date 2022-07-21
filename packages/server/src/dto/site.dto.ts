@@ -20,3 +20,8 @@ export class SiteInfo {
   gaAnalysisId: string;
   baiduAnalysisId: string;
 }
+export interface updateUserDto {
+  username: string;
+  password: string;
+}
+export type UpdateSiteInfoDto = Partial<SiteInfo> | Partial<updateUserDto>;

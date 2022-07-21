@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SiteInfo } from 'src/dto/site.dto';
+import { SiteInfo, UpdateSiteInfoDto } from 'src/dto/site.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('site')
@@ -19,7 +19,7 @@ export class SiteMetaController {
   }
 
   @Put()
-  async update(@Body() updateDto: Partial<SiteInfo>) {
+  async update(@Body() updateDto: UpdateSiteInfoDto) {
     const data = await this.metaProvider.updateSiteInfo(updateDto);
     return {
       statusCode: 200,

@@ -2,13 +2,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Meta, MetaDocument } from 'src/scheme/meta.schema';
-import { SiteInfo } from 'src/dto/site.dto';
+import { SiteInfo, UpdateSiteInfoDto } from 'src/dto/site.dto';
 import { RewardItem } from 'src/dto/reward.dto';
 import { SocialItem, SocialType } from 'src/dto/social.dto';
 import { LinkItem } from 'src/dto/link.dto';
+import { UserProvider } from '../user/user.provider';
 @Injectable()
 export class MetaProvider {
-  constructor(@InjectModel('Meta') private metaModel: Model<MetaDocument>) {}
+  constructor(
+    @InjectModel('Meta') private metaModel: Model<MetaDocument>,
+    private readonly userProvider: UserProvider,
+  ) {}
 
   async addViewer(isNew: boolean) {
     const old = await this.getAll();
@@ -89,8 +93,14 @@ export class MetaProvider {
     );
   }
 
-  async updateSiteInfo(updateSiteInfoDto: Partial<SiteInfo>) {
-    return this.metaModel.updateOne({}, { siteInfo: updateSiteInfoDto });
+  async updateSiteInfo(updateSiteInfoDto: UpdateSiteInfoDto) {
+    // @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    const { username, password, ...updateDto } = updateSiteInfoDto;
+    if (username && username != '') {
+      this.userProvider.updateUser({ name: username, password });
+    }
+
+    return this.metaModel.updateOne({}, { siteInfo: updateDto });
   }
 
   async addOrUpdateReward(addReward: Partial<RewardItem>) {
