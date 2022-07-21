@@ -89,7 +89,9 @@
   --color-attention-subtle: #fff8c5;
   --color-danger-fg: #cf222e;
 }
-
+.markdown-body ul {
+  list-style: unset;
+}
 .markdown-body {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
