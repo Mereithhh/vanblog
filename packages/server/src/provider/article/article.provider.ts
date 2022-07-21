@@ -144,10 +144,7 @@ export class AritcleProvider {
   }
 
   async getNewId() {
-    const maxObj = await this.articleModel
-      .find({})
-      .sort({ createdAt: -1 })
-      .exec();
+    const maxObj = await this.articleModel.find({}).sort({ id: -1 }).exec();
     if (maxObj.length) {
       return maxObj[0].id + 1;
     } else {
