@@ -11,6 +11,7 @@ export default function (props: {}) {
     currentTimer.timer = null;
   };
   const setTimer = () => {
+    clearTimer();
     currentTimer.timer = setInterval(() => {
       const d = new Date().getHours();
       const night = d > 17 || d < 8;
@@ -40,6 +41,9 @@ export default function (props: {}) {
         setTimer();
       }
     }
+    return () => {
+      clearInterval(currentTimer.timer);
+    };
   }, [current, setTheme, props, currentTimer, theme]);
   const handleSwitch = () => {
     clearTimer();
