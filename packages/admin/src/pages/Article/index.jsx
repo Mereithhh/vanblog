@@ -74,6 +74,16 @@ const columns = [
     hideInSearch: true,
   },
   {
+    title: '顶置',
+    key: (() => {
+      return Math.floor(Math.random() * 10000);
+    })(),
+    dataIndex: 'top',
+    valueType: 'number',
+    sorter: true,
+    hideInSearch: true,
+  },
+  {
     title: '创建时间',
     dataIndex: 'createdAt',
     valueType: 'dateRange',
@@ -152,11 +162,26 @@ export default () => {
               return moment(b.createdAt).unix() - moment(a.createdAt).unix();
             });
           }
+        } else if (sort && sort.top) {
+          data = data.sort((a, b) => {
+            const atop = a.top || 0;
+            const btop = b.top || 0;
+            const r = btop - atop;
+            if (r != 0) {
+              return r;
+            } else {
+              return moment(b.createdAt).unix() - moment(a.createdAt).unix();
+            }
+          });
         } else {
           data = data.sort((a, b) => {
             return moment(b.createdAt).unix() - moment(a.createdAt).unix();
           });
         }
+        const about = data.filter((a) => a.id == 0);
+        const notAbout = data.filter((a) => a.id != 0);
+        data = [...about, ...notAbout];
+
         // 搜索
 
         const { current, pageSize, ...searchObj } = params;
