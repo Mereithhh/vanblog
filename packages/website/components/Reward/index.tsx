@@ -46,8 +46,11 @@ export default function (props: {
         </div>
       </div>
       <div
-        className="text-center transition-all overflow-hidden"
-        style={{ maxHeight: show ? "300px" : "0px" }}
+        className="text-center transition-all overflow-hidden flex justify-center"
+        style={{
+          maxHeight: show ? "300px" : "0px",
+          marginBottom: show ? "16px" : "0",
+        }}
       >
         <Image src={payUrl[0]} width={180} height={250}></Image>
         <div className="w-4 inline-block"></div>
