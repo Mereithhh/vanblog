@@ -92,6 +92,9 @@
 .markdown-body ul {
   list-style: unset;
 }
+.markdown-body code {
+  word-break: break-all;
+}
 .markdown-body {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
