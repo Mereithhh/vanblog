@@ -76,7 +76,13 @@ export default function (props: {
             setIsOpen(state.isOpen);
           }}
         >
-          <ul className=" sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark ">
+          <ul
+            onClick={() => {
+              setIsOpen(false);
+              document.body.style.overflow = "auto";
+            }}
+            className=" sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark "
+          >
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/"}>
                 <a className="w-full inline-block">主页</a>
