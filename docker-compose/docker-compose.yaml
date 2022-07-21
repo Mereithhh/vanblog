@@ -4,11 +4,9 @@ services:
   server:
     image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:server-1.0.0
     restart: always
-    volumes:
-      - /var/docker/waline/data:/app/data
     environment:
       TZ: "Asia/Shanghai"
-      VAN_BLOG_DATABASE_URL: "mongodb://localhost:27017"
+      VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017"
       VAN_BLOG_JWT_SECRET: "AnyString"
   admin:
     image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:admin-1.0.0
@@ -33,3 +31,31 @@ services:
       VAN_BLOG_SERVER_HOST: "server:3000"
       VAN_BLOG_WEBSITE_HOST: "website:3001"
       VAN_BLOG_ADMIN_HOST: "admin:3002"
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      TZ: "Asia/Shanghai"
+      MONGO_INITDB_ROOT_USERNAME: vanBlog
+      MONGO_INITDB_ROOT_PASSWORD: vanBlog
+    volumes:
+      - $(pwd)/data/mongo:/data/db
+  # 如果你需要评论系统就加上
+  # waline:
+  #   image: lizheming/waline:latest
+  #   restart: always
+  #   ports:
+  #     - 127.0.0.1:8360:8360
+  #   volumes:
+  #     - /var/docker/waline/data:/app/data
+  #   environment:
+  #     TZ: 'Asia/Shanghai'
+  #     SITE_NAME: 'Mereith Blog'
+  #     SITE_URL: 'https://www.mereith.com'
+  #     SECURE_DOMAINS: 'mereith.com'
+  #     AUTHOR_EMAIL: 'wanglu@mereith.com'
+  #     MONGO_HOST: "tx4.mereith.top"
+  #     MONGO_DB: "waline"
+  #     MONGO_USER: "mereith"
+  #     MONGO_PASSWORD: "vanlusg2!"
+  #     MONGO_AUTHSOURCE: "admin"

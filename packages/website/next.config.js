@@ -41,5 +41,8 @@ module.exports = {
       domains: getAllowDomains(),
     },
   },
+  images: {
+    domains: getAllowDomains(),
+  },
   ...rewites,
 };
