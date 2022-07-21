@@ -33,8 +33,8 @@ export default function (props: { content: string }) {
                   }}
                 >
                   <span
-                    className="transition-all rounded inline-block cursor-pointer absolute top-2 right-2  bg-inherit  hover:bg-gray-600"
-                    style={{ height: "32px", padding: "6px 10px" }}
+                    className="transition-all rounded inline-block cursor-pointer absolute top-1 right-2  bg-inherit  hover:bg-gray-600"
+                    style={{ height: "36px", padding: "6px 10px" }}
                   >
                     <img
                       src="/copy.svg"
