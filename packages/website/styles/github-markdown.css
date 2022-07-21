@@ -92,6 +92,9 @@
 .markdown-body ul {
   list-style: unset;
 }
+.markdown-body ol {
+  list-style: unset;
+}
 .markdown-body code {
   word-break: break-all;
 }
