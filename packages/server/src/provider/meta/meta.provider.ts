@@ -14,6 +14,14 @@ export class MetaProvider {
     private readonly userProvider: UserProvider,
   ) {}
 
+  async getViewer() {
+    const old = await this.getAll();
+    const ov = old.viewer || 0;
+    const oldVisited = old.visited || 0;
+    const newViewer = ov;
+    const newVisited = oldVisited;
+    return { visited: newVisited, viewer: newViewer };
+  }
   async addViewer(isNew: boolean) {
     const old = await this.getAll();
     const ov = old.viewer || 0;

@@ -45,6 +45,15 @@ export class PublicController {
     };
   }
 
+  @Get('/viewer')
+  async getViewer() {
+    const data = await this.metaProvider.getViewer();
+    return {
+      statusCode: 200,
+      data: data,
+    };
+  }
+
   @Get('/tag/:name')
   async getArticlesByTagName(@Param('name') name: string) {
     const data = await this.tagProvider.getArticlesByTag(name);
