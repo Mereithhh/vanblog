@@ -4,7 +4,6 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
-import Image from "next/future/image";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -37,14 +36,14 @@ export default function (props: { content: string }) {
                     className="transition-all rounded inline-block cursor-pointer absolute top-2 right-2  bg-inherit  hover:bg-gray-600"
                     style={{ height: "32px", padding: "6px 10px" }}
                   >
-                    <Image
+                    <img
                       src="/copy.svg"
                       width={20}
                       height={20}
                       style={{
                         backgroundColor: "inherit",
                       }}
-                    ></Image>
+                    ></img>
                   </span>
                 </CopyToClipboard>
                 <SyntaxHighlighter

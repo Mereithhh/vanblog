@@ -1,4 +1,3 @@
-import Image from "next/future/image";
 import { useContext, useEffect, useMemo, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
@@ -52,9 +51,9 @@ export default function (props: {
           marginBottom: show ? "16px" : "0",
         }}
       >
-        <Image src={payUrl[0]} width={180} height={250}></Image>
+        <img src={payUrl[0]} width={180} height={250}></img>
         <div className="w-4 inline-block"></div>
-        <Image src={payUrl[1]} width={180} height={250}></Image>
+        <img src={payUrl[1]} width={180} height={250}></img>
       </div>
       <div className=" bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-dark ">
         <p>

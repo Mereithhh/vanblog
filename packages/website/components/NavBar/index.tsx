@@ -1,4 +1,3 @@
-import Image from "next/future/image";
 import Link from "next/link";
 import Headroom from "headroom.js";
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
@@ -99,7 +98,7 @@ export default function (props: {
               </span>
             </div>
             <div className="hidden sm:block transform translate-x-2">
-              <Image src={picUrl} width={52} height={52}></Image>
+              <img src={picUrl} width={52} height={52}></img>
             </div>
           </div>
           {/* 第二个flex */}

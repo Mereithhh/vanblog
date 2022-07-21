@@ -3,7 +3,6 @@ import { SocialItem, SocialType } from "../../api/getMeta";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";
-import Image from "next/future/image";
 import { ThemeContext } from "../../utils/themeContext";
 
 export default function (props: { item: SocialItem }) {
@@ -71,7 +70,7 @@ export default function (props: { item: SocialItem }) {
                 className="card-shadow bg-white dark:bg-dark-2 dark:card-shadow-dark"
                 style={{ height: 280 }}
               >
-                <Image src={weChatUrl} width={200} height={280}></Image>
+                <img src={weChatUrl} width={200} height={280}></img>
               </div>
             </ArrowContainer>
           );

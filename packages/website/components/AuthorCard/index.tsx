@@ -1,4 +1,3 @@
-import Image from "next/future/image";
 import Link from "next/link";
 import { useContext, useEffect, useMemo } from "react";
 import Headroom from "headroom.js";
@@ -43,12 +42,12 @@ export default function (props: {
     <div id="author-card" className="fixed ">
       <div className="w-52 flex flex-col justify-center items-center bg-white pt-6  pb-4 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
         <div className="px-10 flex flex-col justify-center items-center">
-          <Image
+          <img
             className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
             src={logoUrl}
             width={120}
             height={120}
-          ></Image>
+          ></img>
 
           <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">
             {props.author}
