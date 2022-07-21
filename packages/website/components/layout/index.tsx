@@ -79,9 +79,13 @@ export default function (props: {
               </Link>
             </li>
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-              <Link href={"https://tools.mereith.com"} target="_blank">
-                <a className="w-full inline-block">工具站</a>
-              </Link>
+              <a
+                className="w-full inline-block"
+                target="_blank"
+                href="https://tools.mereith.com"
+              >
+                工具站
+              </a>
             </li>
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/about"}>

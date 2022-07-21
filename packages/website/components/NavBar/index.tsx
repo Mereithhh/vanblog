@@ -106,9 +106,13 @@ export default function (props: {
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
-                <Link href={"https://tools.mereith.com"} target="_blank">
-                  <a className="h-full flex items-center">工具站</a>
-                </Link>
+                <a
+                  className="h-full flex items-center"
+                  href={"https://tools.mereith.com"}
+                  target="_blank"
+                >
+                  工具站
+                </a>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/about"}>
