@@ -25,6 +25,7 @@ export default function (props: { content: string }) {
         className="bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark overflow-y-auto"
         style={{ maxHeight: 450 }}
       >
+        <div className="text-center text-lg font-medium mt-4">目录</div>
         <MarkdownNavbar
           updateHashAuto={true}
           source={props.content}
