@@ -13,6 +13,10 @@
   code {
     white-space: pre-wrap !important;
   }
+  ol,
+  ul {
+    list-style: unset;
+  }
   a {
     word-wrap: break-word;
     word-break: break-all;
