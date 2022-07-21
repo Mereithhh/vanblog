@@ -61,7 +61,7 @@ export default function (props: { content: string }) {
             );
           },
         }}
-        className="markdown-body"
+        className="markdown-body md:text-lg text-base"
         children={props.content}
       />
     </>
