@@ -5,10 +5,11 @@ import BackToTopBtn from "../BackToTop";
 import NavBar from "../NavBar";
 import Viewer from "../Viewer";
 import { slide as Menu } from "react-burger-menu";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import BaiduAnalysis from "../baiduAnalysis";
 import GaAnalysis from "../gaAnalysis";
+import { MenuItem } from "../../api/getMeta";
 export default function (props: {
   title: string;
   children: any;
@@ -25,13 +26,31 @@ export default function (props: {
   baiduAnalysisID: string;
   gaAnalysisID: string;
   logoDark: string;
+  links: MenuItem[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const renderLinks = useCallback(() => {
+    const arr: any[] = [];
+    props.links.forEach((item) => {
+      arr.push(
+        <li
+          className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2"
+          key={item.name}
+        >
+          <a className="w-full inline-block" target="_blank" href={item.value}>
+            {item.name}
+          </a>
+        </li>
+      );
+    });
+    return arr;
+  }, [props]);
   return (
     <>
       <BaiduAnalysis id={props.baiduAnalysisID}></BaiduAnalysis>
       <GaAnalysis id={props.gaAnalysisID}></GaAnalysis>
       <NavBar
+        links={props.links}
         siteName={props.siteName}
         logo={props.logo}
         categories={props.categories}
@@ -78,15 +97,7 @@ export default function (props: {
                 <a className="w-full inline-block">时间线</a>
               </Link>
             </li>
-            <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-              <a
-                className="w-full inline-block"
-                target="_blank"
-                href="https://tools.mereith.com"
-              >
-                工具站
-              </a>
-            </li>
+            {renderLinks()}
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/about"}>
                 <a className="w-full inline-block">关于</a>

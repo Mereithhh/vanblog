@@ -1,4 +1,4 @@
-import { getPublicAll } from "../../api/getMeta";
+import { getPublicAll, MenuItem } from "../../api/getMeta";
 import Layout from "../../components/layout";
 import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
@@ -33,10 +33,12 @@ interface IndexProps {
   baiduAnalysisID: string;
   gaAnalysisID: string;
   logoDark: string;
+  links: MenuItem[];
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      links={props.links}
       walineServerUrl={props.walineServerUrl}
       favicon={props.favicon}
       title={props.article.title}
@@ -128,6 +130,7 @@ export async function getStaticProps({
       postNum: postNum,
       tagNum: tagNum,
       catelogNum: catelogNum,
+      links: data.meta.menus,
       article,
       pay: [siteInfo.payAliPay, siteInfo.payWechat],
       payDark: [siteInfo?.payAliPayDark || "", siteInfo?.payWechatDark || ""],

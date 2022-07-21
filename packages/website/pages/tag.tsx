@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPublicAll, SocialItem } from "../api/getMeta";
+import { getPublicAll, MenuItem, SocialItem } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
 import { getLayoutProps } from "../utils/getLayoutProps";
@@ -27,11 +27,13 @@ interface IndexProps {
   baiduAnalysisID: string;
   gaAnalysisID: string;
   logoDark: string;
+  links: MenuItem[];
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
       title="标签"
+      links={props.links}
       favicon={props.favicon}
       ipcNumber={props.ipcNumber}
       ipcHref={props.ipcHref}
@@ -96,6 +98,7 @@ export async function getStaticProps(): Promise<{
       catelogNum: catelogNum,
       tags,
       socials: data.meta.socials,
+      links: data.meta.menus,
     },
     ...revalidate,
   };

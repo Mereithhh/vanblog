@@ -11,6 +11,10 @@ export interface SocialItem {
   value: string;
   dark?: string;
 }
+export interface MenuItem {
+  name: string;
+  value: string;
+}
 export interface PublicAllProp {
   articles: any[];
   categories: any[];
@@ -19,6 +23,7 @@ export interface PublicAllProp {
     links: any[];
     socials: SocialItem[];
     rewards: any[];
+    menus: MenuItem[];
     about: {
       updatedAt: string;
       content: string;
@@ -58,6 +63,7 @@ export async function getPublicAll(): Promise<PublicAllProp> {
         categories: [],
         tags: [],
         meta: {
+          menus: [],
           links: [],
           socials: [],
           rewards: [],

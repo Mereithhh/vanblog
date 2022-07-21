@@ -1,4 +1,4 @@
-import { getPublicAll, SocialItem } from "../api/getMeta";
+import { getPublicAll, MenuItem, SocialItem } from "../api/getMeta";
 import AuthorCard from "../components/AuthorCard";
 import Layout from "../components/layout";
 import PageNav from "../components/PageNav";
@@ -30,10 +30,12 @@ interface IndexProps {
   baiduAnalysisID: string;
   gaAnalysisID: string;
   logoDark: string;
+  links: MenuItem[];
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      links={props.links}
       favicon={props.favicon}
       title={props.siteName}
       logoDark={props.logoDark}
@@ -115,6 +117,7 @@ export async function getStaticProps(): Promise<{
       catelogNum: catelogNum,
       articles: articles,
       socials: data.meta.socials,
+      links: data.meta.menus,
     },
     ...revalidate,
   };

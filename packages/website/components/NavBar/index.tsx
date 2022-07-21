@@ -1,11 +1,12 @@
 import Image from "next/future/image";
 import Link from "next/link";
 import Headroom from "headroom.js";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
 import { ThemeContext } from "../../utils/themeContext";
+import { MenuItem } from "../../api/getMeta";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -13,6 +14,7 @@ export default function (props: {
   setOpen: (open: boolean) => void;
   isOpen: boolean;
   siteName: string;
+  links: MenuItem[];
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
@@ -34,6 +36,27 @@ export default function (props: {
       headroom?.destroy();
     };
   }, [headroom, setHeadroom]);
+
+  const renderedLinks = useCallback(() => {
+    const arr: any[] = [];
+    props.links.forEach((item) => {
+      arr.push(
+        <li
+          key={item.name}
+          className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all"
+        >
+          <a
+            className="h-full flex items-center"
+            href={item.value}
+            target="_blank"
+          >
+            {item.name}
+          </a>
+        </li>
+      );
+    });
+    return arr;
+  }, [props]);
   return (
     <>
       <SearchCard visible={showSearch} setVisible={setShowSearch}></SearchCard>
@@ -105,15 +128,7 @@ export default function (props: {
                   <a className="h-full flex items-center">时间线</a>
                 </Link>
               </li>
-              <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
-                <a
-                  className="h-full flex items-center"
-                  href={"https://tools.mereith.com"}
-                  target="_blank"
-                >
-                  工具站
-                </a>
-              </li>
+              {renderedLinks()}
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/about"}>
                   <a className="h-full flex items-center">关于</a>
