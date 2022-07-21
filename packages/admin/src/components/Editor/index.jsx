@@ -10,6 +10,9 @@ export default function Editor(props) {
       },
       minHeight: 500,
     });
+    return () => {
+      vditor.destroy();
+    };
   }, []);
   return <div id="vditor" className="vditor" />;
 }

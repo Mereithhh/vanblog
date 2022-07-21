@@ -2,11 +2,11 @@ import "@waline/client/dist/waline.css";
 import { useEffect, useRef } from "react";
 import { init } from "@waline/client";
 export default function (props: { serverUrl: string; visible: boolean }) {
-  const { current } = useRef<any>({ hasInit: false });
+  const { current } = useRef<any>({ hasInit: false, wa: null });
   useEffect(() => {
     if (!current.hasInit && props.serverUrl && props.serverUrl != "") {
       current.hasInit = true;
-      init({
+      current.wa = init({
         el: "#waline",
         serverURL: props.serverUrl,
         comment: true,
@@ -14,6 +14,9 @@ export default function (props: { serverUrl: string; visible: boolean }) {
         dark: ".dark",
       });
     }
+    return () => {
+      current.wa?.destroy();
+    };
   }, [current]);
   if (!props.serverUrl || props.serverUrl == "") {
     return null;

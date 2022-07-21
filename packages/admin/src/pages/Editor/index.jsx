@@ -91,10 +91,12 @@ export default function () {
               type="primary"
               key="saveButton"
               onClick={async () => {
+                // console.log(vd.getValue());
                 Modal.confirm({
                   title: `确定保存吗？`,
                   onOk: async () => {
                     const v = vd?.getValue();
+
                     if (type == 'article') {
                       await updateArticle(currObj?.id, { content: v });
                       reload();
