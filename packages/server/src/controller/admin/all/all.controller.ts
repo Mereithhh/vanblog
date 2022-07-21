@@ -20,6 +20,7 @@ import { TagProvider } from 'src/provider/tag/tag.provider';
 import { UserProvider } from 'src/provider/user/user.provider';
 import * as fs from 'fs';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { removeID } from 'src/utils/removeId';
 
 @ApiTags('about')
 @UseGuards(AdminGuard)
@@ -60,7 +61,12 @@ export class AllController {
   async importAll(@UploadedFile() file: Express.Multer.File) {
     const json = file.buffer.toString();
     const data = JSON.parse(json);
-    const { articles, meta, drafts, user } = data;
+    // eslint-disable-next-line prefer-const
+    let { articles, meta, drafts, user } = data;
+    // 去掉 id
+    articles = removeID(articles);
+    drafts = removeID(drafts);
+
     await this.articleProvider.importArticles(articles);
     await this.draftProvider.importDrafts(drafts);
     await this.userProvider.updateUser(user);

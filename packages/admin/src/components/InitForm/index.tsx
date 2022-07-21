@@ -5,6 +5,23 @@ export default function () {
     <>
       <ProFormText
         width="lg"
+        name="username"
+        required
+        label="登录用户名"
+        placeholder={'请输入登录用户名'}
+        rules={[{ required: true, message: '这是必填项' }]}
+      ></ProFormText>
+      <ProFormText.Password
+        width="lg"
+        name="password"
+        required
+        label="登录密码"
+        placeholder={'请输入登录密码'}
+        rules={[{ required: true, message: '这是必填项' }]}
+      ></ProFormText.Password>
+
+      <ProFormText
+        width="lg"
         name="author"
         required
         label="作者名字"
