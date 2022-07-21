@@ -22,10 +22,12 @@ export default function (props: { content: string }) {
     <div className="fixed" id="author-card">
       <div
         id="toc-container"
-        className="bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark overflow-y-auto"
+        className="bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark overflow-y-auto pb-2"
         style={{ maxHeight: 450 }}
       >
-        <div className="text-center text-lg font-medium mt-4">目录</div>
+        <div className="text-center text-lg font-medium mt-4 text-gray-700 dark:text-dark">
+          目录
+        </div>
         <MarkdownNavbar
           updateHashAuto={true}
           source={props.content}
