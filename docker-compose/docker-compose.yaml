@@ -8,7 +8,7 @@ services:
       - /var/docker/waline/data:/app/data
     environment:
       TZ: "Asia/Shanghai"
-      VAN_BLOG_DATABASE_URL: "mongodb://mereith:vanlusg2!@tx.mereith.top:27017/vanBlog?authSource=admin"
+      VAN_BLOG_DATABASE_URL: "mongodb://localhost:27017"
       VAN_BLOG_JWT_SECRET: "AnyString"
   admin:
     image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:admin-1.0.0
@@ -21,7 +21,8 @@ services:
     environment:
       TZ: "Asia/Shanghai"
       VAN_BLOG_SERVER_URL: "http://server:3000"
-      #VAN_BLOG_REVALIDATE_TIME: 10
+      VAN_BLOG_REVALIDATE_TIME: 10
+      VAN_BLOG_ALLOW_DOMAINS: "pic.mereith.com"
   proxy:
     image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:proxy
     restart: always
