@@ -29,7 +29,8 @@ export default function (props: {}) {
     if (!current.hasInit) {
       current.hasInit = true;
       const iTheme = initTheme();
-      if (iTheme.includes("auto") && !currentTimer.timer) {
+      clearTimer();
+      if (iTheme.includes("auto")) {
         setTimer();
       } else {
         clearTimer();
@@ -39,15 +40,14 @@ export default function (props: {}) {
   }, [current, setTheme, props, currentTimer]);
   const handleSwitch = () => {
     if (theme == "light") {
+      clearTimer();
       setTheme("dark");
       switchTheme("dark");
-      clearTimer();
     } else if (theme == "dark") {
       const r = switchTheme("auto");
       setTheme(r);
-      if (!currentTimer.timer) {
-        setTimer();
-      }
+      clearTimer();
+      setTimer();
     } else {
       clearTimer();
       setTheme("light");
