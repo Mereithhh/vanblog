@@ -66,6 +66,9 @@ export class AllController {
     // 去掉 id
     articles = removeID(articles);
     drafts = removeID(drafts);
+    delete user._id
+    delete user.__v
+    delete meta._id
 
     await this.articleProvider.importArticles(articles);
     await this.draftProvider.importDrafts(drafts);
