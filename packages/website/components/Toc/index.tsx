@@ -36,7 +36,7 @@ export default function (props: { content: string }) {
             );
 
             let to = (el as any)?.offsetTop;
-            console.log(to);
+            // console.log(to);
 
             if (to) {
               if (newHash < oldHash) {
@@ -49,7 +49,7 @@ export default function (props: { content: string }) {
                 spyThrottle: 0,
               });
             }
-            console.log(newHash, oldHash, el);
+            // console.log(newHash, oldHash, el);
           }}
         />
       </div>
