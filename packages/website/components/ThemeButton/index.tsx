@@ -32,24 +32,25 @@ export default function (props: {}) {
       clearTimer();
       if (iTheme.includes("auto")) {
         setTimer();
-      } else {
-        clearTimer();
       }
       setTheme(iTheme);
-    }
-  }, [current, setTheme, props, currentTimer]);
-  const handleSwitch = () => {
-    if (theme == "light") {
+    } else {
       clearTimer();
+      if (theme.includes("auto")) {
+        setTimer();
+      }
+    }
+  }, [current, setTheme, props, currentTimer, theme]);
+  const handleSwitch = () => {
+    clearTimer();
+    if (theme == "light") {
       setTheme("dark");
       switchTheme("dark");
     } else if (theme == "dark") {
       const r = switchTheme("auto");
       setTheme(r);
-      clearTimer();
       setTimer();
     } else {
-      clearTimer();
       setTheme("light");
       switchTheme("light");
     }
