@@ -23,7 +23,12 @@ services:
       VAN_BLOG_SERVER_URL: "http://server:3000"
       #VAN_BLOG_REVALIDATE_TIME: 10
   proxy:
-    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:proxy-1.0.0
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:proxy
     restart: always
     ports:
       - 8360:80
+    environment:
+      TZ: "Asia/Shanghai"
+      VAN_BLOG_SERVER_HOST: "server:3000"
+      VAN_BLOG_WEBSITE_HOST: "website:3001"
+      VAN_BLOG_ADMIN_HOST: "admin:3002"
