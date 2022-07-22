@@ -11,6 +11,7 @@ import BaiduAnalysis from "../baiduAnalysis";
 import GaAnalysis from "../gaAnalysis";
 import { MenuItem } from "../../api/getMeta";
 export default function (props: {
+  description: string;
   title: string;
   children: any;
   ipcNumber: string;
@@ -130,6 +131,7 @@ export default function (props: {
         <Head>
           <title>{props.title}</title>
           <link rel="icon" href={props.favicon}></link>
+          <meta name="description" content={props.description}></meta>
         </Head>
 
         {

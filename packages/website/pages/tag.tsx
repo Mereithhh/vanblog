@@ -28,10 +28,12 @@ interface IndexProps {
   gaAnalysisID: string;
   logoDark: string;
   links: MenuItem[];
+  description: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      description={props.description}
       title="标签"
       links={props.links}
       favicon={props.favicon}

@@ -15,5 +15,6 @@ export function getLayoutProps(siteInfo: any) {
     baiduAnalysisID: siteInfo?.baiduAnalysisId || "",
     gaAnalysisID: siteInfo?.gaAnalysisId || "",
     logoDark: siteInfo?.siteLogoDark || "",
+    description: siteInfo?.siteDesc || "",
   };
 }

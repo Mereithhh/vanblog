@@ -30,10 +30,12 @@ interface IndexProps {
   gaAnalysisID: string;
   logoDark: string;
   links: MenuItem[];
+  description: string;
 }
 const Home = (props: IndexProps) => {
   return (
     <Layout
+      description={props.description}
       links={props.links}
       title={"时间线"}
       ipcNumber={props.ipcNumber}
