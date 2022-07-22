@@ -1,5 +1,6 @@
 import Head from "next/head";
-import { useEffect, useRef, useState } from "react";
+import Script from "next/script";
+import { useEffect, useRef } from "react";
 export default function (props: { id: string }) {
   const { current } = useRef<any>({ hasInit: false });
   useEffect(() => {
@@ -23,10 +24,9 @@ export default function (props: { id: string }) {
       <Head>
         {props.id != "" && (
           <>
-            <script
-              async
+            <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${props.id}`}
-            ></script>
+            ></Script>
           </>
         )}
       </Head>
