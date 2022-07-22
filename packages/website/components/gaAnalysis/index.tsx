@@ -25,6 +25,7 @@ export default function (props: { id: string }) {
         {props.id != "" && (
           <>
             <Script
+              async
               src={`https://www.googletagmanager.com/gtag/js?id=${props.id}`}
             ></Script>
           </>

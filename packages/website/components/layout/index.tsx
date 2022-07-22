@@ -56,8 +56,13 @@ export default function (props: {
   }, [props]);
   return (
     <>
-      <BaiduAnalysis id={props.baiduAnalysisID}></BaiduAnalysis>
-      <GaAnalysis id={props.gaAnalysisID}></GaAnalysis>
+      {props.baiduAnalysisID != "" && (
+        <BaiduAnalysis id={props.baiduAnalysisID}></BaiduAnalysis>
+      )}
+      {props.gaAnalysisID != "" && (
+        <GaAnalysis id={props.gaAnalysisID}></GaAnalysis>
+      )}
+
       <NavBar
         links={props.links}
         siteName={props.siteName}
