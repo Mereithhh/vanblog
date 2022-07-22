@@ -42,6 +42,8 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { Viewer, ViewerSchema } from './scheme/viewer.schema';
 import { ViewerProvider } from './provider/viewer/viewer.provider';
 import { ViewerTask } from './schedule/viewer.task';
+import { Visit, VisitSchema } from './scheme/visit.schema';
+import { VisitProvider } from './provider/visit/visit.provider';
 
 @Module({
   imports: [
@@ -52,6 +54,7 @@ import { ViewerTask } from './schedule/viewer.task';
       { name: Meta.name, schema: MetaSchema },
       { name: User.name, schema: UserSchema },
       { name: Viewer.name, schema: ViewerSchema },
+      { name: Visit.name, schema: VisitSchema },
     ]),
     JwtModule.register({
       secret: config.jwtSecret,
@@ -84,6 +87,7 @@ import { ViewerTask } from './schedule/viewer.task';
     CategoryProvider,
     DraftProvider,
     MetaProvider,
+    VisitProvider,
     TagProvider,
     UserProvider,
     AuthProvider,

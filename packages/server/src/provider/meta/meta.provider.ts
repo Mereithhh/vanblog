@@ -8,11 +8,13 @@ import { SocialItem, SocialType } from 'src/dto/social.dto';
 import { LinkItem } from 'src/dto/link.dto';
 import { UserProvider } from '../user/user.provider';
 import { MenuItem } from 'src/dto/menu.dto';
+import { VisitProvider } from '../visit/visit.provider';
 @Injectable()
 export class MetaProvider {
   constructor(
     @InjectModel('Meta') private metaModel: Model<MetaDocument>,
     private readonly userProvider: UserProvider,
+    private readonly visitProvider: VisitProvider,
   ) {}
 
   async getViewer() {
@@ -23,7 +25,7 @@ export class MetaProvider {
     const newVisited = oldVisited;
     return { visited: newVisited, viewer: newViewer };
   }
-  async addViewer(isNew: boolean) {
+  async addViewer(isNew: boolean, pathname: string) {
     const old = await this.getAll();
     const ov = old.viewer || 0;
     const oldVisited = old.visited || 0;
@@ -40,6 +42,8 @@ export class MetaProvider {
       }
     }
     await this.update({ viewer: newViewer, visited: newVisited });
+    //增加每个路径的。
+    this.visitProvider.add({ pathname: pathname });
     return { visited: newVisited, viewer: newViewer };
   }
 

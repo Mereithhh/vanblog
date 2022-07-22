@@ -1,5 +1,6 @@
-import { Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Request, Response } from 'express';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
@@ -37,8 +38,15 @@ export class PublicController {
     };
   }
   @Post('/viewer')
-  async addViewer(@Query('isNew') isNew: boolean) {
-    const data = await this.metaProvider.addViewer(isNew);
+  async addViewer(@Query('isNew') isNew: boolean, @Req() req: Request) {
+    const refer = req.headers.referer;
+    const url = new URL(refer);
+    if (!url.pathname || url.pathname == '') {
+      console.log('没找到 refer:', req.headers);
+    }
+    // console.log(url.pathname);
+
+    const data = await this.metaProvider.addViewer(isNew, url.pathname);
     return {
       statusCode: 200,
       data: data,
