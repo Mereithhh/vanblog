@@ -1,0 +1,8 @@
+#!/bin/bash
+TO=$1
+cd "packages/${TO}"
+
+docker build -t registry.cn-beijing.aliyuncs.com/mereith/van-blog:${TO}-1.0.0 .
+docker push registry.cn-beijing.aliyuncs.com/mereith/van-blog:${TO}-1.0.0
+
+cd ../..
