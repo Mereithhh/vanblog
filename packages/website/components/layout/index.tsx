@@ -29,6 +29,11 @@ export default function (props: {
   links: MenuItem[];
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  });
   const renderLinks = useCallback(() => {
     const arr: any[] = [];
     props.links.forEach((item) => {
@@ -37,7 +42,11 @@ export default function (props: {
           className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2"
           key={item.name}
         >
-          <a className="w-full inline-block" target="_blank" href={item.value}>
+          <a
+            className="w-full inline-block px-4 "
+            target="_blank"
+            href={item.value}
+          >
             {item.name}
           </a>
         </li>
@@ -78,35 +87,35 @@ export default function (props: {
         >
           <ul
             onClick={() => {
-              setIsOpen(false);
               document.body.style.overflow = "auto";
+              setIsOpen(false);
             }}
             className=" sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark "
           >
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/"}>
-                <a className="w-full inline-block">主页</a>
+                <a className="w-full inline-block px-4 ">主页</a>
               </Link>
             </li>
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/tag"}>
-                <a className="w-full inline-block">标签</a>
+                <a className="w-full inline-block px-4 ">标签</a>
               </Link>
             </li>
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/category"}>
-                <a className="w-full inline-block">分类</a>
+                <a className="w-full inline-block px-4 ">分类</a>
               </Link>
             </li>
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/timeline"}>
-                <a className="w-full inline-block">时间线</a>
+                <a className="w-full inline-block px-4 ">时间线</a>
               </Link>
             </li>
             {renderLinks()}
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/about"}>
-                <a className="w-full inline-block">关于</a>
+                <a className="w-full inline-block px-4 ">关于</a>
               </Link>
             </li>
           </ul>

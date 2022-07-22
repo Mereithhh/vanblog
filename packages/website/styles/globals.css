@@ -27,7 +27,7 @@
     @apply transition cursor-pointer flex items-center h-full  border-b-2 border-white;
   }
   .side-bar-item {
-    @apply text-base leading-9 w-full px-4 hover:bg-gray-100 cursor-pointer;
+    @apply text-base leading-9 w-full hover:bg-gray-100 cursor-pointer;
   }
   .dark-border-hover {
     @apply dark:hover:text-gray-300 dark:hover:border-gray-300;
