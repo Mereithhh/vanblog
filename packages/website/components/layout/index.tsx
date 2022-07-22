@@ -57,10 +57,10 @@ export default function (props: {
   }, [props]);
   return (
     <>
-      {props.baiduAnalysisID != "" && (
+      {props.baiduAnalysisID != "" && process.env.NODE_ENV != "development" && (
         <BaiduAnalysis id={props.baiduAnalysisID}></BaiduAnalysis>
       )}
-      {props.gaAnalysisID != "" && (
+      {props.gaAnalysisID != "" && process.env.NODE_ENV != "development" && (
         <GaAnalysis id={props.gaAnalysisID}></GaAnalysis>
       )}
 
