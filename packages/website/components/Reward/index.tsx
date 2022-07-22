@@ -10,7 +10,7 @@ export default function (props: {
   author: string;
   id: number;
 }) {
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const { theme } = useContext(ThemeContext);
   const payUrl = useMemo(() => {
     const r = [];
@@ -45,15 +45,17 @@ export default function (props: {
         </div>
       </div>
       <div
-        className="text-center transition-all overflow-hidden flex justify-center"
+        className=" justify-center overflow-hidden transition-all"
         style={{
-          maxHeight: show ? "300px" : "0px",
+          maxHeight: show ? "3000px" : "0px",
           marginBottom: show ? "16px" : "0",
         }}
       >
-        <img src={payUrl[0]} width={180} height={250}></img>
-        <div className="w-4 inline-block"></div>
-        <img src={payUrl[1]} width={180} height={250}></img>
+        <div className="flex justify-center">
+          <img src={payUrl[0]} width={180} height={250}></img>
+          <div className="w-4 inline-block"></div>
+          <img src={payUrl[1]} width={180} height={250}></img>
+        </div>
       </div>
       <div className=" bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-dark ">
         <p>
