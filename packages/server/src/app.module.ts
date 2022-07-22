@@ -38,6 +38,10 @@ import { InitProvider } from './provider/init/init.provider';
 import { InitMiddleware } from './provider/auth/init.middleware';
 import { AllController } from './controller/admin/all/all.controller';
 import { MenuMetaController } from './controller/admin/menu/menu.meta.controller';
+import { ScheduleModule } from '@nestjs/schedule';
+import { Viewer, ViewerSchema } from './scheme/viewer.schema';
+import { ViewerProvider } from './provider/viewer/viewer.provider';
+import { ViewerTask } from './schedule/viewer.task';
 
 @Module({
   imports: [
@@ -47,6 +51,7 @@ import { MenuMetaController } from './controller/admin/menu/menu.meta.controller
       { name: Draft.name, schema: DraftSchema },
       { name: Meta.name, schema: MetaSchema },
       { name: User.name, schema: UserSchema },
+      { name: Viewer.name, schema: ViewerSchema },
     ]),
     JwtModule.register({
       secret: config.jwtSecret,
@@ -54,6 +59,7 @@ import { MenuMetaController } from './controller/admin/menu/menu.meta.controller
         expiresIn: 3600 * 24 * 7,
       },
     }),
+    ScheduleModule.forRoot(),
   ],
   controllers: [
     AppController,
@@ -82,8 +88,10 @@ import { MenuMetaController } from './controller/admin/menu/menu.meta.controller
     UserProvider,
     AuthProvider,
     LocalStrategy,
+    ViewerProvider,
     JwtStrategy,
     InitProvider,
+    ViewerTask,
   ],
 })
 export class AppModule implements NestModule {
