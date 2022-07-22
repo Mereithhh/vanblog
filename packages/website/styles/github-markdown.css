@@ -96,7 +96,7 @@
   list-style: unset;
 } */
 .markdown-body code {
-  word-break: break-all;
+  word-break: break-word;
 }
 .markdown-body {
   /* font: 400 16px/1.75 "Open Sans", "PingFang SC", "Hiragino Sans GB",
@@ -318,7 +318,7 @@
   border-spacing: 0;
   border-collapse: collapse;
   display: block;
-  width: max-content;
+  /* width: max-content; */
   max-width: 100%;
   overflow: auto;
 }
@@ -1048,5 +1048,5 @@
   margin-bottom: 0;
 }
 .markdown-body * {
-  word-break: break-all;
+  word-break: break-word;
 }
