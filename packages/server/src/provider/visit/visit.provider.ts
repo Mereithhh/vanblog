@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import dayjs from 'dayjs';
+import * as dayjs from 'dayjs';
 import { Model } from 'mongoose';
 import { createVisitDto } from 'src/dto/visit.dto';
 import { Viewer } from 'src/scheme/viewer.schema';
@@ -26,8 +26,8 @@ export class VisitProvider {
     } else {
       // 没有今天的，找到能找到的上一天，然后加一，并创建今天的。
       const lastData = await this.getLastData();
-      const lastVisit = lastData.visited || 0;
-      const lastViewer = lastData.viewer || 0;
+      const lastVisit = lastData?.visited || 0;
+      const lastViewer = lastData?.viewer || 0;
       const createdData = new this.visitModel({
         date: today,
         viewer: lastViewer + 1,
