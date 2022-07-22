@@ -10,7 +10,7 @@ export default function (props: {
   author: string;
   id: number;
 }) {
-  const [show, setShow] = useState(true);
+  const [show, setShow] = useState(false);
   const { theme } = useContext(ThemeContext);
   const payUrl = useMemo(() => {
     const r = [];
