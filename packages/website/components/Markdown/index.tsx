@@ -38,6 +38,7 @@ export default function (props: { content: string }) {
                     style={{ height: "36px", padding: "6px 10px" }}
                   >
                     <img
+                      alt="copy logo"
                       src="/copy.svg"
                       width={20}
                       height={20}

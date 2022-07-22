@@ -70,7 +70,13 @@ export default function (props: { item: SocialItem }) {
                 className="card-shadow bg-white dark:bg-dark-2 dark:card-shadow-dark"
                 style={{ height: 280 }}
               >
-                <img src={weChatUrl} width={200} height={280}></img>
+                <img
+                  loading="lazy"
+                  alt="logo wechat qrcode"
+                  src={weChatUrl}
+                  width={200}
+                  height={280}
+                ></img>
               </div>
             </ArrowContainer>
           );

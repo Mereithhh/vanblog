@@ -98,7 +98,13 @@ export default function (props: {
               </span>
             </div>
             <div className="hidden sm:block transform translate-x-2">
-              <img src={picUrl} width={52} height={52}></img>
+              <img
+                loading="lazy"
+                alt="site logo"
+                src={picUrl}
+                width={52}
+                height={52}
+              ></img>
             </div>
           </div>
           {/* 第二个flex */}

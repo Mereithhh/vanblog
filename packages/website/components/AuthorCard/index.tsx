@@ -43,6 +43,8 @@ export default function (props: {
       <div className="w-52 flex flex-col justify-center items-center bg-white pt-6  pb-4 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
         <div className="px-10 flex flex-col justify-center items-center">
           <img
+            loading="lazy"
+            alt="author logo"
             className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
             src={logoUrl}
             width={120}
