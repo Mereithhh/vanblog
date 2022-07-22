@@ -90,10 +90,20 @@ export const layout = ({ initialState, setInitialState }) => {
       }
     },
     links: [
-      <Link key="mainSite" to="/" target="_blank">
+      <a
+        key="mainSite"
+        // to={(() => {
+        //   console.log(initialState?.meta?.siteInfo?.baseUrl || '/');
+        //   return initialState?.meta?.siteInfo?.baseUrl || '/';
+        // })()}
+        onClick={() => {
+          window.open(initialState?.meta?.siteInfo?.baseUrl || '/', '_blank');
+        }}
+        target="_blank"
+      >
         <LinkOutlined />
         <span>主站</span>
-      </Link>,
+      </a>,
       <a key="mainSite" href="https://github.com/mereithhh/van-blog" target="_blank">
         <LinkOutlined />
         <span>帮助文档</span>
