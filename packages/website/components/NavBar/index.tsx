@@ -45,7 +45,7 @@ export default function (props: {
           className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all"
         >
           <a
-            className="h-full flex items-center"
+            className="h-full flex items-center px-2 md:px-4 "
             href={item.value}
             target="_blank"
           >
@@ -109,28 +109,30 @@ export default function (props: {
             <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/"}>
-                  <a className="h-full flex items-center">首页</a>
+                  <a className="h-full flex items-center px-2 md:px-4 ">首页</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/tag"}>
-                  <a className="h-full flex items-center">标签</a>
+                  <a className="h-full flex items-center px-2 md:px-4 ">标签</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/category"}>
-                  <a className="h-full flex items-center">分类</a>
+                  <a className="h-full flex items-center px-2 md:px-4 ">分类</a>
                 </Link>
               </li>
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/timeline"}>
-                  <a className="h-full flex items-center">时间线</a>
+                  <a className="h-full flex items-center px-2 md:px-4 ">
+                    时间线
+                  </a>
                 </Link>
               </li>
               {renderedLinks()}
               <li className="nav-item transform hover:scale-110 hover:border-gray-400 dark:border-nav-dark dark:hover:border-nav-dark-light dark:transition-all">
                 <Link href={"/about"}>
-                  <a className="h-full flex items-center">关于</a>
+                  <a className="h-full flex items-center px-2 md:px-4 ">关于</a>
                 </Link>
               </li>
             </ul>
