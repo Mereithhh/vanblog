@@ -64,4 +64,5 @@ ENV PORT 3001
 ENV VAN_BLOG_SERVER_URL server:3000
 ENV VAN_BLOG_REVALIDATE_TIME 10
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
+ENV VAN_BLOG_SERVER_URL "https://www.mereith.com"
 CMD ["node", "server.js","-p","3001"]
