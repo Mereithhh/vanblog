@@ -1,23 +1,23 @@
-import { ProCard, ProForm, ProFormDatePicker, ProFormText } from '@ant-design/pro-components';
+import { ProFormDatePicker, ProFormText } from '@ant-design/pro-components';
 
-export default function () {
+export default function (props: { requireUser: boolean }) {
   return (
     <>
       <ProFormText
         width="lg"
         name="username"
-        required
+        required={props.requireUser ? true : false}
+        rules={props.requireUser ? [{ required: true, message: '这是必填项' }] : []}
         label="登录用户名"
         placeholder={'请输入登录用户名'}
-        rules={[{ required: true, message: '这是必填项' }]}
       ></ProFormText>
       <ProFormText.Password
         width="lg"
         name="password"
-        required
+        required={props.requireUser ? true : false}
+        rules={props.requireUser ? [{ required: true, message: '这是必填项' }] : []}
         label="登录密码"
         placeholder={'请输入登录密码'}
-        rules={[{ required: true, message: '这是必填项' }]}
       ></ProFormText.Password>
 
       <ProFormText

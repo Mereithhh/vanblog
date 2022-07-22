@@ -15,7 +15,15 @@ export default function () {
           const allData = await initialState?.fetchInitData?.();
           await setInitialState((s) => ({ ...s, ...allData }));
           // console.log(initialState);
-          return initialState?.meta?.siteInfo || {};
+          if (initialState?.meta?.siteInfo) {
+            const siteInfo = initialState?.meta?.siteInfo;
+            return {
+              ...siteInfo,
+              username: initialState?.user?.name || '',
+              password: initialState?.user?.password || '',
+            };
+          }
+          return {};
         }}
         syncToInitialValues={true}
         onFinish={async (data) => {
@@ -25,7 +33,7 @@ export default function () {
           message.success('更新成功!');
         }}
       >
-        <InitForm></InitForm>
+        <InitForm requireUser={false}></InitForm>
       </ProForm>
     </ProCard>
   );

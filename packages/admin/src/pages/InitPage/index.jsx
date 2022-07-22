@@ -31,7 +31,7 @@ const InitPage = () => {
               console.log(newData);
             }}
           >
-            <InitForm></InitForm>
+            <InitForm requireUser={true}></InitForm>
           </ProForm>
         </ProCard>
       </div>
