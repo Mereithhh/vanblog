@@ -7,11 +7,11 @@ heroFullScreen: false
 tagline: 一款简洁实用的个人博客解决方案
 actions:
   - text: 💡 快速上手
-    link: /guide/get-started.html
+    link: /get-started.html
     type: primary
 
   - text: ℹ️ 介绍
-    link: /guide/intro.html
+    link: /intro.html
     type: secondary
 features:
   - title: 简洁美观

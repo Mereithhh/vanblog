@@ -1,6 +1,7 @@
 import { sidebar } from "vuepress-theme-hope";
 
 export default sidebar([
+  "/intro",
   {
     text: "快速上手",
     icon: "creative",
@@ -8,10 +9,10 @@ export default sidebar([
     // children: "structure",
   },
   {
-    text: "指南",
+    text: "参考",
     icon: "creative",
     // activeMatch: "^/guide/$",
     prefix: "/guide/",
-    children: ["intro.md", "env.md", "setting.md"],
+    children: ["env.md", "setting.md"],
   },
 ]);
