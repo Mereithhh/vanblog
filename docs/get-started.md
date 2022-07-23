@@ -7,7 +7,7 @@ footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
 
-## docker-compose 部署 (推荐)
+## docker-compose 部署
 
 新建 `docker-compose.yml`文件：
 
@@ -72,25 +72,37 @@ docker-compose up -d
 
 浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。
 
-## docker 部署
+## 反向代理与 HTTPS
 
-如果你已经有了自己的 `mongoDB` 和 `waline` ,也懒得用 `docker-compose` 直接起就行了：
+:::info 注意
+使用反向代理之前记得要修改默认的 80 端口号哦
+:::
 
-```bash
-docker run --name blog \\
---restart always \\
--p 80:80 \\
--e VAN_BLOG_ALLOW_DOMAINS "图片允许的域名" \\
--e VAN_BLOG_DATABASE_URL "mongoDB 的 URL" \\
--e VAN_BLOG_JWT_SECRET "jwt 密钥，随机字符串就可以" \\
-mereith/van-blog:latest
+### nginx-proxy-manager
+
+强烈推荐 [nginx-proxy-manager](https://nginxproxymanager.com/)这个项目！它可以帮你自动管理反代配置，并申请相应的 `https` 证书。
+
+### caddy
+
+第二推荐的是 [caddy](https://caddyserver.com/)，一个现代的高性能 web 服务器，它也可以自动帮你配置好 `https`
+
+配置文件参考：
+
+```yaml
 
 ```
 
-## 安装 docker (可选)
+### nginx
 
-目前的部署方案基于 `docker` 和 `docker-compose`，没有安装的话可通过以下脚本安装:
+如果你还是想想用 nginx 的话，那好吧。
+http 版本的：
 
-```bash
-curl -sSL https://get.daocloud.io/docker | sh
+```nginx
+
+```
+
+https 版本的：
+
+```nginx
+
 ```

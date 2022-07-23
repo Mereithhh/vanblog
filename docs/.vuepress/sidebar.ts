@@ -13,6 +13,6 @@ export default sidebar([
     icon: "creative",
     // activeMatch: "^/guide/$",
     prefix: "/guide/",
-    children: ["env.md", "setting.md"],
+    children: ["env.md", "setting.md", "proj.md", "faq.md"],
   },
 ]);
