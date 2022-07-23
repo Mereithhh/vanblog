@@ -6,15 +6,16 @@ export default hopeTheme({
   hostname: "https://vuepress-theme-hope-v2-demo.mrhope.site",
 
   author: {
-    name: "Mr.Hope",
-    url: "https://mrhope.site",
+    name: "Mereith",
+    url: "https://www.mereith.com",
   },
 
+  darkmode: "switch",
   iconAssets: "iconfont",
 
   logo: "/logo.svg",
 
-  repo: "vuepress-theme-hope/vuepress-theme-hope",
+  repo: "mereithhh/van-blog",
 
   docsDir: "demo/src",
 
@@ -24,7 +25,7 @@ export default hopeTheme({
   // sidebar
   sidebar: sidebar,
 
-  footer: "默认页脚",
+  footer: "GPL-2.0 协议",
 
   displayFooter: true,
 

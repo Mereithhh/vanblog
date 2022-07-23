@@ -1,48 +1,60 @@
 ---
 home: true
-layout: Blog
 icon: home
-title: 博客主页
 heroImage: /logo.svg
-heroText: 你博客的名称
-heroFullScreen: true
-tagline: 你可以在这里放置你的口号与标语
-projects:
-  - icon: project
-    name: 项目名称
-    desc: 项目详细描述
-    link: https://你的项目链接
+heroText: Van Blog
+heroFullScreen: false
+tagline: 一款简洁实用的个人博客解决方案
+actions:
+  - text: 💡 快速上手
+    link: /guide/get-started.html
+    type: primary
 
-  - icon: link
-    name: 链接名称
-    desc: 链接详细描述
-    link: https://链接地址
+  - text: ℹ️ 介绍
+    link: /advanced/intro.html
+    type: secondary
+features:
+  - title: 简洁美观
+    icon: bit
+    details: 专注于博客本身，拒绝花里胡哨
 
-  - icon: book
-    name: 书籍名称
-    desc: 书籍详细描述
-    link: https://你的书籍链接
+  - title: 功能强大
+    icon: contrast
+    details: 搜索、黑暗模式，该有的都有
 
-  - icon: article
-    name: 文章名称
-    desc: 文章详细描述
-    link: https://你的文章链接
+  - title: 响应式
+    icon: card
+    details: 无论是电脑、平板还是手机都完美展示
 
-  - icon: friend
-    name: 伙伴名称
-    desc: 伙伴详细介绍
-    link: https://你的伙伴链接
+  - title: 高性能
+    icon: light
+    details: 秒级相应的增量渲染，内置图片优化与缓存
 
-  - icon: /logo.svg
-    name: 自定义项目
-    desc: 自定义详细介绍
-    link: https://你的自定义链接
+  - title: SEO 友好
+    icon: search
+    details: 不需要 SSR，我们选择 SSG
 
-footer: 自定义你的页脚文字
+  - title: 可量化
+    icon: table
+    details: 支持百度和GA，内置浏览量统计
+
+  - title: 可配置
+    icon: setting
+    details: 能想到的都可配置
+
+  - title: 现代后台
+    icon: strong
+    details: 功能齐全的后台页面
+
+  - title: 易于部署
+    icon: linux
+    details: docker 一键部署
+copyright: false
+footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
 ---
 
-这是一个博客主页的案例。
+<!-- 这是一个博客主页的案例。
 
 要使用此布局，你应该在页面前端设置 `layout: Blog` 和 `home: true`。
 
-相关配置文档请见 [博客主页](https://vuepress-theme-hope.github.io/v2/zh/guide/blog/home/)。
+相关配置文档请见 [博客主页](https://vuepress-theme-hope.github.io/v2/zh/guide/blog/home/)。 -->
