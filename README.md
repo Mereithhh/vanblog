@@ -9,9 +9,9 @@
 - server： 对接数据库，整个博客系统的后台服务。（目前数据库只对接了 mongoDB)（基于 nest.js)
 - admin: 后台管理系统的前端，基于 `antd pro`
 - website: 博客前台，基于`next.js`，采用 `SSG` 静态生成网页，并支持 增量渲染（会在你修改后几秒钟内重新渲染出来），这样比较好对接 `CDN`
-- proxy: 一个很简单的 nginx 反代容器，作为对外的出口和网关。
+- proxy: 一个很简单的 nginx 反代容器，作为对外的出口和网关。（现在改成 all in one ，用不到了）
 
-## docker-compose 部署
+## docker 部署
 
 有一些配置可能会看不懂，部署文档等功能稳定了就补上，暂时部署遇到问题可以提 `issue`。
 

@@ -1,6 +1,0 @@
-#!/bin/bash
-
-docker build -t registry.cn-beijing.aliyuncs.com/mereith/van-blog:1.0.0 .
-docker push registry.cn-beijing.aliyuncs.com/mereith/van-blog:1.0.0
-
-
