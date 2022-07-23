@@ -11,7 +11,7 @@ actions:
     type: primary
 
   - text: ℹ️ 介绍
-    link: /advanced/intro.html
+    link: /guide/intro.html
     type: secondary
 features:
   - title: 简洁美观
