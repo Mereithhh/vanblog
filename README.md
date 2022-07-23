@@ -1,6 +1,6 @@
 ## 简介
 
-一个一站式的博客系统。刚达到一个可以用的状态，文档慢慢补吧。。目前自用中。
+一个一站式的个人博客系统。刚达到一个可以用的状态，文档慢慢补吧。。目前自用中。
 
 ## 架构
 
@@ -20,6 +20,14 @@
 目前只做了 `docker-compose` 部署的教程，以后慢慢加。
 
 编排文件在 `docker-compose` 文件夹中。
+
+如果不想用 `docker-compose` 也可以直接：
+```bash
+docker run --name vanBlog --restart always -p 80:80 \\
+-e VAN_BLOG_DATABASE_URL="" \\
+-e VAN_BLOG_ALLOW_DOMAINS="" \\
+mereith/van-blog:latest
+```
 
 ## 更新记录
 
