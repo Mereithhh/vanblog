@@ -29,7 +29,7 @@ RUN yarn
 
 FROM node:16-alpine AS WEBSITE_BUILDER
 WORKDIR /app
-COPY --from=deps /app/node_modules ./node_modules
+COPY --from=WEBSITE_DEPS /app/node_modules ./node_modules
 COPY ./packages/website/ .
 ENV isBuild=t
 ENV VAN_BLOG_REVALIDATE_TIME=10
@@ -67,5 +67,7 @@ COPY default.conf /etc/nginx/sites-available/default
 # 复制入口文件
 WORKDIR /app
 COPY ./entrypoint.sh ./
+ENV PORT 3001
 EXPOSE 80
-ENTRYPOINT [ "entrypoint.sh" ]
+ENTRYPOINT [ "bash","entrypoint.sh" ]
+# CMD [ "entrypoint.sh" ]
