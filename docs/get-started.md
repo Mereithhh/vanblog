@@ -37,30 +37,6 @@ services:
     volumes:
       # mongoDB 数据存放地址，按需修改。
       - $(pwd)/data/mongo:/data/db
-  # 如果你不需要评论系统或想通过其他方式部署评论系统那就注释掉，https://waline.js.org/
-  waline:
-    image: lizheming/waline:latest
-    restart: always
-    ports:
-      - 8360:8360
-    volumes:
-      - /var/docker/waline/data:/app/data
-    environment:
-      TZ: 'Asia/Shanghai'
-      # 博客站点名称
-      SITE_NAME: 'Mereith Blog'
-      # 博客网址
-      SITE_URL: 'https://www.mereith.com'
-      # 允许的域名
-      SECURE_DOMAINS: 'mereith.com'
-      # 作者邮箱
-      AUTHOR_EMAIL: 'wanglu@mereith.com'
-      MONGO_HOST: "mongo"
-      MONGO_DB: "waline"
-      MONGO_USER: "vanBlog"
-      MONGO_PASSWORD: "vanBlog"
-      MONGO_AUTHSOURCE: "admin"
-
 ```
 
 按注释说明修改`docker-compose.yml`的配置后：
@@ -214,3 +190,9 @@ spec:
 如果觉得麻烦，还可以对接上 [picGo](https://github.com/Molunerfinn/PicGo)，快捷键截图。
 
 还嫌麻烦的话，那等等`VanBlog`自己的图床实现吧
+
+## 评论
+
+`VanBlog` 采用 [waline](https://waline.js.org/) 作为评论系统。
+
+如果想启用评论功能，可参考 []() 部署 `waline` 后，在后台 `站点管理/站点配置` 中填写 `WaLine 服务端 Url` 即可启用。
