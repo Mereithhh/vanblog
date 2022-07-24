@@ -28,7 +28,7 @@ services:
       # jwt 密钥，随机字符串即可
       VAN_BLOG_JWT_SECRET: "AnyString"
     ports:
-      - 2333:80
+      - 80:80
   mongo:
     image: mongo
     restart: always
