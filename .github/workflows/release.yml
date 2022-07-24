@@ -52,8 +52,10 @@ jobs:
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
       - name: 打包镜像并推送（自用）
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
+          build-args: |
+            VAN_BLOG_BUILD_SERVER=https://www.mereith.com
           context: .
           file: ./Dockerfile
           platforms: linux/amd64,linux/arm64
