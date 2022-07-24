@@ -3,7 +3,8 @@
 FROM node:18 as ADMIN_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /usr/src/app
-# RUN yarn config set registry https://registry.npm.taobao.org
+RUN yarn config set registry https://registry.npm.taobao.org
+RUN yarn config set network-timeout 60000 -g
 COPY ./packages/admin/package.json ./
 RUN yarn
 COPY ./packages/admin/ ./
