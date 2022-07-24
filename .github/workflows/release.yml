@@ -1,4 +1,4 @@
-name: 部署文档
+name: 发布版本
 
 on:
   push:
