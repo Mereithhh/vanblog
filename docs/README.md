@@ -39,7 +39,7 @@ features:
     details: 支持百度和GA，内置浏览量统计
 
   - title: ARM Ready
-    icon: setting
+    icon: engine
     details: 树莓派、香橙派，无论什么派
 
   - title: 现代后台
