@@ -66,4 +66,4 @@ jobs:
           command: set image -n tools deployment/vanblog-doc vanblog-doc=registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
       - name: send Message To me
         run: |
-          curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-doc","message":"流水线运行完毕，文档已部署。
+          curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-doc","message":"流水线运行完毕，${{ steps.get_version.outputs.VERSION }} 已部署"}'
