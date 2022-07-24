@@ -31,8 +31,9 @@ icon: advance
 ## Wey not xxx？
 
 - hexo: 本身没有后台，每次写新文章后都要全量构建。
-- typecho: 不算 SSG，高度依赖主题。
+- typecho: 不算 SSG，样式依赖主题。
 - wordpress: 有些臃肿，主题繁杂，不简洁。
+- hugo: 需要手动配置主题之类的，比较麻烦，需要构建。
 
 ## TODO
 
@@ -48,3 +49,22 @@ icon: advance
 - [ ] 404 页面
 
 ## 预览图
+
+### PC 端
+
+![pc-light](./assets/desktop-light.png)
+![pc-dark](./assets/desktop-dark.png)
+
+### 平板端
+
+![tablet-light](./assets/tablet-light.png)
+![tablet-dark](./assets/tablet-dark.png)
+
+### 移动端
+
+![phone-light](./assets/phone-light.png)
+![phone-dark](./assets/phone-dark.png)
+
+### 管理后台
+
+![admin](./assets/admin.png)
