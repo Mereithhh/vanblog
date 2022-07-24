@@ -19,6 +19,10 @@
 
 请移步项目主页： [https://vanblog.mereith.com](https://vanblog.mereith.com)
 
+## CHANGELOG
+
+[CHANGELOG](CHANGELOG.md)
+
 ## 谁在用
 
 目前就我自己- -
