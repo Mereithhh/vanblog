@@ -15,7 +15,9 @@ version: "3"
 
 services:
   vanblog:
-    image: mereith/van-blog:latest
+    # 默认国内原的
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
+    # image: mereith/van-blog:latest
     restart: always
     environment:
       TZ: "Asia/Shanghai"

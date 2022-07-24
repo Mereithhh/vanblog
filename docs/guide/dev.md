@@ -96,3 +96,21 @@ VAN_BLOG_BUILD_SERVER="https://www.mereith.com"
 docker build --build-arg VAN_BLOG_BUILD_SERVER=$VAN_BLOG_BUILD_SERVER -t mereith/van-blog:1.0.0 .
 docker push mereith/van-blog:1.0.0
 ```
+
+## 文档发版
+
+已经有了对应的 `github actions`，向远端推送 `doc*` 的 `tag` 会触发然后发布到项目官方。
+
+```bash
+git tag doc-1.0.0
+git push --tags
+```
+
+## Release
+
+向远端推送一个 `v*` 的 `tag` 会自动触发 `release`、构建好镜像并推送。
+
+```bash
+git tag v1.0.0
+git push --tags
+```
