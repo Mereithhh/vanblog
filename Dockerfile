@@ -6,7 +6,6 @@ WORKDIR /usr/src/app
 RUN yarn config set registry https://registry.npmmirror.com/
 RUN yarn config set network-timeout 60000 -g
 COPY ./packages/admin/package.json ./
-COPY ./packages/admin/yarn.lock ./
 RUN yarn
 COPY ./packages/admin/ ./
 ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
