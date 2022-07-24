@@ -191,6 +191,9 @@ spec:
             - name: VAN_BLOG_DATABASE_URL
               value: >-
                 mongodb://some@some@van.example.com:27017/vanBlog?authSource=admin
+            - name: VAN_BLOG_ALLOW_DOMAINS
+              value: >-
+                pic.mereith.com
           resources:
             requests:
               memory: "300Mi"
