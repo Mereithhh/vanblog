@@ -54,7 +54,7 @@ jobs:
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
       - name: Bump version
-        uses: qzb/standard-version@v1
+        uses: qzb/standard-version@v1.0.5
       - name: Release
         uses: softprops/action-gh-release@v1
       - name: 打包镜像并推送（自用）
