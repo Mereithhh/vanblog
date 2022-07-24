@@ -2,9 +2,10 @@
   "name": "root",
   "private": true,
   "devDependencies": {
+    "@vuepress/client": "^2.0.0-beta.49",
+    "@vuepress/plugin-search": "^2.0.0-beta.49",
     "lerna": "^4.0.0",
     "standard-version": "^9.5.0",
-    "@vuepress/client": "^2.0.0-beta.49",
     "vue": "^3.2.36",
     "vuepress": "^2.0.0-beta.49",
     "vuepress-theme-hope": "^2.0.0-beta.87"
