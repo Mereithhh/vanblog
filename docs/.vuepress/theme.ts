@@ -25,7 +25,7 @@ export default hopeTheme({
   // sidebar
   sidebar: sidebar,
 
-  footer: "GPL-2.0 协议",
+  footer: "GPL-3.0 协议",
 
   displayFooter: true,
 

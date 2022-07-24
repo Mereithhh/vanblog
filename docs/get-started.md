@@ -2,7 +2,6 @@
 icon: creative
 title: 快速上手
 copyright: false
-footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
 ---
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
