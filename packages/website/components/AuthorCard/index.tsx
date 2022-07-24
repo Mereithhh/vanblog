@@ -4,6 +4,7 @@ import Headroom from "headroom.js";
 import { SocialItem } from "../../api/getMeta";
 import SocialCard from "../SocialCard";
 import { ThemeContext } from "../../utils/themeContext";
+import Image from "next/future/image";
 // import RecentComment from "../RecentComment";
 export default function (props: {
   author: string;
@@ -42,14 +43,13 @@ export default function (props: {
     <div id="author-card" className="fixed ">
       <div className="w-52 flex flex-col justify-center items-center bg-white pt-6  pb-4 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
         <div className="px-10 flex flex-col justify-center items-center">
-          <img
-            loading="lazy"
+          <Image
             alt="author logo"
             className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
             src={logoUrl}
             width={120}
             height={120}
-          ></img>
+          ></Image>
 
           <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">
             {props.author}

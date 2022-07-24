@@ -4,6 +4,7 @@ import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";
 import { ThemeContext } from "../../utils/themeContext";
+import Image from "next/future/image";
 
 export default function (props: { item: SocialItem }) {
   const { theme } = useContext(ThemeContext);
@@ -70,13 +71,12 @@ export default function (props: { item: SocialItem }) {
                 className="card-shadow bg-white dark:bg-dark-2 dark:card-shadow-dark"
                 style={{ height: 280 }}
               >
-                <img
-                  loading="lazy"
+                <Image
                   alt="logo wechat qrcode"
                   src={weChatUrl}
                   width={200}
                   height={280}
-                ></img>
+                ></Image>
               </div>
             </ArrowContainer>
           );

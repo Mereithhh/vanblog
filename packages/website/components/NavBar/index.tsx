@@ -6,6 +6,7 @@ import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
 import { ThemeContext } from "../../utils/themeContext";
 import { MenuItem } from "../../api/getMeta";
+import Image from "next/future/image";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -98,13 +99,12 @@ export default function (props: {
               </span>
             </div>
             <div className="hidden sm:block transform translate-x-2">
-              <img
-                loading="lazy"
+              <Image
                 alt="site logo"
                 src={picUrl}
                 width={52}
                 height={52}
-              ></img>
+              ></Image>
             </div>
           </div>
           {/* 第二个flex */}

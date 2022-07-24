@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
 import { ThemeContext } from "../../utils/themeContext";
+import Image from "next/future/image";
 export default function (props: {
   aliPay: string;
   weChatPay: string;
@@ -52,21 +53,19 @@ export default function (props: {
         }}
       >
         <div className="flex justify-center">
-          <img
-            loading="lazy"
+          <Image
             alt="logo ali pay"
             src={payUrl[0]}
             width={180}
             height={250}
-          ></img>
+          ></Image>
           <div className="w-4 inline-block"></div>
-          <img
-            loading="lazy"
+          <Image
             alt="logo wechat pay"
             src={payUrl[1]}
             width={180}
             height={250}
-          ></img>
+          ></Image>
         </div>
       </div>
       <div className=" bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-dark ">

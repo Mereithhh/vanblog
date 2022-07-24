@@ -49,16 +49,6 @@ export default function (props: { content: string }) {
                         fill="#6f7177"
                       ></path>
                     </svg>
-
-                    {/* <img
-                      alt="copy logo"
-                      src="/copy.svg"
-                      width={20}
-                      height={20}
-                      style={{
-                        backgroundColor: "inherit",
-                      }}
-                    ></img> */}
                   </span>
                 </CopyToClipboard>
                 <SyntaxHighlighter

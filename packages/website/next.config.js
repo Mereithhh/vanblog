@@ -31,18 +31,18 @@ const getAllowDomains = () => {
 module.exports = {
   reactStrictMode: true,
   output: "standalone",
-  // experimental: {
-  //   images: {
-  //     allowFutureImage: true,
-  //   },
-  // },
-  // publicRuntimeConfig: {
-  //   images: {
-  //     domains: getAllowDomains(),
-  //   },
-  // },
-  // images: {
-  //   domains: getAllowDomains(),
-  // },
+  experimental: {
+    images: {
+      allowFutureImage: true,
+    },
+  },
+  publicRuntimeConfig: {
+    images: {
+      domains: getAllowDomains(),
+    },
+  },
+  images: {
+    domains: getAllowDomains(),
+  },
   ...rewites,
 };
