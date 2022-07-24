@@ -1,4 +1,11 @@
 # Changelog
+### [0.3.2](https://github.com/Mereithhh/van-blog/compare/v0.3.1...v0.3.2) (2022-07-24)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* nginx 301 带端口问题 ([131f470](https://github.com/Mereithhh/van-blog/commit/131f470840e3144fef4f05cea7c5b568287f2776))
+
 ### 0.3.1 (2022-07-24)
 
 
