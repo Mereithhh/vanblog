@@ -38,7 +38,7 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: vanBlog
     volumes:
       # mongoDB 数据存放地址，按需修改。
-      - $(pwd)/data/mongo:/data/db
+      - ${PWD}/data/mongo:/data/db
 ```
 
 按注释说明修改`docker-compose.yml`的配置后：
