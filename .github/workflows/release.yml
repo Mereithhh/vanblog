@@ -48,7 +48,7 @@ jobs:
           file: ./Dockerfile
           build-args: |
             VAN_BLOG_BUILD_SERVER=http://localhost:3000
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             "docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
@@ -58,7 +58,7 @@ jobs:
       - name: standard version
         run: |
           yarn
-          yarn release && git push --follow-tags
+          yarn release && git push --follow-tags origin master
       - name: Release
         uses: softprops/action-gh-release@v1
       - name: 打包镜像并推送（自用）
