@@ -51,6 +51,9 @@ jobs:
             "docker.io/mereith/van-blog:latest"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
+      - name: Release
+        uses: softprops/action-gh-release@v1
+
       - name: 打包镜像并推送（自用）
         uses: docker/build-push-action@v3
         with:
