@@ -93,6 +93,6 @@ yarn docs:dev
 ```bash
 # 这个build server 是第一次打包镜像拿数据的，不写也行，那就得等启动容器后增量渲染生效了。
 VAN_BLOG_BUILD_SERVER="https://www.mereith.com"
-docker build -build-arg VAN_BLOG_BUILD_SERVER=$VAN_BLOG_BUILD_SERVER -t mereith/van-blog:1.0.0 .
+docker build --build-arg VAN_BLOG_BUILD_SERVER=$VAN_BLOG_BUILD_SERVER -t mereith/van-blog:1.0.0 .
 docker push mereith/van-blog:1.0.0
 ```
