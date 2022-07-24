@@ -6,7 +6,7 @@ on:
       - "v*"
 
 jobs:
-  deploy-pages:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -55,10 +55,6 @@ jobs:
             "docker.io/mereith/van-blog:latest"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
-      - name: standard version
-        run: |
-          yarn
-          yarn release && git push --follow-tags origin master
       - name: Release
         uses: softprops/action-gh-release@v1
       - name: 打包镜像并推送（自用）
