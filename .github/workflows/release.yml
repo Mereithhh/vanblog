@@ -48,7 +48,7 @@ jobs:
           file: ./Dockerfile
           build-args: |
             VAN_BLOG_BUILD_SERVER=http://localhost:3000
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: |
             "docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
@@ -68,7 +68,7 @@ jobs:
             VAN_BLOG_BUILD_SERVER=https://www.mereith.com
           context: .
           file: ./Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: |
             "registry.cn-beijing.aliyuncs.com/van-blog/mereith:${{ steps.get_version.outputs.VERSION }}"
