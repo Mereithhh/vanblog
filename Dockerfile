@@ -3,7 +3,7 @@
 FROM node:18 as ADMIN_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /usr/src/app
-RUN yarn config set registry https://registry.npmmirror.com/ -g
+RUN yarn config set registry https://registry.npmmirror.com -g
 RUN yarn config set network-timeout 60000 -g
 COPY ./packages/admin/package.json ./
 RUN yarn
@@ -16,10 +16,10 @@ RUN yarn build
 FROM node:18 as SERVER_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /app
-RUN yarn config set network-timeout 60000 -g
+# RUN yarn config set registry https://registry.npmmirror.com -g
+# RUN yarn config set network-timeout 60000 -g
 # RUN yarn config set registry https://registry.npm.taobao.org
 COPY ./packages/server/ .
-RUN yarn config set registry https://registry.npmmirror.com/ -g
 RUN yarn
 RUN yarn build
 
@@ -29,7 +29,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY ./packages/website/package.json ./packages/website/yarn.lock* ./packages/website/package-lock.json* ./packages/website/pnpm-lock.yaml* ./
 RUN yarn config set network-timeout 60000 -g
-RUN yarn config set registry https://registry.npmmirror.com/ -g
+RUN yarn config set registry https://registry.npmmirror.com -g
 RUN yarn
 
 FROM node:16-alpine AS WEBSITE_BUILDER
@@ -42,7 +42,7 @@ ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
 ARG VAN_BLOG_BUILD_SERVER
 ENV VAN_BLOG_SERVER_URL ${VAN_BLOG_BUILD_SERVER}
 RUN yarn config set network-timeout 60000 -g
-RUN yarn config set registry https://registry.npmmirror.com/ -g
+RUN yarn config set registry https://registry.npmmirror.com -g
 RUN yarn build
 
 #运行容器
