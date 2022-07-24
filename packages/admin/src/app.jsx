@@ -104,7 +104,7 @@ export const layout = ({ initialState, setInitialState }) => {
         <LinkOutlined />
         <span>主站</span>
       </a>,
-      <a key="mainSite" href="https://github.com/mereithhh/van-blog" target="_blank">
+      <a key="mainSite" href="https://vanblog.mereith.com/" target="_blank">
         <LinkOutlined />
         <span>帮助文档</span>
       </a>,

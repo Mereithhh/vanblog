@@ -19,6 +19,12 @@ const Footer = () => {
           href: 'https://github.com/mereithhh/van-blog',
           blankTarget: true,
         },
+        {
+          key: 'websitev',
+          title: "项目主页",
+          href: 'https://vanblog.mereith.com',
+          blankTarget: true,
+        },
       ]}
     />
   );

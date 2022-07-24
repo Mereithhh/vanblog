@@ -164,7 +164,7 @@ export default function (props: {
           <p className="">
             Powered By{" "}
             <a
-              href="https://github.com/Mereithhh/van-blog"
+              href="https://vanblog.mereith.com"
               target={"_blank"}
               className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
             >
