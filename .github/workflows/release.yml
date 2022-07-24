@@ -46,6 +46,8 @@ jobs:
         with:
           context: .
           file: ./Dockerfile
+          build-args: |
+            VAN_BLOG_BUILD_SERVER=http://localhost:3000
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
