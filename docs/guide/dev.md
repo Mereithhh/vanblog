@@ -108,4 +108,9 @@ git push --tags
 
 ## Release
 
-本项目使用 [standard-version](https://github.com/conventional-changelog/standard-version) 管理版本，运行 `yarn release` 即可发版，并触发流水线打包发布镜像。
+本项目使用 [standard-version](https://github.com/conventional-changelog/standard-version) 管理版本，并有了对应的 `github actions`，向远端推送 `v*` 的 `tag` 会触发`standard-version release` 然后打包发布项目。
+
+```bash
+git tag v1.0.0
+git push --tags
+```
