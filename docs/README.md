@@ -38,13 +38,13 @@ features:
     icon: table
     details: 支持百度和GA，内置浏览量统计
 
-  - title: 可配置
+  - title: ARM Ready
     icon: setting
-    details: 能想到的都可配置
+    details: 树莓派、香橙派，无论什么派
 
   - title: 现代后台
     icon: strong
-    details: 功能齐全的后台页面
+    details: 功能齐全的后台页面，可配置化高
 
   - title: 易于部署
     icon: linux
