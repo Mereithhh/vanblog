@@ -2,12 +2,11 @@ name: 部署文档
 
 on:
   push:
-    branches:
-      # 确保这是你正在使用的分支名称
-      - master
+    tags:
+      - "doc*"
 
 jobs:
-  deploy-gh-pages:
+  deploy-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -16,6 +15,19 @@ jobs:
           fetch-depth: 0
           # 如果你文档需要 Git 子模块，取消注释下一行
           # submodules: true
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to AliyunCS
+        uses: docker/login-action@v1
+        with:
+          registry: registry.cn-beijing.aliyuncs.com
+          username: ${{ secrets.ALI_USER  }}
+          password: ${{ secrets.ALI_PASSWORD  }}
 
       - name: 设置 Node.js
         uses: actions/setup-node@v3
@@ -32,11 +44,21 @@ jobs:
         run: |-
           yarn run docs:build
           > docs/.vuepress/dist/.nojekyll
-
-      - name: 部署文档
-        uses: JamesIves/github-pages-deploy-action@v4
+        id: image-name
+      - name: 打包镜像并推送
+        uses: docker/build-push-action@v2
         with:
-          # 这是文档部署到的分支名称
-          branch: gh-pages
-          
-          folder: docs/.vuepress/dist
+          context: ./docs
+          file: ./docs/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:docs-${{ github.ref }}"
+      - name: 部署到集群
+        uses: steebchen/kubectl@v2.0.0
+        with: # defaults to latest kubectl binary version
+          config: ${{ secrets.K8S_CONFIG_DATA }}
+          command: set image -n tools deployment/vanblog-doc vanblog-doc=registry.cn-beijing.aliyuncs.com/mereith/van-blog:docs-${{ github.ref }}
+      - name: send Message To me
+        run: |
+          curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-doc","message":"流水线运行完毕，文档已部署。
