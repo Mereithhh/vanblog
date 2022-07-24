@@ -13,8 +13,10 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          # 如果你文档需要 Git 子模块，取消注释下一行
-          # submodules: true
+      - name: Configure committer
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
       - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
@@ -51,9 +53,10 @@ jobs:
             "docker.io/mereith/van-blog:latest"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
+      - name: Bump version
+        uses: qzb/standard-version@v1
       - name: Release
         uses: softprops/action-gh-release@v1
-
       - name: 打包镜像并推送（自用）
         uses: docker/build-push-action@v3
         with:
