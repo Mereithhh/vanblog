@@ -47,6 +47,7 @@ export default function (props: {
     <div>
       <div
         style={{ position: "relative" }}
+        id="post-card"
         className="overflow-hidden  bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
       >
         {props.top != 0 && <TopPinIcon></TopPinIcon>}
