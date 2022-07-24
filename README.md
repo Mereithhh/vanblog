@@ -1,4 +1,6 @@
-## 简介
+<p align="center">
+	<img src="/img/logo.svg" style="width: 300px"></img>
+</p>
 
 一个一站式的个人博客系统。刚达到一个可以用的状态，文档慢慢补吧。。目前自用中。
 
