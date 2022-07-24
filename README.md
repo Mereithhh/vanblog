@@ -11,7 +11,16 @@
 	<strong>项目主页: </strong>  <a target="_blank" href='https://vanblog.mereith.com'>vanblog.mereith.com</a>
 </p>
 
+## 快速上手
+
+请移步项目文档：[快速上手](https://vanblog.mereith.com/get-started.html)
+
 ## 说明与文档
+
 请移步项目主页： [https://vanblog.mereith.com](https://vanblog.mereith.com)
 
+## 谁在用
 
+目前就我自己- -
+
+- [Mereith's Blog](https://www.mereith.com)
