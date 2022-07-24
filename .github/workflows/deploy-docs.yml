@@ -58,12 +58,12 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:docs-${{ steps.get_version.outputs.VERSION }}"
+            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
       - name: 部署到集群
         uses: steebchen/kubectl@v2.0.0
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.K8S_CONFIG_DATA }}
-          command: set image -n tools deployment/vanblog-doc vanblog-doc=registry.cn-beijing.aliyuncs.com/mereith/van-blog:docs-${{ steps.get_version.outputs.VERSION }}
+          command: set image -n tools deployment/vanblog-doc vanblog-doc=registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
       - name: send Message To me
         run: |
           curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-doc","message":"流水线运行完毕，文档已部署。
