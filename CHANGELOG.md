@@ -1,4 +1,18 @@
 # Changelog
+### [0.3.3](https://github.com/Mereithhh/van-blog/compare/v0.3.2...v0.3.3) (2022-07-26)
+
+
+### ✨ Features | 新功能
+
+* 导航栏增加动效 ([9772e39](https://github.com/Mereithhh/van-blog/commit/9772e3922347aa88b2979bd4337f529c43ebf137))
+* 文章标题可点击 ([80ffbad](https://github.com/Mereithhh/van-blog/commit/80ffbadb5b101dffc09cee5ca33907b012810a13))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 后台查看文章路由不对 ([1c046d4](https://github.com/Mereithhh/van-blog/commit/1c046d49ac4a4849fabb7b87406abed2bae79424))
+* 文章卡片分类点击效果 ([9b172cf](https://github.com/Mereithhh/van-blog/commit/9b172cf9dfa8960182a9ef5b800d2df66ef401d7))
+
 ### [0.3.2](https://github.com/Mereithhh/van-blog/compare/v0.3.1...v0.3.2) (2022-07-24)
 
 
