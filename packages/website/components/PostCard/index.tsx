@@ -23,7 +23,8 @@ export default function (props: {
   top: number;
 }) {
   const iconSize = "16";
-  const iconClass = "mr-1 fill-gray-400 dark:text-dark";
+  const iconClass =
+    "mr-1 fill-gray-400 dark:text-dark group-hover:fill-gray-900 ";
   const dataPath = useMemo(() => {
     if (props.type == "about") {
       return "/about";
@@ -90,7 +91,7 @@ export default function (props: {
           </span>
 
           {props.type != "about" && (
-            <span className="inline-flex px-2 items-center">
+            <span className="inline-flex px-2 items-center group cursor-pointer">
               <span className={iconClass}>
                 <svg
                   viewBox="0 0 1024 1024"
@@ -107,7 +108,7 @@ export default function (props: {
                 </svg>
               </span>
               <Link href={`/category/${props.catelog}`}>
-                <a className="cursor-pointer hover:text-gray-900 dark:hover:text-dark-hover hover:font-medium transition-all">{`${props.catelog}`}</a>
+                <a className="cursor-pointer group-hover:text-gray-900 dark:hover:text-dark-hover hover:font-medium ">{`${props.catelog}`}</a>
               </Link>
             </span>
           )}
