@@ -176,3 +176,24 @@ body .wl-panel {
   opacity: 1 !important;
   bottom: 2px !important;
 }
+
+.ua {
+  position: relative;
+  text-decoration: none;
+  /* font-size: 20px; */
+}
+.ua:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background: var(--text-color-sm);
+  transition: all 0.3s;
+}
+.ua:hover:before {
+  width: 100%;
+  left: 0;
+  right: 0;
+}

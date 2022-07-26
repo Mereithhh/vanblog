@@ -245,6 +245,7 @@ export default () => {
       }}
       pagination={{
         pageSize: 5,
+
         onChange: (page) => console.log(page),
       }}
       dateFormatter="string"
