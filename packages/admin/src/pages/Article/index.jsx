@@ -111,7 +111,7 @@ const columns = [
         编辑
       </a>,
       <a
-        href={`/article/${record.id}`}
+        href={`/post/${record.id}`}
         target="_blank"
         rel="noopener noreferrer"
         key={'view' + record.id}
