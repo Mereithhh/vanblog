@@ -1,4 +1,4 @@
-import { SocialType } from "../api/getMeta";
+import { SocialType } from "../api/getAllData";
 
 export function getIcon(type: SocialType, size: number) {
   if (type == "bilibili") {

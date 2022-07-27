@@ -1,69 +1,24 @@
-import { getPublicAll, MenuItem, SocialItem } from "../../api/getMeta";
-import AuthorCard from "../../components/AuthorCard";
+import { getPublicAll } from "../../api/getAllData";
+import AuthorCard, { AuthorCardProps } from "../../components/AuthorCard";
 import Layout from "../../components/layout";
 import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import { Article } from "../../types/article";
-import { getLayoutProps } from "../../utils/getLayoutProps";
+import { LayoutProps } from "../../utils/getLayoutProps";
+import { getPagePagesProps } from "../../utils/getPageProps";
 import { revalidate } from "../../utils/loadConfig";
-import { sortArticleWithTop } from "../../utils/sortArticles";
-interface IndexProps {
-  ipcNumber: string;
-  since: string;
-  ipcHref: string;
-  logo: string;
-  categories: string[];
-  author: string;
-  authorLogoDark: string;
-  desc: string;
-  authorLogo: string;
-  postNum: number;
-  catelogNum: number;
-  tagNum: number;
-  articles: Article[];
+export interface PagePagesProps {
+  layoutProps: LayoutProps;
+  authorCardProps: AuthorCardProps;
   currPage: number;
-  favicon: string;
-  walineServerUrl: string;
-  siteName: string;
-  siteDesc: string;
-  socials: SocialItem[];
-  baiduAnalysisID: string;
-  gaAnalysisID: string;
-  logoDark: string;
-  links: MenuItem[];
-  description: string;
+  articles: Article[];
 }
-const Home = (props: IndexProps) => {
+const PagePages = (props: PagePagesProps) => {
   return (
     <Layout
-      description={props.description}
-      links={props.links}
-      walineServerUrl={props.walineServerUrl}
-      favicon={props.favicon}
-      title={props.siteName}
-      logoDark={props.logoDark}
-      ipcNumber={props.ipcNumber}
-      ipcHref={props.ipcHref}
-      since={new Date(props.since)}
-      logo={props.logo}
-      categories={props.categories}
-      siteDesc={props.siteDesc}
-      siteName={props.siteName}
-      baiduAnalysisID={props.baiduAnalysisID}
-      gaAnalysisID={props.gaAnalysisID}
-      sideBar={
-        <AuthorCard
-          catelogNum={props.catelogNum}
-          postNum={props.postNum}
-          tagNum={props.tagNum}
-          logoDark={props.authorLogoDark}
-          author={props.author}
-          logo={props.authorLogo}
-          desc={props.desc}
-          socials={props.socials}
-          walineServerUrl={props.walineServerUrl}
-        ></AuthorCard>
-      }
+      option={props.layoutProps}
+      title={props.layoutProps.siteName}
+      sideBar={<AuthorCard option={props.authorCardProps}></AuthorCard>}
     >
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
@@ -76,12 +31,12 @@ const Home = (props: IndexProps) => {
             catelog={article.category}
             content={article.content}
             type={"overview"}
-            walineServerUrl={props.walineServerUrl}
+            walineServerUrl={props.layoutProps.walineServerUrl}
           ></PostCard>
         ))}
       </div>
       <PageNav
-        total={props.postNum}
+        total={props.authorCardProps.postNum}
         current={props.currPage}
         base={"/"}
         more={"/page"}
@@ -90,7 +45,7 @@ const Home = (props: IndexProps) => {
   );
 };
 
-export default Home;
+export default PagePages;
 
 export async function getStaticPaths() {
   const data = await getPublicAll();
@@ -111,43 +66,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: IndexProps; revalidate?: number }> {
-  const curPage = parseInt(params.p);
-  const data = await getPublicAll();
-  const siteInfo = data.meta.siteInfo;
-  const postNum = data.articles.length;
-  const tagNum = data.tags.length;
-  const catelogNum = data.categories.length;
-  const sortedArticles = sortArticleWithTop(data.articles);
-  // 只需要5个文章
-  const articles = [];
-  // 前面的不要
-  for (let j = 0; j < curPage - 1; j++) {
-    for (let i = 0; i < 5; i++) {
-      sortedArticles.pop();
-    }
-  }
-  //后面的要5个。
-  for (let i = 0; i < 5; i++) {
-    const a = sortedArticles.pop();
-    if (a) {
-      articles.push(a);
-    }
-  }
-
+}: any): Promise<{ props: PagePagesProps; revalidate?: number }> {
   return {
-    props: {
-      currPage: curPage,
-      ...getLayoutProps(siteInfo),
-      categories: data.categories,
-      socials: data.meta.socials,
-      postNum: postNum,
-      tagNum: tagNum,
-      links: data.meta.menus,
-
-      catelogNum: catelogNum,
-      articles: articles,
-    },
+    props: await getPagePagesProps(params.p),
     ...revalidate,
   };
 }

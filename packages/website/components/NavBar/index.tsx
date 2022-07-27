@@ -5,7 +5,7 @@ import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
 import { ThemeContext } from "../../utils/themeContext";
-import { MenuItem } from "../../api/getMeta";
+import { MenuItem } from "../../api/getAllData";
 import Image from "next/future/image";
 export default function (props: {
   logo: string;

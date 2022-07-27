@@ -1,69 +1,24 @@
-import { getPublicAll, MenuItem, SocialItem } from "../api/getMeta";
-import AuthorCard from "../components/AuthorCard";
+import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/layout";
 import PostCard from "../components/PostCard";
-import WaLine from "../components/WaLine";
-import { getLayoutProps } from "../utils/getLayoutProps";
+import { LayoutProps } from "../utils/getLayoutProps";
+import { getAboutPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
-interface IndexProps {
-  ipcNumber: string;
-  since: string;
-  ipcHref: string;
-  logo: string;
-  categories: string[];
-  author: string;
-  desc: string;
-  authorLogo: string;
-  postNum: number;
-  authorLogoDark: string;
-  catelogNum: number;
-  tagNum: number;
-  favicon: string;
-  about: {
-    updatedAt: string;
-    content: string;
-  };
-  walineServerUrl: string;
-  siteName: string;
-  siteDesc: string;
-  socials: SocialItem[];
-  baiduAnalysisID: string;
-  gaAnalysisID: string;
-  logoDark: string;
-  links: MenuItem[];
-  description: string;
+export interface About {
+  updatedAt: string;
+  content: string;
 }
-const Home = (props: IndexProps) => {
+export interface AboutPageProps {
+  layoutProps: LayoutProps;
+  authorCardProps: AuthorCardProps;
+  about: About;
+}
+const AboutPage = (props: AboutPageProps) => {
   return (
     <Layout
-      links={props.links}
-      description={props.description}
       title="关于我"
-      logoDark={props.logoDark}
-      ipcNumber={props.ipcNumber}
-      ipcHref={props.ipcHref}
-      since={new Date(props.since)}
-      logo={props.logo}
-      baiduAnalysisID={props.baiduAnalysisID}
-      gaAnalysisID={props.gaAnalysisID}
-      categories={props.categories}
-      favicon={props.favicon}
-      walineServerUrl={props.walineServerUrl}
-      siteDesc={props.siteDesc}
-      siteName={props.siteName}
-      sideBar={
-        <AuthorCard
-          catelogNum={props.catelogNum}
-          postNum={props.postNum}
-          tagNum={props.tagNum}
-          socials={props.socials}
-          author={props.author}
-          logoDark={props.authorLogoDark}
-          walineServerUrl={props.walineServerUrl}
-          logo={props.authorLogo}
-          desc={props.desc}
-        ></AuthorCard>
-      }
+      option={props.layoutProps}
+      sideBar={<AuthorCard option={props.authorCardProps} />}
     >
       <PostCard
         id={0}
@@ -73,35 +28,20 @@ const Home = (props: IndexProps) => {
         catelog={"about"}
         content={props.about.content}
         type={"about"}
-        walineServerUrl={props.walineServerUrl}
+        walineServerUrl={props.layoutProps.walineServerUrl}
         top={0}
       ></PostCard>
     </Layout>
   );
 };
 
-export default Home;
+export default AboutPage;
 export async function getStaticProps(): Promise<{
-  props: IndexProps;
+  props: AboutPageProps;
   revalidate?: number;
 }> {
-  const data = await getPublicAll();
-  const siteInfo = data.meta.siteInfo;
-  const postNum = data.articles.length;
-  const tagNum = data.tags.length;
-  const catelogNum = data.categories.length;
-  const about = data.meta.about;
   return {
-    props: {
-      ...getLayoutProps(siteInfo),
-      categories: data.categories,
-      postNum: postNum,
-      socials: data.meta.socials,
-      tagNum: tagNum,
-      catelogNum: catelogNum,
-      about: about as any,
-      links: data.meta.menus,
-    },
+    props: await getAboutPageProps(),
     ...revalidate,
   };
 }

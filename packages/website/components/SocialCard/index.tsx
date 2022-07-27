@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { SocialItem } from "../../api/getMeta";
+import { SocialItem } from "../../api/getAllData";
 import { topUpper } from "../../utils/TopUpper";
 import SocialIcon from "../SocialIcon";
 

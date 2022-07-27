@@ -1,5 +1,5 @@
 import { useContext, useMemo, useState } from "react";
-import { SocialItem, SocialType } from "../../api/getMeta";
+import { SocialItem, SocialType } from "../../api/getAllData";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";

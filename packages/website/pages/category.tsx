@@ -1,84 +1,39 @@
-import { getPublicAll, MenuItem, SocialItem } from "../api/getMeta";
-import AuthorCard from "../components/AuthorCard";
+import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/layout";
 import TimeLineItem from "../components/TimeLineItem";
 import { Article } from "../types/article";
-import { getLayoutProps } from "../utils/getLayoutProps";
+import { LayoutProps } from "../utils/getLayoutProps";
+import { getCategoryPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
-import { wordCount } from "../utils/wordCount";
-interface IndexProps {
-  ipcNumber: string;
-  since: string;
-  ipcHref: string;
-  logo: string;
-  categories: string[];
-  author: string;
-  desc: string;
-  authorLogoDark: string;
-  authorLogo: string;
-  postNum: number;
-  catelogNum: number;
-  tagNum: number;
-  articles: Record<string, Article[]>;
+
+export interface CategoryPageProps {
+  layoutProps: LayoutProps;
+  authorCardProps: AuthorCardProps;
+  sortedArticles: Record<string, Article[]>;
   wordTotal: number;
-  favicon: string;
-  walineServerUrl: string;
-  siteName: string;
-  siteDesc: string;
-  socials: SocialItem[];
-  baiduAnalysisID: string;
-  gaAnalysisID: string;
-  logoDark: string;
-  links: MenuItem[];
-  description: string;
 }
-const Home = (props: IndexProps) => {
+const CategoryPage = (props: CategoryPageProps) => {
   return (
     <Layout
-      links={props.links}
-      description={props.description}
-      favicon={props.favicon}
+      option={props.layoutProps}
       title="分类"
-      ipcNumber={props.ipcNumber}
-      logoDark={props.logoDark}
-      ipcHref={props.ipcHref}
-      walineServerUrl={props.walineServerUrl}
-      since={new Date(props.since)}
-      logo={props.logo}
-      categories={props.categories}
-      siteDesc={props.siteDesc}
-      siteName={props.siteName}
-      baiduAnalysisID={props.baiduAnalysisID}
-      gaAnalysisID={props.gaAnalysisID}
-      sideBar={
-        <AuthorCard
-          catelogNum={props.catelogNum}
-          postNum={props.postNum}
-          socials={props.socials}
-          walineServerUrl={props.walineServerUrl}
-          tagNum={props.tagNum}
-          author={props.author}
-          logo={props.authorLogo}
-          logoDark={props.authorLogoDark}
-          desc={props.desc}
-        ></AuthorCard>
-      }
+      sideBar={<AuthorCard option={props.authorCardProps} />}
     >
       <div className="bg-white card-shadow dark:bg-dark dark:card-shadow-dark py-4 px-8 md:py-6 md:px-8">
         <div>
           <div className="text-2xl md:text-3xl text-gray-700 text-center dark:text-dark">
             分类
           </div>
-          <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light dark:text-dark">{`${props.catelogNum} 分类 × ${props.postNum} 文章 × ${props.tagNum} 标签 × ${props.wordTotal} 字`}</div>
+          <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light dark:text-dark">{`${props.authorCardProps.catelogNum} 分类 × ${props.authorCardProps.postNum} 文章 × ${props.authorCardProps.tagNum} 标签 × ${props.wordTotal} 字`}</div>
         </div>
         <div className="flex flex-col mt-2">
-          {Object.keys(props.articles).map((key: string) => {
+          {Object.keys(props.sortedArticles).map((key: string) => {
             return (
               <TimeLineItem
                 defaultOpen={false}
                 key={key}
                 date={key}
-                articles={props.articles[key]}
+                articles={props.sortedArticles[key]}
                 showYear={true}
               ></TimeLineItem>
             );
@@ -89,51 +44,13 @@ const Home = (props: IndexProps) => {
   );
 };
 
-export default Home;
+export default CategoryPage;
 export async function getStaticProps(): Promise<{
-  props: IndexProps;
+  props: CategoryPageProps;
   revalidate?: number;
 }> {
-  const data = await getPublicAll();
-  const siteInfo = data.meta.siteInfo;
-  const postNum = data.articles.length;
-  const tagNum = data.tags.length;
-  const catelogNum = data.categories.length;
-  let wordTotal = 0;
-  data.articles.forEach((a) => {
-    wordTotal = wordTotal + wordCount(a.content);
-  });
-  const articles = {} as any;
-  for (const category of data.categories) {
-    let curDateArticles = data.articles
-      .filter((each) => {
-        return each.category == category;
-      })
-      .map((each) => {
-        return {
-          title: each.title,
-          id: each.id,
-          createdAt: each.createdAt,
-          updatedAt: each.updatedAt,
-        };
-      });
-    curDateArticles = curDateArticles.sort((a, b) => {
-      return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
-    });
-    articles[String(category)] = curDateArticles;
-  }
   return {
-    props: {
-      wordTotal,
-      ...getLayoutProps(siteInfo),
-      categories: data.categories,
-      postNum: postNum,
-      tagNum: tagNum,
-      catelogNum: catelogNum,
-      articles: articles,
-      socials: data.meta.socials,
-      links: data.meta.menus,
-    },
+    props: await getCategoryPageProps(),
     ...revalidate,
   };
 }

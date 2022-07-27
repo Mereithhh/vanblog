@@ -32,6 +32,7 @@ export interface PublicAllProp {
       author: string;
       authorDesc: string;
       authorLogo: string;
+      authorLogoDark?: string;
       siteLogo: string;
       favicon: string;
       siteName: string;

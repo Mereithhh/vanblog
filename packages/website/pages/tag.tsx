@@ -1,65 +1,21 @@
 import Link from "next/link";
-import { getPublicAll, MenuItem, SocialItem } from "../api/getMeta";
-import AuthorCard from "../components/AuthorCard";
+import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/layout";
-import { getLayoutProps } from "../utils/getLayoutProps";
+import { LayoutProps } from "../utils/getLayoutProps";
+import { getTagPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
 
-interface IndexProps {
-  ipcNumber: string;
-  since: string;
-  ipcHref: string;
-  logo: string;
-  categories: string[];
-  author: string;
-  desc: string;
-  authorLogoDark: string;
-  authorLogo: string;
-  postNum: number;
-  catelogNum: number;
-  tagNum: number;
+export interface TagPageProps {
+  layoutProps: LayoutProps;
+  authorCardProps: AuthorCardProps;
   tags: string[];
-  favicon: string;
-  walineServerUrl: string;
-  siteName: string;
-  siteDesc: string;
-  socials: SocialItem[];
-  baiduAnalysisID: string;
-  gaAnalysisID: string;
-  logoDark: string;
-  links: MenuItem[];
-  description: string;
 }
-const Home = (props: IndexProps) => {
+const TagPage = (props: TagPageProps) => {
   return (
     <Layout
-      description={props.description}
+      option={props.layoutProps}
       title="标签"
-      links={props.links}
-      favicon={props.favicon}
-      ipcNumber={props.ipcNumber}
-      ipcHref={props.ipcHref}
-      since={new Date(props.since)}
-      logoDark={props.logoDark}
-      logo={props.logo}
-      siteDesc={props.siteDesc}
-      baiduAnalysisID={props.baiduAnalysisID}
-      gaAnalysisID={props.gaAnalysisID}
-      siteName={props.siteName}
-      categories={props.categories}
-      walineServerUrl={props.walineServerUrl}
-      sideBar={
-        <AuthorCard
-          catelogNum={props.catelogNum}
-          postNum={props.postNum}
-          tagNum={props.tagNum}
-          author={props.author}
-          logoDark={props.authorLogoDark}
-          logo={props.authorLogo}
-          desc={props.desc}
-          socials={props.socials}
-        ></AuthorCard>
-      }
+      sideBar={<AuthorCard option={props.authorCardProps}></AuthorCard>}
     >
       <div className="bg-white card-shadow dark:bg-dark dark:card-shadow-dark py-4 px-8 md:py-6 md:px-8">
         <div className="text-lg md:text-xl text-gray-700 dark:text-dark">
@@ -80,28 +36,13 @@ const Home = (props: IndexProps) => {
   );
 };
 
-export default Home;
+export default TagPage;
 export async function getStaticProps(): Promise<{
-  props: IndexProps;
+  props: TagPageProps;
   revalidate?: number;
 }> {
-  const data = await getPublicAll();
-  const siteInfo = data.meta.siteInfo;
-  const postNum = data.articles.length;
-  const tagNum = data.tags.length;
-  const catelogNum = data.categories.length;
-  const tags = data.tags;
   return {
-    props: {
-      ...getLayoutProps(siteInfo),
-      categories: data.categories,
-      postNum: postNum,
-      tagNum: tagNum,
-      catelogNum: catelogNum,
-      tags,
-      socials: data.meta.socials,
-      links: data.meta.menus,
-    },
+    props: await getTagPageProps(),
     ...revalidate,
   };
 }

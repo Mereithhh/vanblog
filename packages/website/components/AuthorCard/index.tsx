@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { useContext, useEffect, useMemo } from "react";
 import Headroom from "headroom.js";
-import { SocialItem } from "../../api/getMeta";
+import { SocialItem } from "../../api/getAllData";
 import SocialCard from "../SocialCard";
 import { ThemeContext } from "../../utils/themeContext";
 import Image from "next/future/image";
-// import RecentComment from "../RecentComment";
-export default function (props: {
+export interface AuthorCardProps {
   author: string;
   desc: string;
   logo: string;
@@ -16,13 +15,19 @@ export default function (props: {
   tagNum: number;
   walineServerUrl?: string;
   socials: SocialItem[];
-}) {
+}
+
+export default function (props: { option: AuthorCardProps }) {
   const { theme } = useContext(ThemeContext);
   const logoUrl = useMemo(() => {
-    if (theme.includes("dark") && props.logoDark && props.logoDark != "") {
-      return props.logoDark;
+    if (
+      theme.includes("dark") &&
+      props.option.logoDark &&
+      props.option.logoDark != ""
+    ) {
+      return props.option.logoDark;
     }
-    return props.logo;
+    return props.option.logo;
   }, [theme, props]);
   useEffect(() => {
     const el = document.querySelector("#author-card");
@@ -52,16 +57,16 @@ export default function (props: {
           ></Image>
 
           <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">
-            {props.author}
+            {props.option.author}
           </div>
           <div className="text-sm text-gray-500 mb-2 dark:text-dark-light">
-            {props.desc}
+            {props.option.desc}
           </div>
           <div className="flex">
             <Link href="/timeline">
               <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark ">
                 <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
-                  {props.postNum}
+                  {props.option.postNum}
                 </div>
                 <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
                   日志
@@ -71,7 +76,7 @@ export default function (props: {
             <Link href="/category">
               <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
                 <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
-                  {props.catelogNum}
+                  {props.option.catelogNum}
                 </div>
                 <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
                   分类
@@ -81,7 +86,7 @@ export default function (props: {
             <Link href="/tag">
               <a className="group flex flex-col justify-center items-center text-gray-600 text-sm px-1 dark:text-dark">
                 <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
-                  {props.tagNum}
+                  {props.option.tagNum}
                 </div>
                 <div className=" group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
                   标签
@@ -92,7 +97,7 @@ export default function (props: {
         </div>
 
         <div className="mt-4 w-full">
-          <SocialCard socials={props.socials}></SocialCard>
+          <SocialCard socials={props.option.socials}></SocialCard>
         </div>
       </div>
       {/* <RecentComment

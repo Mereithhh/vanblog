@@ -1,59 +1,33 @@
-import { getPublicAll, MenuItem } from "../../api/getMeta";
+import { getPublicAll } from "../../api/getAllData";
 import Layout from "../../components/layout";
 import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
-import WaLine from "../../components/WaLine";
 import { Article } from "../../types/article";
-import { getLayoutProps } from "../../utils/getLayoutProps";
+import { LayoutProps } from "../../utils/getLayoutProps";
+import { getPostPagesProps } from "../../utils/getPageProps";
 import { hasToc } from "../../utils/hasToc";
 import { revalidate } from "../../utils/loadConfig";
 
-interface IndexProps {
-  ipcNumber: string;
-  since: string;
-  ipcHref: string;
-  logo: string;
-  categories: string[];
-  author: string;
-  desc: string;
-  authorLogo: string;
-  postNum: number;
-  catelogNum: number;
-  tagNum: number;
+export interface PostPagesProps {
+  layoutProps: LayoutProps;
   article: Article;
   pay: string[];
   payDark: string[];
-  curId: number;
-  pre: { id: number; title: string };
-  next: { id: number; title: string };
-  favicon: string;
-  walineServerUrl: string;
-  siteName: string;
-  siteDesc: string;
-  baiduAnalysisID: string;
-  gaAnalysisID: string;
-  logoDark: string;
-  links: MenuItem[];
-  description: string;
+  author: string;
+  pre: {
+    id: number;
+    title: string;
+  };
+  next: {
+    id: number;
+    title: string;
+  };
 }
-const Home = (props: IndexProps) => {
+const PostPages = (props: PostPagesProps) => {
   return (
     <Layout
-      description={props.description}
-      links={props.links}
-      walineServerUrl={props.walineServerUrl}
-      favicon={props.favicon}
+      option={props.layoutProps}
       title={props.article.title}
-      logoDark={props.logoDark}
-      ipcNumber={props.ipcNumber}
-      ipcHref={props.ipcHref}
-      since={new Date(props.since)}
-      logo={props.logo}
-      categories={props.categories}
-      baiduAnalysisID={props.baiduAnalysisID}
-      gaAnalysisID={props.gaAnalysisID}
-      siteDesc={props.siteDesc}
-      siteName={props.siteName}
       sideBar={
         hasToc(props.article.content) ? (
           <Toc content={props.article.content} />
@@ -75,23 +49,21 @@ const Home = (props: IndexProps) => {
         tags={props.article.tags}
         pre={props.pre}
         next={props.next}
-        walineServerUrl={props.walineServerUrl}
+        walineServerUrl={props.layoutProps.walineServerUrl}
       ></PostCard>
     </Layout>
   );
 };
 
-export default Home;
+export default PostPages;
 
 export async function getStaticPaths() {
   const data = await getPublicAll();
-
   const paths = data.articles.map((article) => ({
     params: {
       id: String(article.id),
     },
   }));
-
   return {
     paths,
     fallback: "blocking",
@@ -100,45 +72,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: IndexProps; revalidate?: number }> {
-  const id = parseInt(params.id);
-  const data = await getPublicAll();
-  const siteInfo = data.meta.siteInfo;
-  const postNum = data.articles.length;
-  const tagNum = data.tags.length;
-  const catelogNum = data.categories.length;
-  const sortedArticle = data.articles.sort(
-    (a, b) => new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
-  );
-  const article = data.articles.find((each) => {
-    return each.id == id;
-  });
-  const curIndex = sortedArticle.indexOf(article);
-  let pre = {} as any;
-  let next = {} as any;
-  if (curIndex > 0) {
-    next["id"] = sortedArticle[curIndex - 1].id;
-    next["title"] = sortedArticle[curIndex - 1].title;
-  }
-  if (curIndex < sortedArticle.length - 1) {
-    pre["id"] = sortedArticle[curIndex + 1].id;
-    pre["title"] = sortedArticle[curIndex + 1].title;
-  }
+}: any): Promise<{ props: PostPagesProps; revalidate?: number }> {
   return {
-    props: {
-      ...getLayoutProps(siteInfo),
-      curId: id,
-      categories: data.categories,
-      postNum: postNum,
-      tagNum: tagNum,
-      catelogNum: catelogNum,
-      links: data.meta.menus,
-      article,
-      pay: [siteInfo.payAliPay, siteInfo.payWechat],
-      payDark: [siteInfo?.payAliPayDark || "", siteInfo?.payWechatDark || ""],
-      pre,
-      next,
-    },
+    props: await getPostPagesProps(params.id),
     ...revalidate,
   };
 }

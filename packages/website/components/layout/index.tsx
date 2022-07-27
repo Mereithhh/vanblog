@@ -9,25 +9,12 @@ import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import BaiduAnalysis from "../baiduAnalysis";
 import GaAnalysis from "../gaAnalysis";
-import { MenuItem } from "../../api/getMeta";
+import { LayoutProps } from "../../utils/getLayoutProps";
 export default function (props: {
-  description: string;
+  option: LayoutProps;
   title: string;
-  children: any;
-  ipcNumber: string;
-  since: Date;
-  ipcHref: string;
-  logo: string;
-  categories: string[];
   sideBar: any;
-  favicon: string;
-  walineServerUrl: string;
-  siteName: string;
-  siteDesc: string;
-  baiduAnalysisID: string;
-  gaAnalysisID: string;
-  logoDark: string;
-  links: MenuItem[];
+  children: any;
 }) {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
@@ -37,7 +24,7 @@ export default function (props: {
   });
   const renderLinks = useCallback(() => {
     const arr: any[] = [];
-    props.links.forEach((item) => {
+    props.option.links.forEach((item) => {
       arr.push(
         <li
           className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2"
@@ -57,21 +44,23 @@ export default function (props: {
   }, [props]);
   return (
     <>
-      {props.baiduAnalysisID != "" && process.env.NODE_ENV != "development" && (
-        <BaiduAnalysis id={props.baiduAnalysisID}></BaiduAnalysis>
-      )}
-      {props.gaAnalysisID != "" && process.env.NODE_ENV != "development" && (
-        <GaAnalysis id={props.gaAnalysisID}></GaAnalysis>
-      )}
+      {props.option.baiduAnalysisID != "" &&
+        process.env.NODE_ENV != "development" && (
+          <BaiduAnalysis id={props.option.baiduAnalysisID}></BaiduAnalysis>
+        )}
+      {props.option.gaAnalysisID != "" &&
+        process.env.NODE_ENV != "development" && (
+          <GaAnalysis id={props.option.gaAnalysisID}></GaAnalysis>
+        )}
 
       <NavBar
-        links={props.links}
-        siteName={props.siteName}
-        logo={props.logo}
-        categories={props.categories}
+        links={props.option.links}
+        siteName={props.option.siteName}
+        logo={props.option.logo}
+        categories={props.option.categories}
         isOpen={isOpen}
         setOpen={setIsOpen}
-        logoDark={props.logoDark}
+        logoDark={props.option.logoDark}
       ></NavBar>
       <BackToTopBtn></BackToTopBtn>
       <div>
@@ -130,8 +119,8 @@ export default function (props: {
       <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-700 ">
         <Head>
           <title>{props.title}</title>
-          <link rel="icon" href={props.favicon}></link>
-          <meta name="description" content={props.description}></meta>
+          <link rel="icon" href={props.option.favicon}></link>
+          <meta name="description" content={props.option.description}></meta>
         </Head>
 
         {
@@ -152,15 +141,17 @@ export default function (props: {
           <p className="">
             IPC 编号:{" "}
             <a
-              href={props.ipcHref}
+              href={props.option.ipcHref}
               target="_blank"
               className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
             >
-              {props.ipcNumber}
+              {props.option.ipcNumber}
             </a>
           </p>
 
-          <p>本站居然运行了 {getRunTimeOfDays(props.since)} 天</p>
+          <p>
+            本站居然运行了 {getRunTimeOfDays(new Date(props.option.since))} 天
+          </p>
           <p className="">
             Powered By{" "}
             <a
@@ -173,7 +164,8 @@ export default function (props: {
           </p>
 
           <p className="select-none">
-            © {props.since.getFullYear()} - {new Date().getFullYear()}
+            © {new Date(props.option.since).getFullYear()} -{" "}
+            {new Date().getFullYear()}
           </p>
           <p className="select-none">
             <Viewer></Viewer>
