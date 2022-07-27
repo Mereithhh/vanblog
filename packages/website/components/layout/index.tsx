@@ -10,6 +10,7 @@ import Link from "next/link";
 import BaiduAnalysis from "../baiduAnalysis";
 import GaAnalysis from "../gaAnalysis";
 import { LayoutProps } from "../../utils/getLayoutProps";
+import RunningTime from "../RunningTime";
 export default function (props: {
   option: LayoutProps;
   title: string;
@@ -148,10 +149,7 @@ export default function (props: {
               {props.option.ipcNumber}
             </a>
           </p>
-
-          <p>
-            本站居然运行了 {getRunTimeOfDays(new Date(props.option.since))} 天
-          </p>
+          <RunningTime since={props.option.since}></RunningTime>
           <p className="">
             Powered By{" "}
             <a
