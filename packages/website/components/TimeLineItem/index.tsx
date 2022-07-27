@@ -31,11 +31,6 @@ export default function (props: {
       <div
         className="transition-all z-0 "
         style={{ maxHeight: visible ? `${calMaxHeight}px` : "0" }}
-        // style={{
-        //   maxHeight: visible ? "max-content" : "0",
-        //   overflowY: "hidden",
-        //   transition: "max-height .4s linear",
-        // }}
       >
         <ArticleList
           articles={props.articles}

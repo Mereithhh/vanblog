@@ -23,7 +23,7 @@ export default function (props: {}) {
         document.documentElement.classList.add("light");
         document.documentElement.classList.remove("dark");
       }
-    }, 1000);
+    }, 10000);
   };
 
   useEffect(() => {

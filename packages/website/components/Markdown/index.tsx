@@ -7,19 +7,8 @@ import Swal from "sweetalert2";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
-// import Image from "next/future/image";
 import "katex/dist/katex.min.css";
-// import { useEffect, useState } from "react";
 export default function (props: { content: string }) {
-  // console.log(props.content);
-  // const [width, setWidth] = useState(300);
-  // useEffect(() => {
-  //   const el = document.querySelector("#post-card");
-  //   if (el) {
-  //     setWidth(el.clientWidth);
-  //   }
-  // });
-
   return (
     <>
       <ReactMarkdown
@@ -81,10 +70,6 @@ export default function (props: { content: string }) {
                 alt={props.alt}
                 src={(props.src as string) || ""}
                 loading="lazy"
-                // layout="responsive"
-                // width={width}
-                // height={5000}
-                // style={{ height: "auto ", width: "auto " }}
               ></img>
             );
           },
