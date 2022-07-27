@@ -1,4 +1,16 @@
 # Changelog
+### [0.3.4](https://github.com/Mereithhh/van-blog/compare/v0.3.3...v0.3.4) (2022-07-27)
+
+
+### ✨ Features | 新功能
+
+* 增加本站运行时间动态计算 ([273b0e8](https://github.com/Mereithhh/van-blog/commit/273b0e87bd97fb8afde2b1010ef609a6c3b5103a))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 主题切换定时器改为10s一次 ([8659611](https://github.com/Mereithhh/van-blog/commit/865961183e6de16aadb5eebb040292ba2b01be25))
+
 ### [0.3.3](https://github.com/Mereithhh/van-blog/compare/v0.3.2...v0.3.3) (2022-07-26)
 
 
