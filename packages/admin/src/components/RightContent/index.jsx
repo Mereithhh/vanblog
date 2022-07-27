@@ -1,12 +1,24 @@
-import { QuestionCircleOutlined } from '@ant-design/icons';
-import { Space } from 'antd';
-import { SelectLang, useModel } from 'umi';
-import HeaderSearch from '../HeaderSearch';
-import Avatar from './AvatarDropdown';
+import { Space, Button } from 'antd';
+import { useModel, history } from 'umi';
 import styles from './index.less';
+import { stringify } from 'querystring';
 
+const loginOut = async () => {
+  window.localStorage.removeItem('token');
+  const { query = {}, search, pathname } = history.location;
+  const { redirect } = query; // Note: There may be security issues, please note
+
+  if (window.location.pathname !== '/user/login' && !redirect) {
+    history.replace({
+      pathname: '/user/login',
+      search: stringify({
+        redirect: pathname + search,
+      }),
+    });
+  }
+};
 const GlobalHeaderRight = () => {
-  const { initialState } = useModel('@@initialState');
+  const { initialState, setInitialState } = useModel('@@initialState');
 
   if (!initialState || !initialState.settings) {
     return null;
@@ -21,41 +33,15 @@ const GlobalHeaderRight = () => {
 
   return (
     <Space className={className}>
-      {/* <HeaderSearch
-        className={`${styles.action} ${styles.search}`}
-        placeholder="站内搜索"
-        defaultValue="umi ui"
-        options={[
-          {
-            label: <a href="https://umijs.org/zh/guide/umi-ui.html">umi ui</a>,
-            value: 'umi ui',
-          },
-          {
-            label: <a href="next.ant.design">Ant Design</a>,
-            value: 'Ant Design',
-          },
-          {
-            label: <a href="https://protable.ant.design/">Pro Table</a>,
-            value: 'Pro Table',
-          },
-          {
-            label: <a href="https://prolayout.ant.design/">Pro Layout</a>,
-            value: 'Pro Layout',
-          },
-        ]} // onSearch={value => {
-        //   console.log('input', value);
-        // }}
-      /> */}
-      {/* <span
-        className={styles.action}
+      <a
         onClick={() => {
-          window.open('https://pro.ant.design/docs/getting-started');
+          setInitialState((s) => ({ ...s, user: undefined }));
+          loginOut();
+          return;
         }}
       >
-        <QuestionCircleOutlined />
-      </span> */}
-      <Avatar />
-      {/* <SelectLang className={styles.action} /> */}
+        退出登录
+      </a>
     </Space>
   );
 };

@@ -16,14 +16,10 @@ export const initialStateConfig = {
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
  * */
-
 export async function getInitialState() {
-  // console.log("init")
   const fetchInitData = async (option) => {
     try {
       const msg = await fetchAll(option);
-      // console.log(msg);
-      // console.log(msg,window.location.pathname)
       if (msg.statusCode == 233) {
         history.push('/init');
       } else if (window.location.pathname == '/init' && msg.statusCode == 200) {
@@ -31,7 +27,6 @@ export async function getInitialState() {
       } else {
         const result = msg.data;
         if (result.articles && result.meta && result.meta.about) {
-          // 把 about 加进去
           result.articles = [
             {
               id: 0,
@@ -50,7 +45,6 @@ export async function getInitialState() {
         return msg.data;
       }
     } catch (error) {
-      // console.log("error",error)
       history.push(loginPath);
     }
 
@@ -70,15 +64,11 @@ export async function getInitialState() {
 
 export const layout = ({ initialState, setInitialState }) => {
   return {
-    rightContentRender: () => <RightContent />,
+    rightContentRender: () => <RightContent></RightContent>,
     disableContentMargin: false,
-    waterMarkProps: {
-      content: initialState?.currentUser?.name,
-    },
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
-      // console.log('onchange,',location,initialState)
       if (location.pathname === '/init' && !initialState?.user) {
         return;
       }
@@ -92,10 +82,6 @@ export const layout = ({ initialState, setInitialState }) => {
     links: [
       <a
         key="mainSite"
-        // to={(() => {
-        //   console.log(initialState?.meta?.siteInfo?.baseUrl || '/');
-        //   return initialState?.meta?.siteInfo?.baseUrl || '/';
-        // })()}
         onClick={() => {
           window.open(initialState?.meta?.siteInfo?.baseUrl || '/', '_blank');
         }}
