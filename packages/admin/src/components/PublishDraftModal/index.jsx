@@ -1,7 +1,7 @@
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { publishDraft } from '@/services/van-blog/api';
 export default function (props) {
-  const { title, id, trigger } = props;
+  const { title, id, trigger, action } = props;
   return (
     <>
       <ModalForm
@@ -13,7 +13,9 @@ export default function (props) {
         submitTimeout={3000}
         onFinish={async (values) => {
           await publishDraft(id, values);
-          action.reload();
+          if (action && action.reload) {
+            action.reload();
+          }
           return true;
         }}
         layout="horizontal"

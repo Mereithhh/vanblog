@@ -98,7 +98,14 @@ export default () => {
       }}
       dateFormatter="string"
       headerTitle="草稿管理"
-      toolBarRender={() => [<NewDraftModal key="newDraft123" />]}
+      toolBarRender={() => [
+        <NewDraftModal
+          key="newDraft123"
+          onFinish={() => {
+            actionRef?.current?.reload();
+          }}
+        />,
+      ]}
     />
   );
 };

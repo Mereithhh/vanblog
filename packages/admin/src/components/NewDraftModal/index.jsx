@@ -2,7 +2,10 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { createDraft, getTags } from '@/services/van-blog/api';
-export default function () {
+import { useModel } from 'umi';
+export default function (props) {
+  const { onFinish } = props;
+  const { initialState } = useModel('@@initialState');
   return (
     <ModalForm
       title="新建草稿"
@@ -21,7 +24,9 @@ export default function () {
         }
 
         await createDraft(washedValues);
-        actionRef?.current?.reload();
+        if (onFinish) {
+          onFinish();
+        }
         return true;
       }}
       layout="horizontal"

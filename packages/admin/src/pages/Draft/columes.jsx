@@ -1,6 +1,5 @@
-import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { Tag } from 'antd';
-import { deleteDraft, getAllCategories, publishDraft } from '@/services/van-blog/api';
+import { Tag, Modal, message } from 'antd';
+import { deleteDraft, getAllCategories } from '@/services/van-blog/api';
 import PublishDraftModal from '@/components/PublishDraftModal';
 export const columns = [
   {
@@ -100,6 +99,7 @@ export const columns = [
         key="publishRecord1213"
         title={record.title}
         id={record.id}
+        action={action}
         trigger={<a key="publishRecord123">发布</a>}
       />,
       <a

@@ -119,7 +119,14 @@ export default () => {
       }}
       dateFormatter="string"
       headerTitle="文章管理"
-      toolBarRender={() => [<NewArticleModal key="newArticle123" />]}
+      toolBarRender={() => [
+        <NewArticleModal
+          key="newArticle123"
+          onFinish={() => {
+            actionRef?.current?.reload();
+          }}
+        />,
+      ]}
     />
   );
 };
