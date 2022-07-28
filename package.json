@@ -19,5 +19,8 @@
     "docs:build": "vuepress build docs",
     "docs:clean-dev": "vuepress dev docs --clean-cache",
     "docs:dev": "vuepress dev docs"
+  },
+  "dependencies": {
+    "@ant-design/plots": "^1.2.1"
   }
 }

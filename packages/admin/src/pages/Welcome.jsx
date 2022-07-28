@@ -5,9 +5,17 @@ import { useModel } from 'umi';
 import { wordCount } from '@/services/van-blog/wordCount';
 import { useMemo } from 'react';
 import { Button, Space } from 'antd';
+import { Line } from '@ant-design/plots';
+const { Statistic } = StatisticCard;
 
 const Welcome = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
+  const lineConfig = {
+    data: initialState?.viewer?.grid || [],
+    padding: 'auto',
+    xField: 'date',
+  };
+
   const totalWords = useMemo(() => {
     const articles = initialState?.articles || [];
     let t = 0;
@@ -69,15 +77,40 @@ const Welcome = () => {
           statistic={{
             title: '总访客数',
             value: initialState?.meta?.visited || 0,
+            description: (
+              <Statistic
+                title="今日新增"
+                value={initialState?.viewer?.add?.visited || 0}
+                trend="up"
+              />
+            ),
           }}
         />
         <StatisticCard
           statistic={{
             title: '总访问量',
             value: initialState?.meta?.viewer || 0,
+            description: (
+              <Statistic
+                title="今日新增"
+                value={initialState?.viewer?.add?.viewer || 0}
+                trend="up"
+              />
+            ),
           }}
         />
       </StatisticCard.Group>
+      <StatisticCard.Group>
+        <StatisticCard
+          title="访客数趋势图"
+          chart={<Line height={200} yField="visited" {...lineConfig} />}
+        />
+        <StatisticCard
+          title="访问量趋势图"
+          chart={<Line height={200} yField="viewer" {...lineConfig} />}
+        />
+      </StatisticCard.Group>
+
       {/* </Card> */}
     </PageContainer>
   );

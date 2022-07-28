@@ -21,8 +21,9 @@ import { UserProvider } from 'src/provider/user/user.provider';
 import * as fs from 'fs';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { removeID } from 'src/utils/removeId';
+import { ViewerProvider } from 'src/provider/viewer/viewer.provider';
 
-@ApiTags('about')
+@ApiTags('all')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/all')
 export class AllController {
@@ -33,6 +34,7 @@ export class AllController {
     private readonly metaProvider: MetaProvider,
     private readonly draftProvider: DraftProvider,
     private readonly userProvider: UserProvider,
+    private readonly viewProvider: ViewerProvider,
   ) {}
 
   @Get()
@@ -43,6 +45,7 @@ export class AllController {
     const meta = await this.metaProvider.getAll();
     const drafts = await this.draftProvider.getAll();
     const user = await this.userProvider.getUser();
+    const viewer = await this.viewProvider.getViewerGrid(5);
     const data = {
       articles,
       tags,
@@ -50,6 +53,7 @@ export class AllController {
       drafts,
       categories,
       user,
+      viewer,
     };
     return {
       statusCode: 200,
@@ -66,9 +70,9 @@ export class AllController {
     // 去掉 id
     articles = removeID(articles);
     drafts = removeID(drafts);
-    delete user._id
-    delete user.__v
-    delete meta._id
+    delete user._id;
+    delete user.__v;
+    delete meta._id;
 
     await this.articleProvider.importArticles(articles);
     await this.draftProvider.importDrafts(drafts);
