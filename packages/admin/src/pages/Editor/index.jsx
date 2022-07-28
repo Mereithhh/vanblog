@@ -1,4 +1,5 @@
 import Editor from '@/components/Editor';
+import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
 import {
   getTags,
@@ -251,77 +252,19 @@ export default function () {
             )}
           </ModalForm>,
           type == 'draft' && (
-            <ModalForm
-              title={`发布草稿: ${currObj?.title}`}
-              key="publishModal"
-              trigger={<Button key={'publish' + currObj?.id}>发布草稿</Button>}
-              width={450}
-              autoFocusFirstInput
-              submitTimeout={3000}
-              onFinish={async (values) => {
-                await publishDraft(currObj?.id, values);
-                await reload();
-                history.push('/article');
-                return true;
-              }}
-              layout="horizontal"
-              labelCol={{ span: 6 }}
-              // wrapperCol: { span: 14 },
-            >
-              <ProFormSelect
-                width="md"
-                name="private"
-                id="private"
-                label="是否加密"
-                placeholder="是否加密"
-                request={async () => {
-                  return [
-                    {
-                      label: '否',
-                      value: false,
-                    },
-                    {
-                      label: '是',
-                      value: true,
-                    },
-                  ];
-                }}
-              />
-              <ProFormText.Password
-                label="密码"
-                width="md"
-                id="password"
-                name="password"
-                placeholder="请输入密码"
-                dependencies={['private']}
-              />
-              <ProFormSelect
-                width="md"
-                name="hidden"
-                id="hidden"
-                label="是否隐藏"
-                placeholder="是否隐藏"
-                request={async () => {
-                  return [
-                    {
-                      label: '否',
-                      value: false,
-                    },
-                    {
-                      label: '是',
-                      value: true,
-                    },
-                  ];
-                }}
-              />
-            </ModalForm>
+            <PublishDraftModal
+              title={currObj?.title}
+              key="publishModal1"
+              id={currObj?.id}
+              trigger={<Button key={'publishBtn' + currObj?.id}>发布草稿</Button>}
+            />
           ),
         ],
         breadcrumb: {},
       }}
       footer={null}
     >
-      <Editor setVd={setVd}></Editor>
+      <Editor setVd={setVd} />
     </PageContainer>
   );
 }

@@ -1,5 +1,4 @@
 import { PageContainer } from '@ant-design/pro-layout';
-import styles from './Welcome.less';
 import { StatisticCard } from '@ant-design/pro-components';
 import { useModel } from 'umi';
 import { wordCount } from '@/services/van-blog/wordCount';

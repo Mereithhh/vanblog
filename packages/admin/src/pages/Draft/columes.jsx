@@ -1,6 +1,7 @@
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Tag } from 'antd';
 import { deleteDraft, getAllCategories, publishDraft } from '@/services/van-blog/api';
+import PublishDraftModal from '@/components/PublishDraftModal';
 export const columns = [
   {
     dataIndex: 'id',
@@ -94,70 +95,13 @@ export const columns = [
       >
         编辑
       </a>,
-      <ModalForm
-        title={`发布草稿: ${record.title}`}
-        key="publishModal"
-        trigger={<a key={'publish' + record.id}>发布草稿</a>}
-        width={450}
-        autoFocusFirstInput
-        submitTimeout={3000}
-        onFinish={async (values) => {
-          await publishDraft(record.id, values);
-          action.reload();
-          return true;
-        }}
-        layout="horizontal"
-        labelCol={{ span: 6 }}
-        // wrapperCol: { span: 14 },
-      >
-        <ProFormSelect
-          width="md"
-          name="private"
-          id="private"
-          label="是否加密"
-          placeholder="是否加密"
-          request={async () => {
-            return [
-              {
-                label: '否',
-                value: false,
-              },
-              {
-                label: '是',
-                value: true,
-              },
-            ];
-          }}
-        />
-        <ProFormText.Password
-          label="密码"
-          width="md"
-          id="password"
-          name="password"
-          placeholder="请输入密码"
-          dependencies={['private']}
-        />
-        <ProFormSelect
-          width="md"
-          name="hidden"
-          id="hidden"
-          label="是否隐藏"
-          placeholder="是否隐藏"
-          request={async () => {
-            return [
-              {
-                label: '否',
-                value: false,
-              },
-              {
-                label: '是',
-                value: true,
-              },
-            ];
-          }}
-        />
-      </ModalForm>,
-
+      ,
+      <PublishDraftModal
+        key="publishRecord1213"
+        title={record.title}
+        id={record.id}
+        trigger={<a key="publishRecord123">发布</a>}
+      />,
       <a
         key={'deleteDraft' + record.id}
         onClick={() => {
