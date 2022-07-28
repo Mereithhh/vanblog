@@ -1,6 +1,6 @@
 import Footer from '@/components/Footer';
 import RightContent from '@/components/RightContent';
-import { BookOutlined, LinkOutlined } from '@ant-design/icons';
+import { HomeOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';
@@ -64,7 +64,7 @@ export async function getInitialState() {
 
 export const layout = ({ initialState, setInitialState }) => {
   return {
-    rightContentRender: () => <RightContent></RightContent>,
+    rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     footerRender: () => <Footer />,
     onPageChange: () => {
@@ -87,11 +87,11 @@ export const layout = ({ initialState, setInitialState }) => {
         }}
         target="_blank"
       >
-        <LinkOutlined />
+        <HomeOutlined />
         <span>主站</span>
       </a>,
-      <a key="mainSite" href="https://vanblog.mereith.com/" target="_blank">
-        <LinkOutlined />
+      <a key="mainSite" href="https://vanblog.mereith.com/" target="_blank" rel="noreferrer">
+        <QuestionCircleOutlined />
         <span>帮助文档</span>
       </a>,
     ],
