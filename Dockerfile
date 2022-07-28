@@ -29,7 +29,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY ./packages/website/package.json ./packages/website/yarn.lock* ./packages/website/package-lock.json* ./packages/website/pnpm-lock.yaml* ./
 RUN yarn config set network-timeout 60000 -g
-RUN yarn config set registry https://registry.npmmirror.com -g
+# RUN yarn config set registry https://registry.npmmirror.com -g
 RUN yarn
 
 FROM node:16-alpine AS WEBSITE_BUILDER
