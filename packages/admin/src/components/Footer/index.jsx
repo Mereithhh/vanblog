@@ -1,13 +1,8 @@
 import { DefaultFooter } from '@ant-design/pro-layout';
-import { useIntl } from 'umi';
 import { GithubOutlined } from '@ant-design/icons';
 
 const Footer = () => {
-  const intl = useIntl();
-  const defaultMessage = intl.formatMessage({
-    id: 'app.copyright.produced',
-    defaultMessage: 'Van Blog',
-  });
+  const defaultMessage = 'Van Blog';
   const currentYear = new Date().getFullYear();
   return (
     <DefaultFooter
@@ -21,7 +16,7 @@ const Footer = () => {
         },
         {
           key: 'websitev',
-          title: "项目主页",
+          title: '项目主页',
           href: 'https://vanblog.mereith.com',
           blankTarget: true,
         },
