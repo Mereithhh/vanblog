@@ -2,7 +2,7 @@ import Footer from '@/components/Footer';
 import InitForm from '@/components/InitForm';
 import { fetchInit } from '@/services/van-blog/api';
 import ProCard from '@ant-design/pro-card';
-import ProForm, { ProFormDatePicker, ProFormText } from '@ant-design/pro-form';
+import ProForm from '@ant-design/pro-form';
 import { message } from 'antd';
 import { useHistory } from 'umi';
 import styles from './index.less';
@@ -31,7 +31,7 @@ const InitPage = () => {
               console.log(newData);
             }}
           >
-            <InitForm requireUser={true}></InitForm>
+            <InitForm requireUser={true} />
           </ProForm>
         </ProCard>
       </div>

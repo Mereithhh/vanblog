@@ -1,20 +1,14 @@
 import Editor from '@/components/Editor';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
-import {
-  getTags,
-  publishDraft,
-  updateAbout,
-  updateArticle,
-  updateDraft,
-} from '@/services/van-blog/api';
+import { getTags, updateAbout, updateArticle, updateDraft } from '@/services/van-blog/api';
 import { formatTimes } from '@/services/van-blog/tool';
 import { useQuery } from '@/services/van-blog/useQuery';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Descriptions, Modal, Space, Tag } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
-import { history, useModel } from 'umi';
+import { useModel } from 'umi';
 
 export default function () {
   const [vd, setVd] = useState();
