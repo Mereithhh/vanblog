@@ -1,22 +1,32 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
 export default function Editor(props) {
+  const { current } = useRef({ editor: null });
   useEffect(() => {
-    const vditor = new Vditor('vditor', {
-      mode: 'sv',
-      fullscreen: {
-        index: 9999,
-      },
-      after: () => {
-        vditor.setValue('`Vditor` 最小代码示例');
-        props?.setVd(vditor);
-      },
-      minHeight: 500,
-    });
+    if (!current.editor) {
+      current.editor = new Vditor(
+        'vditor',
+        {
+          mode: 'wysiwyg',
+          fullscreen: {
+            index: 9999,
+          },
+          preview: {
+            delay: 200,
+          },
+          after: () => {
+            props?.setVd(vditor);
+          },
+        }.current,
+      );
+    }
+
     return () => {
-      vditor.destroy();
+      if (current.editor && current.editor.destroy) {
+        current.editor.destroy();
+      }
     };
-  }, []);
-  return <div id="vditor" className="vditor" />;
+  }, [current]);
+  return <div id="vditor" className="vditor" style={{ minHeight: 400 }} />;
 }
