@@ -1,4 +1,19 @@
 # Changelog
+### [0.3.5](https://github.com/Mereithhh/van-blog/compare/v0.3.4...v0.3.5) (2022-07-28)
+
+
+### ✨ Features | 新功能
+
+* 后台精简代码 ([a7f2158](https://github.com/Mereithhh/van-blog/commit/a7f215839ad87cca6092bd22f6717be4a898fe3b))
+* 后台优化 editor 布局和样式 ([68f6b67](https://github.com/Mereithhh/van-blog/commit/68f6b67c10114d87d8c4a22f3d25450d583f9bbc))
+* 后台增加加载状态 ([9de19c4](https://github.com/Mereithhh/van-blog/commit/9de19c4728495ab6da38a556f703dd8161357ba4))
+* 删除后台 i18n 代码，精简一下 ([2b33c27](https://github.com/Mereithhh/van-blog/commit/2b33c270db18e1475f05cae44a7d99964f67acda))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复记录访客逻辑 ([792defa](https://github.com/Mereithhh/van-blog/commit/792defa8c7c8b5d40485a83ea3e1d89fd37de007))
+
 ### [0.3.4](https://github.com/Mereithhh/van-blog/compare/v0.3.3...v0.3.4) (2022-07-27)
 
 
