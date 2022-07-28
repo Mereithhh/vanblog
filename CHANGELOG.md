@@ -1,4 +1,26 @@
 # Changelog
+### [0.3.6](https://github.com/Mereithhh/van-blog/compare/v0.3.5...v0.3.6) (2022-07-28)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 根目录误引入依赖 ([1441ded](https://github.com/Mereithhh/van-blog/commit/1441dedfdd930342529b40b1c41c3a28ecd344eb))
+* 后台列表样式显示出错 ([5f8caec](https://github.com/Mereithhh/van-blog/commit/5f8caeccfc2cdf43d062854cfb1b9ca5a9a88b15))
+
+
+### ✨ Features | 新功能
+
+* 后台增加访客与访问量趋势图 ([320c296](https://github.com/Mereithhh/van-blog/commit/320c2967aa8ad05a1b18d8c152d2c402fd8356c4))
+* 修改后台侧边栏图标 ([46d4b40](https://github.com/Mereithhh/van-blog/commit/46d4b40502185d0396c7f12818ba322672fbfae0))
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 后台草稿页抽离组件 ([b3d7552](https://github.com/Mereithhh/van-blog/commit/b3d7552ef28127cd030ecc911e51d1563d2d424c))
+* 后台抽离发布草稿组件 ([3e96652](https://github.com/Mereithhh/van-blog/commit/3e9665217f6788b68d7981b5ab862eee9841ac63))
+* 后台代码抽离组件(article) ([49e58ee](https://github.com/Mereithhh/van-blog/commit/49e58eeb5b736960c781b1cbd3188b58656d1ba5))
+* 后台修复抽离组件问题 ([1da3656](https://github.com/Mereithhh/van-blog/commit/1da36566808446e1646addaaa3db3dad655bbb35))
+
 ### [0.3.5](https://github.com/Mereithhh/van-blog/compare/v0.3.4...v0.3.5) (2022-07-28)
 
 
