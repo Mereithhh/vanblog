@@ -12,7 +12,8 @@ export class VisitProvider {
 
   async add(createViewerDto: createVisitDto): Promise<any> {
     // 先找一下有没有今天的，有的话就在今天的基础上加1。
-    const today = dayjs().format('YYY-MM-DD');
+    const { isNew } = createViewerDto;
+    const today = dayjs().format('YYYY-MM-DD');
     const todayData = await this.findByDate(today);
     if (todayData) {
       // 有今天的，直接在今天的基础上 +1 就行了
@@ -20,7 +21,7 @@ export class VisitProvider {
         { _id: todayData._id },
         {
           viewer: todayData.viewer + 1,
-          visited: todayData.visited + 1,
+          visited: isNew ? todayData.visited + 1 : todayData.visited,
         },
       );
     } else {
@@ -31,7 +32,7 @@ export class VisitProvider {
       const createdData = new this.visitModel({
         date: today,
         viewer: lastViewer + 1,
-        visited: lastVisit + 1,
+        visited: isNew ? lastVisit + 1 : lastVisit,
         pathname: createViewerDto.pathname,
       });
       return await createdData.save();
@@ -39,7 +40,7 @@ export class VisitProvider {
   }
 
   async getLastData() {
-    const lastDay = dayjs().add(-1, 'day').format('YYY-MM-DD');
+    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
     const lastData = await this.findByDate(lastDay);
     if (lastData) {
       return lastData;

@@ -15,6 +15,17 @@ export class ViewerProvider {
     return createdData.save();
   }
 
+  async createOrUpdate(createViewerDto: createViewerDto) {
+    const { date } = createViewerDto;
+    const oldData = await this.viewerModel.findOne({ date });
+    if (!oldData) {
+      const createdData = new this.viewerModel(createViewerDto);
+      return createdData.save();
+    } else {
+      return this.viewerModel.updateOne({ date }, createViewerDto);
+    }
+  }
+
   async getAll(): Promise<Viewer[]> {
     return this.viewerModel.find({}).exec();
   }

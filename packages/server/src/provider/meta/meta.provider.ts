@@ -31,19 +31,22 @@ export class MetaProvider {
     const oldVisited = old.visited || 0;
     const newViewer = ov + 1;
     let newVisited = oldVisited;
+    let isNewVisitor = false;
     if (typeof isNew == 'string') {
       if (isNew == 'true') {
         newVisited += 1;
+        isNewVisitor = true;
       }
     }
     if (typeof isNew == 'boolean') {
       if (isNew == true) {
         newVisited += 1;
+        isNewVisitor = true;
       }
     }
     await this.update({ viewer: newViewer, visited: newVisited });
     //增加每个路径的。
-    this.visitProvider.add({ pathname: pathname });
+    this.visitProvider.add({ pathname: pathname, isNew: isNewVisitor });
     return { visited: newVisited, viewer: newViewer };
   }
 

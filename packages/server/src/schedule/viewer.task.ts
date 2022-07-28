@@ -20,7 +20,7 @@ export class ViewerTask {
         'YYYY-MM-DD HH:mm:ss',
       )}] visitor: ${visited} \t viewer: ${viewer}`,
     );
-    this.viewerProvider.create({
+    this.viewerProvider.createOrUpdate({
       viewer: viewer,
       visited: visited,
       date: curTime.format('YYYY-MM-DD'),
