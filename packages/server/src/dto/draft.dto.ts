@@ -1,3 +1,5 @@
+import { SortOrder } from './sort';
+
 export class CreateDraftDto {
   title: string;
   content?: string;
@@ -15,4 +17,15 @@ export class PublishDraftDto {
   hidden?: boolean;
   private?: boolean;
   password?: string;
+}
+export class SearchDraftOption {
+  page: number;
+  pageSize: number;
+  category?: string;
+  tags?: string;
+  title?: string;
+  sortCreatedAt?: SortOrder;
+  startTime?: string;
+  endTime?: string;
+  toListView?: boolean;
 }

@@ -5,18 +5,64 @@ import { CreateArticleDto } from 'src/dto/article.dto';
 import {
   CreateDraftDto,
   PublishDraftDto,
+  SearchDraftOption,
   UpdateDraftDto,
 } from 'src/dto/draft.dto';
 import { Draft, DraftDocument } from 'src/scheme/draft.schema';
 import { AritcleProvider } from '../article/article.provider';
-
+export type DraftView = 'admin' | 'public' | 'list';
 @Injectable()
 export class DraftProvider {
   constructor(
     @InjectModel('Draft') private draftModel: Model<DraftDocument>,
     private readonly articleProvider: AritcleProvider,
   ) {}
+  publicView = {
+    title: 1,
+    content: 1,
+    tags: 1,
+    category: 1,
+    updateAt: 1,
+    createdAt: 1,
+    id: 1,
+    _id: 0,
+  };
 
+  adminView = {
+    title: 1,
+    content: 1,
+    tags: 1,
+    category: 1,
+    updateAt: 1,
+    createdAt: 1,
+    id: 1,
+    _id: 0,
+  };
+
+  listView = {
+    title: 1,
+    tags: 1,
+    category: 1,
+    updateAt: 1,
+    createdAt: 1,
+    id: 1,
+    _id: 0,
+  };
+
+  getView(view: DraftView) {
+    let thisView: any = this.adminView;
+    switch (view) {
+      case 'admin':
+        thisView = this.adminView;
+        break;
+      case 'list':
+        thisView = this.listView;
+        break;
+      case 'public':
+        thisView = this.publicView;
+    }
+    return thisView;
+  }
   async create(createDraftDto: CreateDraftDto): Promise<Draft> {
     const createdData = new this.draftModel(createDraftDto);
     const newId = await this.getNewId();
@@ -39,6 +85,81 @@ export class DraftProvider {
         await this.create(createDto);
       }
     }
+  }
+
+  async getByOption(
+    option: SearchDraftOption,
+  ): Promise<{ drafts: Draft[]; total: number }> {
+    const query: any = {};
+    const $and: any = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+    ];
+    const and = [];
+    const sort: any = { createdAt: -1 };
+    if (option.sortCreatedAt) {
+      if (option.sortCreatedAt == 'asc') {
+        sort.createdAt = 1;
+      }
+    }
+    if (option.tags) {
+      const tags = option.tags.split(',');
+      const or: any = [];
+      tags.forEach((t) => {
+        or.push({
+          tags: { $regex: `${t}`, $options: '$i' },
+        });
+      });
+      and.push({ $or: or });
+    }
+    if (option.category) {
+      and.push({
+        category: { $regex: `${option.category}`, $options: '$i' },
+      });
+    }
+    if (option.title) {
+      and.push({
+        title: { $regex: `${option.title}`, $options: '$i' },
+      });
+    }
+    if (option.startTime || option.endTime) {
+      const obj: any = {};
+      if (option.startTime) {
+        obj['$gte'] = new Date(option.startTime);
+      }
+      if (option.endTime) {
+        obj['$lte'] = new Date(option.endTime);
+      }
+      $and.push({ createdAt: obj });
+    }
+
+    if (and.length) {
+      $and.push({ $and: and });
+    }
+
+    query.$and = $and;
+    const view = option.toListView ? this.listView : this.adminView;
+
+    const drafts = await this.draftModel
+      .find(query, view)
+      .sort(sort)
+      .skip(option.pageSize * option.page - option.pageSize)
+      .limit(option.pageSize)
+      .exec();
+    const total = await this.draftModel.count(query).exec();
+
+    return {
+      drafts,
+      total,
+    };
   }
   async publish(id: number, options: PublishDraftDto) {
     const draft = await this.getById(id);

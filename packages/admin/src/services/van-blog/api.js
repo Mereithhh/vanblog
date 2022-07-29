@@ -199,3 +199,17 @@ export async function getArticlesByOption(option) {
     method: 'GET',
   });
 }
+export async function getDraftsByOption(option) {
+  const newQuery = {};
+  for (const [k, v] of Object.entries(option)) {
+    newQuery[k] = v;
+  }
+  let queryString = '';
+  for (const [k, v] of Object.entries(newQuery)) {
+    queryString += `${k}=${v}&`;
+  }
+  queryString = queryString.substring(0, queryString.length - 1);
+  return request(`/api/admin/draft?${queryString}&toListView=true`, {
+    method: 'GET',
+  });
+}

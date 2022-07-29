@@ -15,7 +15,6 @@ export default () => {
       actionRef={actionRef}
       cardBordered
       request={async (params = {}, sort, filter) => {
-        // console.log(sort, filter);
         const option = {};
         if (sort.createdAt) {
           if (sort.createdAt == 'ascend') {
@@ -85,6 +84,7 @@ export default () => {
       rowKey="id"
       search={{
         labelWidth: 'auto',
+        span: 8,
       }}
       pagination={{
         pageSize: 5,

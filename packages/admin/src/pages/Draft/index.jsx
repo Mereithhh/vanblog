@@ -1,96 +1,91 @@
 import NewDraftModal from '@/components/NewDraftModal';
-import { mutiSearch } from '@/services/van-blog/search';
+import { getDraftsByOption } from '@/services/van-blog/api';
 import { ProTable } from '@ant-design/pro-components';
-import moment from 'moment';
 import { useRef } from 'react';
 import { useModel } from 'umi';
 import { columns } from './columes';
 
 export default () => {
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
+  const categories = initialState?.meta?.categories || [];
   const actionRef = useRef();
   return (
     <ProTable
-      columns={columns}
+      columns={columns(categories)}
       actionRef={actionRef}
       cardBordered
       request={async (params = {}, sort, filter) => {
-        // console.log(sort, filter);
-
-        let data = await initialState?.fetchInitData?.();
-        await setInitialState((s) => ({ ...s, ...data }));
-        data = data.drafts;
-        // 排序
-        if (sort && sort.createdAt) {
+        const option = {};
+        if (sort.createdAt) {
           if (sort.createdAt == 'ascend') {
-            data = data.sort((a, b) => {
-              return moment(a.createdAt).unix() - moment(b.createdAt).unix();
-            });
+            option.sortCreatedAt = 'asc';
           } else {
-            data = data.sort((a, b) => {
-              return moment(b.createdAt).unix() - moment(a.createdAt).unix();
-            });
+            option.sortCreatedAt = 'desc';
           }
         }
-        // 搜索
+        if (sort.top) {
+          if (sort.top == 'ascend') {
+            option.sortTop = 'asc';
+          } else {
+            option.sortTop = 'desc';
+          }
+        }
 
+        // 搜索
         const { current, pageSize, ...searchObj } = params;
         if (searchObj) {
           for (const [targetName, target] of Object.entries(searchObj)) {
             switch (targetName) {
               case 'title':
-                if (target != '') {
-                  data = data.filter((eachRecord) => {
-                    return mutiSearch(eachRecord.title, target);
-                  });
+                if (target.trim() != '') {
+                  option.title = target;
                 }
                 break;
               case 'tags':
-                if (target != '') {
-                  data = data.filter((eachRecord) => {
-                    if (!eachRecord.tags || eachRecord.tags.length == 0) {
-                      return false;
-                    }
-                    return eachRecord.tags.some((eachTag) => mutiSearch(eachTag, target));
-                  });
+                if (target.trim() != '') {
+                  option.tags = target;
                 }
                 break;
               case 'endTime':
-                data = data.filter((eachRecord) => {
-                  const t = moment(eachRecord.createdAt);
-                  const t0 = moment(searchObj?.startTime);
-                  const t1 = moment(searchObj?.endTime);
-                  return t.isBetween(t0, t1, 'day', '[]');
-                });
+                if (searchObj?.startTime) {
+                  option.startTime = searchObj?.startTime;
+                }
+                if (searchObj?.endTime) {
+                  option.endTime = searchObj?.endTime;
+                }
                 break;
               case 'category':
-                data = data.filter((eachRecord) => {
-                  return mutiSearch(eachRecord.category, target);
-                });
+                if (target.trim() != '') {
+                  option.category = target;
+                }
                 break;
             }
           }
         }
+        option.page = current;
+        option.pageSize = pageSize;
+        const { data } = await getDraftsByOption(option);
+        const { drafts, total } = data;
 
         return {
-          data,
+          data: drafts,
           // success 请返回 true，
           // 不然 table 会停止解析数据，即使有数据
           success: Boolean(data),
           // 不传会使用 data 的长度，如果是分页一定要传
-          total: data?.articles?.length,
+          total: total,
         };
       }}
       editable={false}
       columnsState={{
-        persistenceKey: 'pro-table-singe-demos',
+        persistenceKey: 'van-blog-draft-table',
         persistenceType: 'localStorage',
         onChange(value) {},
       }}
       rowKey="id"
       search={{
         labelWidth: 'auto',
-        span: 6,
+        span: 8,
       }}
       pagination={{
         pageSize: 5,

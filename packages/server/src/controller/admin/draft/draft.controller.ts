@@ -15,6 +15,7 @@ import {
   PublishDraftDto,
   UpdateDraftDto,
 } from 'src/dto/draft.dto';
+import { SortOrder } from 'src/dto/sort';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 
@@ -25,8 +26,29 @@ export class DraftController {
   constructor(private readonly draftProvider: DraftProvider) {}
 
   @Get('/')
-  async getAll() {
-    const data = await this.draftProvider.getAll();
+  async getByOption(
+    @Query('page') page: number,
+    @Query('pageSize') pageSize = 5,
+    @Query('toListView') toListView = false,
+    @Query('category') category?: string,
+    @Query('tags') tags?: string,
+    @Query('title') title?: string,
+    @Query('sortCreatedAt') sortCreatedAt?: SortOrder,
+    @Query('startTime') startTime?: string,
+    @Query('endTime') endTime?: string,
+  ) {
+    const option = {
+      page,
+      pageSize,
+      category,
+      tags,
+      title,
+      sortCreatedAt,
+      startTime,
+      endTime,
+      toListView,
+    };
+    const data = await this.draftProvider.getByOption(option);
     return {
       statusCode: 200,
       data,

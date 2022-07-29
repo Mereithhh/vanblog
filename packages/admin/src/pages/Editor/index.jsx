@@ -14,7 +14,7 @@ import { useQuery } from '@/services/van-blog/useQuery';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Descriptions, Modal, Space, Tag } from 'antd';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useModel } from 'umi';
 
 export default function () {
@@ -71,7 +71,7 @@ export default function () {
               </Descriptions.Item>
               {type != 'about' && (
                 <Descriptions.Item label="标签">
-                  <Tags tags={currObj?.tags}></Tags>
+                  <Tags tags={currObj?.tags} />
                 </Descriptions.Item>
               )}
               {type != 'about' && (
