@@ -23,10 +23,10 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { removeID } from 'src/utils/removeId';
 import { ViewerProvider } from 'src/provider/viewer/viewer.provider';
 
-@ApiTags('all')
+@ApiTags('backup')
 @UseGuards(AdminGuard)
-@Controller('/api/admin/all')
-export class AllController {
+@Controller('/api/admin/backup')
+export class BackupController {
   constructor(
     private readonly articleProvider: AritcleProvider,
     private readonly categoryProvider: CategoryProvider,
@@ -37,32 +37,7 @@ export class AllController {
     private readonly viewProvider: ViewerProvider,
   ) {}
 
-  @Get('meta')
-  async getAllMeta() {
-    const categories = await this.categoryProvider.getAllCategories();
-    const tags = await this.tagProvider.getAllTags();
-    const meta = await this.metaProvider.getAll();
-    const user = await this.userProvider.getUser();
-    const viewer = await this.viewProvider.getViewerGrid(5);
-    const total = {
-      wordCount: await this.articleProvider.getTotalWordCount(),
-      articleNum: await this.articleProvider.getTotalNum(),
-    };
-    const data = {
-      tags,
-      meta,
-      categories,
-      user,
-      viewer,
-      total,
-    };
-    return {
-      statusCode: 200,
-      data,
-    };
-  }
-
-  @Get()
+  @Get('export')
   async getAll() {
     const articles = await this.articleProvider.getAll('admin');
     const categories = await this.categoryProvider.getAllCategories();

@@ -36,7 +36,7 @@ import { JwtStrategy } from './provider/auth/jwt.strategy';
 import { InitController } from './controller/admin/init/init.controller';
 import { InitProvider } from './provider/init/init.provider';
 import { InitMiddleware } from './provider/auth/init.middleware';
-import { AllController } from './controller/admin/all/all.controller';
+import { BackupController } from './controller/admin/backup/backup.controller';
 import { MenuMetaController } from './controller/admin/menu/menu.meta.controller';
 import { ScheduleModule } from '@nestjs/schedule';
 import { Viewer, ViewerSchema } from './scheme/viewer.schema';
@@ -44,6 +44,7 @@ import { ViewerProvider } from './provider/viewer/viewer.provider';
 import { ViewerTask } from './schedule/viewer.task';
 import { Visit, VisitSchema } from './scheme/visit.schema';
 import { VisitProvider } from './provider/visit/visit.provider';
+import { MetaController } from './controller/admin/meta/meta.controller';
 
 @Module({
   imports: [
@@ -79,7 +80,8 @@ import { VisitProvider } from './provider/visit/visit.provider';
     AuthController,
     InitController,
     MenuMetaController,
-    AllController,
+    BackupController,
+    MetaController,
   ],
   providers: [
     AppService,

@@ -4,7 +4,7 @@
 import { request } from 'umi';
 
 export async function fetchAllMeta(options) {
-  return request('/api/admin/all/meta', {
+  return request('/api/admin/meta', {
     method: 'GET',
     ...(options || {}),
   });
@@ -16,7 +16,6 @@ export async function fetchInit(body) {
     data: body,
   });
 }
-/** 登录接口 POST /api/login/account */
 
 export async function login(body, options) {
   return request('/api/admin/auth/login', {
