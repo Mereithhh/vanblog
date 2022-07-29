@@ -1,6 +1,6 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { useEffect, useMemo, useState } from 'react';
-import { history, useModel } from 'umi';
+import { history } from 'umi';
 import Backup from './tabs/Backup';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
@@ -21,7 +21,6 @@ export default function () {
     user: <User />,
   };
   const [currTabKey, setCurrTabKey] = useState('category');
-  const { initialState, setInitialState } = useModel('@@initialState');
   const currTab = useMemo(() => {
     return history.location.query?.tab || 'category';
   }, []);

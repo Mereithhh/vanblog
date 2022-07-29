@@ -2,6 +2,8 @@ import Editor from '@/components/Editor';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
 import {
+  getAbout,
+  getAllCategories,
   getArticleById,
   getDraftById,
   getTags,
@@ -15,14 +17,12 @@ import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-component
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Descriptions, message, Modal, Space, Tag } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
-import { useModel } from 'umi';
 
 export default function () {
   const [vd, setVd] = useState();
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
   const [query] = useQuery();
-  const { initialState, setInitialState } = useModel('@@initialState');
   // 类型，可以是文章、草稿、或者 about
   const type = query?.type || 'article';
   const typeMap = {
@@ -35,7 +35,8 @@ export default function () {
     const type = query?.type || 'article';
     const id = query?.id;
     if (type == 'about') {
-      return initialState?.meta?.about;
+      const { data } = await getAbout();
+      setCurrObj(data);
     }
     if (type == 'article' && id) {
       const { data } = await getArticleById(id);
@@ -46,7 +47,7 @@ export default function () {
       setCurrObj(data);
     }
     setLoading(false);
-  }, [query, initialState, setLoading]);
+  }, [query, setLoading]);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
@@ -193,7 +194,8 @@ export default function () {
               placeholder="请选择分类"
               rules={[{ required: true, message: '这是必填项' }]}
               request={async () => {
-                return initialState?.categories?.map((e) => {
+                const categories = await getAllCategories();
+                return categories?.map((e) => {
                   return {
                     label: e,
                     value: e,

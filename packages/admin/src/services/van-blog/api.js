@@ -207,6 +207,11 @@ export async function updateAbout(body) {
     data: body,
   });
 }
+export async function getAbout() {
+  return request(`/api/admin/meta/about`, {
+    method: 'GET',
+  });
+}
 export async function getArticleById(id) {
   return request(`/api/admin/article/${id}`, {
     method: 'GET',
