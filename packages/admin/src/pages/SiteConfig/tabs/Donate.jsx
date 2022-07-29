@@ -1,20 +1,14 @@
-import { deleteDonate, updateDonate } from '@/services/van-blog/api';
+import { deleteDonate, getDonate, updateDonate } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
 import { useState } from 'react';
-import { useModel } from 'umi';
 
 export default function () {
-  const { initialState, setInitialState } = useModel('@@initialState');
-  // const actionRef = useRef();
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
-  const [dataSource, setDataSource] = useState([]);
   const fetchData = async () => {
     setLoading(true);
-    let data = await initialState?.fetchInitData?.();
-    await setInitialState((s) => ({ ...s, ...data }));
-    data = data?.meta?.rewards;
+    const { data } = await getDonate();
     setLoading(false);
     return data;
   };
@@ -69,8 +63,7 @@ export default function () {
             Modal.confirm({
               onOk: async () => {
                 await deleteDonate(record.name);
-                const data = await fetchData();
-                setDataSource(data);
+                action?.reload();
               },
               title: `确认删除"${record.name}"的捐赠吗?`,
             });
@@ -99,27 +92,17 @@ export default function () {
           columns={columns}
           request={async () => {
             let data = await fetchData();
-
             return {
               data,
               success: true,
+              total: data.length,
             };
-          }}
-          value={dataSource}
-          onChange={async (values) => {
-            const data = await fetchData();
-            setDataSource(data);
           }}
           editable={{
             type: 'multiple',
             editableKeys,
             onSave: async (rowKey, data, row) => {
-              const toSaveObj = {
-                name: data.name,
-                value: data.value,
-              };
               await updateDonate(data);
-              // await waitTime(2000);
             },
             onChange: setEditableRowKeys,
           }}

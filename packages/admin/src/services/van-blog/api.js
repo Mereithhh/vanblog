@@ -136,6 +136,11 @@ export async function deleteDonate(name) {
     method: 'DELETE',
   });
 }
+export async function getDonate() {
+  return request(`/api/admin/meta/reward`, {
+    method: 'GET',
+  });
+}
 export async function updateSocial(body) {
   return request(`/api/admin/meta/social`, {
     method: 'PUT',
