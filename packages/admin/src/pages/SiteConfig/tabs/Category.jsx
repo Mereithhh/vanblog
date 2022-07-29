@@ -1,9 +1,13 @@
-import { createCategory, deleteCategory, updateCategory } from '@/services/van-blog/api';
+import {
+  createCategory,
+  deleteCategory,
+  getAllCategories,
+  updateCategory,
+} from '@/services/van-blog/api';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, message, Modal } from 'antd';
 import { useRef } from 'react';
-import { useModel } from 'umi';
 const columns = [
   {
     dataIndex: 'name',
@@ -67,16 +71,18 @@ const columns = [
   },
 ];
 export default function () {
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const fetchData = async () => {
+    const { data: res } = await getAllCategories();
+    return res.map((item) => ({
+      key: item,
+      name: item,
+    }));
+  };
   const actionRef = useRef();
   return (
     <>
       <ProTable
-        // dataSource={tableListDataSource}
         rowKey="name"
-        // pagination={{
-        //   showQuickJumper: true,
-        // }}
         columns={columns}
         search={false}
         dateFormatter="string"
@@ -95,13 +101,13 @@ export default function () {
             autoFocusFirstInput
             submitTimeout={3000}
             onFinish={async (values) => {
-              const res = await createCategory(values);
+              await createCategory(values);
               actionRef?.current?.reload();
+              message.success('新建分类成功！');
               return true;
             }}
             layout="horizontal"
             labelCol={{ span: 6 }}
-            // wrapperCol: { span: 14 },
           >
             <ProFormText
               width="md"
@@ -116,13 +122,7 @@ export default function () {
           </ModalForm>,
         ]}
         request={async () => {
-          let data = await initialState?.fetchInitData?.();
-          await setInitialState((s) => ({ ...s, ...data }));
-          data = data.categories.map((item) => ({
-            key: item,
-            name: item,
-          }));
-          // console.log(data);
+          const data = await fetchData();
           return {
             data,
             // success 请返回 true，
