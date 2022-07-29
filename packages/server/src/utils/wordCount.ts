@@ -1,4 +1,4 @@
-export function wordCount(Words) {
+export function wordCount(Words: string) {
   let iTotal = 0;
   let inum = 0;
   let eTotal = 0;

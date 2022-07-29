@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
+import { SortOrder } from 'src/dto/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
@@ -18,10 +19,10 @@ export class PublicController {
 
   @Get('/article/:id')
   async getArticleById(@Param('id') id: number) {
-    const data = await this.articleProvider.getById(id, 'public');
+    const data = await this.articleProvider.getByIdWithPreNext(id, 'public');
     return {
       statusCode: 200,
-      data: data ? this.articleProvider.toPublic([data])[0] : null,
+      data: data,
     };
   }
 
@@ -44,8 +45,6 @@ export class PublicController {
     if (!url.pathname || url.pathname == '') {
       console.log('没找到 refer:', req.headers);
     }
-    // console.log(url.pathname);
-
     const data = await this.metaProvider.addViewer(isNew, url.pathname);
     return {
       statusCode: 200,
@@ -70,18 +69,71 @@ export class PublicController {
       data: this.articleProvider.toPublic(data),
     };
   }
+  @Get('article')
+  async getByOption(
+    @Query('page') page: number,
+    @Query('pageSize') pageSize = 5,
+    @Query('toListView') toListView = false,
+    @Query('regMatch') regMatch = false,
+    @Query('withWordCount') withWordCount = false,
+    @Query('category') category?: string,
+    @Query('tags') tags?: string,
+    @Query('sortCreatedAt') sortCreatedAt?: SortOrder,
+    @Query('sortTop') sortTop?: SortOrder,
+  ) {
+    const option = {
+      page,
+      pageSize,
+      category,
+      tags,
+      toListView,
+      regMatch,
+      sortTop,
+      sortCreatedAt,
+      withWordCount,
+    };
+    const data = await this.articleProvider.getByOption(option);
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+  @Get('timeline')
+  async getTimeLineInfo() {
+    const data = await this.articleProvider.getTimeLineInfo();
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+  @Get('category')
+  async getArticlesByCategory() {
+    const data = await this.categoryProvider.getCategoriesWithArticle();
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+  @Get('tag')
+  async getArticlesByTag() {
+    const data = await this.tagProvider.getTagsWithArticle();
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
 
-  @Get('/all')
-  async getAllPublicData() {
-    const articles = await this.articleProvider.getAll('public');
-    const categories = await this.categoryProvider.getAllCategories();
+  @Get('/meta')
+  async getBuildMeta() {
     const tags = await this.tagProvider.getAllTags();
     const meta = await this.metaProvider.getAll();
+    const totalArticles = await this.articleProvider.getTotalNum();
+    const totalWordCount = await this.metaProvider.getTotalWords();
     const data = {
-      articles,
-      categories,
       tags,
       meta,
+      totalArticles,
+      totalWordCount,
     };
     return {
       statusCode: 200,

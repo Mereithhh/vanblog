@@ -24,6 +24,7 @@ export class UpdateArticleDto {
 export class SearchArticleOption {
   page: number;
   pageSize: number;
+  regMatch: boolean;
   category?: string;
   tags?: string;
   title?: string;
@@ -32,4 +33,5 @@ export class SearchArticleOption {
   startTime?: string;
   endTime?: string;
   toListView?: boolean;
+  withWordCount?: boolean;
 }

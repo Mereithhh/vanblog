@@ -15,44 +15,54 @@ export interface MenuItem {
   name: string;
   value: string;
 }
+export interface MetaProps {
+  links: any[];
+  socials: SocialItem[];
+  rewards: any[];
+  menus: MenuItem[];
+  categories: string[];
+  about: {
+    updatedAt: string;
+    content: string;
+  };
+  siteInfo: {
+    author: string;
+    authorDesc: string;
+    authorLogo: string;
+    authorLogoDark?: string;
+    siteLogo: string;
+    favicon: string;
+    siteName: string;
+    siteDesc: string;
+    beianNumber: string;
+    beianUrl: string;
+    payAliPay: string;
+    payWechat: string;
+    payAliPayDark?: string;
+    payWechatDark?: string;
+    since: string;
+    walineServerUrl: string;
+    baseUrl: string;
+    baiduAnalysisId?: string;
+    gaAnalysisId?: string;
+    siteLogoDark?: string;
+  };
+}
+export interface PublicMetaProp {
+  tags: string[];
+  totalArticles: number;
+  meta: MetaProps;
+  totalWordCount: number;
+}
 export interface PublicAllProp {
   articles: any[];
   categories: any[];
   tags: string[];
-  meta: {
-    links: any[];
-    socials: SocialItem[];
-    rewards: any[];
-    menus: MenuItem[];
-    about: {
-      updatedAt: string;
-      content: string;
-    };
-    siteInfo: {
-      author: string;
-      authorDesc: string;
-      authorLogo: string;
-      authorLogoDark?: string;
-      siteLogo: string;
-      favicon: string;
-      siteName: string;
-      siteDesc: string;
-      beianNumber: string;
-      beianUrl: string;
-      payAliPay: string;
-      payWechat: string;
-      payAliPayDark?: string;
-      payWechatDark?: string;
-      since: string;
-      walineServerUrl: string;
-      baseUrl: string;
-    };
-  };
+  meta: MetaProps;
 }
-export async function getPublicAll(): Promise<PublicAllProp> {
-  console.log("调用一次 getAll");
+export async function getPublicMeta(): Promise<PublicMetaProp> {
   try {
-    const url = `${config.baseUrl}api/public/all`;
+    const url = `${config.baseUrl}api/public/meta`;
     const res = await fetch(url);
     const { data } = await res.json();
     return data;
@@ -61,10 +71,11 @@ export async function getPublicAll(): Promise<PublicAllProp> {
       console.log("无法连接，采用默认值");
       // 给一个默认的吧。
       return {
-        articles: [],
-        categories: [],
+        totalWordCount: 0,
         tags: [],
+        totalArticles: 0,
         meta: {
+          categories: [],
           menus: [],
           links: [],
           socials: [],

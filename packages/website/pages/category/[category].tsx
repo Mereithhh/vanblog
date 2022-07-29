@@ -1,4 +1,4 @@
-import { getPublicAll } from "../../api/getAllData";
+import { getPublicMeta } from "../../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../../components/AuthorCard";
 import Layout from "../../components/layout";
 import TimeLineItem from "../../components/TimeLineItem";
@@ -49,9 +49,9 @@ const CategoryPages = (props: CategoryPagesProps) => {
 
 export default CategoryPages;
 export async function getStaticPaths() {
-  const data = await getPublicAll();
+  const data = await getPublicMeta();
 
-  const paths = data.categories.map((category) => ({
+  const paths = data.meta.categories.map((category) => ({
     params: {
       category: category,
     },

@@ -1,4 +1,5 @@
-import { getPublicAll } from "../../api/getAllData";
+import { getPublicMeta } from "../../api/getAllData";
+import { getArticlesByOption } from "../../api/getArticles";
 import Layout from "../../components/layout";
 import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
@@ -58,7 +59,11 @@ const PostPages = (props: PostPagesProps) => {
 export default PostPages;
 
 export async function getStaticPaths() {
-  const data = await getPublicAll();
+  const data = await getArticlesByOption({
+    page: 1,
+    pageSize: -1,
+    toListView: true,
+  });
   const paths = data.articles.map((article) => ({
     params: {
       id: String(article.id),

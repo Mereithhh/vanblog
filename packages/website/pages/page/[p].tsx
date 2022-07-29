@@ -1,4 +1,4 @@
-import { getPublicAll } from "../../api/getAllData";
+import { getPublicMeta } from "../../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../../components/AuthorCard";
 import Layout from "../../components/layout";
 import PageNav from "../../components/PageNav";
@@ -48,8 +48,8 @@ const PagePages = (props: PagePagesProps) => {
 export default PagePages;
 
 export async function getStaticPaths() {
-  const data = await getPublicAll();
-  const total = Math.ceil(data.articles.length / 5);
+  const data = await getPublicMeta();
+  const total = Math.ceil(data.totalArticles / 5);
   const paths = [];
   for (let i = 1; i <= total; i++) {
     paths.push({

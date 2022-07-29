@@ -1,4 +1,4 @@
-import { getPublicAll } from "../../api/getAllData";
+import { getPublicMeta } from "../../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../../components/AuthorCard";
 import Layout from "../../components/layout";
 import TimeLineItem from "../../components/TimeLineItem";
@@ -49,7 +49,7 @@ const TagPages = (props: TagPagesProps) => {
 
 export default TagPages;
 export async function getStaticPaths() {
-  const data = await getPublicAll();
+  const data = await getPublicMeta();
   const paths = data.tags.map((tag) => ({
     params: {
       tag: tag,

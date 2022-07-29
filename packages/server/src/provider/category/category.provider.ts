@@ -12,8 +12,8 @@ export class CategoryProvider {
     private readonly articleProvider: ArticleProvider,
     private readonly metaProvider: MetaProvider,
   ) {}
-  async getCategoriesWirhArticle() {
-    const allArticles = await this.articleProvider.getAll('admin');
+  async getCategoriesWithArticle() {
+    const allArticles = await this.articleProvider.getAll('list');
     const categories = await this.getAllCategories();
     const data = {};
     categories.forEach((c) => {
@@ -34,7 +34,7 @@ export class CategoryProvider {
   }
 
   async getArticlesByCategory(name: string) {
-    const d = await this.getCategoriesWirhArticle();
+    const d = await this.getCategoriesWithArticle();
     return d[name] ?? [];
   }
 

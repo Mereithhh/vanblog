@@ -1,4 +1,4 @@
-import { MenuItem, PublicAllProp } from "../api/getAllData";
+import { MenuItem, PublicAllProp, PublicMetaProp } from "../api/getAllData";
 
 export interface LayoutProps {
   description: string;
@@ -17,7 +17,7 @@ export interface LayoutProps {
   links: MenuItem[];
 }
 
-export function getLayoutProps(data: any): LayoutProps {
+export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   const siteInfo = data.meta.siteInfo;
   return {
     walineServerUrl: siteInfo?.walineServerUrl || "",
@@ -33,15 +33,15 @@ export function getLayoutProps(data: any): LayoutProps {
     logoDark: siteInfo?.siteLogoDark || "",
     description: siteInfo?.siteDesc || "",
     links: data?.meta?.menus || [],
-    categories: data.categories,
+    categories: data.meta.categories,
   };
 }
 
-export function getAuthorCardProps(data: PublicAllProp) {
+export function getAuthorCardProps(data: PublicMetaProp) {
   return {
-    postNum: data.articles.length,
+    postNum: data.totalArticles,
     tagNum: data.tags.length,
-    catelogNum: data.categories.length,
+    catelogNum: data.meta.categories.length,
     socials: data.meta.socials,
     author: data.meta.siteInfo.author,
     desc: data.meta.siteInfo.authorDesc,

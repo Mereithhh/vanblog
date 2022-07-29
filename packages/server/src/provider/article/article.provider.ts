@@ -1,4 +1,9 @@
-import { Inject, Injectable, forwardRef } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  forwardRef,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -171,12 +176,46 @@ export class ArticleProvider {
         },
         thisView,
       )
+      .sort({ createdAt: -1 })
       .exec();
     return articles;
   }
+
+  async getTimeLineInfo() {
+    // 肯定是不需要具体内容的，一个列表就好了
+    const articles = await this.articleModel
+      .find(
+        {
+          $and: [
+            {
+              $or: [
+                {
+                  deleted: false,
+                },
+                {
+                  deleted: { $exists: false },
+                },
+              ],
+            },
+          ],
+        },
+        this.listView,
+      )
+      .sort({ createdAt: -1 })
+      .exec();
+    // 清洗一下数据。
+    const dates = Array.from(
+      new Set(articles.map((a) => a.createdAt.getFullYear())),
+    );
+    const res: Record<string, Article[]> = {};
+    dates.forEach((date) => {
+      res[date] = articles.filter((a) => a.createdAt.getFullYear() == date);
+    });
+    return res;
+  }
   async getByOption(
     option: SearchArticleOption,
-  ): Promise<{ articles: Article[]; total: number }> {
+  ): Promise<{ articles: Article[]; total: number; totalWordCount?: number }> {
     const query: any = {};
     const $and: any = [
       {
@@ -208,16 +247,28 @@ export class ArticleProvider {
       const tags = option.tags.split(',');
       const or: any = [];
       tags.forEach((t) => {
-        or.push({
-          tags: { $regex: `${t}`, $options: '$i' },
-        });
+        if (option.regMatch) {
+          or.push({
+            tags: { $regex: `${t}`, $options: '$i' },
+          });
+        } else {
+          or.push({
+            tags: t,
+          });
+        }
       });
       and.push({ $or: or });
     }
     if (option.category) {
-      and.push({
-        category: { $regex: `${option.category}`, $options: '$i' },
-      });
+      if (option.regMatch) {
+        and.push({
+          category: { $regex: `${option.category}`, $options: '$i' },
+        });
+      } else {
+        and.push({
+          category: option.category,
+        });
+      }
     }
     if (option.title) {
       and.push({
@@ -240,20 +291,29 @@ export class ArticleProvider {
     }
 
     query.$and = $and;
-    const view = option.toListView ? this.listView : this.adminView;
+    let view = option.toListView ? this.listView : this.adminView;
+    if (option.withWordCount) {
+      view = this.adminView;
+    }
+    let articlesQuery = this.articleModel.find(query, view).sort(sort);
+    if (option.pageSize != -1) {
+      articlesQuery = articlesQuery
+        .skip(option.pageSize * option.page - option.pageSize)
+        .limit(option.pageSize);
+    }
+    const articles = await articlesQuery.exec();
+    // withWordCount 只会返回当前分页的文字数量
 
-    const articles = await this.articleModel
-      .find(query, view)
-      .sort(sort)
-      .skip(option.pageSize * option.page - option.pageSize)
-      .limit(option.pageSize)
-      .exec();
     const total = await this.articleModel.count(query).exec();
-
-    return {
-      articles,
-      total,
-    };
+    const resData: any = { articles, total };
+    if (option.withWordCount) {
+      let totalWordCount = 0;
+      articles.forEach((a) => {
+        totalWordCount = totalWordCount + wordCount(a?.content || '');
+      });
+      resData.totalWordCount = totalWordCount;
+    }
+    return resData;
   }
 
   async getById(id: number, view: ArticleView): Promise<Article> {
@@ -273,6 +333,69 @@ export class ArticleProvider {
         this.getView(view),
       )
       .exec();
+  }
+  async getByIdWithPreNext(id: number, view: ArticleView) {
+    const curArticle = await this.getById(id, view);
+    if (!curArticle) {
+      throw new NotFoundException('找不到文章');
+    }
+    const res: any = { article: curArticle };
+    // 找它的前一个和后一个。
+    const preArticle = await this.getPreArticleByArticle(curArticle, 'list');
+    const nextArticle = await this.getNextArticleByArticle(curArticle, 'list');
+    if (preArticle) {
+      res.pre = preArticle;
+    }
+    if (nextArticle) {
+      res.next = nextArticle;
+    }
+    return res;
+  }
+  async getPreArticleByArticle(article: Article, view: ArticleView) {
+    const result = await this.articleModel
+      .find(
+        {
+          createdAt: { $lt: article.createdAt },
+          $or: [
+            {
+              deleted: false,
+            },
+            {
+              deleted: { $exists: false },
+            },
+          ],
+        },
+        this.getView(view),
+      )
+      .sort({ createdAt: -1 })
+      .limit(1);
+    if (result.length) {
+      return result[0];
+    }
+    return null;
+  }
+  async getNextArticleByArticle(article: Article, view: ArticleView) {
+    const result = await this.articleModel
+      .find(
+        {
+          createdAt: { $gt: article.createdAt },
+          $or: [
+            {
+              deleted: false,
+            },
+            {
+              deleted: { $exists: false },
+            },
+          ],
+        },
+        this.getView(view),
+      )
+      .sort({ createdAt: 1 })
+      .limit(1);
+    if (result.length) {
+      return result[0];
+    }
+    return null;
   }
 
   async findOneByTitle(title: string): Promise<Article> {

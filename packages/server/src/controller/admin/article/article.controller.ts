@@ -14,7 +14,6 @@ import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { SortOrder } from 'src/dto/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
-import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('article')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/article')
@@ -26,6 +25,7 @@ export class ArticleController {
     @Query('page') page: number,
     @Query('pageSize') pageSize = 5,
     @Query('toListView') toListView = false,
+    @Query('regMatch') regMatch = true,
     @Query('category') category?: string,
     @Query('tags') tags?: string,
     @Query('title') title?: string,
@@ -45,6 +45,7 @@ export class ArticleController {
       startTime,
       endTime,
       toListView,
+      regMatch,
     };
     const data = await this.articleProvider.getByOption(option);
     return {

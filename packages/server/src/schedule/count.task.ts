@@ -9,10 +9,6 @@ export class CountTask {
 
   @Interval(1000 * 60 * 5)
   async handleCron() {
-    const curTime = dayjs();
-    const total = await this.metaProvider.updateTotalWords();
-    this.logger.debug(
-      `[${curTime.format('YYYY-MM-DD HH:mm:ss')}] updateWordCount: ${total}`,
-    );
+    await this.metaProvider.updateTotalWords();
   }
 }
