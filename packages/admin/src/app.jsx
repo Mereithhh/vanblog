@@ -24,23 +24,6 @@ export async function getInitialState() {
       } else if (window.location.pathname == '/init' && msg.statusCode == 200) {
         history.push('/');
       } else {
-        const result = msg.data;
-        if (result.articles && result.meta && result.meta.about) {
-          result.articles = [
-            {
-              id: 0,
-              category: '关于',
-              title: '关于',
-              tag: ['关于'],
-              about: true,
-              content: result.meta.about.content,
-              updatedAt:
-                result.meta.about.updatedAt || result.meta?.siteInfo?.since || '2022-06-26',
-              createdAt: result.meta?.siteInfo?.since || '2022-06-26',
-            },
-            ...result.articles,
-          ];
-        }
         return msg.data;
       }
     } catch (error) {
@@ -78,17 +61,6 @@ export const layout = ({ initialState, setInitialState }) => {
       }
     },
     links: [
-      <a
-        key="mainSite"
-        onClick={() => {
-          window.open(initialState?.meta?.siteInfo?.baseUrl || '/', '_blank');
-        }}
-        target="_blank"
-      >
-        <HomeOutlined />
-        <span>主站</span>
-      </a>,
-
       <LogoutButton
         key="logoutSider"
         trigger={
