@@ -11,11 +11,12 @@ import { MenuItem } from 'src/dto/menu.dto';
 import { VisitProvider } from '../visit/visit.provider';
 import { AritcleProvider } from '../article/article.provider';
 import { ViewerProvider } from '../viewer/viewer.provider';
+import { MetaProvider } from '../meta/meta.provider';
 @Injectable()
 export class OverviewProvider {
   constructor(
     private readonly userProvider: UserProvider,
-    private readonly visitProvider: VisitProvider,
+    private readonly metaProvider: MetaProvider,
     private readonly articleProvider: AritcleProvider,
     private readonly viewProvider: ViewerProvider,
   ) {}
@@ -27,9 +28,14 @@ export class OverviewProvider {
       articleNum: await this.articleProvider.getTotalNum(),
     };
     const viewer = await this.viewProvider.getViewerGrid(5);
+    const siteInfo = await this.metaProvider.getSiteInfo();
     return {
       total,
       viewer,
+      link: {
+        baseUrl: siteInfo.baseUrl,
+        walineServerUrl: siteInfo.walineServerUrl,
+      },
     };
   }
 }
