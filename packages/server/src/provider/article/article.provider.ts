@@ -165,7 +165,7 @@ export class AritcleProvider {
     option: SearchArticleOption,
   ): Promise<{ articles: Article[]; total: number }> {
     const query: any = {};
-    const $and = [
+    const $and: any = [
       {
         $or: [
           {
@@ -177,7 +177,7 @@ export class AritcleProvider {
         ],
       },
     ];
-    const $or = [];
+    const and = [];
     const sort: any = { createdAt: -1 };
     if (option.sortCreatedAt) {
       if (option.sortCreatedAt == 'asc') {
@@ -193,25 +193,39 @@ export class AritcleProvider {
     }
     if (option.tags) {
       const tags = option.tags.split(',');
+      const or: any = [];
       tags.forEach((t) => {
-        $or.push({
+        or.push({
           tags: { $regex: `${t}`, $options: '$i' },
         });
       });
+      and.push({ $or: or });
     }
     if (option.category) {
-      $or.push({
+      and.push({
         category: { $regex: `${option.category}`, $options: '$i' },
       });
     }
     if (option.title) {
-      $or.push({
+      and.push({
         title: { $regex: `${option.title}`, $options: '$i' },
       });
     }
-    if ($or.length) {
-      $and.push({ $or });
+    if (option.startTime || option.endTime) {
+      const obj: any = {};
+      if (option.startTime) {
+        obj['$gte'] = new Date(option.startTime);
+      }
+      if (option.endTime) {
+        obj['$lte'] = new Date(option.endTime);
+      }
+      $and.push({ createdAt: obj });
     }
+
+    if (and.length) {
+      $and.push({ $and: and });
+    }
+
     query.$and = $and;
     const view = option.toListView ? this.listView : this.adminView;
 

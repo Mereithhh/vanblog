@@ -14,7 +14,6 @@ export const columns = (categories) => {
       dataIndex: 'title',
       copyable: true,
       ellipsis: true,
-      tip: '标题过长会自动收缩',
       formItemProps: {
         rules: [
           {
@@ -72,6 +71,7 @@ export const columns = (categories) => {
       dataIndex: 'top',
       valueType: 'number',
       sorter: true,
+      width: 80,
       hideInSearch: true,
     },
     {

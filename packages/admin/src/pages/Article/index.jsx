@@ -54,12 +54,6 @@ export default () => {
                 if (searchObj?.endTime) {
                   option.endTime = searchObj?.endTime;
                 }
-                // data = data.filter((eachRecord) => {
-                //   const t = moment(eachRecord.createdAt);
-                //   const t0 = moment(searchObj?.startTime);
-                //   const t1 = moment(searchObj?.endTime);
-                //   return t.isBetween(t0, t1, 'day', '[]');
-                // });
                 break;
               case 'category':
                 if (target.trim() != '') {
@@ -84,14 +78,13 @@ export default () => {
       }}
       editable={false}
       columnsState={{
-        persistenceKey: 'pro-table-singe-demos',
+        persistenceKey: 'van-blog-article-table',
         persistenceType: 'localStorage',
         onChange(value) {},
       }}
       rowKey="id"
       search={{
         labelWidth: 'auto',
-        span: 6,
       }}
       pagination={{
         pageSize: 5,
