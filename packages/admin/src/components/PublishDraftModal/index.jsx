@@ -41,6 +41,13 @@ export default function (props) {
             ];
           }}
         />
+        <ProFormText
+          label="置顶优先级"
+          width="md"
+          id="top"
+          name="top"
+          placeholder="留空或0表示不置顶，其余数字越大表示优先级越高"
+        />
         <ProFormText.Password
           label="密码"
           width="md"
