@@ -1,13 +1,12 @@
 import Footer from '@/components/Footer';
-import RightContent from '@/components/RightContent';
-import { HomeOutlined, QuestionCircleOutlined } from '@ant-design/icons';
+import { HomeOutlined, QuestionCircleOutlined, LogoutOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';
+import LogoutButton from './components/LogoutButton';
 import { fetchAllMeta } from './services/van-blog/api';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
-const basePath = '/';
 /** 获取用户信息比较慢的时候会展示一个 loading */
 
 export const initialStateConfig = {
@@ -64,7 +63,6 @@ export async function getInitialState() {
 
 export const layout = ({ initialState, setInitialState }) => {
   return {
-    rightContentRender: () => <RightContent />,
     disableContentMargin: false,
     footerRender: () => <Footer />,
     onPageChange: () => {
@@ -90,10 +88,16 @@ export const layout = ({ initialState, setInitialState }) => {
         <HomeOutlined />
         <span>主站</span>
       </a>,
-      <a key="mainSite" href="https://vanblog.mereith.com/" target="_blank" rel="noreferrer">
-        <QuestionCircleOutlined />
-        <span>帮助文档</span>
-      </a>,
+
+      <LogoutButton
+        key="logoutSider"
+        trigger={
+          <a>
+            <LogoutOutlined />
+            <span>登出</span>
+          </a>
+        }
+      />,
     ],
 
     menuHeaderRender: undefined,

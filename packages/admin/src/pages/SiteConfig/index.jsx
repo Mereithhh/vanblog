@@ -1,5 +1,4 @@
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, message } from 'antd';
 import { useEffect, useMemo, useState } from 'react';
 import { history, useModel } from 'umi';
 import Backup from './tabs/Backup';
@@ -62,25 +61,6 @@ export default function () {
           key: 'io',
         },
       ]}
-      extra={[
-        <Button
-          key="1"
-          type="primary"
-          onClick={async () => {
-            const allData = await initialState?.fetchInitData?.();
-            await setInitialState((s) => ({ ...s, ...allData }));
-            message.success('刷新成功 !');
-          }}
-        >
-          刷新
-        </Button>,
-      ]}
-      // footer={[
-      //   <Button key="rest">重置</Button>,
-      //   <Button key="submit" type="primary">
-      //     提交
-      //   </Button>,
-      // ]}
       onTabChange={(tab) => {
         setCurrTabKey(tab);
         history.push(`${history.location.pathname}?tab=${tab}`);
