@@ -45,6 +45,8 @@ import { ViewerTask } from './schedule/viewer.task';
 import { Visit, VisitSchema } from './scheme/visit.schema';
 import { VisitProvider } from './provider/visit/visit.provider';
 import { MetaController } from './controller/admin/meta/meta.controller';
+import { WelcomeController } from './controller/admin/welcome/welcome.controller';
+import { OverviewProvider } from './provider/overview/overview.provider';
 
 @Module({
   imports: [
@@ -82,6 +84,7 @@ import { MetaController } from './controller/admin/meta/meta.controller';
     MenuMetaController,
     BackupController,
     MetaController,
+    WelcomeController,
   ],
   providers: [
     AppService,
@@ -98,6 +101,7 @@ import { MetaController } from './controller/admin/meta/meta.controller';
     JwtStrategy,
     InitProvider,
     ViewerTask,
+    OverviewProvider,
   ],
 })
 export class AppModule implements NestModule {

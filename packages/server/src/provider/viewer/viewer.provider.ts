@@ -56,6 +56,10 @@ export class ViewerProvider {
         viewer: today.viewer - lastDay.viewer,
         visited: today.visited - lastDay.visited,
       },
+      now: {
+        viewer: today.viewer,
+        visited: today.visited,
+      },
     };
   }
 

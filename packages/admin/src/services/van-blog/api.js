@@ -212,3 +212,8 @@ export async function getDraftsByOption(option) {
     method: 'GET',
   });
 }
+export async function getWelcomeData() {
+  return request(`/api/admin/welcome`, {
+    method: 'GET',
+  });
+}
