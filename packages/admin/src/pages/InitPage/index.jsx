@@ -28,7 +28,6 @@ const InitPage = () => {
                 message.success('初始化成功!');
                 history.push('/user/login');
               }
-              console.log(newData);
             }}
           >
             <InitForm requireUser={true} />

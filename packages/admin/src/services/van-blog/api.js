@@ -162,7 +162,6 @@ export async function exportAll() {
     method: 'GET',
     skipErrorHandler: true,
     responseType: 'blob',
-
   });
 }
 export async function deleteSocial(name) {
@@ -195,6 +194,11 @@ export async function getArticleById(id) {
 }
 export async function getDraftById(id) {
   return request(`/api/admin/draft/${id}`, {
+    method: 'GET',
+  });
+}
+export async function getSiteInfo() {
+  return request(`/api/admin/meta/site`, {
     method: 'GET',
   });
 }

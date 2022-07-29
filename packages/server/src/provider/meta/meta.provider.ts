@@ -114,9 +114,9 @@ export class MetaProvider {
 
   async updateSiteInfo(updateSiteInfoDto: UpdateSiteInfoDto) {
     // @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    const { username, password, ...updateDto } = updateSiteInfoDto;
-    if (username && username != '') {
-      this.userProvider.updateUser({ name: username, password });
+    const { name, password, ...updateDto } = updateSiteInfoDto;
+    if (name && name != '') {
+      this.userProvider.updateUser({ name: name, password });
     }
 
     return this.metaModel.updateOne({}, { siteInfo: updateDto });
