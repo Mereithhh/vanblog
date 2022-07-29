@@ -52,6 +52,12 @@ export async function updateSiteInfo(body) {
     data: body,
   });
 }
+export async function updateUser(body) {
+  return request(`/api/admin/auth`, {
+    method: 'PUT',
+    data: body,
+  });
+}
 export async function createCategory(body) {
   return request(`/api/admin/category/`, {
     method: 'POST',

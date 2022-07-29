@@ -8,6 +8,7 @@ import Link from './tabs/Link';
 import Menu from './tabs/Menu';
 import SiteInfo from './tabs/SiteInfo';
 import Social from './tabs/Social';
+import User from './tabs/User';
 export default function () {
   const tabMap = {
     category: <Category />,
@@ -15,8 +16,9 @@ export default function () {
     donateInfo: <Donate />,
     links: <Link />,
     socials: <Social />,
-    io: <Backup />,
+    backup: <Backup />,
     menuConfig: <Menu />,
+    user: <User />,
   };
   const [currTabKey, setCurrTabKey] = useState('category');
   const { initialState, setInitialState } = useModel('@@initialState');
@@ -35,7 +37,10 @@ export default function () {
           tab: '分类管理',
           key: 'category',
         },
-
+        {
+          tab: '用户设置',
+          key: 'user',
+        },
         {
           tab: '站点配置',
           key: 'siteInfo',
@@ -58,7 +63,7 @@ export default function () {
         },
         {
           tab: '导入导出',
-          key: 'io',
+          key: 'backup',
         },
       ]}
       onTabChange={(tab) => {
