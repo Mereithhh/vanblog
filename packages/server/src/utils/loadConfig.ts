@@ -45,4 +45,4 @@ export const loadConfig = (key: string, defaultValue?: any) => {
 
   return process.env[envKey] || _.get(config, key, defaultValue);
 };
-export const version = process.env['VAN_BLOG_VERSION'] || 'developing mode';
+export const version = process.env['VAN_BLOG_VERSION'] || 'dev';

@@ -16,7 +16,7 @@ const Footer = () => {
         </p>
         <p>
           <span>版本: </span>
-          <span> {initialState?.version || 'developing mode'}</span>
+          <span> {initialState?.version || 'dev'}</span>
         </p>
       </div>
     </>
