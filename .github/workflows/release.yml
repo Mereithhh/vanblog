@@ -50,7 +50,7 @@ jobs:
           file: ./Dockerfile
           build-args: |
             VAN_BLOG_BUILD_SERVER=http://localhost:3000
-            VAN_BLOG_VERSION=${{ steps.get_version.outputs.VERSION }}
+            VAN_BLOG_VERSIONS=${{ steps.get_version.outputs.VERSION }}
           platforms: linux/amd64
           push: true
           tags: |
@@ -65,6 +65,7 @@ jobs:
         with:
           build-args: |
             VAN_BLOG_BUILD_SERVER=https://www.mereith.com
+            VAN_BLOG_VERSIONS=${{ steps.get_version.outputs.VERSION }}
           context: .
           file: ./Dockerfile
           platforms: linux/amd64
