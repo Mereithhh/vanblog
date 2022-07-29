@@ -1,20 +1,15 @@
-import { deleteSocial, getSocialTypes, updateSocial } from '@/services/van-blog/api';
+import { deleteSocial, getSocial, getSocialTypes, updateSocial } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
 import { useState } from 'react';
-import { useModel } from 'umi';
 
 export default function () {
-  const { initialState, setInitialState } = useModel('@@initialState');
-  // const actionRef = useRef();
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
-  const [dataSource, setDataSource] = useState([]);
+
   const fetchData = async () => {
     setLoading(true);
-    let data = await initialState?.fetchInitData?.();
-    await setInitialState((s) => ({ ...s, ...data }));
-    data = data?.meta?.socials;
+    const { data } = await getSocial();
     setLoading(false);
     return data;
   };
@@ -72,8 +67,7 @@ export default function () {
             Modal.confirm({
               onOk: async () => {
                 await deleteSocial(record.type);
-                const data = await fetchData();
-                setDataSource(data);
+                action?.reload();
               },
               title: `确认删除"${record.type}"吗?`,
             });
@@ -108,11 +102,6 @@ export default function () {
               success: true,
             };
           }}
-          value={dataSource}
-          onChange={async (values) => {
-            const data = await fetchData();
-            setDataSource(data);
-          }}
           editable={{
             type: 'multiple',
             editableKeys,
@@ -122,7 +111,6 @@ export default function () {
                 value: data.value,
               };
               await updateSocial(toSaveObj);
-              // await waitTime(2000);
             },
             onChange: setEditableRowKeys,
           }}

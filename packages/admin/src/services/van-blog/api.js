@@ -157,6 +157,11 @@ export async function updateSocial(body) {
     data: body,
   });
 }
+export async function getSocial() {
+  return request(`/api/admin/meta/social`, {
+    method: 'GET',
+  });
+}
 export async function getSocialTypes() {
   return request(`/api/admin/meta/social/types`, {
     method: 'GET',
