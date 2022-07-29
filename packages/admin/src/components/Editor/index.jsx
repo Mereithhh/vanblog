@@ -5,21 +5,18 @@ export default function Editor(props) {
   const { current } = useRef({ editor: null });
   useEffect(() => {
     if (!current.editor) {
-      current.editor = new Vditor(
-        'vditor',
-        {
-          mode: 'wysiwyg',
-          fullscreen: {
-            index: 9999,
-          },
-          preview: {
-            delay: 200,
-          },
-          after: () => {
-            props?.setVd(vditor);
-          },
-        }.current,
-      );
+      current.editor = new Vditor('vditor', {
+        mode: 'wysiwyg',
+        fullscreen: {
+          index: 9999,
+        },
+        preview: {
+          delay: 200,
+        },
+        after: () => {
+          props?.setVd(current.editor);
+        },
+      });
     }
 
     return () => {

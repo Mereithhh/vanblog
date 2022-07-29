@@ -1,6 +1,7 @@
 import { Tag, Modal, message } from 'antd';
 import { deleteDraft, getAllCategories } from '@/services/van-blog/api';
 import PublishDraftModal from '@/components/PublishDraftModal';
+import { history } from 'umi';
 export const columns = [
   {
     dataIndex: 'id',

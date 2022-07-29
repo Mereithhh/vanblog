@@ -1,4 +1,5 @@
 import { Tag, Modal, message } from 'antd';
+import { history } from 'umi';
 import { deleteArticle } from '@/services/van-blog/api';
 export const columns = (categories) => {
   return [

@@ -1,17 +1,26 @@
 import Editor from '@/components/Editor';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
-import { getTags, updateAbout, updateArticle, updateDraft } from '@/services/van-blog/api';
+import {
+  getArticleById,
+  getDraftById,
+  getTags,
+  updateAbout,
+  updateArticle,
+  updateDraft,
+} from '@/services/van-blog/api';
 import { formatTimes } from '@/services/van-blog/tool';
 import { useQuery } from '@/services/van-blog/useQuery';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Descriptions, Modal, Space, Tag } from 'antd';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useModel } from 'umi';
 
 export default function () {
   const [vd, setVd] = useState();
+  const [currObj, setCurrObj] = useState({});
+  const [loading, setLoading] = useState(true);
   const [query] = useQuery();
   const { initialState, setInitialState } = useModel('@@initialState');
   // 类型，可以是文章、草稿、或者 about
@@ -21,32 +30,31 @@ export default function () {
     draft: '草稿',
     about: '关于',
   };
-  const currObj = useMemo(() => {
-    let obj = {};
-    let array = [];
-    switch (type) {
-      case 'article':
-        array = initialState?.articles;
-        obj = array.find((item) => {
-          return String(item.id) == query.id;
-        });
-        break;
-      case 'draft':
-        array = initialState?.drafts;
-        obj = array?.find((item) => {
-          return String(item.id) == query.id;
-        });
-        break;
-      case 'about':
-        obj = initialState?.meta?.about;
+  const fetchData = useCallback(async () => {
+    setLoading(true);
+    const type = query?.type || 'article';
+    const id = query?.id;
+    if (type == 'about') {
+      return initialState?.meta?.about;
     }
-    return obj;
-  }, [type, initialState, query]);
+    if (type == 'article' && id) {
+      const { data } = await getArticleById(id);
+      setCurrObj(data);
+    }
+    if (type == 'draft' && id) {
+      const { data } = await getDraftById(id);
+      setCurrObj(data);
+    }
+    setLoading(false);
+  }, [query, initialState, setLoading]);
   useEffect(() => {
-    if (vd) {
-      vd.setValue(currObj?.content || '');
+    fetchData();
+  }, [fetchData]);
+  useEffect(() => {
+    if (vd && currObj?.content && !loading) {
+      vd?.setValue(currObj.content);
     }
-  }, [vd, currObj]);
+  }, [currObj, vd, loading]);
   const reload = async () => {
     const data = await initialState?.fetchInitData?.();
     await setInitialState((s) => ({ ...s, ...data }));

@@ -175,6 +175,16 @@ export async function updateAbout(body) {
     data: body,
   });
 }
+export async function getArticleById(id) {
+  return request(`/api/admin/article/${id}`, {
+    method: 'GET',
+  });
+}
+export async function getDraftById(id) {
+  return request(`/api/admin/draft/${id}`, {
+    method: 'GET',
+  });
+}
 export async function getArticlesByOption(option) {
   const newQuery = {};
   for (const [k, v] of Object.entries(option)) {
