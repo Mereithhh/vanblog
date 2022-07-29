@@ -64,7 +64,7 @@ export class AllController {
 
   @Get()
   async getAll() {
-    const articles = await this.articleProvider.getAll();
+    const articles = await this.articleProvider.getAll('admin');
     const categories = await this.categoryProvider.getAllCategories();
     const tags = await this.tagProvider.getAllTags();
     const meta = await this.metaProvider.getAll();

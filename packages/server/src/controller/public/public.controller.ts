@@ -73,7 +73,7 @@ export class PublicController {
 
   @Get('/all')
   async getAllPublicData() {
-    let articles = await this.articleProvider.getAll();
+    let articles = await this.articleProvider.getAll('public');
     articles = this.articleProvider.toPublic(articles) as any;
     const categories = await this.categoryProvider.getAllCategories();
     const tags = await this.tagProvider.getAllTags();

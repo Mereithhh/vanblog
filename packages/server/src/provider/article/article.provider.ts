@@ -131,15 +131,35 @@ export class AritcleProvider {
       .count();
   }
 
-  async getAll(): Promise<Article[]> {
-    const articles = await this.articleModel.find({ hidden: false }).exec();
-    return articles.filter((each) => {
-      if (!each.deleted) {
-        return true;
-      } else {
-        return !each.deleted;
-      }
-    });
+  async getAll(view: 'admin' | 'public' | 'list'): Promise<Article[]> {
+    let thisView: any = this.adminView;
+    switch (view) {
+      case 'admin':
+        thisView = this.adminView;
+        break;
+      case 'list':
+        thisView = this.listView;
+        break;
+      case 'public':
+        thisView = this.publicView;
+    }
+    const articles = await this.articleModel
+      .find(
+        {
+          hidden: false,
+          $or: [
+            {
+              deleted: false,
+            },
+            {
+              deleted: { $exists: false },
+            },
+          ],
+        },
+        thisView,
+      )
+      .exec();
+    return articles;
   }
   async getByOption(
     option: SearchArticleOption,
