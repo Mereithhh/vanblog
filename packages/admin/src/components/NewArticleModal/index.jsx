@@ -1,10 +1,8 @@
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { createArticle, getTags } from '@/services/van-blog/api';
+import { createArticle, getAllCategories, getTags } from '@/services/van-blog/api';
 import { Button } from 'antd';
-import { useModel } from 'umi';
 export default function (props) {
   const { onFinish } = props;
-  const { initialState } = useModel('@@initialState');
   return (
     <ModalForm
       title="新建文章"
@@ -70,7 +68,8 @@ export default function (props) {
         placeholder="请选择分类"
         rules={[{ required: true, message: '这是必填项' }]}
         request={async () => {
-          return initialState?.categories?.map((e) => {
+          const categories = await getAllCategories();
+          return categories?.map((e) => {
             return {
               label: e,
               value: e,

@@ -1,10 +1,7 @@
-import { DefaultFooter } from '@ant-design/pro-layout';
-import { GithubOutlined } from '@ant-design/icons';
 import { useModel } from 'umi';
 import './index.css';
 const Footer = () => {
   const { initialState } = useModel('@@initialState');
-  const currentYear = new Date().getFullYear();
   return (
     <>
       <div className="footer" style={{ textAlign: 'center' }}>
