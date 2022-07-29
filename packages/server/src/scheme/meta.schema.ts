@@ -39,6 +39,9 @@ export class Meta extends Document {
 
   @Prop({ default: [] })
   categories: string[];
+
+  @Prop({ default: 0 })
+  totalWordCount: number;
 }
 
 export const MetaSchema = SchemaFactory.createForClass(Meta);

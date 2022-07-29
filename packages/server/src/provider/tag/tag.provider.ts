@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { AritcleProvider } from '../article/article.provider';
+import { ArticleProvider } from '../article/article.provider';
 
 @Injectable()
 export class TagProvider {
-  constructor(private readonly articleProvider: AritcleProvider) {}
+  constructor(private readonly articleProvider: ArticleProvider) {}
   async getTagsWirhArticle() {
     const allArticles = await this.articleProvider.getAll('admin');
     const data = {};

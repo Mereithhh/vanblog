@@ -3,13 +3,13 @@ import {
   NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
-import { AritcleProvider } from '../article/article.provider';
+import { ArticleProvider } from '../article/article.provider';
 import { MetaProvider } from '../meta/meta.provider';
 
 @Injectable()
 export class CategoryProvider {
   constructor(
-    private readonly articleProvider: AritcleProvider,
+    private readonly articleProvider: ArticleProvider,
     private readonly metaProvider: MetaProvider,
   ) {}
   async getCategoriesWirhArticle() {

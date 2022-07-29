@@ -11,7 +11,7 @@ import { config } from './config/index';
 import { Article, ArticleSchema } from './scheme/article.schema';
 import { Draft, DraftSchema } from './scheme/draft.schema';
 import { Meta, MetaSchema } from './scheme/meta.schema';
-import { AritcleProvider } from './provider/article/article.provider';
+import { ArticleProvider } from './provider/article/article.provider';
 import { CategoryProvider } from './provider/category/category.provider';
 import { DraftProvider } from './provider/draft/draft.provider';
 import { MetaProvider } from './provider/meta/meta.provider';
@@ -47,6 +47,7 @@ import { VisitProvider } from './provider/visit/visit.provider';
 import { MetaController } from './controller/admin/meta/meta.controller';
 import { WelcomeController } from './controller/admin/welcome/welcome.controller';
 import { OverviewProvider } from './provider/overview/overview.provider';
+import { CountTask } from './schedule/count.task';
 
 @Module({
   imports: [
@@ -88,10 +89,10 @@ import { OverviewProvider } from './provider/overview/overview.provider';
   ],
   providers: [
     AppService,
-    AritcleProvider,
+    ArticleProvider,
     CategoryProvider,
-    DraftProvider,
     MetaProvider,
+    DraftProvider,
     VisitProvider,
     TagProvider,
     UserProvider,
@@ -102,6 +103,7 @@ import { OverviewProvider } from './provider/overview/overview.provider';
     InitProvider,
     ViewerTask,
     OverviewProvider,
+    CountTask,
   ],
 })
 export class AppModule implements NestModule {

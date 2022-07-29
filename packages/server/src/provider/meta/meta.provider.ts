@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Meta, MetaDocument } from 'src/scheme/meta.schema';
@@ -9,13 +9,24 @@ import { LinkItem } from 'src/dto/link.dto';
 import { UserProvider } from '../user/user.provider';
 import { MenuItem } from 'src/dto/menu.dto';
 import { VisitProvider } from '../visit/visit.provider';
+import { ArticleProvider } from '../article/article.provider';
 @Injectable()
 export class MetaProvider {
   constructor(
-    @InjectModel('Meta') private metaModel: Model<MetaDocument>,
+    @InjectModel('Meta')
+    private metaModel: Model<MetaDocument>,
     private readonly userProvider: UserProvider,
     private readonly visitProvider: VisitProvider,
+    @Inject(forwardRef(() => ArticleProvider))
+    private readonly articleProvider: ArticleProvider,
   ) {}
+
+  async updateTotalWords() {
+    const total = await this.articleProvider.countTotalWords();
+    await this.update({ totalWordCount: total });
+    console.log('[ 更新字数缓存 ]：当前文章总字数: ', total);
+    return total;
+  }
 
   async getViewer() {
     const old = await this.getAll();
@@ -77,6 +88,9 @@ export class MetaProvider {
         value: 'wechat-dark',
       },
     ];
+  }
+  async getTotalWords() {
+    return (await this.getAll()).totalWordCount || 0;
   }
 
   async update(updateMetaDto: Partial<Meta>) {

@@ -9,13 +9,13 @@ import {
   UpdateDraftDto,
 } from 'src/dto/draft.dto';
 import { Draft, DraftDocument } from 'src/scheme/draft.schema';
-import { AritcleProvider } from '../article/article.provider';
+import { ArticleProvider } from '../article/article.provider';
 export type DraftView = 'admin' | 'public' | 'list';
 @Injectable()
 export class DraftProvider {
   constructor(
     @InjectModel('Draft') private draftModel: Model<DraftDocument>,
-    private readonly articleProvider: AritcleProvider,
+    private readonly articleProvider: ArticleProvider,
   ) {}
   publicView = {
     title: 1,

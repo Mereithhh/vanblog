@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { AritcleProvider } from 'src/provider/article/article.provider';
+import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
@@ -31,7 +31,7 @@ import { ViewerProvider } from 'src/provider/viewer/viewer.provider';
 export class BackupController {
   private readonly logger = new Logger(BackupController.name);
   constructor(
-    private readonly articleProvider: AritcleProvider,
+    private readonly articleProvider: ArticleProvider,
     private readonly categoryProvider: CategoryProvider,
     private readonly tagProvider: TagProvider,
     private readonly metaProvider: MetaProvider,

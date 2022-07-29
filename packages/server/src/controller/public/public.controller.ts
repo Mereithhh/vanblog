@@ -1,7 +1,7 @@
 import { Controller, Get, Param, Post, Query, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request, Response } from 'express';
-import { AritcleProvider } from 'src/provider/article/article.provider';
+import { ArticleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
@@ -10,7 +10,7 @@ import { TagProvider } from 'src/provider/tag/tag.provider';
 @Controller('/api/public/')
 export class PublicController {
   constructor(
-    private readonly articleProvider: AritcleProvider,
+    private readonly articleProvider: ArticleProvider,
     private readonly categoryProvider: CategoryProvider,
     private readonly tagProvider: TagProvider,
     private readonly metaProvider: MetaProvider,

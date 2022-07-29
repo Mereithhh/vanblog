@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
@@ -8,13 +8,17 @@ import {
 } from 'src/dto/article.dto';
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
 import { wordCount } from 'src/utils/wordCount';
+import { MetaProvider } from '../meta/meta.provider';
 
 export type ArticleView = 'admin' | 'public' | 'list';
 
 @Injectable()
-export class AritcleProvider {
+export class ArticleProvider {
   constructor(
-    @InjectModel('Article') private articleModel: Model<ArticleDocument>,
+    @InjectModel('Article')
+    private articleModel: Model<ArticleDocument>,
+    @Inject(forwardRef(() => MetaProvider))
+    private readonly metaProvider: MetaProvider,
   ) {}
   publicView = {
     title: 1,
@@ -75,6 +79,7 @@ export class AritcleProvider {
     const createdData = new this.articleModel(createArticleDto);
     const newId = await this.getNewId();
     createdData.id = newId;
+    this.metaProvider.updateTotalWords();
     return createdData.save();
   }
 
@@ -96,9 +101,10 @@ export class AritcleProvider {
         await this.create(createDto);
       }
     }
+    this.metaProvider.updateTotalWords();
   }
 
-  async getTotalWordCount() {
+  async countTotalWords() {
     //TODO 每次更新文章保存最新字数
     let total = 0;
     const articles = await this.articleModel
@@ -327,14 +333,20 @@ export class AritcleProvider {
     return this.articleModel.find({}).exec();
   }
   async deleteById(id: number) {
-    return this.articleModel.updateOne({ id }, { deleted: true }).exec();
+    const res = await this.articleModel
+      .updateOne({ id }, { deleted: true })
+      .exec();
+    this.metaProvider.updateTotalWords();
+    return res;
   }
 
   async updateById(id: number, updateArticleDto: UpdateArticleDto) {
-    return this.articleModel.updateOne(
+    const res = await this.articleModel.updateOne(
       { id },
       { ...updateArticleDto, updatedAt: new Date() },
     );
+    this.metaProvider.updateTotalWords();
+    return res;
   }
 
   async getNewId() {

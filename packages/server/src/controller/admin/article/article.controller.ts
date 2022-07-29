@@ -12,14 +12,14 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { SortOrder } from 'src/dto/sort';
-import { AritcleProvider } from 'src/provider/article/article.provider';
+import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('article')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/article')
 export class ArticleController {
-  constructor(private readonly articleProvider: AritcleProvider) {}
+  constructor(private readonly articleProvider: ArticleProvider) {}
 
   @Get('/')
   async getByOption(
