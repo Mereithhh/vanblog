@@ -1,4 +1,3 @@
-import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import { createDraft, getAllCategories, getTags } from '@/services/van-blog/api';
@@ -8,7 +7,7 @@ export default function (props) {
     <ModalForm
       title="新建草稿"
       trigger={
-        <Button key="button" icon={<PlusOutlined />} type="primary">
+        <Button key="button" type="primary">
           新建草稿
         </Button>
       }
@@ -61,7 +60,7 @@ export default function (props) {
         placeholder="请选择分类"
         rules={[{ required: true, message: '这是必填项' }]}
         request={async () => {
-          const categories = await getAllCategories();
+          const { data: categories } = await getAllCategories();
           return categories?.map((e) => {
             return {
               label: e,

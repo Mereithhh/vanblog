@@ -10,6 +10,7 @@ import { UserProvider } from '../user/user.provider';
 import { MenuItem } from 'src/dto/menu.dto';
 import { VisitProvider } from '../visit/visit.provider';
 import { ArticleProvider } from '../article/article.provider';
+import * as dayjs from 'dayjs';
 @Injectable()
 export class MetaProvider {
   constructor(
@@ -24,7 +25,12 @@ export class MetaProvider {
   async updateTotalWords() {
     const total = await this.articleProvider.countTotalWords();
     await this.update({ totalWordCount: total });
-    console.log('[ 更新字数缓存 ]：当前文章总字数: ', total);
+    console.log(
+      `[ ${dayjs().format(
+        'YYYY-MM-DD HH:mm:ss',
+      )} ]更新字数缓存：当前文章总字数: `,
+      total,
+    );
     return total;
   }
 
