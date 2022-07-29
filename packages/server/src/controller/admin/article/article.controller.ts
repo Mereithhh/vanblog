@@ -14,6 +14,7 @@ import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { SortOrder } from 'src/dto/sort';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
+import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('article')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/article')

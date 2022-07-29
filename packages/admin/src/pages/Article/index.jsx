@@ -1,8 +1,10 @@
 import NewArticleModal from '@/components/NewArticleModal';
 import { getArticlesByOption } from '@/services/van-blog/api';
 import { ProTable } from '@ant-design/pro-components';
+import { Button } from 'antd';
 import { useRef } from 'react';
 import { columns } from './columns';
+import { history } from 'umi';
 
 export default () => {
   const actionRef = useRef();
@@ -89,8 +91,20 @@ export default () => {
         onChange: (page) => console.log(page),
       }}
       dateFormatter="string"
-      headerTitle="文章管理"
+      headerTitle={
+        <span>
+          <span>文章管理</span>
+        </span>
+      }
       toolBarRender={() => [
+        <Button
+          key="editAboutMe"
+          onClick={() => {
+            history.push(`/editor?type=about&id=${0}`);
+          }}
+        >
+          {`编辑关于`}
+        </Button>,
         <NewArticleModal
           key="newArticle123"
           onFinish={() => {

@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import { HomeOutlined, QuestionCircleOutlined, LogoutOutlined } from '@ant-design/icons';
+import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';

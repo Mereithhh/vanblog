@@ -1,7 +1,6 @@
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { createArticle, getTags } from '@/services/van-blog/api';
 import { Button } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
 import { useModel } from 'umi';
 export default function (props) {
   const { onFinish } = props;
@@ -10,8 +9,8 @@ export default function (props) {
     <ModalForm
       title="新建文章"
       trigger={
-        <Button key="button" icon={<PlusOutlined />} type="primary">
-          新建
+        <Button key="button" type="primary">
+          新建文章
         </Button>
       }
       width={450}
