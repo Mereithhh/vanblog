@@ -2,16 +2,13 @@ import NewArticleModal from '@/components/NewArticleModal';
 import { getArticlesByOption } from '@/services/van-blog/api';
 import { ProTable } from '@ant-design/pro-components';
 import { useRef } from 'react';
-import { useModel } from 'umi';
 import { columns } from './columns';
 
 export default () => {
-  const { initialState } = useModel('@@initialState');
-  const categories = initialState?.meta?.categories || [];
   const actionRef = useRef();
   return (
     <ProTable
-      columns={columns(categories)}
+      columns={columns}
       actionRef={actionRef}
       cardBordered
       request={async (params = {}, sort, filter) => {

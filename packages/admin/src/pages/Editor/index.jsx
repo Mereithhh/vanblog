@@ -194,7 +194,7 @@ export default function () {
               placeholder="请选择分类"
               rules={[{ required: true, message: '这是必填项' }]}
               request={async () => {
-                const categories = await getAllCategories();
+                const { data: categories } = await getAllCategories();
                 return categories?.map((e) => {
                   return {
                     label: e,
