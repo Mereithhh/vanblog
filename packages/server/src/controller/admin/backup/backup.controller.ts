@@ -65,10 +65,7 @@ export class BackupController {
       }
       this.logger.error(err.stack);
     });
-    return {
-      statusCode: 200,
-      data,
-    };
+    fs.rmSync(name);
   }
 
   @Post('/import')
