@@ -103,6 +103,11 @@ export async function updateLink(body) {
     data: body,
   });
 }
+export async function getLink() {
+  return request(`/api/admin/meta/link`, {
+    method: 'GET',
+  });
+}
 export async function updateMenu(body) {
   return request(`/api/admin/meta/menu`, {
     method: 'PUT',
