@@ -77,6 +77,6 @@ jobs:
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.K8S_CONFIG_DATA }}
           command: set image -n tools deployment/van-blog van-blog=registry.cn-beijing.aliyuncs.com/van-blog/mereith:${{ steps.get_version.outputs.VERSION }}
-      - name: send Message To me
-        run: |
-          curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-release","message":"流水线运行完毕，${{ steps.get_version.outputs.VERSION }} 已部署"}' ${{ secrets.WEBHOOK_URL }}
+      # - name: send Message To me
+      #   run: |
+      #     curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-release","message":"流水线运行完毕，${{ steps.get_version.outputs.VERSION }} 已部署"}' ${{ secrets.WEBHOOK_URL }}
