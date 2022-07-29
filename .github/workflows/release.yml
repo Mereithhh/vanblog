@@ -64,7 +64,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           build-args: |
-            VAN_BLOG_BUILD_SERVER=https://www.mereith.com1
+            VAN_BLOG_BUILD_SERVER=https://www.mereith.com
             VAN_BLOG_VERSIONS=${{ steps.get_version.outputs.VERSION }}
           context: .
           file: ./Dockerfile
