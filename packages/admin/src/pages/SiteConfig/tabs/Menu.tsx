@@ -1,20 +1,15 @@
-import { deleteLink, deleteMenu, updateLink, updateMenu } from '@/services/van-blog/api';
+import { deleteLink, deleteMenu, getMenu, updateLink, updateMenu } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
 import { useState } from 'react';
-import { useModel } from 'umi';
 
 export default function () {
-  const { initialState, setInitialState } = useModel('@@initialState');
   // const actionRef = useRef();
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
-  const [dataSource, setDataSource] = useState([]);
   const fetchData = async () => {
     setLoading(true);
-    let data = await initialState?.fetchInitData?.();
-    await setInitialState((s) => ({ ...s, ...data }));
-    data = data?.meta?.menus;
+    const { data } = await getMenu();
     setLoading(false);
     return data;
   };
@@ -57,8 +52,7 @@ export default function () {
             Modal.confirm({
               onOk: async () => {
                 await deleteMenu(record.name);
-                const data = await fetchData();
-                setDataSource(data);
+                action?.reload();
               },
               title: `确认删除"${record.name}"吗?`,
             });
@@ -87,16 +81,10 @@ export default function () {
           columns={columns}
           request={async () => {
             let data = await fetchData();
-
             return {
               data,
               success: true,
             };
-          }}
-          value={dataSource}
-          onChange={async (values) => {
-            const data = await fetchData();
-            setDataSource(data);
           }}
           editable={{
             type: 'multiple',
@@ -107,7 +95,6 @@ export default function () {
                 value: data.value,
               };
               await updateMenu(toSaveObj);
-              // await waitTime(2000);
             },
             onChange: setEditableRowKeys,
           }}

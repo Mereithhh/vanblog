@@ -109,6 +109,11 @@ export async function updateMenu(body) {
     data: body,
   });
 }
+export async function getMenu() {
+  return request(`/api/admin/meta/menu`, {
+    method: 'GET',
+  });
+}
 export async function deleteLink(name) {
   return request(`/api/admin/meta/link/${name}`, {
     method: 'DELETE',
