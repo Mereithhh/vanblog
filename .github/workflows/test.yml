@@ -23,4 +23,6 @@ jobs:
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
       - name: 展示版本
-        run: echo ${{ steps.get_version.outputs.VERSION }}
+        run: adsfsfd
+      - name: 展示版本
+        run: echo 8
