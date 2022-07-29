@@ -31,4 +31,5 @@ export class SearchArticleOption {
   sortTop?: SortOrder;
   startTime?: string;
   endTime?: string;
+  toListView?: boolean;
 }

@@ -24,6 +24,7 @@ export class ArticleController {
   async getByOption(
     @Query('page') page: number,
     @Query('pageSize') pageSize = 5,
+    @Query('toListView') toListView = false,
     @Query('category') category?: string,
     @Query('tags') tags?: string,
     @Query('title') title?: string,
@@ -42,6 +43,7 @@ export class ArticleController {
       sortTop,
       startTime,
       endTime,
+      toListView,
     };
     const data = await this.articleProvider.getByOption(option);
     return {

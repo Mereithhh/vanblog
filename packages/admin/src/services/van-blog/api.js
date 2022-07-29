@@ -185,7 +185,7 @@ export async function getArticlesByOption(option) {
     queryString += `${k}=${v}&`;
   }
   queryString = queryString.substring(0, queryString.length - 1);
-  return request(`/api/admin/article?${queryString}`, {
+  return request(`/api/admin/article?${queryString}&toListView=true`, {
     method: 'GET',
   });
 }

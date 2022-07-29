@@ -14,6 +14,46 @@ export class AritcleProvider {
   constructor(
     @InjectModel('Article') private articleModel: Model<ArticleDocument>,
   ) {}
+  publicView = {
+    title: 1,
+    content: 1,
+    tags: 1,
+    category: 1,
+    updateAt: 1,
+    createdAt: 1,
+    id: 1,
+    top: 1,
+    _id: 0,
+  };
+
+  adminView = {
+    title: 1,
+    content: 1,
+    tags: 1,
+    category: 1,
+    updateAt: 1,
+    createdAt: 1,
+    id: 1,
+    top: 1,
+    hidden: 1,
+    password: 1,
+    private: 1,
+    _id: 0,
+  };
+
+  listView = {
+    title: 1,
+    tags: 1,
+    category: 1,
+    updateAt: 1,
+    createdAt: 1,
+    id: 1,
+    top: 1,
+    hidden: 1,
+    password: 1,
+    private: 1,
+    _id: 0,
+  };
 
   toPublic(oldArticles: Article[]) {
     return oldArticles.map((item) => {
@@ -153,9 +193,10 @@ export class AritcleProvider {
       $and.push({ $or });
     }
     query.$and = $and;
+    const view = option.toListView ? this.listView : this.adminView;
 
     const articles = await this.articleModel
-      .find(query)
+      .find(query, view)
       .sort(sort)
       .skip(option.pageSize * option.page - option.pageSize)
       .limit(option.pageSize)

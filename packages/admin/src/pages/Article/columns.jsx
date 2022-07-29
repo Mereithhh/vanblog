@@ -27,7 +27,6 @@ export const columns = (categories) => {
     {
       title: '分类',
       dataIndex: 'category',
-
       valueType: 'select',
       request: async () => {
         const data = categories.map((each) => ({
