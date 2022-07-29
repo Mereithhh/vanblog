@@ -9,6 +9,8 @@ import {
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
 import { wordCount } from 'src/utils/wordCount';
 
+export type ArticleView = 'admin' | 'public' | 'list';
+
 @Injectable()
 export class AritcleProvider {
   constructor(
@@ -131,7 +133,7 @@ export class AritcleProvider {
       .count();
   }
 
-  async getAll(view: 'admin' | 'public' | 'list'): Promise<Article[]> {
+  getView(view: ArticleView) {
     let thisView: any = this.adminView;
     switch (view) {
       case 'admin':
@@ -143,6 +145,11 @@ export class AritcleProvider {
       case 'public':
         thisView = this.publicView;
     }
+    return thisView;
+  }
+
+  async getAll(view: ArticleView): Promise<Article[]> {
+    const thisView: any = this.getView(view);
     const articles = await this.articleModel
       .find(
         {
@@ -243,19 +250,25 @@ export class AritcleProvider {
     };
   }
 
-  async getById(id: number): Promise<Article> {
-    const article = await this.articleModel
-      .findOne({ id, hidden: false })
+  async getById(id: number, view: ArticleView): Promise<Article> {
+    return await this.articleModel
+      .findOne(
+        {
+          id,
+          $or: [
+            {
+              deleted: false,
+            },
+            {
+              deleted: { $exists: false },
+            },
+          ],
+        },
+        this.getView(view),
+      )
       .exec();
-    if (article?.deleted === true) {
-      return null;
-    } else {
-      return article;
-    }
   }
-  async findById(id: number): Promise<Article> {
-    return this.articleModel.findOne({ id }).exec();
-  }
+
   async findOneByTitle(title: string): Promise<Article> {
     return this.articleModel.findOne({ title }).exec();
   }

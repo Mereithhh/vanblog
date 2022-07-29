@@ -53,8 +53,8 @@ export class ArticleController {
   }
 
   @Get('/:id')
-  async getOne(@Param('id') id: number) {
-    const data = await this.articleProvider.findById(id);
+  async getOneById(@Param('id') id: number) {
+    const data = await this.articleProvider.getById(id, 'admin');
     return {
       statusCode: 200,
       data,

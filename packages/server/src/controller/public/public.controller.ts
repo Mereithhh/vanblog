@@ -18,7 +18,7 @@ export class PublicController {
 
   @Get('/article/:id')
   async getArticleById(@Param('id') id: number) {
-    const data = await this.articleProvider.getById(id);
+    const data = await this.articleProvider.getById(id, 'public');
     return {
       statusCode: 200,
       data: data ? this.articleProvider.toPublic([data])[0] : null,
@@ -73,8 +73,7 @@ export class PublicController {
 
   @Get('/all')
   async getAllPublicData() {
-    let articles = await this.articleProvider.getAll('public');
-    articles = this.articleProvider.toPublic(articles) as any;
+    const articles = await this.articleProvider.getAll('public');
     const categories = await this.categoryProvider.getAllCategories();
     const tags = await this.tagProvider.getAllTags();
     const meta = await this.metaProvider.getAll();
