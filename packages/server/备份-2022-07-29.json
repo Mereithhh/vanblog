@@ -1,0 +1,2278 @@
+{
+  "articles": [
+    {
+      "title": "Netgaer 路由器救砖",
+      "content": "这两天在折腾Netgear3800路由器，刷了不少次系统，结果变砖了。因为最初没有刷breed boot，所以找到了网件的救砖工具，原则上cfe没坏的，都可以救。\n>* 所需工具：  WinPcap、nmrpflash\n>* 下载地址：  链接：https://pan.baidu.com/s/1ytBeqbw4g9GUqR1mmdyRJw       \n提取码：pvjy\n\n## 使用方法\n\n1.把nmrpflash复制到根目录（如d盘），安装winpcap\n\n2.下载路由器固件（factory的）放在相同的目录（如boy.img)\n\n3.管理员身份运行powershell，输入：\n\n```shell\n    ./nmrpflash.exe -L\n```\n找到连接路由器的以太网的哪一行，看一下是net几。\n\n4.输入如下内如，其中boy.img 改成自己的镜像名称，netx的x改成刚才看到的数字。\n\n```shell\n    ./nmrpflash.exe -i netx -f boy.img\n```\n\n5.先断电路由器，按回车，通电，等待即可。\n<!-- more -->\n\n",
+      "tags": [
+        "Netgear",
+        "救砖"
+      ],
+      "top": 0,
+      "category": "魔法网络",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2018-12-06T21:30:04.000Z",
+      "id": 2
+    },
+    {
+      "title": "Hexo + Github(Vps)部署你的个人博客",
+      "content": "经过踩坑+出坑，一系列循环，总算初步把博客网站建立起来了，因为遇到的坑太多了，所以记下来，怕忘了……各种参考地址在最后~\n\n## 建站原理\n本地搭建hexo的开发环境（node.js、git、npm)，然后修改配置参数，本地生成网页git push到相应的github 仓库或者远程的vps服务器上，github page就不说了，傻瓜式操作，\nvps端是用的阿里的轻应用服务器（ubuntu 16.04 x64)+nginx，其中nginx的源代码编译遇到了一些坑…… 0—0\n\n## 搭建本地环境\n\n我用的是windows操作系统，实际上linux或者mac知道了原理后也都大同小异了。\n### 前提准备\n\n需要的安装包如下：\n>* node.js (带npm)\n>* git环境（网上很简单都可以找到）\n>* Termius (跨设备的ssh客户端非常好用哦)\n>* sublime (一个很好用的文本编辑器)\n>* 下载地址：链接：https://pan.baidu.com/s/1HsxmeSwMqCdBI5v23JsK3w 提取码：rkl4 \n\n### 安装相应的安装包\n需要注意的是都按照默认选项安装就可以了。其中git安装完需在shell中执行：\n\n```bash\ngit config --global user.name \"yourname\"\ngit config --global user.email \"yourmail\"\n```\n安装完`node.js`之后请执行如下命令检查可否运行：\n```bash\nnode -v\nnpm -v\n```\n如果一直卡住了，那么请检查 `c:\\user\\ {你的账户}`文件夹里有没有`.npmrc`文件，有的话删了就正常了\n\n### 安装hexo\n打开powershell，执行命令：\n```bash\nnpm install hexo-cli -g\nhexo\n```\n看看是不是安装成功了呢\n如果安装的时候出现了两个警告，什么`fsevents`之类的，不用在意。\n\n### 初始化hexo文件夹\n找个文件夹初始化你的博客吧~，下面博客路径用`blog-path`来替代。\n在你找到的文件夹下，执行：\n```bash\nmkdir hexo-blog\ncd hexo-blog\nnpm init\nhexo init myblog\ncd myblog\nnpm install\n```\n### 执行本地的hexo项目\n修改`myblog`下的`package.json`，在`scripts`下面仿照上面的格式加入下面两个脚本（记得上面的逗号）\n![](https://pic.mereith.com/img/script.png-slim)\n\n\n### 验证成果\n在myblog下执行：\n```bash\nnpm start\n```\n在浏览器打开`localhost:4000`看一下效果吧~\n\n\n## 本地hexo的简单配置\n\n修改`myblog`下的`_config.yml`即可，详细内容看官方文档吧~\n>* [官方文档](https://hexo.io/zh-cn/docs/)\n\n修改完了保存，然后执行`npm start`即可在本地看到效果咯\n**至此，本地部署完成~**\n\n## github端设置（如果你用的话）\n\n### 注册github账号\n直接去 [github官网](https://github.com/join) 注册就好了嘛\n\n### 建立仓库，设置个人主页\n登录之后点击`New repository`建立自己的仓库，仓库的名称请按照`yourname.github.io`来命名，并勾选`README`的那个选项\n进入仓库，点设置找到`github pages`，看到`your site is published at https://yourname.github.io/`就证明你的个人主页创建完成了\n接下来选择主题，随便选一个（反正一会咱们上传咱们的hexo生成的，和他没关系）\n\n## 服务器端设置\n\n### 初始化服务器的git环境\n**在服务器中**\n1.安装git，例如我的ubuntu，直接`apt-get install git`即可\n2.创建用户并配置其仓库，执行如下命令\n```bash\nuseradd git\npasswd git //设置密码\nmkdir /home/git //创建git的目录\nchown git:git /home/git //设置权限\nsu git   //切换用户\ncd /home/git\nmkdir -p progects/blog  //创建项目的目录\nmkdir repos && cd repos //创建仓库的目录\ngit init --bare blog.git //创建仓库\nvim ./blog.git/hooks/post-receive //用vim创建钩子函数，不会vim的请百度一下\n```\n文件内容如下：\n```bash\n#!/bin/sh\ngit --work--tree=/home/git/projects/blog --git-dir=/home/git/repos/blog.git checkout -f\n```\n修改其权限，执行：\n```bash\nchmod +x ./blog.git/hooks/post-receive //添加执行权限\nexit //回到root\nchown -R git:git /home/git/repos/blog.git //添加权限\n···\n3.可以在本地电脑找个空文件夹测试一下`git仓库`是不是能用，执行：\n\n```bash\ngit clone git@server_ip:/home/git/repos/blog.git\n```\n如果成功把空的仓库拉下来，就证明git仓库创建成功了\n\n<!-- more -->\n### nginx网页服务器搭建\n推荐直接编译源码\n#### 编译源码\n执行：\n```bash\ncd /ure/local/src\nwget http://nginx.org/download/nginx-1.15.2.tar.gz\ntar -zxvf nginx-1.15.2.tar.gz\ncd nginx-1.15.2\n./configure //生成配置文件，如果像加上ssl协议就执行后面那一句\n./configure --prefix=/usr/local/nginx --with-heep_stub_status_module --with-http_ssl_module --with-file-aio --with-heep_realip_module //ssl就是https访问\nmake\nmake install\nalias nginx='/usr/local/nginx/sbin/nginx' //别名，但是重启无效\n```\n**错误处理**\n编译源码很容易出岔子，最常见的如下：\n1.缺少pcre库，解决办法：\n```bash\napt-get libpcre3 libpcre3-dev\n```\n2.缺少openssl\n```bash\napt-get install openssl libssl-dev\n```\n3.缺少zlib\n```bash\napt-get install zlib1g-dev\n```\n其余少啥装啥，apt-get找不到，就去下载编译源码~慢慢来可以解决的\n#### nginx参数设置\n通过编辑`/usr/local/nginx/conf/nginx.conf`文件来修改：\n如下图，修改根目录为刚才咱们设置的项目目录，并把一开始的用户设置成root，其余的参数如想修改，查阅资料即可\n如果你想绑定域名，就在第二个划线处输入你的网址就行\n![](https://pic.mereith.com/img/nginx_config.png-slim)\n\n#### 测试\n```bash\nnginx\nnginx -s reload\n```\n然后在**本地电脑**的浏览器上打开你的服务器ip吧~ 看看能不能出现nginx的欢迎界面~\n\n## ssh信任关系建立\n咱们走ssh协议通过git把本地hexo生成的网页推到`服务器`或者`github`上的，但是每次都输入密码很麻烦啊~，所以咱们通过ssh密钥来建立信任关系，\n这样子就不用每次都输入密码了~ \n**本地电脑中** 在powershell里执行：\n```bash\nssh-keygen -t rsa -C \"youremail\"\n```\n然后输入不输入密码都行，我是直接按回车了\n之后你生成的密钥就会保存在了`你的用户目录\\.ssh\\`目录下面，`id_rsa`是私钥，`id_rsa.pub`是公钥\n私钥就在咱们电脑上，公钥可以放到`github`或者`vps`上哦，放上去就可以不用密码直接访问了\n### 拷贝公钥到服务器\n**本地电脑中***\n```bash\nssh-copy-id -i C:\\Users\\yourname\\.ssh\\id_rsa.pub git@server_ip\nssh git@server_ip //测试是不是能登陆\n```\n此时应该不需要密码就能登陆，如果不行请查找原因，或者手动拷贝公钥到`服务器git用户的.ssh目录`下,`chmod 600`并改名为`authorized_keys`即可\n此时服务器的环境就彻底ok了\n### 把公钥放到github上\n登录`github`，选择右上角`用户头像`下的`setthings`,找到`SSH and GPG keys`,添加你的公钥，直接复制过去就行了，名字随便起~\n然后可以在本地测试一下\n```bash\nssh git@github.com\n```\n如果不用密码，并出现了`hello yourname`字样，证明ok，至此github的配置也完成了\n\n## 部署本地的网页到服务器 or github上\n### 修改hexo配置\n修改本地的`myblog/_comfig.yml`里面的`deploy`字段下面的内容如图，把`cs3cx4g`换成你的名字就行了，如果你想同时推送到服务器和github上，就把途中`#`注释的那个也加上换成你的服务器的ip地址就行了嘛\n![](https://pic.mereith.com/img/deploy.png-slim)\n哦，对了，别用记事本，用`sublime`~\n### 安装git部署插件\n在本地的`myblog`下执行\n```bash\nnpm install --save hexo-deployer-git\n```\n### 部署测试\n在本地`myblog`下执行\n```bash\nnpm run start  //咱们那个之前添加过的脚本哦\n```\n然后打开你的服务器或者github地址看看吧~，是不是网页在上面了呢\n\n## next主题配置\n具体参见本站的[next主题优化](/2018/12/08/next主题优化/)\n\n## 博客的配置和使用\n具体参见本站的[hexo博客简单配置和使用](/2018/12/08/hexo博客简单配置和使用/)\n\n## markdown基本语法\n具体参见本站的[markdown在hexo中的基本语法](/2018/12/08/markdown基本语法/)\n\n## 参考文章\n>* [带你跳过各种坑，一次性把hexo部署到服务器上](http://www.freeze61.me/2018/08/11/hexo-to-server)\n>* [next主题官方文档](http://theme-next.iissnan.com/theme-settings.html)\n>* [hexo的官方文档](https://hexo.io/zh-cn/docs)\n",
+      "tags": [
+        "建站",
+        "hexo"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2018-12-08T15:58:30.000Z",
+      "id": 3
+    },
+    {
+      "title": "next主题优化",
+      "content": "\n因为参考了很多别人的东西，所以现附上参考链接~\n\n## 参考链接\n> [next配置优化（一）](https://www.jianshu.com/p/3ff20be8574c)\n> [next配置优化（二）](https://www.jianshu.com/p/428244cd2caa)\n> [next配置优化（三）](https://www.jianshu.com/p/d23d67d318c7)\n> [next配置优化（四）](https://www.jianshu.com/p/4ef35521fee9)\n\n## 添加萌宠\n所用的插件如下：\n\n> [hexo-helper-live2d](https://github.com/EYHN/hexo-helper-live2d)\n> 看说明你会发现有简体中文的哦~\n\n## 评论系统\n\n### valine\n简单免费的评论系统，next主题直接集成\n#### 注册\n> [点我注册]https://leancloud.cn/dashboard/login.html#/signup(https://leancloud.cn/dashboard/login.html#/signup)\n#### 创建应用\n创建一个应用，在设置里找到你的`appid`和`appkey`\n#### 修改配置文件\n修改**主题配置文件**，搜索**valine**，填入你的`appid`和`appkey`\n\n###gittalk\n这个看起来很棒啊，不过你要有个域名好像才行\n> [官网链接](https://github.com/gitalk/gitalk)\n> [参考教程](https://segmentfault.com/a/1190000014085547)\n\n## shareSDK分享系统\n### 注册sharesdk的账号\n> [注册链接](http://sharesdk.mob.com/developer/register)\n注册之后进入后台，选sharesdk，复制你的appkey\n### 在hexo中添加sharesdk\n在`themes/next/layout/_partials/share/`中新建一个叫`sharesdk.swig`的文件，添加如下内容\n```html\n<!--MOB SHARE BEGIN-->\n<div class=\"-mob-share-ui-button -mob-share-open\">分享</div>\n<div class=\"-mob-share-ui\" style=\"display: none\">\n    <ul class=\"-mob-share-list\">\n        <li class=\"-mob-share-weibo\"><p>新浪微博</p></li>\n        <li class=\"-mob-share-tencentweibo\"><p>腾讯微博</p></li>\n        <li class=\"-mob-share-qzone\"><p>QQ空间</p></li>\n        <li class=\"-mob-share-qq\"><p>QQ好友</p></li>\n        <li class=\"-mob-share-renren\"><p>人人网</p></li>\n        <li class=\"-mob-share-kaixin\"><p>开心网</p></li>\n        <li class=\"-mob-share-douban\"><p>豆瓣</p></li>\n        <li class=\"-mob-share-facebook\"><p>Facebook</p></li>\n        <li class=\"-mob-share-twitter\"><p>Twitter</p></li>\n    </ul>\n    <div class=\"-mob-share-close\">取消</div>\n</div>\n<div class=\"-mob-share-ui-bg\"></div>\n<script id=\"-mob-share\" src=\"http://f1.webshare.mob.com/code/mob-share.js?appkey={{ theme.shareSDKappkey }}\"></script>\n<!--MOB SHARE END-->            \n```\n修改这写的目的是为了让我们能够在主题的配置文件中添加appkey,只需要在主题的配置文件中添加一个shareSDKappkey并为其附上值即可\n### 添加可选配置\n找到主题文件夹中的`layout/post.swig`，在`duoshuo_share`关键字下面那一行添加（注意缩进）：\n```html\n        {% elseif theme.sharesdk %}\n        {% include '_partials/share/sharesdk.swig' %}\n```\n### 修改_config.yml\n打开主题配置文件，在后面添加：\n```bash\n#shareSDK\nsharesdk: true\nshareSDKappkey: 你刚复制的appkey\n```\n<!-- more -->\n## 播放器标签插件\n安装方式请移步官方中文文档：\n> [hexo-tag-aplayer](https://github.com/MoePlayer/hexo-tag-aplayer/blob/master/docs/README-zh_cn.md#%E4%BD%BF%E7%94%A8)\n\n## 背景更换和不透明度设置\n你最好把自带的几个背景效果关了,另外背景的缩放好像有点问题，我还没解决\n###实现原理\n修改`themes/next/source/css/_custom/custom.styl`文件即可\n### 自动换背景\n使用的是`source.unsplash.com`,在`custom.styl`添加：\n```html\nbody {\n    background:url(https://source.unsplash.com/random/1600x900);\n    background-repeat: no-repeat;\n    background-attachment:fixed;\n    background-position:50% 50%;\n}\n```\n### 本地背景\n添加：\n```html\nbody {\n    background:url(/images/background.jpg-slim);\n    background-repeat: no-repeat;\n    background-attachment:fixed;\n    background-position:50% 50%;\n}\n```\n\n### 更改不透明度\n添加：\n\n```html\n.main-inner { \n    margin-top: 60px;\n    padding: 60px 60px 60px 60px;\n    background: #fff;\n    opacity: 0.8;\n    min-height: 500px;\n}\n```\n>* background: #fff; 白色\n>* opacity: 0.8; 不透明度\n",
+      "tags": [
+        "建站",
+        "hexo",
+        "next主题"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2018-12-08T17:10:00.000Z",
+      "id": 4
+    },
+    {
+      "title": "hexo博客简单配置和使用",
+      "content": "东西建好了，总得会用吧~\n\n## 写作\nhexo采用的是markdown的语法，所以你要先学会怎么用markdown\n> 请参考：[markdown基本语法](/2018/12/08/markdown基本语法)\n写作工具我用的是sublime\n\n## 创建新文章\n```bash\nhexo new \"你的文章名字\"\n```\n\n## 删除文章\n直接删除`_post`文件夹下的md文件就行了\n\n\n## 添加本地图片\n```shell\n![替代文字](图片地址)\n```\n在hexo中，如果你想引用本地图片，你需要先安装`hexo-asset-image`的插件，然后在生成的`post`下面的文章目录就会自动多一个*和文章同名的文件夹*\n想插入图片的时候，就把`图片地址`改成 `同名文件夹/图片名.jpn`就行了哦\n示例：\n![](https://pic.mereith.com/img/pic.png-slim)\n效果如下：\n![](https://pic.mereith.com/img/show_pic.png-slim)\n> [参考链接](https://blog.csdn.net/sugar_rainbow/article/details/57415705)\n<!-- more -->\n\n## 添加音乐和视频\n> 请参考：[hexo markdown基本语法](https://hyxxsfwy.github.io/2016/01/15/Hexo-Markdown-%E7%AE%80%E6%98%8E%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C/#%E8%B6%85%E9%93%BE%E6%8E%A5)\n\n## 添加自定义界面\n[hexo添加自定义页面](/2019/05/15/hexo自定义页面的方法)\n\n\n## 更多\n> [next主题文档](http://theme-next.iissnan.com/)\n> [hexo主题文档](https://hexo.io/zh-cn/docs/index.html)\n\n## 发布\n在`myblog`目录下执行：\n```bash\nhexo clean && hexo g -d\n```\n",
+      "tags": [
+        "建站",
+        "hexo"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2018-12-08T17:10:10.000Z",
+      "id": 5
+    },
+    {
+      "title": "markdown在hexo中的基本语法",
+      "content": "如题，在hexo中markdown有些许不同哦~\n参考链接:\n> [markdown基本语法](https://hyxxsfwy.github.io/2016/01/15/Hexo-Markdown-%E7%AE%80%E6%98%8E%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C/)\n\n## 标题\n在想要设置为标题的文字前面加`#`来表示\n一个#是一级标题，二个#是二级标题，以此类推。支持六级标题。\n注：标准语法一般在#后跟个空格再写文字，hexo必须加空格，不然没法识别。\n示例：\n![](https://pic.mereith.com/img/title.png-slim)\n效果如下：\n![](https://pic.mereith.com/img/show_title.png-slim)\n\n-----\n## 字体\n*加粗\n要加粗的文字左右分别用`两个*号`包起来\n\n*斜体\n要倾斜的文字左右分别用`一个*号`包起来\n\n*斜体加粗\n要倾斜和加粗的文字左右分别用`三个*号`包起来\n\n*删除线\n要加删除线的文字左右分别用`两个~号`包起来\n\n示例：\n![](https://pic.mereith.com/img/word.png-slim)\n效果如下：\n![](https://pic.mereith.com/img/show_word.png-slim)\n\n-----\n## 引用\n引用的内容前面加`>`即可,加几个是几级引用\n示例：\n![](https://pic.mereith.com/img/from.png-slim)\n效果如下：\n![](https://pic.mereith.com/img/show form.png-slim)\n<!-- more -->\n---\n\n## 分割线\n三个或三个以上的`-`\n示例：\n![](https://pic.mereith.com/img/cut.png-slim)\n效果如下：\n![](https://pic.mereith.com/img/show_cut.png-slim)\n\n----\n## 引用图片\n```bash\n> ![替代文字](图片地址)\n```\n在hexo中，如果你想引用本地图片，你需要先安装`hexo-asset-image`的插件，然后在生成的`post`下面的文章目录就会自动多一个*和文章同名的文件夹*\n想插入图片的时候，就把`图片地址`改成 `同名文件夹/图片名.jpn`就行了哦\n示例：\n![](https://pic.mereith.com/img/pic.png-slim)\n效果如下：\n![](https://pic.mereith.com/img/show_pic.png-slim)\n> [参考链接](https://blog.csdn.net/sugar_rainbow/article/details/57415705)\n---\n## 超链接\n```bash\n[超链接名](超链接地址 \"超链接title\")\ntitle可加可不加\n```\n----\n## 列表、表格、代码、流程图\n看前面的参考链接吧……写不动了\n\n",
+      "tags": [
+        "建站",
+        "hexo",
+        "markdown"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2018-12-08T17:10:19.000Z",
+      "id": 6
+    },
+    {
+      "title": "vps+ssr+路由器实现校园网免流+科学上网",
+      "content": "最近在买了一堆vps，用ssr+我的路由器实现了在ipv6校园网环境下的免流+科学上网，现在分享给大家\n\n## 技术原理\n\n### vps\n虚拟专用服务器，就是你买了一台在网上的虚拟的服务器，别人帮你管理，你只要用它就好了，很省心，而我们选用外国的云服务器就可以通过ssr代理来让vps替我们访问youtube等网站了。\n\n### ss/ssr\n可以理解为是一种vpn，主要用来科学上网，ssr全称是`shadowscoks-R`，前身为ss但它被大家熟知后广泛使用，再后来，据说因为作者被请去“喝茶”，\n所以就停止了该ss项目。后来有ssr出现了，改善了混淆和协议，更难被防火墙检测到。简单地说ssr是ss的改进版\n而我们在云服务器上部署ssr服务端，在本地的路由器或者是手机、电脑下载配置客户端，就可以通过sock5代理来科学上网了~\n\n### ipv6免流原理\n高校原生开通了ipv6，而且是不限流量的，但是ipv4一般是限流的（比如一个月30g），而我们经常访问的网上资源，都是ipv4的，所以我们校园网没流量了，就无法上网了，但其实哪怕是没流量了ipv6也是可以访问的，可以点下面的ipv6测试链接，如果成功，就证明你有ipv6哦\n而谷歌、youtube等网站是支持ipv6的，所以校园网一般可以直接访问他们哦~（国内普及ipv6慢)\n> [ipv6测试](http://test-ipv6.com/)\n\n而我们就是通过ipv6通道连接vps，然后让vps替我们用ipv4来访问ipv4的资源，再把数据通过ipv6的通道给我们发回来。\n如果你不懂什么是ipv4和ipv6，请点下面的科普\n\n> [科普什么是ipv6](https://baijiahao.baidu.com/s?id=1610212047297722961&wfr=spider&for=pc)\n> [科普什么是ipv4](https://baike.baidu.com/item/IPv4/422599?fr=aladdin)\n<!-- more -->\n## vps购买\n外国常见的云服务器商有: DigitalOcean、Vultr、BandwagonHost（搬瓦工)、谷歌云、亚马逊云等等等等\n这里主要推荐前面三个，搬瓦工的便宜，一年19.9美金了解一下？\nDigitalOcean有活动，点推广链接注册送100美金（两个月有效），如果你进行github的学生认证，还送你50美金（12个月有效）这样你选每个月5美金的就可以免费用一年哦！\nVultr点推广连接注册送25美金，日本机房不错，延迟低，但是据说经常掉包…… 不过别的机房都不错嘛\n另外你需要注册`paypal`来付款（相当于外国的支付宝），支持绝大多数的中国银行卡，注册很方便哦\n> [paypal](https://www.paypal.com/)\n\n关于推广连接：你懂的……相当于支付宝邀请好友注册送红包，互惠互利，只有点下面的连接注册才送\n\n> [DigitalOcean推广注册连接](https://m.do.co/c/e4917621721d)\n> [Vultr推广注册连接](https://www.vultr.com/?ref=7675618)\n> [搬瓦工官网](https://bwh8.net/vps-hosting.php)\n\n注册之后需要用paypy\n\n## 节点位置选择\n每家提供商都有很多机房位置可以选，你要选一个速度最快，不掉包的作为你的vps实际地址哦~我实测在我们学校 Vultr的迈阿密机房ipv6访问最快，DigitalOcean的新加坡机房ipv6访问最快，当然不同位置都不一样，还有丢包率等信息要看不是嘛？\n下面是各个供应商的官方测试地址：\n> [DigitalOcean](http://speedtest-sfo1.digitalocean.com/)\n> [Vultr](https://www.vultr.com/faq/) 测速往下拉\n> [BandwagonHost](https://www.bandwagonhost.net/test-ip)\n\n自己测去吧！如果你用ipv6通道，就测ipv6的，v4就选v4就好了嘛，另外还要看一下延迟哦。如果不太懂怎么测速，可以百度：`供应商名字 测速`获取帮助\n\n## 创建实例\n注册完成之后，进入账户，选择创建实例，系统推荐`ubuntu 18.04 x64`，当然你选别的也行嘛……不过我就以这个系统为例子\n然后服务器地点选你测速最快的，下面一定勾选上ipv6，然后等着就好了。\n\n## 配置云服务器\n## 配置本地服务器\n## ssr客户端下载\n写不动了，累了，下面的内容看大佬的吧：\n> [大佬的传送门](https://segmentfault.com/a/1190000011564797)\n> [一键搭建ssr服务并开启bbr加速脚本](https://www.flyzy2005.com/fan-qiang/shadowsocks/install-shadowsocks-in-one-command/)\n> [各个版本的客户端下载](https://www.flyzy2005.com/fan-qiang/shadowsocksr/ss-ssr-clients/)\n\n## 配置路由器\n配置路由器……百度吧 ，推荐openwrt/lede 方案\n\n\n\n\n\n\n",
+      "tags": [
+        "科学上网",
+        "vps"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2018-12-08T19:35:09.000Z",
+      "id": 7
+    },
+    {
+      "title": "ubuntu18.04深度学习环境搭建",
+      "content": "前些天搞深度学习的ai换脸，准备把香蕉君和蔡徐坤的脸换一下，一开始用的cpu跑，但是太慢了，扛不住，想了想买了张矿卡p106-90，这下子可好了我的乖乖，安装驱动和库搞了很久，所以记录一下。\n\n| 安装环境 |   版本    | \n| :------- | --------: | \n| Ubuntu   |   18.04   | \n| CUDA     |    10.0   | \n| cuDNN    |    7.4    |\n| Tensorflow-gpu   |    1.13.1    |\n|python  |  3.6 |\n\n其中python用了virtualenv，其实用conda也蛮好的，但是我头铁没有用。\n---\n## 驱动\n对于nvidia显卡，首先是要禁用默认的nouveau驱动再安装nvidia官方驱动的，两种公用就会导致很奇怪的问题，我是进不去gnome了，没办法在恢复模式删了驱动才好。\n### 禁用nouveau驱动\n```bash\necho \"blacklist nouveau\" >> /etc/modprobe.d/blacklist.conf\necho \"options nouveau modeset=0\" >>/etc/modprobe.d/blacklist.conf\nrmmod nouveau\n``` \n<!-- more -->\n### 查看可用驱动\n```bash\nubuntu-drivers devices\n```\n### 查看正在使用的驱动\n```bash\nlshw -c video\n```\n其中configuration后面的driver就是正在使用的驱动了\n### 查看显卡的使用情况\n```bash\nnvidia-smi //查看一次\nwatch -n 0.1 nvidia-smi  //每个0.1s刷新一次\n```\n## 版本选择\n不用的tensorflow-gpu版本支持的cuda的版本是不一样的，所以都要一一对应，一定要看好。\n>* CUDA官网：https://developer.nvidia.com/cuda-downloads\n>* cuDNN官网：https://developer.nvidia.com/cudnn\n\n## 测试\n安装完了一定要测试一下都能不能用\n### 测试CUDA\n进`Samples`目录，编译相关程序，运行即可\n### 测试cuDNN\n进`Samples`目录，编译相关程序，运行即可\n### 测试Tensorflow-gpu\n```python3\nimport tensorflow as tf\nsess = tf.Session(config=tf.ConfigProto(log_device_placement=True))\n```",
+      "tags": [
+        "ubuntu",
+        "深度学习",
+        "tensorflow",
+        "CUDA",
+        "cuDNN",
+        "深度学习"
+      ],
+      "top": 0,
+      "category": "深度学习",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-09T21:23:02.000Z",
+      "id": 8
+    },
+    {
+      "title": "arm-linux-gcc一键搭建脚本",
+      "content": "前几天上嵌入式的课，让搭建交叉编译环境，挺麻烦的，写了个脚本，记录如下：\n## 源代码\n```bash\n#!/bin/bash\necho '*****************************************************'\necho\necho 'arm-linux-gcc自动安装脚本_wanglu'\necho\necho '*****************************************************'\nread -p \"自动下载？y/n\" van\nif [ %van == \"y\"]\nthen\nsudo apt install curl\ncurl -0 https://github.com/Mereithhh/arm-linux-gcc-autoinstall/blob/master/arm-linux-gcc-4.4.3.tar.gz\ntar vxzf ./arm-linux-gcc-4.4.3.tar.gz\nsudo mkdir /usr/local/arm\nsudo cp -r ./opt/FriendlyARM/toolschain/4.4.3 /usr/local/arm\nsudo chmod 777 /usr/local/arm\necho 'export PATH=$PATH:/usr/local/arm/4.4.3/bin'>>~/.bashrc\nsudo apt install lib32ncurses5 lib32z1\nelse\ntar vxzf ./arm-linux-gcc-4.4.3.tar.gz\nsudo mkdir /usr/local/arm\nsudo cp -r ./opt/FriendlyARM/toolschain/4.4.3 /usr/local/arm\nsudo chmod 777 /usr/local/arm\necho 'export PATH=$PATH:/usr/local/arm/4.4.3/bin'>>~/.bashrc\nsudo apt install lib32ncurses5 lib32z1\nfi\necho\necho\necho '****************************************************'\necho \necho '完成！请再退出脚本后执行 source ~/.bashrc'\necho\n```\n## 使用方法\n保存 `bash 文件名`即可",
+      "tags": [
+        "ubuntu",
+        "arm嵌入式",
+        "环境搭建"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-09T21:51:20.000Z",
+      "id": 9
+    },
+    {
+      "title": "sqlite3一键安装脚本（ubuntu)",
+      "content": "前几天上嵌入式的课，让搭建sqlite3环境，挺麻烦的，写了个脚本，记录如下：\n## 源代码\n```bash\n#!/bin/bash\necho '*****************************************************'\necho\necho 'sqlite自动安装脚本_wanglu'\necho\necho '*****************************************************'\nread -p \"自动下载？ y/n :\" door\nif [ \"$door\" = \"y\" ]\nthen\n\tread -p \"即将下载，任意键开始\"\n\tsudo apt install curl\n\tcurl -O https://www.sqlite.org/2019/sqlite-autoconf-3280000.tar.gz\n\ttar vxzf ./sqlite-autoconf-3280000.tar.gz\n\tcd sqlite-autoconf-3280000\n\tsudo ./configure --prefix=/usr/local\n\tsudo make\n\tsudo make install\nelif [ \"$door\" = \"n\" ]\nthen\n\tread -p \"请确保文件名为sqlite-autoconf-3280000.tar.gz并在同一目录内\"\n\ttar vxzf ./sqlite-autoconf-3280000.tar.gz\n\tcd sqlite-autoconf-3280000\n\tsudo ./configure --prefix=/usr/local\n\tsudo make\n\tsudo make install\nelse\n\techo \"输入错误！请输入y或者n\"\nfi\necho\necho '****************************************************'\necho \necho '完成！请再退出脚本后执行 sqlite3 进入环境'\necho\n```\n## 使用方法\n保存下来 `bash 文件名即可`\n![](https://pic.mereith.com/img/door.png-slim)\n<!-- more -->",
+      "tags": [
+        "ubuntu",
+        "arm嵌入式",
+        "环境搭建",
+        "数据库"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-09T21:52:00.000Z",
+      "id": 10
+    },
+    {
+      "title": "ubuntu grub更改默认启动项",
+      "content": "## 方法\n```bash\nsudo vim /etc/default/grub\n```\n把`default`的选项改成你想要的（从0开始），然后`update-grub`即可\n",
+      "tags": [
+        "ubuntu",
+        "grub",
+        "双系统"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-15T14:52:59.000Z",
+      "id": 11
+    },
+    {
+      "title": "hexo自定义页面的方法",
+      "content": "\n分两种情况：\n*主题内渲染，添加的模块仍在主题内，主题头部信息依然存在，仅仅是在特定区域进行渲染（适合添加 about 页面）\n*完全页面渲染，在主题内点击对应链接跳转到一个完全崭新的页面\n\n## 主题内渲染\n\n### 添加模块\n\n以添加`蔡徐坤`模块为例：\n*编辑主题配置文件`_config.yml`添加对应的`menu`，如：\n```\nmenu:\n\t蔡徐坤: /蔡徐坤/\n```\n其中蔡徐坤通过`hexo new page 蔡徐坤`生成。\n\n### 添加渲染\n在`蔡徐坤`文件夹下的`index.md`中添加`layout: false`，并在文件夹下添加`index.html`用于自定义`html`的渲染.\n\n## 完全页面渲染\n同样以添加`蔡徐坤`模块为例：\n1.添加menu选项，和上面的相同。\n2.在hexo配置文件`_config.yml`中配置`skip_render: 蔡徐坤/**`,则蔡徐坤文件夹下的内容将不会转化为html\n3.在`蔡徐坤`文件夹下添加`index.html`即可\n",
+      "tags": [
+        "hexo",
+        "next"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-15T14:54:13.000Z",
+      "id": 12
+    },
+    {
+      "title": "hexo优化压缩",
+      "content": "## 安装\n```\nnpm install hexo-all-minifier --save\n```\n## 编辑配置文件\n根目录的`_config.yml`\n```\n# 代码压缩 github.com/chenzhutian/hexo-all-minifier\nall_minifier: true\n\nhtml_minifier:\n  enable: true\n  ignore_error: false\n  exclude:\n  \ncss_minifier:\n  enable: true\n  exclude: \n    - '*.min.css'\n\njs_minifier:\n  enable: true\n  mangle: true\n  output:\n  compress:\n  exclude: \n    - '*.min.js'\n\nimage_minifier: \n  enable: false # 图片不压缩\n  interlaced: false\n  multipass: false\n  optimizationLevel: 2\n  png-slimquant: false\n  progressive: false\n ```\n",
+      "tags": [
+        "hexo",
+        "优化",
+        "建站"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-15T15:41:12.000Z",
+      "id": 13
+    },
+    {
+      "title": "hexo文章加密",
+      "content": "加密方法：\n插件安装\n```\nnpm install hexo-blog-encrypt --save\n```\n## 全局加密\n编辑项目的`_config.yml`\n```\n#该密码为全局默认密码\nencrypt: \n  enable: true\n```\n## 文章加密\n在文章开头加上：\n```\npassword: 你的密码\nmessage: Welcome to my blog, enter password to read.\n```\n",
+      "tags": [
+        "hexo",
+        "主题优化",
+        "next",
+        "文章加密"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-15T15:41:26.000Z",
+      "id": 14
+    },
+    {
+      "title": "hexo next文章摘要显示图片",
+      "content": "<img src=\"https://pic.mereith.com/img/zhaiyao.png-slim\" width=100% />\n配上图比较好看，而且可以避免摘要中乱码的现象哈哈哈哈哈，有两种办法。\n## 在文章属性列表中添加photo属性\n这是默认的方式，缺点是不能自定义裁剪和缩略比\n```\nphotos:\n\t\"https://faithlove.github.io/pic/2018/HexoThumb/topPicPre.png-slim\"\n```\n## 正文中使用html更新\n因为markdown是原生支持html的，在`<!-- more -->`之前的内容都会展示到摘要中(同时与你主题文件中配置的摘要字数有关).如：\n```\n---\ntitle: Hexo Next如何在文章摘要展示图片\ndate: 2018-07-18 17:43:44\ntags: Hexo\ncategories: Hexo\n---\n<img src=\"https://faithlove.github.io/pic/2018/RMTP_1/topPicPre.png-slim\" width=50% />\n哇，漂亮的小姐姐(❤ ω ❤)\n<!--more-->\n```\n\n",
+      "tags": [
+        "hexo",
+        "优化",
+        "建站",
+        "next"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2019-05-15T16:11:46.000Z",
+      "id": 15
+    },
+    {
+      "title": "博客更新记录",
+      "content": "最近几个月忙于考研，很久没有搞博客辣。现在过年回家也有时间，决定好好系统的更新一下博客，把最近半年学的东西写上去~\n不看不知道，一看才发现hexo和next的版本落后太多了\n\n## 版本升级\n> hexo: 3.8.0 -> 4.2.0\n> next: 5.1.4 -> 7.7.0\n\n## 内容变化\n总体的思路是，最大化利用新版集成的插件，减少对源代码的改写，为后期的维护和升级提供便利\n>* 删除了Live2d 花里胡哨的宠物\n>* 背景改为由canvas_nest绘制，简单方便\n>* next主题修改为gemini\n>* 评论系统升级veline，更加好用\n>* 增加与作者聊天功能（tidio)\n>* 升级分享服务(addthis)\n>* 修改头像、名称，增加了fb、twitter、ins、bilibili等联系方式\n>* 重新梳理了文章架构\n>* 正确引用了busuanzi统计\n>* 增加网站图标\n\n## 后续待完善的功能\n>* 网盘集成\n>* 图床摄影模块\n>* 继续优化加载速度\n>* 关于模块\n>* 表白模块（反正我也没有女朋友不着急）\n>* 可能会增加一些特效？？\n>* 修复可能的bug\r\n\r\n## 2020/1/26 更新\r\n>* 添加了ssl证书\r\n>* 添加了七牛的图床，采用https的cdn加速\r\n>* 添加了cdn支持\r\n>* 去除了addthis和tidio，优化了js的cdn\r\n>* 用`hexo-neat`进一步压缩资源\r\n>* 增加了本站运行时间\r\n>* 访问速度up,up,up!",
+      "tags": [
+        "hexo",
+        "更新日志"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-22T20:16:02.000Z",
+      "id": 16
+    },
+    {
+      "title": "hexo引用本地图片无法显示",
+      "content": "最近有时间了，重新升级启用 hexo&next，但是发现升级以后，本地图片没办法显示了！\n在网页处用开发工具查看图片地址，发现地址不对，于是寻找原因。\n\n**可能的原因如下：**\n### 插件没安装\n安装一个图片路径转换插件 `hexo-asset-image`\n用npm安装即可\n\n### _config.yml没有修改\n打开`hexo`目录下的`_config.yml`，修改下面内容：\n``` js\npost_asset_folder: true\n```\n<!-- more -->\n### 插件没有修改\n打开`/node_modules/hexo-asset-image/index.js`,将内容替换为如下代码：\n``` js\n'use strict';\nvar cheerio = require('cheerio');\n\n// http://stackoverflow.com/questions/14480345/how-to-get-the-nth-occurrence-in-a-string\nfunction getPosition(str, m, i) {\n  return str.split(m, i).join(m).length;\n}\n\nvar version = String(hexo.version).split('.');\nhexo.extend.filter.register('after_post_render', function(data){\n  var config = hexo.config;\n  if(config.post_asset_folder){\n    \tvar link = data.permalink;\n\tif(version.length > 0 && Number(version[0]) == 3)\n\t   var beginPos = getPosition(link, '/', 1) + 1;\n\telse\n\t   var beginPos = getPosition(link, '/', 3) + 1;\n\t// In hexo 3.1.1, the permalink of \"about\" page is like \".../about/index.html\".\n\tvar endPos = link.lastIndexOf('/') + 1;\n    link = link.substring(beginPos, endPos);\n\n    var toprocess = ['excerpt', 'more', 'content'];\n    for(var i = 0; i < toprocess.length; i++){\n      var key = toprocess[i];\n \n      var $ = cheerio.load(data[key], {\n        ignoreWhitespace: false,\n        xmlMode: false,\n        lowerCaseTags: false,\n        decodeEntities: false\n      });\n\n      $('img').each(function(){\n\t\tif ($(this).attr('src')){\n\t\t\t// For windows style path, we replace '\\' to '/'.\n\t\t\tvar src = $(this).attr('src').replace('\\\\', '/');\n\t\t\tif(!/http[s]*.*|\\/\\/.*/.test(src) &&\n\t\t\t   !/^\\s*\\//.test(src)) {\n\t\t\t  // For \"about\" page, the first part of \"src\" can't be removed.\n\t\t\t  // In addition, to support multi-level local directory.\n\t\t\t  var linkArray = link.split('/').filter(function(elem){\n\t\t\t\treturn elem != '';\n\t\t\t  });\n\t\t\t  var srcArray = src.split('/').filter(function(elem){\n\t\t\t\treturn elem != '' && elem != '.';\n\t\t\t  });\n\t\t\t  if(srcArray.length > 1)\n\t\t\t\tsrcArray.shift();\n\t\t\t  src = srcArray.join('/');\n\t\t\t  $(this).attr('src', config.root + link + src);\n\t\t\t  console.info&&console.info(\"update link as:-->\"+config.root + link + src);\n\t\t\t}\n\t\t}else{\n\t\t\tconsole.info&&console.info(\"no src attr, skipped...\");\n\t\t\tconsole.info&&console.info($(this));\n\t\t}\n      });\n      data[key] = $.html();\n    }\n  }\n});\n```\n\n### 本地图片没有放到同名文件夹中\n将需要引用的本地图片存放在与文章名相同的文件夹中即可\n\n### 图片路径url出错\n解决方案：打开hexo目录下的`_config.yml`修改下述内容\n``` js\n# URL\n## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'\nurl: http://www.mereith.com\nroot: /\n```\n\n## 更好的方式\n可以用标签来通过相对路径引用图片\n当你在`_config.yml`中开启了`post_asset_folder`(它会在建立文章的时候自动生成同名的资源文件夹),那么你可以这样在文章里引用在同名文件夹里的`door.jpg-slim`\n``` js\n{% asset_img door.jpg-slim 这是一个测试哦 %}\n```\n",
+      "tags": [
+        "hexo",
+        "图片"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-22T22:22:02.000Z",
+      "id": 17
+    },
+    {
+      "title": "win10和linux(mac)双系统下时间不同步的问题",
+      "content": "我们装windows和linux/mac双系统的时候，经常会碰到时间不同步的问题，现在有空了梳理一下。\n## 原因\nWindows把硬件时间（主板上的时间）当成本地时间，操作系统中显示的时间和bios中是一样的。\n而mac/linux/unix把硬件时间当作UTC，操作系统显示的时间是硬件时间换算而来的，比如北京时区是UTC+8,系统显示的时间就是硬件时间+8。\n所以二者会发生错乱。\n## 解决方案\n很简单，有以下三种方式：\n### 修改Windows的时间设定\n其实就是让Windows把硬件时间当作UTC，然后换算成正确时间显示到系统上。用管理员身份打开Powershell或者cmd，输入下面的命令并按回车：\n``` bash\nReg add HKLM\\SYSTEM\\CurrentControlSet\\Control\\TimeZoneInformation /v RealTimeIsUniversal /t REG_DWORD /d 1\n```\n### 修改Linux下的时间设定\n修改`/etc/conf.d/hwclock`，将其中的`clock=\"UTC\"`改为`clock=\"local\"`,推荐用系统自带的`vi`进行修改，不会的话可以百度。\n### 修改mac下的时间设定\n直接在时间设置改时区比较简单（直接改成UTC+0的时区)，或者和linux一样改配置文件即可。\n<!-- more -->\n",
+      "tags": [
+        "win10",
+        "双系统",
+        "linux",
+        "mac",
+        "黑苹果"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-23T11:48:42.000Z",
+      "id": 18
+    },
+    {
+      "title": "基于UWB的室内三维定位",
+      "content": "**现已开源** github:[RTLS-UWB](https://github.com/Mereithhh/RTLS-UWB)\n<br>\n最近做了课程设计，是`基于UWB的室内三维定位`，现在大概过程整理如下：\n\n<!-- more -->\n\n## 目的和要求\n\n### 1.目的\n\n1. 实现STM32F103与DWM1000模块通信；\n2. 实现UWB模块之间的TWR（双边测距）完成测距，并将距离信息发送至PC电脑；\n3. 利用采集的距离信息和基站的坐标求解标签位置坐标并显示。\n\n### 2.要求\n\n1. UWB模块之间的通信距离不低于15m；\n2. 在空旷环境下可以得出X，Y，Z轴坐标，其中X，Y轴坐标误差在50cm以内；\n3. 标签的位置坐标显示延时不超过0.5s；\n\n## 实验器材和开发环境\n\n### 器材\n\n1. 研创物联的`UWB Mini 3s Plus`开发版，板载`dw1000芯片`(用于UWB通讯），`STM32F103T8U6`芯片用于主控。\n\n### 开发环境\n\n1. `keil v5` 用于修改单片机代码\n2. `blend vs2019`用于开发上位机客户端（采用`c#/.net4.8`)\n\n\n\n## 实验原理\n\n采用STM32F103和UWB通信模块DWM1000组成一个设备，通过软件编写分别设置成标签或基站。在房间的四个角落布置四个基站，标签通过TWR（双边测距）方式依次完成（TDMA）与各基站之间的测距，将标签与基站的距离消息发送至PC端，利用三边定位原理求解标签的位置坐标并显示。\n![](https://pic.mereith.com/img/原理1.png-slim)\n\n## 实验方案\n\n大体分为四部分：设计方案、keil源代码修改与调试、定位算法的研究与实现、上位机的客户端的开发；我主要负责keil源码和上位机的开发部分。\n\n### 1.总体的设计方案：\n\n**芯片选取**：我们采取了研创物联的`Mini 3s Plus`一体化模块，主芯片是一个中等容量的`stm32f103t8u8`芯片，通讯芯片是`dw1000`芯片，中间通过`spi`总线进行连接，如下图：\n\n![](https://pic.mereith.com/img/芯片图.png-slim)\n\n### 2.测距原理\n\n双向飞行时间法（TW-TOF, two way-time of flight）每个模块从启动开始即会生成一条独立的时间戳。模块A 的发射机在其时间戳上的Ta1发射请求性质的脉冲信号，模块B 在Tb2时刻发射一个响应性质的信号，被模块A 在自己的时间戳Ta2时刻接收。有次可以计算出脉冲信号在两个模块之间的飞行时间，从而确定飞行距离S。\nS=Cx[(Ta2-Ta1)-(Tb2-Tb1)]/2 (C 为光速)\n\n### 3.具体步骤\n\n我们采用4个不共面的、已经标定好的基站和一个标签来实现3维室内测距，首先标签会每隔一定时间闪烁发送数据包，各个基站收到数据包后会通过双向飞行时间法来测出4个基站分别和标签的距离，并把距离数据传回A0基站，由A0基站通过usb模拟串口传输给上位机的客户端界面，上位机的客户端界面收到信息后，根据最小二乘法来计算出可能的标签坐标，在计算过程中，我们会添加一些修正参数来修正系统的天线时延，在空旷的室内环境，它是线性的。为了防止冲突和碰撞，具体的原理大概如下图：\n![](https://pic.mereith.com/img/原理2.png-slim)\n\n### 1) keil源代码及其调试\n\nKeil源码我们在熟读官方例程的基础上进行了一些修改\n\n### 2) 定位算法的研究\n\n整个算法我们基于最小二乘法，这是我们了解到的，比较容易实现的精度符合要求的算法，大体分为三步。\n建立信标节点与未知节点距离方程组其中：（xi,yi,zi）为基站坐标；（x,y,z）为标签坐标；\n\n![](https://pic.mereith.com/img/公式1.png-slim)\n\n方程组为非线性方程组，用方程组中前n-1个方程减去第n个方程后，得到线性化的方程：\n`AX=b`\n![](https://pic.mereith.com/img/公式2.png-slim)\n\n用最小二乘法求解方程：\n\n![](https://pic.mereith.com/img/公式3.png-slim)\n\n由于客户端采用C#/.NET开发，所以我们集成到里面，如下图：\n![](https://pic.mereith.com/img/代码1.png-slim)\n\n### 3) 上位机客户端的开发\n\n![](https://pic.mereith.com/img/客户端.png-slim)\n\n这是主窗体的设计图，里面包含了一个串口调试助手，包含了一些调试功能，自定义功能，和纠错功能，完美支持原厂的帧格式（只需要点一下原厂兼容就可以了）。\n![](https://pic.mereith.com/img/串口助手.png-slim)\n\n## 实验结果与分析\n\n最后我们选择在长9.6m，宽6m的大厅进行测试，xy轴误差在20cm左右，在28m的通信距离下依旧能保持良好的准确率，符合了最初的目的。\n并且制作了展示视频，如下：\n\n<div style=\"width: 100%; display: flex; justify-content: center;aspect-ratio: 2/1;\"><iframe  style=\"width: 100%;\" src=\"https://player.bilibili.com/player.html?aid=85008267&bvid=BV1V7411k7Pb&cid=145354366&page=1\" scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"> </iframe></div>\n\n## 客户端和相关资料下载\n\n[百度网盘(提取码：mu0r)](链接：https://pan.baidu.com/s/134QYoMz7ePtENeYKuHZJKg)\n\n",
+      "tags": [
+        "单品机",
+        "课程设计"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-23T12:01:01.000Z",
+      "id": 19
+    },
+    {
+      "title": "hexo添加视频音频的方法",
+      "content": "最近写东西用到了视频和音频，所以就研究了一下。\n这里用到了两个标签插件`hexo-tag-aplayer`和`hexo-tag-dplayer`，对应音频和视频：\n<!-- more -->\n## hexo-tag-aplayer\n``` bash\nnpm install hexo-tag-aplayer\n```\n\n这是Hexo的[APlayer](https://github.com/MoePlayer/hexo-tag-aplayer)插件，效果如下：\n\n{% aplayer \"杜鹃圆舞曲\" \"Various Artists\" \"https://pic.mereith.com/Various Artists - 杜鹃圆舞曲.mp3\" \"https://pic.mereith.com/img/吃土人士.jfif-slim\n\"  %}\n\n## hexo-tag-dplayer\n``` bash \nnpm install hexo-tag-dplayer\n```\n这是Hexo的[DPlayer](https://github.com/MoePlayer/hexo-tag-dplayer)，效果如下：\n\n{% dplayer \"url=https://pic.mereith.com/UWB.mp4\" \"pic=https://pic.mereith.com/课程设计.jpg-slim\" \"screenshot=true\" \"autoplay=false\" %} \n\nPS: 得关掉`pajx`插件，不然会第一次加载不出来\n",
+      "tags": [
+        "hexo"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-25T15:48:26.000Z",
+      "id": 20
+    },
+    {
+      "title": "hexo设置文章置顶",
+      "content": "## 设置置顶\n推荐直接试用置顶后的插件，使用以下命令：\n``` bash\nnpm uninstall hexo-generator-index --save\nnpm install hexo-generator-index-pin-top --save\n```\n然后在需要置顶的文章中加上`top: true`即可。\n例如：\n``` js\n---\ntitle: hexo设置文章顶置\ndate: 2020-01-25 20:30:49\ntags: [hexo]\ncategories: hexo\ntop: true\n---\n```\n## 置顶标志\n还可以设置置顶标志\n打开 `/theme/next/layout/_macro`下的`post.swig`文件,在`<div class-\"post-meta\">`下，插入：\n``` js\n{% if post.top %}\n  <i class=\"fa fa-thumb-tack\"></i>\n  <font color=7D26CD>置顶</font>\n  <span class=\"post-meta-divider\">|</span>\n{% endif %}\n```\n效果如图\n![](https://pic.mereith.com/img/效果图.png-slim)\n",
+      "tags": [
+        "hexo"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-25T20:30:49.000Z",
+      "id": 21
+    },
+    {
+      "title": "win10-tensorflow环境快速搭建-基于anaconda",
+      "content": "\n众所周知，配置环境一直是个有点小麻烦的事儿，tensorlow分为gpu版本和cpu版本的，其中gpu版本的需要额外的`cuda`和`cudnn`，但是你要是不用gpu吧，又太慢了。上次实在linux下安装开发环境，这次我们在win10下安装tensorflow环境带gpu的版本，为了省事，我们用`acaconda`进行快速安装。\n## 安装Anaconda3\n按照官网的描述：\n\n{% blockquote %}\nThe open-source Anaconda Distribution is the easiest way to perform Python/R data science and machine learning on Linux, Windows, and Mac OS X. With over 19 million users worldwide, it is the industry standard for developing, testing, and training on a single machine, enabling individual data scientists to:\nQuickly download 1,500+ Python/R data science packages\nManage libraries, dependencies, and environments with Conda\nDevelop and train machine learning and deep learning models with scikit-learn, TensorFlow, and Theano\nAnalyze data with scalability and performance with Dask, NumPy, pandas, and Numba\nVisualize results with Matplotlib, Bokeh, Datashader, and Holoviews\n{% endblockquote %}\n\nemm说白了就是一个python/r 的科学平台，可以很方便的帮你配置环境，管理各种包。\n<!-- more -->\n[下载地址](https://www.anaconda.com/distribution/#windows)\n我们选择python3.7的64位版本\n![](https://pic.mereith.com/img/anaconda.png-slim)\n记得右键管理员安装，然后一路下一步即可，需要注意的是到最面需要添加环境变量的时候勾选上，省的后期手动添加：\n![](https://pic.mereith.com/img/安装2.png-slim)\n\n\n## 安装CUDA和CuDNN\n这是为了gpu版本准备的，cpu版本的可以跳过这部分\n\nCUDA是NVIDIA推出的运算平台，CuDNN是专门针对Deep Learning框架设计的一套GPU计算加速方案。\n\n在anaconda安装tensorflow-gpu的时候，会自动安装这俩，但是也可以自己安装（懒得自己安装的话，跳过即可）\n\n先去官网下载安装包，注意的是不同的tensorflow-gpu支持的cuda版本不太一样，要一一对应看好了：\n>* CUDA 官网：https://developer.nvidia.com/cuda-downloads\n>* cuDNN 官网：https://developer.nvidia.com/cudnn\n\n其中CUDA下载完了一路下一步就行了，其中选项选择自定义安装，只勾选第一个CUDA，其他都不选。到最后可能会提示让你安装`Visual Studio`,忽略即可\n\ncudnn下载完了是一个压缩包里面有三个文件夹。把三个文件夹复制到cuda安装目录下即可，一般是在`C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\vx.x` (vx.x是你的版本号）\n\n这样就装好CUDA和CuDNN了，懒人可以跳过去，直接让anaconda自己装就行了嘛。\n\n## 创建TensorFlow开发环境\n\n打开anaconda的命令行，在最左下角的开始菜单里面，选择**右键管理员运行**\n![](https://pic.mereith.com/img/命令0.jpg-slim)\n\n在出现的命令行里，输入：\n``` bash\nconda create -n  tensorflow_gpu python=3.6\n```\n如果你不想要gpu，只用cpu，那么：\n``` bash\nconda create -n tensorflow python=3.6\n```\n\n中间会让我们确认，输入个y按回车就好了。\n可能需要一段时间，尤其是国外的服务器可能会慢。耐心等。\n安装完后，会提示我们用`activate`和`deactivate`进行切换。\n![](https://pic.mereith.com/img/命令2.png-slim)\n\n## 安装各种\n我们先激活环境，在命令行输入：\n``` bash\nactivate tensorflow_gpu\n```\n（如果是cpu的请去掉后面的gpu）\n现在可以升级一下各种库（可选），输入：\n``` bash \nconda update conda\n```\n\n### 安装tensorflow\n如果是gpu输入：` conda install tensorflow-gpu`,cpu输入`conda install tensorflow`\n确认等待即可。\n![](https://pic.mereith.com/img/命令3.png-slim)\n\n## 测试\n这里我们直接用anaconda自带的python ide来测试，打开`jupyter notebook`（就还在开始菜单里），输入下面的代码，回车：\n``` python\nimport tensorflow as tf\nprint(tf.__version__)\n```\n如果顺利会出现版本号（2.0）\n![](https://pic.mereith.com/img/测试0.png-slim)\n\n![](https://pic.mereith.com/img/测试.png-slim)\n\n",
+      "tags": [
+        "tensorflow",
+        "人工智能",
+        "深度学习"
+      ],
+      "top": 0,
+      "category": "深度学习",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-25T20:43:50.000Z",
+      "id": 22
+    },
+    {
+      "title": "hexo博客配置cdn加速",
+      "content": "为了最大化提高博客的访问速度，还可以用cdn进行加速。\n<!-- more -->\n## js库的cdn加速\n我用的next主题里面自带了`jsdelivr`的cdn加速，如图：\n![](https://pic.mereith.com/img/cdn1.png-slim)\n\n如果你没有，那么[参考这个](https://www.jsdelivr.com/)。\n\n## 全局cdn加速\n懒得写了，[参考这个](https://developer.qiniu.com/fusion/manual/1228/fusion-quick-start)\n\n别忘了稍微配置下nginx上面对应回源的`server_name`\n\n是否成功用`nslookup domain.com`，看看下面的回复是否有cdn设置时候的别名。",
+      "tags": [
+        "cdn",
+        "hexo",
+        "优化配置",
+        "建站"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-26T15:00:03.000Z",
+      "id": 23
+    },
+    {
+      "title": "hexo博客添加ssl证书",
+      "content": "每次打开网站，谷歌浏览器总提示此网站不安全，很别扭，解决方法是添加ssl证书，让网站走https。\n<!-- more -->\n## 证书申请\n这里直接在阿里云申请免费的证书即可。\n[阿里云SSL证书](https://cn.aliyun.com/product/cas)\n这里选个人免费，不要钱的。\n![](https://pic.mereith.com/img/证书1.png-slim)\n购买后，选择证书申请\n![](https://pic.mereith.com/img/证书2.png-slim)\n如果证书都在阿里云，就选自动dns验证，不然就选手动。如实填写后等待审核，证书签发后会通知邮箱，然后我们下载对应版本的证书。我是nginx的，就选nginx版本下载\n## 部署证书\n[nginx安装方法](https://help.aliyun.com/document_detail/98728.html)\n对于`nginx`服务器。你需要证书下载后的`证书文件(crt/pem)`和`私钥文件(key)`.\n1. 把证书复制到服务器中，可以放在conf配置文件夹里\n2. 修改配置文件如下例：\n```c\nserver {\n     #SSL 访问端口号为 443\n     listen 443 ssl; \n     #填写绑定证书的域名\n     server_name www.domain.com; \n     #证书文件名称\n     ssl_certificate 1_www.domain.com_bundle.crt; \n     #私钥文件名称\n     ssl_certificate_key 2_www.domain.com.key; \n     ssl_session_timeout 5m;\n     #请按照以下协议配置\n     ssl_protocols TLSv1 TLSv1.1 TLSv1.2; \n     #请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。\n     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE; \n     ssl_prefer_server_ciphers on;\n     location / {\n        #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。\n         root /var/www/www.domain.com; \n         index  index.html index.htm;\n     }\n }\n\n```\n## 强制https\n### 方法一\n在nginx里的`http server`中添加\n``` c\nrewrite ^(.*)$ https://$host$1 permanent;\n```\n当然如果你用了`cdn`直接在cdn里面强制https就可以了。\n### 方法二\n在`server`字段添加:`return 301 https://$host$request_uri;`\n### 方法三\n页面中添加js脚本\n### 方法四\n后端程序中添加重定向\n## 可能的问题\n如果添加了http的图片等外链，会显示`此网站不绝对安全`，解决方法是把外链也换成https的。",
+      "tags": [
+        "hexo",
+        "https",
+        "建站"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-26T17:00:15.000Z",
+      "id": 24
+    },
+    {
+      "title": "hexo图标设置",
+      "content": "自定义页面还有下方的copyright等地方，我们都会想改一下图标，那么怎么办呢，很简单。\n<!-- more -->\nhexo用的是`fontawesome`的图标，直接去[这里](https://fontawesome.com/v4.7.0/icons/)找到喜欢的图标后，把图标改成相应的名字就可以了。\n![](https://pic.mereith.com/img/1580096043(1).png-slim)\n\n![](https://pic.mereith.com/img/修改图标1.png-slim)\n\n![](https://pic.mereith.com/img/1580096123(1).png-slim)",
+      "tags": [
+        "hexo",
+        "建站",
+        "优化"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-27T11:29:09.000Z",
+      "id": 25
+    },
+    {
+      "title": "hexo/next增加鼠标点击效果",
+      "content": "## Anime.js\n`Anime.js`是一个js动画库插件，我们的动画以它为基础绘制的。\n我们先去[官方](https://github.com/juliangarnier/anime/blob/master/README.md)下载`anime.mini.js`或`anime.js`\n我用的next主题，添加到`themes/next/source/js`下，然后在此文件夹再自己创建特效文件`click.js`，代码如下：\n``` js\nfunction updateCoords(e) {\n    pointerX = (e.clientX || e.touches[0].clientX) - canvasEl.getBoundingClientRect().left,\n    pointerY = e.clientY || e.touches[0].clientY - canvasEl.getBoundingClientRect().top\n}\nfunction setParticuleDirection(e) {\n    var t = anime.random(0, 360) * Math.PI / 180\n      , a = anime.random(50, 180)\n      , n = [-1, 1][anime.random(0, 1)] * a;\n    return {\n        x: e.x + n * Math.cos(t),\n        y: e.y + n * Math.sin(t)\n    }\n}\nfunction createParticule(e, t) {\n    var a = {};\n    return a.x = e,\n    a.y = t,\n    a.color = colors[anime.random(0, colors.length - 1)],\n    a.radius = anime.random(16, 32),\n    a.endPos = setParticuleDirection(a),\n    a.draw = function() {\n        ctx.beginPath(),\n        ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0),\n        ctx.fillStyle = a.color,\n        ctx.fill()\n    }\n    ,\n    a\n}\nfunction createCircle(e, t) {\n    var a = {};\n    return a.x = e,\n    a.y = t,\n    a.color = \"#F00\",\n    a.radius = .1,\n    a.alpha = .5,\n    a.lineWidth = 6,\n    a.draw = function() {\n        ctx.globalAlpha = a.alpha,\n        ctx.beginPath(),\n        ctx.arc(a.x, a.y, a.radius, 0, 2 * Math.PI, !0),\n        ctx.lineWidth = a.lineWidth,\n        ctx.strokeStyle = a.color,\n        ctx.stroke(),\n        ctx.globalAlpha = 1\n    }\n    ,\n    a\n}\nfunction renderParticule(e) {\n    for (var t = 0; t < e.animatables.length; t++)\n        e.animatables[t].target.draw()\n}\nfunction animateParticules(e, t) {\n    for (var a = createCircle(e, t), n = [], i = 0; i < numberOfParticules; i++)\n        n.push(createParticule(e, t));\n    anime.timeline().add({\n        targets: n,\n        x: function(e) {\n            return e.endPos.x\n        },\n        y: function(e) {\n            return e.endPos.y\n        },\n        radius: .1,\n        duration: anime.random(1200, 1800),\n        easing: \"easeOutExpo\",\n        update: renderParticule\n    }).add({\n        targets: a,\n        radius: anime.random(80, 160),\n        lineWidth: 0,\n        alpha: {\n            value: 0,\n            easing: \"linear\",\n            duration: anime.random(600, 800)\n        },\n        duration: anime.random(1200, 1800),\n        easing: \"easeOutExpo\",\n        update: renderParticule,\n        offset: 0\n    })\n}\nfunction debounce(fn, delay) {\n  var timer\n  return function () {\n    var context = this\n    var args = arguments\n    clearTimeout(timer)\n    timer = setTimeout(function () {\n      fn.apply(context, args)\n    }, delay)\n  }\n}\nvar canvasEl = document.querySelector(\".fireworks\");\nif (canvasEl) {\n    var ctx = canvasEl.getContext(\"2d\")\n      , numberOfParticules = 30\n      , pointerX = 0\n      , pointerY = 0\n      , tap = \"mousedown\"\n      , colors = [\"#FF1461\", \"#18FF92\", \"#5A87FF\", \"#FBF38C\"]\n      , setCanvasSize = debounce(function() {\n        canvasEl.width = 2 * window.innerWidth,\n        canvasEl.height = 2 * window.innerHeight,\n        canvasEl.style.width = window.innerWidth + \"px\",\n        canvasEl.style.height = window.innerHeight + \"px\",\n        canvasEl.getContext(\"2d\").scale(2, 2)\n    },500)\n      , render = anime({\n        duration: 1 / 0,\n        update: function() {\n            ctx.clearRect(0, 0, canvasEl.width, canvasEl.height)\n        }\n    });\n    document.addEventListener(tap, function(e) {\n        \"sidebar\" !== e.target.id && \"toggle-sidebar\" !== e.target.id && \"A\" !== e.target.nodeName && \"IMG\" !== e.target.nodeName && (render.play(),\n        updateCoords(e),\n        animateParticules(pointerX, pointerY))\n    }, !1),\n    setCanvasSize(),\n    window.addEventListener(\"resize\", setCanvasSize, !1)\n}\n```\n\n## 修改swig渲染模板开启特效\n我们打开`themes/next/layout/_layout.swig`，在`<body>`中添加：\n``` js\n{% if theme.click %}\n<canvas class=\"click\" style=\"position: fixed;left: 0;top: 0;z-index: 1; pointer-events: none;\" ></canvas> \n<script type=\"text/javascript\" src=\"/js/click.js\"></script>\n<script type=\"text/javascript\" src=\"/js/anime.min.js\"></script>\n{% endif %}\n```\n保存，并在主题配置文件下新增`click=true`，即可开启特效。\n效果就在本站- -。\n",
+      "tags": [
+        "hexo",
+        "建站",
+        "优化"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-01-27T11:29:33.000Z",
+      "id": 26
+    },
+    {
+      "title": "基于opencre的ryzen黑苹果10.15.3",
+      "content": "【更新】现已升级到10.15.4，oc版本到0.5.6.\n\n相关引导文件以上传至github：[OC-EFI-2700-B450i-wifi-rx580](https://github.com/Mereithhh/OC-EFI-2700-B450i-wifi-rx580)\n\n配置如下，基本上和我配置差不多的都可以通用哈。\n\n| 硬件 | 型号                        |\n| ------ | ----------------------------- |\n| cpu  | ryzen 2600                  |\n| 主板 | 技嘉b450i wifi pro          |\n| 显卡 | rx584                       |\n| 内存 | 金士顿hyper 3000 ddr4 16gx2 |\n\n![](https://pic.mereith.com/img/B84189BDC44302A1ACE719C77517C840.png-slim)\n\n![](https://pic.mereith.com/img/B84189BDC44302A1ACE719C77517C8ss0.png-slim)\n\n<!-- more -->\n\n***正常***\n\n> * 基本功能无问题，运行流畅\n> * cpu、显卡跑分正常，休眠正常\n> * iservice正常，siri正常\n> * 蓝牙正常(csr8510 a10)\n> * 升级到最新catelina，无缝升级\n\n![](https://pic.mereith.com/img/9A1FE08B8E5AA2C9025E30FFEDDA4B02.png-slim)\n\n***有待解决***\n\n> * 因为是itx，只能用usb网卡，所以还差一个usb网卡这样airdrop就能用了。\n\n## 参考文献\n\n因为是ryzen的黑苹果，所以首先参考了：\n[Opencore-Vanilla-Desktop-Guide](https://khronokernel.github.io/Opencore-Vanilla-Desktop-Guide/)\n\n基本上只参考这一个就够了，后来装完了发现`黑果小兵`的博客上有中文的详解，很详细，上面也有中文的参考资料，不想看英文的话推荐参考：\n\n[OpenCore精解](https://blog.daliansky.net/OpenCore-BootLoader.html)\n\n## 遇到的bug\n\n全程还是比较顺利的，只要有耐心即可。值得一提的是我的主板按照教程打开了`4g以上解码`但是依然会卡在`pci configration`，按照第一个文献的`troubleshooting`也没解决，后来我在`boot-args`增加了`npci=0x2000`就好了(第二个参考文献中提到了)，应该是主板bios的问题，技嘉的bios真的太垃圾了，我甚至关不掉csm，索性没啥问题。\n\n### 蓝牙修复\n\n内置的intel网卡带的蓝牙不行，我手头正好有个绿联的usb蓝牙（csr8510 a10），mac为了考虑体验只能启用一个蓝牙，所以我们要先屏蔽自带的蓝牙，方法很简单：\n\n1. 用[hackintool](http://headsoft.com.au/download/mac/Hackintool.zip)查看蓝牙硬件的`供应商id`和`设备id`，在信息->杂项(misc)里，比如我的是`0x8087`和`0x0025`\n   ![](https://pic.mereith.com/img/WeChatfb73c1d93d2e8ee90e423ab9d002350b.png-slim)\n2. 换算成10进制，即`0x8087->32903`,`0x0025->37`\n3. 打开`/System/Library/Extensions/IOBluetoothFamily.kext/Contents/PlugIns/BroadcomBluetoothHostControllerUSBTransport.kext/Contents/Info.plist`（我用的vscode）\n4. 把所有的`idproduct`和`idvendor`进行替换\n5. 重建kext缓存重启后即可，插上自己的usb蓝牙，就能用airpods听歌了，美滋滋。\n\n### imessage修复\n\n直接参考第一个参考文献重的[troubleshooting](https://khronokernel.github.io/Opencore-Vanilla-Desktop-Guide/troubleshooting/troubleshooting.html),主要就是内建网卡的`en0`\n\n### 打开原生ntfs读写\n\n非常简单\n\n1. `diskutil list`列出所有的磁盘，找到你想挂载的名字，例如我想挂载`NVME1`\n   ![](https://pic.mereith.com/img/WeChat5572a0941abddd0ea276b256f86a3b68.png-slim)\n2. `sudo vim /etc/fstab `添加`LABEL=NVME1 none ntfs rw,auto,nobrowse`,保存即刻。\n3. 如果你在`finder`找不到，就在`/volumes`里能看到，拖到侧边栏就行了\n\n### 修改系统文件没权限的方法\n\n1. 禁用`SIP`,恢复模式中在终端输入`csrutil disable`\n2. 重启进系统，终端输入`sudo mount -uw /`直接都挂可读写，然后就能为所欲为了。\n\n",
+      "tags": [
+        "黑苹果",
+        "opencore",
+        "Hackintosh"
+      ],
+      "top": 0,
+      "category": "折腾搞机",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-02-02T15:43:52.000Z",
+      "id": 27
+    },
+    {
+      "title": "python版本管理",
+      "content": "经过测试，opencore的黑苹果还是很稳定的，准备拿来做生产环境，在配置python的时候，就涉及到版本管理的问题，毕竟现在python2和python3都有在用，而且不同的项目的库也不一样，最终我选择`pyenv`来进行版本控制。\n\n## 安装pyenv\n\n直接在mac里面用[brew](https://brew.sh/)安装就行了:\n\n```bash\nbrew update\nbrew install pyenv\n```\n\n## 简单使用\n\n```bash\n# 查看当前版本\npyenv version\n\n# 查看所有版本\npyenv versions\n\n# 查看所有可安装的版本\npyenv install --list\n\n# 安装指定版本\npyenv install 3.6.5\n# 安装新版本后rehash一下\npyenv rehash\n\n# 删除指定版本\npyenv uninstall 3.5.2\n\n# 指定全局版本\npyenv global 3.6.5\n\n# 指定多个全局版本, 3版本优先\npyenv global 3.6.5 2.7.14\n```\n\n## 安装包管理插件pyenv-virtualenv\n\n安装了`pyenv`后，为了安装包，我们还要安装包管理插件。\n\n```\nbrew install pyenv-virtualenv\neval \"$(pyenv init -)\"\neval \"$(pyenv virtualenv-init -)\"\n```\n\n### 使用\n\n```\n# 创建一个3.8.1版本的虚拟环境, 命名为env, 然后激活虚拟环境\n$ pyenv virtualenv 3.8.1 venv\n$ pyenv activate env\n# 在env下安装requests\npip3 install requests\n# 关闭虚拟环境\n$ pyenv deactivate env\n```\n\n配合`vs code`的话，就直接创建完环境在里面选上创建的环境就行了，很简单哦。注意安装包要用`pip3`（python3）\n\n![](https://pic.mereith.com/img/截屏2020-02-06下午11.18.01.png-slim)\n",
+      "tags": [
+        "python",
+        "开发",
+        "mac"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-02-06T23:07:58.000Z",
+      "id": 28
+    },
+    {
+      "title": "hexo添加本站运行时间",
+      "content": "有人问本站运行时间怎么添加的，我就写下来嘛。\n对于我的`next`主题，打开主题文件夹下的`layout/_partials/footer.swig`\n在最后一行前面添加：\n```\n<div class=\"runtime\">\n<span id=\"timeDate\">载入天数...</span><span id=\"times\">载入时分秒...</span>\n<script>\n    var now = new Date(); \n    function createtime() { \n        var grt= new Date(\"12/08/2018 12:00:00\");//此处修改你的建站时间或者网站上线时间 \n        now.setTime(now.getTime()+250); \n        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); \n        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); \n        if(String(hnum).length ==1 ){hnum = \"0\" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); \n        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = \"0\" + mnum;} \n        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); \n        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = \"0\" + snum;} \n        document.getElementById(\"timeDate\").innerHTML = \"本站居然运行了 \"+dnum+\" 天 \"; \n        document.getElementById(\"times\").innerHTML = hnum + \" 小时 \" + mnum + \" 分 \" + snum + \" 秒\"; \n    } \nsetInterval(\"createtime()\",250);\n</script>\n</div>\n```\n 保存即可。\n",
+      "tags": [
+        "hexo",
+        "next"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-02-13T10:50:48.000Z",
+      "id": 29
+    },
+    {
+      "title": "youtube-dl使用方法(转)",
+      "content": "\n[网址](https://travis-ci.org/ytdl-org/youtube-dl)\n",
+      "tags": [
+        "github",
+        "youtube-dl"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-02-19T13:17:50.000Z",
+      "id": 30
+    },
+    {
+      "title": "【沙雕动画01】小绿是个头铁的人",
+      "content": "沙雕动画处女座出炉！\n\n立下的flag终于拔掉了哈哈哈哈\n\n准备做一个系列，讲小绿的故事\n\n这是第一期：小绿是个头铁的人\n\nPS：以后视频都在`b站`发，感兴趣的请点击头像下面的`bilibili`关注我哦\n\n{% raw %}\n<iframe src=\"//player.bilibili.com/player.html?aid=92900885&cid=158613081&page=1\" scrolling=\"no\" border=\"0\" frameborder=\"no\" framespacing=\"0\" allowfullscreen=\"true\"> </iframe>\n{% endraw %}",
+      "tags": [
+        "沙雕动画"
+      ],
+      "top": 0,
+      "category": "诗与远方",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-03-01T17:00:00.000Z",
+      "id": 31
+    },
+    {
+      "title": "python-docx中文字体设置",
+      "content": "最近用python-docx写word，默认的字体大小不一很难受。\n这里有一个方法可以更改z设置中文字体：\n在`style`对象中如下：\n```python\ndoc.styles['Normal'].font.name = u'等线'\ndoc.styles['Normal']._element.rPr.rFonts.set(qn('w:eastAsia'),u'等线')\n```\n\n",
+      "tags": [
+        "python"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-03-10T21:04:13.000Z",
+      "id": 32
+    },
+    {
+      "title": "python读取excel查重",
+      "content": "# python读取excel并查重\r\n主要就是用了`xlrd`，代码如下，简单易懂就不注释了哈：\r\n```python\r\nimport xlrd\r\nimport time\r\nfrom collections import Counter\r\nt1 = time.time()\r\ndata = xlrd.open_workbook(r'C:\\Users\\pve_win10_1\\Desktop\\suanfa\\text.xlsx')\r\ntable = data.sheet_by_index(1)\r\nlist1 = []\r\n\r\nfor i in range(table.nrows):\r\n    list1.append(table.cell(i,0).value)\r\n\r\nb = Counter(list1)\r\nfor key,value in b.items():\r\n    if value > 1:\r\n        print('{}重复在:'.format(key),[i for i in range(len(list1)) if list1[i] == key])\r\n\r\nt2 = time.time()\r\nprint('用时：',t2-t1,'s')\r\n```\r\n\r\n\r\n# 知识点\r\n## python列表查找所有索引\r\n\r\n默认列表的index方法只能获取第一个索引，如果我们想获取所有索引可以借助range函数遍历：\r\n```python\r\ndef get_index3(lst=None, item=''):\r\n    return [i for i in range(len(lst)) if lst[i] == item]\r\nlst = ['A', 1, 4, 2, 'A', 3]\r\nget_index1(lst, 'A')\r\n[0, 4]\r\n```\r\n\r\n## python列表查重\r\n\r\n直接使用`collections`的`Counter`即可，发挥一个二元组`(重复的值，重复次数)`\r\n\r\n```python\r\nrom collections import Counter   #引入Counter\r\na = [29,36,57,12,79,43,23,56,28,11,14,15,16,37,24,35,17,24,33,15,39,46,52,13]\r\nb = Counter(a)\r\nprint ([key for key,value in b.items()if value > 1])  #只展示重复元素\r\nprint ({key:value for key,value in b.items()if value > 1})  #展现重复元素和重复次数\r\n```\r\n\r\n",
+      "tags": [
+        "python",
+        "xlrd",
+        "excel",
+        "算法"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-03-22T00:18:23.000Z",
+      "id": 33
+    },
+    {
+      "title": "【python爬虫】基于scrapy的小说爬虫",
+      "content": "# 前言\n\n最近一直在学爬虫，从最基本的`urllib`到`requests`、`beautifulsoup`到分布式爬虫框架`scrapy`,现在终于感觉可以上路了。所以先基于`scrapy`重写了我以前做的小说爬虫，代码都很简单，就不注释了。相关的知识点在我的python爬虫系列文章后面都会介绍到。\n主要的参考文献：\n> * [scrapy官方文档(无中文)](https://docs.scrapy.org/en/latest/)\n> * [python官方文档(有中文)](https://docs.python.org/zh-cn/3/)\n\n![](https://pic.mereith.com/img/NovelSpider1.gif)\n\n# 思路\n\n1.搜索小说名，用`requests+lxml`爬取结果，并让用户选择结果，返回小说目录的`url`\n2.`scrapy`根据目录url解析小说章节数以及每章的具体url，其中把小说章节数送给`item`再到`itempipeline`保存，每章的url则是生成异步请求，结果送给`parse_chapter`进行下一步的解析\n3.`parse_chapter`解析每一章的内容，替换没用的`\\xa0`，写入到`item`里，返回交给`pipeline`处理\n4.对于`pipeline`为了写入文件章节顺序是对的，每次返回的`item`都先保存到包括当前章节`编号和内容`的字典里\n5.爬取完毕，对字典进行排序，写入到小说文件中\n\n# 使用说明\n## 依赖\n需要安装：\n> scrapy\n> requests\n\n直接`pip instal scrapy requests`即可，如果`scrapy`安装不了需要编译没成功的话，那么到[这个网站](http://www.lfd.uci.edu/~gohlke/pythonlibs/)下载自己对应编译好的再用pip安装即可\n\n## 运行\n在`项目目录`中打开`shell`运行\n```shell\nscrapy crawl xiaoshuo -a name=小说名 --nolog\n```\n\n# 代码\n\n[*请移步github*](https://github.com/Mereithhh/NovelSpider)\n\n\n",
+      "tags": [
+        "python",
+        "爬虫",
+        "scrapy"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-03-22T22:30:06.000Z",
+      "id": 34
+    },
+    {
+      "title": "ssh设置了为什么密钥还是需要密码",
+      "content": "最近新加了几个git仓库，重新设定了一下几个ssh，结果博客部署的时候j就突然需要密码了，以前都是不需要的，明明设置好了ssh密钥的啊，百思不得其解。所以经过几番折腾，进展如下：\n## 1.查看日志\n对于`ubuntu`来说，查看`/var/log/auth.log`即可\n根据日志的内容针对性解决，如果无明显错误，再去探究\n## 2.配置文件问题\n### 远程主机\n对于`远程主机`，ssh配置文件在`/etc/ssh/sshd_config`，主要有用的如下：\n```shell\n#禁用root账户登录，如果是用root用户登录请开启\nPermitRootLogin yes\n\n# 是否让 sshd 去检查用户家目录或相关档案的权限数据，\n# 这是为了担心使用者将某些重要档案的权限设错，可能会导致一些问题所致。\n# 例如使用者的 ~.ssh/ 权限设错时，某些特殊情况下会不许用户登入\nStrictModes no\n\n# 是否允许用户自行使用成对的密钥系统进行登入行为，仅针对 version 2。\n# 至于自制的公钥数据就放置于用户家目录下的 .ssh/authorized_keys 内\nRSAAuthentication yes\nPubkeyAuthentication yes\nAuthorizedKeysFile      .ssh/authorized_keys\n\n# 有了证书登录了，就禁用密码登录。\nPasswordAuthentication no\n\n```\n重启服务：`service sshd restart`\n### 本地主机\n对于`本地主机`，配置文件在`/etc/ssh/ssh_config`中，主要是：\n```shell\nHost 别名（后面可直接通过[ssh 别名]进行登录）\nHostName IP\nPort 端口\nUser 用户名\nIdentityFile 自己的私钥\n```\n\n## 3.密钥问题\n对于自制的密钥对，想要生效，私钥是放在本地主机里的，要想要让私钥生效，有两种方式：\n> * 1.直接在 /etc/ssh/ssh_config 中添加字段制定私钥\n> * 2.直接用`ssh-add 私钥位置`，添加私钥（最常用）\n\n## 4.权限问题\n很多时候还是不行是因为权限的不得劲，注意如下：\n> *  远程主机的，需要登录的用户的`home目录`、`~/.ssh目录`、`~/.ssh/authorized_keys文件`，权限必须是`700`或者`755`\n> * 本地主机的`私钥`，权限不能太开放，最好是`600`\n\n**奇幻问题**\n当我做完了以上这些的时候，发现我ssh用root登陆ok免密码，用git用户就要密码，经过排查我发现：\n**在sshd_config文件中的authorized_keys字段必须用相对地址指定.ssh目录里的文件**\n我就是因为直接指定了root目录里的文件，所以我用git用户ssh的时候就没有权限了，所以还是要密码\n\n## 5.参考文献\n[ssh|为什么通过公钥进行授权后仍然需要密码才能登陆？](https://www.jianshu.com/p/6e557dbf0aeb?utm_source=oschina-app)\n[SSH无密钥登陆 与 配置公钥后仍需要输入密码的解决方案](https://blog.csdn.net/b_x_p/article/details/78534423)\n[ssh配置config快速登录服务器](https://blog.csdn.net/ky1in93/article/details/83093981)\n",
+      "tags": [
+        "vps",
+        "ssh",
+        "运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-03-23T15:19:19.000Z",
+      "id": 35
+    },
+    {
+      "title": "【python实用系列】python从不同的excel收集数据并汇总",
+      "content": "最近帮同学处理一些数据，目的是分别从不同的一些excel文件中收集数据，按照格式汇总到生成的excel中.\n保存下来，避免以后忘了，主要用到的就是xlrd和xlwt两个模块。\n## 参考：\n[python:xlrd模块](https://www.jianshu.com/p/f2c9dff344c6)\n[python:xlwt模块](https://www.jianshu.com/p/fc97dd7e822c)\n<!-- more -->\n## 代码\n```python\nimport xlwt,xlrd\nimport os\n\n# 初始化工作表\nworkbook = xlwt.Workbook(encoding='utf-8')\nsheet2014 = workbook.add_sheet('2014')\nsheet2015 = workbook.add_sheet('2015')\nsheet2016 = workbook.add_sheet('2016')\nsheet2017 = workbook.add_sheet('2017')\nsheet2018 = workbook.add_sheet('2018')\n\nsheets = [sheet2014,sheet2015,sheet2016,sheet2017,sheet2018]\n\n#style 对齐设置\nalignment = xlwt.Alignment()\nalignment.horz = xlwt.Alignment.HORZ_CENTER\nalignment.vert = xlwt.Alignment.VERT_CENTER\nstyle = xlwt.XFStyle()\nstyle.alignment = alignment\n\n# 初始化第一列\ndef init(name):\n    name.write(0,0,'2014',style)\n    name.write(0,1,'盈利能力：净资产收益率',style)\n    name.write(0,2,'总资产净利率',style)\n    name.write(0,3,'投入资本回报率',style)\n    name.write(0,4,'销售净利率',style)\n    name.write(0,5,'销售毛利率',style)\n    name.write(0,6,'各项指标在营业总收入中占比：营业利润/营业总收入',style)\n    name.write(0,7,'营业总成本/营业总收入',style)\n    name.write(0,8,'销售费用/营业总收入',style)\n    name.write(0,9,'管理费用/营业总收入',style)\n    name.write(0,10,'财务费用/营业总收入',style)\n\nfor sheet_item in sheets:\n    init(sheet_item)\n\n# 写入需要的数据的函数\ndef writedata(tar,src,name,i):\n    i = i+1\n    tar.write(i,0,name,style)\n    tar.write(i,1,src[3],style)\n    tar.write(i,2,src[13],style)\n    tar.write(i,3,src[15],style)\n    tar.write(i,4,src[17],style)\n    tar.write(i,5,src[18],style)\n    tar.write(i,6,src[22],style)\n    tar.write(i,7,src[25],style)\n    tar.write(i,8,src[26],style)\n    tar.write(i,9,src[27],style)\n    tar.write(i,10,src[28],style)\n\n#按顺序加载列表\nidd = 0\nlists = xlrd.open_workbook(r'C:\\Users\\pve_win10_1\\Desktop\\xialinya\\raw.xls').sheet_by_index(0).col_values(0)[16:26]\nprint('读取文件',':',lists)\nfor item in lists:\n    # 获取公司名称\n    name = item\n    # 获取工作表\n    data = xlrd.open_workbook(item+'.xlsx').sheet_by_index(0)\n    # 查找年份在哪里列\n    row1 = data.row_values(0)\n    for i in range(len(row1)):\n        index = row1[i].find('2014')\n        if not index:\n            # 如果这一项有2014,那么2015等就依次减1\n            # 依次得到各个年份的数据哦\n            data2014 = data.col_values(i)\n            data2015 = data.col_values(i-1)\n            data2016 = data.col_values(i-2)\n            data2017 = data.col_values(i-3)\n            data2018 = data.col_values(i-4)\n            datas = [data2014,data2015,data2016,data2017,data2018]\n    # 写入这个公司的数据\n    for i in range(5):\n        writedata(sheets[i],datas[i],name,idd)\n    idd = idd + 1\n\n# 设置单元格高度\n\nfor each in sheets:\n    for i in range(12):\n        each.col(i).width = 5000\n    for i in range(15):\n        each.row(i).height_mismatch = True\n        each.row(i).height = 300\n\n# 保存文件\nworkbook.save(r'C:\\Users\\pve_win10_1\\Desktop\\export\\数据收集.xls')\nprint('over!')\n\n```",
+      "tags": [
+        "python",
+        "excel"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-03-29T14:59:10.000Z",
+      "id": 36
+    },
+    {
+      "title": "ubuntu18.04编译安装nginx",
+      "content": "最近重新升级了一下网站，记录下编译安装nginx的过程怕以后忘了：\n```shell\n# 安装依赖\nsudo apt-get libpcre3 libpcre3-dev\nsudo apt-get install openssl libssl-dev\nsudo apt-get install zlib1g-dev\n# 下载编译安装\nwget https://nginx.org/download/nginx-1.17.9.tar.gz\ntar vxzf nginx-1.17.0.tar.gz\ncd nginx-1.17.0\n./config ----prefix=/usr/local/nginx --with-heep_stub_status_module --with-http_ssl_module  -with-stream\nmake\nmake install\n# 添加到系统环境变量方便调用\nvim /etc/profile\n# 在最后添加\nexport PATH=/usr/local/nginx/sbin:$PATH\n# 导入\nsudo source /etc/profile\n# 记得权限问题\n```\n\n",
+      "tags": [
+        "建站"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-04-05T11:59:26.000Z",
+      "id": 37
+    },
+    {
+      "title": "nginx上传文件大小限制",
+      "content": "最近升级搭建了基于`cloudreve`的私有云，用`nginx`反向代理后发现无法上传超过4m的文件，解决方法如下：\n在nginx的配置文件中的server字段下加入：\n```c\nclient_max_body_size 10000M;\n```\n其中大小可以任意修改\n",
+      "tags": [
+        "nginx",
+        "建站"
+      ],
+      "top": 0,
+      "category": "后端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-04-05T12:59:20.000Z",
+      "id": 38
+    },
+    {
+      "title": "ubuntu的supervisor安装和使用",
+      "content": "最近搭建了基于`cloudreve`的私有云，搭建完成后需要添加`进程守护`,`supervisor`就是一款很好用的进程管理工具。\n## 安装\n***python必须的2.x版本***\n如果版本不对，请切换。\n```shell\n# ubuntu\nsudo apt install supervisor\n# centos \nyun install -y supervisor\n# python\npip2 install supervisor\n```\n\n## 配置\n配置文件在`/etc/supervisor/conf.d/`目录下。添加你想要的`name.conf`即可，示例：\n```shell\n[program:task]                                       #管理进程的命名\ncommand=python test.py  -c test.conf　　　　　　　　　　#执行的命令\nstderr_logfile=/var/log/supervisor/test.log　　　　　　#错误日志输出路径\nstdout_logfile=/var/log/supervisor/test.log　　　　　　#日志输出路径\ndirectory=/root/test　　　　　　　　　　　　　　　　　　　 #命令执行的工作空间\nautostart=true　　　　　　　　　　　　　　　　　　　　　　　#自动启动\nuser=root　　　　　　　　　　　　　　　　　　　　　　　　　　#指定用户\nautorestart=true　　　　　　　　　　　　　　　　　　　　　　#自动重启</pre>\n```\n配置完成后，执行:\n```shell\nsupervisorctl reload\n```\n\n## 使用\n```shell\nsupervisorctl status #查看supervisorctl状态\nsupervisorctl start nginx #启动子进程nginx\nsupervisorctl stop nginx  #关闭子进程nginx\nsupervisorctl restart nginx #重启子进程nginx\n```\n\n## 参考链接\n[ubuntu中supervisor的安装及配置](https://www.jianshu.com/p/68605ac9d06a)",
+      "tags": [
+        "ubuntu",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-04-05T13:01:26.000Z",
+      "id": 39
+    },
+    {
+      "title": "PyQt5学习笔记(一)安装及环境配置",
+      "content": "最近为了写[gnss下载工具](https://www.mereith.com/gnss)学习了PyQt5，查阅了不少资料，为了避免遗忘，把用到的资源和一些知识记载如下.本篇主要介绍`PyQt5`的安装以及配合`Qt Designer`和`VS Code`一起使用的环境配置.\n\n## PyQt5的安装\n对于正常的win10，mac平台，直接用`pip install PyQt5`即可.\n\n对于`debian/ubuntu`来说，比如我的树莓派(arm64的系统)就没办法直接安装，一开始我是编译安装的，按部就班的安装`qmake`，`xxxx-dev`，然后开始编译，比较费劲。后来发现根本不用。直接`apt install python3-pyqt5`就行了，没错，就是这么简单。\n<!-- more -->\n## Qt Designer的安装\n设计图形界面，所见即所得的编辑器十分方便的，网上的资料大多是安装完`pyqt5`去目录里就能找到`Qt Designer`，但是我的win10和mac系统都找不到。。。。。。费了很多无用功，最后google了一下，直接就有网站能下载各个版本的`Qt Designer`装上就能用... \n\n[下载地址](https://build-system.fman.io/qt-designer-download)\n\n![](https://pic.mereith.com/img/qt_designer_download.png-slim)\n\n## vs code环境配置\n1. 安装`PYQT Integration`，插件中心搜索安装，安装完配置一下设置中的第一项，也就是`Qt Designer的路径`\n\n![](https://pic.mereith.com/img/vscode_pyqt_int.png-slim)\n\n![](https://pic.mereith.com/img/qt_setting0.png-slim)\n\n2. 可以在vs code资源管理器中右键选择`PYQT New Form`新建`ui`文件，并用`Qt Designer`打开编辑、预览等。\n   \n![](https://pic.mereith.com/img/qt_right_click.png-slim)\n\n\n3. 右键`ui`文件，`PYQT:Compile Form`编译成`py`文件\n\n![](https://pic.mereith.com/img/qt_right_click2.png-slim)\n\n![](https://pic.mereith.com/img/qt_com_1.png-slim)",
+      "tags": [
+        "python",
+        "PyQt5",
+        "qt"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-05-06T23:30:49.000Z",
+      "id": 40
+    },
+    {
+      "title": "win10系统上禁止运行脚本报错",
+      "content": "在win10中运行hexo时，powershell报错：\n\n![](https://pic.mereith.com/img/ph_error.png-slim)\n\n解决方法：\n1. 以管理员身份打开powershell\n2. 执行下面的命令，选择(A)全是即可\n``` bash\nset-ExecutionPolicy RemoteSigned\n```",
+      "tags": [
+        "vs",
+        "code",
+        "powershell",
+        "Trouble",
+        "shooting"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-05-06T23:31:17.000Z",
+      "id": 41
+    },
+    {
+      "title": "ubuntu/debian安装文泉驿字体",
+      "content": "最近在树莓派上弄3.5寸屏幕，想用`PyQt5`编写一个好看的ui，但是字体是个坑，但其实可以直接使用`apt`安装中文字体，例如安装`文泉驿体`命令：\n\n```bash\napt install ttf-wqy-zenhei\n``` \n\n想用别的字体可以`search`一下啦。",
+      "tags": [
+        "ubuntu",
+        "debian",
+        "字体安装",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-05-07T00:15:00.000Z",
+      "id": 42
+    },
+    {
+      "title": "Python操作MongoDB",
+      "content": "主要参考（抄袭）自：[Python操作MongoDB看这一篇就够了](https://juejin.im/post/5addbd0e518825671f2f62ee#heading-5)\n\n## 准备工作\n你需要有个安装了`MongoDB`的服务器或者本地主机，另外请`pip install pymongo`一下。如果你不会装，请看我写的[MongoDB的基本概念、安装及用户权限配置]()\n\n## 连接MongoDB\n连接`MongoDB`时，我们需要使用`PyMongo`库里面的`MongoClient`。一般来说，传入`MongoDB的IP及端口`即可，其中第一个参数为`地址host`，第二个参数为`端口port`（如果不给它传递参数，默认是`27017`）：\n\n```python\nimport pymongo\nclient = pymongo.MongoClient(host='localhost', port=27017)\n```\n\n这样就可以创建`MongoDB`的连接对象了。\n\n另外，`MongoClient`的第一个参数`host`还可以直接传入MongoDB的`连接字符串`，它以`mongodb开头`，可以用它来指定密码账户等方式，例如：\n\n```python\nclient = MongoClient('mongodb://user:pwd@localhost:27017/')\n```\n\n关于连接的更多姿势，请看官方的[连接字符串](https://docs.mongodb.com/manual/reference/connection-string)\n\n## 指定数据库\n`MongoDB`中可以建立多个数据库，接下来我们需要指定操作哪个数据库。这里我们以`test数据库`为例来说明，下一步需要在程序中指定要使用的数据库：\n\n```python\ndb = client.test\n```\n\n这里调用`client`的`test属性`即可返回`test数据库`。当然，我们也可以这样指定：\n\n```python\ndb = client['test']\n```\n\n这两种方式是等价的。\n\n## 指定集合\nMongoDB的每个数据库又包含许多`集合（collection）`，它们类似于关系型数据库中的表。\n\n下一步需要指定要操作的集合，这里指定一个集合名称为`students`。与指定数据库类似，指定集合也有两种方式：\n\n```python\ncollection = db.students\n#或者\ncollection = db['students']\n```\n\n这样我们便声明了一个Collection对象。\n\n## 插入数据\n\n接下来，便可以插入数据了。对于`students`这个集合，新建一条`学生数据`，这条数据以字典形式表示：\n\n```python\nstudent = {\n    'id': '20170101',\n    'name': 'Jordan',\n    'age': 20,\n    'gender': 'male'\n}\n```\n\n这里指定了学生的学号、姓名、年龄和性别。接下来，直接调用collection的`insert()方法`即可插入数据，代码如下：\n\n```python\nresult = collection.insert(student)\nprint(result)\n```\n\n在`MongoDB`中，每条数据其实都有一个`_id属性`来`唯一标识`。如果没有显式指明该属性，MongoDB会自动产生一个`ObjectId类型的_id属性`。insert()方法会在执行后返回`_id值`。\n\n运行结果如下：\n```bash\n5932a68615c2606814c91f3d\n```\n\n当然，我们也可以同时插入多条数据，只需要以`列表形式`传递即可，示例如下：\n\n```python\nstudent1 = {\n    'id': '20170101',\n    'name': 'Jordan',\n    'age': 20,\n    'gender': 'male'\n}\n\nstudent2 = {\n    'id': '20170202',\n    'name': 'Mike',\n    'age': 21,\n    'gender': 'male'\n}\n\nresult = collection.insert([student1, student2])\nprint(result)\n```\n\n返回结果是对应的`_id的集合`：\n\n```python\n[ObjectId('5932a80115c2606a59e8a048'), ObjectId('5932a80115c2606a59e8a049')]\n```\n\n实际上，在`PyMongo 3.x`版本中，官方已经不推荐使用`insert()方法`了。当然，继续使用也没有什么问题。官方推荐使用`insert_one()`和`insert_many()`方法来分别插入单条记录和多条记录，示例如下：\n\n```python\nstudent = {\n    'id': '20170101',\n    'name': 'Jordan',\n    'age': 20,\n    'gender': 'male'\n}\n\nresult = collection.insert_one(student)\nprint(result)\nprint(result.inserted_id)\n```\n\n运行结果如下：\n\n```python\n<pymongo.results.InsertOneResult object at 0x10d68b558>\n5932ab0f15c2606f0c1cf6c5\n```\n\n与`insert()`方法不同，这次返回的是`InsertOneResult对象`，我们可以调用其`inserted_id属性`获取`_id`。\n\n对于`insert_many()`方法，我们可以将数据以`列表形式`传递，示例如下：\n\n```python\nstudent1 = {\n    'id': '20170101',\n    'name': 'Jordan',\n    'age': 20,\n    'gender': 'male'\n}\n\nstudent2 = {\n    'id': '20170202',\n    'name': 'Mike',\n    'age': 21,\n    'gender': 'male'\n}\n\nresult = collection.insert_many([student1, student2])\nprint(result)\nprint(result.inserted_ids)\n\n```\n\n运行结果如下：\n\n```python\n<pymongo.results.InsertManyResult object at 0x101dea558>\n[ObjectId('5932abf415c2607083d3b2ac'), ObjectId('5932abf415c2607083d3b2ad')]\n```\n\n该方法返回的类型是`InsertManyResult`，调用`inserted_ids属性`可以获取插入数据的`_id列表`。\n\n## 查询\n。。。写不动了 慢慢来",
+      "tags": [
+        "python",
+        "MongoDB",
+        "数据库"
+      ],
+      "top": 0,
+      "category": "后端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-05-07T00:19:04.000Z",
+      "id": 43
+    },
+    {
+      "title": "MongoDB的基本概念、安装及用户权限配置",
+      "content": "最近爬数据处理数据，数据量有几百万条有点大，总是用`json`还是不方便，于是转向了`MongoDB`,下面把我的配置心得说一下。\n## MongoDB简介\n### MongoDB概念\n`MongoDB`是一个基于分布式文件存储的数据库。由 C++ 语言编写。旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。\n\n`MongoDB`是一个介于关系数据库和非关系数据库之间的产品，是非关系数据库当中功能最丰富，最像关系数据库的。\n\n`MongoDB`将数据存储为一个文档，数据结构由键值`(key=>value)`对组成。`MongoDB文档`类似于`JSON`对象。字段值可以包含其他文档，数组及文档数组。在`MongoDB`中，对于插入的格式并没有要求，字段类型可以随意变动。\n### NoSQL\n`NoSQL(NoSQL = Not Only SQL )`，意即\"不仅仅是SQL\"。\n\n为了能够更好的支持大数据或者实时应用，现在我们通常需要`非关系型`的、动态的schema，这样就没有必要进行表关联查询。`NoSQL`数据库的出现，就是要让多台服务器协同处理，提升数据处理的性能，以及通过横向扩展来承载分布式数据库负载，来满足新一代数据处理的需求。\n### 与SQL术语对比\n| SQL | MongoDB|\n| :-: | :-: |\n|表（Talbe）|\t集合（Collection）|\n|行（Row）|\t文档（Document）|\n|列（Col）\t|字段（Field）\n|主键（Primary Key）\t|对象ID（ObjectId）|\n|索引（Index）|索引（Index）|\n|嵌套表（Embeded Table）\t|嵌入式文档（Embeded Document）|\n|数组（Array）\t|数组（Array）|\n\n### 产品线\n现在官网上面有云服务，默认免费的好像是`500mb`硬盘的款式，对性能要求不高的用免费的车也不是不行。\n\n下载的话，`Server`有`社区版`和`企业版`.\n\n另外还有个`Compass`就是数据可视化的管理器，企业版还可以数据分析，如果有图形界面的话，下一个还是挺好用的。\n\n## 安装\n\n[官方安装说明](https://docs.mongodb.com/manual/installation/)说的比我好\n\n## 用户权限配置\n权限是和库绑定的，比如我想给`mereith`库创建一个叫`zhangsan`的用户，密码是`12345`，那么进入到`Mongo shell`里，输入:\n\n```bash\n# 切换数据库\nuse mereith\n# 创建用户\ndb.createUser(\n    {\n        user: \"zhangsan\",\n        pwd: \"12345\",\n        roles:[\n            {role:\"readWrite\",db:\"mereith\"}\n        ]\n    }\n)\n```\n\n更多权限和操作请看[官方权限配置文档](https://docs.mongodb.com/manual/core/security-users/)\n\n",
+      "tags": [
+        "MongoDb",
+        "数据库",
+        "建站"
+      ],
+      "top": 0,
+      "category": "后端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-05-07T00:19:23.000Z",
+      "id": 44
+    },
+    {
+      "title": "screen命令手册(转)",
+      "content": "[原文链接](https://man.linuxde.net/screen)\n\n有时候我们ssh连接了服务器，但是一退出上面的任务也就终止了，为了退出的时候任务也能保留在后台运行，可以用`screen`命令来实现\n\n## 安装\n```bash\nsudo apt install screen\n```\n\n## 语法\n```bash\nscreen [-AmRvx -ls -wipe][-d <作业名称>][-h <行数>][-r <作业名称>][-s ][-S <作业名称>]\n\n-A 　将所有的视窗都调整为目前终端机的大小。\n-d <作业名称> 　将指定的screen作业离线。\n-h <行数> 　指定视窗的缓冲区行数。\n-m 　即使目前已在作业中的screen作业，仍强制建立新的screen作业。\n-r <作业名称> 　恢复离线的screen作业。\n-R 　先试图恢复离线的作业。若找不到离线的作业，即建立新的screen作业。\n-s 　指定建立新视窗时，所要执行的shell。\n-S <作业名称> 　指定screen作业的名称。\n-v 　显示版本信息。\n-x 　恢复之前离线的screen作业。\n-ls或--list 　显示目前所有的screen作业。\n-wipe 　检查目前所有的screen作业，并删除已经无法使用的screen作业。\n```\n## 常用命令\n```bash\nscreen -S yourname -> 新建一个叫yourname的session\nscreen -ls -> 列出当前所有的session\nscreen -r yourname -> 回到yourname这个session\nscreen -d yourname -> 远程detach某个session\nscreen -d -r yourname -> 结束当前session并回到yourname这个session\n```",
+      "tags": [
+        "linux",
+        "linux命令"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-05-07T00:30:49.000Z",
+      "id": 45
+    },
+    {
+      "title": "Ubuntu/Debian挂载ntfs硬盘",
+      "content": "1.安装软件:\n```bash\nsudo apt install ntfs-3g\n```\n\n2.查看硬盘名字\n```bash\nfdisk -l\n```\n找到要挂载的磁盘，记住他的设备名，例如`/dev/sda1`\n\n3.挂载硬盘\n```bash\n#创建挂载目录\nsudo mkdir /mnt/hdd0\n#挂载硬盘\nsudo ntfs-3g /dev/sda1 /mnt/hdd0\n```\n\n4.开机自动挂载\n打开`/etc/fstab`，添加如下内容：\n```bash\n/dev/sda1 /mnt/hdd0 ntfs-3g defaults,locale=zh_CN.UTF-8 0 0\n```",
+      "tags": [
+        "ubuntu",
+        "debian",
+        "linux",
+        "linux配置"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-05-07T23:06:12.000Z",
+      "id": 46
+    },
+    {
+      "title": "debian10安装java",
+      "content": "最近开始玩我的世界了，想给我的chromebook也装一个玩玩，但是因为里面的linux容器时debian10的，而apt直接装的openjdk没有`javaFX`，没办法运行HMCL启动器，折腾了一番，还是装`oracle`的官方java吧。但是网上找的有些添加仓库的，`debian10`没法用添加仓库的命令，只好从官网下载安装了。\n## 下载java\n\n在 Debian 上安装 Oracle JDK 需要从[官网](https://www.oracle.com/java/technologies/javase-downloads.html)上下载可供安装的软件包。\n\n版本看个人需要，在这里我玩我的世界1.15.2直接下载最新的JRE14就行了，而且直接有[deb的安装包](https://www.oracle.com/java/technologies/javase-jdk14-downloads.html)可以用。\n\n如果下的版本没有安装包，或者像手动装，那么可以下载`Linux Compressed Archive`版本的，下载下来后缀是`tar.gz`\n\n## 安装java\n\n对于直接下载`deb安装包`的，直接`dpkg -i xxxx.deb`安装就好了。\n\n而下载了可执行文件压缩包的，先创建一个目录：\n```\nsudo mkdir /usr/local/oracle-java-14\n```\n然后使用`tar命令`将刚才下载的文件解压：\n```\ntar zxvf xxxxxxx.tar.gz -C /usr/local/oracle-java-14\n```\n最后，运行下面的命令创建新的方案：\n```\nsudo update-alternatives --install \"/usr/bin/java\" \"java\" \"/usr/local/oracle-java-14/jdkxxxxx(你的下的版本）/bin/java\" 1500\n\nsudo update-alternatives --install \"/usr/bin/javac\" \"javac\" \"/usr/local/oracle-java-14/jdkxxxxx(你的下的版本）/bin/javac\" 1500\n\nsudo update-alternatives --install \"/usr/bin/javaws\" \"javaws\" \"/usr/local/oracle-java-14/jdkxxxxx(你的下的版本）/bin/javaws\" 1500\n```\n完事儿了，可以测试一下`java -version`哦。\n",
+      "tags": [
+        "ubuntu",
+        "debian",
+        "linux",
+        "linux配置"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-19T22:36:14.000Z",
+      "id": 47
+    },
+    {
+      "title": "nginx禁止直接通过ip访问",
+      "content": "为了安全性，我们常常需要避免直接通过ip地址进行http(s)访问\n## 建立默认配置文件\n对于nginx中，我们可以建立默认的`0.default.conf`文件，内容如下：\n```\n listen 80;\n    listen 443 ssl http2;\n    server_name _;\n    #直接用ip访问时重定向为444\n     if ( $host ~* \"\\d+\\.\\d+\\.\\d+\\.\\d+\" ) {\n       return 444;\n       #rewrite ^(.*) http://www.bojinmi.com;\n     }\n     #配置默认无效证书\n    #HTTP_TO_HTTPS_END\n    ssl_certificate    /www/server/panel/vhost/cert/default/fullchain.pem;\n    ssl_certificate_key    /www/server/panel/vhost/cert/default/privkey.pem;\n    ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;\n    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;\n    ssl_prefer_server_ciphers on;\n    ssl_session_cache shared:SSL:10m;\n    ssl_session_timeout 10m;\n    error_page 497  https://$host$request_uri;\n```\n## 生成辣鸡假证书\n\n### 公共证书\n```\n-----BEGIN CERTIFICATE-----\nMIIDITCCAsagAwIBAgIUTcEWLzynkLCFCoAC1iDH2vG3EkYwCgYIKoZIzj0EAwIw\ngY8xCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T\nYW4gRnJhbmNpc2NvMRkwFwYDVQQKExBDbG91ZEZsYXJlLCBJbmMuMTgwNgYDVQQL\nEy9DbG91ZEZsYXJlIE9yaWdpbiBTU0wgRUNDIENlcnRpZmljYXRlIEF1dGhvcml0\neTAeFw0xOTAxMTMxNDMxMDBaFw0zNDAxMDkxNDMxMDBaMGIxGTAXBgNVBAoTEENs\nb3VkRmxhcmUsIEluYy4xHTAbBgNVBAsTFENsb3VkRmxhcmUgT3JpZ2luIENBMSYw\nJAYDVQQDEx1DbG91ZEZsYXJlIE9yaWdpbiBDZXJ0aWZpY2F0ZTBZMBMGByqGSM49\nAgEGCCqGSM49AwEHA0IABAg/hZ9lDHj/f+0jDRAN23TkNEqIi46mCGnwZVD3glxL\nl+a1mpfXLHSEFTipnSyQgmvkPYzQGaEIFD0q6W/ZgMujggEqMIIBJjAOBgNVHQ8B\nAf8EBAMCBaAwHQYDVR0lBBYwFAYIKwYBBQUHAwIGCCsGAQUFBwMBMAwGA1UdEwEB\n/wQCMAAwHQYDVR0OBBYEFCEZF6Eyem01XPbgwr6DXLZV1qsQMB8GA1UdIwQYMBaA\nFIUwXTsqcNTt1ZJnB/3rObQaDjinMEQGCCsGAQUFBwEBBDgwNjA0BggrBgEFBQcw\nAYYoaHR0cDovL29jc3AuY2xvdWRmbGFyZS5jb20vb3JpZ2luX2VjY19jYTAjBgNV\nHREEHDAaggwqLmRuc3BvZC5jb22CCmRuc3BvZC5jb20wPAYDVR0fBDUwMzAxoC+g\nLYYraHR0cDovL2NybC5jbG91ZGZsYXJlLmNvbS9vcmlnaW5fZWNjX2NhLmNybDAK\nBggqhkjOPQQDAgNJADBGAiEAnrequCk/QZOOrcPH6C3Hgcy4SPNUy5rQtku/aYkj\nqQoCIQCN6IyYNiXuwG+8jUgJrveiirBjiz2jXZSTEfVAyibjTg==\n-----END CERTIFICATE-----\n```\n### 密钥\n```\n-----BEGIN PRIVATE KEY-----\nMIGHAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBG0wawIBAQQgK0HE3hTJQDg6p/fj\nnS92eSuRKZEZ5F4grT6tWFKNYVmhRANCAAQIP4WfZQx4/3/tIw0QDdt05DRKiIuO\npghp8GVQ94JcS5fmtZqX1yx0hBU4qZ0skIJr5D2M0BmhCBQ9Kulv2YDL\n-----END PRIVATE KEY-----\n```\n\n至此基本完事，补充的话可以判断一下非指定主机不允许访问：\n```\nif ( $host != \"www.mereith.com\" ) {\n   rewrite ^(.*) http://www.mereith.com;\n }\n```\n\n## 参考\n\n[宝塔nginx 默认站点禁止https://ip地址直接访问](https://blog.csdn.net/Sncdma/article/details/106226673)\n",
+      "tags": [
+        "nginx",
+        "服务器",
+        "建站"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-19T22:51:52.000Z",
+      "id": 48
+    },
+    {
+      "title": "powershell禁止运行脚本",
+      "content": "最近写了点脚本，老出现这个就很烦。解决方法如下：\n\n管理员打开ps，运行：\n```\n set-executionpolicy remotesigned\n```\n选`Y`即可。",
+      "tags": [
+        "win10",
+        "powershell"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-19T23:07:35.000Z",
+      "id": 49
+    },
+    {
+      "title": "openwrt旁路由踩坑",
+      "content": "假期在家待很久，有一些特殊的上网需求，为了实现所谓的透明代理（省事效率高）所以采用软路由的方案。用的是学校带回来的双千兆D2550主板，装了个`openwrt`\n\n## 国内网站访问不了\n\n解决方法，防火墙添加自定义规则：\n```\niptables -t nat -I POSTROUTING -j MASQUERADE\n```\n搞成！\n\n## 参考及详细教程\n[OpenWrt中，旁路由的设置与使用](https://zhuanlan.zhihu.com/p/112484256)\n",
+      "tags": [
+        "软路由",
+        "openwrt"
+      ],
+      "top": 0,
+      "category": "魔法网络",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-19T23:24:19.000Z",
+      "id": 50
+    },
+    {
+      "title": "nginx反向代理上传文件报错",
+      "content": "最近捣鼓了一下我的世界，弄了个控制面板然后用nginx反代，但是用控制面板带的文件管理上传文件时总是报错。\n在nginx反代配置文件加上如下内容即可解决：\n\n```\nclient_max_body_size 1000m;\n```\n",
+      "tags": [
+        "nginx",
+        "服务器",
+        "建站"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-21T00:22:10.000Z",
+      "id": 51
+    },
+    {
+      "title": "ubuntu安装code-server添加证书并反代",
+      "content": "最近捣鼓一堆服务，经常要ssh连上服务器，然后一顿`vim`、`cp`、`mv`之类的，很烦，之前捣鼓过`code-server`（现在版的vs code），又捣鼓了一下，直接用它来在线编辑文本，执行代码，捣鼓东西美滋滋呀！\n\n而且我的ipad还可以直接用。这样我就可以用它直接来写`hexo`博客了，写完直接生成就用，反正都在一个服务器上不是，妙！\n\n## 安装code-sever\n直接去github的[主页](https://github.com/cdr/code-server/)\n安装脚本：\n```\ncurl -fsSL https://code-server.dev/install.sh | sh -s -- --dry-run\n```\n不想用去看手动安装的教程也ok的。\n\n## 启用code-server\n如果是脚本安装，后面会告诉你怎么启动的。你也可以手动来：\n```\nsystemctl --user enable --now code-server\n```\n\n## 配置code-server\n访问code-server有很多种方法，比如ssh访问，web访问，因为我想用ipad网页访问，所以就用密码进行认证了（而且这样可以在别的临时设备上登录写博客）\n\n首先编辑配置文件`~/.config/code-server/config.yaml`\n\n```\nbind-addr: 127.0.0.1:6666 #可以改一下你想用的端口\nauth: password  #认证方式\npassword: 你想要的密码\ncert: false #不用生成自签证书\n```\n\n然后输入下面的命令重新载入配置：\n```\nsystemctl --user restart code-server\n```\n\n## 申请证书\n\n我直接去腾讯云申请的免费证书，申请完了下载到指定的地方。\n\n## 配置nginx\n添加nginx的配置文件如下：\n```\n    server {\n        listen       443 ssl;\n        server_name  你的域名;\n\n        ssl_certificate 证书地址;\n     #私钥文件名称\n     ssl_certificate_key 密钥地址;\n     ssl_session_timeout 5m;\n     #请按照以下协议配置\n     ssl_protocols TLSv1 TLSv1.1 TLSv1.2;\n     #请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。\n     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE;\n     ssl_prefer_server_ciphers on;\n        location / {\n            #root   html;\n            #index  index.html index.htm;\n    #记得改端口号\n    proxy_pass http://localhost:6666;\n    proxy_set_header Host $host;\n    proxy_set_header Upgrade $http_upgrade;\nproxy_set_header X-Real-IP $remote_addr;\nproxy_set_header X-Scheme $scheme;\n    proxy_set_header Connection upgrade;\n    proxy_set_header Accept-Encoding gzip;\n        }\n}\n    server {\n        listen 80;\n        server_name 你的域名;\n        return 301 https://$host$request_uri;\n\n}                 \n```\n\n然后测试并应用：\n```\nnginx -t\nnginx -s reload\n```\nPS:其实官方用的`caddy`，配置傻瓜很好用，而且自己还带了证书申请签名工具，妙不可言，如果你还没装过类似的工具，不妨用用`caddy`吧，很棒的哦。",
+      "tags": [
+        "nginx",
+        "服务器",
+        "优雅写代码",
+        "code-server"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-21T00:24:44.000Z",
+      "id": 52
+    },
+    {
+      "title": "用nvm来管理node版本",
+      "content": "有时候，我们在实际开发应用中经常需要切换node版本，我们用`nvm`工具就可以做到哦\n\n## 安装\n\n[github主页](https://link.jianshu.com/?t=https%3A%2F%2Fgithub.com%2Fcreationix%2Fnvm%2Fblob%2Fmaster%2FREADME.md)\n\n直接搞就行了：\n```\nwget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash\n```\n弄完之后关闭当前的终端窗口，重新打开一下就可以用了\n\n## 使用\n\n```\n#安装最新版本\nnvm install node\n#安装指定版本号\nnvm install 6.14.4\n#列出可用版本\nnvm ls\nnvm ls-remote\n#切换版本\nnvm use x.x.x\n```\n\n\n",
+      "tags": [
+        "node",
+        "前端",
+        "环境搭建"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-21T00:37:58.000Z",
+      "id": 53
+    },
+    {
+      "title": "powershell更改文件权限",
+      "content": "最近在压缩文件夹的时候，发现有几个文件不得劲，总是权限不允许，用管理员身份运行也不太行，遂用`powersehll`改一下权限\n## 修改文件权限\n```\nGet-Acl -Path <File or Folder Path> | Format-List\n```\n修改文件访问权限需要用到Set-Acl命令，使用-Path参数指定要修改的文件路径，使用-AclObject参数指定一个对象，该对象相当于一个ACL模板，此ACL模板指定了用户访问资源的权限设定。该对象的设定需要调用\"System.Security.AccessControl.FileSystemAccessRule\"类。\n\n设置脚本：\n```\n$account = \"test\\test\"\n    $FileSystemRights = \"FullControl\"\n \n    $objType = [System.Security.AccessControl.AccessControlType]::Allow\n    $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule ($account,$FileSystemRights,$objType)\n    $Folder = \"W:\\Test\\test.txt\"\n    $acl = Get-Acl $Folder\n    $acl.SetAccessRule($accessRule)\n    Set-Acl -Path $Folder -AclObject $acl\n\n```\n## 修改访问文件夹权限\n与修改文件访问权限类似，同样应用Set-Acl命令，只是在调用FileSystemAccessRule时可以多指定参数InheritanceFlags和PropagationFlags来指定访问权限的设定是否被子文件或子文件夹继承：\n设置脚本:\n```\n$account = \"test01win2k8r2\\test\"\n     $FileSystemRights = \"FullControl\"\n     $InheritanceFlag = [System.Security.AccessControl.InheritanceFlags]::ObjectInherit\n     $PropagationFlag = [System.Security.AccessControl.PropagationFlags]::None\n     $objType = [System.Security.AccessControl.AccessControlType]::Allow\n     $accessRule = New-Object System.Security.AccessControl.FileSystemAccessRule ($account,$FileSystemRights,$InheritanceFlag,$PropagationFlag,$objType)\n     $Folder = \"W:\\Test\\\"\n     $acl = Get-Acl $Folder\n     $acl.SetAccessRule($accessRule)\n     Set-Acl -Path $Folder -AclObject $acl\n```\n",
+      "tags": [
+        "powershell"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-21T00:42:45.000Z",
+      "id": 54
+    },
+    {
+      "title": "powershell解压缩文件",
+      "content": "## 解压文件\n```\nCompress-Archive -Path D:\\boy -DestinationPath E:\\boy_bakcup.zip\n```\n\n## 压缩文件\n```\nExpand-Archive -Path E:\\boy_bakcup.zip -DestinationPath F:\\boy\n```\n\n## 压缩比率问题\n我这边实际测试了一下……惊人，用`tar czf`和`bindzip默认zip压缩`都是102M->60M，但是这个居然可以压到21M，就离谱。\n",
+      "tags": [
+        "powershell"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-21T00:48:10.000Z",
+      "id": 55
+    },
+    {
+      "title": "我的世界服务器及MCSM面板搭建",
+      "content": "参考：[我的世界MCSM面板搭建](https://blog.vlssu.com/views/tutorials/2019/121202.html)\n",
+      "tags": [
+        "我的世界",
+        "服务器"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-21T00:51:45.000Z",
+      "id": 56
+    },
+    {
+      "title": "intel ax200ngw刷killer 1650x教程",
+      "content": "参考：\n\n[[折腾] 把 Intel AX200 系列网卡刷成 Killer AX1650 系列网卡教程 最简方法](https://bbs.luobotou.org/thread-45955-1-1.html)\n的全部\n+\n[intel ax200ngw刷killer 1650x教程](https://blog.csdn.net/u014390186/article/details/103423636)\n的第七步开始",
+      "tags": [
+        "网络",
+        "折腾",
+        "装机",
+        "ax200"
+      ],
+      "top": 0,
+      "category": "折腾搞机",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-07-28T23:53:29.000Z",
+      "id": 57
+    },
+    {
+      "title": "ffmpeg音视频处理",
+      "content": "## 视频裁剪\n![](https://pic.mereith.com/img/20200802000706.png-slim)\n\n## 视频提取音频\n```\n# to mp3(提不出mp3看更多下载lame编码器就行了)\nffmpeg -i input.mp4 -f mp3 -vn output.mp3\n# copy aac\nffmpeg -i input.mp4 -acodec copy -vn output.aac(m4a)\n```\n\n## 视频转gif\n![](https://pic.mereith.com/img/20200802001409.png-slim)\n\n## 视频加字幕\n```\nffmpeg -i input.mp4 -i subtitle.src output.mkv\n```\n\n## 更多\n[官网](http://ffmpeg.org/)\n[LAME mp3编解码官网](http://lame.sourceforge.net/)",
+      "tags": [
+        "ffmpeg",
+        "音视频处理"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-08-02T00:03:22.000Z",
+      "id": 58
+    },
+    {
+      "title": "PVE导入img磁盘镜像",
+      "content": "\n## 上传\n用pve实现软路由时经常需要导入img镜像作为磁盘，方法很简单，先把它上传到`local`中。\n\n上传之后默认在`/var/lib/vz/images/`\n\n## 导入\n\n假设导入的`vm ID`为`100`，镜像为`openwrt.img`\n```\nqm importdisk 100 openwrt.img local-lvm\n```",
+      "tags": [
+        "PVE",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-08-11T22:31:09.000Z",
+      "id": 59
+    },
+    {
+      "title": "PVE设置硬盘直通",
+      "content": "\n## 查看硬盘序列号\nssh进入PVE，然后输入\n```\nls /dev/disk/by-id\n```\n查看序列号，比如：\n![](https://pic.mereith.com/img/20200811223555.png-slim)\n\n可以看出来有两块物理硬盘，一块ocz的ssd，一块东芝的硬盘。找出你想直通的硬盘序列号（不带part），然后复制。\n\n## 直通硬盘\n比如我想直通序列号是`ata-TOSHIBA_MQ01ABF050_75V2CZ6PT`的硬盘到VM ID是100的虚拟机上，就在ssh中输入：\n```\nqm set 100 -sata1 /dev/disk/by-id/ata-TOSHIBA_MQ01ABF050_75V2CZ6PT\n```\n即可！",
+      "tags": [
+        "PVE",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-08-11T22:31:23.000Z",
+      "id": 60
+    },
+    {
+      "title": "python提前捕捉头脑王者2答案",
+      "content": "最近和女票玩头脑王者2打发时间，因为比较菜被鄙视了，就想着如何才能用技术来搜索答案。经过查阅资料发现，头脑王者2通过`WebSocket`通信中会在`题目出现前`直接发送客户端答案和题目，所以我们只要通过监控数据包提取数据就可以提前知道答案了。\n## mitmproxy抓包工具\n[mitmproxy](https://mitmproxy.org/)是一个支持HTTP和HTTPS的抓包程序，有类似Fiddler、Charles的功能,并且可以通过python调用来编程实现特定的功能，非常好用。\n\n> 使用方法参考：[App爬虫神器mitmproxy和mitmdump的使用](https://juejin.im/post/6844903588645322760)\n\n注意：在电脑上可能因为是本机，在我的win10系统上抓取微信pc客户端小程序的`WebSocket`通讯失败了，经过测试，在`ios`系统上添加证书可以正常抓取`https,wss`等数据，在`android`系统上，无论是否大于7.0，添加根证书root信任之后也没法正确抓取`wss`但是`https`可以，而网上流传的用老版本微信因为微信会提示更新用不了所以也无法使用了，最后只能用我的`ios14`的`iphone11`抓包。\n\n## 原理\n1. mitmweb抓取微信小程序的数据流\n2. 分析判断数据流，抓取需要的题目和答案数据\n3. 输出到屏幕上并调用win10的语音朗读读出答案\n   \n## 代码实现\n### 环境\n> python3.8\n> mitmproxy (我用pip安装的)\n> msgpack (用来解码序列数据)\n> win32com (调用朗读人)\n### 运行方式\n```python3\nmitmweb --set http2=false -s run.py\n# 为了抓取成功避免错误需要加上http2=false参数\n```\n### 运行效果\n![](https://pic.mereith.com/img/b51d6de44796ad94ad7eaf568a5e192.jpg-slim)\n\n![](https://pic.mereith.com/img/a7f4552e8dfee8046ffd0892950fa4e.jpg-slim)\n\n***另外一说这个游戏会给你匹配电脑来玩，到最后冲榜一的时候，和我一起的小伙伴根本就没在玩，电脑虚拟了它的数据变成了我的队友，这种情况还有很多，我就觉得不可能玩家啥时候都能匹配到啊，所以这个游戏随便玩玩就好了，不要太认真，非要冲榜请写个自动化操作的，不要自己肝，不值得***\n<!-- more -->\n### 代码\n```python3\nfrom mitmproxy import ctx\nimport mitmproxy.websocket\nimport msgpack\nimport gzip\nimport win32com.client\nimport asyncio\ngames = 0\nclass ShowAnswers:\n    games = 0\n    async def say(self,texts):\n        speaker.Speak(texts)\n\n    def websocket_message(self, flow: mitmproxy.websocket.WebSocketFlow):\n        \n        ctx.log.warn(\"收到了wss信息。\")\n        message = flow.messages[-1]\n        content = message.content\n\n        if content !=b'\\x00'and len(str(content)) >= 10:\n            #排除空的或者无法识别的信息\n\n            content = gzip.decompress(content)\n            msg = msgpack.loads(content)\n            try:\n                body = msgpack.loads(msg['body'],strict_map_key=False)\n                msg['body'] = body\n            except:\n                pass\n            #解压读取信息\n\n            cmd = msg['cmd']\n\n            if cmd  == 'Resp_Sync':\n                #处理信息\n                self.deal_resp_sync(msg)\n\n            if cmd == \"Push_MatchStared\":\n                #speaker.Speak(\"比赛开始啦，么么哒\")\n                self.games = self.games +1\n\n    \n    def deal_resp_sync(self,msg):\n        body = msg['body']\n\n        try:\n            battleInfo = body['battleInfo']\n\n            if 'className' in str(battleInfo) and 'province' not in str(battleInfo):\n                #找到正确的包含答案的信息\n                quizMap = battleInfo['quizMap']\n                for num,data in quizMap.items():\n                    #获得题目编号和数据\n                    quiz=data['quiz']\n                    className = data['className']\n                    categoryName = data['categoryName']\n                    answers = {}\n                    for index in data['answers']:\n                        answers[index+1] = data['options'][index]   \n                        #把答案序号存入answers字典\n                    ctx.log.warn(\"{}.{}: {}\".format(className,categoryName,quiz)) \n                    the_answer = \"\"\n                    for index,op in answers.items():\n                        ctx.log.warn(\"[{}] {}\".format(index,op))\n                        the_answer = the_answer+str(index)+'、'\n                        \n                    #遍历answers字典输出答案\n                    asyncio.get_event_loop().create_task(self.say(\"第\"+the_answer[0:-1]+\"个\"))\n                    ctx.log.info(\"\\n\\n\")\n        except:\n            pass\n\nspeaker = win32com.client.Dispatch(\"SAPI.SpVoice\")\naddons = [ShowAnswers()]\n```",
+      "tags": [
+        "python",
+        "爬虫"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-11-19T01:34:24.000Z",
+      "id": 61
+    },
+    {
+      "title": "powershell映射网络驱动器",
+      "content": "最近搭建`emby`需要挂在网络驱动器，但是用的精简版的win10，没办法通过系统的工具挂载（被阉割了），所以想到用`powershell`实现\n```shell\n# adjust path to point to your file share\n$UNCPath = '\\\\server\\share'\n#方法一\nnet use * $UNCPath\n#方法二\nNew-PSDrive -Name y -PSProvider FileSystem -Root $UNCPath -Persist\n#方法三\nNew-SmbMapping -LocalPath 'x:' -RemotePath  $UNCPath\n```\nNet.exe 是最多功能的方法，在 PowerShell 的所有版本中都有效。通过传入一个 “*”，它自动选择下一个有效的驱动器盘符。\n\nNew-PSDrive 从 PowerShell 3 起支持 SMB 共享。\n\nNew-SmbMapping 需要 SmbShare 模块并且现在看来有点古怪：重启后才能在 Windows Explorer 中显示该驱动器。",
+      "tags": [
+        "win10",
+        "powershell",
+        "运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-11-19T01:56:48.000Z",
+      "id": 62
+    },
+    {
+      "title": "距离考研还有36天",
+      "content": "\n时间过得真是快啊，还记得当初上大学的懵懂，去年考研时的酸甜苦辣，一转眼离今年考研只剩下36天了。\n\n最近过得还很好，除了考研这件事压在心头吧。\n\n我有了很棒的女朋友陪我，不再孤单，以前还想过自己会不会单身一辈子，现在想想真的是，谈恋爱的快乐是那时候体会不到的吧哈哈哈哈。\n\n虽然会迷茫会有压力，但到目前为止也没有啥退路了，只能一往无前，希望我能考上吧，这样可以按照预定的轨迹前进，不然日子就很难了。\n\n**加油！考研人**\n\n**加油！考研人**\n\n**加油！考研人**\n\nPS1：等考完研我一定自己写个博客系统……老用hexo还是挺麻烦的\n\nPS2：顺便在做几个沙雕视频和开箱视频！\n\nPS3：没错和老婆的旅行vlog也可以搞搞！\n\nPS4：还有多年积攒的日本vlog！\n\nPS5：要发售了，不知道如果我和老婆住在一起会不会也要把他当路由器来买呢……\n",
+      "tags": [
+        "杂谈"
+      ],
+      "top": 0,
+      "category": "诗与远方",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2020-11-19T02:02:09.000Z",
+      "id": 63
+    },
+    {
+      "title": "Win10家庭版启用组策略",
+      "content": "## 前言\n最近由于出了win10更新后，京瓷打印机蓝屏bug，删除更新包后想顺便禁用更新（通过组策略指定假的更新服务器），但是win10家庭版不能用组策略。但其实不然，它是有相关文件的，可以启用哦。\n\n## 操作步骤\n新建一个txt，复制以下代码，改成`cmd`然后管理员运行就可以了：\n```bat\n@echo off\npushd \"%~dp0\"\ndir /b C:\\Windows\\servicing\\Packages\\Microsoft-Windows-GroupPolicy-ClientExtensions-Package~3*.mum >List.txt\ndir /b C:\\Windows\\servicing\\Packages\\Microsoft-Windows-GroupPolicy-ClientTools-Package~3*.mum >>List.txt\nfor /f %%i in ('findstr /i . List.txt 2^>nul') do dism /online /norestart /add-package:\"C:\\Windows\\servicing\\Packages\\%%i\"\npause\n```\n\n然后`重启电脑`，`win+r`-》`gpedit.msc`就搞定了！",
+      "tags": [
+        "win10"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-18T17:36:50.000Z",
+      "id": 64
+    },
+    {
+      "title": "win10更新后使用京瓷打印机出现蓝屏",
+      "content": "## 前言\n最近妈妈单位电脑一用打印机就蓝屏，查了一下，是因为更新引起的。\n\n## 解决方案\n### 1.删除更新包\npowershell（管理员）输入\n对于win10`2004版本`和`20H2版本`，在powershell（管理员）下输入：\n```bash\nwusa /uninstall /kb:5000802\n```\n对于win10`1909`或`1903`版本，则输入：\n```bash\nwusa /uninstall /kb:5000808\n```\n\n### 2.禁用系统更新\n#### 思路一（邪道思路）\n知乎上看的，人才！\n**step1:**  `win+r`输入`gpedit.msc`打开组策略，如果你没有组策略，那么参考[win10家庭版开启组策略](2021/03/18/Win10家庭版启用组策略)\n**step2:**  找到“计算机配置--管理模版--windows组间--windows更新--指定Internet microsoft更新服务位置”双击打开，启用，随便输入网址，比如bilibili，三个框都填上，点确定，重启电脑就好啦！\n#### 思路二（正常思路）\n新建`.txt`，输入下面的，改成`.reg`，执行：\n```\nWindows Registry Editor Version 5.00[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\au]\"NoAutoUpdate\"=dword:00000001\n```\n#### 对比\n思路1长期有效，但是不能手动更新；思路2可以想更新的时候手动更新。\n",
+      "tags": [
+        "win10"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-18T17:42:14.000Z",
+      "id": 65
+    },
+    {
+      "title": "禁用win10自动更新",
+      "content": "## 2.禁用系统更新\n### 思路一（邪道思路）\n知乎上看的，人才！\n**step1:**  `win+r`输入`gpedit.msc`打开组策略，如果你没有组策略，那么参考[win10家庭版开启组策略](2021/03/18/Win10家庭版启用组策略)\n**step2:**  找到“计算机配置--管理模版--windows组间--windows更新--指定Internet microsoft更新服务位置”双击打开，启用，随便输入网址，比如bilibili，三个框都填上，点确定，重启电脑就好啦！\n### 思路二（正常思路）\n新建`.txt`，输入下面的，改成`.reg`，执行：\n```\nWindows Registry Editor Version 5.00[HKEY_LOCAL_MACHINE\\SOFTWARE\\Policies\\Microsoft\\Windows\\WindowsUpdate\\au]\"NoAutoUpdate\"=dword:00000001\n```\n### 对比\n思路1长期有效，但是不能手动更新；思路2可以想更新的时候手动更新。\n",
+      "tags": [
+        "win10"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-18T17:56:57.000Z",
+      "id": 66
+    },
+    {
+      "title": "linux下判断网卡速率",
+      "content": "直接命令： `ethtool ethx`\n",
+      "tags": [
+        "linux",
+        "运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-18T18:02:07.000Z",
+      "id": 67
+    },
+    {
+      "title": "Proxmox VE 使用LVM新硬盘(多硬盘)",
+      "content": "## LVM相关操作\n给硬盘创建新分区\n```\n# 假定新硬盘为 sdx 根据上面 fdisk -l 结果根据实际情况修改\nfdisk /dev/sdx\nn  # 创建新分区\np  # 创建为主分区\n1  # 选择一个默认分区\nt  # 更改分区类型选择\nL  # 列出可选所有分区类型\n8e # 选择 Linux LVM 类型\nw  # 保存\n```\n创建 LVM 物理卷(PV)\n```\n# 上述操作创建分区后 fdisk -l 可以看到一个 sdx1 的分区\npvcreate /dev/sdx1\n```\n创建新的 LVM 卷组 (VG)\n```\n# <vg_group_name> 可命名为需要的卷组名\nvgcreate <vg_group_name> /dev/sdx1\n# 查看卷组\nvgs\nvgdisplay\n```\n不创建新 LVM 卷组，添加新物理卷至已有卷组\n```\n# 假定以后卷组 vg_group\nvgextend vg_group /dev/sdx1\n```\n## PVE Web 管理界面添加存储\n到这里，我们可以在 PVE Web 界面上 节点 - 磁盘 上看到新的硬盘。\n\n接下来，进入 数据中心 界面\n\n选择 存储\n\n点击 添加 - LVM\n\n根据需要填写 ID 选择 卷组 后，点击 添加 即可。\n\n随后边可以在节点下看到刚刚新添加的存储，以后便可以在创建新虚拟机或者在原有虚拟机下选择这块新加入硬盘的存储了。",
+      "tags": [
+        "PVE",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-18T18:05:12.000Z",
+      "id": 68
+    },
+    {
+      "title": "js获取当前设备的电量信息及联网状态",
+      "content": "做了一个墨水屏用的番茄钟，想要显示电池状态，于是查询到以下资料。\nAPI是`navigator`对象提供的:\n> navigator.getBattery().then(function(result){});\n通过对`getBattery()`的调用，可以得到一个`promise`，其返回一个`then方法`，并提供一个`BatteryManager`对象：\n```\nBatteryManagery {\n\tcharging: false,\n\tchargingTime: Infinity,\n\tdischargingTime: 8940,\n\tlevel: 0.59,\n\tonchargingchange: null,\n\tonchargingtimechange: null,\n\tondischargingtimechange: null,\n\tonlevelchange: null\n}\n```",
+      "tags": [
+        "js",
+        "前端"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-23T19:37:51.000Z",
+      "id": 69
+    },
+    {
+      "title": "通过改刷机包实现科大讯飞R1安装第三方app",
+      "content": "最近入手了一款科大讯飞R1的阅读器，安卓8.1系统，啥都好，就是不能安装第三方app，开启adb需要特殊密码，咱也搞不到，于是另辟蹊径，修改刷机包实现安装第三方app。\n\n下载地址：\n\n>[百度网盘:si7d](https://pan.baidu.com/s/1YSEi22M2zQTcw_BrrEn1ow)\n<!-- more -->\n![效果](https://pic.mereith.com/img/IMG_9011.JPG-slim)\n>* 存在的问题：有时候上面会出现讯飞阅读和咪咕阅读的切换栏，很占地方，解决方法是（刷机重置后）在应用列表点原启动器，会出现初始化设置界面，在这里直接按home键，以后就没切换栏了，设置直接去应用列表找setting。以后可能会修改刷机包，暂时是没时间了。\n## 解包\n    暂略，值得注意的是修改版本号新一点，这样会被识别。\n## 打包\n    通过`SuperRs-Kitchen`厨房进行打包签名就行了。\n## 刷机\n    直接复制到设备根目录，不要改名，然后点更新系统直接就升级了。\n\n## 降级\n    把原厂刷机包放进去，重命名个新点的版本号，比如`R_5.5.5`,点系统升级就行了。\n",
+      "tags": [
+        "折腾",
+        "阅读器",
+        "安卓"
+      ],
+      "top": 0,
+      "category": "折腾搞机",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-23T19:41:18.000Z",
+      "id": 70
+    },
+    {
+      "title": "js全屏后元素变黑",
+      "content": "最近想给自己的工具增加点击全屏功能，但是发现全屏后都黑了。\n我是这么全屏的:\n```\n// 全屏\n    $(\".main\").on(\"click\",()=>{\n        document.body.requestFullscreen();\n    });\n```\n但是发现元素都黑了，是因为全屏后背景自动黑了，所以啥也看不出来了，解决办法如下：\n\n- 将白色固定为背景\n- 并使用z-index将其向下推\n- 将白色固定为html页面内容\n- 并使用z-index将其向上推(在背景上方)\\\n\n它在Firefox和Chrome上有效\n\ncss:\n```\n::backdrop {\n    z-index:0;  \n    background-color: white !important;\n}\n\nhtml, *:fullscreen, *:-webkit-full-screen, *:-moz-full-screen {\n    background-color: white !important;\n    z-index:1;\n}\n```\n",
+      "tags": [
+        "js",
+        "前端"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-28T14:54:04.000Z",
+      "id": 71
+    },
+    {
+      "title": "ffmpeg音视频淡入淡出",
+      "content": "最近帮别人给视频裁切、加音轨、淡入淡出啥的，本来想用pr之类的做，但是好麻烦啊，想着如果能用ffmpeg做就好了，于是找到了如下材料：\n```shell\n#音频淡入淡出\nffmpeg -i v4.mp4 -filter_complex \"afade=t=in:st=0:d=1,afade=t=out:st=137:d=3\" v5.mp4\n\n一看就懂就不注释了\n```\n\n```shell\n#视频音频合并并指定时间\nffmpeg -i videofile.mp4 -i audiofile.wav -t 43 output.mp4\n时间持续43秒\n```\n\n",
+      "tags": [
+        "ffmpeg",
+        "后期"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-03-28T22:29:34.000Z",
+      "id": 72
+    },
+    {
+      "title": "OpenMediaVault(OMV)安装Docker-Aria2",
+      "content": "最近为了文件分享，装了个OMV，据说很快就试试，SMB分享还能支持时间机器。但是为了下载方便还得整个Aria2，图省事就用docker吧！\n## 安装omv-extras\nomv-extras 是omv的第三方扩展插件库，里面有很多的第三方插件可以使用。安装docker需要它。\n\n> [官方网站](https://wiki.omv-extras.org/)\n\n安装指令：\n```\nwget -O - https://github.com/OpenMediaVault-Plugin-Developers/packages/raw/master/install | bash\n```\n\n安装完之后在web里就能看到`OMV-Extras`的选项了.\n\n## 启用docker\n1. 在网页里的`OMV-Extras`选项里启用`Extras repo`库。\n2. 安装docker，和docker管理面板（Portaine/Yacht）\n\n顺便一说里面的Cockpit是一个linux管理面板。另外发现了一个叫Netdata的资源监视面板，挺好用的.\n\n## Aria2-Pro 更好用的Aria2 Docker镜像\n[作者博客](https://p3terx.com/archives/docker-aria2-pro.html)\n```\ndocker run -d \\\n    --name aria2-pro \\\n    --restart unless-stopped \\\n    --log-opt max-size=1m \\\n    --network host \\\n    -e PUID=$UID \\\n    -e PGID=$GID \\\n    -e RPC_SECRET=<TOKEN> \\\n    -e RPC_PORT=6800 \\\n    -e LISTEN_PORT=6888 \\\n    -v $PWD/aria2-config:/config \\\n    -v $PWD/aria2-downloads:/downloads \\\n    p3terx/aria2-pro\n```\n网页面板用[AriaNg](https://p3terx.com/archives/aria2-frontend-ariang-tutorial.html)\n\n谷歌浏览器用`aria2`拓展，特别好用。\n## 其他\n1. 添加端口映射 TCP6800+6888 ，UDP6880\n2. [自动更新](https://p3terx.com/archives/docker-watchtower.html)\n3. 查看日志：\n* 实时查看日志\n```\ndocker logs -f --tail 30 aria2-pro\n```\n",
+      "tags": [
+        "OMV",
+        "NAS",
+        "家庭网络"
+      ],
+      "top": 0,
+      "category": "魔法网络",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-04T20:13:34.000Z",
+      "id": 73
+    },
+    {
+      "title": "docker自动更新容器",
+      "content": "[大佬的博客](https://p3terx.com/archives/docker-watchtower.html)\n",
+      "tags": [
+        "docker"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-04T21:52:53.000Z",
+      "id": 74
+    },
+    {
+      "title": "debian添加系统服务",
+      "content": "\n## 添加服务文件\n```\nvim /usr/lib/systemd/system/cloudreve.service\n```\n## 编辑配置文件\n```\n[Unit]\nDescription=名字\nDocumentation=服务网址\nAfter=network.target\nWants=network.target\n\n[Service]\nWorkingDirectory=/PATH_TO_CLOUDREVE\nExecStart=/PATH_TO_CLOUDREVE/服务名\nRestart=on-abnormal\nRestartSec=5s\nKillMode=mixed\n\nStandardOutput=null\nStandardError=syslog\n\n[Install]\nWantedBy=multi-user.target\n```\n\n## 更新配置\n```\nsystemctl daemon-reload\n```\n## 开机启动\n```\nsystemctl enable 服务名\n```\n## 启动服务\n```\nsystemctl start 服务名\n```",
+      "tags": [
+        "debian",
+        "linux",
+        "运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-05T21:11:47.000Z",
+      "id": 75
+    },
+    {
+      "title": "adguardhome踩坑",
+      "content": "一定一定要单独搞一个LXC容器或者虚拟机运行，如果和其他服务跑一起了会造成奇奇怪怪的问题，很烦人。\n暂时懒得搞了，还是单独来一守LXC容器吧。。。。\n心累。\n",
+      "tags": [
+        "adguardhome",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-05T22:30:12.000Z",
+      "id": 76
+    },
+    {
+      "title": "PVE换源及去掉订阅提示和改端口",
+      "content": "## 换源\n\n### 删除企业源\n```\nrm -rf /etc/apt/sources.list.d/pve-enterprise.list\n```\n### 添加非订阅源\n```\necho \"deb https://mirrors.ustc.edu.cn/proxmox/debian/pve/ buster pve-no-subscription \" >/etc/apt/sources.list.d/pve-install-repo.list\n```\n### 添加ceph源\n```\necho \"deb https://mirrors.ustc.edu.cn/proxmox/debian/ceph-nautilus buster main \" >/etc/apt/sources.list.d/pve-ceph.list\n```\n### 建议同时使用国内debian源\n```\nvim /etc/apt/sources.list\n\n# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释\n\ndeb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free\n\n# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster main contrib non-free\n\ndeb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free\n\n# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-updates main contrib non-free\n\ndeb https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free\n\n# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ buster-backports main contrib non-free\n\ndeb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free\n\n# deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main contrib non-free\n\n```\n## 去掉订阅提示\n\n1. 找到`/usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js`\n\n2. 查找：\n```\t\nif (data.status !== 'Active') {\n```\n3. 把if里面的改成false\n\n4. systemctl restart pveproxy\n\n## 改端口\n1. 转发一手\n```\niptables -t nat -A PREROUTING -p tcp --dport 443 -j REDIRECT --to-ports 8006\n```\n2. 保存一手\n```\niptables-save > /etc/iptables.up.rules\necho -e '#!/bin/sh\\n/sbin/iptables-restore < /etc/iptables.up.rules' > /etc/network/if-pre-up.d/iptables\nchmod +x /etc/network/if-pre-up.d/iptables\n```",
+      "tags": [
+        "PVE",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-05T22:33:17.000Z",
+      "id": 77
+    },
+    {
+      "title": "OpenWrt用VLAN",
+      "content": "看了两个文章，看明白了\n> * [怎么用OpenWrt的VLAN功能实现单臂路由（主路由），省下一个VLAN交换机](https://www.cnblogs.com/parasis/p/13723912.html)\n\n> * [在openwrt系统下划分vlan来隔离端口](https://blog.csdn.net/sinat_27265739/article/details/78962035)",
+      "tags": [
+        "OpenWrt",
+        "VLAN"
+      ],
+      "top": 0,
+      "category": "魔法网络",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-05T22:39:57.000Z",
+      "id": 78
+    },
+    {
+      "title": "linux声卡设置及录音音",
+      "content": "最近搞了个usb声卡，10块钱那种。\n\n### 查看设备\n> arecord -l\n\n### 录音\n\n> arecord -Dhw:1,0 -d 10 -f cd -r 44100 -c 2 -t wav test.wav\n#### 参数解析\n```\n-D 指定了录音设备，0,1 是card 0 device 1的意思，也就是TDM_Capture\n-d 指定录音的时长，单位时秒\n-f 指定录音格式，通过上面的信息知道只支持 cd cdr dat\n-r 指定了采样率，单位时Hz\n-c 指定channel 个数\n-t 指定生成的文件格式\n```\n### 错误解决\n1. arecord:set-params:1239：频道计数不可用\n```\n根本原因：录制频道数与设备(固件)不一致\n解决方法：将-c5改为设备(固件)可用的通道数-c4或者-c2（视具体情况改变）\n```\n2. arecord:main:788：音频打开错误，没有那个文件或目录\n```\n根本原因：录音设备选错了\n解决方法：arecord -l 查看设备，找到对应的设备card x (x:正确录音设备）,将hw:2,0改为hw:1,0\n```\n\n3. arecord:main:788：音频打开错误，设备或资源忙\n```\n根本原因①：上次的录音没有退出/关闭(错误使用ctrl z停止录音）\n解决方法①：fg 将后台挂起的录音任务放到前台终端运行，然后ctrl+c停止上次的录音，再录音就可以了\n\n根本原因②：设备被占用了，Linux音量设置的Input选择了我们要录音的设备（SmartIC) \n解决方法②：更改Input界面选择的设备为其他设备，让我们要录音的设备空下来\n```\n### 参考文献\n[arecord录音](https://blog.csdn.net/zkw_1998/article/details/104540239)",
+      "tags": [
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-05T23:43:14.000Z",
+      "id": 79
+    },
+    {
+      "title": "Portainer添加节点",
+      "content": "局域网里由多个docker节点需要控制，在portainer里面添加endpoint，选择docker，发现不太行。\n\n## 解决办法\n修改docker启动文件,`/lib/systemd/system/docker.service`，找到`ExecStart`，加一个参数`-H tcp://0.0.0.0:2375`就行了。\n\n**不要加在外网及其中**\n",
+      "tags": [
+        "docker",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-08T15:54:54.000Z",
+      "id": 80
+    },
+    {
+      "title": "基于clash搭建旁路网关",
+      "content": "clash是强大的开源代理软件，支持在各种平台上面运行，但默认的配置是socks代理和http代理，想拿它做旁路网关还需要一些操作。\n## 安装clash\n[github仓库](https://github.com/Dreamacro/clash)\n\n直接下载最新的 `Release`就行了。\n\n配置文件在`~/.config/clash/config.yaml`\n<--! more -->\n## 配置clash\n### 添加服务\n创建一个本地的`systemd`配置`/etc/systemd/system/clash.service`\n\n```\n[Unit]\nDescription=clash service\nAfter=network.target\n\n[Service]\nType=simple\nExecStart=/usr/local/bin/clash -d /etc/clash/\nRestart=on-failure\n\n[Install]\nWantedBy=multi-user.target\n\n```\n\n```\nsystemctl start clash.service\nsystemctl enable clash.service\n\n# 然后测试下 socks 代理是否可用\ncurl --socks5 localhost:7891 google.com\n```\n### 配置文件\n#### 说明\n clash里面有内置的dns，如果直接用那么大可不必开启内置的dns服务器，但是想用旁路网关，那么需要开启内置的dns。内置的dns服务器有`redir-host`和`fake-ip`两种模式:\n\n  * `redir-host`对于转发过来的请求，一律先用`nameserver`和`fallback`里面的dns服务器进行解析，如果是外国的地址，那么后续就用`fallback`里的dns服务器，如果是国内的那就直连。\n\n  * `fake-ip`不管啥请求，先返回一个虚拟的ip，因为如果是代理，那么是代理服务器进行的远端解析，比`redir-host`节约一些开销。\n\n  * 只要用了旁路网关，那就得把客户机的dns服务器也设置成clash的dns服务，因为clash需要用dns服务反推域名和ip的对应关系。\n\n  * 可能我说的不清楚，我也理解的不太对，但是我在实际使用中发现，如果我把clash用做旁路网关，并且设置了fake-ip，那么我ping一个网址，或者wget下载一个东西，都直接对假ip进行连接了，换句话说除了浏览器之外别的服务不对劲了。所以旁路网关还是用redir-host模式吧，然后客户机的网关和dns都指向clash的主机，这样可以保证服务都没问题，udp的也ok。\n\n所以我的解决方案就是：`PVE`里一个`LXC容器`里装`Clash`另一个装`AdGuardHome`，然后`Clash`里开启dns服务器，选择`redir-host`模式，不用`fallback`,就一个`nameserver`指向我的`AdGuardHome`。在`AdGuardHome`里，把dns设置成:\n> https://doh.pub/dns-query\n> https://dns.alidns.com/dns-query\n\n这两个都是支持DoH/DoT的，可以防止dns污染，这样所有的dns上游都是AdGuardHome了，可以用来防广告，就是不能根据客户端做单独的服务屏蔽了(这个我还没有好办法)，但是我用`iKuai`做管控，所以没啥影响。\n\n[配置参考](https://github.com/Hackl0us/SS-Rule-Snippet/blob/master/LAZY_RULES/clash.yaml)\n配置完毕后就能用socks代理或者http代理直接用了，但是想要实现旁路网关，还需要设置转发。\n\n## 设置旁路网关\n参考：\n> * [自制旁路网关（一） ——使用clash做代理](https://a-wing.top/network/2020/02/22/bypass_gateway-1_clash.html)\n\n旁路网关自身流量最好别走透明代理，为了实现旁路网关，我们需要转发流量，可以用`iptalbes`或者`nftables`，我用的后者而且测试ok，前者没试过.\n\n### nftables方案\n1. `apt install nftables -y`\n\n2. 创建私有地址定义文件`/etc/nftables/private.nft`（私有地址咱们不转发）:\n```\ndefine private_list = {\n\t0.0.0.0/8,\n\t10.0.0.0/8,\n\t127.0.0.0/8,\n\t169.254.0.0/16,\n\t172.16.0.0/12,\n\t192.168.0.0/16,\n\t224.0.0.0/4,\n\t240.0.0.0/4\n}\n```\n\n3. 修改配置文件`/etc/nftables.conf`：\n\n```\n#!/usr/sbin/nft -f\n\ninclude \"/etc/nftables/private.nft\"\n\ntable ip nat {\n\tchain proxy {\n\t\tip daddr $private_list return\n\t\t\tip protocol tcp redirect to :7892\n\t}\n\tchain prerouting {\n\t\ttype nat hook prerouting priority 0; policy accept;\n\t\tjump proxy\n\t}\n}\n```\n\n4. `sudo sh -c \"nft flush ruleset && nft -f /etc/nftables.conf\"`\n\n设置服务:\n```\nsystemctl enable nftables.service\nsystemctl start nftables.service\n\n```\n5. 开启ip转发\n```\necho \"net.ipv4.ip_forward=1\" >>  /etc/sysctl.conf \nsysctl -p\n```\n### iptables实现\n没用过，不保证效果\n```\niptables -t nat -N CLASH\n\n# 私有 ip 流量不转发，完整的在下面\n# 设置的 fake-ip 请注意检查这里\niptables -t nat -A CLASH -d 192.168.0.0/16 -j RETURN\n\niptables -t nat -A CLASH -p tcp -j REDIRECT --to-ports 7892\niptables -t nat -A PREROUTING -p tcp -j CLASH\n```\n```\n# 内部流量不转发给 CLASH 直通\niptables -t nat -A CLASH -d 0.0.0.0/8 -j RETURN\niptables -t nat -A CLASH -d 10.0.0.0/8 -j RETURN\niptables -t nat -A CLASH -d 127.0.0.0/8 -j RETURN\niptables -t nat -A CLASH -d 169.254.0.0/16 -j RETURN\niptables -t nat -A CLASH -d 172.16.0.0/12 -j RETURN\niptables -t nat -A CLASH -d 192.168.0.0/16 -j RETURN\niptables -t nat -A CLASH -d 224.0.0.0/4 -j RETURN\niptables -t nat -A CLASH -d 240.0.0.0/4 -j RETURN\n```\n然后就是规则持久化，百度就行了。\n\n### 留坑\n这个`nftables`里面写的规则好像不包括`udp`协议，如果我想让`clash`接管`udp`流量，比如我`p2p`下载也想走代理，怎么搞……有空研究吧，我感觉我得多了解一下相关知识了。\n\n#### 更多参考\n[DNS污染对Clash（for Windows）的影响](https://github.com/Fndroid/clash_for_windows_pkg/wiki/DNS%E6%B1%A1%E6%9F%93%E5%AF%B9Clash%EF%BC%88for-Windows%EF%BC%89%E7%9A%84%E5%BD%B1%E5%93%8D)\n\n[使用 KoolClash 作为代理网关](https://blog.skk.moe/post/alternate-surge-koolclash-as-gateway/)\n\n[在 Ubuntu18.04 上使用 clash 部署旁路代理网关（透明代理）](https://breakertt.moe/2019/08/20/clash_gateway/index.html)\n\n[V2Ray 做透明代理](https://toutyrater.github.io/app/transparent_proxy.html)\n\n[debian10 使用 nftables 替换 iptables](https://ghost.qinan.co/debian10_iptables_to_nftables/)\n\n## 懒人规则合集\n[SS-Rule_Snippet](https://github.com/Hackl0us/SS-Rule-Snippet)\n\n## 更新\n我是基于懒人规则合集中例子配置的，最后我想配合`adguardhome`进行，所以我弄了俩，一个负责`nameserver`，里面都是国内的上游DoH和DoT，然后另一个负责`fallback`里面都是国外的。然后关闭`fallback-filter`，具体可以看我的另一片文章。\n> * 参考1： [使用 AdGuard Home 自建 DNS 防污染、去广告 #1 - 安装部署详解教程(Docker)](https://p3terx.com/archives/use-adguard-home-to-build-dns-to-prevent-pollution-and-remove-ads-1.html)\n> * 参考2: [使用 AdGuard Home 自建 DNS 防污染、去广告 #2 - 优化增强设置详解教程](https://p3terx.com/archives/use-adguard-home-to-build-dns-to-prevent-pollution-and-remove-ads-2.html)\n",
+      "tags": [
+        "clash",
+        "路由器",
+        "网络"
+      ],
+      "top": 0,
+      "category": "魔法网络",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-08T16:07:03.000Z",
+      "id": 81
+    },
+    {
+      "title": "ProxmoxVE系统分区相关",
+      "content": "[扩展 Proxmox 系统分区以及 Proxmox 文件系统初识](https://einverne.github.io/post/2020/11/extend-proxmox-system-partition-and-pve-file-system.html)\n\n[Can't remove final physical volume  from volume group (Linux)](http://it-tuff.blogspot.com/2017/11/cant-remove-final-physical-volume-from.html)\n\n[PVE硬盘直通](https://www.zimrilink.com/devops/81.html)\n\n[USB硬盘挂载到PVE LXC容器使用/ Proxmox VE硬盘直通黑群晖](https://www.zszmm.com/archives/378/)",
+      "tags": [
+        "pve",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-08T16:46:56.000Z",
+      "id": 82
+    },
+    {
+      "title": "PVE的LXC容器中安装Docker",
+      "content": "想单独搞个虚拟机装docker，但是为了节约资源还是在LXC容器里装吧！\n## 添加模块\n`lsmod | grep overlay`\n`lsmod | grep aufs`\n没有的话，在`etc/modules`添加一下，这是docker要用的。\n## 配置LXC容器\n建一个`没特权`的容器，在`签名`的设置里够上`按键`和`嵌套`\n\n## 安装docker\n```\ncurl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun\n```\n",
+      "tags": [
+        "pve",
+        "docker",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-08T21:44:17.000Z",
+      "id": 83
+    },
+    {
+      "title": "docker常用开启容器的命令",
+      "content": "最近一直在各种机子上部署docker，有些经常用的就放这里了。\n## 部署镜像\n### [docker安装](https://www.runoob.com/docker/centos-docker-install.html)\n```\ncurl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun\n```\n\n### [Portainer](https://documentation.portainer.io/v2.0/deploy/ceinstalldocker/)\n#### servere\n```\ndocker volume create portainer_data\ndocker run -d -p 8000:8000 -p 9000:9000 --name=portainer --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer-ce\n```\n\n<!-- more -->\n#### agent\n```\ndocker run -d -p 9001:9001 --name portainer_agent --restart=always -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/docker/volumes:/var/lib/docker/volumes portainer/agent\n```\n\n### [Watchtower](https://p3terx.com/archives/docker-watchtower.html)\n```\ndocker run -d \\\n    --restart unless-stopped \\\n    --log-opt max-size=1m \\\n    --name watchtower \\\n    -v /var/run/docker.sock:/var/run/docker.sock \\\n    containrrr/watchtower -c --interval 3600\n```\n\n### [Netdata](https://github.com/netdata/netdata)\n```\ndocker run -d --name=netdata \\\n  -p 19999:19999 \\\n  -v /root/netdata/netdataconfig:/etc/netdata \\\n  -v /root/netdata/netdatalib:/var/lib/netdata \\\n  -v /root/netdata/netdatacache:/var/cache/netdata \\\n  -v /etc/passwd:/host/etc/passwd:ro \\\n  -v /etc/group:/host/etc/group:ro \\\n  -v /proc:/host/proc:ro \\\n  -v /sys:/host/sys:ro \\\n  -v /etc/os-release:/host/etc/os-release:ro \\\n  --restart unless-stopped \\\n  --cap-add SYS_PTRACE \\\n  --security-opt apparmor=unconfined \\\n  netdata/netdata\n```\n\n### [宝塔面板](https://hub.docker.com/r/pch18/baota)\n```\ndocker run -tid --name baota --net=host --privileged=true --shm-size=1g --restart always -v ~/wwwroot:/www/wwwroot pch18/baota\n```\n\n### [Aria2-pro](https://p3terx.com/archives/docker-aria2-pro.html)\n```\ndocker run -d \\\n\t--name aria2-pro \\\n\t--restart unless-stopped \\\n\t--log-opt max-size=1m \\\n\t--network host \\\n\t-e PUID=$UID \\\n\t-e PGID=$GID \\\n\t-e RPC_SECRET=cs3cx4g \\\n\t-e RPC_PORT=6800 \\\n\t-e LISTEN_PORT=6888 \\\n\t-v /srv/dev-disk-by-uuid-FABC8A67BC8A1DEF/aria2-config:/config \\\n\t-v /srv/dev-disk-by-uuid-FABC8A67BC8A1DEF/aria2-downloads:/downloads \\\n\t-e SPECIAL_MOD=move \\\n\tp3terx/aria2-pro\n```\n\n### [AriaNG](https://p3terx.com/archives/aria2-frontend-ariang-tutorial.html)\n```\ndocker run -d \\\n    --name ariang \\\n    --log-opt max-size=1m \\\n    --restart unless-stopped \\\n    --network host \\\n    p3terx/ariang --port 6880\n```\n### [HomeAssistant](https://www.home-assistant.io/installation/odroid)\n```\ndocker run --init -d \\\n  --name homeassistant \\\n  --restart=unless-stopped \\\n  -v /etc/localtime:/etc/localtime:ro \\\n  -v /root/homeassistant/config:/config \\\n  --network=host \\\n  homeassistant/home-assistant:stable\n```\n\n### [peerflix-server](https://github.com/asapach/peerflix-server)\n```\ndocker run -p 9001:9000 -p 6881:6881 -p 6881:6881/udp -d -v /tmp/torrent-stream:/tmp/torrent-stream asapach/peerflix-server\n```\n\n### [py12306](https://github.com/pjialin/py12306)\n```\ndocker run --rm --name py12306 --network host -d -v $(pwd):/config -v py12306:/data pjialin/py12306\n```\n### [MongoDB](https://hub.docker.com/_/mongo)\n```\ndocker run -d --network host --name mongodb \\\n  -e MONGO_INITDB_ROOT_USERNAME=xxxxx \\\n  -e MONGO_INITDB_ROOT_PASSWORD=xxxxx \\\n  --restart unless-stopped \\\n  mongo\n```\n\n### [Monggo Express](https://hub.docker.com/_/mongo-express)\n```\ndocker run -d \\\n    --restart unless-stopped \\\n    --network host \\\n    --name mongo-express \\\n    -e ME_CONFIG_OPTIONS_EDITORTHEME=\"ambiance\" \\\n    -e ME_CONFIG_MONGODB_SERVER=\"mongodb\" \\\n    -e ME_CONFIG_BASICAUTH_USERNAME=\"xxxxx\" \\\n    -e ME_CONFIG_BASICAUTH_PASSWORD=\"xxxxx\" \\\n    -e ME_CONFIG_MONGODB_ADMINUSERNAME=\"xxxx\" \\\n    -e ME_CONFIG_MONGODB_ADMINPASSWORD=\"xxxx\" \\\n    mongo-express\n```\n",
+      "tags": [
+        "docker",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-09T13:57:14.000Z",
+      "id": 84
+    },
+    {
+      "title": "nginx反代模版",
+      "content": "如下：\n```\nserver {\n    listen 80;\n    server_name netdata.home.com;\n    location / {\n        proxy_pass http://192.168.5.4:19999;\n        proxy_redirect off;\n        proxy_http_version 1.1;\n        proxy_set_header Host $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        #添加长链接支持。\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \"upgrade\";\n \n\n    }\n}\n\n\n```\n",
+      "tags": [
+        "nginx",
+        "后端"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-09T13:57:29.000Z",
+      "id": 85
+    },
+    {
+      "title": "LXC直通硬盘",
+      "content": "最近优化一下家里的`all in one`，为了节约内存，决定用轻量化的`lxc`容器来替代虚拟机安装`omv`，接下来就是直通硬盘了，步骤如下：\n\n## 修改容器配置\n修改容器配置`/etc/pve/lxc/ID.conf`\n### 关闭防火墙\n```\n#关闭防火墙(只针对当前LXC容器而言)\nlxc.apparmor.profile: unconfined\n```\n如果你不想添加，可以看这个[英文教程](https://gist.github.com/Waltibaba/93d32e32513cb2d6dbab)添加防火墙配置文件，不过我没成功，一气之下，干脆关了。\n\n### 确定硬盘id和关系\n```\nls -al /dev/sd*\n#或者\nls -al /dev/disk/by-label \n```\n反正最后比如我想找我的`sda1`设备，那我得到了以下输出：\n```\n# ls -al /dev/sda\nbrw-rw---- 1 root disk 8, 0 Dec 19 11:16 /dev/sda1\n# ls -al /dev/sda1\nbrw-rw---- 1 root disk 8, 1 Dec 19 11:16 /dev/sda1\n```\n可以看出，`sda=> 8,0` `sda1=>8,1`\n\n### 绑定硬盘\n继续编辑lxc配置文件,添加：\n```\nlxc.cgroup.devices.allow: b 8:0 rwm\nlxc.cgroup.devices.allow: b 8:1 rwm\n```\n这个`8:0`和`8:1`就是刚才我们得到的。\n\n### 设置自动挂载脚本\n在`pve`中，创建`/var/lib/lxc/ID/mount-hook.sh`文件，其中ID就是你的lxc的ID：\n```\n#!/bin/sh\nmknod -m 777 ${LXC_ROOTFS_MOUNT}/dev/sda b 8 0\nmknod -m 777 ${LXC_ROOTFS_MOUNT}/dev/sda1 b 8 1\n```\n然后`chmod +x `一下，然后在`lxc配置文件`中添加：\n```\nlxc.autodev: 1\nlxc.hook.autodev: /var/lib/lxc/ID/mount-hook.sh\n```\n然后根据我们要挂载的设备，再添加一行(有个教程说不用，但是我加上了，然后成功了）：\n```\nlxc.mount.entry: /dev/sda1 /dev/sda1 bind,create=dir,optional 0 0\n```\n至此，可以启动容器了。\n### 全家福\n我的是挂载了`/dev/mmcblk1p1`和`/dev/sdb2`的，所以我最后是这样的：\n```\narch: amd64\ncores: 4\nfeatures: nesting=1\nhostname: omv\nmemory: 4096\nnameserver: 192.168.5.2\nnet0: name=eth0,bridge=vmbr0,gw=192.168.5.2,hwaddr=56:3A:D8:AB:C9:18,ip=192.168.5.5/24,ip6=auto,type=veth\nonboot: 1\nostype: debian\nrootfs: local-lvm:vm-108-disk-0,size=16G\nswap: 4096\nlxc.mount.auto: cgroup:rw\nlxc.mount.auto: proc:rw\nlxc.mount.auto: sys:rw\nlxc.cgroup.devices.allow: b 179:1 rwm\nlxc.cgroup.devices.allow: b 179:0 rwm\nlxc.cgroup.devices.allow: b 8:16 rwm\nlxc.cgroup.devices.allow: b 8:18 rwm\nlxc.apparmor.profile: unconfined\nlxc.autodev: 1\nlxc.hook.autodev: /var/lib/lxc/108/mount-hook.sh\nlxc.mount.entry: /dev/mmcblk1p1 /dev/mmcblk1p1 bind,create=dir,optional 0 0\nlxc.mount.entry: /dev/sdb2 /dev/sdb2 bind,create=dir,optional 0 0\n```",
+      "tags": [
+        "LXC",
+        "pve",
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-10T21:28:56.000Z",
+      "id": 86
+    },
+    {
+      "title": "pve中使用LXC容器安装OMV",
+      "content": "最近优化一下家里的`all in one`，为了节约内存，决定用轻量化的`lxc`容器来替代虚拟机安装`omv`，步骤如下：\n\n<!-- more -->\n## 建立容器\n用pve模版列表里自带的`debian10`镜像，下载一下，然后新建虚拟机，因为要直通硬盘，所以要`特权`主机，因为我还要在里面放`docker`，在选项中勾选`嵌套`。网络需要科学上网。\n![](https://pic.mereith.com/img/20210410213621.png-slim)\n![](https://pic.mereith.com/img/20210410213514.png-slim)\n\n## 修改配置\n修改`pve主机`的`/etc/pve/lxc/{ID}.conf`({ID}是你的LXC序号)，添加：\n```\nlxc.mount.auto: cgroup:rw\nlxc.mount.auto: proc:rw\nlxc.mount.auto: sys:rw\n```\n当然，如果你需要挂载设备，那需要加点别的，请看我的另一片文章。\n\n## 容器内\n输入一下命令：\n```\n#更新并重启，很重要，有时候不一开始就这样装不成功\napt update && apt upgrade -y && reboot\n#添加仓库、密钥，安装依赖\napt-get install --yes gnupg\nwget -O \"/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc\" https://packages.openmediavault.org/public/archive.key\napt-key add \"/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc\"\n```\n```\ncat <<EOF >> /etc/apt/sources.list.d/openmediavault.list\ndeb https://packages.openmediavault.org/public usul main\n# deb https://downloads.sourceforge.net/project/openmediavault/packages usul main\n## Uncomment the following line to add software from the proposed repository.\n# deb https://packages.openmediavault.org/public usul-proposed main\n# deb https://downloads.sourceforge.net/project/openmediavault/packages usul-proposed main\n## This software is not part of OpenMediaVault, but is offered by third-party\n## developers as a service to OpenMediaVault users.\n# deb https://packages.openmediavault.org/public usul partner\n# deb https://downloads.sourceforge.net/project/openmediavault/packages usul partner\nEOF\n```\n```\nexport LANG=C.UTF-8\nexport DEBIAN_FRONTEND=noninteractive\nexport APT_LISTCHANGES_FRONTEND=none\nwget -O \"/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc\" https://packages.openmediavault.org/public/archive.key\napt-key add \"/etc/apt/trusted.gpg.d/openmediavault-archive-keyring.asc\"\napt-get update\napt-get --yes --auto-remove --show-upgraded \\\n    --allow-downgrades --allow-change-held-packages \\\n    --no-install-recommends \\\n    --option Dpkg::Options::=\"--force-confdef\" \\\n    --option DPkg::Options::=\"--force-confold\" \\\n    install openmediavault-keyring openmediavault\n\nomv-confdbadm populate\n```\n然后就可以啦！直通硬盘请看我的另一篇LXC的文章。\n\n## 安装docker(Aria-Pro,AriaNG)\n```\nwget -O - https://github.com/OpenMediaVault-Plugin-Developers/packages/raw/master/install | bash\n```\n",
+      "tags": [
+        "pve",
+        "omv",
+        "lxc"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-10T21:29:16.000Z",
+      "id": 87
+    },
+    {
+      "title": "adguardhome配合clash",
+      "content": "# 思路\n\n我是基于[懒人规则合集](https://github.com/Hackl0us/SS-Rule-Snippet)中例子配置的，最后我想配合`adguardhome`进行，所以我弄了俩，一个负责`nameserver`，里面都是国内的上游DoH和DoT，然后另一个负责`fallback`里面都是国外的。然后关闭`fallback-filter`，具体可以看我的另一片文章。\n> * 参考1： [使用 AdGuard Home 自建 DNS 防污染、去广告 #1 - 安装部署详解教程(Docker)](https://p3terx.com/archives/use-adguard-home-to-build-dns-to-prevent-pollution-and-remove-ads-1.html)\n> * 参考2: [使用 AdGuard Home 自建 DNS 防污染、去广告 #2 - 优化增强设置详解教程](https://p3terx.com/archives/use-adguard-home-to-build-dns-to-prevent-pollution-and-remove-ads-2.html)\n\n##  DNS配置\n### 国内\n上游:\n```\ntls://dns.pub\nhttps://dns.pub/dns-query\ntls://dns.alidns.com\nhttps://dns.alidns.com/dns-query\n```\nBootStrap(就是解析上游DNS里面域名的DNS):\n```\n119.29.29.29\n119.28.28.28\n223.5.5.5\n223.6.6.6\n```\n\n### 自由网络\n上游:\n```\ntls://8.8.8.8\ntls://8.8.4.4\ntls://dns.google\nhttps://dns.google/dns-query\ntls://1.1.1.1\ntls://1.0.0.1\nhttps://dns.cloudflare.com/dns-query\n```\nBootStrap(就是解析上游DNS里面域名的DNS):\n```\n8.8.8.8\n8.8.4.4\n1.1.1.1\n1.0.0.1\n```\n\n### 其他设置\n* 速度限制： 0\n* 使用EDNS： 可以获取更合适的CDN节点，选上\n* 使用DNSSEC： 校验DNS记录的签名，防止DNS缓存投毒，选上。\n* 禁用IPV6: 不用的话，勾上就行了\n* DNS缓存配置： 最小TTL`600` 最大TTL`3600`",
+      "tags": [
+        "clash",
+        "docker",
+        "adguardhome"
+      ],
+      "top": 0,
+      "category": "魔法网络",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-10T21:52:36.000Z",
+      "id": 88
+    },
+    {
+      "title": "Errors were encountered while processing",
+      "content": "在执行更新或者安装软件命令时\n\nsudo apt-get upgrade\n\nsudo apt-get install\n\n遇到：Errors were encountered while processing\n\n查看错误信息发现： not fully installed\n## 解决办法\n```\ncd /var/lib/dpkg\nsudo mv info info.bak\nsudo mkdir info\nsudo apt-get upgrade\n```",
+      "tags": [
+        "apt",
+        "linux",
+        "debian"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-04-10T22:45:16.000Z",
+      "id": 89
+    },
+    {
+      "title": "基于React/umi/egg自建博客系统",
+      "content": "我从大二开始就开始写博客了，当时只是觉得好玩，有兴趣，于是搜索了一番，决定用简单上手的`hexo`来做博客，顺便买了一个阿里云的学生服务器来放网站，那时候啥也不懂，没接触过`Node`，不会`Js`，前端也是一窍不通，`linux`倒是懂一些，可是网络技术一知半解。但随着我折腾来折腾去，逐渐摸索到了一些门道，也找到了一些乐趣，`nginx`各种配置啦，`cdn加速`、`sll证书`啦，`自己搭建图床`啦。\n\n而迄今为止，我正式学习前端知识也有一段时间啦，`hexo`在使用过程中也觉得有些麻烦，还要依赖特定的环境生成网页再刷新`cdn`缓存，所以我能不能自己写一个博客系统呢？包含前后端，有后台管理系统，随时随地直接就能写文章，岂不妙哉？\n\n于是，经过一段时间的开发，鸽，开发，测试版出炉！\n> 前端技术栈： React/Dva/Umi/Antd <br/>\n> 后端技术栈： \bEgg.js <br/>\n> 数据库： MongoDB\n\n特点：\n> * 前台简洁风格，功能完善，包含文章、分类、标签、评论、统计、通知等多个功能模块\n> * 响应式布局，自适应屏幕大小比例和设备，尽可能有好的浏览效果\n> * 个人资料、网站数据、logo、标题、通知等均可通过管理面板设置\n> * 后台具有完善的markdown编辑器，文章管理、存稿管理、通知管理、前台样式和数据管理功能\n> * 服务端渲染，首屏加载速度快，支持SEO，渲染失败无损降级客户端渲染\n> * 单页面应用，内置路由，切换页面无需刷新，动态请求数据\n> * 数据保存到MongoDB数据库，更安全可靠，耦合性低，未来增加更多数据库支持\n\n目前能看到的这个网站就是了，测试运行中，有bug我会随时修复的。目前我正在调整修复bug，等增加了初始化功能，我会开源到github上- - 。也许有人会用？\n\n待办：\n- [ ] 增加初始化功能，根据指示初始化网站，以便新人使用\n- [ ] Docker镜像构建\n- [ ] 主题系统（可切换）\n- [ ] 增加细节特效，美化网站\n- [ ] 后台增加访客数据统计展示图\n",
+      "tags": [
+        "前端"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-05-11T14:37:22.939Z",
+      "id": 90
+    },
+    {
+      "title": "从pve的硬盘里导出数据",
+      "content": "最近需要把一个pve里的虚拟机的数据导出来，但是pve本身的宿主机已经坏了，我只有pve的硬盘，这时候想导出来就麻烦点，经过多方查阅资料，方法如下：\n<!--mode-->\n## 存储分析\n我想导出的数据在原来的pve宿主机里的一个虚拟机中，首先我先要把硬盘挂载到当前的pve宿主机中，用usb转sata插入后，输入\n```\nvgscan\n```\n结果发现了两个`pve`的`vgname`，是因为我现在的宿主机也是pve，所以想要激活这个`lvm`卷组，要把名字改了。\n## 改vgname激活卷组\n### 查看标签\n因为两个都叫`pve`，所以改名字通过标签来\n```\nvgdisplay\n```\n通过现实的磁盘空间，来判断哪个是我们要改的，然后输入\n```\nvgrename 查到的uuid pve1\n```\n这样就`vgname`就改成`pve1`了。\n### 激活卷组\n```\nlvscan\n```\n然后查看显示的逻辑卷，应该是未激活的。\n然后输入\n```\nvgchange -ay /dev/pve1\n```\n如果取消激活，那就把ay改成an\n## 挂载文件系统\n### 分析\n经过研究，我发现pve本身的`root`挂载点可以在激活逻辑卷后直接通过`mount /dev/pve1/root /mnt/pve1`挂载并成功访问数据。\n但是虚拟机硬盘不行，通过`ls /dev/mapper`和`fdisk -l`列出的数据，发现我们需要的虚拟机磁盘在`dev/mapper/pve1-vm-103-disk--0`，那我新建一个虚拟机，直接挂载这个磁盘到虚拟机上，然后登陆虚拟机导出数据就好了嘛\n### 挂载磁盘到虚拟机\n```\nqm set 104 -sata1 /dev/mapper/pve1-vm-103--disk--0\n```\n然后进入虚拟机快乐地导出数据吧！\n\n## 参考\n* [lvm修改vg名字](http://xstarcd.github.io/wiki/Linux/lvm_vgrename.html)\n* [如何挂载另一个lvm硬盘](https://www.cnblogs.com/wuchanming/p/4878116.html)",
+      "tags": [
+        "虚拟化"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-05-14T14:33:08.586Z",
+      "id": 91
+    },
+    {
+      "title": "解决Nginx安装错误：No package nginx available 问题",
+      "content": "其实问题非常明显，就是找不到包了嘛，添加新的软件仓库就好喽\n## 1.备份repo(防止修改错误还能还原)\n```shell\nmv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup\n```\n\n## 2.下载新的CentOS-Base.repo\n```shell\ncurl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo\n```\n\n## 3.更新\n```shell\nyum makecache\nyum install epel-release\n```\n\n## 4.搞定\n```shell\nyum install nginx\n```",
+      "tags": [
+        "nginx",
+        "运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-07-31T07:43:55.788Z",
+      "id": 92
+    },
+    {
+      "title": "k8s 1.21.3 从 docker 迁移到 containerd",
+      "content": "最近发现我的集群占用空间太多了，这样不太行啊，所以准备把容器运行时从 docker 迁移到 `containerd`。\n\n## 参考文章\n> * [k8s 1.20.6 将docker引擎切换为containerd](https://www.cnblogs.com/zhangb8042/p/14958755.html)\n> * [k8s 常见错误总结](https://www.gylinux.cn/2795.html#kubernetes_containerdcrictl_ps_-a)\n> * [使用 kubeadm 部署 k8s](https://blog.frognew.com/2021/06/kubeadm-install-kubernetes-1.21.html#13-%E9%83%A8%E7%BD%B2%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%97%B6containerd)\n> * [容器运行时](https://kubernetes.io/zh/docs/setup/production-environment/container-runtimes/)\n> * [安全的清空一个节点](https://kubernetes.io/zh/docs/tasks/administer-cluster/safely-drain-node/)\n",
+      "tags": [
+        "k8s",
+        "虚拟化",
+        "云原生"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-08-21T02:53:03.594Z",
+      "id": 93
+    },
+    {
+      "title": "iperf3 网络测速工具",
+      "content": "最近搞了一下家里的网，为了测试一下链接质量，使用 `iperf3`网速测试工具。\n## 基本使用\n### 安装\n直接用包管理器安装就行了。\n### 服务端\n```shell\niperf3 -s \n```\n### 客户端\n```shell\n# 其中带宽需要输入，不然结果会很奇怪\niperf3 -c <服务器ip> -b 1000M -n 100G\n````\n",
+      "tags": [
+        "运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-08-21T02:54:08.782Z",
+      "id": 94
+    },
+    {
+      "title": "css 文字不可选择",
+      "content": "```\n-webkit-user-select: none;\n-moz-user-select: none;\n-ms-user-select: none;\nuser-select: none;\n```",
+      "tags": [
+        "前端",
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-08-27T11:23:35.047Z",
+      "id": 95
+    },
+    {
+      "title": "cent os 换源",
+      "content": "## 备份\n```\nmkdir /etc/yum.repos.d/backup\nmv /etc/yum.repos.d/*.* /etc/yum.repos.d/backup\n```\n## 使用阿里源 ( cent os 7 )\n``` \nwget -O /etc/yum.repos.d/CentOS7-Aliyun.repo http://mirrors.aliyun.com/repo/Centos-7.repo\nwget -O /etc/yum.repos.d/epel-7-Aliyun.repo http://mirrors.aliyun.com/repo/epel-7.repo\nyum clean all\nyum makecache\n#查看源列表\nyum repolist all\n```",
+      "tags": [
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-08-31T15:24:36.733Z",
+      "id": 96
+    },
+    {
+      "title": "windows 命令行安装 inf 驱动",
+      "content": "## 步骤\n```\npnputil -i -a <驱动文件>\n```",
+      "tags": [
+        "运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-09-01T02:03:03.485Z",
+      "id": 97
+    },
+    {
+      "title": "linux 清除 ACL",
+      "content": "有时候会发现 `ls -la` 执行后的权限后面有个加号，这是因为开启了 `ACL` 权限控制，可以执行以下命令关闭\n```\nsetfacl -b <文件名>\n```",
+      "tags": [
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-09-05T13:43:27.163Z",
+      "id": 98
+    },
+    {
+      "title": "linux 挂载 SMB/CIFS",
+      "content": "```\nyum install cifs-util\necho \"//192.168.5.3/Data /mnt/nas cifs defaults,_netdev,username=mereith,password= 0 0\" >> /etc/fatab\nmount -a\n```\n",
+      "tags": [
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-09-06T10:56:44.264Z",
+      "id": 99
+    },
+    {
+      "title": "css 下划线中间向两边滑动效果",
+      "content": "```css\n.nav_item::after {\n  content: \"\";\n  width: 0;\n  height: 1px;\n  background: #000;\n  position: absolute;\n  top: 100%;\n  left: 50%;\n  transition: all 0.5s;\n}\n.nav_item:hover::after {\n  left: 0;\n  width: 100%;\n} \n```",
+      "tags": [
+        "前端",
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-09-10T02:08:00.434Z",
+      "id": 100
+    },
+    {
+      "title": "cent os 7 安装 git 2.x",
+      "content": "cent os 7 默认的 git 是 `1.9` 的，很不优雅，还是换成 2.x 的比较好\n## 增加仓库\n```\ncat /etc/yum.repos.d/wandisco-git.repo <<<EOF\n[wandisco-git]\nname=Wandisco GIT Repository\nbaseurl=http://opensource.wandisco.com/centos/7/git/$basearch/\nenabled=1\ngpgcheck=1\ngpgkey=http://opensource.wandisco.com/RPM-GPG-KEY-WANdisco\nEOF\nrpm --import http://opensource.wandisco.com/RPM-GPG-KEY-WANdisco\n```\n## 安装\n```\nyum install git -y\n```",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-09-10T08:31:27.042Z",
+      "id": 101
+    },
+    {
+      "title": "System limit for number of file watchers reached",
+      "content": "`linux` 下 `vscode` 报错，`System limit for numer of file watchers reached`,解决方法：\n```shell\necho \"fs.inotify.max_user_watches=524288\" >> /etc/sysctl.conf && sysctl -p\n```",
+      "tags": [
+        "运维",
+        "linux",
+        "vscode"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-09-29T03:24:42.646Z",
+      "id": 102
+    },
+    {
+      "title": "cent os 7 安装 gcc 版本 9",
+      "content": "起项目的时候，需要编译 `node-gpy` ,但是在 cent os 7 下报错：\n```\ng++: 错误：unrecognized command line option ‘-std=c++14’\n```\n这是因为 gcc 版本不对，需要升级。步骤如下：\n```shell\nyum install centos-release-scl -y\nyum install devtoolset-10-gcc-c++ -y\nyum install devtoolset-10-toolchain -y\nscl enable devtoolset-10 zsh\nscl enable devtoolset-10 bash\necho \"#!/bin/zsh\" > /etc/init.d/gcc\necho \"source /opt/rh/devtoolset-10/enable\" >> /etc/init.d/gcc\nchmod +x /etc/init.d/gcc\n```\n然后再编译就对了",
+      "tags": [
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-09-29T06:45:37.550Z",
+      "id": 103
+    },
+    {
+      "title": "python 导出项目依赖",
+      "content": "```\npip freeze > requirements.txt\n```",
+      "tags": [
+        "python"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-10-07T14:12:35.478Z",
+      "id": 104
+    },
+    {
+      "title": "Bash 判断命令存在 & 重定向",
+      "content": "## 重定向\n一般情况下，每个 Unix/Linux 命令运行时都会打开三个文件：\n\n* 标准 输入文件(stdin)：stdin的文件描述符为0，Unix程序默认从stdin读取数据。\n* 标准输出文件(stdout)：stdout 的文件描述符为1，Unix程序默认向stdout输出数据。\n* 标准错误文件(stderr)：stderr的文件描述符为2，Unix程序会向stderr流中写入错误信息。\n\n默认情况下：\n\n> `command > file` 将 stdout 重定向到 file\n> `command 2 > file `将 stderr 重定向到 file\n> `command < file` 将stdin 重定向到 file。\n> `command > file 2>&1` 将 stderr 和 stdout合并后重定向到 file\n> `command > file1 < file2` 将 stdout 重定向到 file1，stdin 重定向file2\n> `command 2 >> file` 将 stderr 追加到 file末尾\n\n如果希望执行某个命令，但又不希望在屏幕上显示输出结果，那么可以将输出重定向到 /dev/null\n\n> `command > /dev/null 2>&1` 屏蔽 stdout 和 stderr\n## 判断命令是否存在\n### command\n```bash\n#! /bin/bash\nif command -v git >/dev/null 2>&1; then \n  echo 'exists git' \nelse \n  echo 'no exists git' \nfi\n```\n### type\n```bash\n#! /bin/bash\nif type git >/dev/null 2>&1; then \n  echo 'exists git' \nelse \n  echo 'no exists git' \nfi\n```\n### hash 命令\n```bash\n#! /bin/bash\nif hash git 2>/dev/null; then \n  echo 'exists git' \nelse \n  echo 'no exists git' \nfi\n```\n\n## 参考\n> [https://www.jianshu.com/p/fbffa5cc49e1](https://www.jianshu.com/p/fbffa5cc49e1)\n> [http://c.biancheng.net/cpp/view/2738.html](http://c.biancheng.net/cpp/view/2738.html)",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-10-19T10:49:59.562Z",
+      "id": 105
+    },
+    {
+      "title": "git https 保存密码",
+      "content": "## 临时保存\n```\n# 默认15分钟\ngit config --global credential.helper cache\n# 自定义\ngit config credential.helper 'cache --timeout=3600'\n```\n## 长期保存\n```\n# 手动设置\ngit config --global credential.helper store\n# 添加远程的时候附带\nhttp://yourname:password@git.oschina.net/name/project.git\n```",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-10-19T11:07:19.399Z",
+      "id": 106
+    },
+    {
+      "title": "k8s 集群 control-plane-endpoint 主机名",
+      "content": "## 步骤\n1. 编辑 kubeadm-config ConfigMap\n```\nkubectl edit cm kubeadm-config -n kube-system\n```\n2. 在 apiServer 配置下通过 certSANs 配置添加新的主机名\n```\ndata:\n  ClusterConfiguration: |\n    apiServer:\n      certSANs:\n        - k8s.cnblogs.com\n```\n3. 将 kubeadm-config ConfigMap 导出为 kubeadmconf.yml 文件\n```\nkubeadm config view > /root/kubeadmconf.yml\n```\n4.  删除已有的 apiserver 证书\n```\nrm /etc/kubernetes/pki/apiserver.*\n```\n5. 基于 kubeadmconf.yml 文件重新生成证书\n```\nkubeadm init phase certs apiserver --config /root/kubeadmconf.yml\n```\n重启服务器后可以可以通过新的主机名访问 apiserver",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-11-05T10:34:16.413Z",
+      "id": 107
+    },
+    {
+      "title": "git 无法 pull 仓库refusing to merge unrelated histories",
+      "content": "在你操作命令后面加`--allow-unrelated-histories`",
+      "tags": [
+        "git"
+      ],
+      "top": 0,
+      "category": "实用笔记",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-11-15T16:15:07.312Z",
+      "id": 108
+    },
+    {
+      "title": "bash 数组操作",
+      "content": "最近需要写一些脚本，其中一个需求就是把命令执行的结果存到一个数组，在后面遍历循环使用它，不多说直接上代码：\n```bash\narray=(`./qshell listbucket2 mereith-www | awk '{print $1}'`)\nlen=${#array[@]}\ni=0\nwhile [ $i -lt $len ]\ndo\n./qshell delete mereith-www \"${array[$i]}\"\n#echo `${array[$i]}`\nlet i++\ndone\n```",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-11-16T14:42:03.464Z",
+      "id": 109
+    },
+    {
+      "title": "vim 修改文件格式为 unix",
+      "content": "最近复制 ssh 密钥的时候，连接远程机器总是提示 `Load key \"/root/.ssh/id_rsa\": invalid format` ，这实际上就是从 windows 复制过来格式不对，可以通过 vim 修改:\n```\n:set fileformat=unix\n:wq\n```",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-11-18T08:46:52.027Z",
+      "id": 110
+    },
+    {
+      "title": "用 SOCAT 端口转发",
+      "content": "最近想把一台机器穿透到外网，先用 wireguard 做了组网，然后公网的节点直接端口转发不就完事了，参考了我 OpenWrt 使用的 SOCAT 工具，方法如下：\n## 安装\n```\napt install socat -y\nyum install socat -y\n```\n## 转发 TCP\n```\n常规:\nsocat -d TCP4-LISTEN:80,reuseaddr,fork TCP4:127.0.0.1:8080\n记录并输出：\nnohup socat TCP4-LISTEN:30000,reuseaddr,fork TCP4:1.1.1.1:30000 >> socat.log 2>&1 &\n```\n## 转发 UDP\n```\n常规:\nsocat -T 600 UDP4-LISTEN:5353,reuseaddr,fork UDP4:114.114.114.114:53\n记录并输出\nnohup socat -T 600 UDP4-LISTEN:10000,reuseaddr,fork UDP4:1.1.1.1:10000 >> socat.log 2>&1 &\n```",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-11-23T09:47:15.488Z",
+      "id": 111
+    },
+    {
+      "title": "ProxmoxVE (PVE) 7.0 换源升级",
+      "content": "## 删除企业源\n\n```bash\necho \"#deb https://enterprise.proxmox.com/debian/pve bullseye pve-enterprise\" > /etc/apt/sources.list.d/pve-enterprise.list\n```\n\n## 切换国内源\n\n### 中科大源\n\n```bash\nwget https://mirrors.ustc.edu.cn/proxmox/debian/proxmox-release-bullseye.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg\necho \"deb https://mirrors.ustc.edu.cn/proxmox/debian/pve bullseye pve-no-subscription\" > /etc/apt/sources.list.d/pve-no-subscription.list     #中科大源\necho \"deb https://mirrors.ustc.edu.cn/proxmox/debian/ceph-pacific bullseye main\" > /etc/apt/sources.list.d/ceph.list     #中科大源\nsed -i.bak \"s#http://download.proxmox.com/debian#https://mirrors.ustc.edu.cn/proxmox/debian#g\" /usr/share/perl5/PVE/CLI/pveceph.pm     #中科大源\nsed -i.bak \"s#ftp.debian.org/debian#mirrors.aliyun.com/debian#g\" /etc/apt/sources.list     #阿里Debian源\nsed -i \"s#security.debian.org#mirrors.aliyun.com/debian-security#g\" /etc/apt/sources.list     #阿里Debian源\napt update && apt dist-upgrade\n```\n\n### pve 社区源\n\n```bash\nwget http://download.proxmox.wiki/debian/proxmox-release-bullseye.gpg -O /etc/apt/trusted.gpg.d/proxmox-release-bullseye.gpg\necho \"deb http://download.proxmox.wiki/debian/pve bullseye pve-no-subscription\" > /etc/apt/sources.list.d/pve-no-subscription.list     #Proxmox中文社区源\necho \"deb https://download.proxmox.wiki/debian/ceph-pacific bullseye main\" > /etc/apt/sources.list.d/ceph.list     #Proxmox中文社区源\nsed -i.bak \"s#http://download.proxmox.com/debian#https://download.proxmox.wiki/debian#g\" /usr/share/perl5/PVE/CLI/pveceph.pm     #Proxmox中文社区源\nsed -i.bak \"s#ftp.debian.org/debian#mirrors.aliyun.com/debian#g\" /etc/apt/sources.list     #阿里Debian源\nsed -i \"s#security.debian.org#mirrors.aliyun.com/debian-security#g\" /etc/apt/sources.list     #阿里Debian源\napt update && apt dist-upgrade\n```\n\n## 升级\n\n```bash\napt update && apt dist-upgrade\n```\n\n",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-11-23T14:16:13.236Z",
+      "id": 112
+    },
+    {
+      "title": "win11 任务栏不合并",
+      "content": "新装了 win11 ，但是总是合并任务栏就很难受。\n通过软件 `StartAllBack` 即可控制。",
+      "tags": [
+        "win11"
+      ],
+      "top": 0,
+      "category": "折腾搞机",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-11-24T03:09:50.694Z",
+      "id": 113
+    },
+    {
+      "title": "Cent os 7 安装 zsh 5.6 以上版本",
+      "content": "源码编译吧，步骤如下：\n```shell\nyum groupinstall \"Development tools\"\nyum install ncurses-devel\nwget https://sourceforge.net/projects/zsh/files/zsh/5.6.2/zsh-5.6.2.tar.xz/download\ntar -xvJf download\ncd zsh-5.6.2\n./configure\nmake \nmake install \necho \"/usr/local/bin/zsh\" >> /etc/shells\nchsh -s /usr/local/bin/zsh\n```",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-12-01T10:23:34.405Z",
+      "id": 114
+    },
+    {
+      "title": "ssh 通过跳板机访问目标机器",
+      "content": "有时候需要用跳板机访问机器，更安全。\n\n对于 `openssh 7.3` 以上的版本可以使用 `ProxyJump`, 低于 `7.3` 可以使用 `ProxyCommand`\n\n## ProxyJump\n需要 `OpenSSH 7.3` 以上版本才可以使用 `ProxyJump`, 使用下列命令查看`OpenSSH` 版本：\n```\n$ ssh -V\n```\n\nProxyJump 命令行使用方法：\n```\nssh -J [email protected]:port1,[email protected]:port2\n```\n可以直接使用上述命令通过跳板机直接登录内网机器，比如：\n```\nssh username@目标机器IP -p 22 -J username@跳板机IP:22\n```\n如果需要通过多个跳板机则以 , 分割：\n```\nssh username@目标机器IP -p 22 -J username1@跳板机IP1:22,username2@跳板机IP2:22\n```\n如果你觉得每次都需要加上 -J 的配置很多麻烦，可以写到配置文件里。修改配置文件 ~\\.ssh\\config，默认没有需要自己创建。增加以下内容：\n```\nHost target    # 代表目标机器的名字\n    HostName 目标机器 IP    # 这个是目标机器的 IP\n    Port 22    # 目标机器 ssh 的端口\n    User username_target    # 目标机器的用户名\n    ProxyJump username@跳板机IP:port\n\nHost 10.10.0.*    # 使用通配符 * 代表 10.10.0.1 - 10.10.0.255\n    Port 22    # 服务器端口\n    User username    # 服务器用户名\n    ProxyJump username@跳板机IP:port\n```\n也可以为跳板机器一个“别名”方便使用：\n```\nHost tiaoban1    # 代表跳板机 1\n    HostName 跳板机 1 的 IP\n    Port 22    # ssh 连接端口\n    User username1    # 跳板机 1 的用户名\n\nHost tiaoban2    # 代表跳板机 2\n    HostName 跳板机 2 的 IP\n    Port 22    # ssh 连接端口\n    User username2    # 跳板机 2 的用户名\n\nHost target    # 代表目标机器的名字\n    HostName 目标机器 IP    # 这个是目标机器的 IP\n    Port 22    # 目标机器 ssh 的端口\n    User username_target    # 目标机器的用户名\n    ProxyJump tiaoban1,tiaoban2\n\nHost 10.10.0.*    # 使用通配符 * 代表 10.10.0.1 - 10.10.0.255\n    Port 22    # 服务器端口\n    User username    # 服务器用户名\n    ProxyJump tiaoban1,tiaoban2\n```\n使用方法：\n```\nssh target\nssh 10.10.0.1\nssh username@target -p22\nssh username@10.10.0.1 -p22\n```\n## ProxyCommand\n如果 `OpenSSH` 版本低于 `7.3` 可以使用 `ProxyCommand`达到同样的效果。\n\n`ProxyCommand` 命令行使用方法：\n```\nssh username@目标机器IP -p 22 -o ProxyCommand='ssh -p 22 username@跳板机IP -W %h:%p'\n```\n同样可以在 ~/.ssh/config 文件中增加配置文件：\n```\nHost tiaoban   # 任意名字，随便使用\n\n    HostName 跳板机的 IP，支持域名\n\n    Port 22      # 跳板机端口\n\n    User username_tiaoban       # 跳板机用户\n\n \n\nHost target      # 同样，任意名字，随便起\n\n    HostName 目标服务器 IP    # 真正登陆的服务器，不支持域名必须IP地址\n\n    Port 22   # 服务器的端口\n\n    User username   # 服务器的用户\n\n    ProxyCommand ssh tiaoban -W %h:%p\n\n\n\nHost 10.10.0.*      # 可以用*通配符\n\n    Port 22   # 服务器的端口\n\n    User username   # 服务器的用户\n\n    ProxyCommand ssh tiaoban -W %h:%p\n```\n使用方法同上：\n```\nssh target\nssh 10.10.0.1\nssh username@target -p22\nssh username@10.10.0.1 -p22\n```\n## 参考链接\n[SSH 通过跳板机直接访问内网机器](https://zhuanlan.zhihu.com/p/74193910)",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-12-01T10:26:32.107Z",
+      "id": 115
+    },
+    {
+      "title": "Proxmox VE 直通显卡",
+      "content": "## 参数设置\n修改`/etc/default/grub`，找到`GRUB_CMDLINE_LINUX_DEFAULT`，按`CPU类型`分别修改为\n```\nGRUB_CMDLINE_LINUX_DEFAULT=\"quiet intel_iommu=on\"\nGRUB_CMDLINE_LINUX_DEFAULT=\"quiet amd_iommu=on\"\n```\n然后修改`/etc/modules`，一个一行：\n```\nvfio\nvfio_iommu_type1\nvfio_pci\nvfio_virqfd\n```\n然后屏蔽驱动\n```\necho \"blacklist radeon\" >> /etc/modprobe.d/blacklist.conf\necho \"blacklist nouveau\" >> /etc/modprobe.d/blacklist.conf\necho \"blacklist nvidia\" >> /etc/modprobe.d/blacklist.conf\n```\n避免 43 问题\n```\necho \"options vfio_iommu_type1 allow_unsafe_interrupts=1\" > /etc/modprobe.d/iommu_unsafe_interrupts.conf\necho \"options kvm ignore_msrs=1\" > /etc/modprobe.d/kvm.conf\n```\n## VFIO(可选)\n为什么是**可选**呢？因为部分机器执行此操作后可能**无法**输出到外接显示器，如出现问题请尝试撤回这一步。\n\n首先，查看显卡的ID。我这里有三张显卡，ID在前面：\n```\nroot@pve:~# lspci -v | grep VGA\n02:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Caicos XT [Radeon HD 7470/8470 / R5 235/310 OEM] (prog-if 00 [VGA controller])\n04:00.0 VGA compatible controller: NVIDIA Corporation GP107 [GeForce GTX 1050 Ti] (rev a1) (prog-if 00 [VGA controller])\n09:00.0 VGA compatible controller: ASPEED Technology, Inc. ASPEED Graphics Family (rev 30) (prog-if 00 [VGA controller])\n```\n以N卡为例，ID为02:00:0，继续执行：\n```\nroot@pve:~# lspci -n -s 02:00\n02:00.0 0300: 1002:6778\n02:00.1 0403: 1002:aa98\n```\n会得到显卡和显卡内置音频的另一个ID，我这里是1002:6778和1002:aa98。\n接下来把这两个ID加入VFIO（**记得ID改成自己的！**）：\n```\necho \"options vfio-pci ids=1002:6778,1002:aa98 disable_vga=1\"> /etc/modprobe.d/vfio.conf\n```\n如出现无法输出到外接显示器可以试试以下，如还无法使用请清空vfio.conf。\n```\necho \"options vfio-pci ids=1002:6778,1002:aa98\"> /etc/modprobe.d/vfio.conf\n```\n然后应用更改：\n```\nupdate-grub\nupdate-initramfs -k -a all\n```\n重启PVE主机。\n## 虚拟机设置\n类型为 `q35`，需为`efi`。添加显卡添加第一个后面是`.0`的就行。\n\n## 参考链接\n[Proxmox VE 直通显卡方案及解决N卡Code43](https://xylog.cn/2020/03/03/proxmox-vga-nvidia.html)",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-12-01T10:31:04.592Z",
+      "id": 116
+    },
+    {
+      "title": "nginx 反代 rewite url",
+      "content": "之前部署 code-server 需要根据不同的路径反代不同的后端，并且还要在反代时根据正则做匹配。但一直没找到完美的方案，后来在 strapi 的文档找到了好用的配置，如下：\n\n```\n location /test/ {\n        rewrite ^/test/?(.*)$ /$1 break;\n        proxy_pass http://strapi;\n        proxy_http_version 1.1;\n        proxy_set_header X-Forwarded-Host $host;\n        proxy_set_header X-Forwarded-Server $host;\n        proxy_set_header X-Real-IP $remote_addr;\n        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;\n        proxy_set_header X-Forwarded-Proto $scheme;\n        proxy_set_header Host $http_host;\n        proxy_set_header Upgrade $http_upgrade;\n        proxy_set_header Connection \"Upgrade\";\n        proxy_pass_request_headers on;\n    }\n\n```",
+      "tags": [
+        "DevOps",
+        "运维",
+        "linux"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-12-03T06:42:30.190Z",
+      "id": 117
+    },
+    {
+      "title": "strapi 关闭 Content Security Policy",
+      "content": "最近基于 `strapi` 开发了导航站，经过一番折腾决定把静态网页也放到 `strapi` 项目的 `public` 让 `strapi`  又当爹又当妈。\n\n但是发现网页的内联脚本和图片加载不出来，经过一番查询发现是因为默认 `strapi` 开启了 `内容安全策略`, 在返回头中加上了 `Content-Security-Policy` 从而限制浏览器执行内联脚本和加载其他网址的图片。\n\n## 关闭方法\n `config/middlewares.js` 改为：\n```js\nmodule.exports = [\n  'strapi::errors',\n  {\n    name: 'strapi::security',\n    config: {\n      contentSecurityPolicy: false\n    }\n  },\n  'strapi::cors',\n  'strapi::poweredBy',\n  'strapi::logger',\n  'strapi::query',\n  'strapi::body',\n  'strapi::favicon',\n  'strapi::public'\n];\n\n```\n\n## 参考链接\n[Content Security Policy 入门教程](https://www.ruanyifeng.com/blog/2016/09/csp.html)",
+      "tags": [
+        "strapi"
+      ],
+      "top": 0,
+      "category": "后端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-12-03T06:46:02.068Z",
+      "id": 118
+    },
+    {
+      "title": "基于 strapi 开发应用",
+      "content": "原来一直都听过 `strapi` 的大名，但是一直没深入研究，最近有时间把我的工具站分离了出来，做成一个通用的项目，后端的话也只是简单的 `CURD` 而已，不如用 `strapi` 来做。\n\n## Strapi 是什么\n\n`strapi` 按照官网的说法，是**无头内容管理系统**，我的理解就是，一个自动生成 `CURD API`  的 后端 + 管理面板 .\n\n我只要起一个 `strapi` 项目，在自带的管理面板图形化定义字段，就能自动生成对应的 `CURD API` ，这样我只要开发前端就行了。\n\n不仅如此，它还自带了后台可以很方便的管理内容，增删改查，甚至还集成了认证系统，自己就是完善的后端。\n\n## 开发方案\n\n懒人如我，当然能少干活就少干活，步骤如下：\n\n1. 起一个 `strapi` 项目，做好配置，设置好字段值。\n2. 起一个前端项目，展示数据，适配 `strapi` 的 `api`。\n3. 前端 `build 产物` 直接放到 `strapi` 的 `public` 文件夹，连反代都省了。\n4. 打包成一个 `docker` 部署，完事儿。\n\n## 部署方案\n### 构建前端\n在打包之前，先构建前端，并复制到 `strapi项目` 的 `public` 文件夹。\n\n为了避免错误，你可能需要关闭 `contentSecurityPolicy`,修改 `config/middlewares.js` 如下：\n```\n{\n    name: 'strapi::security',\n    config: {\n      contentSecurityPolicy: false\n    }\n  },\n```\n### Dockerfile\n```\nFROM strapi/base\n\nWORKDIR /app\n\nCOPY ./server/package.json ./\nCOPY ./server/yarn.lock ./\n\nRUN yarn install\n\nCOPY ./server/ /app/\n\nENV NODE_ENV production\n\nRUN yarn build\n\nEXPOSE 1337\n\nCMD [\"yarn\", \"develop\"]\n```\n### 运行\n对于开发人员本身用，或者后期需要改字段的话，直接启动入口用 `yarn develop` ，否则就生产运行 `yarn start` 即可（还需加上环境变量 `NODE_ENV=production`）\n\n### 反代\n此方法直接反代一个 `1337` 就行了，省事儿。\n\n如果需要更复杂的，建议参考官方文档：\n\n> [Nginx Proxying](https://docs.strapi.io/developer-docs/latest/setup-deployment-guides/deployment/optional-software/nginx-proxy.html#configuration)\n\n\n",
+      "tags": [
+        "strapi"
+      ],
+      "top": 0,
+      "category": "后端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-12-03T06:46:16.908Z",
+      "id": 119
+    },
+    {
+      "title": "docker-compose 部署 matomo 分析系统",
+      "content": "按照计划需要给博客增加分析系统，考虑到国内的网络情况，另外也想要数据完全的私有化，采用开源的 `matomo` 方案:\n\n> [matomo-org/matomo](https://github.com/matomo-org/matomo)\n> 但是官方文档感觉写的不是很好，很多内容零碎，需要自己找。我的需求是，通过  `docker-compose`  部署  `php`  版本的 `matomo`  和  `mysql` ，然后在外层宿主机通过 `nginx` 连接 `matomo 容器中的 php` 暴露的端口进行代理。经过一番折腾，配置如下：\n\n## docker-compose\n\n```yaml\nversion: \"3\"\n\nservices:\n  db:\n    image: mariadb\n    command: --max-allowed-packet=64MB\n    restart: always\n    volumes:\n      - /var/docker/matomo/db:/var/lib/mysql\n    environment:\n      - MYSQL_ROOT_PASSWORD=matomo\n      - MYSQL_PASSWORD=matomo\n      - MYSQL_DATABASE=matomo\n      - MYSQL_USER=matomo\n\n  app:\n    image: matomo:fpm-alpine\n    restart: always\n    links:\n      - db\n    volumes:\n      # - ./config:/var/www/html/config:rw\n      # - ./logs:/var/www/html/logs\n      - /var/www/html:/var/www/html\n    environment:\n      - MATOMO_DATABASE_HOST=db\n      - PHP_MEMORY_LIMIT=2048M\n      - MATOMO_DATABASE_ADAPTER=mysql\n      - MATOMO_DATABASE_TABLES_PREFIX=matomo_\n      - MATOMO_DATABASE_USERNAME=matomo\n      - MATOMO_DATABASE_PASSWORD=matomo\n      - MATOMO_DATABASE_DBNAME=matomo\n    ports:\n      - 8919:9000\n```\n\n## nginx 配置\n\n```nginx\nserver {\n    listen 80;\n    server_name matomo.mereith.com;\n    # Redirect all HTTP requests to HTTPS with a 301 Moved Permanently response.\n    location / {\n        return 301 https://$host$request_uri;\n    }\n}\nserver {\n    listen 443 ssl http2;\n    server_name matomo.mereith.com; # list all domains Matomo should be reachable from\n    access_log /var/log/nginx/matomo.access.log;\n    error_log /var/log/nginx/matomo.error.log;\n\n    ## uncomment if you want to enable HSTS with 6 months cache\n    ## ATTENTION: Be sure you know the implications of this change (you won't be able to disable HTTPS anymore)\n    #add_header Strict-Transport-Security max-age=15768000 always;\n\n    ## replace with your SSL certificate\n    ssl_certificate /var/cert/mereith.com.crt;\n    ssl_certificate_key /var/cert/mereith.com.key;\n\n    ssl_session_timeout 1d;\n    ssl_session_cache shared:SSL:50m;\n    ssl_session_tickets off;\n\n    ssl_protocols TLSv1.2;\n    ssl_ciphers 'ECDHE-ECDSA-AES256-GCM-SHA384:ECDHE-RSA-AES256-GCM-SHA384:ECDHE-ECDSA-CHACHA20-POLY1305:ECDHE-RSA-CHACHA20-POLY1305:ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE-ECDSA-AES256-SHA384:ECDHE-RSA-AES256-SHA384:ECDHE-ECDSA-AES128-SHA256:ECDHE-RSA-AES128-SHA256';\n    ssl_prefer_server_ciphers on;\n\n    ssl_stapling on;\n    ssl_stapling_verify on;\n\n    add_header Referrer-Policy origin always; # make sure outgoing links don't show the URL to the Matomo instance\n    add_header X-Content-Type-Options \"nosniff\" always;\n    add_header X-XSS-Protection \"1; mode=block\" always;\n\n    root /var/docker/matomo/app/; # replace with path to your matomo instance\n\n    index index.php;\n\n    ## only allow accessing the following php files\n    location ~ ^/(index|matomo|piwik|js/index|plugins/HeatmapSessionRecording/configs)\\.php$ {\n        include snippets/fastcgi-php.conf; https://github.com/nginx/nginx/blob/master/conf/fastcgi.conf\n        # try_files $fastcgi_script_name =404; # protects against CVE-2019-11043. If this line is already included in your snippets/fastcgi-php.conf you can comment it here.\n        fastcgi_param HTTP_PROXY \"\"; # prohibit httpoxy: https://httpoxy.org/\n        # fastcgi_pass unix:/var/run/php/php7.2-fpm.sock; #replace with the path to your PHP socket file\n        fastcgi_pass 127.0.0.1:8919; # uncomment if you are using PHP via TCP sockets (e.g. Docker container)\n    }\n\n    ## deny access to all other .php files\n    location ~* ^.+\\.php$ {\n        deny all;\n        return 403;\n    }\n\n    ## serve all other files normally\n    location / {\n        try_files $uri $uri/ =404;\n    }\n\n    ## disable all access to the following directories\n    location ~ ^/(config|tmp|core|lang) {\n        deny all;\n        return 403; # replace with 404 to not show these directories exist\n    }\n\n    location ~ /\\.ht {\n        deny  all;\n        return 403;\n    }\n\n    location ~ js/container_.*_preview\\.js$ {\n        expires off;\n        add_header Cache-Control 'private, no-cache, no-store';\n    }\n\n    location ~ \\.(gif|ico|jpg|png|svg|js|css|htm|html|mp3|mp4|wav|ogg|avi|ttf|eot|woff|woff2|json)$ {\n        allow all;\n        ## Cache images,CSS,JS and webfonts for an hour\n        ## Increasing the duration may improve the load-time, but may cause old files to show after an Matomo upgrade\n        expires 1h;\n        add_header Pragma public;\n        add_header Cache-Control \"public\";\n    }\n\n    location ~ ^/(libs|vendor|plugins|misc|node_modules) {\n        deny all;\n        return 403;\n    }\n\n    ## properly display textfiles in root directory\n    location ~/(.*\\.md|LEGALNOTICE|LICENSE) {\n        default_type text/plain;\n    }\n}\n```\n\n",
+      "tags": [
+        "DevOps"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2021-12-04T10:03:05.148Z",
+      "id": 121
+    },
+    {
+      "title": "nginx 反代丢端口",
+      "content": "自从切换到 `nginx-proxy-manager` 之后，发现在家里用的时候对于某些服务会丢端口。\n\n因为家里外网不给 80 端口，一直用的 8443。\n\n折腾了一番发现可以追加协议：\n```\n proxy_set_header Host $host:$server_port; \n```\n因为我在路由器开了端口转发，所以强制制定了 8443 端口：\n```\n proxy_set_header Host $host:8443;\n```",
+      "tags": [
+        "nginx 运维"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-03-21T07:57:00.979Z",
+      "id": 122
+    },
+    {
+      "title": "css 黑白滤镜",
+      "content": "可以使用:\n```css\nfilter: grayscale(50%);\n```\n具体可以参考 [MDN filter - CSS 层叠样式表](https://developer.mozilla.org/zh-CN/docs/Web/CSS/filter)",
+      "tags": [
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-03-26T15:56:40.742Z",
+      "id": 123
+    },
+    {
+      "title": "css 填充 svg 颜色",
+      "content": "需要使用 `fill: #fff` 才行，`color` 与 `background` 是没用的。",
+      "tags": [
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-03-26T15:58:28.229Z",
+      "id": 124
+    },
+    {
+      "title": "css 文字超出隐藏并显示省略号",
+      "content": "```css\noverflow: hidden;\ntext-overflow: ellipsis;\nwhite-space: nowrap;\n```",
+      "tags": [
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-03-26T16:01:08.357Z",
+      "id": 125
+    },
+    {
+      "title": "css 隐藏滚动条",
+      "content": "```css\n.demo::-webkit-scrollbar {\n  display: none; /* Chrome Safari */\n}\n\n.demo {\n  scrollbar-width: none; /* firefox */\n  -ms-overflow-style: none; /* IE 10+ */\n  overflow-x: hidden;\n  overflow-y: auto;\n}\n```",
+      "tags": [
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-03-26T16:02:21.761Z",
+      "id": 126
+    },
+    {
+      "title": "css flex 布局超出隐藏",
+      "content": "```css\n.fathor {\ndisplay: flex;\n}\n.son1{ flex: 1;  overflow: hidden;}\n```\n\n[其他参考](https://juejin.cn/post/6844904012794298375)",
+      "tags": [
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-03-26T16:04:31.528Z",
+      "id": 127
+    },
+    {
+      "title": "关于我重写了三次博客项目这件事",
+      "content": "## 闲话\n\n我喜欢写博客，或者说喜欢有这么一个地方。因为哪怕平时不怎么写，但是有时候看到的好东西偶尔会想着有个放过来。\n\n第一次知道个人博客这个东西是刚上大学，那时候搜索一些代码相关的问题，偶尔会搜到别人的博客里，就感觉好酷啊。 在互联网上有这么一个地方，可以抒发自己的见解并且分享知识。于是那时候搜索一番，用`hexo`写了第一篇博客：\n\n> [OpenWrt/LEDE 内网转发ipv6](https://www.mereith.com/post/129#heading-0) 。\n\n后续零零散散写了一些，但发现有些不方便：每次写完必须构建然后发布，然后刷新 `CDN` ，而且很大程度上我必须用常用的那一台电脑写，不然我就要重装环境（那时候还没有 `codespace`）。\n\n<!-- more -->\n\n## 第一次\n\n2021上半年我准备出去找工作，第一份工作打算招前端的。于是我花了大概不到一个月学了一些前端知识和一点框架（`react`、`umijs`、`eggjs`）。当时觉得自己比较僵硬，想写个项目练练手，顺便简历有的写，于是就写了博客。当时用的 `egg.js` 和`umi.js` 作为前后端的框架，还用了 `服务端渲染` 的方式。记得当初不熟悉部署那一套（`docker`啊，`k8s`啊），直接在裸机服务器部署的，`nginx`反代给我折腾半天，不过总算是搞明白了。\n\n但是用着用着发现小问题不断，一方面是我代码写的不好，`react` 总是触发多次重复渲染；另一方面是`cdn`和`ssr`的配置不对，我新写的文章有时候在页面上刷新也不展示，缓存的奇奇怪怪。移动端展示也不优秀。\n\n但作为一个前端新手，我还是挺满意的，虽然现在看来代码写的稀烂。当时还写了一篇文章：[基于React/umi/egg自建博客系统](https://www.mereith.com/post/90) ，当初还想开源给别人用，结果文章后面说的那些一个也没实现。后面工作忙了我也没更新过这一版了。\n\n## 第二次\n\n后面我去了`Authing`，随着我工作带来的水平提高，我看原来的博客越来越不顺眼了。也愈发觉得`SSR`这种方式不适合个人博客的场景。于是我想用`SSG（静态生成）`来重新写一次博客。因为在公司也一直用`react`，所以这一次用了`gatsby`，顺手复习一下`graphQL`岂不是秒的很？\n\n于是我就用了`gatsby`重新写了博客，其中遇到了一些问题，比如插件对接`API`或者`mongoDB`对数据的一致性要求很高，我当时的数据结构偶尔会丢数据，我就写了适配函数。当时还颇为认真的规划了一下`css`，因为写博客是对自己水平的考察，所以我没有用任何第三方库，组件啥的都是自己写的。还写了简单的搜索接口。\n\n后来部署的时候发现每次都手动构建很傻，我还写了一个微服务叫`blog-publisher`，它接收后台的构建请求，拉取最新的代码，然后`build`，发版到`cdn`并自动刷新`cdn缓存`。虽然延迟长了一些，但是也还能用。\n\n但它还是有一些问题：\n\n* 代码写的比较混乱，维护性差。尤其是写了一堆适配函数。\n* 不具备通用性，我没办法给别人用。一开始就是为了自用而开发的。\n* 黑暗模式没实现，搜索卡片简陋。\n* 样式还是不美观。\n* 构建到看到结果还是慢了点。\n\n## 第三次（现在的版本）\n\n2022年中我离职了，现在有了大把的时间。那就重构吧，这次就比较系统了，一开始就瞄准了以下几个目标：\n\n* 良好的代码维护性，清晰的层级逻辑\n* 面向开源，任何人都能用（所以得有完善的初始化功能、所有选项都可配置化）\n* 还用`SSG`但是要增量渲染，不要每次都手动刷新。\n* 支持黑暗模式，完美支持各个屏幕大小，样式好看。\n\n其实在这之前我也调研过，考虑了一下要不要用现在的博客。但是要么我觉得不好看，要么觉得花里胡哨的，要么觉得功能不完备。想来想去还是自己实现比较好。\n总之最终我决定把这个博客系统分为几个服务：\n\n* 后台服务： 采用`nest.js`实现。\n* 管理页面：采用`antd pro`实现。\n* 博客前台：采用`next.js`实现，完美支持需求。\n* 评论系统：直接用`waline`，以后会考虑自研。\n\n具体到前后端我都尽量先规划好再写，这样避免了很大程度上的代码混乱（虽然有些地方还是小脏 2333）。\n\n现在你所看到的就是重构之后的版本啦~ 基本能用了，但是文档还没写。我会慢慢补的。\n\n具体大概有以下特点：\n\n* 一站式博客系统，功能全面。\n* `docker-compose` 一键部署。\n* 有完善的初始化和后台页面。\n* 支持百度、谷歌分析。\n* 支持 `waline` 评论系统。\n* 数据可以导入导出。\n* 具备完善的文章、分类、标签、草稿功能。\n* 站点信息可配置化，logo图片可配置化，导航栏可配置化。\n* 完善的主题切换系统，支持：自动、白天和黑暗三种模式。\n* 全面适配各个尺寸的屏幕，移动端友好，自适应布局。\n* 静态生成页面，`CDN`与`SEO`友好。\n* 增量渲染，自动根据最新的数据生成页面，无需重新构建。\n* 资源消耗少，初始化后所有服务加起来 `100M` 内存左右。（默认开启了内存缓存后面会增大些）\n* 带有快捷键的搜索功能。\n* 内置访客、访问量统计。\n* `API First`，后端自带`swagger` ，方便调试查看。（后面会补 API 文档）\n* 理论上你可以只用后端和后台，网站的前台自己去实现。（其实就是把本项目当作`无头 CMS`也是完全可以的）\n  。。。\n\n有兴趣的可以试试哈，有啥问题也欢迎和我联系，我会持续更新的。👀️\n\n项目主页: [https://vanblog.mereith.com](https://vanblog.mereith.com)\n\n",
+      "tags": [
+        "博客",
+        "建站"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-21T09:31:09.005Z",
+      "id": 129
+    },
+    {
+      "title": "css 实现展开收起动画",
+      "content": "参考： [CSS 实现展开动画](https://www.cnblogs.com/WindrunnerMax/p/14346468.html)\n\n展开收起效果是比较常见的一种交互方式，通常的做法是控制 display 属性值在 none 和其它值之间切换，虽说功能可以实现，但是效果略显生硬，所以会有这样的需求——希望元素展开收起能具有平滑的效果。\n\n<!-- more -->\n\n## max-height\n\n首先想到的是通过 height 在 0 与 auto 之间切换，但是结果可能并不会是我们所预期的那样，原因是我们将要展开的元素内容是动态的，即高度值不确定，因此 height 使用的值是默认的 auto，从 0px 到 auto 是无法计算的，因此无法形成过渡或动画效果。\n\n据此我们可以使用 max-height，将 max-height 从 0 过渡到一个能够大于完全显示内部元素的值，展开后的 max-height 值，只需要设定为保证比展开内容高度大的值即可，在 max-height 值比 height 值大的情况下，元素仍会默认采用自身的高度值即 auto，如此一来一个高度不定的元素展开收起动画效果就实现了。\n\n请注意这种方式实现还是有限制的，使用 CSS 进行过渡动画的时候依旧是通过计算 0 到设定的 max-height 高度值进行计算的，在实际应用中如果 max-height 值太大，在元素收起的时候将会产生延迟的效果，这是因为在收起时，max-height 从设定的特别大的值，到元素自身高度值的变化过程将占用较多时间，此时画面表现则会产生延迟的效果。因此建议将 max-height 值设置为足够安全的最小值，这样在收起时即使有略微延迟，也会因为时间很短，难以被用户感知，将不会影响体验。\n\n```html\n<!DOCTYPEhtml>\n<html>\n  <head>\n    <title>展开动画</title>\n    <styletype=\"text/css\">\n      .page {\n        width: 200px;\n        padding: 10px20px;\n        border: 1pxsolid#eee;\n      }\n      .container {\n        overflow: hidden;\n      }\n      .container > .options {\n        transition: all0.5s;\n        max-height: 0;\n      }\n      .container > .unfold {\n        max-height: 150px;\n      }\n      .container > .btn {\n        color: #4c98f7;\n        cursor: pointer;\n        text-decoration: underline;\n      }\n    </style>\n  </head>\n  <body>\n    <divclass=\"page\">\n      <divclass=\"container\">\n        <divclass=\"btn\"onclick=\"operate(this)\"unfold=\"1\">展开</div>\n        <divclass=\"options\">\n          <divclass=\"option\">选项1</div>\n          <divclass=\"option\">选项2</div>\n          <divclass=\"option\">选项3</div>\n          <divclass=\"option\">选项4</div>\n          <divclass=\"option\">选项5</div>\n          <divclass=\"option\">选项6</div>\n          <divclass=\"option\">选项7</div>\n        </div>\n      </div>\n    </div>\n  </body>\n  <scripttype=\"text/javascript\">\n    functionoperate(btn) {\n      constoptionsNode = document.querySelector(\".container > .options\");\n      constunfold = btn.getAttribute(\"unfold\");\n      if (unfold && unfold === \"1\") {\n        btn.innerText = \"收缩\";\n        optionsNode.classList.add(\"unfold\");\n      } else {\n        btn.innerText = \"展开\";\n        optionsNode.classList.remove(\"unfold\");\n      }\n      btn.setAttribute(\"unfold\", unfold === \"0\" ? \"1\" : \"0\");\n    }\n  </script>\n</html>\n```\n\n## height\n\n使用 max-height 必定有一定的局限性，那么不如我们在 DOM 加载完成后就取得元素的实际高度并保存，之后直接利用这个真实高度与 0 进行动画过渡即可，因为浏览器的渲染顺序，在解析 JavaScript 时会阻塞 DOM 的渲染，所以在获取元素实际高度再设置高度为 0 的过程中一般不会出现闪烁的情况，如果实在担心因为获取高度之后再将高度设置为 0 可能会有一个闪烁的过程，那么我们可以取得元素父节点后调用 cloneNode(true)方法或者 innerHTML 方法取得字符串再 innerHTML 到一个新创建的节点，目的就是将其拷贝，之后将其使用绝对定位等放置到屏幕外即将其设置到屏幕能够显示的外部区域，注意此时要设置 body 的 overflow: hidden;，之后利用 getComputedStyle 取得实际高度，然后再将其移出 DOM 结构，此时有了实际高度就可以进行动画过渡了，下面简单的实现一下在 DOM 加载时便取得实际高度进行动画实现。\n\n```html\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>展开动画</title>\n    <style type=\"text/css\">\n      .page {\n        width: 200px;\n        padding: 10px 20px;\n        border: 1px solid #eee;\n      }\n      .container {\n        overflow: hidden;\n      }\n      .container > .options {\n        transition: all 0.5s;\n      }\n      .container > .btn {\n        color: #4c98f7;\n        cursor: pointer;\n        text-decoration: underline;\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"page\">\n      <div class=\"container\">\n        <div class=\"btn\" onclick=\"operate(this)\" unfold=\"1\">展开</div>\n        <div class=\"options\">\n          <div class=\"option\">选项1</div>\n          <div class=\"option\">选项2</div>\n          <div class=\"option\">选项3</div>\n          <div class=\"option\">选项4</div>\n          <div class=\"option\">选项5</div>\n          <div class=\"option\">选项6</div>\n          <div class=\"option\">选项7</div>\n        </div>\n      </div>\n    </div>\n  </body>\n  <script type=\"text/javascript\">\n    (function init(win, doc) {\n      const optionsNode = document.querySelector(\".container > .options\");\n      optionsNode.setAttribute(\n        \"real-height\",\n        win.getComputedStyle(optionsNode).height\n      );\n      optionsNode.style.height = \"0px\";\n    })(window, document);\n\n    function operate(btn) {\n      const optionsNode = document.querySelector(\".container > .options\");\n      const unfold = btn.getAttribute(\"unfold\");\n      const realHeight = optionsNode.getAttribute(\"real-height\");\n      if (unfold && unfold === \"1\") {\n        btn.innerText = \"收缩\";\n        optionsNode.style.height = realHeight;\n      } else {\n        btn.innerText = \"展开\";\n        optionsNode.style.height = \"0px\";\n      }\n      btn.setAttribute(\"unfold\", unfold === \"0\" ? \"1\" : \"0\");\n    }\n  </script>\n</html>\n```\n\n## translateY\n\n还有一种常用实现动画的方式，即首先将外层元素没有动画过渡的形式直接展开，再将选项加入动画缓慢下落，通常利用 transform: translateY();去实现这个缓慢下降的动画，在微信的 WEUI 小程序组件库的首页就是采用这种实现方式。\n\n```html\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>展开动画</title>\n    <style type=\"text/css\">\n      .page {\n        width: 200px;\n        padding: 10px 20px;\n        border: 1px solid #eee;\n      }\n      .container,\n      .options-container {\n        overflow: hidden;\n      }\n      .options-container {\n        height: 0;\n      }\n      .container .options {\n        transition: all 0.5s;\n        transform: translateY(-100%);\n      }\n      .container .unfold {\n        transform: translateY(0);\n      }\n      .container > .btn {\n        color: #4c98f7;\n        cursor: pointer;\n        text-decoration: underline;\n      }\n    </style>\n  </head>\n  <body>\n    <div class=\"page\">\n      <div class=\"container\">\n        <div class=\"btn\" onclick=\"operate(this)\" unfold=\"1\">展开</div>\n        <div class=\"options-container\">\n          <div class=\"options\">\n            <div class=\"option\">选项1</div>\n            <div class=\"option\">选项2</div>\n            <div class=\"option\">选项3</div>\n            <div class=\"option\">选项4</div>\n            <div class=\"option\">选项5</div>\n            <div class=\"option\">选项6</div>\n            <div class=\"option\">选项7</div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </body>\n  <script type=\"text/javascript\">\n    function operate(btn) {\n      const optionsNode = document.querySelector(\".container .options\");\n      const optionsContainer = document.querySelector(\".options-container\");\n      const unfold = btn.getAttribute(\"unfold\");\n      if (unfold && unfold === \"1\") {\n        btn.innerText = \"收缩\";\n        optionsNode.classList.add(\"unfold\");\n        optionsContainer.style.height = \"auto\";\n      } else {\n        btn.innerText = \"展开\";\n        optionsNode.classList.remove(\"unfold\");\n        optionsContainer.style.height = \"0px\";\n      }\n      btn.setAttribute(\"unfold\", unfold === \"0\" ? \"1\" : \"0\");\n    }\n  </script>\n</html>\n```\n\n",
+      "tags": [
+        "前端",
+        "css"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-25T00:52:43.637Z",
+      "id": 130
+    },
+    {
+      "title": "nginx 301 问题",
+      "content": "在起项目用`nginx`反代的时候，会发现出现意料之外的`301`，把需要或者不需要的端口号带上。\n\n## 现象\n\n使用 `vanblog` 的镜像时使用`-p 2333:80`,那么：\n\n1. 使用 http://域名:2333 可以正常访问\n2. 使用 http://域名:2333/admin 无法访问，具体体现为：该请求会返回 301 重定向，Location 为 http://域名/admin\n\n<!-- more -->\n\n## 原因分析\n\n[官方文档](http://www.5190m.top/note/2020/7/8/2020-07-08-install-elastic-and-kibana.html#%E4%BD%BF%E7%94%A8nginx%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86Kibana)\n\n```nginx\nIf a location is defined by a prefix string that ends with the slash character,\n and requests are processed by one of proxy_pass, fastcgi_pass, uwsgi_pass, scgi_pass, or memcached_pass,\n then the special processing is performed.\n In response to a request with URI equal to this string, but without the trailing slash,\n a permanent redirect with the code 301 will be returned to the requested URI with the slash appended.\n If this is not desired, an exact match of the URI and location could be defined like this:\n\nlocation /user/ {\n    proxy_pass http://user.example.com;\n}\n\nlocation = /user {\n    proxy_pass http://login.example.com;\n}\n```\n\n## 解决方案\n\n配置文件增加：\n\n```nginx\nabsolute_redirect off;\n```\n\n",
+      "tags": [
+        "nginx",
+        "nginx 运维",
+        "DevOps"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-25T00:58:40.723Z",
+      "id": 131
+    },
+    {
+      "title": "Node.js 流式编程",
+      "content": "## 可读流\n\n可读流是**生产数据**用来供程序消费的流。举例：\n\n```js\nconst rs = fs.createReadStream(filePath);\nprocess.stdin.pipe(process.stdout);\n```\n\n<!-- more -->\n\n### 自定义可读流\n\n1. 继承 sream 模块的 **Readable** 类\n2. 重写 **_read** 方法，调用 **this.push** 将生产的数据放入待读取队列\n\n写一个每100毫秒产生随机数的流\n\n```js\nconst Readable = require('stream').Readable;\nclass RandomNumberStream extends Readable {\n    constructor(max) {\n        super()\n    }\n    _read() {\n        const ctx = this;\n        setTimeout(() => {\n            const randomNumber = parseInt(Math.random() * 10000);\n            // 只能 push 字符串或 Buffer，为了方便显示打一个回车\n            ctx.push(`${randomNumber}\\n`);\n        }, 100);\n    }\n```\n\n如果需要停下来的话，用`ctx.push(null)` 就行了。\n\n## 可写流\n\n可写流是对数据流向设备的抽象，用来消费上游流过来的数据，通过可写流程序可以把数据写入设备，常见的是本地磁盘文件或者 TCP、HTTP 等网络响应。\n\n```js\nconst fs = require('fs');\nconst rs = fs.createReadStream('./w.js');\nconst ws = fs.createWriteStream('./copy.js');\n\nrs.setEncoding('utf-8');\n\nrs.on('data', chunk => {\n  ws.write(chunk);\n});\n```\n\nwrite() 方法有三个参数\n\n* chunk {String| Buffer}，表示要写入的数据\n* encoding 当写入的数据是字符串的时候可以设置编码\n* callback 数据被写入之后的回调函数\n\n### 自定义可写流\n\n和自定义可读流类似，简单的自定义可写流只需要两步\n\n1. 继承 stream 模块的 Writable 类\n2. 实现 _write() 方法\n\n```js\nconst Writable = require('stream').Writable\nclass OutputStream extends Writable {\n    _write(chunk, enc, done) {\n        // 转大写之后写入标准输出设备\n        process.stdout.write(chunk.toString().toUpperCase());\n        // 此处不严谨，应该是监听写完之后才调用 done\n        process.nextTick(done);\n    }\n}\nmodule.exports = OutputStream;\n```\n\n## 参考\n\n基本抄自：[可读流](https://www.yuque.com/sunluyong/node/readable)\n\n",
+      "tags": [
+        "node",
+        "js"
+      ],
+      "top": 0,
+      "category": "后端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-25T05:06:17.994Z",
+      "id": 132
+    },
+    {
+      "title": "js 防抖节流中的 this 与箭头函数",
+      "content": "## 参数问题\n\n### 现象\n\n背八股文的时候温习了一下防抖和节流的概念。于是自己随手把网上的版本试了一下，发现不行：\n\n```html\n<body>\n  <button id=\"debounce\">防抖测试</button>\n  <script>\n    function debounce(fn, delay) {\n      let timer = null;\n      return function () {\n        clearTimeout(timer);\n        timer = setTimeout(() => {\n          fn.apply(this)\n        }, delay)\n      }\n    }\n    document.querySelector(\"#debounce\").addEventListener(\"click\", debounce((ev) => {\n      console.log(ev)\n    }, 500))\n  </script>\n</body>\n```\n\n控制台会打印 `undefined`。\n<!-- more -->\n\n### 结论\n\n`setTimeout` 里我们的函数执行的时候，没有参数。所以应该改为：\n\n```js\ntimer = setTimeout(() => {\n          fn.apply(this,arguments)\n}, delay)\n```\n\n所以里面的 `apply` 可以通俗的理解为就是为了传参数进去用的。\n\n但为什么这样就可以呢？为啥`arguments` 就对了呢？\n\n## 箭头函数\n\n## 试验1\n\n`setTimeout` 里面用的是箭头函数，那我们用普通函数会发生什么？\n\n```js\ntimer = setTimeout(function () {\n          fn.apply(this,arguments)\n}, delay)\n```\n\n控制台会打印：\n\n```\nundefined\n```\n\n## 试验2\n\n我们修改一下代码：\n\n```js\nfunction debounce(fn, delay) {\n      let timer = null;\n      return function () {\n        console.log(this,arguments);\n        setTimeout(function () {\n          console.log(this,arguments);\n        },delay)\n        setTimeout(()=>{\n          console.log(this,arguments);\n        },delay)\n      }\n    }\n```\n\n控制台会输出：\n\n![](https://pic.mereith.com/img/20220726143232.png)\n\n### 分析\n\n从两个试验可以看出，箭头函数会把内部的 `this` 和 `arguments` 绑定为与定义时的上层一致。\n\n而上一层就是我们的事件监听器直接调用的函数，所以这时候的 `arguments` 和 `this` 都是正确的。\n\n## 知识点\n\n1. 作为普通函数执行时，`this` 指向 `window`。如果是事件监听，就是触发事件的对象。\n2. 当函数作为对象的方法被调用时，`this` 就会指向该对象。\n3. 构造器调用，`this` 指向返回的这个对象。\n4. 箭头函数的 `this` 绑定看的是 `this` 所在函数定义在哪个对象下，就绑定哪个对象。如果有嵌套的情况，则 `this` 绑定到最近的一层对象上。\n5. 基于 `Function.prototype` 上的 `apply` 、 `call` 和 `bind` 调用模式，这三个方法都可以显示的指定调用函数的 `this` 指向。`apply` 接收参数的是数组，`call` 接受参数列表，`bind` 方法通过传入一个对象，返回一个 `this` 绑定了传入对象的新函数。这个函数的 `this` 指向除了使用 `new` 时会被改变，其他情况下都不会改变。若为空默认是指向全局对象 `window`。\n\n",
+      "tags": [
+        "js"
+      ],
+      "top": 0,
+      "category": "前端技术",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-26T06:36:06.255Z",
+      "id": 133
+    },
+    {
+      "title": "混合云部署k3s集群(基于wireguard)",
+      "content": "之前经常撸云服务器羊毛，就想搭建`k8s`集群，一开始手动搭建太折腾了还有小问题，后来用了[kubekey](https://github.com/kubesphere/kubekey)，感觉占用资源太多。\n\n后来发现了 [k3s](https://github.com/k3s-io/k3s) 这个好东西，占用资源低。\n\n后来发现了 [wireguard](https://www.wireguard.com/) 这个好东西，混合云组网神器。\n\n后来发现了 [network-manager](https://github.com/gravitl/netmaker/) 这个好东西，wireguard 组网神器。\n\n那就搞吧！\n\n<!-- more -->\n\n## 配置概览\n\n为了避免烂七八糟毛病，操作系统最好统一，这里我统一采用了 `ubuntu 20.04` 系统。\n\n所有服务器概览如下：\n\n| 云厂商 | 配置 | 架构 |\n\n| ---| ---| --- |\n\n| 腾讯 | 2C4G | amd64 |\n\n| 阿里 | 1C2G | amd64 |\n\n| 华为 | 2C4G | amd64 |\n\n## 网络搭建\n\n首先需要搭建星状网络，参考:\n\n[# 使用 Netmaker 快速组建 WireGuard mesh 网络](https://einverne.github.io/post/2021/12/netmaker.html)\n\n```bash\nwget -O docker-compose.yml https://raw.githubusercontent.com/gravitl/netmaker/master/compose/docker-compose.contained.yml\nsed -i 's/NETMAKER_BASE_DOMAIN/<your base domain>/g' docker-compose.yml\nsed -i 's/SERVER_PUBLIC_IP/<your server ip>/g' docker-compose.yml\nsed -i 's/COREDNS_IP/<default interface ip>/g' docker-compose.yml\n# 生成 master key\ntr -dc A-Za-z0-9 </dev/urandom | head -c 30 ; echo ''\nsed -i 's/REPLACE_MASTER_KEY/<your generated key>/g' docker-compose.yml\n# 配置 Caddy\nwget -O /root/Caddyfile https://raw.githubusercontent.com/gravitl/netmaker/master/docker/Caddyfile\n\nsed -i 's/NETMAKER_BASE_DOMAIN/<your base domain>/g' /root/Caddyfile\nsed -i 's/YOUR_EMAIL/<your email>/g' /root/Caddyfile\n# 启动\ndocker-compose up -d\n```\n\nemm，总之按照官方的就能很轻松的部署了。\n\n### 踩坑\n\n后面我部署集群的时候发现 `k3s` 的 `serviceLB` 会破坏 `wirguard` 网络的连通性。所以部署的时候一定要禁用。。。\n\n## K3S 安装\n\n### master\n\n```bash\ncurl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn INSTALL_K3S_SELINUX_WARN=true \\\\\n INSTALL_K3S_EXEC=\"--disable servicelb --disable traefik  --node-ip '10.20.30.7'  --node-external-ip '82.157.137.245'  --flannel-backend wireguard --kube-proxy-arg proxy-mode=ipvs  --kube-proxy-arg masquerade-all=true --kube-proxy-arg metrics-bind-address=0.0.0.0  --tls-san 'k3s.mereith.com' --tls-san '82.157.137.245' \" sh -\n# 获取 token\ncat /var/lib/rancher/k3s/server/token\n```\n\n### node\n\n```bash\ncurl -sfL https://rancher-mirror.rancher.cn/k3s/k3s-install.sh | INSTALL_K3S_MIRROR=cn  K3S_URL=https://82.157.137.245:6443  INSTALL_K3S_EXEC=\"--node-ip '10.20.30.5'  --node-external-ip '82.157.125.43' --kube-proxy-arg proxy-mode=ipvs --kube-proxy-arg masquerade-all=true --kube-proxy-arg metrics-bind-address=0.0.0.0 \" K3S_TOKEN=\"05ed38e986ebf0cdeb97bec629d1b7c9\" sh -\n```\n\n### 复写 ip\n\n因为云服务器自己还有内网 `ip`，为了保证网络畅通性，需要：\n\n```bash\nkubectl annotate nodes tx3 flannel.alpha.coreos.com/public-ip-overwrite=10.20.30.7\n```\n\n### 测试\n\n```bash\n## curl busybox\nkubectl run  busybox --image sequenceiq/busybox  --command -- /bin/sh -c \"while true;do echo hello docker;sleep 1;done\"\nkubectl exec -it busybox   -- sh\n\n## nginx test\nkubectl run  nginx --image nginx\n```\n\n### 卸载\n\n```bash\n/usr/local/bin/k3s-uninstall.sh\n/usr/local/bin/k3s-agent-uninstall.sh\n\nip link delete kube-ipvs0\n```\n\n### 注意\n\n* 需要禁用 `servicelb `，不然会影响跨集群的 `pod` 畅通\n* 禁用 traefik 是为了用自己的编排，不禁用也行。\n\n## 参考\n\n[# 使用 k3s 和 WireGuard 网络部署 Kubernetes 集群](https://einverne.github.io/post/2021/12/kubernetes-cluster-multiple-clouds-using-k3s-netmaker-wireguard.html)\n\n",
+      "tags": [],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-26T10:40:55.129Z",
+      "id": 134
+    },
+    {
+      "title": "用 vuepress 搭建私人知识库",
+      "content": "在平时的开发和折腾中，总会遇到各种各样的问题，踩各种各样的坑，原来是都记录在博客上的，但是发现有人搞这种专门的笔记站，感觉不错，所以我也打算搞一个：\n\n## 技术栈\n\n* [vue-press](https://vuepress.vuejs.org/zh/)\n* [vue-press-hope](https://vuepress-theme-hope.github.io/)\n\n<!-- more -->\n\n## 步骤\n\n### 创建项目\n\n新建一个 `github` 仓库，然后按照 [vue-press-hope](https://vuepress-theme-hope.github.io/) 主题官方说明初始化项目：\n\n```bash\nnpm init vuepress-theme-hope@next [dir]\n```\n\n### 配置项目\n\n按照官网的说明配置项目即可，慢慢来，细心即可。注意的是我们的场景并不需要主页，所以 `home: true` 去掉就行了。\n\n`nav bar` 、`主题色`、`搜索`等，按照文档走就行。注意`复制按钮`需要设置一下才能用，不然点了也没用。\n\n### 配置 CI\n\n默认初始化项目会询问你是否加一个自动部署到 `github pages` 的提示，如果需要的话点需要就行了。\n\n这里提供一个我用的 `Dockerfile` 用来部署到自己的服务器。\n\n```dockerfile\nFROM node:18 as builder\nWORKDIR /app\nCOPY . .\nRUN yarn\nRUN yarn docs:build\n\nFROM nginx\nWORKDIR /usr/share/nginx/html/\nCOPY --form=builder /app/.vuepress/dist/ ./\n```\n\n也提供一个我用来部署到 `k8s` 的 `github actions`：\n\n```yaml\nname: 部署文档\n\non:\n  push:\n    branches:\n      - \"master\"\n\njobs:\n  deploy-pages:\n    runs-on: ubuntu-latest\n    steps:\n      - name: Checkout\n        uses: actions/checkout@v3\n      - name: 获取版本\n        run: |\n          FILENAME=`date  +\"%y%m%d%H%M%S\"`\n          echo \"::set-output name=VERSION::$FILENAME\"\n        id: get_version\n      - name: 展示版本\n        run: echo ${{ steps.get_version.outputs.VERSION }}\n      - name: Set up QEMU\n        uses: docker/setup-qemu-action@v1\n\n      - name: Set up Docker Buildx\n        id: buildx\n        uses: docker/setup-buildx-action@v1\n\n      - name: Login to AliyunCS\n        uses: docker/login-action@v1\n        with:\n          registry: registry.cn-beijing.aliyuncs.com\n          username: ${{ secrets.ALI_USER  }}\n          password: ${{ secrets.ALI_PASSWORD  }}\n\n      - name: 设置 Node.js\n        uses: actions/setup-node@v3\n        with:\n          node-version: 16\n          cache: yarn\n\n      - name: 安装依赖\n        run: yarn install --frozen-lockfile\n\n      - name: 构建文档\n        env:\n          NODE_OPTIONS: --max_old_space_size=4096\n        run: |-\n          yarn run docs:build\n        id: image-name\n      - name: 打包镜像并推送\n        uses: docker/build-push-action@v2\n        with:\n          context: .\n          file: ./Dockerfile\n          platforms: linux/amd64\n          push: true\n          tags: |\n            \"registry.cn-beijing.aliyuncs.com/mereith/gists:${{ steps.get_version.outputs.VERSION }}\"\n      - name: 部署到集群\n        uses: steebchen/kubectl@v2.0.0\n        with: # defaults to latest kubectl binary version\n          config: ${{ secrets.K8S_CONFIG_DATA }}\n          command: set image -n tools deployment/gists gists=registry.cn-beijing.aliyuncs.com/mereith/gists:${{ steps.get_version.outputs.VERSION }}\n      - name: send Message To me\n        run: |\n          curl -X POST -H \"Content-Type: application/json\" -d '{\"source\":\"github-ci:gists-doc\",\"message\":\"流水线运行完毕，${{ steps.get_version.outputs.VERSION }} 已部署\"}'  ${{ secrets.WEBHOOK_URL }}\n```\n\n",
+      "tags": [],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-26T11:36:25.307Z",
+      "id": 135
+    },
+    {
+      "title": "docker 删除无用镜像",
+      "content": "## 批量删除\n\n```bash\ndocker images | awk 'NR!=1{print $1\":\"$2}' | xargs docker rmi\n```\n\n<!--  more -->\n\n## 定时删除\n\n### ubuntu\n\n```bash\n#清理10天前创建且当前无容器实例使用的镜像\ncat >> /var/spool/cron/crontabs/root << EOF\n# 每周一清理无效镜像\n* * * * 1 /usr/bin/docker image prune -a --force --filter \"until=240h\" 2>&1\nEOF\n```\n\n### cent os\n\n```bash\n#清理10天前创建且当前无容器实例使用的镜像\ncat >> /var/spool/cron/root << EOF\n# 每周一清理无效镜像\n* * * * 1 /usr/bin/docker image prune -a --force --filter \"until=240h\" 2>&1\nEOF\n```\n\n",
+      "tags": [
+        "docker"
+      ],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-26T11:48:35.634Z",
+      "id": 136
+    },
+    {
+      "title": "docker 内访问宿主机",
+      "content": "除了常见的使用 `bridge` 网络和宿主机 `ip` 之外，在 `docker 18` 之后的版本可以用：\n\n```bash\nhost.docker.internal\n```\n\n<!-- more -->\n\n",
+      "tags": [],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-26T11:58:04.961Z",
+      "id": 137
+    },
+    {
+      "title": "Dockerfile 给 Ubuntu 换源",
+      "content": "```bash\nsed -i s@/archive.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list\n\nsed -i s@/security.ubuntu.com/@/mirrors.tuna.tsinghua.edu.cn/@g /etc/apt/sources.list\n```\n\n<!-- more -->\n\n",
+      "tags": [],
+      "top": 0,
+      "category": "DevOps",
+      "hidden": false,
+      "private": false,
+      "password": "",
+      "createdAt": "2022-07-26T12:03:55.899Z",
+      "id": 138
+    }
+  ],
+  "tags": [
+    "Netgear",
+    "救砖",
+    "建站",
+    "hexo",
+    "next主题",
+    "markdown",
+    "科学上网",
+    "vps",
+    "ubuntu",
+    "深度学习",
+    "tensorflow",
+    "CUDA",
+    "cuDNN",
+    "arm嵌入式",
+    "环境搭建",
+    "数据库",
+    "grub",
+    "双系统",
+    "next",
+    "优化",
+    "主题优化",
+    "文章加密",
+    "更新日志",
+    "图片",
+    "win10",
+    "linux",
+    "mac",
+    "黑苹果",
+    "单品机",
+    "课程设计",
+    "人工智能",
+    "cdn",
+    "优化配置",
+    "https",
+    "opencore",
+    "Hackintosh",
+    "python",
+    "开发",
+    "github",
+    "youtube-dl",
+    "沙雕动画",
+    "xlrd",
+    "excel",
+    "算法",
+    "爬虫",
+    "scrapy",
+    "ssh",
+    "运维",
+    "nginx",
+    "PyQt5",
+    "qt",
+    "vs",
+    "code",
+    "powershell",
+    "Trouble",
+    "shooting",
+    "debian",
+    "字体安装",
+    "MongoDB",
+    "MongoDb",
+    "linux命令",
+    "linux配置",
+    "服务器",
+    "软路由",
+    "openwrt",
+    "优雅写代码",
+    "code-server",
+    "node",
+    "前端",
+    "我的世界",
+    "网络",
+    "折腾",
+    "装机",
+    "ax200",
+    "ffmpeg",
+    "音视频处理",
+    "PVE",
+    "虚拟化",
+    "杂谈",
+    "js",
+    "阅读器",
+    "安卓",
+    "后期",
+    "OMV",
+    "NAS",
+    "家庭网络",
+    "docker",
+    "adguardhome",
+    "OpenWrt",
+    "VLAN",
+    "clash",
+    "路由器",
+    "pve",
+    "后端",
+    "LXC",
+    "omv",
+    "lxc",
+    "apt",
+    "k8s",
+    "云原生",
+    "css",
+    "DevOps",
+    "vscode",
+    "git",
+    "win11",
+    "strapi",
+    "nginx 运维",
+    "博客"
+  ],
+  "meta": {
+    "_id": "62d8b591b79aec9f2dee9934",
+    "links": [],
+    "socials": [
+      {
+        "updatedAt": "2022-07-19T01:28:02.646Z",
+        "value": "https://space.bilibili.com/33289228",
+        "type": "bilibili"
+      },
+      {
+        "updatedAt": "2022-07-19T01:28:11.353Z",
+        "value": "wanglu@mereith.com",
+        "type": "email"
+      },
+      {
+        "updatedAt": "2022-07-19T01:28:23.782Z",
+        "value": "https://github.com/Mereithhh",
+        "type": "github"
+      },
+      {
+        "updatedAt": "2022-07-19T01:30:54.092Z",
+        "value": "https://pic.mereith.com/2022/07/19/62d6094649864.jpg",
+        "type": "wechat"
+      }
+    ],
+    "rewards": [],
+    "about": {
+      "updatedAt": "2022-07-21T07:08:42.445Z",
+      "content": "* 95后\n* 理工科高校生,现在的打工人\n* 研究哲♂学\n* 科幻爱好者\n* 业余视频后期，喜欢沙雕动画\n* 没啥艺术细胞\n* 时宅时不宅\n* 原来很喜欢运动，希望我现在和以后也能喜欢\n* 前端后端DevOps都会一点，但最喜欢瞎折腾\n* 想成为很厉害的程序员\n* 工作了一年，写了3次博客项目（这个是第三次）\n\n"
+    },
+    "siteInfo": {
+      "author": "mereith",
+      "authorDesc": "Life is strange.",
+      "authorLogo": "https://pic.mereith.com/img/avatar.jpg-slim",
+      "authorLogoDark": "",
+      "siteLogo": "https://pic.mereith.com/2022/07/19/62d5ff079e73e.png",
+      "siteLogoDark": "https://pic.mereith.com/2022/07/19/62d6b46bbf681.png",
+      "favicon": "https://pic.mereith.com/logo.svg",
+      "siteName": "Mereith's Blog",
+      "siteDesc": "Mereith's Blog",
+      "beianNumber": "京ICP备18064122号",
+      "beianUrl": "http://beian.miit.gov.cn/",
+      "payAliPay": "https://pic.mereith.com/img/ali.jpg-slim",
+      "payAliPayDark": "",
+      "payWechat": "https://pic.mereith.com/img/wechat.jpg-slim",
+      "payWechatDark": "",
+      "baseUrl": "https://www.mereith.com",
+      "gaAnalysisId": "G-ZQMFNM7TMJ",
+      "baiduAnalysisId": "88c17cfda966c784bd91eb5dc5c73200",
+      "walineServerUrl": "https://waline.mereith.com",
+      "since": "2018-07-01"
+    },
+    "viewer": 1352,
+    "visited": 138,
+    "categories": [
+      "前端技术",
+      "后端技术",
+      "DevOps",
+      "折腾搞机",
+      "深度学习",
+      "魔法网络",
+      "实用笔记",
+      "诗与远方"
+    ],
+    "__v": 0,
+    "menus": [
+      {
+        "value": "https://tools.mereith.com",
+        "name": "工具站"
+      },
+      {
+        "value": "https://gists.mereith.com",
+        "name": "知识库"
+      }
+    ]
+  },
+  "drafts": [
+    {
+      "_id": "62e37d9ca7891eae68965902",
+      "title": "测试1",
+      "content": "你好你好\n\n1111\n",
+      "tags": [],
+      "category": "前端技术",
+      "deleted": false,
+      "createdAt": "2022-07-29T06:26:36.609Z",
+      "updatedAt": "2022-07-29T06:30:00.738Z",
+      "id": 17,
+      "__v": 0
+    }
+  ],
+  "categories": [
+    "前端技术",
+    "后端技术",
+    "DevOps",
+    "折腾搞机",
+    "深度学习",
+    "魔法网络",
+    "实用笔记",
+    "诗与远方"
+  ],
+  "user": {
+    "_id": "62d8b591b79aec9f2dee9932",
+    "id": 0,
+    "createdAt": "2022-07-12T08:33:59.908Z",
+    "__v": 0,
+    "name": "mereith",
+    "password": "vanlusg2!"
+  }
+}

@@ -20,7 +20,6 @@ export default function (props) {
         }}
         layout="horizontal"
         labelCol={{ span: 6 }}
-        // wrapperCol: { span: 14 },
       >
         <ProFormSelect
           width="md"

@@ -1,17 +1,14 @@
 import ProCard from '@ant-design/pro-card';
-import { Card, Space, Button, Upload, message, Spin } from 'antd';
-import { useModel } from 'umi';
+import { Space, Button, Upload, message, Spin } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
+import { exportAll } from '@/services/van-blog/api';
 
 export default function (props) {
-  const { initialState, setInitialState } = useModel('@@initialState');
   const [loading, setLoading] = useState(false);
-  const handleOutPut = () => {
-    const { fetchInitData, ...toExport } = initialState;
-    const data = JSON.stringify(toExport, undefined, 4);
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
+  const handleOutPut = async () => {
+    const data = await exportAll();
+    const url = URL.createObjectURL(data);
     const link = document.createElement('a');
     link.href = url;
     link.download = `备份-${moment().format('YYYY-MM-DD')}.json`;

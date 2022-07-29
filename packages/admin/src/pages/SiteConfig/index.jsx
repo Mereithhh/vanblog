@@ -15,14 +15,14 @@ export default function () {
     donateInfo: <Donate />,
     links: <Link />,
     socials: <Social />,
-    io: <Backup></Backup>,
-    menuConfig: <Menu></Menu>,
+    io: <Backup />,
+    menuConfig: <Menu />,
   };
   const [currTabKey, setCurrTabKey] = useState('category');
   const { initialState, setInitialState } = useModel('@@initialState');
   const currTab = useMemo(() => {
     return history.location.query?.tab || 'category';
-  }, [history]);
+  }, []);
   useEffect(() => {
     setCurrTabKey(currTab);
   }, [currTab]);

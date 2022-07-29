@@ -147,8 +147,16 @@ export async function getTags() {
   });
 }
 export async function importAll() {
-  return request(`/api/admin/all/import`, {
+  return request(`/api/admin/backup/import`, {
     method: 'POST',
+  });
+}
+export async function exportAll() {
+  return request(`/api/admin/backup/export`, {
+    method: 'GET',
+    skipErrorHandler: true,
+    responseType: 'blob',
+
   });
 }
 export async function deleteSocial(name) {
