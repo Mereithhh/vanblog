@@ -1,4 +1,11 @@
 # Changelog
+### [0.4.2](https://github.com/Mereithhh/van-blog/compare/v0.4.1...v0.4.2) (2022-07-29)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复 updatedAt 日期构建错误 ([8ce03e7](https://github.com/Mereithhh/van-blog/commit/8ce03e7dcc652cd7951ade582317ead8a80ea76d))
+
 ### [0.4.1](https://github.com/Mereithhh/van-blog/compare/v0.4.0...v0.4.1) (2022-07-29)
 
 
