@@ -1,4 +1,16 @@
 # Changelog
+## [0.5.0](https://github.com/Mereithhh/van-blog/compare/v0.4.2...v0.5.0) (2022-07-29)
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 前台渲染分离各个页面的接口和 props ([d223a76](https://github.com/Mereithhh/van-blog/commit/d223a76ffffcaaf1baacd6dad404bf6a3825ad69))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复前台分类hover样式问题 ([889103d](https://github.com/Mereithhh/van-blog/commit/889103da57994317ec8a11492674320964f0c7d4))
+
 ### [0.4.2](https://github.com/Mereithhh/van-blog/compare/v0.4.1...v0.4.2) (2022-07-29)
 
 
