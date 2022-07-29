@@ -1,4 +1,50 @@
 # Changelog
+## [0.4.0](https://github.com/Mereithhh/van-blog/compare/v0.3.6...v0.4.0) (2022-07-29)
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 查询时指定不同的 viewer 以优化性能 ([5fbdbc0](https://github.com/Mereithhh/van-blog/commit/5fbdbc0b33bed846b09a7fe15bfdfbe1019c8c80))
+* 分类设置界面分离接口 ([cf2db34](https://github.com/Mereithhh/van-blog/commit/cf2db34194f7307eabaa2fb81193b21c029bb575))
+* 分离用户设置 ([5e8b813](https://github.com/Mereithhh/van-blog/commit/5e8b813cd98aed6198568e693abc90f36ad8640d))
+* 后台 edit 页面解耦 initState ([b4ca1ad](https://github.com/Mereithhh/van-blog/commit/b4ca1ad358454f08e5d8d8fc4b9ebec8eca76ab5))
+* 后台 welcome 页分离接口 ([8c781be](https://github.com/Mereithhh/van-blog/commit/8c781be0f0eb3f9b38aba7028627227ed2553a0a))
+* 后台编辑关于我入口 ([dba9b8e](https://github.com/Mereithhh/van-blog/commit/dba9b8e1860067d11e1cfc247f9a74be33d1df50))
+* 后台草稿页重构 ([2ade50b](https://github.com/Mereithhh/van-blog/commit/2ade50b9191a8c8093d7ec9759af2d72e2d2e93d))
+* 后台分离导航菜单配置接口 ([9be4cf7](https://github.com/Mereithhh/van-blog/commit/9be4cf7ef5a3b401c0215b011cdf9c6e1e093b74))
+* 后台分离捐赠管理接口 ([c95b9d0](https://github.com/Mereithhh/van-blog/commit/c95b9d0b4f7f81914acd159696c642cec7c4c7b9))
+* 后台分离联系方式卡片接口 ([2d6870d](https://github.com/Mereithhh/van-blog/commit/2d6870d08267e4a5ead6a94ea0767d649a636846))
+* 后台分离站点信息配置 ([db8b915](https://github.com/Mereithhh/van-blog/commit/db8b9150b248af1af172824c6856d9df81d389d7))
+* 后台欢迎页接口适配 ([03dc24e](https://github.com/Mereithhh/van-blog/commit/03dc24e39e2179f2c2da935f7e17e2c73c2fc4e5))
+* 后台获取分类解耦 initState ([9f79ef9](https://github.com/Mereithhh/van-blog/commit/9f79ef9ade95df4130e47a64ad385a15b4485fad))
+* 后台接口完全分离 ([38d8911](https://github.com/Mereithhh/van-blog/commit/38d89115542d572130bee6f029e53d7c87821d86))
+* 后台进一步解耦分类获取接口 ([3560d02](https://github.com/Mereithhh/van-blog/commit/3560d02a03e3292eb50d58a5f1f0ae81d27007ca))
+* 后台文章页分离为单独的接口,以适应大批量的页面 ([b8eafce](https://github.com/Mereithhh/van-blog/commit/b8eafceee83ceec9851d071fb3381b54d0e95725))
+* 后台友情链接分离接口 ([53c931c](https://github.com/Mereithhh/van-blog/commit/53c931c8880f82de700c9f36cfce2017be4ac269))
+* 后台重构一部分编辑界面 ([a804088](https://github.com/Mereithhh/van-blog/commit/a8040889c994f776728fa9437d1e339c41c06d32))
+* 文章查询应用视图 ([3745833](https://github.com/Mereithhh/van-blog/commit/37458332a344fd02b5e305ade13e10bb37d53ee4))
+* 优化查询逻辑&时间段查询 ([eef2394](https://github.com/Mereithhh/van-blog/commit/eef2394177973dcda6a8b1950237064eceb06510))
+* 优化查询文章字段范围 ([cefb4f1](https://github.com/Mereithhh/van-blog/commit/cefb4f173d97de48a55fa03bb720cabfdfd23dbf))
+* 重构导出接口 ([376224e](https://github.com/Mereithhh/van-blog/commit/376224ef09f912f54d60be0ca5f7d998f6c92f57))
+* server 调整 controller 规则 ([a5b8290](https://github.com/Mereithhh/van-blog/commit/a5b8290c268513e189eb5aea6d886b448a3716cf))
+
+
+### ✨ Features | 新功能
+
+* 编辑界面增加提示语和加载态 ([937c02c](https://github.com/Mereithhh/van-blog/commit/937c02c46fcf3eccc80b5dea3e8460cdf27d1f44))
+* 草稿发布增加置顶优先级选项 ([9c11940](https://github.com/Mereithhh/van-blog/commit/9c119409433f89c4212daf4f90f54cc00a4d21f4))
+* 调整后台布局&去掉header ([889028d](https://github.com/Mereithhh/van-blog/commit/889028d28bd43607fef0f46d01543e7dedcccf56))
+* 后台站点配置优化创建选项 ([95b5df3](https://github.com/Mereithhh/van-blog/commit/95b5df39413162c4c776cb3eeeb31f357a25d95f))
+* 优化后台首页图表样式 ([7f50b05](https://github.com/Mereithhh/van-blog/commit/7f50b05bd4054d12c65580c0454d5be50d7a617b))
+* 增加版本展示 ([a7c0ff6](https://github.com/Mereithhh/van-blog/commit/a7c0ff6ac5ac8fbf1e101f37148acdbaff6fef21))
+* 增加总字数缓存 ([0857ea1](https://github.com/Mereithhh/van-blog/commit/0857ea1580ead74930a57f1bf669aa85f6169e2a))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 后台分类获取接口调用问题 ([188d2dd](https://github.com/Mereithhh/van-blog/commit/188d2ddcc713753460525871e7b47040041a55a8))
+* 修改版本号文案 ([da6ac06](https://github.com/Mereithhh/van-blog/commit/da6ac06844011195a172d945c96603a811d91229))
+
 ### [0.3.6](https://github.com/Mereithhh/van-blog/compare/v0.3.5...v0.3.6) (2022-07-28)
 
 
