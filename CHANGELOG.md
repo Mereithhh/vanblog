@@ -1,4 +1,16 @@
 # Changelog
+### [0.4.1](https://github.com/Mereithhh/van-blog/compare/v0.4.0...v0.4.1) (2022-07-29)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 备份后删除临时文件 ([26e317d](https://github.com/Mereithhh/van-blog/commit/26e317d73c3a5697172d34b4a8736a9339d6045d))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 构建版本号显示不正确 ([4c784b7](https://github.com/Mereithhh/van-blog/commit/4c784b7ef5c1db6dd0123037a55453daea58945c))
+
 ## [0.4.0](https://github.com/Mereithhh/van-blog/compare/v0.3.6...v0.4.0) (2022-07-29)
 
 
