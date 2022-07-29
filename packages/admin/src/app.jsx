@@ -4,7 +4,7 @@ import { HomeOutlined, QuestionCircleOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';
-import { fetchAll } from './services/van-blog/api';
+import { fetchAllMeta } from './services/van-blog/api';
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
 const basePath = '/';
@@ -19,7 +19,7 @@ export const initialStateConfig = {
 export async function getInitialState() {
   const fetchInitData = async (option) => {
     try {
-      const msg = await fetchAll(option);
+      const msg = await fetchAllMeta(option);
       if (msg.statusCode == 233) {
         history.push('/init');
       } else if (window.location.pathname == '/init' && msg.statusCode == 200) {

@@ -31,7 +31,7 @@ export class Article extends Document {
   @Prop({ default: '' })
   password: string;
 
-  @Prop({ defualt: false })
+  @Prop({ default: false })
   deleted: boolean;
 
   @Prop({

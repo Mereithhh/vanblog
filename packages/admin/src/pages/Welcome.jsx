@@ -8,21 +8,13 @@ import { Line } from '@ant-design/plots';
 const { Statistic } = StatisticCard;
 
 const Welcome = () => {
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
   const lineConfig = {
     data: initialState?.viewer?.grid || [],
     padding: 'auto',
     xField: 'date',
   };
 
-  const totalWords = useMemo(() => {
-    const articles = initialState?.articles || [];
-    let t = 0;
-    articles.forEach((a) => {
-      t = t + wordCount(a?.content || '');
-    });
-    return t;
-  }, [initialState]);
   return (
     <PageContainer
       title={'Hi，今天写了没？'}
@@ -63,13 +55,13 @@ const Welcome = () => {
         <StatisticCard
           statistic={{
             title: '总文章数',
-            value: initialState?.articles?.length || 0,
+            value: initialState?.total?.articleNum || 0,
           }}
         />
         <StatisticCard
           statistic={{
             title: '总字数',
-            value: totalWords,
+            value: initialState?.total?.wordCount || 0,
           }}
         />
         <StatisticCard

@@ -37,6 +37,31 @@ export class AllController {
     private readonly viewProvider: ViewerProvider,
   ) {}
 
+  @Get('meta')
+  async getAllMeta() {
+    const categories = await this.categoryProvider.getAllCategories();
+    const tags = await this.tagProvider.getAllTags();
+    const meta = await this.metaProvider.getAll();
+    const user = await this.userProvider.getUser();
+    const viewer = await this.viewProvider.getViewerGrid(5);
+    const total = {
+      wordCount: await this.articleProvider.getTotalWordCount(),
+      articleNum: await this.articleProvider.getTotalNum(),
+    };
+    const data = {
+      tags,
+      meta,
+      categories,
+      user,
+      viewer,
+      total,
+    };
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+
   @Get()
   async getAll() {
     const articles = await this.articleProvider.getAll();

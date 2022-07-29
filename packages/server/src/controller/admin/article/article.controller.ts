@@ -6,10 +6,12 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
+import { SortOrder } from 'src/dto/sort';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 @ApiTags('article')
@@ -19,8 +21,29 @@ export class ArticleController {
   constructor(private readonly articleProvider: AritcleProvider) {}
 
   @Get('/')
-  async getAll() {
-    const data = await this.articleProvider.getAll();
+  async getByOption(
+    @Query('page') page: number,
+    @Query('pageSize') pageSize = 5,
+    @Query('category') category?: string,
+    @Query('tags') tags?: string,
+    @Query('title') title?: string,
+    @Query('sortCreatedAt') sortCreatedAt?: SortOrder,
+    @Query('sortTop') sortTop?: SortOrder,
+    @Query('startTime') startTime?: string,
+    @Query('endTime') endTime?: string,
+  ) {
+    const option = {
+      page,
+      pageSize,
+      category,
+      tags,
+      title,
+      sortCreatedAt,
+      sortTop,
+      startTime,
+      endTime,
+    };
+    const data = await this.articleProvider.getByOption(option);
     return {
       statusCode: 200,
       data,

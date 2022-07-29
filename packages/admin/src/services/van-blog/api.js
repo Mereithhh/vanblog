@@ -3,8 +3,8 @@
 /* eslint-disable */
 import { request } from 'umi';
 
-export async function fetchAll(options) {
-  return request('/api/admin/all', {
+export async function fetchAllMeta(options) {
+  return request('/api/admin/all/meta', {
     method: 'GET',
     ...(options || {}),
   });
@@ -173,5 +173,19 @@ export async function updateAbout(body) {
   return request(`/api/admin/meta/about`, {
     method: 'PUT',
     data: body,
+  });
+}
+export async function getArticlesByOption(option) {
+  const newQuery = {};
+  for (const [k, v] of Object.entries(option)) {
+    newQuery[k] = v;
+  }
+  let queryString = '';
+  for (const [k, v] of Object.entries(newQuery)) {
+    queryString += `${k}=${v}&`;
+  }
+  queryString = queryString.substring(0, queryString.length - 1);
+  return request(`/api/admin/article?${queryString}`, {
+    method: 'GET',
   });
 }

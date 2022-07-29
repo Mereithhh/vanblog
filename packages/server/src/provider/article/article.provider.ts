@@ -1,8 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
+import {
+  CreateArticleDto,
+  SearchArticleOption,
+  UpdateArticleDto,
+} from 'src/dto/article.dto';
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
+import { wordCount } from 'src/utils/wordCount';
 
 @Injectable()
 export class AritcleProvider {
@@ -51,6 +56,41 @@ export class AritcleProvider {
     }
   }
 
+  async getTotalWordCount() {
+    //TODO 每次更新文章保存最新字数
+    let total = 0;
+    const articles = await this.articleModel
+      .find({
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      })
+      .exec();
+    articles.forEach((a) => {
+      total = total + wordCount(a.content);
+    });
+    return total;
+  }
+  async getTotalNum() {
+    return await this.articleModel
+      .find({
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      })
+      .count();
+  }
+
   async getAll(): Promise<Article[]> {
     const articles = await this.articleModel.find({ hidden: false }).exec();
     return articles.filter((each) => {
@@ -60,6 +100,72 @@ export class AritcleProvider {
         return !each.deleted;
       }
     });
+  }
+  async getByOption(
+    option: SearchArticleOption,
+  ): Promise<{ articles: Article[]; total: number }> {
+    const query: any = {};
+    const $and = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+    ];
+    const $or = [];
+    const sort: any = { createdAt: -1 };
+    if (option.sortCreatedAt) {
+      if (option.sortCreatedAt == 'asc') {
+        sort.createdAt = 1;
+      }
+    }
+    if (option.sortTop) {
+      if (option.sortTop == 'asc') {
+        sort.top = 1;
+      } else {
+        sort.top = -1;
+      }
+    }
+    if (option.tags) {
+      const tags = option.tags.split(',');
+      tags.forEach((t) => {
+        $or.push({
+          tags: { $regex: `${t}`, $options: '$i' },
+        });
+      });
+    }
+    if (option.category) {
+      $or.push({
+        category: { $regex: `${option.category}`, $options: '$i' },
+      });
+    }
+    if (option.title) {
+      $or.push({
+        title: { $regex: `${option.title}`, $options: '$i' },
+      });
+    }
+    if ($or.length) {
+      $and.push({ $or });
+    }
+    query.$and = $and;
+
+    const articles = await this.articleModel
+      .find(query)
+      .sort(sort)
+      .skip(option.pageSize * option.page - option.pageSize)
+      .limit(option.pageSize)
+      .exec();
+    const total = await this.articleModel.count(query).exec();
+
+    return {
+      articles,
+      total,
+    };
   }
 
   async getById(id: number): Promise<Article> {

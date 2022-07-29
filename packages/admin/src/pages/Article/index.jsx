@@ -1,104 +1,85 @@
 import NewArticleModal from '@/components/NewArticleModal';
-import { mutiSearch } from '@/services/van-blog/search';
+import { getArticlesByOption } from '@/services/van-blog/api';
 import { ProTable } from '@ant-design/pro-components';
-import moment from 'moment';
 import { useRef } from 'react';
 import { useModel } from 'umi';
 import { columns } from './columns';
 
 export default () => {
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
+  const categories = initialState?.meta?.categories || [];
   const actionRef = useRef();
   return (
     <ProTable
-      columns={columns}
+      columns={columns(categories)}
       actionRef={actionRef}
       cardBordered
       request={async (params = {}, sort, filter) => {
         // console.log(sort, filter);
-
-        let data = await initialState?.fetchInitData?.();
-        await setInitialState((s) => ({ ...s, ...data }));
-        data = data.articles;
-        // 排序
-        if (sort && sort.createdAt) {
+        const option = {};
+        if (sort.createdAt) {
           if (sort.createdAt == 'ascend') {
-            data = data.sort((a, b) => {
-              return moment(a.createdAt).unix() - moment(b.createdAt).unix();
-            });
+            option.sortCreatedAt = 'asc';
           } else {
-            data = data.sort((a, b) => {
-              return moment(b.createdAt).unix() - moment(a.createdAt).unix();
-            });
+            option.sortCreatedAt = 'desc';
           }
-        } else if (sort && sort.top) {
-          data = data.sort((a, b) => {
-            const atop = a.top || 0;
-            const btop = b.top || 0;
-            const r = btop - atop;
-            if (r != 0) {
-              return r;
-            } else {
-              return moment(b.createdAt).unix() - moment(a.createdAt).unix();
-            }
-          });
-        } else {
-          data = data.sort((a, b) => {
-            return moment(b.createdAt).unix() - moment(a.createdAt).unix();
-          });
         }
-        const about = data.filter((a) => a.id == 0);
-        const notAbout = data.filter((a) => a.id != 0);
-        data = [...about, ...notAbout];
+        if (sort.top) {
+          if (sort.top == 'ascend') {
+            option.sortTop = 'asc';
+          } else {
+            option.sortTop = 'desc';
+          }
+        }
 
         // 搜索
-
         const { current, pageSize, ...searchObj } = params;
         if (searchObj) {
           for (const [targetName, target] of Object.entries(searchObj)) {
             switch (targetName) {
               case 'title':
-                if (target != '') {
-                  data = data.filter((eachRecord) => {
-                    return mutiSearch(eachRecord.title, target);
-                  });
+                if (target.trim() != '') {
+                  option.title = target;
                 }
                 break;
               case 'tags':
-                if (target != '') {
-                  console.log(target);
-                  data = data.filter((eachRecord) => {
-                    if (!eachRecord.tags || eachRecord.tags.length == 0) {
-                      return false;
-                    }
-                    return eachRecord.tags.some((eachTag) => mutiSearch(eachTag, target));
-                  });
+                if (target.trim() != '') {
+                  option.tags = target;
                 }
                 break;
               case 'endTime':
-                data = data.filter((eachRecord) => {
-                  const t = moment(eachRecord.createdAt);
-                  const t0 = moment(searchObj?.startTime);
-                  const t1 = moment(searchObj?.endTime);
-                  return t.isBetween(t0, t1, 'day', '[]');
-                });
+                if (searchObj?.startTime) {
+                  option.startTime = searchObj?.startTime;
+                }
+                if (searchObj?.endTime) {
+                  option.endTime = searchObj?.endTime;
+                }
+                // data = data.filter((eachRecord) => {
+                //   const t = moment(eachRecord.createdAt);
+                //   const t0 = moment(searchObj?.startTime);
+                //   const t1 = moment(searchObj?.endTime);
+                //   return t.isBetween(t0, t1, 'day', '[]');
+                // });
                 break;
               case 'category':
-                data = data.filter((eachRecord) => {
-                  return mutiSearch(eachRecord.category, target);
-                });
+                if (target.trim() != '') {
+                  option.category = target;
+                }
                 break;
             }
           }
         }
-
+        option.page = current;
+        option.pageSize = pageSize;
+        const { data } = await getArticlesByOption(option);
+        const { articles, total } = data;
         return {
-          data,
+          data: articles,
           // success 请返回 true，
           // 不然 table 会停止解析数据，即使有数据
           success: Boolean(data),
           // 不传会使用 data 的长度，如果是分页一定要传
-          total: data?.articles?.length,
+          total: total,
         };
       }}
       editable={false}

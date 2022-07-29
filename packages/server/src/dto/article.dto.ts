@@ -1,3 +1,5 @@
+import { SortOrder } from './sort';
+
 export class CreateArticleDto {
   title: string;
   content?: string;
@@ -18,4 +20,15 @@ export class UpdateArticleDto {
   private?: boolean;
   password?: string;
   deleted?: boolean;
+}
+export class SearchArticleOption {
+  page: number;
+  pageSize: number;
+  category?: string;
+  tags?: string;
+  title?: string;
+  sortCreatedAt?: SortOrder;
+  sortTop?: SortOrder;
+  startTime?: string;
+  endTime?: string;
 }
