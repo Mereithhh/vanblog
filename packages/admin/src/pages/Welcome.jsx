@@ -1,18 +1,29 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { StatisticCard } from '@ant-design/pro-components';
 import { useModel } from 'umi';
-import { wordCount } from '@/services/van-blog/wordCount';
-import { useMemo } from 'react';
 import { Button, Space } from 'antd';
-import { Line } from '@ant-design/plots';
+import { Area } from '@ant-design/plots';
+import { useMemo } from 'react';
 const { Statistic } = StatisticCard;
 
 const Welcome = () => {
   const { initialState } = useModel('@@initialState');
+  const lineData = useMemo(() => {
+    const res = [];
+    for (const each of initialState?.viewer?.grid || []) {
+      res.push({
+        date: each.date,
+        访客数: each.visited,
+        访问量: each.viewer,
+      });
+    }
+    return res;
+  }, [initialState.viewer]);
   const lineConfig = {
-    data: initialState?.viewer?.grid || [],
+    data: lineData,
     padding: 'auto',
     xField: 'date',
+    autoFix: false,
   };
 
   return (
@@ -94,11 +105,11 @@ const Welcome = () => {
       <StatisticCard.Group>
         <StatisticCard
           title="访客数趋势图"
-          chart={<Line height={200} yField="visited" {...lineConfig} />}
+          chart={<Area height={200} yField="访客数" {...lineConfig} />}
         />
         <StatisticCard
           title="访问量趋势图"
-          chart={<Line height={200} yField="viewer" {...lineConfig} />}
+          chart={<Area height={200} yField="访问量" {...lineConfig} />}
         />
       </StatisticCard.Group>
 
