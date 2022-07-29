@@ -36,10 +36,13 @@ const config = [...rawConfigs].reduce((prev, curr) => {
  * @param defaultValue 默认值
  */
 export const loadConfig = (key: string, defaultValue?: any) => {
-  const envKey ="VAN_BLOG_" + key
-    .split('.')
-    .map((x) => x.toUpperCase())
-    .join('_');
+  const envKey =
+    'VAN_BLOG_' +
+    key
+      .split('.')
+      .map((x) => x.toUpperCase())
+      .join('_');
 
   return process.env[envKey] || _.get(config, key, defaultValue);
 };
+export const version = process.env['VAN_BLOG_VERSION'] || 'developing mode';

@@ -1,5 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { version } from '../../../utils/loadConfig';
 import { AritcleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
@@ -41,6 +42,7 @@ export class MetaController {
       user,
       viewer,
       total,
+      version: version,
     };
     return {
       statusCode: 200,

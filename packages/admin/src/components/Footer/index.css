@@ -1,0 +1,31 @@
+.footer > p {
+  margin-bottom: 4px;
+}
+.footer {
+  padding-bottom: 24px;
+  user-select: none;
+}
+.ua {
+  position: relative;
+  color: #333;
+  font-size: 14;
+  text-decoration: none;
+}
+.ua:hover {
+  color: #333;
+}
+.ua:before {
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #152236;
+  transition: all 0.3s;
+  content: '';
+}
+.ua:hover:before {
+  right: 0;
+  left: 0;
+  width: 100%;
+}

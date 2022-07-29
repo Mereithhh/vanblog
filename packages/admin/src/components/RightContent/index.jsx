@@ -1,4 +1,4 @@
-import { Space, Button } from 'antd';
+import { Space, Tag } from 'antd';
 import { useModel, history } from 'umi';
 import styles from './index.less';
 import { stringify } from 'querystring';
@@ -33,6 +33,9 @@ const GlobalHeaderRight = () => {
 
   return (
     <Space className={className}>
+      <Tag color={'blue'} style={{ userSelect: 'none' }}>
+        {initialState?.version || 'dev'}
+      </Tag>
       <a
         onClick={() => {
           setInitialState((s) => ({ ...s, user: undefined }));

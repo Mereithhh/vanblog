@@ -5,7 +5,6 @@ export interface Config {
   jwtSecret: string;
 }
 
-
 export const config: Config = {
   mongoUrl: loadConfig(
     'database.url',

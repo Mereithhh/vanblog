@@ -76,6 +76,9 @@ COPY default.conf /etc/nginx/sites-available/default
 WORKDIR /app
 COPY ./entrypoint.sh ./
 ENV PORT 3001
+# 增加版本
+ARG VAN_BLOG_VERSION
+ENV VAN_BLOG_VERSION ${VAN_BLOG_VERSION}
 EXPOSE 80
 ENTRYPOINT [ "bash","entrypoint.sh" ]
 # CMD [ "entrypoint.sh" ]

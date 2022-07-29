@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Meta, MetaDocument } from 'src/scheme/meta.schema';
-import { SiteInfo, UpdateSiteInfoDto } from 'src/dto/site.dto';
+import { UpdateSiteInfoDto } from 'src/dto/site.dto';
 import { RewardItem } from 'src/dto/reward.dto';
 import { SocialItem, SocialType } from 'src/dto/social.dto';
 import { LinkItem } from 'src/dto/link.dto';
