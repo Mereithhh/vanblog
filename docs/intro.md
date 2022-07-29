@@ -67,4 +67,6 @@ icon: advance
 
 ### 管理后台
 
-![admin](./assets/admin.png)
+![admin](./assets/admin-welcome.png)
+![admin](./assets/admin-editor.png)
+![admin](./assets/admin-setting.png)
