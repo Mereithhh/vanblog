@@ -1,5 +1,3 @@
-import { config } from "../utils/loadConfig";
-
 export async function searchArticles(str: string): Promise<any> {
   try {
     const url = `/api/public/search?value=${str}`;

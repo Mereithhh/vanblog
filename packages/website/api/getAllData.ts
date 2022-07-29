@@ -50,6 +50,7 @@ export interface PublicAllProp {
   };
 }
 export async function getPublicAll(): Promise<PublicAllProp> {
+  console.log("调用一次 getAll");
   try {
     const url = `${config.baseUrl}api/public/all`;
     const res = await fetch(url);
