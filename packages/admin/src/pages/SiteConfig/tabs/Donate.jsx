@@ -10,7 +10,7 @@ export default function () {
     setLoading(true);
     const { data } = await getDonate();
     setLoading(false);
-    return data;
+    return data.map((item) => ({ key: item.name, ...item }));
   };
   const columns = [
     {
@@ -78,7 +78,7 @@ export default function () {
     <>
       <Spin spinning={loading}>
         <EditableProTable
-          rowKey="name"
+          rowKey="key"
           headerTitle="捐赠详情"
           maxLength={5}
           scroll={{
@@ -86,7 +86,7 @@ export default function () {
           }}
           recordCreatorProps={{
             position: 'bottom',
-            record: () => ({ name: '请输入捐赠者' }),
+            record: () => ({ key: Math.floor(Math.random() * 1000000) }),
           }}
           loading={false}
           columns={columns}

@@ -11,7 +11,7 @@ export default function () {
     setLoading(true);
     const { data } = await getMenu();
     setLoading(false);
-    return data;
+    return data.map((item) => ({ key: item.name, ...item }));
   };
   const columns = [
     {
@@ -67,7 +67,7 @@ export default function () {
     <>
       <Spin spinning={loading}>
         <EditableProTable
-          rowKey="name"
+          rowKey="key"
           headerTitle="导航菜单管理"
           maxLength={5}
           scroll={{
@@ -75,7 +75,7 @@ export default function () {
           }}
           recordCreatorProps={{
             position: 'bottom',
-            record: () => ({ name: '请输入菜单名' }),
+            record: () => ({ key: Math.floor(Math.random() * 1000000) }),
           }}
           loading={false}
           columns={columns}

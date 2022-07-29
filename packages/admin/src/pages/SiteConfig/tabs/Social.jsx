@@ -10,8 +10,9 @@ export default function () {
   const fetchData = async () => {
     setLoading(true);
     const { data } = await getSocial();
+
     setLoading(false);
-    return data;
+    return data.map((item) => ({ key: item.type, ...item }));
   };
   const columns = [
     {
@@ -82,7 +83,7 @@ export default function () {
     <>
       <Spin spinning={loading}>
         <EditableProTable
-          rowKey="type"
+          rowKey="key"
           headerTitle="联系方式"
           maxLength={5}
           scroll={{
@@ -90,7 +91,7 @@ export default function () {
           }}
           recordCreatorProps={{
             position: 'bottom',
-            record: () => ({ type: '选择类型' }),
+            record: () => ({ key: Math.floor(Math.random() * 1000000) }),
           }}
           loading={false}
           columns={columns}
