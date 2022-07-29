@@ -13,7 +13,7 @@ import { formatTimes } from '@/services/van-blog/tool';
 import { useQuery } from '@/services/van-blog/useQuery';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Descriptions, Modal, Space, Tag } from 'antd';
+import { Button, Descriptions, message, Modal, Space, Tag } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { useModel } from 'umi';
 
@@ -55,10 +55,6 @@ export default function () {
       vd?.setValue(currObj.content);
     }
   }, [currObj, vd, loading]);
-  const reload = async () => {
-    const data = await initialState?.fetchInitData?.();
-    await setInitialState((s) => ({ ...s, ...data }));
-  };
   return (
     <PageContainer
       header={{
@@ -93,23 +89,26 @@ export default function () {
             type="primary"
             key="saveButton"
             onClick={async () => {
-              // console.log(vd.getValue());
               Modal.confirm({
                 title: `确定保存吗？`,
                 onOk: async () => {
                   const v = vd?.getValue();
-
+                  setLoading(true);
                   if (type == 'article') {
                     await updateArticle(currObj?.id, { content: v });
-                    reload();
+                    await fetchData();
+                    message.success('保存成功！');
                   } else if (type == 'draft') {
                     await updateDraft(currObj?.id, { content: v });
-                    reload();
+                    await fetchData();
+                    message.success('保存成功！');
                   } else if (type == 'about') {
                     await updateAbout({ content: v });
-                    await reload();
+                    await fetchData();
+                    message.success('保存成功！');
                   } else {
                   }
+                  setLoading(false);
                 },
               });
             }}
@@ -120,6 +119,7 @@ export default function () {
             key="resetButton"
             onClick={() => {
               vd.setValue(currObj?.content || '');
+              message.success('重置为初始值成功！');
             }}
           >
             重置
@@ -141,15 +141,21 @@ export default function () {
               if (!currObj || !currObj.id) {
                 return false;
               }
+              setLoading(true);
               if (type == 'article') {
                 await updateArticle(currObj?.id, values);
-                reload();
+                await fetchData();
+                message.success('修改文章成功！');
+                setLoading(false);
               } else if (type == 'draft') {
                 await updateDraft(currObj?.id, values);
-                reload();
+                await fetchData();
+                message.success('修改草稿成功！');
+                setLoading(false);
               } else {
                 return false;
               }
+
               return true;
             }}
             layout="horizontal"
