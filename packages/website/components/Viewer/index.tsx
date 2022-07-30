@@ -1,21 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { addViewer } from "../../api/addViewer";
+import { useContext } from "react";
+import { GlobalContext } from "../../utils/globalContext";
 export default function () {
-  const [viewer, setViewer] = useState(0);
-  const [visited, setVisited] = useState(0);
-  const { current } = useRef<any>({ hasInit: false });
-  const fetchViewer = useCallback(async () => {
-    const result = await addViewer();
-    setViewer(result.viewer);
-    setVisited(result.visited);
-  }, [setViewer, setVisited]);
-  useEffect(() => {
-    console.log("更新Viewer");
-    if (!current.hasInit) {
-      current.hasInit = true;
-      fetchViewer();
-    }
-  }, [current, fetchViewer]);
+  const { state } = useContext(GlobalContext);
   // 全站浏览量统计
   return (
     <span className="flex justify-center items-center dark:text-dark fill-gray-600 divide-gray-600">
@@ -35,7 +21,7 @@ export default function () {
             ></path>
           </svg>
         </span>{" "}
-        {visited}
+        {state.visited}
       </span>
       <span className="flex items-center justify-center pl-2">
         <span>
@@ -57,7 +43,7 @@ export default function () {
             ></path>
           </svg>
         </span>
-        {viewer}
+        {state.viewer}
       </span>
     </span>
   );
