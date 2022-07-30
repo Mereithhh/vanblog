@@ -8,7 +8,7 @@ import { UserDocument } from 'src/scheme/user.schema';
 export class UserProvider {
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
   async getUser() {
-    return this.userModel.findOne().exec();
+    return await this.userModel.findOne().exec();
   }
   async updateUser(updateUserDto: UpdateUserDto) {
     const currUser = await this.getUser();

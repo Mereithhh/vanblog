@@ -19,13 +19,17 @@ export class AuthProvider {
     return null;
   }
 
-  async login(user: User) {
+  async login(user: any) {
     const payload = { username: user.name, sub: user.id };
+    if (user._doc) {
+      payload.username = user._doc.name;
+      payload.sub = user._doc.id;
+    }
     return {
       token: this.jwtService.sign(payload),
       user: {
-        username: user.name,
-        id: user.id,
+        name: payload.username,
+        id: payload.sub,
       },
     };
   }

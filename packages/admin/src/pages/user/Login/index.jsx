@@ -3,23 +3,10 @@ import { login } from '@/services/van-blog/api';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { Alert, message } from 'antd';
-import { useState } from 'react';
 import { history, useModel } from 'umi';
 import styles from './index.less';
 
-const LoginMessage = ({ content }) => (
-  <Alert
-    style={{
-      marginBottom: 24,
-    }}
-    message={content}
-    type="error"
-    showIcon
-  />
-);
-
 const Login = () => {
-  const [userLoginState, setUserLoginState] = useState({});
   const type = 'account';
   const { initialState, setInitialState } = useModel('@@initialState');
 
@@ -27,34 +14,36 @@ const Login = () => {
     try {
       // 登录
       const msg = await login({ ...values, type });
-      console.log(msg);
 
       if (msg.statusCode === 200) {
         const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
         const token = msg.data.token;
+        const user = {
+          name: msg.data.user.name,
+          id: msg.data.user.id,
+        };
+        console.log(user);
         window.localStorage.setItem('token', token);
-        await setInitialState((s) => ({ ...s, token: token, user: msg.data.user }));
-        const data = await initialState?.fetchInitData?.();
-        await setInitialState((s) => ({ ...s, ...data }));
+        await setInitialState((s) => ({
+          ...s,
+          token: token,
+          user: user,
+        }));
         /** 此方法会跳转到 redirect 参数所在的位置 */
-
         if (!history) return;
         const { query } = history.location;
         const { redirect } = query;
         history.push(redirect || '/');
         return;
+      } else {
+        console.log(msg); // 如果失败去设置用户错误信息
       }
-
-      console.log(msg); // 如果失败去设置用户错误信息
-
-      setUserLoginState(msg);
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！'; // message.error(defaultLoginFailureMessage);
     }
   };
 
-  const { status, type: loginType } = userLoginState;
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -69,9 +58,6 @@ const Login = () => {
             await handleSubmit(values);
           }}
         >
-          {status === 'error' && loginType === 'account' && (
-            <LoginMessage content={'错误的用户名和密码'} />
-          )}
           {type === 'account' && (
             <>
               <ProFormText
