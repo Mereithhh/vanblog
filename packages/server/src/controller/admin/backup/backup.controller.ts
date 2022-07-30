@@ -24,6 +24,7 @@ import * as dayjs from 'dayjs';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { removeID } from 'src/utils/removeId';
 import { ViewerProvider } from 'src/provider/viewer/viewer.provider';
+import { VisitProvider } from 'src/provider/visit/visit.provider';
 
 @ApiTags('backup')
 @UseGuards(AdminGuard)
@@ -37,6 +38,8 @@ export class BackupController {
     private readonly metaProvider: MetaProvider,
     private readonly draftProvider: DraftProvider,
     private readonly userProvider: UserProvider,
+    private readonly viewerProvider: ViewerProvider,
+    private readonly visitProvider: VisitProvider,
   ) {}
 
   @Get('export')
@@ -47,6 +50,9 @@ export class BackupController {
     const meta = await this.metaProvider.getAll();
     const drafts = await this.draftProvider.getAll();
     const user = await this.userProvider.getUser();
+    // 访客记录
+    const viewer = await this.viewerProvider.getAll();
+    const visit = await this.visitProvider.getAll();
     const data = {
       articles,
       tags,
@@ -54,6 +60,8 @@ export class BackupController {
       drafts,
       categories,
       user,
+      viewer,
+      visit,
     };
     // 拼接一个临时文件
     const name = `备份-${dayjs().format('YYYY-MM-DD')}.json`;
