@@ -70,4 +70,17 @@ export class ViewerProvider {
   async findByDate(date: string): Promise<Viewer> {
     return this.viewerModel.findOne({ date }).exec();
   }
+  async import(data: Viewer[]) {
+    for (const each of data) {
+      const oldData = await this.viewerModel.findOne({
+        date: each.date,
+      });
+      if (oldData) {
+        await this.viewerModel.updateOne({ _id: oldData._id }, each);
+      } else {
+        const newData = new this.viewerModel(each);
+        await newData.save();
+      }
+    }
+  }
 }

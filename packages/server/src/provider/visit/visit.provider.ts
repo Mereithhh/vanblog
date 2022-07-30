@@ -61,4 +61,19 @@ export class VisitProvider {
     const today = dayjs().format('YYYY-MM-DD');
     return await this.visitModel.findOne({ date: today, pathname });
   }
+
+  async import(data: Visit[]) {
+    for (const each of data) {
+      const oldData = await this.visitModel.findOne({
+        pathname: each.pathname,
+        date: each.date,
+      });
+      if (oldData) {
+        await this.visitModel.updateOne({ _id: oldData._id }, each);
+      } else {
+        const newData = new this.visitModel(each);
+        await newData.save();
+      }
+    }
+  }
 }

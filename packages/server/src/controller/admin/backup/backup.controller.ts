@@ -82,10 +82,13 @@ export class BackupController {
     const json = file.buffer.toString();
     const data = JSON.parse(json);
     // eslint-disable-next-line prefer-const
-    let { articles, meta, drafts, user } = data;
+    let { articles, meta, drafts, user, viewer, visit } = data;
     // 去掉 id
     articles = removeID(articles);
     drafts = removeID(drafts);
+    viewer = removeID(viewer);
+    visit = removeID(visit);
+
     delete user._id;
     delete user.__v;
     delete meta._id;
@@ -94,6 +97,12 @@ export class BackupController {
     await this.draftProvider.importDrafts(drafts);
     await this.userProvider.updateUser(user);
     await this.metaProvider.update(meta);
+    if (visit) {
+      await this.visitProvider.import(visit);
+    }
+    if (viewer) {
+      await this.viewerProvider.import(viewer);
+    }
     return {
       statusCode: 200,
       data: '导入成功！',
