@@ -1,4 +1,11 @@
 # Changelog
+### [0.5.5](https://github.com/Mereithhh/van-blog/compare/v0.5.4...v0.5.5) (2022-07-30)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 优化访客记录逻辑&移除定时任务 ([d5197de](https://github.com/Mereithhh/van-blog/commit/d5197de79e92d77db14ff12acf48de48a71e97de))
+
 ### [0.5.4](https://github.com/Mereithhh/van-blog/compare/v0.5.3...v0.5.4) (2022-07-30)
 
 
