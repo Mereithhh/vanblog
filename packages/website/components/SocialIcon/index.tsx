@@ -7,7 +7,8 @@ import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
 
 export default function (props: { item: SocialItem }) {
-  const { theme } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
+  const { theme } = state;
   const weChatUrl = useMemo(() => {
     if (props.item.type == "wechat") {
       if (theme.includes("dark") && props.item.dark && props.item.dark != "") {

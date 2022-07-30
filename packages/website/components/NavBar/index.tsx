@@ -18,7 +18,8 @@ export default function (props: {
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
-  const { theme } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
+  const { theme } = state;
   const picUrl = useMemo(() => {
     if (theme.includes("dark") && props.logoDark && props.logoDark != "") {
       return props.logoDark;

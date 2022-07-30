@@ -18,7 +18,8 @@ export interface AuthorCardProps {
 }
 
 export default function (props: { option: AuthorCardProps }) {
-  const { theme } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
+  const { theme } = state;
   const logoUrl = useMemo(() => {
     if (
       theme.includes("dark") &&

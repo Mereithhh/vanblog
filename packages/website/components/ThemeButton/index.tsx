@@ -5,7 +5,11 @@ import { GlobalContext } from "../../utils/globalContext";
 export default function (props: {}) {
   const { current } = useRef<any>({ hasInit: false });
   const { current: currentTimer } = useRef<any>({ timer: null });
-  const { theme, setTheme } = useContext(GlobalContext);
+  const { state, setState } = useContext(GlobalContext);
+  const { theme } = state;
+  const setTheme = (newTheme: "auto" | "light" | "dark") => {
+    setState({ ...state, theme: newTheme });
+  };
   const clearTimer = () => {
     clearInterval(currentTimer.timer);
     currentTimer.timer = null;

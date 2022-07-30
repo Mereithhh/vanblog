@@ -12,7 +12,8 @@ export default function (props: {
   id: number;
 }) {
   const [show, setShow] = useState(false);
-  const { theme } = useContext(GlobalContext);
+  const { state } = useContext(GlobalContext);
+  const { theme } = state;
   const payUrl = useMemo(() => {
     const r = [];
     if (theme.includes("dark") && props.aliPayDark != "") {
