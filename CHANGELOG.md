@@ -1,4 +1,12 @@
 # Changelog
+### [0.5.4](https://github.com/Mereithhh/van-blog/compare/v0.5.3...v0.5.4) (2022-07-30)
+
+
+### ✨ Features | 新功能
+
+* 优化单独每个页面的访客记录逻辑 ([0c528fa](https://github.com/Mereithhh/van-blog/commit/0c528fa25c39e1e3cab4c6c3e7ce02f44cd1337e))
+* 自己实现文章访客记录 ([06a2966](https://github.com/Mereithhh/van-blog/commit/06a2966912636fd55d544304c42812bd18817a6b))
+
 ### [0.5.3](https://github.com/Mereithhh/van-blog/compare/v0.5.2...v0.5.3) (2022-07-30)
 
 
