@@ -1,4 +1,11 @@
 # Changelog
+### [0.5.9](https://github.com/Mereithhh/van-blog/compare/v0.5.8...v0.5.9) (2022-07-30)
+
+
+### ✨ Features | 新功能
+
+* 优化markdown 标题大小 ([3afcc6e](https://github.com/Mereithhh/van-blog/commit/3afcc6eda1dc9b3043718df66ad6688878c01821))
+
 ### [0.5.8](https://github.com/Mereithhh/van-blog/compare/v0.5.7...v0.5.8) (2022-07-30)
 
 
