@@ -12,8 +12,10 @@ import {
   UpdateArticleDto,
 } from 'src/dto/article.dto';
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
+import { copyDocObj } from 'src/utils/objCopy';
 import { wordCount } from 'src/utils/wordCount';
 import { MetaProvider } from '../meta/meta.provider';
+import { VisitProvider } from '../visit/visit.provider';
 
 export type ArticleView = 'admin' | 'public' | 'list';
 
@@ -24,6 +26,7 @@ export class ArticleProvider {
     private articleModel: Model<ArticleDocument>,
     @Inject(forwardRef(() => MetaProvider))
     private readonly metaProvider: MetaProvider,
+    private readonly visitProvider: VisitProvider,
   ) {}
   publicView = {
     title: 1,
@@ -305,7 +308,7 @@ export class ArticleProvider {
     // withWordCount 只会返回当前分页的文字数量
 
     const total = await this.articleModel.count(query).exec();
-    const resData: any = { articles, total };
+    const resData: any = {};
     if (option.withWordCount) {
       let totalWordCount = 0;
       articles.forEach((a) => {
@@ -313,6 +316,28 @@ export class ArticleProvider {
       });
       resData.totalWordCount = totalWordCount;
     }
+    // 查找浏览量
+    if (option.withViewer) {
+      const newArticles: any[] = [];
+      for (let i = 0; i < articles.length; i++) {
+        const eachViewerData = await this.visitProvider.getByArticleId(
+          articles[i].id,
+        );
+        let viewerNum = 0;
+        if (Boolean(eachViewerData)) {
+          viewerNum = eachViewerData.viewer;
+        }
+        // 赋值
+        const newArticle = copyDocObj(articles[i]);
+        newArticle.viewer = viewerNum;
+        newArticles.push(newArticle);
+      }
+      resData.articles = newArticles;
+    } else {
+      resData.articles = articles;
+    }
+
+    resData.total = total;
     return resData;
   }
 

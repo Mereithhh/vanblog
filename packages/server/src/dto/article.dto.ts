@@ -34,4 +34,5 @@ export class SearchArticleOption {
   endTime?: string;
   toListView?: boolean;
   withWordCount?: boolean;
+  withViewer?: boolean;
 }

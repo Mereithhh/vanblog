@@ -63,6 +63,7 @@ export default () => {
         }
         option.page = current;
         option.pageSize = pageSize;
+        option.withViewer = true;
         const { data } = await getArticlesByOption(option);
         const { articles, total } = data;
         return {
