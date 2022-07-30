@@ -81,7 +81,7 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
           <ProFormText
             name="payAliPay"
             label="支付宝图片 Url"
-            placeholder={'请输入支付宝打赏图片 Url'}
+            placeholder={'请输入支付宝打赏图片 Url，留空不启用打赏'}
           ></ProFormText>{' '}
           <ProFormText
             name="payAliPayDark"
@@ -91,7 +91,7 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
           <ProFormText
             name="payWechat"
             label="微信图片 Url"
-            placeholder={'请输入微信打赏图片 Url'}
+            placeholder={'请输入微信打赏图片 Url，留空不启用打赏'}
           ></ProFormText>
           <ProFormText
             name="payWechatDark"
@@ -111,11 +111,15 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
       )}
       {props.showOption && (
         <>
-          <ProFormText name="beianNumber" label="备案号" placeholder={'请输入备案号'}></ProFormText>
+          <ProFormText
+            name="beianNumber"
+            label="备案号"
+            placeholder={'请输入备案号，留空不显示备案信息'}
+          ></ProFormText>
           <ProFormText
             name="beianUrl"
             label="备案网址"
-            placeholder={'请输入备案网址'}
+            placeholder={'请输入备案网址，留空不显示备案信息'}
           ></ProFormText>
           <ProFormText
             name="gaAnalysisId"
