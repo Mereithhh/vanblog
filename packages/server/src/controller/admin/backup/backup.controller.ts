@@ -64,7 +64,7 @@ export class BackupController {
       visit,
     };
     // 拼接一个临时文件
-    const name = `备份-${dayjs().format('YYYY-MM-DD')}.json`;
+    const name = `temp.json`;
     fs.writeFileSync(name, JSON.stringify(data, null, 2));
     res.download(name, (err) => {
       if (!err) {
