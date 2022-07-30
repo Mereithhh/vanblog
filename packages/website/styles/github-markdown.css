@@ -180,7 +180,7 @@
   margin: 0.67em 0;
   font-weight: 600;
   padding-bottom: 0.3em;
-  font-size: 2em;
+  font-size: 1.4em;
   border-bottom: 1px solid var(--color-border-muted);
 }
 
@@ -366,13 +366,13 @@
 .markdown-body h2 {
   font-weight: 600;
   padding-bottom: 0.3em;
-  font-size: 1.5em;
+  font-size: 1.3em;
   border-bottom: 1px solid var(--color-border-muted);
 }
 
 .markdown-body h3 {
   font-weight: 600;
-  font-size: 1.25em;
+  font-size: 1.15em;
 }
 
 .markdown-body h4 {
