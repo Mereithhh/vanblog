@@ -1,6 +1,5 @@
 import Head from "next/head";
 
-import { getRunTimeOfDays } from "../../utils/getRunTile";
 import BackToTopBtn from "../BackToTop";
 import NavBar from "../NavBar";
 import Viewer from "../Viewer";
@@ -23,6 +22,7 @@ export default function (props: {
       document.body.style.overflow = "auto";
     };
   });
+
   const renderLinks = useCallback(() => {
     const arr: any[] = [];
     props.option.links.forEach((item) => {
@@ -139,7 +139,7 @@ export default function (props: {
           </div>
         }
         <footer className="text-center text-sm space-y-1 mt-8 md:mt-12 dark:text-dark">
-          {props.option.ipcNumber && props.option.ipcNumber != "" && (
+          {Boolean(props.option.ipcNumber) && props.option.ipcNumber != "" && (
             <p className="">
               IPC 编号:{" "}
               <a
