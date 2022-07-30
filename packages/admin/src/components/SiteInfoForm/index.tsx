@@ -74,20 +74,7 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
             placeholder={'请输入网站描述'}
             rules={[{ required: true, message: '这是必填项' }]}
           ></ProFormText>
-          <ProFormText
-            name="beianNumber"
-            required
-            label="备案号"
-            placeholder={'请输入备案号'}
-            rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
-          <ProFormText
-            name="beianUrl"
-            required
-            label="备案网址"
-            placeholder={'请输入备案网址'}
-            rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+
           <ProFormText
             name="payAliPay"
             required
@@ -131,7 +118,20 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
       )}
       {props.showOption && (
         <>
-          {' '}
+          <ProFormText
+            name="beianNumber"
+            required
+            label="备案号"
+            placeholder={'请输入备案号'}
+            rules={[{ required: true, message: '这是必填项' }]}
+          ></ProFormText>
+          <ProFormText
+            name="beianUrl"
+            required
+            label="备案网址"
+            placeholder={'请输入备案网址'}
+            rules={[{ required: true, message: '这是必填项' }]}
+          ></ProFormText>
           <ProFormText
             name="gaAnalysisId"
             label="Google Analysis ID"

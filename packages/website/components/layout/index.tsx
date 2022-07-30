@@ -139,16 +139,18 @@ export default function (props: {
           </div>
         }
         <footer className="text-center text-sm space-y-1 mt-8 md:mt-12 dark:text-dark">
-          <p className="">
-            IPC 编号:{" "}
-            <a
-              href={props.option.ipcHref}
-              target="_blank"
-              className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
-            >
-              {props.option.ipcNumber}
-            </a>
-          </p>
+          {props.option.ipcNumber && props.option.ipcNumber != "" && (
+            <p className="">
+              IPC 编号:{" "}
+              <a
+                href={props.option.ipcHref}
+                target="_blank"
+                className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
+              >
+                {props.option.ipcNumber}
+              </a>
+            </p>
+          )}
           <RunningTime since={props.option.since}></RunningTime>
           <p className="">
             Powered By{" "}

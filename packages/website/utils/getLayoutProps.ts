@@ -21,8 +21,8 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   const siteInfo = data.meta.siteInfo;
   return {
     walineServerUrl: siteInfo?.walineServerUrl || "",
-    ipcHref: siteInfo.beianUrl,
-    ipcNumber: siteInfo.beianNumber,
+    ipcHref: siteInfo?.beianUrl || "",
+    ipcNumber: siteInfo?.beianNumber || "",
     since: siteInfo.since,
     logo: siteInfo.siteLogo,
     favicon: siteInfo.favicon,
