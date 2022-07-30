@@ -1,11 +1,29 @@
 import SiteInfoForm from '@/components/SiteInfoForm';
 import { getSiteInfo, updateSiteInfo } from '@/services/van-blog/api';
 import { ProCard, ProForm } from '@ant-design/pro-components';
-import { message } from 'antd';
+import { Card, message } from 'antd';
 import { useState } from 'react';
 export default function () {
+  const [activeTabKey, setActiveTabKey] = useState<string>('basic');
+  const tabList = [
+    {
+      key: 'basic',
+      tab: '基本设置',
+    },
+    {
+      key: 'more',
+      tab: '高级设置',
+    },
+  ];
+
   return (
-    <ProCard>
+    <Card
+      tabList={tabList}
+      onTabChange={(key) => {
+        setActiveTabKey(key);
+      }}
+      activeTabKey={activeTabKey}
+    >
       <ProForm
         grid={true}
         layout={'horizontal'}
@@ -20,8 +38,8 @@ export default function () {
           message.success('更新成功！');
         }}
       >
-        <SiteInfoForm showOption={true} showRequire={true} />
+        <SiteInfoForm showOption={activeTabKey != 'basic'} showRequire={activeTabKey == 'basic'} />
       </ProForm>
-    </ProCard>
+    </Card>
   );
 }
