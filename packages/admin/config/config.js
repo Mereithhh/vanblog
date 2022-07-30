@@ -1,5 +1,4 @@
 // https://umijs.org/config/
-import { join } from 'path';
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';

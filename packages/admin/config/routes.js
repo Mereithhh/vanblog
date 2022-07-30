@@ -8,7 +8,7 @@ export default [
     ],
   },
   { path: '/init', layout: false, component: './InitPage' },
-  { path: '/welcome', name: '概览', icon: 'smile', component: './Welcome' },
+  { path: '/welcome', name: '分析概览', icon: 'smile', component: './Welcome' },
   { name: '文章管理', icon: 'form', path: '/article', component: './Article' },
   {
     name: '图形编辑器',
