@@ -2,13 +2,18 @@ import MarkdownNavbar from "markdown-navbar";
 import { useEffect } from "react";
 import Headroom from "headroom.js";
 import scroll from "react-scroll";
-export default function (props: { content: string }) {
+export default function (props: {
+  content: string;
+  showSubMenu: "true" | "false";
+}) {
   useEffect(() => {
     const el = document.querySelector("#author-card");
     if (el) {
       const headroom = new Headroom(el, {
         classes: {
-          initial: "side-bar",
+          initial: `side-bar${
+            props.showSubMenu == "true" ? "" : " no-submenu"
+          }`,
           pinned: "side-bar-pinned",
           unpinned: "side-bar-unpinned",
           top: "side-bar-top",

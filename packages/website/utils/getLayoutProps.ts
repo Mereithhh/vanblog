@@ -1,5 +1,6 @@
 import { MenuItem, PublicMetaProp } from "../api/getAllData";
 import dayjs from "dayjs";
+import { AuthorCardProps } from "../components/AuthorCard";
 export interface LayoutProps {
   description: string;
   ipcNumber: string;
@@ -15,10 +16,13 @@ export interface LayoutProps {
   gaAnalysisID: string;
   logoDark: string;
   links: MenuItem[];
+  showSubMenu: "true" | "false";
 }
 
 export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   const siteInfo = data.meta.siteInfo;
+  const showSubMenu =
+    Boolean(data.meta.categories.length) && siteInfo?.showSubMenu == "true";
   return {
     walineServerUrl: siteInfo?.walineServerUrl || "",
     ipcHref: siteInfo?.beianUrl || "",
@@ -34,10 +38,14 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     description: siteInfo?.siteDesc || "",
     links: data?.meta?.menus || [],
     categories: data.meta.categories,
+    showSubMenu: showSubMenu ? "true" : "false",
   };
 }
 
-export function getAuthorCardProps(data: PublicMetaProp) {
+export function getAuthorCardProps(data: PublicMetaProp): AuthorCardProps {
+  const showSubMenu =
+    Boolean(data.meta.categories.length) &&
+    data.meta.siteInfo?.showSubMenu == "true";
   return {
     postNum: data.totalArticles,
     tagNum: data.tags.length,
@@ -47,5 +55,6 @@ export function getAuthorCardProps(data: PublicMetaProp) {
     desc: data.meta.siteInfo.authorDesc,
     logo: data.meta.siteInfo.authorLogo,
     logoDark: data.meta.siteInfo.authorLogoDark || "",
+    showSubMenu: showSubMenu ? "true" : "false",
   };
 }

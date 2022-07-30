@@ -1,4 +1,4 @@
-import { ProFormDatePicker, ProFormText } from '@ant-design/pro-components';
+import { ProFormDatePicker, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 
 export default function (props: {
   showOption: boolean;
@@ -141,6 +141,19 @@ export default function (props: {
             placeholder={'请输入 WaLine 服务端 Url，留空表示不启用'}
           ></ProFormText>
           <ProFormDatePicker name="since" width={'lg'} label="建站时间" />
+        </>
+      )}
+      {/* 布局选项 */}
+      {props.showLayout && (
+        <>
+          <ProFormSelect
+            name={'showSubMenu'}
+            label="显示分类导航栏"
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+          ></ProFormSelect>
         </>
       )}
     </>

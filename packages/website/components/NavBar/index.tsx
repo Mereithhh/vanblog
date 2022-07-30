@@ -15,6 +15,7 @@ export default function (props: {
   isOpen: boolean;
   siteName: string;
   links: MenuItem[];
+  showSubMenu: "true" | "false";
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
@@ -187,7 +188,7 @@ export default function (props: {
             </div>
           </div>
         </div>
-        {Boolean(props.categories.length) && (
+        {Boolean(props.categories.length) && props.showSubMenu == "true" && (
           <div className="h-10 items-center hidden md:flex border-b border-gray-200 dark:border-nav-dark">
             <div className="mx-5" style={{ width: 52 }}></div>
             <ul className="flex h-full items-center text-sm text-gray-600 dark:text-dark ">

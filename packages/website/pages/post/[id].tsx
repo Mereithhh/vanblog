@@ -23,6 +23,7 @@ export interface PostPagesProps {
     id: number;
     title: string;
   };
+  showSubMenu: "true" | "false";
 }
 const PostPages = (props: PostPagesProps) => {
   return (
@@ -31,7 +32,10 @@ const PostPages = (props: PostPagesProps) => {
       title={props.article.title}
       sideBar={
         hasToc(props.article.content) ? (
-          <Toc content={props.article.content} />
+          <Toc
+            content={props.article.content}
+            showSubMenu={props.showSubMenu}
+          />
         ) : null
       }
     >

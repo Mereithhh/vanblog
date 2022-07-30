@@ -15,6 +15,7 @@ export interface AuthorCardProps {
   tagNum: number;
   walineServerUrl?: string;
   socials: SocialItem[];
+  showSubMenu: "true" | "false";
 }
 
 export default function (props: { option: AuthorCardProps }) {
@@ -35,7 +36,9 @@ export default function (props: { option: AuthorCardProps }) {
     if (el) {
       const headroom = new Headroom(el, {
         classes: {
-          initial: "side-bar",
+          initial: `side-bar${
+            props.option.showSubMenu == "true" ? "" : " no-submenu"
+          }`,
           pinned: "side-bar-pinned",
           unpinned: "side-bar-unpinned",
           top: "side-bar-top",

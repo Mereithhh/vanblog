@@ -14,6 +14,10 @@ export default function () {
       key: 'more',
       tab: '高级设置',
     },
+    {
+      key: 'layout',
+      tab: '布局设置',
+    },
   ];
 
   return (
@@ -39,8 +43,8 @@ export default function () {
         }}
       >
         <SiteInfoForm
-          showLayout={false}
-          showOption={activeTabKey != 'basic'}
+          showLayout={activeTabKey == 'layout'}
+          showOption={activeTabKey == 'more'}
           showRequire={activeTabKey == 'basic'}
         />
       </ProForm>

@@ -19,6 +19,7 @@ export class SiteInfo {
   walineServerUrl: string;
   gaAnalysisId: string;
   baiduAnalysisId: string;
+  showSubMenu?: 'true' | 'false';
 }
 export interface updateUserDto {
   username: string;

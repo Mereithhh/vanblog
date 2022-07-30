@@ -131,13 +131,23 @@
 .side-bar-top {
   top: 112px;
 }
+.side-bar-top.no-submenu {
+  top: 72px;
+}
 
 .side-bar-not-top {
   top: 56px;
 }
+.side-bar-not-top.no-submenu {
+  top: 16px;
+}
 .side-bar-not-top.side-bar-pinned {
   top: 112px;
 }
+.side-bar-not-top.side-bar-pinned.no-submenu {
+  top: 72px;
+}
+
 /* 滚动槽 */
 ::-webkit-scrollbar {
   width: 6px;

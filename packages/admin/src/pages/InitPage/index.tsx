@@ -65,7 +65,7 @@ const InitPage = () => {
               <SiteInfoForm showRequire={true} showOption={false} showLayout={false} />
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step3" title={'额外配置'}>
-              <SiteInfoForm showRequire={false} showOption={true} showLayout={false} />
+              <SiteInfoForm showRequire={false} showOption={true} showLayout={true} />
             </StepsForm.StepForm>
           </StepsForm>
         </ProCard>

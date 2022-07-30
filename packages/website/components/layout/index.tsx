@@ -22,7 +22,6 @@ export default function (props: {
       document.body.style.overflow = "auto";
     };
   });
-
   const renderLinks = useCallback(() => {
     const arr: any[] = [];
     props.option.links.forEach((item) => {
@@ -55,6 +54,7 @@ export default function (props: {
         )}
 
       <NavBar
+        showSubMenu={props.option.showSubMenu}
         links={props.option.links}
         siteName={props.option.siteName}
         logo={props.option.logo}

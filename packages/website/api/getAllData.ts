@@ -46,6 +46,7 @@ export interface MetaProps {
     baiduAnalysisId?: string;
     gaAnalysisId?: string;
     siteLogoDark?: string;
+    showSubMenu?: "true" | "false";
   };
 }
 export interface PublicMetaProp {

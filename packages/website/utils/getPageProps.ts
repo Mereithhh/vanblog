@@ -140,6 +140,7 @@ export async function getPostPagesProps(
     ...currArticleProps,
     ...payProps,
     author: data.meta.siteInfo.author,
+    showSubMenu: layoutProps.showSubMenu,
   };
 }
 export async function getPagePagesProps(
