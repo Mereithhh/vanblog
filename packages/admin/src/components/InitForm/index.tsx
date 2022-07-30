@@ -20,7 +20,7 @@ export default function () {
         label="登录密码"
         placeholder={'请输入登录密码'}
       ></ProFormText.Password>
-      <SiteInfoForm />
+      <SiteInfoForm showOption={true} showRequire={true} />
     </>
   );
 }

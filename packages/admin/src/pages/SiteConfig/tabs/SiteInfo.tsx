@@ -20,7 +20,7 @@ export default function () {
           message.success('更新成功！');
         }}
       >
-        <SiteInfoForm />
+        <SiteInfoForm showOption={true} showRequire={true} />
       </ProForm>
     </ProCard>
   );

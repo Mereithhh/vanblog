@@ -12,7 +12,7 @@ const InitPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <ProCard title="初始化 VanBlog 系统...">
+        <ProCard title="欢迎使用 VanBlog 个人博客系统">
           <ProForm
             onFinish={async (data) => {
               const { username, password, ...siteInfo } = data;
