@@ -72,8 +72,8 @@ export class BackupController {
         return;
       }
       this.logger.error(err.stack);
+      fs.rmSync(name);
     });
-    fs.rmSync(name);
   }
 
   @Post('/import')

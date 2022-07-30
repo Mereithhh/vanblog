@@ -7,12 +7,14 @@ import { exportAll } from '@/services/van-blog/api';
 export default function (props) {
   const [loading, setLoading] = useState(false);
   const handleOutPut = async () => {
+    setLoading(true);
     const data = await exportAll();
     const url = URL.createObjectURL(data);
     const link = document.createElement('a');
     link.href = url;
     link.download = `备份-${moment().format('YYYY-MM-DD')}.json`;
     link.click();
+    setLoading(false);
   };
   return (
     <ProCard>
