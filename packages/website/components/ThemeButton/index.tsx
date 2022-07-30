@@ -1,11 +1,11 @@
 import { useContext, useEffect, useRef } from "react";
 import { initTheme, switchTheme } from "../../utils/theme";
-import { ThemeContext } from "../../utils/themeContext";
+import { GlobalContext } from "../../utils/globalContext";
 
 export default function (props: {}) {
   const { current } = useRef<any>({ hasInit: false });
   const { current: currentTimer } = useRef<any>({ timer: null });
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, setTheme } = useContext(GlobalContext);
   const clearTimer = () => {
     clearInterval(currentTimer.timer);
     currentTimer.timer = null;

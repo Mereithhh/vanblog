@@ -3,7 +3,7 @@ import { useContext, useEffect, useMemo } from "react";
 import Headroom from "headroom.js";
 import { SocialItem } from "../../api/getAllData";
 import SocialCard from "../SocialCard";
-import { ThemeContext } from "../../utils/themeContext";
+import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
 export interface AuthorCardProps {
   author: string;
@@ -18,7 +18,7 @@ export interface AuthorCardProps {
 }
 
 export default function (props: { option: AuthorCardProps }) {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useContext(GlobalContext);
   const logoUrl = useMemo(() => {
     if (
       theme.includes("dark") &&

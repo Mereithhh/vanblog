@@ -4,15 +4,15 @@ import "../styles/side-bar.css";
 import "../styles/toc-dark.css";
 import "../styles/var.css";
 import type { AppProps } from "next/app";
-import { ThemeContext } from "../utils/themeContext";
+import { GlobalContext } from "../utils/globalContext";
 import { useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = useState("auto");
   return (
-    <ThemeContext.Provider value={{ theme: theme, setTheme }}>
+    <GlobalContext.Provider value={{ theme: theme, setTheme }}>
       <Component {...pageProps} />
-    </ThemeContext.Provider>
+    </GlobalContext.Provider>
   );
 }
 

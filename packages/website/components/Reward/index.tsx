@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Swal from "sweetalert2";
-import { ThemeContext } from "../../utils/themeContext";
+import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
 export default function (props: {
   aliPay: string;
@@ -12,7 +12,7 @@ export default function (props: {
   id: number;
 }) {
   const [show, setShow] = useState(false);
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useContext(GlobalContext);
   const payUrl = useMemo(() => {
     const r = [];
     if (theme.includes("dark") && props.aliPayDark != "") {

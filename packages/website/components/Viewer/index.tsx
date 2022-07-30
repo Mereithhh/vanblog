@@ -10,6 +10,7 @@ export default function () {
     setVisited(result.visited);
   }, [setViewer, setVisited]);
   useEffect(() => {
+    console.log("更新Viewer");
     if (!current.hasInit) {
       current.hasInit = true;
       fetchViewer();

@@ -167,7 +167,6 @@ export default function (props: {
           </p>
           <p className="select-none">
             <Viewer></Viewer>
-            {/* <span className="waline-pageview-count" data-path="/*" /> */}
           </p>
         </footer>
       </div>

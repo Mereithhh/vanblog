@@ -3,11 +3,11 @@ import { SocialItem, SocialType } from "../../api/getAllData";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";
-import { ThemeContext } from "../../utils/themeContext";
+import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
 
 export default function (props: { item: SocialItem }) {
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useContext(GlobalContext);
   const weChatUrl = useMemo(() => {
     if (props.item.type == "wechat") {
       if (theme.includes("dark") && props.item.dark && props.item.dark != "") {

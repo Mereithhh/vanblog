@@ -4,7 +4,7 @@ import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
-import { ThemeContext } from "../../utils/themeContext";
+import { GlobalContext } from "../../utils/globalContext";
 import { MenuItem } from "../../api/getAllData";
 import Image from "next/future/image";
 export default function (props: {
@@ -18,7 +18,7 @@ export default function (props: {
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
-  const { theme } = useContext(ThemeContext);
+  const { theme } = useContext(GlobalContext);
   const picUrl = useMemo(() => {
     if (theme.includes("dark") && props.logoDark && props.logoDark != "") {
       return props.logoDark;
