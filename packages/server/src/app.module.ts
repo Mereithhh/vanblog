@@ -47,7 +47,6 @@ import { VisitProvider } from './provider/visit/visit.provider';
 import { MetaController } from './controller/admin/meta/meta.controller';
 import { WelcomeController } from './controller/admin/welcome/welcome.controller';
 import { OverviewProvider } from './provider/overview/overview.provider';
-import { CountTask } from './schedule/count.task';
 
 @Module({
   imports: [
@@ -103,7 +102,6 @@ import { CountTask } from './schedule/count.task';
     InitProvider,
     ViewerTask,
     OverviewProvider,
-    CountTask,
   ],
 })
 export class AppModule implements NestModule {
