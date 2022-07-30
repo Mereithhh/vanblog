@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useMemo } from "react";
 import Markdown from "../Markdown";
+import PostViewer from "../PostViewer";
 import Reward from "../Reward";
 import TopPinIcon from "../TopPinIcon";
 import WaLine from "../WaLine";
@@ -133,7 +134,11 @@ export default function (props: {
                 ></path>
               </svg>
             </span>
-            <span className="waline-pageview-count" data-path={dataPath}></span>
+            {/* <span className="waline-pageview-count" data-path={dataPath}></span> */}
+            <PostViewer
+              shouldAddViewer={props.type != "overview"}
+              id={props.id}
+            />
           </span>
           <span className="inline-flex px-2 items-center">
             <span className={iconClass}>

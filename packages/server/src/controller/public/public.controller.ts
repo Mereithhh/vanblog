@@ -6,6 +6,7 @@ import { ArticleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
+import { VisitProvider } from 'src/provider/visit/visit.provider';
 
 @ApiTags('public')
 @Controller('/api/public/')
@@ -15,6 +16,7 @@ export class PublicController {
     private readonly categoryProvider: CategoryProvider,
     private readonly tagProvider: TagProvider,
     private readonly metaProvider: MetaProvider,
+    private readonly visitProvider: VisitProvider,
   ) {}
 
   @Get('/article/:id')
@@ -55,6 +57,14 @@ export class PublicController {
   @Get('/viewer')
   async getViewer() {
     const data = await this.metaProvider.getViewer();
+    return {
+      statusCode: 200,
+      data: data,
+    };
+  }
+  @Get('/article/viewer/:id')
+  async getViewerByArticleId(@Param('id') id: number) {
+    const data = await this.visitProvider.getByArticleId(id);
     return {
       statusCode: 200,
       data: data,

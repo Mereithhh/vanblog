@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import * as dayjs from 'dayjs';
 import { Model } from 'mongoose';
 import { createVisitDto } from 'src/dto/visit.dto';
-import { Viewer } from 'src/scheme/viewer.schema';
+import { Visit } from 'src/scheme/visit.schema';
 import { VisitDocument } from 'src/scheme/visit.schema';
 
 @Injectable()
@@ -48,11 +48,16 @@ export class VisitProvider {
     return null;
   }
 
-  async getAll(): Promise<Viewer[]> {
+  async getAll(): Promise<Visit[]> {
     return this.visitModel.find({}).exec();
   }
 
-  async findByDateAndPath(date: string, pathname: string): Promise<Viewer> {
+  async findByDateAndPath(date: string, pathname: string): Promise<Visit> {
     return this.visitModel.findOne({ date, pathname }).exec();
+  }
+  async getByArticleId(id: number) {
+    const pathname = `/post/${id}`;
+    const today = dayjs().format('YYYY-MM-DD');
+    return await this.visitModel.findOne({ date: today, pathname });
   }
 }

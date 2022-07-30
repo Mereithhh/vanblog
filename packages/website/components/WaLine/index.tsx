@@ -10,7 +10,7 @@ export default function (props: { serverUrl: string; visible: boolean }) {
         el: "#waline",
         serverURL: props.serverUrl,
         comment: true,
-        pageview: true,
+        pageview: false,
         dark: ".dark",
       });
     }
