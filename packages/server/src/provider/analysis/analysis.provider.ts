@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { ArticleProvider } from '../article/article.provider';
 import { ViewerProvider } from '../viewer/viewer.provider';
 import { MetaProvider } from '../meta/meta.provider';
+import { ViewerTabData } from 'src/dto/analysis';
+import { VisitProvider } from '../visit/visit.provider';
 export type WelcomeTab = 'overview' | 'viewer';
 @Injectable()
 export class AnalysisProvider {
@@ -9,6 +11,7 @@ export class AnalysisProvider {
     private readonly metaProvider: MetaProvider,
     private readonly articleProvider: ArticleProvider,
     private readonly viewProvider: ViewerProvider,
+    private readonly visitProvider: VisitProvider,
   ) {}
 
   async getOverViewData() {
@@ -27,8 +30,35 @@ export class AnalysisProvider {
       },
     };
   }
-  async getViewerData() {
-    return {};
+  async getViewerData(): Promise<ViewerTabData> {
+    const siteInfo = await this.metaProvider.getSiteInfo();
+    const enableGA =
+      Boolean(siteInfo.gaAnalysisId) && siteInfo.gaAnalysisId != '';
+    const enableBaidu =
+      Boolean(siteInfo.baiduAnalysisId) && siteInfo.baiduAnalysisId != '';
+    const viewerData = await this.visitProvider.getTop5Viewer();
+    const visitedData = await this.visitProvider.getTop5Visited();
+    const top5Viewer: any[] = [];
+    const top5Visited: any[] = [];
+    // 获取访客文章
+    for (const each of viewerData) {
+      const id = parseInt(each.pathname.replace('/post/', ''));
+      const a = await this.articleProvider.getById(id, 'list');
+      top5Viewer.push(a);
+    }
+    for (const each of visitedData) {
+      const id = parseInt(each.pathname.replace('/post/', ''));
+      const a = await this.articleProvider.getById(id, 'list');
+      top5Visited.push(a);
+    }
+
+    return {
+      enableGA,
+      enableBaidu,
+      top5Viewer,
+      top5Visited,
+      recentVisitArticles: [],
+    };
   }
 
   async getWelcomePageData(tab: WelcomeTab) {

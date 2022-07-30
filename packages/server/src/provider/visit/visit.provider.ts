@@ -62,6 +62,30 @@ export class VisitProvider {
     return await this.visitModel.findOne({ date: today, pathname });
   }
 
+  async getTop5Viewer() {
+    const today = dayjs().format('YYYY-MM-DD');
+    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
+    return await this.visitModel
+      .find({
+        date: { $in: [today, lastDay] },
+        pathname: { $regex: '/post/' },
+      })
+      .sort({ viewer: -1 })
+      .limit(5);
+  }
+
+  async getTop5Visited() {
+    const today = dayjs().format('YYYY-MM-DD');
+    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
+    return await this.visitModel
+      .find({
+        date: { $in: [today, lastDay] },
+        pathname: { $regex: '/post/' },
+      })
+      .sort({ visited: -1 })
+      .limit(5);
+  }
+
   async import(data: Visit[]) {
     for (const each of data) {
       const oldData = await this.visitModel.findOne({
