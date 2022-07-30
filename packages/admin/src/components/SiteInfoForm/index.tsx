@@ -56,7 +56,7 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
           <ProFormText
             name="favicon"
             required
-            label="图标"
+            label="网站图标"
             placeholder={'请输入网站图标 Url'}
             rules={[{ required: true, message: '这是必填项' }]}
           ></ProFormText>
@@ -74,38 +74,31 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
             placeholder={'请输入网站描述'}
             rules={[{ required: true, message: '这是必填项' }]}
           ></ProFormText>
-
-          <ProFormText
-            name="payAliPay"
-            required
-            label="支付宝图片 Url"
-            placeholder={'请输入支付宝打赏图片 Url'}
-            rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
         </>
       )}
       {props.showOption && (
-        <ProFormText
-          name="payAliPayDark"
-          label="支付宝图片 Url（黑暗模式）"
-          placeholder={'请输入黑暗模式支付宝打赏图片 Url，留空沿用上个'}
-        ></ProFormText>
-      )}
-      {props.showRequire && (
-        <ProFormText
-          name="payWechat"
-          required
-          label="微信图片 Url"
-          placeholder={'请输入微信打赏图片 Url'}
-          rules={[{ required: true, message: '这是必填项' }]}
-        ></ProFormText>
-      )}
-      {props.showOption && (
-        <ProFormText
-          name="payWechatDark"
-          label="微信图片 Url（黑暗模式）"
-          placeholder={'请输入黑暗模式微信打赏图片 Url，留空沿用上个'}
-        ></ProFormText>
+        <>
+          <ProFormText
+            name="payAliPay"
+            label="支付宝图片 Url"
+            placeholder={'请输入支付宝打赏图片 Url'}
+          ></ProFormText>{' '}
+          <ProFormText
+            name="payAliPayDark"
+            label="支付宝图片 Url（黑暗模式）"
+            placeholder={'请输入黑暗模式支付宝打赏图片 Url，留空沿用上个'}
+          ></ProFormText>
+          <ProFormText
+            name="payWechat"
+            label="微信图片 Url"
+            placeholder={'请输入微信打赏图片 Url'}
+          ></ProFormText>
+          <ProFormText
+            name="payWechatDark"
+            label="微信图片 Url（黑暗模式）"
+            placeholder={'请输入黑暗模式微信打赏图片 Url，留空沿用上个'}
+          ></ProFormText>
+        </>
       )}
       {props.showRequire && (
         <ProFormText
@@ -118,19 +111,11 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
       )}
       {props.showOption && (
         <>
-          <ProFormText
-            name="beianNumber"
-            required
-            label="备案号"
-            placeholder={'请输入备案号'}
-            rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+          <ProFormText name="beianNumber" label="备案号" placeholder={'请输入备案号'}></ProFormText>
           <ProFormText
             name="beianUrl"
-            required
             label="备案网址"
             placeholder={'请输入备案网址'}
-            rules={[{ required: true, message: '这是必填项' }]}
           ></ProFormText>
           <ProFormText
             name="gaAnalysisId"

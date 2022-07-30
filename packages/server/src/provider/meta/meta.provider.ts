@@ -145,8 +145,11 @@ export class MetaProvider {
     if (name && name != '') {
       this.userProvider.updateUser({ name: name, password });
     }
-
-    return this.metaModel.updateOne({}, { siteInfo: updateDto });
+    const oldSiteInfo = await this.getSiteInfo();
+    return this.metaModel.updateOne(
+      {},
+      { siteInfo: { ...oldSiteInfo, ...updateDto } },
+    );
   }
 
   async addOrUpdateReward(addReward: Partial<RewardItem>) {

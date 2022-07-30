@@ -125,7 +125,10 @@ export async function getPostPagesProps(
   const data = await getPublicMeta();
   const layoutProps = getLayoutProps(data);
   const payProps = {
-    pay: [data.meta.siteInfo.payAliPay, data.meta.siteInfo.payWechat],
+    pay: [
+      data.meta.siteInfo?.payAliPay || "",
+      data.meta.siteInfo?.payWechat || "",
+    ],
     payDark: [
       data.meta.siteInfo?.payAliPayDark || "",
       data.meta.siteInfo?.payWechatDark || "",
