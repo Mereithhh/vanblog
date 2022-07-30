@@ -1,4 +1,27 @@
 # Changelog
+### [0.5.1](https://github.com/Mereithhh/van-blog/compare/v0.5.0...v0.5.1) (2022-07-30)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 删除通知step ([24b23b9](https://github.com/Mereithhh/van-blog/commit/24b23b9311f9c4c84fb9991c6c3c14a11754db32))
+* 增加一个测试webhook的ci ([239a224](https://github.com/Mereithhh/van-blog/commit/239a224d711c211d29fa4ec687618e4b17392bf9))
+* delete test ci ([cdda87b](https://github.com/Mereithhh/van-blog/commit/cdda87b836e25ffe85ab2dc9f92eacfb9b7c79d3))
+* fix self use ([fb695f3](https://github.com/Mereithhh/van-blog/commit/fb695f37d1efbf89f8a47324d836319765b565a6))
+* fix self use build ([445a8eb](https://github.com/Mereithhh/van-blog/commit/445a8eb96ac67fe88f8849c46980cce9c52305f7))
+* test ([aaf6e81](https://github.com/Mereithhh/van-blog/commit/aaf6e81df304c331bdbb38575e4fae6f392f89bf))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 登录态没能持续保存的问题 ([45ad14e](https://github.com/Mereithhh/van-blog/commit/45ad14e2b8998bcdc32b25171399b67674c8ae59))
+
+
+### ✨ Features | 新功能
+
+* 按需更新字数缓存，不用定时了 ([3b47eda](https://github.com/Mereithhh/van-blog/commit/3b47eda7a6abc56efda9dc38561fbc550f15ce6c))
+* 尝试为后台增加 pwa ([8fba5f3](https://github.com/Mereithhh/van-blog/commit/8fba5f35ace8eedfbdfccc2bb581d2814acde7ce))
+
 ## [0.5.0](https://github.com/Mereithhh/van-blog/compare/v0.4.2...v0.5.0) (2022-07-29)
 
 
