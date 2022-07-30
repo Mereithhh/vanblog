@@ -1,4 +1,11 @@
 # Changelog
+### [0.5.8](https://github.com/Mereithhh/van-blog/compare/v0.5.7...v0.5.8) (2022-07-30)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* markdown 黑暗模式颜色不对 ([f8bd642](https://github.com/Mereithhh/van-blog/commit/f8bd6422a35792bb7a5c9063113a5e3d76bce3e3))
+
 ### [0.5.7](https://github.com/Mereithhh/van-blog/compare/v0.5.6...v0.5.7) (2022-07-30)
 
 
