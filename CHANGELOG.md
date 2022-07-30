@@ -1,4 +1,11 @@
 # Changelog
+### [0.5.7](https://github.com/Mereithhh/van-blog/compare/v0.5.6...v0.5.7) (2022-07-30)
+
+
+### ✨ Features | 新功能
+
+* 导入功能适配新版 dto ([cb84bec](https://github.com/Mereithhh/van-blog/commit/cb84bec8bfefb9116a0091a7f0c993c1fbd216af))
+
 ### [0.5.6](https://github.com/Mereithhh/van-blog/compare/v0.5.5...v0.5.6) (2022-07-30)
 
 
