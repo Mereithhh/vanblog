@@ -51,13 +51,20 @@ export class AnalysisProvider {
       const a = await this.articleProvider.getById(id, 'list');
       top5Visited.push(a);
     }
+    const { recentArticleIds } = await this.metaProvider.getSiteInfo();
+    const recentVisitArticles: any[] = [];
+    for (const each of recentArticleIds) {
+      recentVisitArticles.push(
+        await this.articleProvider.getById(each, 'list'),
+      );
+    }
 
     return {
       enableGA,
       enableBaidu,
       top5Viewer,
       top5Visited,
-      recentVisitArticles: [],
+      recentVisitArticles,
     };
   }
 
