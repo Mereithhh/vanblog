@@ -12,6 +12,7 @@ import { VisitProvider } from '../visit/visit.provider';
 import { ArticleProvider } from '../article/article.provider';
 import * as dayjs from 'dayjs';
 import { isTrue } from 'src/utils/isTrue';
+import { ViewerProvider } from '../viewer/viewer.provider';
 @Injectable()
 export class MetaProvider {
   constructor(
@@ -19,6 +20,7 @@ export class MetaProvider {
     private metaModel: Model<MetaDocument>,
     private readonly userProvider: UserProvider,
     private readonly visitProvider: VisitProvider,
+    private readonly viewProvider: ViewerProvider,
     @Inject(forwardRef(() => ArticleProvider))
     private readonly articleProvider: ArticleProvider,
   ) {}
@@ -56,9 +58,15 @@ export class MetaProvider {
     if (isTrue(isNewByPath)) {
       isNewVisitorByArticle = true;
     }
+    // 这个是 meta 的
     await this.update({ viewer: newViewer, visited: newVisited });
+    // 还需要增加每天的
+    this.viewProvider.createOrUpdate({
+      date: dayjs().format('YYYY-MM-DD'),
+      viewer: newViewer,
+      visited: newVisited,
+    });
     //增加每个路径的。
-
     this.visitProvider.add({
       pathname: pathname,
       isNew: isNewVisitorByArticle,

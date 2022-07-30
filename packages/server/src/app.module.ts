@@ -100,7 +100,6 @@ import { OverviewProvider } from './provider/overview/overview.provider';
     ViewerProvider,
     JwtStrategy,
     InitProvider,
-    ViewerTask,
     OverviewProvider,
   ],
 })
