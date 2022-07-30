@@ -27,6 +27,7 @@ export const columns = [
     title: '分类',
     dataIndex: 'category',
     valueType: 'select',
+    width: 100,
     request: async () => {
       const { data: categories } = await getAllCategories();
       const data = categories.map((each) => ({
@@ -40,6 +41,7 @@ export const columns = [
     disable: true,
     title: '标签',
     dataIndex: 'tags',
+    width: 120,
     search: true,
     renderFormItem: (_, { defaultRender }) => {
       return defaultRender(_);
@@ -63,6 +65,7 @@ export const columns = [
     valueType: 'dateTime',
     sorter: true,
     hideInSearch: true,
+    width: 150,
   },
   {
     title: '顶置',
@@ -70,6 +73,17 @@ export const columns = [
       return Math.floor(Math.random() * 10000);
     })(),
     dataIndex: 'top',
+    valueType: 'number',
+    sorter: true,
+    width: 80,
+    hideInSearch: true,
+  },
+  {
+    title: '浏览量',
+    key: (() => {
+      return Math.floor(Math.random() * 10000);
+    })(),
+    dataIndex: 'viewer',
     valueType: 'number',
     sorter: true,
     width: 80,
@@ -93,6 +107,7 @@ export const columns = [
     title: '操作',
     valueType: 'option',
     key: 'option',
+    width: 140,
     render: (text, record, _, action) => [
       <a
         key={'editable' + record.id}

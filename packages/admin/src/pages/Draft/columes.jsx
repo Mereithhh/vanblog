@@ -28,7 +28,7 @@ export const columns = [
   {
     title: '分类',
     dataIndex: 'category',
-
+    width: 120,
     valueType: 'select',
     request: async () => {
       const { data: categories } = await getAllCategories();
@@ -45,6 +45,7 @@ export const columns = [
     title: '标签',
     dataIndex: 'tags',
     search: true,
+    width: 120,
     renderFormItem: (_, { defaultRender }) => {
       return defaultRender(_);
     },
@@ -67,6 +68,7 @@ export const columns = [
     valueType: 'dateTime',
     sorter: true,
     hideInSearch: true,
+    width: 150,
   },
   {
     title: '创建时间',
@@ -86,6 +88,7 @@ export const columns = [
     title: '操作',
     valueType: 'option',
     key: 'option',
+    width: 140,
     render: (text, record, _, action) => [
       <a
         key={'editable' + record.id}
