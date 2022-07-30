@@ -20,6 +20,7 @@ export class SiteInfo {
   gaAnalysisId: string;
   baiduAnalysisId: string;
   showSubMenu?: 'true' | 'false';
+  recentArticleIds: number[];
 }
 export interface updateUserDto {
   username: string;
