@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import style from "../../styles/back-to-top.module.css";
 import scroll from "react-scroll";
-import Image from "next/image";
 import { debounce } from "../../utils/debounce";
 interface BackToTopBtnProps {}
 function getScrollTop() {

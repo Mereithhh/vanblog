@@ -14,14 +14,3 @@
   text-align: center;
   box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.15);
 }
-/* .backToTop::before {
-  content: "^";
-  display: block;
-
-  font-family: serif, "Times New Roman", Times;
-}
-.backToTop:hover::before {
-  font-size: 12px;
-  content: "回顶部";
-  line-height: 42px;
-} */
