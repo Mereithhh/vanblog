@@ -1,4 +1,18 @@
 # Changelog
+### [0.5.2](https://github.com/Mereithhh/van-blog/compare/v0.5.1...v0.5.2) (2022-07-30)
+
+
+### ✨ Features | 新功能
+
+* 自己实现分页器以便调用 next/link ([b5f7505](https://github.com/Mereithhh/van-blog/commit/b5f750519a7756275ac13fd450fcf931f47381b0))
+* markdown 样式改为模块导入以减少体积 ([da4713e](https://github.com/Mereithhh/van-blog/commit/da4713ee62a30f35a0b2400736e85c54acf5c612))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 分页展示问题 ([e770caf](https://github.com/Mereithhh/van-blog/commit/e770caf1ca1d1064bd8e5d58c147eaa306eb88c7))
+* 修复记录浏览量逻辑 ([083d569](https://github.com/Mereithhh/van-blog/commit/083d569240fd7b09e75933185406a2cf7c48e337))
+
 ### [0.5.1](https://github.com/Mereithhh/van-blog/compare/v0.5.0...v0.5.1) (2022-07-30)
 
 
