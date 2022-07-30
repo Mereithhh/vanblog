@@ -47,6 +47,15 @@
   .filter-dark {
     filter: grayscale(0.2);
   }
+  .pg-text-dark {
+    color: #9e9e9e;
+  }
+  .pg-text-dark-hover {
+    color: #232428;
+  }
+  .bg-dark-hover {
+    background-color: #9e9e9e;
+  }
   .bg-dark {
     background-color: #26282c;
   }
