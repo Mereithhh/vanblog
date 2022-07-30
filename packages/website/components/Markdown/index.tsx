@@ -8,7 +8,6 @@ import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
-import style from "../../styles/github-markdown.module.css";
 export default function (props: { content: string }) {
   return (
     <>
@@ -75,7 +74,7 @@ export default function (props: { content: string }) {
             );
           },
         }}
-        className={`${style["markdown-body"]} text-base`}
+        className={`markdown-body text-base`}
         children={props.content}
       />
     </>

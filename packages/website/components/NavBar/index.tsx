@@ -109,6 +109,11 @@ export default function (props: {
               ></Image>
             </div>
           </div>
+          {/* {props.showSubMenu == "false" && (
+            <div className="text-gray-800 text-xl font-medium ml-3 mr-1 hidden lg:block">
+              {props.siteName}
+            </div>
+          )} */}
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow ">
             <div className=" sm:hidden flex-grow text-center  flex items-center justify-center select-none dark:text-dark">

@@ -3,6 +3,7 @@ import "markdown-navbar/dist/navbar.css";
 import "../styles/side-bar.css";
 import "../styles/toc-dark.css";
 import "../styles/var.css";
+import "../styles/github-markdown.css";
 import type { AppProps } from "next/app";
 import { GlobalContext, GlobalState } from "../utils/globalContext";
 import { useCallback, useEffect, useRef, useState } from "react";
