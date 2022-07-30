@@ -62,10 +62,10 @@ const InitPage = () => {
               ></ProFormText.Password>
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step2" title={'基本配置'}>
-              <SiteInfoForm showRequire={true} showOption={false} />
+              <SiteInfoForm showRequire={true} showOption={false} showLayout={false} />
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step3" title={'额外配置'}>
-              <SiteInfoForm showRequire={false} showOption={true} />
+              <SiteInfoForm showRequire={false} showOption={true} showLayout={false} />
             </StepsForm.StepForm>
           </StepsForm>
         </ProCard>

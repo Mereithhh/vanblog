@@ -38,7 +38,11 @@ export default function () {
           message.success('更新成功！');
         }}
       >
-        <SiteInfoForm showOption={activeTabKey != 'basic'} showRequire={activeTabKey == 'basic'} />
+        <SiteInfoForm
+          showLayout={false}
+          showOption={activeTabKey != 'basic'}
+          showRequire={activeTabKey == 'basic'}
+        />
       </ProForm>
     </Card>
   );

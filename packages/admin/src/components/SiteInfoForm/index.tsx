@@ -1,6 +1,10 @@
 import { ProFormDatePicker, ProFormText } from '@ant-design/pro-components';
 
-export default function (props: { showOption: boolean; showRequire: boolean }) {
+export default function (props: {
+  showOption: boolean;
+  showRequire: boolean;
+  showLayout: boolean;
+}) {
   return (
     <>
       {props.showRequire && (
