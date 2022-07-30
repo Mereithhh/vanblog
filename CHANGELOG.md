@@ -1,4 +1,24 @@
 # Changelog
+### [0.5.6](https://github.com/Mereithhh/van-blog/compare/v0.5.5...v0.5.6) (2022-07-30)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 导出按钮点了没反应 ([edf96f2](https://github.com/Mereithhh/van-blog/commit/edf96f25f41a216ee8ce4cd324bd1f6bb8268da5))
+
+
+### ✨ Features | 新功能
+
+* 备案号变为可选配置 ([57f9900](https://github.com/Mereithhh/van-blog/commit/57f99009ddf7fef9e8e4b7aaa847bc0fe5777062))
+* 备份导出访客信息 ([177a909](https://github.com/Mereithhh/van-blog/commit/177a909fceae049b2f5303756e8fc523885d8f54))
+* 拆分站点配置 ([11b86d3](https://github.com/Mereithhh/van-blog/commit/11b86d3e4423d5c85df3a259f6d3a81024cee122))
+* 继续抽离必填项&修复更新站点信息接口覆盖问题 ([d252796](https://github.com/Mereithhh/van-blog/commit/d2527962ba4d36d197bf45a9085ea3b4b735a9bf))
+* 建站时间变为可选项 ([11a3685](https://github.com/Mereithhh/van-blog/commit/11a3685a5950e795e55afea4cebe41f1ad7110f7))
+* 修改站点描述表单 ([ea2ec11](https://github.com/Mereithhh/van-blog/commit/ea2ec11f6129d706fdc476b1fdde546f77fcdb06))
+* 优化初始化页面 ([4b2ba9f](https://github.com/Mereithhh/van-blog/commit/4b2ba9f2b85be6dcbd9a251702a00422b9342d6e))
+* 增加不显示 submenu 的配置 ([0f66bfa](https://github.com/Mereithhh/van-blog/commit/0f66bfaaaaab26be12fd4f2243a8002ed672bc1f))
+* 子导航栏没有分类不渲染 ([24c53e8](https://github.com/Mereithhh/van-blog/commit/24c53e8c56bcf44d48e7d9495b437c2b40582ed0))
+
 ### [0.5.5](https://github.com/Mereithhh/van-blog/compare/v0.5.4...v0.5.5) (2022-07-30)
 
 
