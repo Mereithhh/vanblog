@@ -2,8 +2,8 @@
 /* eslint-disable no-underscore-dangle */
 /* globals workbox */
 workbox.core.setCacheNameDetails({
-  prefix: 'antd-pro',
-  suffix: 'v5',
+  prefix: 'van-blog-admin',
+  suffix: 'v0',
 });
 // Control all opened tabs ASAP
 workbox.clientsClaim();

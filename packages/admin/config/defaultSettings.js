@@ -11,7 +11,7 @@ const Settings = {
   headerHeight: 48,
   splitMenus: false,
   headerRender: false,
-  pwa: false,
+  pwa: true,
   logo: 'https://pic.mereith.com/logo.svg',
   iconfontUrl: '',
 };
