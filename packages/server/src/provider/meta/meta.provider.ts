@@ -63,6 +63,7 @@ export class MetaProvider {
     }
     await this.update({ viewer: newViewer, visited: newVisited });
     //增加每个路径的。
+
     this.visitProvider.add({ pathname: pathname, isNew: isNewVisitor });
     return { visited: newVisited, viewer: newViewer };
   }

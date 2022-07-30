@@ -12,9 +12,9 @@ export class VisitProvider {
 
   async add(createViewerDto: createVisitDto): Promise<any> {
     // 先找一下有没有今天的，有的话就在今天的基础上加1。
-    const { isNew } = createViewerDto;
+    const { isNew, pathname } = createViewerDto;
     const today = dayjs().format('YYYY-MM-DD');
-    const todayData = await this.findByDate(today);
+    const todayData = await this.findByDateAndPath(today, pathname);
     if (todayData) {
       // 有今天的，直接在今天的基础上 +1 就行了
       return await this.visitModel.updateOne(
@@ -26,22 +26,22 @@ export class VisitProvider {
       );
     } else {
       // 没有今天的，找到能找到的上一天，然后加一，并创建今天的。
-      const lastData = await this.getLastData();
+      const lastData = await this.getLastData(pathname);
       const lastVisit = lastData?.visited || 0;
       const lastViewer = lastData?.viewer || 0;
       const createdData = new this.visitModel({
         date: today,
         viewer: lastViewer + 1,
         visited: isNew ? lastVisit + 1 : lastVisit,
-        pathname: createViewerDto.pathname,
+        pathname: pathname,
       });
       return await createdData.save();
     }
   }
 
-  async getLastData() {
+  async getLastData(pathname: string) {
     const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
-    const lastData = await this.findByDate(lastDay);
+    const lastData = await this.findByDateAndPath(lastDay, pathname);
     if (lastData) {
       return lastData;
     }
@@ -52,7 +52,7 @@ export class VisitProvider {
     return this.visitModel.find({}).exec();
   }
 
-  async findByDate(date: string): Promise<Viewer> {
-    return this.visitModel.findOne({ date }).exec();
+  async findByDateAndPath(date: string, pathname: string): Promise<Viewer> {
+    return this.visitModel.findOne({ date, pathname }).exec();
   }
 }
