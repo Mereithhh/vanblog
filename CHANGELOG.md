@@ -1,4 +1,17 @@
 # Changelog
+### [0.5.3](https://github.com/Mereithhh/van-blog/compare/v0.5.2...v0.5.3) (2022-07-30)
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 前台提升 globalState ([72f6460](https://github.com/Mereithhh/van-blog/commit/72f646013a1f41c6436ab27f43957d6c699d569f))
+* themeContext -> globalConext ([b36a254](https://github.com/Mereithhh/van-blog/commit/b36a254fc3022098c1c96e27cf55c28a714ec421))
+
+
+### ✨ Features | 新功能
+
+* 前台监听路由跳转以优化访客记录逻辑 ([2899f51](https://github.com/Mereithhh/van-blog/commit/2899f51c0c5087153c0f8f7a98db8a991226b5aa))
+
 ### [0.5.2](https://github.com/Mereithhh/van-blog/compare/v0.5.1...v0.5.2) (2022-07-30)
 
 
