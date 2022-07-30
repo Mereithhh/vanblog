@@ -11,6 +11,7 @@ import { MenuItem } from 'src/dto/menu.dto';
 import { VisitProvider } from '../visit/visit.provider';
 import { ArticleProvider } from '../article/article.provider';
 import * as dayjs from 'dayjs';
+import { isTrue } from 'src/utils/isTrue';
 @Injectable()
 export class MetaProvider {
   constructor(
@@ -42,29 +43,26 @@ export class MetaProvider {
     const newVisited = oldVisited;
     return { visited: newVisited, viewer: newViewer };
   }
-  async addViewer(isNew: boolean, pathname: string) {
+  async addViewer(isNew: boolean, pathname: string, isNewByPath: boolean) {
     const old = await this.getAll();
     const ov = old.viewer || 0;
     const oldVisited = old.visited || 0;
     const newViewer = ov + 1;
     let newVisited = oldVisited;
-    let isNewVisitor = false;
-    if (typeof isNew == 'string') {
-      if (isNew == 'true') {
-        newVisited += 1;
-        isNewVisitor = true;
-      }
+    let isNewVisitorByArticle = false;
+    if (isTrue(isNew)) {
+      newVisited += 1;
     }
-    if (typeof isNew == 'boolean') {
-      if (isNew == true) {
-        newVisited += 1;
-        isNewVisitor = true;
-      }
+    if (isTrue(isNewByPath)) {
+      isNewVisitorByArticle = true;
     }
     await this.update({ viewer: newViewer, visited: newVisited });
     //增加每个路径的。
 
-    this.visitProvider.add({ pathname: pathname, isNew: isNewVisitor });
+    this.visitProvider.add({
+      pathname: pathname,
+      isNew: isNewVisitorByArticle,
+    });
     return { visited: newVisited, viewer: newViewer };
   }
 

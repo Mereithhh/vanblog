@@ -1,14 +1,19 @@
-import { config } from "../utils/loadConfig";
-
-export async function addViewer(): Promise<any> {
+export async function addViewer(pathname: string): Promise<any> {
   let isNew = true;
   if (window.localStorage.getItem("visited")) {
     isNew = false;
   } else {
     window.localStorage.setItem("visited", "true");
   }
+  let isNewByPath = true;
+  if (window.localStorage.getItem(`visited-${pathname}`)) {
+    isNewByPath = false;
+  } else {
+    window.localStorage.setItem(`visited-${pathname}`, "true");
+  }
+
   try {
-    const url = `/api/public/viewer?isNew=${isNew}`;
+    const url = `/api/public/viewer?isNew=${isNew}&isNewByPath=${isNewByPath}`;
     const res = await fetch(url, {
       method: "POST",
     });

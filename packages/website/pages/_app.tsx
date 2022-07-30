@@ -17,11 +17,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     visited: 0,
   });
   const router = useRouter();
-  const reloadViewer = async (reason: string) => {
-    console.log("[更新访客]", reason);
-    const { viewer, visited } = await addViewer();
-    setGlobalState({ ...globalState, viewer: viewer, visited: visited });
-  };
+  const reloadViewer = useCallback(
+    async (reason: string) => {
+      const pathname = window.location.pathname;
+      console.log("[更新访客]", reason, pathname);
+      const { viewer, visited } = await addViewer(pathname);
+      setGlobalState({ ...globalState, viewer: viewer, visited: visited });
+    },
+    [globalState, setGlobalState]
+  );
   useEffect(() => {
     if (!current.hasInit) {
       current.hasInit = true;
@@ -33,7 +37,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       url: string,
       { shallow }: { shallow: boolean }
     ) => {
-      reloadViewer(`页面跳转 ${url}`);
+      reloadViewer(`页面跳转`);
     };
 
     router.events.on("routeChangeComplete", handleRouteChange);

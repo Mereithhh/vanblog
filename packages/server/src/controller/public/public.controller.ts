@@ -41,13 +41,21 @@ export class PublicController {
     };
   }
   @Post('/viewer')
-  async addViewer(@Query('isNew') isNew: boolean, @Req() req: Request) {
+  async addViewer(
+    @Query('isNew') isNew: boolean,
+    @Query('isNewByPath') isNewByPath: boolean,
+    @Req() req: Request,
+  ) {
     const refer = req.headers.referer;
     const url = new URL(refer);
     if (!url.pathname || url.pathname == '') {
       console.log('没找到 refer:', req.headers);
     }
-    const data = await this.metaProvider.addViewer(isNew, url.pathname);
+    const data = await this.metaProvider.addViewer(
+      isNew,
+      url.pathname,
+      isNewByPath,
+    );
     return {
       statusCode: 200,
       data: data,

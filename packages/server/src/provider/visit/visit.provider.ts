@@ -13,6 +13,7 @@ export class VisitProvider {
   async add(createViewerDto: createVisitDto): Promise<any> {
     // 先找一下有没有今天的，有的话就在今天的基础上加1。
     const { isNew, pathname } = createViewerDto;
+    // 这里的 isNew 代表是对于这个文章来说有没有访问过。
     const today = dayjs().format('YYYY-MM-DD');
     const todayData = await this.findByDateAndPath(today, pathname);
     if (todayData) {

@@ -16,6 +16,6 @@ export default async function handler(
   // } else {
   //   ip = req.connection.remoteAddress || "";
   // }
-  const result = await addViewer();
+  const result = await addViewer("");
   res.status(200).json(result);
 }
