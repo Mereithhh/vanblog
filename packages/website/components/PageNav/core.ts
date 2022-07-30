@@ -78,7 +78,7 @@ export const calItemList = (props: PageNavProps) => {
       // 加一个item
 
       res.push({
-        type: props.current ? "link-cur" : "link",
+        type: props.current == 4 ? "link-cur" : "link",
         href: `${props.more}/${4}`,
         page: 4,
       });
