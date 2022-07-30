@@ -3,19 +3,19 @@ import { ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 
 import {
-  OverviewProvider,
+  AnalysisProvider,
   WelcomeTab,
-} from 'src/provider/overview/overview.provider';
+} from 'src/provider/analysis/analysis.provider';
 
-@ApiTags('welcome')
+@ApiTags('analysis')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/welcome')
-export class WelcomeController {
-  constructor(private readonly overviewProvider: OverviewProvider) {}
+export class AnalysisController {
+  constructor(private readonly analysisProvider: AnalysisProvider) {}
 
   @Get()
   async getWelcomePageData(@Query('tab') tab: WelcomeTab) {
-    const data = await this.overviewProvider.getWelcomePageData(tab);
+    const data = await this.analysisProvider.getWelcomePageData(tab);
     return {
       statusCode: 200,
       data,

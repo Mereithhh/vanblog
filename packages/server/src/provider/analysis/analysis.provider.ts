@@ -4,7 +4,7 @@ import { ViewerProvider } from '../viewer/viewer.provider';
 import { MetaProvider } from '../meta/meta.provider';
 export type WelcomeTab = 'overview' | 'viewer';
 @Injectable()
-export class OverviewProvider {
+export class AnalysisProvider {
   constructor(
     private readonly metaProvider: MetaProvider,
     private readonly articleProvider: ArticleProvider,

@@ -41,12 +41,11 @@ import { MenuMetaController } from './controller/admin/menu/menu.meta.controller
 import { ScheduleModule } from '@nestjs/schedule';
 import { Viewer, ViewerSchema } from './scheme/viewer.schema';
 import { ViewerProvider } from './provider/viewer/viewer.provider';
-import { ViewerTask } from './schedule/viewer.task';
 import { Visit, VisitSchema } from './scheme/visit.schema';
 import { VisitProvider } from './provider/visit/visit.provider';
 import { MetaController } from './controller/admin/meta/meta.controller';
-import { WelcomeController } from './controller/admin/welcome/welcome.controller';
-import { OverviewProvider } from './provider/overview/overview.provider';
+import { AnalysisController } from './controller/admin/analysis/analysis.controller';
+import { AnalysisProvider } from './provider/analysis/analysis.provider';
 
 @Module({
   imports: [
@@ -84,7 +83,7 @@ import { OverviewProvider } from './provider/overview/overview.provider';
     MenuMetaController,
     BackupController,
     MetaController,
-    WelcomeController,
+    AnalysisController,
   ],
   providers: [
     AppService,
@@ -100,7 +99,7 @@ import { OverviewProvider } from './provider/overview/overview.provider';
     ViewerProvider,
     JwtStrategy,
     InitProvider,
-    OverviewProvider,
+    AnalysisProvider,
   ],
 })
 export class AppModule implements NestModule {
