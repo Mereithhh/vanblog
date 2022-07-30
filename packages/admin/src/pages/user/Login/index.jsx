@@ -23,7 +23,6 @@ const Login = () => {
           name: msg.data.user.name,
           id: msg.data.user.id,
         };
-        console.log(user);
         window.localStorage.setItem('token', token);
         await setInitialState((s) => ({
           ...s,
@@ -36,12 +35,8 @@ const Login = () => {
         const { redirect } = query;
         history.push(redirect || '/');
         return;
-      } else {
-        console.log(msg); // 如果失败去设置用户错误信息
       }
-    } catch (error) {
-      const defaultLoginFailureMessage = '登录失败，请重试！'; // message.error(defaultLoginFailureMessage);
-    }
+    } catch (error) {}
   };
 
   return (
