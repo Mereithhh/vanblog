@@ -136,16 +136,8 @@ export default function (props: { showOption: boolean; showRequire: boolean }) {
             label="WaLine 服务端 Url"
             placeholder={'请输入 WaLine 服务端 Url，留空表示不启用'}
           ></ProFormText>
+          <ProFormDatePicker name="since" width={'lg'} label="建站时间" />
         </>
-      )}
-      {props.showRequire && (
-        <ProFormDatePicker
-          required
-          rules={[{ required: true, message: '这是必填项' }]}
-          name="since"
-          width={'lg'}
-          label="起始时间日期"
-        />
       )}
     </>
   );

@@ -1,5 +1,5 @@
-import { MenuItem, PublicAllProp, PublicMetaProp } from "../api/getAllData";
-
+import { MenuItem, PublicMetaProp } from "../api/getAllData";
+import dayjs from "dayjs";
 export interface LayoutProps {
   description: string;
   ipcNumber: string;
@@ -23,7 +23,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     walineServerUrl: siteInfo?.walineServerUrl || "",
     ipcHref: siteInfo?.beianUrl || "",
     ipcNumber: siteInfo?.beianNumber || "",
-    since: siteInfo.since,
+    since: siteInfo?.since || dayjs().format("YYYY-MM-DD"),
     logo: siteInfo.siteLogo,
     favicon: siteInfo.favicon,
     siteName: siteInfo.siteName,
