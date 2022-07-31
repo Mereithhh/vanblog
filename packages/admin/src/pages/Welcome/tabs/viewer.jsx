@@ -3,6 +3,11 @@ import { Spin } from 'antd';
 import { Area } from '@ant-design/plots';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getWelcomeData } from '@/services/van-blog/api';
+import PowerIcon from '@/components/PowerIcon';
+import moment from 'moment';
+import ArticleList from '@/components/ArticleList';
+import { getRecentTimeDes } from '@/services/van-blog/tool';
+import { Link, history } from 'umi';
 const { Statistic } = StatisticCard;
 
 const Viewer = () => {
@@ -36,49 +41,107 @@ const Viewer = () => {
     xField: 'date',
     autoFix: false,
   };
+  const recentHref = useMemo(() => {
+    if (!data) {
+      return undefined;
+    }
+    if (!data?.siteLastVisitedPathname) {
+      return undefined;
+    }
+    return data?.siteLastVisitedPathname;
+  }, [data]);
+  const recentVisitTime = useMemo(() => {
+    if (!data) {
+      return '-';
+    }
+    if (!data.siteLastVisitedTime) {
+      return '-';
+    }
+    return getRecentTimeDes(data?.siteLastVisitedTime);
+  }, [data]);
 
   return (
     <Spin spinning={loading}>
       <StatisticCard.Group>
         <StatisticCard
           statistic={{
-            title: '总文章数',
-            value: data?.total?.articleNum || 0,
-          }}
-        />
-        <StatisticCard
-          statistic={{
-            title: '总字数',
-            value: data?.total?.wordCount || 0,
-          }}
-        />
-        <StatisticCard
-          statistic={{
-            title: '总访客数',
-            value: data?.viewer?.now?.visited || 0,
-            description: (
-              <Statistic title="今日新增" value={data?.viewer?.add?.visited || 0} trend="up" />
+            title: (
+              <a
+                href="https://tongji.baidu.com/main/homepage/"
+                className="ua blue"
+                target="_blank"
+                rel="noreferrer"
+              >
+                百度统计
+              </a>
             ),
+            formatter: () => {
+              if (data?.enableBaidu) {
+                return <span>已开启</span>;
+              } else {
+                return <Link to="/site?tab=siteInfo">未配置</Link>;
+              }
+            },
+            status: data?.enableBaidu ? 'success' : 'error',
           }}
         />
         <StatisticCard
           statistic={{
-            title: '总访问量',
-            value: data?.viewer?.now?.viewer || 0,
-            description: (
-              <Statistic title="今日新增" value={data?.viewer?.add?.viewer || 0} trend="up" />
+            title: (
+              <a
+                href="https://analytics.google.com/analytics/web/"
+                className="ua blue"
+                target="_blank"
+                rel="noreferrer"
+              >
+                谷歌分析
+              </a>
             ),
+            formatter: () => {
+              if (data?.enableGA) {
+                return <span>已开启</span>;
+              } else {
+                return <Link to="/site?tab=siteInfo">未配置</Link>;
+              }
+            },
+            status: data?.enableGA ? 'success' : 'error',
+          }}
+        />
+        <StatisticCard
+          statistic={{
+            title: '最近访问',
+            value: recentVisitTime,
+          }}
+        />
+        <StatisticCard
+          statistic={{
+            title: '最近访问路径',
+            formatter: (val) => {
+              return (
+                <a className="ua blue" target="_blank" rel="noreferrer" href={recentHref}>
+                  {data?.siteLastVisitedPathname || '-'}
+                </a>
+              );
+            },
           }}
         />
       </StatisticCard.Group>
       <StatisticCard.Group>
         <StatisticCard
-          title="访客数趋势图"
-          chart={<Area height={200} yField="访客数" {...lineConfig} />}
+          title="最近访问 TOP"
+          chart={
+            <div style={{ marginTop: -14 }}>
+              <ArticleList showRecentViewTime articles={data?.recentVisitArticles || []} />
+            </div>
+          }
         />
         <StatisticCard
-          title="访问量趋势图"
-          chart={<Area height={200} yField="访问量" {...lineConfig} />}
+          title="文章访问量 TOP"
+          chart={
+            <div style={{ marginTop: -14 }}>
+              <ArticleList showViewerNum articles={data?.topViewer || []} />
+            </div>
+          }
         />
       </StatisticCard.Group>
     </Spin>

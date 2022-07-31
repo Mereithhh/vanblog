@@ -5,14 +5,23 @@
   padding-bottom: 24px;
   user-select: none;
 }
+.ua.blue {
+  color: #1772b4;
+}
 .ua {
   position: relative;
   color: #333;
   font-size: 14;
   text-decoration: none;
 }
+.ua.blue:hover {
+  color: #1772b4;
+}
 .ua:hover {
   color: #333;
+}
+.blue.ua::before {
+  background: #1772b4;
 }
 .ua:before {
   position: absolute;
