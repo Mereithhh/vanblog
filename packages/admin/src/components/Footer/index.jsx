@@ -4,7 +4,7 @@ const Footer = () => {
   const { initialState } = useModel('@@initialState');
   return (
     <>
-      <div className="footer" style={{ textAlign: 'center' }}>
+      <div className="footer" style={{ textAlign: 'center', marginTop: 32 }}>
         <p>
           <span>Powered By </span>
           <a className="ua" href="https://vanblog.mereith.com" target="_blank" rel="noreferrer">

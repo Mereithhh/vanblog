@@ -64,6 +64,7 @@
     "omit.js": "^2.0.2",
     "pinyin-match": "^1.2.2",
     "rc-menu": "^9.1.0",
+    "rc-resize-observer": "^1.2.0",
     "rc-util": "^5.16.0",
     "react": "^17.0.0",
     "react-dev-inspector": "^1.7.0",

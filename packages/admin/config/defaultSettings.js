@@ -10,7 +10,7 @@ const Settings = {
   title: 'Van Blog Admin',
   headerHeight: 48,
   splitMenus: false,
-  headerRender: false,
+  // headerRender: false,
   pwa: true,
   logo: 'https://pic.mereith.com/logo.svg',
   iconfontUrl: '',

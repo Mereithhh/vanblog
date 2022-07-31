@@ -46,7 +46,20 @@ export async function getInitialState() {
 
 export const layout = ({ initialState, setInitialState }) => {
   return {
-    disableContentMargin: false,
+    rightContentRender: () => {
+      return (
+        <LogoutButton
+          key="logoutRightContent"
+          trigger={
+            <a>
+              <LogoutOutlined />
+              <span style={{ marginLeft: 6 }}>登出</span>
+            </a>
+          }
+        />
+      );
+    },
+    // disableContentMargin: true,
     footerRender: () => <Footer />,
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
@@ -72,7 +85,6 @@ export const layout = ({ initialState, setInitialState }) => {
       />,
     ],
 
-    menuHeaderRender: undefined,
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     // 增加一个 loading 的状态
