@@ -36,7 +36,7 @@ features:
 
   - title: 可量化
     icon: table
-    details: 支持百度和GA，内置浏览量统计
+    details: 内置强大分析系统与精美看板，同时支持百度和GA
 
   - title: ARM Ready
     icon: engine
