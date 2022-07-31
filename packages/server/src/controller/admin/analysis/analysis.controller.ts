@@ -18,11 +18,13 @@ export class AnalysisController {
     @Query('tab') tab: WelcomeTab,
     @Query('viewerDataNum') viewerDataNum = 5,
     @Query('overviewDataNum') overviewDataNum = 5,
+    @Query('articleTabDataNum') articleTabDataNum = 5,
   ) {
     const data = await this.analysisProvider.getWelcomePageData(
       tab,
       overviewDataNum,
       viewerDataNum,
+      articleTabDataNum,
     );
     return {
       statusCode: 200,

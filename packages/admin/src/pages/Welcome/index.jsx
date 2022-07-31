@@ -5,6 +5,7 @@ import OverView from './tabs/overview';
 import { useModel } from 'umi';
 import Viewer from './tabs/viewer';
 import { useTab } from '@/services/van-blog/useTab';
+import Article from './tabs/article';
 
 const Welcome = () => {
   const [tab, setTab] = useTab('overview', 'tab');
@@ -13,6 +14,7 @@ const Welcome = () => {
   const tabMap = {
     overview: <OverView />,
     viewer: <Viewer />,
+    article: <Article />,
   };
   const showCommentBtn = useMemo(() => {
     const url = initialState?.walineServerUrl;
@@ -35,6 +37,10 @@ const Welcome = () => {
         {
           tab: '访客统计',
           key: 'viewer',
+        },
+        {
+          tab: '文章分析',
+          key: 'article',
         },
       ]}
       title={'Hi，今天写了没？'}

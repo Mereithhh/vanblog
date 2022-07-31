@@ -8,11 +8,12 @@ import { Link } from 'umi';
 import TipTitle from '@/components/TipTitle';
 import style from '../index.less';
 import NumSelect from '@/components/NumSelect';
+import { useNum } from '@/services/van-blog/useNum';
 
 const Viewer = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
-  const [num, setNum] = useState(5);
+  const [num, setNum] = useNum(5);
   const fetchData = useCallback(async () => {
     const { data: res } = await getWelcomeData('viewer', 5, num);
     setData(res);

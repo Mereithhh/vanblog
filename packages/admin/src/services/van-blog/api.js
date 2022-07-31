@@ -255,8 +255,8 @@ export async function getDraftsByOption(option) {
     method: 'GET',
   });
 }
-export async function getWelcomeData(tab, overviewNum = 5, viewNum = 5) {
-  return request(`/api/admin/analysis?tab=${tab}&viewerDataNum=${viewNum}&overviewDataNum=${overviewNum}`, {
+export async function getWelcomeData(tab, overviewNum = 5, viewNum = 5, articleTabNum = 5) {
+  return request(`/api/admin/analysis?tab=${tab}&viewerDataNum=${viewNum}&overviewDataNum=${overviewNum}&articleTabDataNum=${articleTabNum}`, {
     method: 'GET',
   });
 }

@@ -2,9 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { ArticleProvider } from '../article/article.provider';
 import { ViewerProvider } from '../viewer/viewer.provider';
 import { MetaProvider } from '../meta/meta.provider';
-import { ViewerTabData } from 'src/dto/analysis';
+import { ArticleTabData, ViewerTabData } from 'src/dto/analysis';
 import { VisitProvider } from '../visit/visit.provider';
-export type WelcomeTab = 'overview' | 'viewer';
+import { TagProvider } from '../tag/tag.provider';
+import { CategoryProvider } from '../category/category.provider';
+export type WelcomeTab = 'overview' | 'viewer' | 'article';
 @Injectable()
 export class AnalysisProvider {
   constructor(
@@ -12,9 +14,11 @@ export class AnalysisProvider {
     private readonly articleProvider: ArticleProvider,
     private readonly viewProvider: ViewerProvider,
     private readonly visitProvider: VisitProvider,
+    private readonly tagProvider: TagProvider,
+    private readonly categoryProvider: CategoryProvider,
   ) {}
 
-  async getOverViewData(num: number) {
+  async getOverViewTabData(num: number) {
     const total = {
       wordCount: await this.metaProvider.getTotalWords(),
       articleNum: await this.articleProvider.getTotalNum(),
@@ -31,7 +35,7 @@ export class AnalysisProvider {
     };
   }
 
-  async getViewerData(num: number): Promise<ViewerTabData> {
+  async getViewerTabData(num: number): Promise<ViewerTabData> {
     const siteInfo = await this.metaProvider.getSiteInfo();
     const enableGA =
       Boolean(siteInfo.gaAnalysisId) && siteInfo.gaAnalysisId != '';
@@ -73,17 +77,39 @@ export class AnalysisProvider {
     };
   }
 
+  async getArticleTabData(num: number): Promise<ArticleTabData> {
+    const articleNum = await this.articleProvider.getTotalNum();
+    const wordNum = await this.metaProvider.getTotalWords();
+    const tagNum = (await this.tagProvider.getAllTags())?.length || 0;
+    const categoryNum =
+      (await this.metaProvider.getAll())?.categories?.length || 0;
+    const categoryPieData = await this.categoryProvider.getPieData();
+    const columnData = await this.tagProvider.getColumnData(num);
+    return {
+      articleNum,
+      wordNum,
+      tagNum,
+      categoryNum,
+      categoryPieData,
+      columnData,
+    };
+  }
+
   async getWelcomePageData(
     tab: WelcomeTab,
     overviewDataNum: number,
     viewerDataNum: number,
+    articleTabDataNum: number,
   ) {
     // 总字数和总文章数
     if (tab == 'overview') {
-      return await this.getOverViewData(overviewDataNum);
+      return await this.getOverViewTabData(overviewDataNum);
     }
     if (tab == 'viewer') {
-      return await this.getViewerData(viewerDataNum);
+      return await this.getViewerTabData(viewerDataNum);
+    }
+    if (tab == 'article') {
+      return await this.getArticleTabData(articleTabDataNum);
     }
   }
 }

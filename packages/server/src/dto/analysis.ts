@@ -13,3 +13,11 @@ export interface ViewerTabData {
   maxArticleViewer: number;
   maxArticleVisited: number;
 }
+export interface ArticleTabData {
+  articleNum: number;
+  categoryNum: number;
+  tagNum: number;
+  wordNum: number;
+  categoryPieData: { type: string; value: number }[];
+  columnData: { type: string; value: number }[];
+}

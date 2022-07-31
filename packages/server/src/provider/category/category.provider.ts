@@ -24,6 +24,21 @@ export class CategoryProvider {
     });
     return data;
   }
+  async getPieData() {
+    const oldData = await this.getCategoriesWithArticle();
+    const categories = Object.keys(oldData);
+    if (!categories || categories.length < 0) {
+      return [];
+    }
+    const res = [];
+    categories.forEach((c) => {
+      res.push({
+        type: c,
+        value: oldData[c].length || 0,
+      });
+    });
+    return res;
+  }
 
   async getAllCategories() {
     const d = await this.metaProvider.getAll();

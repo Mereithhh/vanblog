@@ -6,12 +6,13 @@ import { getWelcomeData } from '@/services/van-blog/api';
 import TipTitle from '@/components/TipTitle';
 import style from '../index.less';
 import NumSelect from '@/components/NumSelect';
+import { useNum } from '@/services/van-blog/useNum';
 const { Statistic } = StatisticCard;
 
 const OverView = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
-  const [num, setNum] = useState(5);
+  const [num, setNum] = useNum(5);
   const fetchData = useCallback(async () => {
     const { data: res } = await getWelcomeData('overview', num);
     setData(res);
@@ -46,7 +47,7 @@ const OverView = () => {
       <StatisticCard.Group>
         <StatisticCard
           statistic={{
-            title: '总文章数',
+            title: '文章数',
             value: data?.total?.articleNum || 0,
           }}
         />
