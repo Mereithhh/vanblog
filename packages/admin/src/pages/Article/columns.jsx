@@ -85,7 +85,7 @@ export const columns = [
     })(),
     dataIndex: 'viewer',
     valueType: 'number',
-    sorter: false,
+    sorter: true,
     width: 80,
     hideInSearch: true,
   },

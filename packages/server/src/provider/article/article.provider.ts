@@ -264,6 +264,13 @@ export class ArticleProvider {
         sort.top = -1;
       }
     }
+    if (option.sortViewer) {
+      if (option.sortViewer == 'asc') {
+        sort.viewer = 1;
+      } else {
+        sort.viewer = -1;
+      }
+    }
     if (option.tags) {
       const tags = option.tags.split(',');
       const or: any = [];

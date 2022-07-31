@@ -31,6 +31,7 @@ export class ArticleController {
     @Query('title') title?: string,
     @Query('sortCreatedAt') sortCreatedAt?: SortOrder,
     @Query('sortTop') sortTop?: SortOrder,
+    @Query('sortViewer') sortViewer?: SortOrder,
     @Query('startTime') startTime?: string,
     @Query('endTime') endTime?: string,
   ) {
@@ -46,6 +47,7 @@ export class ArticleController {
       endTime,
       toListView,
       regMatch,
+      sortViewer,
     };
     const data = await this.articleProvider.getByOption(option);
     return {

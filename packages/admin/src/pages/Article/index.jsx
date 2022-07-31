@@ -29,6 +29,13 @@ export default () => {
             option.sortTop = 'desc';
           }
         }
+        if (sort.viewer) {
+          if (sort.viewer == 'ascend') {
+            option.sortViewer = 'asc';
+          } else {
+            option.sortViewer = 'desc';
+          }
+        }
 
         // 搜索
         const { current, pageSize, ...searchObj } = params;
@@ -63,7 +70,6 @@ export default () => {
         }
         option.page = current;
         option.pageSize = pageSize;
-        option.withViewer = true;
         const { data } = await getArticlesByOption(option);
         const { articles, total } = data;
         return {
