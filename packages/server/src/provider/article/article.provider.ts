@@ -12,7 +12,6 @@ import {
   UpdateArticleDto,
 } from 'src/dto/article.dto';
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
-import { copyDocObj } from 'src/utils/objCopy';
 import { wordCount } from 'src/utils/wordCount';
 import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';

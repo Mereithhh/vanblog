@@ -4,7 +4,6 @@ import { ViewerProvider } from '../viewer/viewer.provider';
 import { MetaProvider } from '../meta/meta.provider';
 import { ViewerTabData } from 'src/dto/analysis';
 import { VisitProvider } from '../visit/visit.provider';
-import { Article } from 'src/scheme/article.schema';
 export type WelcomeTab = 'overview' | 'viewer';
 @Injectable()
 export class AnalysisProvider {
@@ -12,7 +11,6 @@ export class AnalysisProvider {
     private readonly metaProvider: MetaProvider,
     private readonly articleProvider: ArticleProvider,
     private readonly viewProvider: ViewerProvider,
-    private readonly visitProvider: VisitProvider,
   ) {}
 
   async getOverViewData() {
