@@ -1,6 +1,7 @@
 import { Tag, Modal, message } from 'antd';
 import { history } from 'umi';
 import { deleteArticle, getAllCategories } from '@/services/van-blog/api';
+import { genActiveObj } from '../../services/van-blog/activeColTools';
 export const columns = [
   {
     dataIndex: 'id',
@@ -12,6 +13,7 @@ export const columns = [
   {
     title: '标题',
     dataIndex: 'title',
+    width: 150,
     copyable: true,
     ellipsis: true,
     formItemProps: {
@@ -38,7 +40,6 @@ export const columns = [
     },
   },
   {
-    disable: true,
     title: '标签',
     dataIndex: 'tags',
     width: 120,
@@ -69,9 +70,7 @@ export const columns = [
   },
   {
     title: '顶置',
-    key: (() => {
-      return Math.floor(Math.random() * 10000);
-    })(),
+    key: 'top',
     dataIndex: 'top',
     valueType: 'number',
     sorter: true,
@@ -80,9 +79,7 @@ export const columns = [
   },
   {
     title: '浏览量',
-    key: (() => {
-      return Math.floor(Math.random() * 10000);
-    })(),
+    key: 'viewer',
     dataIndex: 'viewer',
     valueType: 'number',
     sorter: true,
@@ -143,3 +140,16 @@ export const columns = [
     ],
   },
 ];
+export const articleKeys = [
+  'category',
+  'id',
+  'option',
+  'showTime',
+  'tags',
+  'title',
+  'top',
+  'viewer',
+];
+export const articleKeysSmall = ['category', 'id', 'option', 'title'];
+export const articleObjAll = genActiveObj(articleKeys, articleKeys);
+export const articleObjSmall = genActiveObj(articleKeysSmall, articleKeys);

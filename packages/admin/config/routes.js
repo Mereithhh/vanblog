@@ -16,7 +16,6 @@ export default [
     path: '/editor',
     component: './Editor',
     hideInMenu: true,
-    headerRender: false,
   },
   { name: '草稿管理', icon: 'container', path: '/draft', component: './Draft' },
   { name: '站点管理', icon: 'tool', path: '/site', component: './SiteConfig' },

@@ -2,6 +2,7 @@ import { Tag, Modal, message } from 'antd';
 import { deleteDraft, getAllCategories } from '@/services/van-blog/api';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import { history } from 'umi';
+import { genActiveObj } from '@/services/van-blog/activeColTools';
 export const columns = [
   {
     dataIndex: 'id',
@@ -15,6 +16,7 @@ export const columns = [
     dataIndex: 'title',
     copyable: true,
     ellipsis: true,
+    width: 150,
     tip: '标题过长会自动收缩',
     formItemProps: {
       rules: [
@@ -41,7 +43,6 @@ export const columns = [
     },
   },
   {
-    disable: true,
     title: '标签',
     dataIndex: 'tags',
     search: true,
@@ -124,3 +125,8 @@ export const columns = [
     ],
   },
 ];
+export const draftKeys = ['category', 'id', 'option', 'showTime', 'tags', 'title'];
+export const draftKeysSmall = ['category', 'id', 'option', 'title'];
+
+export const draftKeysObj = genActiveObj(draftKeys, draftKeys);
+export const draftKeysObjSmall = genActiveObj(draftKeysSmall, draftKeys);
