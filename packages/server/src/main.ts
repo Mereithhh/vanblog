@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { MetaProvider } from './provider/meta/meta.provider';
+import { ArticleProvider } from './provider/article/article.provider';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -18,5 +19,8 @@ async function bootstrap() {
   console.log('swagger 地址: http://localhost:3000/swagger');
   const metaProvider = app.get(MetaProvider);
   await metaProvider.updateTotalWords();
+  // 测试用的
+  // const articleProvider = app.get(ArticleProvider);
+  // await articleProvider.washViewerInfoByVisitProvider();
 }
 bootstrap();

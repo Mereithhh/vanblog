@@ -20,6 +20,8 @@ export class UpdateArticleDto {
   private?: boolean;
   password?: string;
   deleted?: boolean;
+  viewer?: number;
+  visited?: number;
 }
 export class SearchArticleOption {
   page: number;
