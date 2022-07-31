@@ -17,6 +17,9 @@ export class Visit extends Document {
   @Prop()
   pathname: string;
 
+  @Prop()
+  lastVisitedTime: Date;
+
   @Prop({
     default: () => {
       return new Date();

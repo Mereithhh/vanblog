@@ -23,6 +23,7 @@ export class VisitProvider {
         {
           viewer: todayData.viewer + 1,
           visited: isNew ? todayData.visited + 1 : todayData.visited,
+          lastVisitedTime: new Date(),
         },
       );
     } else {
@@ -35,6 +36,7 @@ export class VisitProvider {
         viewer: lastViewer + 1,
         visited: isNew ? lastVisit + 1 : lastVisit,
         pathname: pathname,
+        lastVisitedTime: new Date(),
       });
       return await createdData.save();
     }

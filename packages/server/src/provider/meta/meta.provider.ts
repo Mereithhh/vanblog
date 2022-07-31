@@ -59,7 +59,11 @@ export class MetaProvider {
       isNewVisitorByArticle = true;
     }
     // 这个是 meta 的
-    await this.update({ viewer: newViewer, visited: newVisited });
+    await this.update({
+      viewer: newViewer,
+      visited: newVisited,
+      lastVisitedTime: new Date(),
+    });
     // 更新文章的
     const r = /\/post\//;
     const isArticlePath = r.test(pathname);
