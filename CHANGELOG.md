@@ -1,4 +1,11 @@
 # Changelog
+## [0.6.0](https://github.com/Mereithhh/van-blog/compare/v0.5.11...v0.6.0) (2022-07-31)
+
+
+### ✨ Features | 新功能
+
+* 后台增加文章分析卡片 ([0617528](https://github.com/Mereithhh/van-blog/commit/061752826cb55875cbf47635f4b599cf51444791))
+
 ### [0.5.11](https://github.com/Mereithhh/van-blog/compare/v0.5.10...v0.5.11) (2022-07-31)
 
 
