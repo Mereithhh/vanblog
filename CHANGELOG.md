@@ -1,4 +1,14 @@
 # Changelog
+### [0.5.11](https://github.com/Mereithhh/van-blog/compare/v0.5.10...v0.5.11) (2022-07-31)
+
+
+### ✨ Features | 新功能
+
+* 访客统计卡片增加更多信息展示 ([cbc5627](https://github.com/Mereithhh/van-blog/commit/cbc56278ac706c4249908b9ad3157a351c7ba37d))
+* 后台访客相关数据可选择天数/条数 ([8189497](https://github.com/Mereithhh/van-blog/commit/8189497f671b5ebd0f4352319a72ce8c46eb4be6))
+* 后台完善分析卡片&增加提示' ([11485cf](https://github.com/Mereithhh/van-blog/commit/11485cffb09cf8eff0a9c2d26755f9f52c87893b))
+* 记录所有的tabKey ([9fb7464](https://github.com/Mereithhh/van-blog/commit/9fb74649cd45c0850784f9822ee8861ad4c16982))
+
 ### [0.5.10](https://github.com/Mereithhh/van-blog/compare/v0.5.9...v0.5.10) (2022-07-31)
 
 
