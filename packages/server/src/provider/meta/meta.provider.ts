@@ -60,6 +60,15 @@ export class MetaProvider {
     }
     // 这个是 meta 的
     await this.update({ viewer: newViewer, visited: newVisited });
+    // 更新文章的
+    const r = /\/post\//;
+    const isArticlePath = r.test(pathname);
+    if (isArticlePath) {
+      await this.articleProvider.updateViewer(
+        parseInt(pathname.replace('/post/', '')),
+        isNewByPath,
+      );
+    }
     // 还需要增加每天的
     this.viewProvider.createOrUpdate({
       date: dayjs().format('YYYY-MM-DD'),
@@ -75,6 +84,7 @@ export class MetaProvider {
     this.addRecentVisitArticleIds(pathname);
     return { visited: newVisited, viewer: newViewer };
   }
+
   async addRecentVisitArticleIds(pathname: string) {
     const r = /\/post\//;
     const isArticlePath = r.test(pathname);

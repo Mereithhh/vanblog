@@ -91,6 +91,18 @@ export class ArticleProvider {
     return createdData.save();
   }
 
+  async updateViewer(id: number, isNew: boolean) {
+    const article = await this.getById(id, 'list');
+    const oldViewer = article.viewer || 0;
+    const oldVIsited = article.visited || 0;
+    const newViewer = oldViewer + 1;
+    const newVisited = isNew ? oldVIsited + 1 : oldVIsited;
+    await this.articleModel.updateOne(
+      { id: id },
+      { visited: newVisited, viewer: newViewer },
+    );
+  }
+
   async importArticles(articles: Article[]) {
     // 先获取一遍新的 id
     // for (let i = 0; i < articles.length; i++) {

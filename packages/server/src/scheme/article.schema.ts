@@ -34,6 +34,12 @@ export class Article extends Document {
   @Prop({ default: false })
   deleted: boolean;
 
+  @Prop({ default: 0 })
+  viewer: number;
+
+  @Prop({ default: 0 })
+  visited: number;
+
   @Prop({
     default: () => {
       return new Date();
