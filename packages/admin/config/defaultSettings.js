@@ -3,7 +3,8 @@ const Settings = {
   // 明青色
   primaryColor: '#1772B4',
   layout: 'side',
-  contentWidth: 'Fluid',
+  contentWidth: 'Fixed',
+  // contentWidth: 'Fluid',
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
