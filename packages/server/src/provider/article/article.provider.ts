@@ -38,6 +38,8 @@ export class ArticleProvider {
     id: 1,
     top: 1,
     _id: 0,
+    viewer: 1,
+    visited: 1,
   };
 
   adminView = {
@@ -53,6 +55,8 @@ export class ArticleProvider {
     password: 1,
     private: 1,
     _id: 0,
+    viewer: 1,
+    visited: 1,
   };
 
   listView = {
@@ -67,6 +71,8 @@ export class ArticleProvider {
     password: 1,
     private: 1,
     _id: 0,
+    viewer: 1,
+    visited: 1,
   };
 
   toPublic(oldArticles: Article[]) {
@@ -328,27 +334,27 @@ export class ArticleProvider {
       });
       resData.totalWordCount = totalWordCount;
     }
-    // 查找浏览量
-    if (option.withViewer) {
-      const newArticles: any[] = [];
-      for (let i = 0; i < articles.length; i++) {
-        const eachViewerData = await this.visitProvider.getByArticleId(
-          articles[i].id,
-        );
-        let viewerNum = 0;
-        if (Boolean(eachViewerData)) {
-          viewerNum = eachViewerData.viewer;
-        }
-        // 赋值
-        const newArticle = copyDocObj(articles[i]);
-        newArticle.viewer = viewerNum;
-        newArticles.push(newArticle);
-      }
-      resData.articles = newArticles;
-    } else {
-      resData.articles = articles;
-    }
+    // // 查找浏览量
+    // if (option.withViewer) {
+    //   const newArticles: any[] = [];
+    //   for (let i = 0; i < articles.length; i++) {
+    //     const eachViewerData = await this.visitProvider.getByArticleId(
+    //       articles[i].id,
+    //     );
+    //     let viewerNum = 0;
+    //     if (Boolean(eachViewerData)) {
+    //       viewerNum = eachViewerData.viewer;
+    //     }
+    //     // 赋值
+    //     const newArticle = copyDocObj(articles[i]);
+    //     newArticle.viewer = viewerNum;
+    //     newArticles.push(newArticle);
+    //   }
+    //   resData.articles = newArticles;
+    // } else {
+    // }
 
+    resData.articles = articles;
     resData.total = total;
     return resData;
   }

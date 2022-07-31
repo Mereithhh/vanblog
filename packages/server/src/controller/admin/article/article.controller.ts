@@ -26,7 +26,6 @@ export class ArticleController {
     @Query('pageSize') pageSize = 5,
     @Query('toListView') toListView = false,
     @Query('regMatch') regMatch = true,
-    @Query('withViewer') withViewer = false,
     @Query('category') category?: string,
     @Query('tags') tags?: string,
     @Query('title') title?: string,
@@ -46,7 +45,6 @@ export class ArticleController {
       startTime,
       endTime,
       toListView,
-      withViewer,
       regMatch,
     };
     const data = await this.articleProvider.getByOption(option);
