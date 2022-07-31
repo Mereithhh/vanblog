@@ -109,6 +109,45 @@ export class ArticleProvider {
     );
   }
 
+  async getTop5Viewer(view: ArticleView) {
+    return await this.articleModel
+      .find(
+        {
+          viewer: { $ne: 0, $exists: true },
+          $or: [
+            {
+              deleted: false,
+            },
+            {
+              deleted: { $exists: false },
+            },
+          ],
+        },
+        this.getView(view),
+      )
+      .sort({ viewer: -1 })
+      .limit(5);
+  }
+  async getTop5Visited(view: ArticleView) {
+    return await this.articleModel
+      .find(
+        {
+          viewer: { $ne: 0, $exists: true },
+          $or: [
+            {
+              deleted: false,
+            },
+            {
+              deleted: { $exists: false },
+            },
+          ],
+        },
+        this.getView(view),
+      )
+      .sort({ visited: -1 })
+      .limit(5);
+  }
+
   async importArticles(articles: Article[]) {
     // 先获取一遍新的 id
     // for (let i = 0; i < articles.length; i++) {

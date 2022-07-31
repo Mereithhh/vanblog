@@ -9,7 +9,7 @@ import {
 
 @ApiTags('analysis')
 @UseGuards(AdminGuard)
-@Controller('/api/admin/welcome')
+@Controller('/api/admin/analysis')
 export class AnalysisController {
   constructor(private readonly analysisProvider: AnalysisProvider) {}
 

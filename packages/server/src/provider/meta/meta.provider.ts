@@ -81,28 +81,31 @@ export class MetaProvider {
       isNew: isNewVisitorByArticle,
     });
     // 更新最近访问文章数据
-    this.addRecentVisitArticleIds(pathname);
+    this.addRecentVisitArticleId(pathname);
     return { visited: newVisited, viewer: newViewer };
   }
 
-  async addRecentVisitArticleIds(pathname: string) {
+  async addRecentVisitArticleId(pathname: string) {
     const r = /\/post\//;
     const isArticlePath = r.test(pathname);
     if (isArticlePath) {
       const id = parseInt(pathname.replace('/post/', ''));
       let { recentArticleIds } = await this.getSiteInfo();
       // 如果有的话把它移到第一个
-      if (recentArticleIds.includes(id)) {
-        const index = recentArticleIds.findIndex((a) => a == id);
-        const t = recentArticleIds[0];
-        recentArticleIds[0] = id;
-        recentArticleIds[index] = t;
+      if (!recentArticleIds) {
+        recentArticleIds = [id];
       } else {
-        // 没有的话替换掉第一个就行了。
-        recentArticleIds = recentArticleIds.reverse();
-        recentArticleIds.push(id);
-        recentArticleIds = recentArticleIds.reverse();
-        recentArticleIds.pop();
+        if (recentArticleIds.includes(id)) {
+          const index = recentArticleIds.findIndex((a) => a == id);
+          const t = recentArticleIds[0];
+          recentArticleIds[0] = id;
+          recentArticleIds[index] = t;
+        } else {
+          // 没有的话在第一个添加就行了。
+          recentArticleIds = recentArticleIds.reverse();
+          recentArticleIds.push(id);
+          recentArticleIds = recentArticleIds.reverse();
+        }
       }
       // 更新
       this.updateSiteInfo({ recentArticleIds });

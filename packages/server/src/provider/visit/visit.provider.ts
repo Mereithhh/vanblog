@@ -57,34 +57,45 @@ export class VisitProvider {
     return this.visitModel.findOne({ date, pathname }).exec();
   }
   async getByArticleId(id: number) {
-    const pathname = `/post/${id}`;
-    const today = dayjs().format('YYYY-MM-DD');
-    return await this.visitModel.findOne({ date: today, pathname });
-  }
-
-  async getTop5Viewer() {
+    const pathname = id == 0 ? `/about` : `/post/${id}`;
     const today = dayjs().format('YYYY-MM-DD');
     const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
-    return await this.visitModel
+    const result = await this.visitModel
       .find({
         date: { $in: [today, lastDay] },
-        pathname: { $regex: '/post/' },
+        pathname,
       })
-      .sort({ viewer: -1 })
-      .limit(5);
+      .sort({ date: -1 })
+      .limit(1);
+    if (result && result.length) {
+      return result[0];
+    }
+    return null;
   }
+  //! 无法限定是同一篇文章，所以这种查询直接到 articleProvider 查。
+  // async getTop5Viewer() {
+  //   const today = dayjs().format('YYYY-MM-DD');
+  //   const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
+  //   return await this.visitModel
+  //     .find({
+  //       date: { $in: [today, lastDay] },
+  //       pathname: { $regex: '/post/' },
+  //     })
+  //     .sort({ viewer: -1 })
+  //     .limit(5);
+  // }
 
-  async getTop5Visited() {
-    const today = dayjs().format('YYYY-MM-DD');
-    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
-    return await this.visitModel
-      .find({
-        date: { $in: [today, lastDay] },
-        pathname: { $regex: '/post/' },
-      })
-      .sort({ visited: -1 })
-      .limit(5);
-  }
+  // async getTop5Visited() {
+  //   const today = dayjs().format('YYYY-MM-DD');
+  //   const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
+  //   return await this.visitModel
+  //     .find({
+  //       date: { $in: [today, lastDay] },
+  //       pathname: { $regex: '/post/' },
+  //     })
+  //     .sort({ visited: -1 })
+  //     .limit(5);
+  // }
 
   async import(data: Visit[]) {
     for (const each of data) {

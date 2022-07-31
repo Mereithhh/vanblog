@@ -4,6 +4,7 @@ import { ViewerProvider } from '../viewer/viewer.provider';
 import { MetaProvider } from '../meta/meta.provider';
 import { ViewerTabData } from 'src/dto/analysis';
 import { VisitProvider } from '../visit/visit.provider';
+import { Article } from 'src/scheme/article.schema';
 export type WelcomeTab = 'overview' | 'viewer';
 @Injectable()
 export class AnalysisProvider {
@@ -30,34 +31,33 @@ export class AnalysisProvider {
       },
     };
   }
+
+  async getRecentArticles(num: number) {
+    const { recentArticleIds } = await this.metaProvider.getSiteInfo();
+    const recentVisitArticles: Article[] = [];
+    if (recentArticleIds && recentArticleIds.length > 0) {
+      let i = 0;
+      for (const each of recentArticleIds) {
+        if (i == num) {
+          break;
+        }
+        recentVisitArticles.push(
+          await this.articleProvider.getById(each, 'list'),
+        );
+        i = i + 1;
+      }
+    }
+    return recentVisitArticles;
+  }
   async getViewerData(): Promise<ViewerTabData> {
     const siteInfo = await this.metaProvider.getSiteInfo();
     const enableGA =
       Boolean(siteInfo.gaAnalysisId) && siteInfo.gaAnalysisId != '';
     const enableBaidu =
       Boolean(siteInfo.baiduAnalysisId) && siteInfo.baiduAnalysisId != '';
-    const viewerData = await this.visitProvider.getTop5Viewer();
-    const visitedData = await this.visitProvider.getTop5Visited();
-    const top5Viewer: any[] = [];
-    const top5Visited: any[] = [];
-    // 获取访客文章
-    for (const each of viewerData) {
-      const id = parseInt(each.pathname.replace('/post/', ''));
-      const a = await this.articleProvider.getById(id, 'list');
-      top5Viewer.push(a);
-    }
-    for (const each of visitedData) {
-      const id = parseInt(each.pathname.replace('/post/', ''));
-      const a = await this.articleProvider.getById(id, 'list');
-      top5Visited.push(a);
-    }
-    const { recentArticleIds } = await this.metaProvider.getSiteInfo();
-    const recentVisitArticles: any[] = [];
-    for (const each of recentArticleIds) {
-      recentVisitArticles.push(
-        await this.articleProvider.getById(each, 'list'),
-      );
-    }
+    const top5Viewer = await this.articleProvider.getTop5Viewer('list');
+    const top5Visited = await this.articleProvider.getTop5Visited('list');
+    const recentVisitArticles = await this.getRecentArticles(5);
 
     return {
       enableGA,
