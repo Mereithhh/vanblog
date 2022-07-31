@@ -8,7 +8,7 @@ import moment from 'moment';
 import ArticleList from '@/components/ArticleList';
 import { getRecentTimeDes } from '@/services/van-blog/tool';
 import { Link, history } from 'umi';
-const { Statistic } = StatisticCard;
+import TipTitle from '@/components/TipTitle';
 
 const Viewer = () => {
   const [data, setData] = useState();
@@ -24,23 +24,6 @@ const Viewer = () => {
     });
   }, [fetchData, setLoading]);
 
-  const lineData = useMemo(() => {
-    const res = [];
-    for (const each of data?.viewer?.grid || []) {
-      res.push({
-        date: each.date,
-        访客数: each.visited,
-        访问量: each.viewer,
-      });
-    }
-    return res;
-  }, [data]);
-  const lineConfig = {
-    data: lineData,
-    padding: 'auto',
-    xField: 'date',
-    autoFix: false,
-  };
   const recentHref = useMemo(() => {
     if (!data) {
       return undefined;
@@ -129,25 +112,45 @@ const Viewer = () => {
       <StatisticCard.Group style={{ marginTop: -16 }}>
         <StatisticCard
           statistic={{
-            title: '总访客数',
+            title: (
+              <TipTitle
+                title="总访客数"
+                tip="以浏览器内缓存的唯一标识符为衡量标准计算全站独立访客的数量"
+              />
+            ),
             value: data?.totalVisited || 0,
           }}
         />
         <StatisticCard
           statistic={{
-            title: '总访问量',
+            title: (
+              <TipTitle
+                title="总访问数"
+                tip="以每一次页面的访问及跳转为衡量标准计算全站的访问数量"
+              />
+            ),
             value: data?.totalViewer || 0,
           }}
         />
         <StatisticCard
           statistic={{
-            title: '单篇最高访客数',
+            title: (
+              <TipTitle
+                title="单篇最高访客数"
+                tip="以浏览器内缓存的唯一标识符为衡量标准计算出单篇文章最高的独立访客数"
+              />
+            ),
             value: data?.maxArticleVisited || 0,
           }}
         />
         <StatisticCard
           statistic={{
-            title: '单篇最高访问量',
+            title: (
+              <TipTitle
+                title="单篇最高访问量"
+                tip="以每一次页面的访问及跳转为衡量标准计算出单篇文章最高的访问量"
+              />
+            ),
             value: data?.maxArticleViewer || 0,
           }}
         />
