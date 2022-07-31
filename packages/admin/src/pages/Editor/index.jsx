@@ -15,7 +15,7 @@ import { formatTimes } from '@/services/van-blog/tool';
 import { useQuery } from '@/services/van-blog/useQuery';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Descriptions, message, Modal, Space, Tag } from 'antd';
+import { Button, Col, Descriptions, message, Modal, Row, Space, Tag } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 
 export default function () {
@@ -61,20 +61,30 @@ export default function () {
       header={{
         children: (
           <>
-            <Descriptions size="small" column={2}>
-              <Descriptions.Item label="类型">{typeMap[type] || '-'}</Descriptions.Item>
-              <Descriptions.Item label="修改时间">
-                {formatTimes(currObj?.updatedAt, currObj?.createdAt)}
-              </Descriptions.Item>
-              {type != 'about' && (
-                <Descriptions.Item label="标签">
-                  <Tags tags={currObj?.tags} />
-                </Descriptions.Item>
-              )}
-              {type != 'about' && (
-                <Descriptions.Item label="分类">{currObj?.category || '-'}</Descriptions.Item>
-              )}
-            </Descriptions>
+            <Row>
+              <Col span={8}>
+                <span>类型：</span>
+                <span>{typeMap[type] || '-'}</span>
+              </Col>
+              <Col span={16}>
+                <span>更新：</span>
+                <span>{formatTimes(currObj?.updatedAt, currObj?.createdAt)}</span>
+              </Col>
+            </Row>
+            {type != 'about' && (
+              <Row>
+                <Col span={8}>
+                  <span>标签：</span>
+                  <span>
+                    <Tags tags={currObj?.tags} />
+                  </span>
+                </Col>
+                <Col span={16}>
+                  <span>分类：</span>
+                  <span>{currObj?.category || '-'}</span>
+                </Col>
+              </Row>
+            )}
           </>
         ),
         title: (
