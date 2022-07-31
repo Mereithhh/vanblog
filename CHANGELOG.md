@@ -1,4 +1,17 @@
 # Changelog
+## [0.7.0](https://github.com/Mereithhh/van-blog/compare/v0.6.0...v0.7.0) (2022-07-31)
+
+
+### ✨ Features | 新功能
+
+* 后台管理页面基本适配移动端 ([577ae12](https://github.com/Mereithhh/van-blog/commit/577ae123e8e4265ecfb77cca4ea16db04bad5254))
+* 后台文章编辑页面移动端优化 ([dcdb423](https://github.com/Mereithhh/van-blog/commit/dcdb42370f72352c276dfba01939dac79c076919))
+* 进一步优化后台移动端样式 ([c4bdac2](https://github.com/Mereithhh/van-blog/commit/c4bdac28e899a6b5c38e362899c93f9a64902714))
+* 优化后台文章和草稿页的移动端展示 ([ec96722](https://github.com/Mereithhh/van-blog/commit/ec967224f2558603a9e7940ce5a94350d6ce436d))
+* 优化后台移动端表单工具栏样式 ([9889732](https://github.com/Mereithhh/van-blog/commit/9889732ed364f790f87a2505f3b0a43a56214a99))
+* 优化后台移动端卡片 extra 区域展示 ([1aac513](https://github.com/Mereithhh/van-blog/commit/1aac513fed7d3fbae244ec75a8731d829acd9bd2))
+* 优化平板显示比例 ([09ea652](https://github.com/Mereithhh/van-blog/commit/09ea65255c4a5fabda8a140bfefd1322f2167887))
+
 ## [0.6.0](https://github.com/Mereithhh/van-blog/compare/v0.5.11...v0.6.0) (2022-07-31)
 
 
