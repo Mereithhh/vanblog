@@ -1,6 +1,5 @@
+import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
-import { useEffect, useMemo, useState } from 'react';
-import { history } from 'umi';
 import Backup from './tabs/Backup';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
@@ -20,17 +19,11 @@ export default function () {
     menuConfig: <Menu />,
     user: <User />,
   };
-  const [currTabKey, setCurrTabKey] = useState('category');
-  const currTab = useMemo(() => {
-    return history.location.query?.tab || 'category';
-  }, []);
-  useEffect(() => {
-    setCurrTabKey(currTab);
-  }, [currTab]);
+  const [tab, setTab] = useTab('category', 'tab');
 
   return (
     <PageContainer
-      tabActiveKey={currTabKey}
+      tabActiveKey={tab}
       tabList={[
         {
           tab: '分类管理',
@@ -65,12 +58,9 @@ export default function () {
           key: 'backup',
         },
       ]}
-      onTabChange={(tab) => {
-        setCurrTabKey(tab);
-        history.push(`${history.location.pathname}?tab=${tab}`);
-      }}
+      onTabChange={setTab}
     >
-      {tabMap[currTabKey] || tabMap['category']}
+      {tabMap[tab]}
     </PageContainer>
   );
 }

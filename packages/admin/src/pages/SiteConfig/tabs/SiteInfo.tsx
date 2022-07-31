@@ -1,10 +1,10 @@
 import SiteInfoForm from '@/components/SiteInfoForm';
 import { getSiteInfo, updateSiteInfo } from '@/services/van-blog/api';
-import { ProCard, ProForm } from '@ant-design/pro-components';
+import { useTab } from '@/services/van-blog/useTab';
+import { ProForm } from '@ant-design/pro-components';
 import { Card, message } from 'antd';
-import { useState } from 'react';
 export default function () {
-  const [activeTabKey, setActiveTabKey] = useState<string>('basic');
+  const [tab, setTab] = useTab('basic', 'subTab');
   const tabList = [
     {
       key: 'basic',
@@ -21,13 +21,7 @@ export default function () {
   ];
 
   return (
-    <Card
-      tabList={tabList}
-      onTabChange={(key) => {
-        setActiveTabKey(key);
-      }}
-      activeTabKey={activeTabKey}
-    >
+    <Card tabList={tabList} onTabChange={setTab} activeTabKey={tab}>
       <ProForm
         grid={true}
         layout={'horizontal'}
@@ -43,9 +37,9 @@ export default function () {
         }}
       >
         <SiteInfoForm
-          showLayout={activeTabKey == 'layout'}
-          showOption={activeTabKey == 'more'}
-          showRequire={activeTabKey == 'basic'}
+          showLayout={tab == 'layout'}
+          showOption={tab == 'more'}
+          showRequire={tab == 'basic'}
         />
       </ProForm>
     </Card>

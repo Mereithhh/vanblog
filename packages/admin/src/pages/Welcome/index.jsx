@@ -1,12 +1,14 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Space } from 'antd';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import OverView from './tabs/overview';
 import { useModel } from 'umi';
 import Viewer from './tabs/viewer';
+import { useTab } from '@/services/van-blog/useTab';
 
 const Welcome = () => {
-  const [activeKey, setActiveKey] = useState('overview');
+  const [tab, setTab] = useTab('overview', 'tab');
+
   const { initialState } = useModel('@@initialState');
   const tabMap = {
     overview: <OverView />,
@@ -22,9 +24,9 @@ const Welcome = () => {
   return (
     <PageContainer
       onTabChange={(k) => {
-        setActiveKey(k);
+        setTab(k);
       }}
-      activeKey={activeKey}
+      tabActiveKey={tab}
       tabList={[
         {
           tab: '数据概览',
@@ -69,7 +71,7 @@ const Welcome = () => {
         </Space>
       }
     >
-      {tabMap[activeKey]}
+      {tabMap[tab]}
     </PageContainer>
   );
 };
