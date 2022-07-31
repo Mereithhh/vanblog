@@ -4,15 +4,18 @@ import { Area } from '@ant-design/plots';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getWelcomeData } from '@/services/van-blog/api';
 import TipTitle from '@/components/TipTitle';
+import style from '../index.less';
+import NumSelect from '@/components/NumSelect';
 const { Statistic } = StatisticCard;
 
 const OverView = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+  const [num, setNum] = useState(5);
   const fetchData = useCallback(async () => {
-    const { data: res } = await getWelcomeData('overview');
+    const { data: res } = await getWelcomeData('overview', num);
     setData(res);
-  }, [setData]);
+  }, [setData, num]);
   useEffect(() => {
     setLoading(true);
     fetchData().then(() => {
@@ -84,11 +87,23 @@ const OverView = () => {
       </StatisticCard.Group>
       <StatisticCard.Group style={{ marginTop: -10 }}>
         <StatisticCard
-          title="总访客数趋势图"
+          className={style['card-full-title']}
+          title={
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>总访客数趋势图</div>
+              <NumSelect d="天" value={num} setValue={setNum} />
+            </div>
+          }
           chart={<Area height={200} yField="访客数" {...lineConfig} />}
         />
         <StatisticCard
-          title="总访问量趋势图"
+          className={style['card-full-title']}
+          title={
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>总访问量趋势图</div>
+              <NumSelect d="天" value={num} setValue={setNum} />
+            </div>
+          }
           chart={<Area height={200} yField="访问量" {...lineConfig} />}
         />
       </StatisticCard.Group>

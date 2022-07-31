@@ -1,22 +1,22 @@
 import { StatisticCard } from '@ant-design/pro-components';
 import { Spin } from 'antd';
-import { Area } from '@ant-design/plots';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getWelcomeData } from '@/services/van-blog/api';
-import PowerIcon from '@/components/PowerIcon';
-import moment from 'moment';
 import ArticleList from '@/components/ArticleList';
 import { getRecentTimeDes } from '@/services/van-blog/tool';
-import { Link, history } from 'umi';
+import { Link } from 'umi';
 import TipTitle from '@/components/TipTitle';
+import style from '../index.less';
+import NumSelect from '@/components/NumSelect';
 
 const Viewer = () => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
+  const [num, setNum] = useState(5);
   const fetchData = useCallback(async () => {
-    const { data: res } = await getWelcomeData('viewer');
+    const { data: res } = await getWelcomeData('viewer', 5, num);
     setData(res);
-  }, [setData]);
+  }, [setData, num]);
   useEffect(() => {
     setLoading(true);
     fetchData().then(() => {
@@ -157,7 +157,13 @@ const Viewer = () => {
       </StatisticCard.Group>
       <StatisticCard.Group style={{ marginTop: -10 }}>
         <StatisticCard
-          title="最近访问 TOP"
+          title={
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>最近访问TOP</div>
+              <NumSelect d="条" value={num} setValue={setNum} />
+            </div>
+          }
+          className={style['card-full-title']}
           chart={
             <div style={{ marginTop: -14 }}>
               <ArticleList showRecentViewTime articles={data?.recentVisitArticles || []} />
@@ -165,7 +171,13 @@ const Viewer = () => {
           }
         />
         <StatisticCard
-          title="文章访问量 TOP"
+          title={
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div>文章访问量TOP</div>
+              <NumSelect d="条" value={num} setValue={setNum} />
+            </div>
+          }
+          className={style['card-full-title']}
           chart={
             <div style={{ marginTop: -14 }}>
               <ArticleList showViewerNum articles={data?.topViewer || []} />
