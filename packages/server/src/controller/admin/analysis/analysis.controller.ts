@@ -14,8 +14,16 @@ export class AnalysisController {
   constructor(private readonly analysisProvider: AnalysisProvider) {}
 
   @Get()
-  async getWelcomePageData(@Query('tab') tab: WelcomeTab) {
-    const data = await this.analysisProvider.getWelcomePageData(tab);
+  async getWelcomePageData(
+    @Query('tab') tab: WelcomeTab,
+    @Query('viewerDataNum') viewerDataNum = 5,
+    @Query('overviewDataNum') overviewDataNum = 5,
+  ) {
+    const data = await this.analysisProvider.getWelcomePageData(
+      tab,
+      overviewDataNum,
+      viewerDataNum,
+    );
     return {
       statusCode: 200,
       data,

@@ -25,6 +25,11 @@ export class MetaProvider {
     private readonly articleProvider: ArticleProvider,
   ) {}
 
+  async getSiteLastVisitedTime() {
+    const d = await this.getAll();
+    return d.lastVisitedTime;
+  }
+
   async updateTotalWords() {
     const total = await this.articleProvider.countTotalWords();
     await this.update({ totalWordCount: total });

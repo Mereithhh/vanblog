@@ -67,7 +67,6 @@ export class ArticleProvider {
     id: 1,
     top: 1,
     hidden: 1,
-    password: 1,
     private: 1,
     _id: 0,
     viewer: 1,
@@ -109,24 +108,27 @@ export class ArticleProvider {
     );
   }
 
-  async getRecentVisitedArticles(num: number) {
+  async getRecentVisitedArticles(num: number, view: ArticleView) {
     return await this.articleModel
-      .find({
-        lastVisitedTime: { $exists: true },
-        $or: [
-          {
-            deleted: false,
-          },
-          {
-            deleted: { $exists: false },
-          },
-        ],
-      })
+      .find(
+        {
+          lastVisitedTime: { $exists: true },
+          $or: [
+            {
+              deleted: false,
+            },
+            {
+              deleted: { $exists: false },
+            },
+          ],
+        },
+        this.getView(view),
+      )
       .sort({ lastVisitedTime: -1 })
       .limit(num);
   }
 
-  async getTop5Viewer(view: ArticleView) {
+  async getTopViewer(view: ArticleView, num: number) {
     return await this.articleModel
       .find(
         {
@@ -143,9 +145,9 @@ export class ArticleProvider {
         this.getView(view),
       )
       .sort({ viewer: -1 })
-      .limit(5);
+      .limit(num);
   }
-  async getTop5Visited(view: ArticleView) {
+  async getTopVisited(view: ArticleView, num: number) {
     return await this.articleModel
       .find(
         {
@@ -162,7 +164,7 @@ export class ArticleProvider {
         this.getView(view),
       )
       .sort({ visited: -1 })
-      .limit(5);
+      .limit(num);
   }
 
   async washViewerInfoByVisitProvider() {
