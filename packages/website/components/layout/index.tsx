@@ -117,7 +117,7 @@ export default function (props: {
           </ul>
         </Menu>
       </div>
-      <div className="container mx-auto  md:px-6  md:py-4 py-2 px-2 text-gray-700 ">
+      <div className=" mx-auto  lg:px-6  md:py-4 py-2 px-2 md:px-4  text-gray-700 ">
         <Head>
           <title>{props.title}</title>
           <link rel="icon" href={props.option.favicon}></link>
@@ -126,7 +126,7 @@ export default function (props: {
 
         {
           <div className="flex mx-auto justify-center">
-            <div className="flex-shrink flex-grow max-w-3xl ">
+            <div className="flex-shrink flex-grow md:max-w-3xl xl:max-w-4xl">
               {props.children}
             </div>
             <div
