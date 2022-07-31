@@ -8,11 +8,13 @@ import RcResizeObserver from 'rc-resize-observer';
 export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(draftKeysObj);
+  const [simplePage, setSimplePage] = useState(false);
   return (
     <RcResizeObserver
       key="resize-observer"
       onResize={(offset) => {
         const r = offset.width < 800;
+        setSimplePage(offset.width < 600);
         if (r) {
           setColKeys(draftKeysObjSmall);
         } else {
@@ -103,6 +105,7 @@ export default () => {
         }}
         pagination={{
           pageSize: 5,
+          simple: simplePage,
         }}
         dateFormatter="string"
         headerTitle="草稿管理"

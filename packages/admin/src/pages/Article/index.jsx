@@ -10,12 +10,14 @@ import RcResizeObserver from 'rc-resize-observer';
 export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(articleObjAll);
+  const [simplePage, setSimplePage] = useState(false);
 
   return (
     <RcResizeObserver
       key="resize-observer"
       onResize={(offset) => {
         const r = offset.width < 1000;
+        setSimplePage(offset.width < 600);
         if (r) {
           setColKeys(articleObjSmall);
         } else {
@@ -112,6 +114,7 @@ export default () => {
         }}
         pagination={{
           pageSize: 5,
+          simple: simplePage,
         }}
         dateFormatter="string"
         headerTitle={
