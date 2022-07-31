@@ -103,10 +103,28 @@ export class ArticleProvider {
     const oldVIsited = article.visited || 0;
     const newViewer = oldViewer + 1;
     const newVisited = isNew ? oldVIsited + 1 : oldVIsited;
+    const nowTime = new Date();
     await this.articleModel.updateOne(
       { id: id },
-      { visited: newVisited, viewer: newViewer },
+      { visited: newVisited, viewer: newViewer, lastVisitedTime: nowTime },
     );
+  }
+
+  async getRecentVisitedArticles(num: number) {
+    return await this.articleModel
+      .find({
+        lastVisitedTime: { $exists: true },
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      })
+      .sort({ lastVisitedTime: -1 })
+      .limit(num);
   }
 
   async getTop5Viewer(view: ArticleView) {

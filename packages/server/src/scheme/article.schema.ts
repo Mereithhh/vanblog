@@ -40,6 +40,9 @@ export class Article extends Document {
   @Prop({ default: 0 })
   visited: number;
 
+  @Prop()
+  lastVisitedTime: Date;
+
   @Prop({
     default: () => {
       return new Date();

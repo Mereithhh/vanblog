@@ -32,23 +32,6 @@ export class AnalysisProvider {
     };
   }
 
-  async getRecentArticles(num: number) {
-    const { recentArticleIds } = await this.metaProvider.getSiteInfo();
-    const recentVisitArticles: Article[] = [];
-    if (recentArticleIds && recentArticleIds.length > 0) {
-      let i = 0;
-      for (const each of recentArticleIds) {
-        if (i == num) {
-          break;
-        }
-        recentVisitArticles.push(
-          await this.articleProvider.getById(each, 'list'),
-        );
-        i = i + 1;
-      }
-    }
-    return recentVisitArticles;
-  }
   async getViewerData(): Promise<ViewerTabData> {
     const siteInfo = await this.metaProvider.getSiteInfo();
     const enableGA =
@@ -57,7 +40,8 @@ export class AnalysisProvider {
       Boolean(siteInfo.baiduAnalysisId) && siteInfo.baiduAnalysisId != '';
     const top5Viewer = await this.articleProvider.getTop5Viewer('list');
     const top5Visited = await this.articleProvider.getTop5Visited('list');
-    const recentVisitArticles = await this.getRecentArticles(5);
+    const recentVisitArticles =
+      await this.articleProvider.getRecentVisitedArticles(5);
 
     return {
       enableGA,
