@@ -1,6 +1,7 @@
 import { sidebar } from "vuepress-theme-hope";
 
 export default sidebar([
+  "/pic",
   "/intro",
   {
     text: "快速上手",
