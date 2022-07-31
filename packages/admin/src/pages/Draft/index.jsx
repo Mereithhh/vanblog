@@ -1,7 +1,7 @@
 import NewDraftModal from '@/components/NewDraftModal';
 import { getDraftsByOption } from '@/services/van-blog/api';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { columns, draftKeysObj, draftKeysObjSmall } from './columes';
 import RcResizeObserver from 'rc-resize-observer';
 
@@ -9,11 +9,20 @@ export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(draftKeysObj);
   const [simplePage, setSimplePage] = useState(false);
+  const [simpleSearch, setSimpleSearch] = useState(false);
+  const searchSpan = useMemo(() => {
+    if (!simpleSearch) {
+      return 8;
+    } else {
+      return 24;
+    }
+  }, [simpleSearch]);
   return (
     <PageContainer>
       <RcResizeObserver
         key="resize-observer"
         onResize={(offset) => {
+          setSimpleSearch(offset.width < 750);
           const r = offset.width < 800;
           setSimplePage(offset.width < 600);
           if (r) {
@@ -102,7 +111,8 @@ export default () => {
           rowKey="id"
           search={{
             labelWidth: 'auto',
-            span: 8,
+            className: 'searchCard',
+            span: searchSpan,
           }}
           pagination={{
             pageSize: 5,

@@ -2,7 +2,7 @@ import NewArticleModal from '@/components/NewArticleModal';
 import { getArticlesByOption } from '@/services/van-blog/api';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
-import { useRef, useState } from 'react';
+import { useRef, useState, useMemo } from 'react';
 import { articleObjAll, articleObjSmall, columns } from './columns';
 import { history } from 'umi';
 import RcResizeObserver from 'rc-resize-observer';
@@ -11,13 +11,22 @@ export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(articleObjAll);
   const [simplePage, setSimplePage] = useState(false);
-
+  const [simpleSearch, setSimpleSearch] = useState(false);
+  const searchSpan = useMemo(() => {
+    if (!simpleSearch) {
+      return 8;
+    } else {
+      return 24;
+    }
+  }, [simpleSearch]);
   return (
     <PageContainer>
       <RcResizeObserver
         key="resize-observer"
         onResize={(offset) => {
           const r = offset.width < 1000;
+
+          setSimpleSearch(offset.width < 750);
           setSimplePage(offset.width < 600);
           if (r) {
             setColKeys(articleObjSmall);
@@ -111,7 +120,8 @@ export default () => {
           rowKey="id"
           search={{
             labelWidth: 'auto',
-            span: 8,
+            span: searchSpan,
+            className: 'searchCard',
           }}
           pagination={{
             pageSize: 5,
