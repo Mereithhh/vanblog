@@ -8,4 +8,8 @@ export interface ViewerTabData {
   recentVisitArticles: Article[];
   siteLastVisitedTime: Date;
   siteLastVisitedPathname: string;
+  totalViewer: number;
+  totalVisited: number;
+  maxArticleViewer: number;
+  maxArticleVisited: number;
 }

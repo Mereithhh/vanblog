@@ -126,7 +126,33 @@ const Viewer = () => {
           }}
         />
       </StatisticCard.Group>
-      <StatisticCard.Group>
+      <StatisticCard.Group style={{ marginTop: -16 }}>
+        <StatisticCard
+          statistic={{
+            title: '总访客数',
+            value: data?.totalVisited || 0,
+          }}
+        />
+        <StatisticCard
+          statistic={{
+            title: '总访问量',
+            value: data?.totalViewer || 0,
+          }}
+        />
+        <StatisticCard
+          statistic={{
+            title: '单篇最高访客数',
+            value: data?.maxArticleVisited || 0,
+          }}
+        />
+        <StatisticCard
+          statistic={{
+            title: '单篇最高访问量',
+            value: data?.maxArticleViewer || 0,
+          }}
+        />
+      </StatisticCard.Group>
+      <StatisticCard.Group style={{ marginTop: -10 }}>
         <StatisticCard
           title="最近访问 TOP"
           chart={

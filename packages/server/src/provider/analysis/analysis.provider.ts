@@ -48,6 +48,16 @@ export class AnalysisProvider {
       siteLastVisitedTime = lastVisitItem.lastVisitedTime;
       siteLastVisitedPathname = lastVisitItem.pathname;
     }
+    const { viewer: totalViewer, visited: totalVisited } =
+      await this.metaProvider.getViewer();
+    let maxArticleVisited = 0;
+    let maxArticleViewer = 0;
+    if (topViewer && topViewer.length > 0) {
+      maxArticleViewer = topViewer[0].viewer;
+    }
+    if (topVisited && topVisited.length > 0) {
+      maxArticleVisited = topVisited[0].visited;
+    }
     return {
       enableGA,
       enableBaidu,
@@ -56,6 +66,10 @@ export class AnalysisProvider {
       recentVisitArticles,
       siteLastVisitedTime,
       siteLastVisitedPathname,
+      totalViewer,
+      totalVisited,
+      maxArticleVisited,
+      maxArticleViewer,
     };
   }
 

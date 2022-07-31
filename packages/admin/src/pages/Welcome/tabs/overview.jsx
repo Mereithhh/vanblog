@@ -71,7 +71,7 @@ const OverView = () => {
           }}
         />
       </StatisticCard.Group>
-      <StatisticCard.Group>
+      <StatisticCard.Group style={{ marginTop: -10 }}>
         <StatisticCard
           title="总访客数趋势图"
           chart={<Area height={200} yField="访客数" {...lineConfig} />}
