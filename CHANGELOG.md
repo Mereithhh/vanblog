@@ -1,4 +1,31 @@
 # Changelog
+### [0.5.10](https://github.com/Mereithhh/van-blog/compare/v0.5.9...v0.5.10) (2022-07-31)
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 精简访客查询逻辑 ([0332821](https://github.com/Mereithhh/van-blog/commit/033282140111145c9b66e6744ea96a103d9ac91f))
+* 文章增加 viewer字段 ([f70ffc0](https://github.com/Mereithhh/van-blog/commit/f70ffc061b69dc9d0a45adbf0f8be4628765f96d))
+* 优化访客记录查询逻辑 ([b15c85a](https://github.com/Mereithhh/van-blog/commit/b15c85afe97e95e652092474988c36da3a229510))
+* 优化访客记录分析能力 ([9bca268](https://github.com/Mereithhh/van-blog/commit/9bca2687e49b9f58e33f54b27ce0eccd33612aa3))
+* 优化分析接口返回数据 ([449bec0](https://github.com/Mereithhh/van-blog/commit/449bec0c3c7f2d408bf303c324c1e10192377d80))
+* 重构-> analysisProvider ([bc9b2ea](https://github.com/Mereithhh/van-blog/commit/bc9b2ea956d7408fdc4f419ece53a7abf9b74ee7))
+
+
+### ✨ Features | 新功能
+
+* 后台首页拆分part1 ([976f16e](https://github.com/Mereithhh/van-blog/commit/976f16ee69554b45c81af0ce6988ee8acb8f1208))
+* 后台文章列表页访客数可排序 ([03870d3](https://github.com/Mereithhh/van-blog/commit/03870d3ef84548d018f601014324b691e31161d1))
+* 后台文章页列表展示浏览量 ([37e2745](https://github.com/Mereithhh/van-blog/commit/37e2745db50bd80466a6287c5d32013cf3aa2fd2))
+* 后台优化展示列表列宽 ([ccef55f](https://github.com/Mereithhh/van-blog/commit/ccef55f26d54eea347157a371ade001d095b472d))
+* 记录全站最近访问时间 ([d262879](https://github.com/Mereithhh/van-blog/commit/d262879a5a8d33f546dfc1739d6402d70148b8a3))
+* 记录最近访问文章的时间 ([4311b93](https://github.com/Mereithhh/van-blog/commit/4311b93a781404726df6861a0dd867334b4c6508))
+* 实现了一部分概览分析接口 ([97e4176](https://github.com/Mereithhh/van-blog/commit/97e4176f8fa4c13ee5552303295bf7a05c025de2))
+* 拓展分析接口查询能力，可查询指定数量 ([8bb56e9](https://github.com/Mereithhh/van-blog/commit/8bb56e9f2ed49326eff0b0ebebd9c2120c1ff34f))
+* 完善 analysis 获取 viewerData 接口 ([f1386b1](https://github.com/Mereithhh/van-blog/commit/f1386b1d5db98c94c10bb883f120a6cefaa281c5))
+* 完善方可分析 tab ([984359c](https://github.com/Mereithhh/van-blog/commit/984359c002943f376546d1c99f0783c5e6afa6e3))
+* 增加更新最近访问文章逻辑 ([65b2a3b](https://github.com/Mereithhh/van-blog/commit/65b2a3bccfd037691092ad30aba861eb2407a288))
+
 ### [0.5.9](https://github.com/Mereithhh/van-blog/compare/v0.5.8...v0.5.9) (2022-07-30)
 
 
