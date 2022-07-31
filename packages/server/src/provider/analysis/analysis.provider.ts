@@ -3,6 +3,7 @@ import { ArticleProvider } from '../article/article.provider';
 import { ViewerProvider } from '../viewer/viewer.provider';
 import { MetaProvider } from '../meta/meta.provider';
 import { ViewerTabData } from 'src/dto/analysis';
+import { VisitProvider } from '../visit/visit.provider';
 export type WelcomeTab = 'overview' | 'viewer';
 @Injectable()
 export class AnalysisProvider {
@@ -10,6 +11,7 @@ export class AnalysisProvider {
     private readonly metaProvider: MetaProvider,
     private readonly articleProvider: ArticleProvider,
     private readonly viewProvider: ViewerProvider,
+    private readonly visitProvider: VisitProvider,
   ) {}
 
   async getOverViewData(num: number) {
@@ -39,8 +41,13 @@ export class AnalysisProvider {
     const topVisited = await this.articleProvider.getTopVisited('list', num);
     const recentVisitArticles =
       await this.articleProvider.getRecentVisitedArticles(num, 'list');
-    const siteLastVisitedTime =
-      await this.metaProvider.getSiteLastVisitedTime();
+    let siteLastVisitedTime = null;
+    let siteLastVisitedPathname = '';
+    const lastVisitItem = await this.visitProvider.getLastVisitItem();
+    if (lastVisitItem) {
+      siteLastVisitedTime = lastVisitItem.lastVisitedTime;
+      siteLastVisitedPathname = lastVisitItem.pathname;
+    }
     return {
       enableGA,
       enableBaidu,
@@ -48,6 +55,7 @@ export class AnalysisProvider {
       topVisited,
       recentVisitArticles,
       siteLastVisitedTime,
+      siteLastVisitedPathname,
     };
   }
 

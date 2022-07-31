@@ -25,11 +25,6 @@ export class MetaProvider {
     private readonly articleProvider: ArticleProvider,
   ) {}
 
-  async getSiteLastVisitedTime() {
-    const d = await this.getAll();
-    return d.lastVisitedTime;
-  }
-
   async updateTotalWords() {
     const total = await this.articleProvider.countTotalWords();
     await this.update({ totalWordCount: total });
@@ -67,7 +62,6 @@ export class MetaProvider {
     await this.update({
       viewer: newViewer,
       visited: newVisited,
-      lastVisitedTime: new Date(),
     });
     // 更新文章的
     const r = /\/post\//;

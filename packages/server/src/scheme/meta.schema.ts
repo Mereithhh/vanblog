@@ -42,9 +42,6 @@ export class Meta extends Document {
 
   @Prop({ default: 0 })
   totalWordCount: number;
-
-  @Prop()
-  lastVisitedTime: Date;
 }
 
 export const MetaSchema = SchemaFactory.createForClass(Meta);

@@ -7,4 +7,5 @@ export interface ViewerTabData {
   topVisited: Article[];
   recentVisitArticles: Article[];
   siteLastVisitedTime: Date;
+  siteLastVisitedPathname: string;
 }

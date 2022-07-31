@@ -74,30 +74,21 @@ export class VisitProvider {
     }
     return null;
   }
-  //! 无法限定是同一篇文章，所以这种查询直接到 articleProvider 查。
-  // async getTop5Viewer() {
-  //   const today = dayjs().format('YYYY-MM-DD');
-  //   const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
-  //   return await this.visitModel
-  //     .find({
-  //       date: { $in: [today, lastDay] },
-  //       pathname: { $regex: '/post/' },
-  //     })
-  //     .sort({ viewer: -1 })
-  //     .limit(5);
-  // }
-
-  // async getTop5Visited() {
-  //   const today = dayjs().format('YYYY-MM-DD');
-  //   const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
-  //   return await this.visitModel
-  //     .find({
-  //       date: { $in: [today, lastDay] },
-  //       pathname: { $regex: '/post/' },
-  //     })
-  //     .sort({ visited: -1 })
-  //     .limit(5);
-  // }
+  async getLastVisitItem() {
+    const today = dayjs().format('YYYY-MM-DD');
+    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
+    const result = await this.visitModel
+      .find({
+        date: { $in: [today, lastDay] },
+        lastVisitedTime: { $exists: true },
+      })
+      .sort({ lastVisitedTime: -1 })
+      .limit(1);
+    if (result && result.length) {
+      return result[0];
+    }
+    return null;
+  }
 
   async import(data: Visit[]) {
     for (const each of data) {
