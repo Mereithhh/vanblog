@@ -128,11 +128,8 @@ export default () => {
             simple: simplePage,
           }}
           dateFormatter="string"
-          headerTitle={
-            <span>
-              <span>文章管理</span>
-            </span>
-          }
+          headerTitle={simpleSearch ? undefined : '文章管理'}
+          options={simpleSearch ? false : true}
           toolBarRender={() => [
             <Button
               key="editAboutMe"

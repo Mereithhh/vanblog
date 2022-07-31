@@ -119,7 +119,8 @@ export default () => {
             simple: simplePage,
           }}
           dateFormatter="string"
-          headerTitle="草稿管理"
+          headerTitle={simpleSearch ? undefined : '草稿管理'}
+          options={simpleSearch ? false : true}
           toolBarRender={() => [
             <NewDraftModal
               key="newDraft123"

@@ -86,8 +86,9 @@ export default function () {
         columns={columns}
         search={false}
         dateFormatter="string"
-        headerTitle="分类"
+        // headerTitle="分类"
         actionRef={actionRef}
+        options={false}
         toolBarRender={() => [
           <ModalForm
             title="新建分类"
