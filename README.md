@@ -2,7 +2,7 @@
 	<img src="/img/logo.svg" style="width: 300px"></img>
 </p>
 <p align="center">
-	<strong>VanBlog 一款简洁实用的个人博客系统。支持黑暗模式、支持移动端自适应、支持流量统计和评论，配有完备的前台和后台管理功能。</strong>
+	<strong>VanBlog 一款简洁实用的个人博客系统。支持黑暗模式、支持移动端自适应、支持流量统计和评论，配有完备的前台和支持移动端的后台管理功能。</strong>
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/license-GPL%20v3-yellow.svg" />
