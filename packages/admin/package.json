@@ -23,7 +23,7 @@
     "prepare": "echo 'pre'",
     "prettier": "prettier -c --write \"src/**/*\"",
     "serve": "umi-serve",
-    "start": " cross-env MOCK=none UMI_ENV=dev NODE_OPTIONS=--openssl-legacy-provider PORT=3002 umi dev",
+    "start": " cross-env MOCK=none UMI_ENV=dev PORT=3002 umi dev",
     "start:dev": "cross-env REACT_APP_ENV=dev MOCK=none UMI_ENV=dev umi dev",
     "start:no-mock": "cross-env MOCK=none UMI_ENV=dev umi dev",
     "start:no-ui": "cross-env UMI_UI=none UMI_ENV=dev umi dev",

@@ -1,15 +1,17 @@
 import NewDraftModal from '@/components/NewDraftModal';
 import { getDraftsByOption } from '@/services/van-blog/api';
+import { useNum } from '@/services/van-blog/useNum';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { useRef, useState, useMemo } from 'react';
-import { columns, draftKeysObj, draftKeysObjSmall } from './columes';
 import RcResizeObserver from 'rc-resize-observer';
+import { useMemo, useRef, useState } from 'react';
+import { columns, draftKeysObj, draftKeysObjSmall } from './columes';
 
 export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(draftKeysObj);
   const [simplePage, setSimplePage] = useState(false);
   const [simpleSearch, setSimpleSearch] = useState(false);
+  const [pageSize, setPageSize] = useNum(5, 'draft-page-size');
   const searchSpan = useMemo(() => {
     if (!simpleSearch) {
       return 8;
@@ -115,7 +117,12 @@ export default () => {
             span: searchSpan,
           }}
           pagination={{
-            pageSize: 5,
+            pageSize: pageSize,
+            onChange: (p, ps) => {
+              if (ps != pageSize) {
+                setPageSize(ps);
+              }
+            },
             simple: simplePage,
           }}
           dateFormatter="string"

@@ -1,17 +1,19 @@
 import NewArticleModal from '@/components/NewArticleModal';
 import { getArticlesByOption } from '@/services/van-blog/api';
+import { useNum } from '@/services/van-blog/useNum';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import { Button } from 'antd';
-import { useRef, useState, useMemo } from 'react';
-import { articleObjAll, articleObjSmall, columns } from './columns';
-import { history } from 'umi';
 import RcResizeObserver from 'rc-resize-observer';
+import { useMemo, useRef, useState } from 'react';
+import { history } from 'umi';
+import { articleObjAll, articleObjSmall, columns } from './columns';
 
 export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(articleObjAll);
   const [simplePage, setSimplePage] = useState(false);
   const [simpleSearch, setSimpleSearch] = useState(false);
+  const [pageSize, setPageSize] = useNum(5, 'article-page-size');
   const searchSpan = useMemo(() => {
     if (!simpleSearch) {
       return 8;
@@ -124,8 +126,13 @@ export default () => {
             className: 'searchCard',
           }}
           pagination={{
-            pageSize: 5,
+            pageSize: pageSize,
             simple: simplePage,
+            onChange: (p, ps) => {
+              if (ps != pageSize) {
+                setPageSize(ps);
+              }
+            },
           }}
           dateFormatter="string"
           headerTitle={simpleSearch ? undefined : '文章管理'}
