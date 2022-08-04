@@ -27,14 +27,23 @@ async function run() {
           deleted: { $exists: false },
         },
       ],
-      content: { $not: { $regex: `<!-- more -->` } },
+      // content: { $not: { $regex: `<!-- more -->` } },
     };
     const articles = await collection.find(query).toArray();
+    const as = [];
     for (const a of articles) {
+      if (!a.content.includes("<!-- more -->")) {
+        as.push(a);
+        // console.log(a.title);
+      }
+    }
+
+    for (const a of as) {
       if (a.content.includes("# ")) {
         const str = a.content + "";
         // 区分一下
         if (str.includes("## ")) {
+          console.log(a.title);
           const p = str.indexOf("## ");
           const newContent = `${str.substring(
             0,
@@ -58,13 +67,21 @@ async function run() {
           console.log(a.title);
         }
 
-        // 自己加上吧。
-        // const newContent = a.content + "\n<!-- more -->\n";
-        // const r = await collection.updateOne(
-        //   { _id: a._id },
-        //   { $set: {content: newContent} }
-        // );
-        // console.log(a.title, des);
+        //     // 自己加上吧。
+        //     // const newContent = a.content + "\n<!-- more -->\n";
+        //     // const r = await collection.updateOne(
+        //     //   { _id: a._id },
+        //     //   { $set: {content: newContent} }
+        //     // );
+        //     // console.log(a.title, des);
+      } else {
+        const newContent = `${a.content}\n<!-- more -->\n`;
+        const r = await collection.updateOne(
+          { _id: a._id },
+          { $set: { content: newContent } }
+        );
+        console.log(r);
+        console.log(a.title, a.content.length);
       }
     }
     // articles.forEach((t) => {
