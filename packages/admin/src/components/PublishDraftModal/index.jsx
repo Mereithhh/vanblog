@@ -1,5 +1,6 @@
-import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { publishDraft } from '@/services/van-blog/api';
+import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { message } from 'antd';
 export default function (props) {
   const { title, id, trigger, action } = props;
   return (
@@ -15,6 +16,7 @@ export default function (props) {
           await publishDraft(id, values);
           if (action && action.reload) {
             action.reload();
+            message.success('发布成功！');
           }
           return true;
         }}
