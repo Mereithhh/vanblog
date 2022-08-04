@@ -16,6 +16,8 @@ export default function (props: {
   siteName: string;
   links: MenuItem[];
   showSubMenu: "true" | "false";
+  headerLeftContent: "siteName" | "siteLogo"
+  subMenuOffset: number;
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
@@ -74,7 +76,7 @@ export default function (props: {
         >
           <div className="mx-4 flex items-center">
             <div
-              className="cursor-pointer block sm:hidden"
+              className="cursor-pointer block md:hidden"
               onClick={() => {
                 if (!props.isOpen) {
                   // 要打开
@@ -100,26 +102,27 @@ export default function (props: {
                 </svg>
               </span>
             </div>
-            <div className="hidden sm:block transform translate-x-2">
+            {props.headerLeftContent =="siteLogo" && (<div className="hidden sm:block transform translate-x-2">
               <Image
                 alt="site logo"
                 src={picUrl}
                 width={52}
                 height={52}
               ></Image>
-            </div>
+            </div>)}
+
           </div>
-          {/* {props.showSubMenu == "false" && (
-            <div className="text-gray-800 text-xl font-medium ml-3 mr-1 hidden lg:block">
+          {props.headerLeftContent == "siteName" && (
+            <div className="text-gray-800 select-none text-lg dark:text-dark lg:text-xl font-medium  mr-4 hidden md:block">
               {props.siteName}
             </div>
-          )} */}
+          )}
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow ">
-            <div className=" sm:hidden flex-grow text-center  flex items-center justify-center select-none dark:text-dark">
+            <div className=" md:hidden flex-grow text-center  flex items-center justify-center select-none dark:text-dark">
               <div>{props.siteName}</div>
             </div>
-            <ul className=" sm:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
+            <ul className=" md:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden" >
               <li className="nav-item transform hover:scale-110  dark:border-nav-dark dark:transition-all">
                 <Link href={"/"}>
                   <a className="h-full flex items-center px-2 md:px-4 ua ">
@@ -195,7 +198,7 @@ export default function (props: {
         </div>
         {Boolean(props.categories.length) && props.showSubMenu == "true" && (
           <div className="h-10 items-center hidden md:flex border-b border-gray-200 dark:border-nav-dark">
-            <div className="mx-5" style={{ width: 52 }}></div>
+            <div className="mx-5" style={{ width: 52+ props.subMenuOffset  }}></div>
             <ul className="flex h-full items-center text-sm text-gray-600 dark:text-dark ">
               {props.categories.map((catelog) => {
                 return (

@@ -55,6 +55,8 @@ export default function (props: {
 
       <NavBar
         showSubMenu={props.option.showSubMenu}
+        headerLeftContent={props.option.headerLeftContent}
+        subMenuOffset={props.option.subMenuOffset}
         links={props.option.links}
         siteName={props.option.siteName}
         logo={props.option.logo}

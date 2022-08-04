@@ -20,6 +20,8 @@ export class SiteInfo {
   gaAnalysisId: string;
   baiduAnalysisId: string;
   showSubMenu?: 'true' | 'false';
+  headerLeftContent?: 'siteLogo' | 'siteName';
+  subMenuOffset: number;
 }
 export interface updateUserDto {
   username: string;

@@ -47,6 +47,8 @@ export interface MetaProps {
     gaAnalysisId?: string;
     siteLogoDark?: string;
     showSubMenu?: "true" | "false";
+    headerLeftContent?: "siteLogo" | "siteName";
+    subMenuOffset?: number;
   };
 }
 export interface PublicMetaProp {

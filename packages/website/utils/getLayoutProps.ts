@@ -17,13 +17,21 @@ export interface LayoutProps {
   logoDark: string;
   links: MenuItem[];
   showSubMenu: "true" | "false";
+  headerLeftContent: "siteLogo" | "siteName";
+  subMenuOffset: number;
 }
 
 export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   const siteInfo = data.meta.siteInfo;
   const showSubMenu =
     Boolean(data.meta.categories.length) && siteInfo?.showSubMenu == "true";
+  let headerLeftContent: "siteLogo" | "siteName" = "siteName";
+  if (data.meta.siteInfo.siteLogo && siteInfo.headerLeftContent == "siteLogo") {
+    headerLeftContent = "siteLogo";
+  }
   return {
+    subMenuOffset: siteInfo?.subMenuOffset || 0,
+    headerLeftContent,
     walineServerUrl: siteInfo?.walineServerUrl || "",
     ipcHref: siteInfo?.beianUrl || "",
     ipcNumber: siteInfo?.beianNumber || "",
