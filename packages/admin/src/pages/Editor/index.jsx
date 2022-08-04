@@ -12,19 +12,18 @@ import {
   updateDraft,
 } from '@/services/van-blog/api';
 import { formatTimes } from '@/services/van-blog/tool';
-import { useQuery } from '@/services/van-blog/useQuery';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Col, Descriptions, message, Modal, Row, Space, Tag } from 'antd';
+import { Button, Col, message, Modal, Row, Space, Tag } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
+import { history } from 'umi';
 
 export default function () {
   const [vd, setVd] = useState();
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
-  const [query] = useQuery();
   // 类型，可以是文章、草稿、或者 about
-  const type = query?.type || 'article';
+  const type = history.location.query?.type || 'article';
   const typeMap = {
     article: '文章',
     draft: '草稿',
@@ -32,8 +31,8 @@ export default function () {
   };
   const fetchData = useCallback(async () => {
     setLoading(true);
-    const type = query?.type || 'article';
-    const id = query?.id;
+    const type = history.location.query?.type || 'article';
+    const id = history.location.query?.id;
     if (type == 'about') {
       const { data } = await getAbout();
       setCurrObj(data);
@@ -47,7 +46,7 @@ export default function () {
       setCurrObj(data);
     }
     setLoading(false);
-  }, [query, setLoading]);
+  }, [history, setLoading]);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
