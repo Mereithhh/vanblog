@@ -1,4 +1,25 @@
 # Changelog
+### [0.7.1](https://github.com/Mereithhh/van-blog/compare/v0.7.0...v0.7.1) (2022-08-04)
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 后台优化 query 获取逻辑 ([98b8600](https://github.com/Mereithhh/van-blog/commit/98b8600917d9e1b869faffdebadd931183fe50a8))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 后台关闭密码自动补全 ([b9f1272](https://github.com/Mereithhh/van-blog/commit/b9f12725f23e4bebdd6dbb59bf038347abd7c1ff))
+
+
+### ✨ Features | 新功能
+
+* 发布草稿增加成功提示 ([29e4943](https://github.com/Mereithhh/van-blog/commit/29e4943794f69606e79285985d708af4fc4b5af0))
+* 后台会持久记忆表格pageSize ([6ae55e9](https://github.com/Mereithhh/van-blog/commit/6ae55e9ab54db1033a67fc58cb082726b0362fbb))
+* 后台编辑器增加快速插入more 标记按钮 ([b6065c8](https://github.com/Mereithhh/van-blog/commit/b6065c8319df54f5d4040a23109e1b2a092fff7b))
+* 增加并完善导航栏配置项，可配置显示网站名/logo ([9f9b79e](https://github.com/Mereithhh/van-blog/commit/9f9b79e9b3b3d6a718b783c3af1b41c27cde0180))
+* 增加过时文章提醒 ([c0fa233](https://github.com/Mereithhh/van-blog/commit/c0fa233e30ad7af9bffe11d6338fc98f6444cc84))
+
 ## [0.7.0](https://github.com/Mereithhh/van-blog/compare/v0.6.0...v0.7.0) (2022-07-31)
 
 
