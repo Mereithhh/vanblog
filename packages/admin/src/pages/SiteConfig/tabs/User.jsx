@@ -1,7 +1,7 @@
 import { updateUser } from '@/services/van-blog/api';
 import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
-import { useModel, history } from 'umi';
+import { history, useModel } from 'umi';
 export default function () {
   const { initialState, setInitialState } = useModel('@@initialState');
   return (
@@ -36,6 +36,7 @@ export default function () {
         <ProFormText.Password
           width="lg"
           name="password"
+          autocomplete="new-password"
           required={true}
           rules={[{ required: true, message: '这是必填项' }]}
           label="登录密码"

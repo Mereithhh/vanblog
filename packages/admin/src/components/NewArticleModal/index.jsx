@@ -1,5 +1,5 @@
-import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { createArticle, getAllCategories, getTags } from '@/services/van-blog/api';
+import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Button } from 'antd';
 export default function (props) {
   const { onFinish } = props;
@@ -101,6 +101,7 @@ export default function (props) {
         width="md"
         id="passwordC"
         name="passwordC"
+        autocomplete="new-password"
         placeholder="请输入密码"
         dependencies={['private']}
       />

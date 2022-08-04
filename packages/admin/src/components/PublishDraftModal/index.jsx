@@ -52,6 +52,7 @@ export default function (props) {
         <ProFormText.Password
           label="密码"
           width="md"
+          autocomplete="new-password"
           id="password"
           name="password"
           placeholder="请输入密码"
