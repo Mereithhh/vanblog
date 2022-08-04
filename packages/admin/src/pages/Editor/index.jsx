@@ -99,6 +99,16 @@ export default function () {
             type="primary"
             key="saveButton"
             onClick={async () => {
+              // 先检查一下有没有 more .
+              if (history.location.query?.type == 'article') {
+                const v = vd?.getValue();
+                if (!v?.includes('<!-- more -->')) {
+                  message.warning(
+                    '缺少more标记，请点击工具栏第一个按钮在合适的地方插入标记！这样阅读全文前的内容才能被正确识别。',
+                  );
+                  return;
+                }
+              }
               Modal.confirm({
                 title: `确定保存吗？`,
                 onOk: async () => {

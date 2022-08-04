@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useMemo } from "react";
+import AlertCard from "../AlertCard";
 import Markdown from "../Markdown";
 import PostViewer from "../PostViewer";
 import Reward from "../Reward";
@@ -11,6 +12,7 @@ export default function (props: {
   id: number;
   title: string;
   updatedAt: Date;
+  createdAt: Date;
   catelog: string;
   content: string;
   type: "overview" | "article" | "about";
@@ -160,6 +162,13 @@ export default function (props: {
           </span>
         </div>
         <div className="text-sm md:text-base  text-gray-600 mt-4 mx-2">
+          {props.type == "article" && (
+            <AlertCard
+              updatedAt={props.updatedAt}
+              createdAt={props.createdAt}
+            ></AlertCard>
+          )}
+
           <Markdown content={getContent(props.content)}></Markdown>
         </div>
 

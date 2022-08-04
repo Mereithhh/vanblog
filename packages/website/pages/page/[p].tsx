@@ -28,6 +28,7 @@ const PagePages = (props: PagePagesProps) => {
             key={article.title}
             title={article.title}
             updatedAt={new Date(article.updatedAt)}
+            createdAt={new Date(article.createdAt)}
             catelog={article.category}
             content={article.content}
             type={"overview"}

@@ -9,6 +9,8 @@ export class CreateArticleDto {
   hidden?: boolean;
   private?: boolean;
   password?: string;
+  updatedAt?: Date;
+  createdAt?: Date;
 }
 export class UpdateArticleDto {
   title?: string;
@@ -22,6 +24,7 @@ export class UpdateArticleDto {
   deleted?: boolean;
   viewer?: number;
   visited?: number;
+  updatedAt?: Date;
 }
 export class SearchArticleOption {
   page: number;

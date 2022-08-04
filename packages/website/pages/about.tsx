@@ -25,6 +25,7 @@ const AboutPage = (props: AboutPageProps) => {
         key={"about"}
         title={"关于我"}
         updatedAt={new Date(props.about.updatedAt)}
+        createdAt={new Date(props.about.updatedAt)}
         catelog={"about"}
         content={props.about.content}
         type={"about"}

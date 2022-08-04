@@ -198,9 +198,16 @@ export class ArticleProvider {
       const title = a.title;
       const oldArticle = await this.findOneByTitle(title);
       if (oldArticle) {
-        this.updateById(oldArticle.id, { ...createDto, deleted: false });
+        this.updateById(oldArticle.id, {
+          ...createDto,
+          deleted: false,
+          updatedAt: oldArticle.updatedAt || oldArticle.createdAt,
+        });
       } else {
-        await this.create(createDto);
+        await this.create({
+          ...createDto,
+          updatedAt: createDto.updatedAt || createDto.createdAt || new Date(),
+        });
       }
     }
     this.metaProvider.updateTotalWords();
@@ -592,7 +599,10 @@ export class ArticleProvider {
   async updateById(id: number, updateArticleDto: UpdateArticleDto) {
     const res = await this.articleModel.updateOne(
       { id },
-      { ...updateArticleDto, updatedAt: new Date() },
+      {
+        ...updateArticleDto,
+        updatedAt: updateArticleDto.updatedAt || new Date(),
+      },
     );
     this.metaProvider.updateTotalWords();
     return res;

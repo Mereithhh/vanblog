@@ -1,0 +1,12 @@
+.warning-card {
+  background-color: #fdf8ea;
+  border-left-color: #f0ad4e;
+  border-left-width: 4px;
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+.dark .warning-card {
+  border-left-color: #30363d;
+  background-color: rgb(30, 30, 30);
+}
