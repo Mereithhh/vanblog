@@ -549,11 +549,25 @@ export class ArticleProvider {
   async searchByString(str: string): Promise<Article[]> {
     const rawData = await this.articleModel
       .find({
-        $or: [
-          { content: { $regex: `${str}`, $options: '$i' } },
-          { title: { $regex: `${str}`, $options: '$i' } },
-          { category: { $regex: `${str}`, $options: '$i' } },
-          { tags: { $regex: `${str}`, $options: '$i' } },
+        $and: [
+          {
+            $or: [
+              { content: { $regex: `${str}`, $options: '$i' } },
+              { title: { $regex: `${str}`, $options: '$i' } },
+              { category: { $regex: `${str}`, $options: '$i' } },
+              { tags: { $regex: `${str}`, $options: '$i' } },
+            ],
+          },
+          {
+            $or: [
+              {
+                deleted: false,
+              },
+              {
+                deleted: { $exists: false },
+              },
+            ],
+          },
         ],
       })
       .exec();
