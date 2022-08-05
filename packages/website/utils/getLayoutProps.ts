@@ -17,6 +17,7 @@ export interface LayoutProps {
   logoDark: string;
   links: MenuItem[];
   showSubMenu: "true" | "false";
+  showAdminButton: "true" | "false";
   headerLeftContent: "siteLogo" | "siteName";
   subMenuOffset: number;
 }
@@ -29,8 +30,13 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (data.meta.siteInfo.siteLogo && siteInfo.headerLeftContent == "siteLogo") {
     headerLeftContent = "siteLogo";
   }
+  let showAdminButton: "true" | "false" = "false";
+  if (siteInfo.showAdminButton && siteInfo.showAdminButton == "true") {
+    showAdminButton = "true";
+  }
   return {
     subMenuOffset: siteInfo?.subMenuOffset || 0,
+    showAdminButton,
     headerLeftContent,
     walineServerUrl: siteInfo?.walineServerUrl || "",
     ipcHref: siteInfo?.beianUrl || "",

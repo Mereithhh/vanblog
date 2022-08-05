@@ -57,6 +57,7 @@ export default function (props: {
         showSubMenu={props.option.showSubMenu}
         headerLeftContent={props.option.headerLeftContent}
         subMenuOffset={props.option.subMenuOffset}
+        showAdminButton={props.option.showAdminButton}
         links={props.option.links}
         siteName={props.option.siteName}
         logo={props.option.logo}

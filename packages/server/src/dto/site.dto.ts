@@ -22,6 +22,7 @@ export class SiteInfo {
   showSubMenu?: 'true' | 'false';
   headerLeftContent?: 'siteLogo' | 'siteName';
   subMenuOffset: number;
+  showAdminButton: 'true' | 'false';
 }
 export interface updateUserDto {
   username: string;

@@ -7,6 +7,7 @@ import KeyCard from "../KeyCard";
 import { GlobalContext } from "../../utils/globalContext";
 import { MenuItem } from "../../api/getAllData";
 import Image from "next/future/image";
+import AdminButton from "../AdminButton";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -16,7 +17,8 @@ export default function (props: {
   siteName: string;
   links: MenuItem[];
   showSubMenu: "true" | "false";
-  headerLeftContent: "siteName" | "siteLogo"
+  showAdminButton: "true" | "false";
+  headerLeftContent: "siteName" | "siteLogo";
   subMenuOffset: number;
 }) {
   const [showSearch, setShowSearch] = useState(false);
@@ -102,15 +104,16 @@ export default function (props: {
                 </svg>
               </span>
             </div>
-            {props.headerLeftContent =="siteLogo" && (<div className="hidden sm:block transform translate-x-2">
-              <Image
-                alt="site logo"
-                src={picUrl}
-                width={52}
-                height={52}
-              ></Image>
-            </div>)}
-
+            {props.headerLeftContent == "siteLogo" && (
+              <div className="hidden sm:block transform translate-x-2">
+                <Image
+                  alt="site logo"
+                  src={picUrl}
+                  width={52}
+                  height={52}
+                ></Image>
+              </div>
+            )}
           </div>
           {props.headerLeftContent == "siteName" && (
             <div className="text-gray-800 select-none text-lg dark:text-dark lg:text-xl font-medium  mr-4 hidden md:block">
@@ -119,10 +122,13 @@ export default function (props: {
           )}
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow ">
-            <div className=" md:hidden flex-grow text-center  flex items-center justify-center select-none dark:text-dark">
+            <div
+              style={{ transform: "translateX(30px)" }}
+              className=" md:hidden  flex-grow text-center  flex items-center justify-center select-none dark:text-dark"
+            >
               <div>{props.siteName}</div>
             </div>
-            <ul className=" md:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden" >
+            <ul className=" md:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
               <li className="nav-item transform hover:scale-110  dark:border-nav-dark dark:transition-all">
                 <Link href={"/"}>
                   <a className="h-full flex items-center px-2 md:px-4 ua ">
@@ -159,6 +165,18 @@ export default function (props: {
                   </a>
                 </Link>
               </li>
+              {props.showAdminButton == "true" && (
+                <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
+                  <a
+                    target="_blank"
+                    href="/admin"
+                    rel="noreferrer"
+                    className="h-full flex items-center px-2 md:px-4 ua"
+                  >
+                    后台
+                  </a>
+                </li>
+              )}
             </ul>
             <div className="flex">
               <div
@@ -191,14 +209,17 @@ export default function (props: {
                   <KeyCard type="search"></KeyCard>
                 </div>
               </div>
-
               <ThemeButton />
+              {props.showAdminButton && <AdminButton />}
             </div>
           </div>
         </div>
         {Boolean(props.categories.length) && props.showSubMenu == "true" && (
           <div className="h-10 items-center hidden md:flex border-b border-gray-200 dark:border-nav-dark">
-            <div className="mx-5" style={{ width: 52+ props.subMenuOffset  }}></div>
+            <div
+              className="mx-5"
+              style={{ width: 52 + props.subMenuOffset }}
+            ></div>
             <ul className="flex h-full items-center text-sm text-gray-600 dark:text-dark ">
               {props.categories.map((catelog) => {
                 return (

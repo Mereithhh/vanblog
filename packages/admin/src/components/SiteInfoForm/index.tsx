@@ -1,4 +1,9 @@
-import { ProFormDatePicker, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import {
+  ProFormDatePicker,
+  ProFormDigit,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
 
 export default function (props: {
   showOption: boolean;
@@ -41,18 +46,19 @@ export default function (props: {
       )}
       {props.showOption && (
         <>
-        <ProFormText
-          name="siteLogo"
-          required
-          label="网站 Logo"
-          placeholder={'请输入网站 Logo Url'}
-          rules={[{ required: true, message: '这是必填项' }]}
-        ></ProFormText>
-        <ProFormText
-          name="siteLogoDark"
-          label="网站 Logo（黑暗模式）"
-          placeholder={'请输入网站黑暗模式 Logo Url，留空表示沿用上个'}
-        ></ProFormText></>
+          <ProFormText
+            name="siteLogo"
+            required
+            label="网站 Logo"
+            placeholder={'请输入网站 Logo Url'}
+            rules={[{ required: true, message: '这是必填项' }]}
+          ></ProFormText>
+          <ProFormText
+            name="siteLogoDark"
+            label="网站 Logo（黑暗模式）"
+            placeholder={'请输入网站黑暗模式 Logo Url，留空表示沿用上个'}
+          ></ProFormText>
+        </>
       )}
       {props.showRequire && (
         <>
@@ -152,8 +158,9 @@ export default function (props: {
               true: '显示',
               false: '隐藏',
             }}
-            tooltip={"默认隐藏，如果显示的是网站名，开启此项可能会对不齐。"}
+            tooltip={'默认隐藏，如果显示的是网站名，开启此项可能会对不齐。'}
           ></ProFormSelect>
+
           <ProFormDigit
             name={'subMenuOffset'}
             label="分类导航栏左侧偏移（px）"
@@ -161,7 +168,7 @@ export default function (props: {
             fieldProps={{ precision: 0 }}
             min={0}
             max={200}
-            tooltip={"导航栏显示的是网站名的时候，设置正确偏移以对其分类第一个字。"}
+            tooltip={'导航栏显示的是网站名的时候，设置正确偏移以对其分类第一个字。'}
           ></ProFormDigit>
           <ProFormSelect
             name={'headerLeftContent'}
@@ -170,7 +177,16 @@ export default function (props: {
               siteLogo: '网站logo',
               siteName: '网站名',
             }}
-            tooltip={"显示网站logo的前提是已设置正确的网站logo哦。默认显示网站名"}
+            tooltip={'显示网站logo的前提是已设置正确的网站logo哦。默认显示网站名'}
+          ></ProFormSelect>
+          <ProFormSelect
+            name={'showAdminButton'}
+            label="后台按钮显示"
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认隐藏，开启后导航栏会显示后台按钮'}
           ></ProFormSelect>
         </>
       )}
