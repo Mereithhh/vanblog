@@ -1,4 +1,23 @@
 # Changelog
+### [0.7.2](https://github.com/Mereithhh/van-blog/compare/v0.7.1...v0.7.2) (2022-08-05)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 修改脚本 ([2757229](https://github.com/Mereithhh/van-blog/commit/2757229fc67b1b7cdee97be50dbf5d7c59508b8e))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复主站按钮显示 ([ab22fca](https://github.com/Mereithhh/van-blog/commit/ab22fcad4c723096f0e1dcd314b4f16ea36be38e))
+* 搜索接口会带上已删除的文章 ([2d66b67](https://github.com/Mereithhh/van-blog/commit/2d66b670c3541a5a050858567f6701b4e5140de7))
+
+
+### ✨ Features | 新功能
+
+* 增加展示后台按钮配置项 ([6105162](https://github.com/Mereithhh/van-blog/commit/6105162133e33ce983522c5f8650bfc98d9eef94))
+* 增加清洗数据脚本 ([76b47f9](https://github.com/Mereithhh/van-blog/commit/76b47f9c4c2fcd4e249dc4c85e79ceb343f536b9))
+
 ### [0.7.1](https://github.com/Mereithhh/van-blog/compare/v0.7.0...v0.7.1) (2022-08-04)
 
 
