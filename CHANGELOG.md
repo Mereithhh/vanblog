@@ -1,4 +1,11 @@
 # Changelog
+### [0.7.3](https://github.com/Mereithhh/van-blog/compare/v0.7.2...v0.7.3) (2022-08-05)
+
+
+### ✨ Features | 新功能
+
+* 如果有 noViewer 的标记则不更新访客 ([758398d](https://github.com/Mereithhh/van-blog/commit/758398dd893eef279bcfcabb9b7536c98a4b6740))
+
 ### [0.7.2](https://github.com/Mereithhh/van-blog/compare/v0.7.1...v0.7.2) (2022-08-05)
 
 
