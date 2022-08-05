@@ -12,11 +12,12 @@ export class MetaController {
   constructor(private readonly metaProvider: MetaProvider) {}
   @Get()
   async getAllMeta(@Req() req: Request) {
+    const meta = await this.metaProvider.getAll();
     const data = {
       version: version,
       user: req.user,
-      walineServerUrl:
-        (await this.metaProvider.getSiteInfo()).walineServerUrl || '',
+      baseUrl: meta.siteInfo.baseUrl,
+      walineServerUrl: meta.siteInfo.walineServerUrl || '',
     };
     return {
       statusCode: 200,

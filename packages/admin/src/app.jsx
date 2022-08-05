@@ -1,11 +1,11 @@
 import Footer from '@/components/Footer';
 import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
-import { history, Link } from 'umi';
+import { history } from 'umi';
 import defaultSettings from '../config/defaultSettings';
 import LogoutButton from './components/LogoutButton';
 import { fetchAllMeta } from './services/van-blog/api';
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.UMI_ENV === 'dev';
 const loginPath = '/user/login';
 /** 获取用户信息比较慢的时候会展示一个 loading */
 
@@ -74,6 +74,10 @@ export const layout = ({ initialState, setInitialState }) => {
       }
     },
     links: [
+      <a key="mainSiste" rel="noreferrer" target="_blank" href={initialState?.baseUrl || '/'}>
+        <HomeOutlined />
+        <span>主站</span>
+      </a>,
       <LogoutButton
         key="logoutSider"
         trigger={
