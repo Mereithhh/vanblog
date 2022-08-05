@@ -21,6 +21,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const reloadViewer = useCallback(
     async (reason: string) => {
+      if (window.localStorage.getItem("noViewer")) {
+        return;
+      }
       const pathname = window.location.pathname;
       console.log("[更新访客]", reason, pathname);
       const { viewer, visited } = await addViewer(pathname);
