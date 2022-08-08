@@ -100,7 +100,7 @@ export default function () {
             key="saveButton"
             onClick={async () => {
               // 先检查一下有没有 more .
-              if (history.location.query?.type == 'article') {
+              if (['article', 'draft'].includes(history.location.query?.type)) {
                 const v = vd?.getValue();
                 if (!v?.includes('<!-- more -->')) {
                   message.warning(

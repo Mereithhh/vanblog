@@ -11,7 +11,6 @@ const sleep = (delay: number) => {
 export default function Editor(props) {
   const { current } = useRef<{ editor: Vditor }>({ editor: null });
   const handleClickMore = async () => {
-    // current.editor.setValue(`${current.editor.getValue()}<!-- more -->`, false);
     current.editor.insertValue('!-- more -->\n');
     await sleep(50);
     current.editor.insertValue('<');

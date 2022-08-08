@@ -83,6 +83,7 @@ export class DraftController {
   }
   @Post('/publish')
   async publish(@Query('id') id: number, @Body() publishDto: PublishDraftDto) {
+    
     const data = await this.draftProvider.publish(id, publishDto);
     return {
       statusCode: 200,
