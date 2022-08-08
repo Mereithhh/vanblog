@@ -49,7 +49,7 @@ export class ArticleController {
       regMatch,
       sortViewer,
     };
-    const data = await this.articleProvider.getByOption(option);
+    const data = await this.articleProvider.getByOption(option, false);
     return {
       statusCode: 200,
       data,

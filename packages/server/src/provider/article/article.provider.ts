@@ -319,6 +319,7 @@ export class ArticleProvider {
   }
   async getByOption(
     option: SearchArticleOption,
+    isPublic: boolean,
   ): Promise<{ articles: Article[]; total: number; totalWordCount?: number }> {
     const query: any = {};
     const $and: any = [
@@ -402,9 +403,12 @@ export class ArticleProvider {
     }
 
     query.$and = $and;
-    let view = option.toListView ? this.listView : this.adminView;
+    let view: any = isPublic ? this.publicView : this.adminView;
+    if (option.toListView) {
+      view = this.listView;
+    }
     if (option.withWordCount) {
-      view = this.adminView;
+      view = isPublic ? this.publicView : this.adminView;
     }
     let articlesQuery = this.articleModel.find(query, view).sort(sort);
     if (option.pageSize != -1) {
@@ -424,27 +428,17 @@ export class ArticleProvider {
       });
       resData.totalWordCount = totalWordCount;
     }
-    // // 查找浏览量
-    // if (option.withViewer) {
-    //   const newArticles: any[] = [];
-    //   for (let i = 0; i < articles.length; i++) {
-    //     const eachViewerData = await this.visitProvider.getByArticleId(
-    //       articles[i].id,
-    //     );
-    //     let viewerNum = 0;
-    //     if (Boolean(eachViewerData)) {
-    //       viewerNum = eachViewerData.viewer;
-    //     }
-    //     // 赋值
-    //     const newArticle = copyDocObj(articles[i]);
-    //     newArticle.viewer = viewerNum;
-    //     newArticles.push(newArticle);
-    //   }
-    //   resData.articles = newArticles;
-    // } else {
-    // }
+    if (option.withWordCount && option.toListView) {
+      // 重置视图
+      resData.articles = articles.map((a) => ({
+        ...a,
+        content: undefined,
+        password: undefined,
+      }));
+    } else {
+      resData.articles = articles;
+    }
 
-    resData.articles = articles;
     resData.total = total;
     return resData;
   }

@@ -91,7 +91,7 @@ export class PublicController {
   async getByOption(
     @Query('page') page: number,
     @Query('pageSize') pageSize = 5,
-    @Query('toListView') toListView = false,
+    @Query('toListView') toListView = true,
     @Query('regMatch') regMatch = false,
     @Query('withWordCount') withWordCount = false,
     @Query('category') category?: string,
@@ -110,7 +110,7 @@ export class PublicController {
       sortCreatedAt,
       withWordCount,
     };
-    const data = await this.articleProvider.getByOption(option);
+    const data = await this.articleProvider.getByOption(option, true);
     return {
       statusCode: 200,
       data,
