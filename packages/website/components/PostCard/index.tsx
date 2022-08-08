@@ -89,7 +89,7 @@ export default function (props: {
               </svg>
             </span>
             {props.type != "about"
-              ? `${dayjs(props.updatedAt).format("YYYY-MM-DD")}`
+              ? `${dayjs(props.createdAt).format("YYYY-MM-DD")}`
               : ` ${dayjs(props.updatedAt).format("YYYY-MM-DD")}`}
           </span>
 
