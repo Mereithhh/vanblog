@@ -165,18 +165,6 @@ export default function (props: {
                   </a>
                 </Link>
               </li>
-              {props.showAdminButton == "true" && (
-                <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
-                  <a
-                    target="_blank"
-                    href="/admin"
-                    rel="noreferrer"
-                    className="h-full flex items-center px-2 md:px-4 ua"
-                  >
-                    后台
-                  </a>
-                </li>
-              )}
             </ul>
             <div className="flex">
               <div
@@ -210,7 +198,7 @@ export default function (props: {
                 </div>
               </div>
               <ThemeButton />
-              {props.showAdminButton && <AdminButton />}
+              {props.showAdminButton == "true" && <AdminButton />}
             </div>
           </div>
         </div>
