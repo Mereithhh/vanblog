@@ -430,8 +430,8 @@ export class ArticleProvider {
     }
     if (option.withWordCount && option.toListView) {
       // 重置视图
-      resData.articles = articles.map((a) => ({
-        ...a,
+      resData.articles = articles.map((a: any) => ({
+        ...(a?._doc || a),
         content: undefined,
         password: undefined,
       }));
