@@ -1,4 +1,11 @@
 # Changelog
+### [0.7.6](https://github.com/Mereithhh/van-blog/compare/v0.7.5...v0.7.6) (2022-08-08)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 文章卡片展示创建日期 ([51936a1](https://github.com/Mereithhh/van-blog/commit/51936a141f65ae507a63fc03939c7ad66f428df6))
+
 ### [0.7.5](https://github.com/Mereithhh/van-blog/compare/v0.7.4...v0.7.5) (2022-08-08)
 
 
