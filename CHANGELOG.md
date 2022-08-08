@@ -1,4 +1,11 @@
 # Changelog
+### [0.7.5](https://github.com/Mereithhh/van-blog/compare/v0.7.4...v0.7.5) (2022-08-08)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 显示后台按钮配置没按预期显示 ([cbbe6fe](https://github.com/Mereithhh/van-blog/commit/cbbe6fe005c0fd4b8fa9727eb012a663c54b8a13))
+
 ### [0.7.4](https://github.com/Mereithhh/van-blog/compare/v0.7.3...v0.7.4) (2022-08-08)
 
 
