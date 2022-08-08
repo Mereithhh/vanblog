@@ -1,4 +1,11 @@
 # Changelog
+### [0.7.7](https://github.com/Mereithhh/van-blog/compare/v0.7.6...v0.7.7) (2022-08-08)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复接口错误 ([cf0b81e](https://github.com/Mereithhh/van-blog/commit/cf0b81ec4fdfbceec36aabb04882251812819199))
+
 ### [0.7.6](https://github.com/Mereithhh/van-blog/compare/v0.7.5...v0.7.6) (2022-08-08)
 
 
