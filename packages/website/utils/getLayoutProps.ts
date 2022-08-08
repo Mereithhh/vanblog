@@ -15,6 +15,7 @@ export interface LayoutProps {
   baiduAnalysisID: string;
   gaAnalysisID: string;
   logoDark: string;
+  version: string;
   links: MenuItem[];
   showSubMenu: "true" | "false";
   showAdminButton: "true" | "false";
@@ -35,6 +36,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showAdminButton = "true";
   }
   return {
+    version: data?.version || "dev",
     subMenuOffset: siteInfo?.subMenuOffset || 0,
     showAdminButton,
     headerLeftContent,

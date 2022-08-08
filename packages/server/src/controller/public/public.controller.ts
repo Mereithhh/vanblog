@@ -7,6 +7,7 @@ import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 import { VisitProvider } from 'src/provider/visit/visit.provider';
+import { version } from 'src/utils/loadConfig';
 
 @ApiTags('public')
 @Controller('/api/public/')
@@ -91,7 +92,7 @@ export class PublicController {
   async getByOption(
     @Query('page') page: number,
     @Query('pageSize') pageSize = 5,
-    @Query('toListView') toListView = true,
+    @Query('toListView') toListView = false,
     @Query('regMatch') regMatch = false,
     @Query('withWordCount') withWordCount = false,
     @Query('category') category?: string,
@@ -148,6 +149,7 @@ export class PublicController {
     const totalArticles = await this.articleProvider.getTotalNum();
     const totalWordCount = await this.metaProvider.getTotalWords();
     const data = {
+      version: version,
       tags,
       meta,
       totalArticles,

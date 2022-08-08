@@ -53,6 +53,7 @@ export interface MetaProps {
   };
 }
 export interface PublicMetaProp {
+  version: string;
   tags: string[];
   totalArticles: number;
   meta: MetaProps;
@@ -64,6 +65,8 @@ export interface PublicAllProp {
   tags: string[];
   meta: MetaProps;
 }
+export const version = process.env["VAN_BLOG_VERSION"] || "dev";
+
 export async function getPublicMeta(): Promise<PublicMetaProp> {
   try {
     const url = `${config.baseUrl}api/public/meta`;
@@ -75,6 +78,7 @@ export async function getPublicMeta(): Promise<PublicMetaProp> {
       console.log("无法连接，采用默认值");
       // 给一个默认的吧。
       return {
+        version: version,
         totalWordCount: 0,
         tags: [],
         totalArticles: 0,

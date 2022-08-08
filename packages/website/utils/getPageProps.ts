@@ -4,11 +4,7 @@ import { TagPageProps } from "../pages/tag";
 import { TimeLinePageProps } from "../pages/timeline";
 import { CategoryPageProps } from "../pages/category";
 import { getAuthorCardProps, getLayoutProps } from "./getLayoutProps";
-import {
-  getCurrArticleProps,
-  getTotalCount,
-  washArticlesByKey,
-} from "./washArticles";
+import { washArticlesByKey } from "./washArticles";
 import { AboutPageProps } from "../pages/about";
 import { TagPagesProps } from "../pages/tag/[tag]";
 import { PostPagesProps } from "../pages/post/[id]";

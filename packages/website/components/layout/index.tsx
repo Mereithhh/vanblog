@@ -160,9 +160,9 @@ export default function (props: {
             <a
               href="https://vanblog.mereith.com"
               target={"_blank"}
-              className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
+              className="hover:text-gray-900 hover:underline-offset-4 hover:underline dark:hover:text-dark-hover transition"
             >
-              Van Blog
+              Van Blog <span>{props.option.version}</span>
             </a>
           </p>
 

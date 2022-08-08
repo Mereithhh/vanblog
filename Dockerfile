@@ -41,6 +41,8 @@ ENV VAN_BLOG_REVALIDATE_TIME=10
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
 ARG VAN_BLOG_BUILD_SERVER
 ENV VAN_BLOG_SERVER_URL ${VAN_BLOG_BUILD_SERVER}
+ARG VAN_BLOG_VERSIONS
+ENV VAN_BLOG_VERSION ${VAN_BLOG_VERSIONS}
 RUN yarn config set network-timeout 60000 -g
 RUN yarn config set registry https://registry.npmmirror.com -g
 RUN yarn build
