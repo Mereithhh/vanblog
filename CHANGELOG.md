@@ -1,4 +1,13 @@
 # Changelog
+### [0.7.4](https://github.com/Mereithhh/van-blog/compare/v0.7.3...v0.7.4) (2022-08-08)
+
+
+### ✨ Features | 新功能
+
+* 优化文章获取接口 ([2e83b41](https://github.com/Mereithhh/van-blog/commit/2e83b41e09a9cce0fef7000e64d1bbd575e8bc85))
+* 保存和发布草稿默认检测 more 标记 ([3e684df](https://github.com/Mereithhh/van-blog/commit/3e684dfc90cbd75e6deae8b00673dfa951ce12d6))
+* 前台展示版本号 ([c81850b](https://github.com/Mereithhh/van-blog/commit/c81850b4cdadadd9a009fc439fea5a6ed1058d84))
+
 ### [0.7.3](https://github.com/Mereithhh/van-blog/compare/v0.7.2...v0.7.3) (2022-08-05)
 
 
