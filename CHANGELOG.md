@@ -1,4 +1,11 @@
 # Changelog
+### [0.7.8](https://github.com/Mereithhh/van-blog/compare/v0.7.7...v0.7.8) (2022-08-09)
+
+
+### ✨ Features | 新功能
+
+* 后台增加黑暗模式 ([c92996a](https://github.com/Mereithhh/van-blog/commit/c92996a3a1824e5b58d008ef9d890f1c32c7344e))
+
 ### [0.7.7](https://github.com/Mereithhh/van-blog/compare/v0.7.6...v0.7.7) (2022-08-08)
 
 
