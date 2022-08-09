@@ -4,7 +4,9 @@ import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { history } from 'umi';
 import defaultSettings from '../config/defaultSettings';
 import LogoutButton from './components/LogoutButton';
+import ThemeButton from './components/ThemeButton';
 import { fetchAllMeta } from './services/van-blog/api';
+import { beforeSwitchTheme, getInitTheme, mapTheme } from './services/van-blog/theme';
 const isDev = process.env.UMI_ENV === 'dev';
 const loginPath = '/user/login';
 /** 获取用户信息比较慢的时候会展示一个 loading */
@@ -37,10 +39,14 @@ export async function getInitialState() {
     option.skipErrorHandler = true;
   }
   const initData = await fetchInitData(option);
+  // 暗色模式
+  const theme = getInitTheme();
+  const sysTheme = mapTheme(theme);
   return {
     fetchInitData,
     ...initData,
-    settings: defaultSettings,
+    settings: { ...defaultSettings, navTheme: sysTheme },
+    theme,
   };
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
 
@@ -48,15 +54,18 @@ export const layout = ({ initialState, setInitialState }) => {
   return {
     rightContentRender: () => {
       return (
-        <LogoutButton
-          key="logoutRightContent"
-          trigger={
-            <a>
-              <LogoutOutlined />
-              <span style={{ marginLeft: 6 }}>登出</span>
-            </a>
-          }
-        />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <ThemeButton />
+          <LogoutButton
+            key="logoutRightContent"
+            trigger={
+              <a>
+                <LogoutOutlined />
+                <span style={{ marginLeft: 6 }}>登出</span>
+              </a>
+            }
+          />
+        </div>
       );
     },
     // disableContentMargin: true,
@@ -101,8 +110,14 @@ export const layout = ({ initialState, setInitialState }) => {
             <SettingDrawer
               disableUrlParams
               enableDarkTheme
+              colorList={false}
               settings={initialState?.settings}
+              themeOnly={true}
               onSettingChange={(settings) => {
+                if (settings.navTheme != initialState?.settings?.navTheme) {
+                  // 切换了主题
+                  beforeSwitchTheme(settings.navTheme);
+                }
                 setInitialState((preInitialState) => ({ ...preInitialState, settings }));
               }}
             />
