@@ -13,7 +13,7 @@ const ImgPage = () => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useNum(1, 'static-img-page');
-  const [pageSize, setPageSize] = useNum(5, 'static-img-page-size');
+  const [pageSize, setPageSize] = useNum(10, 'static-img-page-size');
   const [responsive, setResponsive] = useState(false);
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -61,34 +61,50 @@ const ImgPage = () => {
       >
         <Spin spinning={loading}>
           <Image.PreviewGroup>
-            <Space align="start">
+            <Space align="start" wrap>
               {data.map((item: StaticItem) => {
                 return (
-                  <Image
-                    fallback={errorImg}
-                    width={responsive ? 150 : 200}
-                    key={item.sign}
-                    src={`/static/img/${item.name}`}
-                  />
+                  <div
+                    style={{
+                      height: responsive ? 150 : 200,
+                      width: responsive ? 150 : 200,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <Image
+                      fallback={errorImg}
+                      style={{
+                        maxHeight: responsive ? 150 : 200,
+                        maxWidth: responsive ? 150 : 200,
+                      }}
+                      width={'auto'}
+                      height={'auto'}
+                      key={item.sign}
+                      src={`/static/img/${item.name}`}
+                    />
+                  </div>
                 );
               })}
             </Space>
           </Image.PreviewGroup>
+          <Pagination
+            style={{ marginTop: 20, textAlign: 'right' }}
+            hideOnSinglePage={true}
+            current={page as number}
+            pageSize={pageSize as number}
+            onChange={(p, ps) => {
+              if (ps != pageSize) {
+                (setPageSize as any)(ps);
+              }
+              if (p != page) {
+                (setPage as any)(p);
+              }
+            }}
+            total={total}
+          />
         </Spin>
-        <Pagination
-          style={{ marginTop: 20, textAlign: 'right' }}
-          hideOnSinglePage={true}
-          current={page as number}
-          onChange={(p, ps) => {
-            if (ps != pageSize) {
-              (setPageSize as any)(ps);
-            }
-            if (p != page) {
-              (setPage as any)(p);
-            }
-          }}
-          total={total}
-        />
       </RcResizeObserver>
     </PageContainer>
   );
