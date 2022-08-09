@@ -18,6 +18,15 @@ export default [
     hideInMenu: true,
   },
   { name: '草稿管理', icon: 'container', path: '/draft', component: './Draft' },
+  {
+    name: '文件管理',
+    icon: 'container',
+    path: '/static',
+    hideInBreadcrumb: true,
+    routes: [
+      { name: '图片管理', icon: 'container', path: '/static/img', component: './Static/img' },
+    ],
+  },
   { name: '站点管理', icon: 'tool', path: '/site', component: './SiteConfig' },
   { path: '/', redirect: '/welcome' },
   { component: './404' },

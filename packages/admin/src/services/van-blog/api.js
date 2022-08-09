@@ -241,6 +241,11 @@ export async function getArticlesByOption(option) {
     method: 'GET',
   });
 }
+export async function getImgs(page, pageSize = 10) {
+  return request(`/api/admin/img?page=${page}&pageSize=${pageSize}`, {
+    method: 'GET',
+  });
+}
 export async function getDraftsByOption(option) {
   const newQuery = {};
   for (const [k, v] of Object.entries(option)) {
@@ -256,7 +261,10 @@ export async function getDraftsByOption(option) {
   });
 }
 export async function getWelcomeData(tab, overviewNum = 5, viewNum = 5, articleTabNum = 5) {
-  return request(`/api/admin/analysis?tab=${tab}&viewerDataNum=${viewNum}&overviewDataNum=${overviewNum}&articleTabDataNum=${articleTabNum}`, {
-    method: 'GET',
-  });
+  return request(
+    `/api/admin/analysis?tab=${tab}&viewerDataNum=${viewNum}&overviewDataNum=${overviewNum}&articleTabDataNum=${articleTabNum}`,
+    {
+      method: 'GET',
+    },
+  );
 }

@@ -46,6 +46,12 @@ import { VisitProvider } from './provider/visit/visit.provider';
 import { MetaController } from './controller/admin/meta/meta.controller';
 import { AnalysisController } from './controller/admin/analysis/analysis.controller';
 import { AnalysisProvider } from './provider/analysis/analysis.provider';
+import { Setting, SettingSchema } from './scheme/setting.schema';
+import { Static, StaticSchema } from './scheme/static.schema';
+import { SettingProvider } from './provider/setting/setting.provider';
+import { StaticProvider } from './provider/static/static.provider';
+import { ImgController } from './controller/admin/img/img.controller';
+import { LocalProvider } from './provider/static/local.provider';
 
 @Module({
   imports: [
@@ -57,6 +63,8 @@ import { AnalysisProvider } from './provider/analysis/analysis.provider';
       { name: User.name, schema: UserSchema },
       { name: Viewer.name, schema: ViewerSchema },
       { name: Visit.name, schema: VisitSchema },
+      { name: Setting.name, schema: SettingSchema },
+      { name: Static.name, schema: StaticSchema },
     ]),
     JwtModule.register({
       secret: config.jwtSecret,
@@ -84,6 +92,7 @@ import { AnalysisProvider } from './provider/analysis/analysis.provider';
     BackupController,
     MetaController,
     AnalysisController,
+    ImgController,
   ],
   providers: [
     AppService,
@@ -100,6 +109,9 @@ import { AnalysisProvider } from './provider/analysis/analysis.provider';
     JwtStrategy,
     InitProvider,
     AnalysisProvider,
+    SettingProvider,
+    StaticProvider,
+    LocalProvider,
   ],
 })
 export class AppModule implements NestModule {

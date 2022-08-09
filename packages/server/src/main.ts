@@ -2,10 +2,21 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { MetaProvider } from './provider/meta/meta.provider';
-import { ArticleProvider } from './provider/article/article.provider';
+// import { ArticleProvider } from './provider/article/article.provider';
+import { NestExpressApplication } from '@nestjs/platform-express';
+import { config as globalConfig } from './config/index';
+import { checkOrCreate } from './utils/checkFolder';
+import * as path from 'path';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  app.useStaticAssets(globalConfig.staticPath, {
+    prefix: '/static/',
+  });
+  // 查看文件夹是否存在 并创建.
+  checkOrCreate(globalConfig.staticPath);
+  checkOrCreate(path.join(globalConfig.staticPath, 'img'));
+
   const config = new DocumentBuilder()
     .setTitle('VanBlog API Reference')
     .setDescription('The VanBlog API description')
