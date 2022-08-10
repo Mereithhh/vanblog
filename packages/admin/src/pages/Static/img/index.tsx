@@ -1,9 +1,10 @@
 import CopyUploadBtn from '@/components/CopyUploadBtn';
+import ObjTable from '@/components/ObjTable';
 import UploadBtn from '@/components/UploadBtn';
 import { deleteAllIMG, deleteImgBySign, getImgs } from '@/services/van-blog/api';
 import { useNum } from '@/services/van-blog/useNum';
 import { PageContainer } from '@ant-design/pro-components';
-import { Button, Empty, Image, message, Pagination, Space, Spin } from 'antd';
+import { Button, Empty, Image, message, Modal, Pagination, Space, Spin } from 'antd';
 import RcResizeObserver from 'rc-resize-observer';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Item, Menu, Separator, useContextMenu } from 'react-contexify';
@@ -12,7 +13,7 @@ import { useModel } from 'umi';
 import TipTitle from '../../../components/TipTitle';
 import { useTab } from '../../../services/van-blog/useTab';
 import { StaticItem } from '../type';
-import { copyImgLink } from './tools';
+import { copyImgLink, mergeMetaInfo } from './tools';
 
 const MENU_ID = 'static-img';
 const errorImg =
@@ -29,9 +30,28 @@ const ImgPage = () => {
   const { show } = useContextMenu({
     id: MENU_ID,
   });
+  async function deleteImg(sign: string) {
+    try {
+      setLoading(true);
+      await deleteImgBySign(clickItem.sign);
+      setLoading(false);
+      message.success('删除成功！');
+    } catch (err) {
+      message.error('删除失败！');
+    }
+    fetchData();
+  }
   async function handleItemClick({ event, props, triggerEvent, data }) {
     switch (data) {
       case 'info':
+        Modal.info({
+          title: '图片信息',
+          content: (
+            <div>
+              <ObjTable obj={mergeMetaInfo(initialState?.baseUrl || '', clickItem)} />
+            </div>
+          ),
+        });
         break;
       case 'copy':
         copyImgLink(initialState?.baseUrl, `${clickItem.staticType}/${clickItem.name}`);
@@ -40,15 +60,12 @@ const ImgPage = () => {
         copyImgLink(initialState?.baseUrl, `${clickItem.staticType}/${clickItem.name}`, true);
         break;
       case 'delete':
-        try {
-          setLoading(true);
-          await deleteImgBySign(clickItem.sign);
-          setLoading(false);
-          message.success('删除成功！');
-        } catch (err) {
-          message.error('删除失败！');
-        }
-        fetchData();
+        Modal.confirm({
+          title: '确定删除该图片吗？删除后不可恢复！',
+          onOk: () => {
+            deleteImg(clickItem.sign);
+          },
+        });
         break;
     }
   }
@@ -83,7 +100,12 @@ const ImgPage = () => {
   return (
     <PageContainer
       header={{
-        title: <TipTitle title="图片管理" tip="首次使用请先前往设置确认存储策略，默认为本地存储" />,
+        title: (
+          <TipTitle
+            title="图片管理"
+            tip="设置页可更改图片存储方式。对着图片点右键可解锁更多操作哦"
+          />
+        ),
       }}
       extra={
         <Space>
@@ -91,9 +113,14 @@ const ImgPage = () => {
             <Button
               danger
               onClick={async () => {
-                await deleteAllIMG();
-                fetchData();
-                message.success('全部删除！');
+                Modal.confirm({
+                  title: '【DEV ONLY】确定删除所有图片吗？删除后不可恢复！',
+                  onOk: async () => {
+                    await deleteAllIMG();
+                    fetchData();
+                    message.success('全部删除！');
+                  },
+                });
               }}
             >
               全部删除
