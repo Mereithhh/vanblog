@@ -5,6 +5,7 @@ import * as path from 'path';
 import { config } from 'src/config';
 import { imageSize } from 'image-size';
 import { formatBytes } from 'src/utils/size';
+import { ImgMeta } from 'src/dto/img';
 @Injectable()
 export class LocalProvider {
   async saveFile(fileName: string, buffer: Buffer, type: StaticType) {
@@ -14,9 +15,10 @@ export class LocalProvider {
     const byteLength = buffer.byteLength;
 
     fs.writeFileSync(srcPath, buffer);
+    const meta: ImgMeta = { ...result, size: formatBytes(byteLength) };
     return {
-      meta: { ...result, size: formatBytes(byteLength) },
-      realPath: srcPath,
+      meta,
+      realPath: `/static/${type}/${fileName}`,
     };
   }
   async deleteFile(fileName: string, type: StaticType) {

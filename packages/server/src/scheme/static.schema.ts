@@ -17,7 +17,7 @@ export class Static extends Document {
   fileType: string;
 
   @Prop()
-  // 实际路径, oss 上的或者是 picGo 上的
+  // 实际 url 路径, oss 上的或者是 picGo 上的
   realPath: string;
 
   @Prop({ type: SchemaTypes.Mixed })

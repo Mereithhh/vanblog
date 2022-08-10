@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SearchStaticOption, StaticType } from 'src/dto/setting.dto';
@@ -6,6 +6,7 @@ import { Static, StaticDocument } from 'src/scheme/static.schema';
 import { encryptFileMD5 } from 'src/utils/crypto';
 import { SettingProvider } from '../setting/setting.provider';
 import { LocalProvider } from './local.provider';
+import { PicgoProvider } from './picgo.provider';
 
 @Injectable()
 export class StaticProvider {
@@ -14,10 +15,10 @@ export class StaticProvider {
     private staticModel: Model<StaticDocument>,
     private readonly settingProvider: SettingProvider,
     private readonly localProvider: LocalProvider,
+    private readonly picgoProvider: PicgoProvider,
   ) {}
   publicView = {
     _id: 0,
-    realPath: 0,
   };
   adminView = undefined;
   getView(view: 'admin' | 'public') {
@@ -34,7 +35,7 @@ export class StaticProvider {
 
     if (hasPicture) {
       return {
-        src: `${type}/${hasPicture.name}`,
+        src: hasPicture.realPath,
         isNew: false,
       };
     }
@@ -42,9 +43,18 @@ export class StaticProvider {
     const arr = file.originalname.split('.');
     const fileType = arr[arr.length - 1];
     const fileName = currentSign + '.' + file.originalname;
-    await this.saveFile(fileType, fileName, buffer, type, currentSign);
+    const realPath = await this.saveFile(
+      fileType,
+      fileName,
+      buffer,
+      type,
+      currentSign,
+    );
+    if (!realPath) {
+      throw new HttpException('上传失败', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
     return {
-      src: `${type}/${fileName}`,
+      src: realPath,
       isNew: true,
     };
   }
@@ -73,7 +83,23 @@ export class StaticProvider {
           realPath,
           meta,
         });
-        break;
+        return realPath;
+      case 'picgo':
+        const picgoRes = await this.picgoProvider.saveFile(
+          fileName,
+          buffer,
+          type,
+        );
+        await this.createInDB({
+          fileType: picgoRes.meta?.type || fileType,
+          staticType: type,
+          storageType: storageType,
+          sign,
+          name: fileName,
+          realPath: picgoRes.realPath,
+          meta: picgoRes.meta,
+        });
+        return picgoRes.realPath;
     }
   }
   async createInDB(dto: Partial<Static>) {
@@ -115,6 +141,8 @@ export class StaticProvider {
           toDeleteData.staticType,
         );
         break;
+      case 'picgo':
+        console.log('实际上只删了数据库，网盘上还有的。');
     }
     return await this.staticModel.deleteOne({ sign }).exec();
   }

@@ -53,6 +53,7 @@ import { StaticProvider } from './provider/static/static.provider';
 import { ImgController } from './controller/admin/img/img.controller';
 import { LocalProvider } from './provider/static/local.provider';
 import { SettingController } from './controller/admin/setting/setting.controller';
+import { PicgoProvider } from './provider/static/picgo.provider';
 
 @Module({
   imports: [
@@ -102,6 +103,7 @@ import { SettingController } from './controller/admin/setting/setting.controller
     CategoryProvider,
     MetaProvider,
     DraftProvider,
+    PicgoProvider,
     VisitProvider,
     TagProvider,
     UserProvider,
