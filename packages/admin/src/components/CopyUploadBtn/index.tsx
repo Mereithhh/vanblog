@@ -15,7 +15,6 @@ export default function (props: {
       props.onError();
       return;
     }
-    console.log(fileObj.name);
     const formData = new FormData();
     formData.append('file', fileObj);
     fetch('/api/admin/img/upload', {

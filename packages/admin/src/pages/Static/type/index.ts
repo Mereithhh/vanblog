@@ -1,5 +1,6 @@
 export interface StaticItem {
   storageType: StorageType;
+  staticType: string;
   fileType: string;
   realPath: string;
   meta: any;

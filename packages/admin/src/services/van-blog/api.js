@@ -246,6 +246,11 @@ export async function getImgs(page, pageSize = 10) {
     method: 'GET',
   });
 }
+export async function deleteImgBySign(sign) {
+  return request(`/api/admin/img/${sign}`, {
+    method: 'DELETE',
+  });
+}
 export async function getDraftsByOption(option) {
   const newQuery = {};
   for (const [k, v] of Object.entries(option)) {
