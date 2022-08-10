@@ -1,9 +1,15 @@
 import { writeClipBoardText } from '@/services/van-blog/clipboard';
 import { message } from 'antd';
 import { StaticItem } from '../type';
-
-export const copyImgLink = (baseUrl, src, isMarkdown = false) => {
-  let url = `${baseUrl}/static/${src}`;
+export const getImgLink = (realPath) => {
+  let url = `${window.location.protocol}//${window.location.host}${realPath}`;
+  if (realPath.includes('http://') || realPath.includes('https://')) {
+    url = realPath;
+  }
+  return url;
+};
+export const copyImgLink = (realPath, isMarkdown = false) => {
+  let url = getImgLink(realPath);
   if (isMarkdown) {
     url = `![](${url})`;
   }
@@ -15,7 +21,7 @@ export const copyImgLink = (baseUrl, src, isMarkdown = false) => {
     }
   });
 };
-export const mergeMetaInfo = (baseUrl, item: StaticItem) => {
+export const mergeMetaInfo = (item: StaticItem) => {
   const Dic = {
     type: '格式',
     height: '高',
@@ -29,14 +35,16 @@ export const mergeMetaInfo = (baseUrl, item: StaticItem) => {
   const KeyDic = {
     local: '本地',
   };
+  let url = getImgLink(realPath);
   const rawObj = {
     name: item.name,
     ...item.meta,
     sign: item.sign,
     storageType: item.storageType,
-    url: `${baseUrl}/static/${item.staticType}/${item.name}`,
+    url,
   };
   const res = {};
+
   for (const [k, v] of Object.entries(rawObj)) {
     res[Dic[k] || k] = KeyDic[v as any] || v;
   }

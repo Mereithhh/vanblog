@@ -7,4 +7,4 @@ export interface StaticItem {
   name: string;
   sign: string;
 }
-export type StorageType = 'local';
+export type StorageType = 'local' | 'picgo';

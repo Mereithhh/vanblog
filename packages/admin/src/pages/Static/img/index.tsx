@@ -24,8 +24,8 @@ const ImgPage = () => {
   const [page, setPage] = useTab(1, 'page');
   const [responsive, setResponsive] = useState(false);
   const [pageSize, setPageSize] = useNum(responsive ? 9 : 15, 'static-img-page-size');
-  const { initialState } = useModel('@@initialState');
   const [clickItem, setClickItem] = useState<StaticItem>();
+  const { initialState, setInitialState } = useModel('@@initialState');
   const { show } = useContextMenu({
     id: MENU_ID,
   });
@@ -34,7 +34,11 @@ const ImgPage = () => {
       setLoading(true);
       await deleteImgBySign(clickItem.sign);
       setLoading(false);
-      message.success('删除成功！');
+      message.success(
+        `删除成功！${
+          clickItem.storageType == 'picgo' ? '但是 OSS 存储中并未删除哦' : '已彻底删除'
+        }`,
+      );
     } catch (err) {
       message.error('删除失败！');
     }
@@ -47,16 +51,16 @@ const ImgPage = () => {
           title: '图片信息',
           content: (
             <div>
-              <ObjTable obj={mergeMetaInfo(initialState?.baseUrl || '', clickItem)} />
+              <ObjTable obj={mergeMetaInfo(clickItem)} />
             </div>
           ),
         });
         break;
       case 'copy':
-        copyImgLink(initialState?.baseUrl, `${clickItem.staticType}/${clickItem.name}`);
+        copyImgLink(clickItem.realPath);
         break;
       case 'copyMarkdown':
-        copyImgLink(initialState?.baseUrl, `${clickItem.staticType}/${clickItem.name}`, true);
+        copyImgLink(clickItem.realPath, true);
         break;
       case 'delete':
         Modal.confirm({
@@ -67,7 +71,7 @@ const ImgPage = () => {
         });
         break;
       case 'download':
-        downloadImg(clickItem.name, `/static/${clickItem.staticType}/${clickItem.name}`);
+        downloadImg(clickItem.name, clickItem.realPath);
         break;
     }
   }
@@ -141,7 +145,7 @@ const ImgPage = () => {
               } else {
                 message.warning(`剪切板图片已存在!`);
               }
-              copyImgLink(initialState?.baseUrl, data.src);
+              copyImgLink(data.src);
 
               fetchData();
             }}
@@ -158,7 +162,7 @@ const ImgPage = () => {
               } else {
                 message.warning(`${info.name} 已存在!`);
               }
-              copyImgLink(initialState?.baseUrl, info?.response?.data?.src);
+              copyImgLink(info?.response?.data?.src);
               fetchData();
             }}
             url="/api/admin/img/upload"
@@ -217,7 +221,7 @@ const ImgPage = () => {
                       // }}
                       width={'auto'}
                       height={'auto'}
-                      src={`/static/img/${item.name}`}
+                      src={`${item.realPath}`}
                     />
                   </div>
                 );
