@@ -9,7 +9,7 @@ export const copyImgLink = (baseUrl, src, isMarkdown = false) => {
   }
   writeClipBoardText(url).then((res) => {
     if (res) {
-      message.success(`已复制${isMarkdown ? 'markdown' : '图片'}链接到剪切板！`);
+      message.success(`已复制${isMarkdown ? ' markdown ' : '图片'}链接到剪切板！`);
     } else {
       message.error('复制链接到剪切板失败！');
     }
@@ -41,4 +41,11 @@ export const mergeMetaInfo = (baseUrl, item: StaticItem) => {
     res[Dic[k] || k] = KeyDic[v as any] || v;
   }
   return res;
+};
+export const downloadImg = (name, url) => {
+  const tag = document.createElement('a');
+  // 此属性的值就是下载时图片的名称，注意，名称中不能有半角点，否则下载时后缀名会错误
+  tag.setAttribute('download', name);
+  tag.href = `https://192.168.5.11:3002${url}`;
+  tag.dispatchEvent(new MouseEvent('click'));
 };

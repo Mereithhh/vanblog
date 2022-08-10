@@ -13,7 +13,7 @@ import { useModel } from 'umi';
 import TipTitle from '../../../components/TipTitle';
 import { useTab } from '../../../services/van-blog/useTab';
 import { StaticItem } from '../type';
-import { copyImgLink, mergeMetaInfo } from './tools';
+import { copyImgLink, downloadImg, mergeMetaInfo } from './tools';
 
 const MENU_ID = 'static-img';
 const errorImg =
@@ -66,6 +66,9 @@ const ImgPage = () => {
             deleteImg(clickItem.sign);
           },
         });
+        break;
+      case 'download':
+        downloadImg(clickItem.name, `/static/${clickItem.staticType}/${clickItem.name}`);
         break;
     }
   }
@@ -232,6 +235,9 @@ const ImgPage = () => {
           复制 Markdown 链接
         </Item>
         <Separator />
+        <Item onClick={handleItemClick} data="download">
+          下载
+        </Item>
         <Item onClick={handleItemClick} data="delete">
           删除
         </Item>
