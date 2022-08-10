@@ -1,8 +1,10 @@
+import StaticForm from '@/components/StaticForm';
 import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
 import Backup from './tabs/Backup';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
+import ImgTab from './tabs/ImgTab';
 import Link from './tabs/Link';
 import Menu from './tabs/Menu';
 import SiteInfo from './tabs/SiteInfo';
@@ -18,6 +20,7 @@ export default function () {
     backup: <Backup />,
     menuConfig: <Menu />,
     user: <User />,
+    img: <ImgTab />,
   };
   const [tab, setTab] = useTab('category', 'tab');
 
@@ -36,6 +39,10 @@ export default function () {
         {
           tab: '站点配置',
           key: 'siteInfo',
+        },
+        {
+          tab: '图床设置',
+          key: 'img',
         },
         {
           tab: '导航配置',

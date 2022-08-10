@@ -256,6 +256,17 @@ export async function deleteAllIMG() {
     method: 'DELETE',
   });
 }
+export async function getStaticSetting() {
+  return request(`/api/admin/setting/static`, {
+    method: 'GET',
+  });
+}
+export async function updateStaticSetting(data) {
+  return request(`/api/admin/setting/static`, {
+    method: 'PUT',
+    data: data,
+  });
+}
 export async function getDraftsByOption(option) {
   const newQuery = {};
   for (const [k, v] of Object.entries(option)) {
