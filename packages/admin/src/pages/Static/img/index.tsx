@@ -1,14 +1,15 @@
 import CopyUploadBtn from '@/components/CopyUploadBtn';
 import UploadBtn from '@/components/UploadBtn';
-import { deleteImgBySign, getImgs } from '@/services/van-blog/api';
+import { deleteAllIMG, deleteImgBySign, getImgs } from '@/services/van-blog/api';
 import { useNum } from '@/services/van-blog/useNum';
 import { PageContainer } from '@ant-design/pro-components';
-import { Image, message, Pagination, Space, Spin } from 'antd';
+import { Button, Empty, Image, message, Pagination, Space, Spin } from 'antd';
 import RcResizeObserver from 'rc-resize-observer';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Item, Menu, Separator, useContextMenu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
 import { useModel } from 'umi';
+import TipTitle from '../../../components/TipTitle';
 import { useTab } from '../../../services/van-blog/useTab';
 import { StaticItem } from '../type';
 import { copyImgLink } from './tools';
@@ -73,11 +74,32 @@ const ImgPage = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
+  const showDelAllBtn = useMemo(() => {
+    if (initialState?.version && initialState?.version == 'dev') {
+      return true;
+    }
+    return false;
+  }, [initialState]);
   return (
     <PageContainer
+      header={{
+        title: <TipTitle title="图片管理" tip="首次使用请先前往设置确认存储策略，默认为本地存储" />,
+      }}
       extra={
         <Space>
+          {showDelAllBtn && (
+            <Button
+              danger
+              onClick={async () => {
+                await deleteAllIMG();
+                fetchData();
+                message.success('全部删除！');
+              }}
+            >
+              全部删除
+            </Button>
+          )}
+
           <CopyUploadBtn
             setLoading={setLoading}
             onError={() => {
@@ -123,6 +145,9 @@ const ImgPage = () => {
         }}
       >
         <Spin spinning={loading}>
+          {data.length == 0 && (
+            <Empty description="暂无图片，快上传呀~" style={{ marginTop: 100 }} />
+          )}
           <Image.PreviewGroup>
             <Space align="start" wrap>
               {data.map((item: StaticItem) => {

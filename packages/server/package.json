@@ -31,6 +31,7 @@
     "@nestjs/swagger": "^5.2.1",
     "crypto": "^1.0.1",
     "dayjs": "^1.11.4",
+    "image-size": "^1.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^6.3.4",
     "passport": "^0.6.0",

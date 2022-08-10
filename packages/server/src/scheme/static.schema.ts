@@ -31,6 +31,13 @@ export class Static extends Document {
   @Prop()
   //签名;
   sign: string;
+
+  @Prop({
+    default: () => {
+      return new Date();
+    },
+  })
+  updatedAt: Date;
 }
 
 export const StaticSchema = SchemaFactory.createForClass(Static);

@@ -65,7 +65,7 @@ export class StaticProvider {
           type,
         );
         await this.createInDB({
-          fileType: fileType,
+          fileType: meta?.type || fileType,
           staticType: type,
           storageType: storageType,
           sign,
@@ -96,6 +96,7 @@ export class StaticProvider {
     const total = await this.staticModel.count(query);
     const items = await this.staticModel
       .find(query, this.getView(option.view))
+      .sort({ updatedAt: -1 })
       .limit(option.pageSize)
       .skip(option.page * option.pageSize - option.pageSize);
     return {
@@ -116,5 +117,12 @@ export class StaticProvider {
         break;
     }
     return await this.staticModel.deleteOne({ sign }).exec();
+  }
+  async deleteAllIMG() {
+    // 调试用的
+    const all = await this.getAll('img', 'admin');
+    for (const each of all) {
+      await this.deleteOneBySign(each.sign);
+    }
   }
 }

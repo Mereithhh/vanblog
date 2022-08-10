@@ -40,6 +40,14 @@ export class ImgController {
     };
   }
 
+  @Delete('/all/delete')
+  async deleteALL() {
+    const res = await this.staticProvider.deleteAllIMG();
+    return {
+      statusCode: 200,
+      data: res,
+    };
+  }
   @Delete('/:sign')
   async delete(@Param('sign') sign: string) {
     const res = await this.staticProvider.deleteOneBySign(sign);
