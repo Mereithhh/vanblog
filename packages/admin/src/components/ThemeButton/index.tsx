@@ -1,8 +1,9 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useModel } from 'umi';
 import { beforeSwitchTheme } from '../../services/van-blog/theme';
 import style from './index.less';
 export default function (props: {}) {
+  const { current } = useRef<any>({ hasInit: false });
   const { current: currentTimer } = useRef<any>({ timer: null });
   const { initialState, setInitialState } = useModel('@@initialState');
   const setTheme = (newTheme: 'auto' | 'light' | 'dark') => {
@@ -30,6 +31,19 @@ export default function (props: {}) {
       setTheme('auto');
     }, 10000);
   };
+  useEffect(() => {
+    if (!current.hasInit) {
+      current.hasInit = true;
+      if (theme.includes('auto')) {
+        setTimer();
+      } else {
+        clearTimer();
+      }
+    }
+    return () => {
+      clearTimer();
+    };
+  }, [current, clearTimer, theme, setTimer]);
 
   const handleSwitch = () => {
     clearTimer();

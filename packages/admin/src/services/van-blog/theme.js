@@ -1,5 +1,5 @@
 export const getInitTheme = () => {
-  let theme = 'light';
+  let theme = 'auto';
   if (!('theme' in localStorage) || localStorage.theme == 'auto') {
     return 'auto';
   } else {
