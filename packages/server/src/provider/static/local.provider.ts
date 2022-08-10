@@ -8,6 +8,7 @@ export class LocalProvider {
   async saveFile(fileName: string, buffer: Buffer, type: StaticType) {
     const storagePath = StoragePath[type] || StoragePath['img'];
     const srcPath = path.join(config.staticPath, storagePath, fileName);
+
     fs.writeFileSync(srcPath, buffer);
     return {
       meta: {},
