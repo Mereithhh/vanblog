@@ -1,4 +1,11 @@
 # Changelog
+## [0.9.0](https://github.com/Mereithhh/van-blog/compare/v0.8.0...v0.9.0) (2022-08-12)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 增加更新版本到 api server 的操作 ([5cf678d](https://github.com/Mereithhh/van-blog/commit/5cf678d0ce1b6cbf0b28b16b857cc58e49765927))
+
 ## [0.8.0](https://github.com/Mereithhh/van-blog/compare/v0.7.8...v0.8.0) (2022-08-12)
 
 
