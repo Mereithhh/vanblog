@@ -4,6 +4,7 @@ import { version } from '../../../utils/loadConfig';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { Request } from 'express';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+import { getVersionFromServer } from 'src/utils/getVersion';
 
 @ApiTags('meta')
 @UseGuards(AdminGuard)
@@ -13,8 +14,11 @@ export class MetaController {
   @Get()
   async getAllMeta(@Req() req: Request) {
     const meta = await this.metaProvider.getAll();
+    const serverData = await getVersionFromServer();
     const data = {
       version: version,
+      latestVersion: serverData?.version || version,
+      updatedAt: serverData?.updatedAt || new Date(),
       user: req.user,
       baseUrl: meta.siteInfo.baseUrl,
       walineServerUrl: meta.siteInfo.walineServerUrl || '',
