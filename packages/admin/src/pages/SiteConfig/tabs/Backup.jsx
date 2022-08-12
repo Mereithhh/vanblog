@@ -1,8 +1,8 @@
+import { exportAll } from '@/services/van-blog/api';
 import ProCard from '@ant-design/pro-card';
-import { Space, Button, Upload, message, Spin } from 'antd';
+import { Alert, Button, message, Space, Spin, Upload } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
-import { exportAll } from '@/services/van-blog/api';
 
 export default function (props) {
   const [loading, setLoading] = useState(false);
@@ -18,6 +18,11 @@ export default function (props) {
   };
   return (
     <ProCard>
+      <Alert
+        type="warning"
+        message="注意：导入导出并不会实际导出图床中的图片本身，而是导入导出其图片记录以便检索。所以本地图床时需要手动备份图片哦"
+        style={{ marginBottom: 20 }}
+      />
       <Spin spinning={loading}>
         <Space size="large">
           <Upload

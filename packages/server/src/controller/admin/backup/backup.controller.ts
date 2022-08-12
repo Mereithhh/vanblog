@@ -25,6 +25,8 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { removeID } from 'src/utils/removeId';
 import { ViewerProvider } from 'src/provider/viewer/viewer.provider';
 import { VisitProvider } from 'src/provider/visit/visit.provider';
+import { StaticProvider } from 'src/provider/static/static.provider';
+import { SettingProvider } from 'src/provider/setting/setting.provider';
 
 @ApiTags('backup')
 @UseGuards(AdminGuard)
@@ -40,6 +42,8 @@ export class BackupController {
     private readonly userProvider: UserProvider,
     private readonly viewerProvider: ViewerProvider,
     private readonly visitProvider: VisitProvider,
+    private readonly settingProvider: SettingProvider,
+    private readonly staticProvider: StaticProvider,
   ) {}
 
   @Get('export')
@@ -53,6 +57,9 @@ export class BackupController {
     // 访客记录
     const viewer = await this.viewerProvider.getAll();
     const visit = await this.visitProvider.getAll();
+    // 设置表
+    const staticSetting = await this.settingProvider.getStaticSetting();
+    const staticItems = await this.staticProvider.exportAll();
     const data = {
       articles,
       tags,
@@ -62,6 +69,8 @@ export class BackupController {
       user,
       viewer,
       visit,
+      static: staticItems,
+      setting: { static: staticSetting },
     };
     // 拼接一个临时文件
     const name = `temp.json`;
@@ -81,14 +90,19 @@ export class BackupController {
   async importAll(@UploadedFile() file: Express.Multer.File) {
     const json = file.buffer.toString();
     const data = JSON.parse(json);
-    // eslint-disable-next-line prefer-const
-    let { articles, meta, drafts, user, viewer, visit } = data;
+    const { meta, user, setting } = data;
+    let { articles, drafts, viewer, visit, static: staticItems } = data;
     // 去掉 id
     articles = removeID(articles);
     drafts = removeID(drafts);
     viewer = removeID(viewer);
     visit = removeID(visit);
-
+    if (staticItems) {
+      staticItems = removeID(staticItems);
+    }
+    if (setting && setting.static) {
+      setting.static = { ...setting.static, _id: undefined, __v: undefined };
+    }
     delete user._id;
     delete user.__v;
     delete meta._id;
@@ -97,6 +111,8 @@ export class BackupController {
     await this.draftProvider.importDrafts(drafts);
     await this.userProvider.updateUser(user);
     await this.metaProvider.update(meta);
+    await this.settingProvider.importSetting(setting);
+    await this.staticProvider.importItems(staticItems);
     if (visit) {
       await this.visitProvider.import(visit);
     }

@@ -81,6 +81,8 @@ ENV PORT 3001
 # 增加版本
 ARG VAN_BLOG_VERSIONS
 ENV VAN_BLOG_VERSION ${VAN_BLOG_VERSIONS}
+VOLUME /app/static
+RUN mkdir /app/static
 EXPOSE 80
 ENTRYPOINT [ "bash","entrypoint.sh" ]
 # CMD [ "entrypoint.sh" ]

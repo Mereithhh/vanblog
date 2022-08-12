@@ -19,6 +19,16 @@ export class SettingProvider {
     }
     return null;
   }
+  async importSetting(setting: any) {
+    for (const [k, v] of Object.entries(setting)) {
+      if (k == 'static') {
+        await this.importStaticSetting(v as any);
+      }
+    }
+  }
+  async importStaticSetting(dto: StaticSetting) {
+    await this.updateStaticSetting(dto);
+  }
   async updateStaticSetting(dto: StaticSetting) {
     const oldValue = await this.getStaticSetting();
     const newValue = { ...oldValue, ...dto };

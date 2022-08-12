@@ -58,6 +58,16 @@ export class StaticProvider {
       isNew: true,
     };
   }
+  async importItems(items: Static[]) {
+    for (const each of items) {
+      const oldItem = await this.getOneBySign(each.sign);
+      if (!oldItem) {
+        await this.createInDB(each);
+      } else {
+        this.staticModel.updateOne({ _id: oldItem._id }, { each });
+      }
+    }
+  }
   async saveFile(
     fileType: string,
     fileName: string,
@@ -113,6 +123,9 @@ export class StaticProvider {
     return await this.staticModel
       .find({ staticType: type }, this.getView(view))
       .exec();
+  }
+  async exportAll() {
+    return await this.staticModel.find({}, this.getView('public')).exec();
   }
   async getByOption(option: SearchStaticOption) {
     const query: any = {};
