@@ -193,6 +193,7 @@ const ImgPage = () => {
                 gridTemplateColumns: `repeat(${responsive ? 3 : 5}, ${
                   responsive ? '30%' : '18.5%'
                 })`,
+
                 gridGap: '10px 10px',
                 justifyItems: 'center',
                 alignItems: 'center',

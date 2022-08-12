@@ -35,7 +35,7 @@ export const mergeMetaInfo = (item: StaticItem) => {
   const KeyDic = {
     local: '本地',
   };
-  let url = getImgLink(realPath);
+  let url = getImgLink(item.realPath);
   const rawObj = {
     name: item.name,
     ...item.meta,
