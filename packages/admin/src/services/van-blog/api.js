@@ -16,6 +16,14 @@ export async function fetchInit(body) {
     data: body,
   });
 }
+export async function searchArtclesByLink(link) {
+  return request('/api/admin/article/searchByLink', {
+    method: 'POST',
+    data: {
+      link,
+    },
+  });
+}
 export async function scanImgsOfArticles() {
   return request('/api/admin/img/scan', {
     method: 'POST',

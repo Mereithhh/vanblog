@@ -82,6 +82,16 @@ export class ArticleController {
       data,
     };
   }
+  @Post('searchByLink')
+  async searchArtcilesByLink(@Body() searchDto: { link: string }) {
+    const data = await this.articleProvider.searchArticlesByLink(
+      searchDto?.link || '',
+    );
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
   @Delete('/:id')
   async delete(@Param('id') id: number) {
     const data = await this.articleProvider.deleteById(id);

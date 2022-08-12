@@ -98,6 +98,23 @@ export class ArticleProvider {
     this.metaProvider.updateTotalWords();
     return createdData.save();
   }
+  async searchArticlesByLink(link: string) {
+    const artciles = await this.articleModel.find(
+      {
+        content: { $regex: link, $options: '$i' },
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+      this.listView,
+    );
+    return artciles;
+  }
   async getAllImageLinks() {
     const res = [];
     const articles = await this.articleModel.find({
