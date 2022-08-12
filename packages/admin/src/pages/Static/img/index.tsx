@@ -251,13 +251,15 @@ const ImgPage = () => {
                       displayMenu(e, item);
                     }}
                     key={item.sign + item.realPath}
+                    // className="hover-gray"
                     style={{
                       // height: responsive ? 150 : 200,
                       // width: responsive ? 150 : 200,
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
-                      // height: '200px',
+                      height: '100%',
+                      width: '100%',
                     }}
                   >
                     <Image
