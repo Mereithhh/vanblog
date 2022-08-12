@@ -193,7 +193,7 @@ const ImgPage = () => {
                 gridTemplateColumns: `repeat(${responsive ? 3 : 5}, ${
                   responsive ? '30%' : '18.5%'
                 })`,
-
+                gridAutoRows: 'auto',
                 gridGap: '10px 10px',
                 justifyItems: 'center',
                 alignItems: 'center',
@@ -212,6 +212,7 @@ const ImgPage = () => {
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'center',
+                      // height: '200px',
                     }}
                   >
                     <Image
@@ -220,6 +221,7 @@ const ImgPage = () => {
                       //   maxHeight: responsive ? 150 : 200,
                       //   maxWidth: responsive ? 150 : 200,
                       // }}
+                      style={{ maxHeight: '200px' }}
                       width={'auto'}
                       height={'auto'}
                       src={`${item.realPath}`}
