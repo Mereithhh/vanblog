@@ -4,11 +4,13 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
+import UrlFormItem from '../UrlFormItem';
 
 export default function (props: {
   showOption: boolean;
   showRequire: boolean;
   showLayout: boolean;
+  form: any;
 }) {
   return (
     <>
@@ -28,47 +30,51 @@ export default function (props: {
             placeholder={'请输入作者描述'}
             rules={[{ required: true, message: '这是必填项' }]}
           ></ProFormText>
-          <ProFormText
+          <UrlFormItem
+            formRef={props.form}
             name="authorLogo"
             required
             label="作者 Logo"
             placeholder={'请输入作者 Logo Url'}
-            rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+          />
         </>
       )}
       {props.showOption && (
-        <ProFormText
+        <UrlFormItem
+          required={false}
+          formRef={props.form}
           name="authorLogoDark"
           label="作者 Logo（黑暗模式）"
           placeholder={'请输入黑暗模式作者 Logo Url，留空表示沿用上个'}
-        ></ProFormText>
+        />
       )}
       {props.showOption && (
         <>
-          <ProFormText
+          <UrlFormItem
+            formRef={props.form}
             name="siteLogo"
-            required
+            required={false}
             label="网站 Logo"
             placeholder={'请输入网站 Logo Url'}
-            rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
-          <ProFormText
+          />
+          <UrlFormItem
+            formRef={props.form}
             name="siteLogoDark"
             label="网站 Logo（黑暗模式）"
+            required={false}
             placeholder={'请输入网站黑暗模式 Logo Url，留空表示沿用上个'}
-          ></ProFormText>
+          />
         </>
       )}
       {props.showRequire && (
         <>
-          <ProFormText
+          <UrlFormItem
+            formRef={props.form}
             name="favicon"
             required
-            label="网站图标"
+            label="网站图标(favicon)"
             placeholder={'请输入网站图标 Url'}
-            rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+          />
           <ProFormText
             name="siteName"
             required
@@ -87,36 +93,44 @@ export default function (props: {
       )}
       {props.showOption && (
         <>
-          <ProFormText
+          <UrlFormItem
+            formRef={props.form}
             name="payAliPay"
             label="支付宝图片 Url"
             placeholder={'请输入支付宝打赏图片 Url，留空不启用打赏'}
-          ></ProFormText>{' '}
-          <ProFormText
+            required={false}
+          />
+          <UrlFormItem
+            formRef={props.form}
             name="payAliPayDark"
             label="支付宝图片 Url（黑暗模式）"
             placeholder={'请输入黑暗模式支付宝打赏图片 Url，留空沿用上个'}
-          ></ProFormText>
-          <ProFormText
+            required={false}
+          />
+          <UrlFormItem
+            formRef={props.form}
             name="payWechat"
             label="微信图片 Url"
             placeholder={'请输入微信打赏图片 Url，留空不启用打赏'}
-          ></ProFormText>
-          <ProFormText
+            required={false}
+          />
+          <UrlFormItem
+            formRef={props.form}
             name="payWechatDark"
             label="微信图片 Url（黑暗模式）"
             placeholder={'请输入黑暗模式微信打赏图片 Url，留空沿用上个'}
-          ></ProFormText>
+            required={false}
+          />
         </>
       )}
       {props.showRequire && (
         <ProFormText
           name="baseUrl"
-          required
+          rules={[{ required: true, message: '这是必填项' }]}
           label="网站 Url"
           placeholder={'请输入网站 Url'}
-          rules={[{ required: true, message: '这是必填项' }]}
-        ></ProFormText>
+          required={true}
+        />
       )}
       {props.showOption && (
         <>
@@ -130,6 +144,7 @@ export default function (props: {
             label="备案网址"
             placeholder={'请输入备案网址，留空不显示备案信息'}
           ></ProFormText>
+
           <ProFormText
             name="gaAnalysisId"
             label="Google Analysis ID"
@@ -154,6 +169,7 @@ export default function (props: {
           <ProFormSelect
             name={'showSubMenu'}
             label="显示分类导航栏"
+            placeholder={'隐藏'}
             valueEnum={{
               true: '显示',
               false: '隐藏',
@@ -165,6 +181,7 @@ export default function (props: {
             name={'subMenuOffset'}
             label="分类导航栏左侧偏移（px）"
             dependencies={['showSubMenu']}
+            placeholder={'0'}
             fieldProps={{ precision: 0 }}
             min={0}
             max={200}
@@ -177,11 +194,13 @@ export default function (props: {
               siteLogo: '网站logo',
               siteName: '网站名',
             }}
+            placeholder="网站名"
             tooltip={'显示网站logo的前提是已设置正确的网站logo哦。默认显示网站名'}
           ></ProFormSelect>
           <ProFormSelect
             name={'showAdminButton'}
-            label="后台按钮显示"
+            label="后台按钮是否显示"
+            placeholder={'显示'}
             valueEnum={{
               true: '显示',
               false: '隐藏',

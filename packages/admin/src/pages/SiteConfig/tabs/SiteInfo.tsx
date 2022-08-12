@@ -5,6 +5,7 @@ import { ProForm } from '@ant-design/pro-components';
 import { Card, message } from 'antd';
 export default function () {
   const [tab, setTab] = useTab('basic', 'subTab');
+  const [form] = ProForm.useForm();
   const tabList = [
     {
       key: 'basic',
@@ -23,6 +24,7 @@ export default function () {
   return (
     <Card tabList={tabList} onTabChange={setTab} activeTabKey={tab}>
       <ProForm
+        form={form}
         grid={true}
         layout={'horizontal'}
         labelCol={{ span: 6 }}
@@ -37,6 +39,7 @@ export default function () {
         }}
       >
         <SiteInfoForm
+          form={form}
           showLayout={tab == 'layout'}
           showOption={tab == 'more'}
           showRequire={tab == 'basic'}

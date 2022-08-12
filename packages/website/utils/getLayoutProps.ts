@@ -44,7 +44,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     ipcHref: siteInfo?.beianUrl || "",
     ipcNumber: siteInfo?.beianNumber || "",
     since: siteInfo?.since || dayjs().format("YYYY-MM-DD"),
-    logo: siteInfo.siteLogo,
+    logo: siteInfo?.siteLogo || "",
     favicon: siteInfo.favicon,
     siteName: siteInfo.siteName,
     siteDesc: siteInfo.siteDesc,

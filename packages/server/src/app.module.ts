@@ -120,9 +120,12 @@ import { PicgoProvider } from './provider/static/picgo.provider';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(InitMiddleware).forRoutes({
-      path: '*',
-      method: RequestMethod.ALL,
-    });
+    consumer
+      .apply(InitMiddleware)
+      .exclude({ path: '/api/admin/img/upload', method: RequestMethod.POST })
+      .forRoutes({
+        path: '*',
+        method: RequestMethod.ALL,
+      });
   }
 }

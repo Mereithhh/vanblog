@@ -9,12 +9,14 @@ import styles from './index.less';
 
 import { ProFormText, StepsForm } from '@ant-design/pro-components';
 
-import { useRef } from 'react';
 import SiteInfoForm from '@/components/SiteInfoForm';
+import { useRef } from 'react';
 
 const InitPage = () => {
   const history = useHistory();
   const formMapRef = useRef<React.MutableRefObject<ProFormInstance<any> | undefined>[]>([]);
+  const formRef1 = useRef<ProFormInstance>();
+  const formRef2 = useRef<ProFormInstance>();
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -61,11 +63,21 @@ const InitPage = () => {
                 placeholder={'请输入登录密码'}
               ></ProFormText.Password>
             </StepsForm.StepForm>
-            <StepsForm.StepForm name="step2" title={'基本配置'}>
-              <SiteInfoForm showRequire={true} showOption={false} showLayout={false} />
+            <StepsForm.StepForm name="step2" title={'基本配置'} formRef={formRef1}>
+              <SiteInfoForm
+                showRequire={true}
+                showOption={false}
+                showLayout={false}
+                form={formRef1}
+              />
             </StepsForm.StepForm>
-            <StepsForm.StepForm name="step3" title={'额外配置'}>
-              <SiteInfoForm showRequire={false} showOption={true} showLayout={true} />
+            <StepsForm.StepForm name="step3" title={'额外配置'} formRef={formRef2}>
+              <SiteInfoForm
+                showRequire={false}
+                showOption={true}
+                showLayout={true}
+                form={formRef2}
+              />
             </StepsForm.StepForm>
           </StepsForm>
         </ProCard>
