@@ -38,6 +38,7 @@ export default function (props: {
               <UploadBtn
                 setLoading={() => {}}
                 muti={false}
+                crop={true}
                 text="上传图片"
                 onFinish={(info) => {
                   if (info?.response?.data?.isNew) {

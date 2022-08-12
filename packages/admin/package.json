@@ -57,6 +57,7 @@
     "@ant-design/pro-table": "^2.71.0",
     "@umijs/route-utils": "^2.0.0",
     "antd": "^4.19.0",
+    "antd-img-crop": "^4.2.4",
     "btoa": "^1.2.1",
     "classnames": "^2.3.0",
     "lodash": "^4.17.0",

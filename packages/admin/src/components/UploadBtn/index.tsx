@@ -1,5 +1,5 @@
 import { Button, message, Upload } from 'antd';
-
+import ImgCrop from 'antd-img-crop';
 export default function (props: {
   setLoading: (loading: boolean) => void;
   text: string;
@@ -7,8 +7,9 @@ export default function (props: {
   url: string;
   accept: string;
   muti: boolean;
+  crop?: boolean;
 }) {
-  return (
+  const Core = (
     <Upload
       showUploadList={false}
       // name="file"
@@ -37,4 +38,9 @@ export default function (props: {
       <Button type="primary">{props.text}</Button>
     </Upload>
   );
+  if (props.crop) {
+    return <ImgCrop>{Core}</ImgCrop>;
+  } else {
+    return Core;
+  }
 }
