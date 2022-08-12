@@ -12,6 +12,7 @@ import {
   UpdateArticleDto,
 } from 'src/dto/article.dto';
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
+import { parseImgLinksOfMarkdown } from 'src/utils/parseImgOfMarkdown';
 import { wordCount } from 'src/utils/wordCount';
 import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';
@@ -96,6 +97,28 @@ export class ArticleProvider {
     createdData.id = newId;
     this.metaProvider.updateTotalWords();
     return createdData.save();
+  }
+  async getAllImageLinks() {
+    const res = [];
+    const articles = await this.articleModel.find({
+      $or: [
+        {
+          deleted: false,
+        },
+        {
+          deleted: { $exists: false },
+        },
+      ],
+    });
+    for (const article of articles) {
+      const eachLinks = parseImgLinksOfMarkdown(article.content || '');
+      res.push({
+        articleId: article.id,
+        title: article.title,
+        links: eachLinks,
+      });
+    }
+    return res;
   }
 
   async updateViewer(id: number, isNew: boolean) {

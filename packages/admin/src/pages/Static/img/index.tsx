@@ -197,6 +197,7 @@ const ImgPage = () => {
                 gridGap: '10px 10px',
                 justifyItems: 'center',
                 alignItems: 'center',
+                minHeight: '400px',
               }}
             >
               {data.map((item: StaticItem) => {
@@ -205,7 +206,7 @@ const ImgPage = () => {
                     onContextMenu={(e) => {
                       displayMenu(e, item);
                     }}
-                    key={item.sign}
+                    key={item.sign + item.realPath}
                     style={{
                       // height: responsive ? 150 : 200,
                       // width: responsive ? 150 : 200,
@@ -235,6 +236,7 @@ const ImgPage = () => {
             style={{ marginTop: 20, textAlign: 'right' }}
             hideOnSinglePage={true}
             current={page as number}
+            showSizeChanger={false}
             pageSize={pageSize as number}
             onChange={(p, ps) => {
               if (ps != pageSize) {

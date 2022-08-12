@@ -16,6 +16,11 @@ export async function fetchInit(body) {
     data: body,
   });
 }
+export async function scanImgsOfArticles() {
+  return request('/api/admin/img/scan', {
+    method: 'POST',
+  });
+}
 
 export async function login(body, options) {
   return request('/api/admin/auth/login', {

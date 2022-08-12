@@ -1,13 +1,21 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { SearchStaticOption, StaticType } from 'src/dto/setting.dto';
+import {
+  SearchStaticOption,
+  StaticType,
+  StorageType,
+} from 'src/dto/setting.dto';
 import { Static, StaticDocument } from 'src/scheme/static.schema';
 import { encryptFileMD5 } from 'src/utils/crypto';
+import { ArticleProvider } from '../article/article.provider';
 import { SettingProvider } from '../setting/setting.provider';
 import { LocalProvider } from './local.provider';
 import { PicgoProvider } from './picgo.provider';
-
+import { imageSize } from 'image-size';
+import { ImgMeta } from 'src/dto/img';
+import { formatBytes } from 'src/utils/size';
+import axios from 'axios';
 @Injectable()
 export class StaticProvider {
   constructor(
@@ -16,6 +24,7 @@ export class StaticProvider {
     private readonly settingProvider: SettingProvider,
     private readonly localProvider: LocalProvider,
     private readonly picgoProvider: PicgoProvider,
+    private readonly articleProvder: ArticleProvider,
   ) {}
   publicView = {
     _id: 0,
@@ -67,6 +76,66 @@ export class StaticProvider {
         this.staticModel.updateOne({ _id: oldItem._id }, { each });
       }
     }
+  }
+  async fetchImg(link: string): Promise<Buffer | null> {
+    try {
+      const res = await axios({
+        method: 'GET',
+        url: encodeURI(link),
+        responseType: 'arraybuffer',
+      });
+
+      return res.data;
+    } catch (err) {
+      console.log(err);
+      return null;
+    }
+  }
+  async getImgInfoByLink(link: string) {
+    const buffer = await this.fetchImg(link);
+    if (!buffer) {
+      return null;
+    }
+    const result = imageSize(buffer);
+    const meta: ImgMeta = { ...result, size: formatBytes(buffer.byteLength) };
+    const filename = link.split('/').pop();
+    const fileType = filename?.split('.')?.pop() || '';
+    const currentSign = encryptFileMD5(buffer);
+    return {
+      meta,
+      staticType: 'img' as StaticType,
+      storageType: 'picgo' as StorageType,
+      fileType: result?.type || fileType,
+      realPath: link,
+      name: filename,
+      sign: currentSign,
+    };
+  }
+  async scanLinksOfArticles() {
+    const linkObjs = await this.articleProvder.getAllImageLinks();
+    const errorLinks = [];
+    let total = 0;
+    for (const linkObj of linkObjs) {
+      const links = linkObj.links;
+      for (const link of links) {
+        total = total + 1;
+        const dto = await this.getImgInfoByLink(link);
+        if (!dto) {
+          errorLinks.push({
+            artcileId: linkObj.articleId,
+            title: linkObj.title,
+            link,
+          });
+        } else {
+          const hasPicture = await this.getOneBySign(dto?.sign || '');
+          console.log(link, dto);
+          if (!hasPicture) {
+            await this.createInDB(dto);
+          }
+        }
+      }
+    }
+    return { total: total, errorLinks };
   }
   async saveFile(
     fileType: string,
