@@ -1,4 +1,33 @@
 # Changelog
+## [0.8.0](https://github.com/Mereithhh/van-blog/compare/v0.7.8...v0.8.0) (2022-08-12)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图片信息显示错误 ([b3fb7d4](https://github.com/Mereithhh/van-blog/commit/b3fb7d402014f4f0849857ca7714b1a023da9abc))
+
+
+### ✨ Features | 新功能
+
+* 优化主题切换定时器“ ([91820e9](https://github.com/Mereithhh/van-blog/commit/91820e9c406a1ae7a73116fd4eacf82e0eb5b7b3))
+* 优化后台图片最大高度展示 ([6fbcd48](https://github.com/Mereithhh/van-blog/commit/6fbcd487226e9e02ad646f4b198c1b9ada811b7b))
+* 优化图床meta 信息和后台央视 ([5a9c67d](https://github.com/Mereithhh/van-blog/commit/5a9c67dbb6ae139932fc2080cc474f79a1b53825))
+* 优化图片管理展示页面 ([9d6efd8](https://github.com/Mereithhh/van-blog/commit/9d6efd818e3457ae0f74421aee45439fcf74d868))
+* 初步增加本地图床 ([939c405](https://github.com/Mereithhh/van-blog/commit/939c4057c717a24d1f069d2a02539b3b3168f023))
+* 可查看被引用图片的文章了 ([805d5c6](https://github.com/Mereithhh/van-blog/commit/805d5c6c3ffea2670bfdaca7fa4b7bbbc286c412))
+* 后台剪切板图片上传 ([9922314](https://github.com/Mereithhh/van-blog/commit/992231487482d0b582e69ca6c5275f656a259149))
+* 后台图片管理完善剪切板复制和右键菜单删除 ([9a27a60](https://github.com/Mereithhh/van-blog/commit/9a27a60c8d2db92718e93d53ec9aa3e2d9d91238))
+* 后台图片部分支持内置图床&优化设置表单 ([023fed9](https://github.com/Mereithhh/van-blog/commit/023fed90385c8c68543b82c1f34042e28ab4978f))
+* 后台完善右键菜单和剪切板删除 ([15b9bca](https://github.com/Mereithhh/van-blog/commit/15b9bca5615bb702e8536a1d17a93b900f3dcf02))
+* 后台编辑器上传toolbar ([d1d924e](https://github.com/Mereithhh/van-blog/commit/d1d924e13dd02c18f039f7f0dfdce41489e3a9d3))
+* 后台设置增加裁剪支持 ([c705397](https://github.com/Mereithhh/van-blog/commit/c7053976a23644742e6b15f4d080bb49f86a6319))
+* 图床可以下载图片 ([691c946](https://github.com/Mereithhh/van-blog/commit/691c9468c9a00b1199e5ca88f6f5c00b9ca73805))
+* 增加图床设置界面和接口 ([032a0f0](https://github.com/Mereithhh/van-blog/commit/032a0f00855ce0e08b957c7c6cd70f166fb34ec8))
+* 备份恢复图床支持 ([2dd253d](https://github.com/Mereithhh/van-blog/commit/2dd253dd946134b7a8b7205dd16e323009f93691))
+* 完善图片信息展示&增加删除二次确认弹窗 ([e685250](https://github.com/Mereithhh/van-blog/commit/e6852509009f0416005c5360ba10d8e07d3f7eea))
+* 支持扫描文章已存在的图片到图床 ([8fd9b5a](https://github.com/Mereithhh/van-blog/commit/8fd9b5ab9f347b3ab5cbf9912857852747df9163))
+* 隐藏多余的设置抽屉 ([7dbf9b7](https://github.com/Mereithhh/van-blog/commit/7dbf9b78276c92885862b2b6f6d946671676a776))
+
 ### [0.7.8](https://github.com/Mereithhh/van-blog/compare/v0.7.7...v0.7.8) (2022-08-09)
 
 
