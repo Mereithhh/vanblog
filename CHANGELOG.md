@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.3](https://github.com/Mereithhh/van-blog/compare/v0.10.2...v0.10.3) (2022-08-13)
+
+
+### ✨ Features | 新功能
+
+* 移除sweetalert2，优化 toast ([4a7620c](https://github.com/Mereithhh/van-blog/commit/4a7620c6322d69049c27e7bd878347b5fc8b7f71))
+
 ### [0.10.2](https://github.com/Mereithhh/van-blog/compare/v0.10.1...v0.10.2) (2022-08-13)
 
 
