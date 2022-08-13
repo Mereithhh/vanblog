@@ -189,7 +189,7 @@ export default function (props: {
           ></ProFormDigit>
           <ProFormSelect
             name={'headerLeftContent'}
-            label="导航栏左侧左侧"
+            label="导航栏左侧显示内容"
             valueEnum={{
               siteLogo: '网站logo',
               siteName: '网站名',
