@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.2](https://github.com/Mereithhh/van-blog/compare/v0.10.1...v0.10.2) (2022-08-13)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复友情链接站点信息错误 ([03a5769](https://github.com/Mereithhh/van-blog/commit/03a5769624b05c85fc0de52eda0c72df3ac0f4f5))
+
 ### [0.10.1](https://github.com/Mereithhh/van-blog/compare/v0.10.0...v0.10.1) (2022-08-13)
 
 
