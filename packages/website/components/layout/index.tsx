@@ -111,12 +111,17 @@ export default function (props: {
                 <a className="w-full inline-block px-4 ">时间线</a>
               </Link>
             </li>
-            {renderLinks()}
+            <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
+              <Link href={"/link"}>
+                <a className="w-full inline-block px-4 ">友链</a>
+              </Link>
+            </li>
             <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
               <Link href={"/about"}>
                 <a className="w-full inline-block px-4 ">关于</a>
               </Link>
             </li>
+            {renderLinks()}
           </ul>
         </Menu>
       </div>

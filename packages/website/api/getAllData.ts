@@ -15,8 +15,15 @@ export interface MenuItem {
   name: string;
   value: string;
 }
+export interface LinkItem {
+  name: string;
+  desc: string;
+  logo: string;
+  url: string;
+  updatedAt: string;
+}
 export interface MetaProps {
-  links: any[];
+  links: LinkItem[];
   socials: SocialItem[];
   rewards: any[];
   menus: MenuItem[];

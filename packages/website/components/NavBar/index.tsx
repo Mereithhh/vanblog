@@ -105,7 +105,7 @@ export default function (props: {
               </span>
             </div>
             {props.headerLeftContent == "siteLogo" && (
-              <div className="hidden sm:block transform translate-x-2">
+              <div className="hidden md:block transform translate-x-2">
                 <Image
                   alt="site logo"
                   src={picUrl}
@@ -157,7 +157,13 @@ export default function (props: {
                   </a>
                 </Link>
               </li>
-              {renderedLinks()}
+              <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
+                <Link href={"/link"}>
+                  <a className="h-full flex items-center px-2 md:px-4 ua">
+                    友链
+                  </a>
+                </Link>
+              </li>
               <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
                 <Link href={"/about"}>
                   <a className="h-full flex items-center px-2 md:px-4 ua">
@@ -165,6 +171,7 @@ export default function (props: {
                   </a>
                 </Link>
               </li>
+              {renderedLinks()}
             </ul>
             <div className="flex">
               <div
