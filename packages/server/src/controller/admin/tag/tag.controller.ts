@@ -10,7 +10,7 @@ export class TagController {
 
   @Get('/all')
   async getAllTags() {
-    const data = await this.tagProvider.getAllTags();
+    const data = await this.tagProvider.getAllTags(true);
     return {
       statusCode: 200,
       data,
@@ -19,7 +19,7 @@ export class TagController {
 
   @Get('/:name')
   async getArticlesByTagName(@Param('name') name: string) {
-    const data = await this.tagProvider.getArticlesByTag(name);
+    const data = await this.tagProvider.getArticlesByTag(name, true);
     return {
       statusCode: 200,
       data,

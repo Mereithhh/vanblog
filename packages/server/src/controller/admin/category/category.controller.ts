@@ -31,7 +31,7 @@ export class CategoryController {
 
   @Get('/:name')
   async getArticlesByName(@Param('name') name: string) {
-    const data = await this.categoryProvider.getArticlesByCategory(name);
+    const data = await this.categoryProvider.getArticlesByCategory(name, true);
     return {
       statusCode: 200,
       data,

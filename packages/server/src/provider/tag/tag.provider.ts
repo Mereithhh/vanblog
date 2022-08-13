@@ -4,8 +4,11 @@ import { ArticleProvider } from '../article/article.provider';
 @Injectable()
 export class TagProvider {
   constructor(private readonly articleProvider: ArticleProvider) {}
-  async getTagsWithArticle() {
-    const allArticles = await this.articleProvider.getAll('list');
+  async getTagsWithArticle(includeHidden: boolean) {
+    const allArticles = await this.articleProvider.getAll(
+      'list',
+      includeHidden,
+    );
     const data = {};
     allArticles.forEach((a) => {
       a.tags.forEach((t) => {
@@ -19,13 +22,13 @@ export class TagProvider {
     return data;
   }
   //TODO tag 改为缓存模式
-  async getAllTags() {
-    const d = await this.getTagsWithArticle();
+  async getAllTags(includeHidden: boolean) {
+    const d = await this.getTagsWithArticle(includeHidden);
     return Object.keys(d);
   }
 
-  async getColumnData(topNum: number) {
-    const data = await this.getTagsWithArticle();
+  async getColumnData(topNum: number, includeHidden: boolean) {
+    const data = await this.getTagsWithArticle(includeHidden);
     const tags = Object.keys(data);
     if (!tags || tags.length <= 0) {
       return [];
@@ -48,8 +51,8 @@ export class TagProvider {
 
     return res;
   }
-  async getArticlesByTag(tagName: string) {
-    const d = await this.getTagsWithArticle();
+  async getArticlesByTag(tagName: string, includeHidden: boolean) {
+    const d = await this.getTagsWithArticle(includeHidden);
     return d[tagName] ?? [];
   }
 }

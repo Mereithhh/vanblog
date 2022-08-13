@@ -31,7 +31,7 @@ export class PublicController {
 
   @Get('/search')
   async searchArticle(@Query('value') search: string) {
-    const data = await this.articleProvider.searchByString(search);
+    const data = await this.articleProvider.searchByString(search, false);
 
     return {
       statusCode: 200,
@@ -82,7 +82,7 @@ export class PublicController {
 
   @Get('/tag/:name')
   async getArticlesByTagName(@Param('name') name: string) {
-    const data = await this.tagProvider.getArticlesByTag(name);
+    const data = await this.tagProvider.getArticlesByTag(name, false);
     return {
       statusCode: 200,
       data: this.articleProvider.toPublic(data),
@@ -127,7 +127,7 @@ export class PublicController {
   }
   @Get('category')
   async getArticlesByCategory() {
-    const data = await this.categoryProvider.getCategoriesWithArticle();
+    const data = await this.categoryProvider.getCategoriesWithArticle(false);
     return {
       statusCode: 200,
       data,
@@ -135,7 +135,7 @@ export class PublicController {
   }
   @Get('tag')
   async getArticlesByTag() {
-    const data = await this.tagProvider.getTagsWithArticle();
+    const data = await this.tagProvider.getTagsWithArticle(false);
     return {
       statusCode: 200,
       data,
@@ -144,9 +144,9 @@ export class PublicController {
 
   @Get('/meta')
   async getBuildMeta() {
-    const tags = await this.tagProvider.getAllTags();
+    const tags = await this.tagProvider.getAllTags(false);
     const meta = await this.metaProvider.getAll();
-    const totalArticles = await this.articleProvider.getTotalNum();
+    const totalArticles = await this.articleProvider.getTotalNum(false);
     const totalWordCount = await this.metaProvider.getTotalWords();
     const data = {
       version: version,

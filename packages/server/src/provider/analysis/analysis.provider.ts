@@ -21,7 +21,7 @@ export class AnalysisProvider {
   async getOverViewTabData(num: number) {
     const total = {
       wordCount: await this.metaProvider.getTotalWords(),
-      articleNum: await this.articleProvider.getTotalNum(),
+      articleNum: await this.articleProvider.getTotalNum(true),
     };
     const viewer = await this.viewProvider.getViewerGrid(num);
     const siteInfo = await this.metaProvider.getSiteInfo();
@@ -78,13 +78,13 @@ export class AnalysisProvider {
   }
 
   async getArticleTabData(num: number): Promise<ArticleTabData> {
-    const articleNum = await this.articleProvider.getTotalNum();
+    const articleNum = await this.articleProvider.getTotalNum(true);
     const wordNum = await this.metaProvider.getTotalWords();
-    const tagNum = (await this.tagProvider.getAllTags())?.length || 0;
+    const tagNum = (await this.tagProvider.getAllTags(true))?.length || 0;
     const categoryNum =
       (await this.metaProvider.getAll())?.categories?.length || 0;
     const categoryPieData = await this.categoryProvider.getPieData();
-    const columnData = await this.tagProvider.getColumnData(num);
+    const columnData = await this.tagProvider.getColumnData(num, true);
     return {
       articleNum,
       wordNum,

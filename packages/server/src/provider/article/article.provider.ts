@@ -212,7 +212,7 @@ export class ArticleProvider {
 
   async washViewerInfoByVisitProvider() {
     // 用 visitProvider 里面的数据洗一下 article 的。
-    const articles = await this.getAll('list');
+    const articles = await this.getAll('list', true);
     for (const a of articles) {
       const visitData = await this.visitProvider.getByArticleId(a.id);
       if (visitData) {
@@ -254,10 +254,10 @@ export class ArticleProvider {
   }
 
   async countTotalWords() {
-    //TODO 每次更新文章保存最新字数
+    //! 默认不保存 hidden 文章的！
     let total = 0;
-    const articles = await this.articleModel
-      .find({
+    const $and: any = [
+      {
         $or: [
           {
             deleted: false,
@@ -266,6 +266,21 @@ export class ArticleProvider {
             deleted: { $exists: false },
           },
         ],
+      },
+      {
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      },
+    ];
+    const articles = await this.articleModel
+      .find({
+        $and,
       })
       .exec();
     articles.forEach((a) => {
@@ -273,9 +288,9 @@ export class ArticleProvider {
     });
     return total;
   }
-  async getTotalNum() {
-    return await this.articleModel
-      .find({
+  async getTotalNum(includeHidden: boolean) {
+    const $and: any = [
+      {
         $or: [
           {
             deleted: false,
@@ -284,6 +299,23 @@ export class ArticleProvider {
             deleted: { $exists: false },
           },
         ],
+      },
+    ];
+    if (!includeHidden) {
+      $and.push({
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      });
+    }
+    return await this.articleModel
+      .find({
+        $and,
       })
       .count();
   }
@@ -303,20 +335,36 @@ export class ArticleProvider {
     return thisView;
   }
 
-  async getAll(view: ArticleView): Promise<Article[]> {
+  async getAll(view: ArticleView, includeHidden: boolean): Promise<Article[]> {
     const thisView: any = this.getView(view);
+    const $and: any = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+    ];
+    if (!includeHidden) {
+      $and.push({
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      });
+    }
     const articles = await this.articleModel
       .find(
         {
-          hidden: false,
-          $or: [
-            {
-              deleted: false,
-            },
-            {
-              deleted: { $exists: false },
-            },
-          ],
+          $and,
         },
         thisView,
       )
@@ -338,6 +386,16 @@ export class ArticleProvider {
                 },
                 {
                   deleted: { $exists: false },
+                },
+              ],
+            },
+            {
+              $or: [
+                {
+                  hidden: false,
+                },
+                {
+                  hidden: { $exists: false },
                 },
               ],
             },
@@ -376,6 +434,18 @@ export class ArticleProvider {
     ];
     const and = [];
     const sort: any = { createdAt: -1 };
+    if (isPublic) {
+      $and.push({
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      });
+    }
     if (option.sortCreatedAt) {
       if (option.sortCreatedAt == 'asc') {
         sort.createdAt = 1;
@@ -506,6 +576,9 @@ export class ArticleProvider {
     if (!curArticle) {
       throw new NotFoundException('找不到文章');
     }
+    if (curArticle.hidden) {
+      throw new NotFoundException('该文章是隐藏文章！');
+    }
     const res: any = { article: curArticle };
     // 找它的前一个和后一个。
     const preArticle = await this.getPreArticleByArticle(curArticle, 'list');
@@ -580,29 +653,45 @@ export class ArticleProvider {
     }));
   }
 
-  async searchByString(str: string): Promise<Article[]> {
-    const rawData = await this.articleModel
-      .find({
-        $and: [
+  async searchByString(
+    str: string,
+    includeHidden: boolean,
+  ): Promise<Article[]> {
+    const $and: any = [
+      {
+        $or: [
+          { content: { $regex: `${str}`, $options: '$i' } },
+          { title: { $regex: `${str}`, $options: '$i' } },
+          { category: { $regex: `${str}`, $options: '$i' } },
+          { tags: { $regex: `${str}`, $options: '$i' } },
+        ],
+      },
+      {
+        $or: [
           {
-            $or: [
-              { content: { $regex: `${str}`, $options: '$i' } },
-              { title: { $regex: `${str}`, $options: '$i' } },
-              { category: { $regex: `${str}`, $options: '$i' } },
-              { tags: { $regex: `${str}`, $options: '$i' } },
-            ],
+            deleted: false,
           },
           {
-            $or: [
-              {
-                deleted: false,
-              },
-              {
-                deleted: { $exists: false },
-              },
-            ],
+            deleted: { $exists: false },
           },
         ],
+      },
+    ];
+    if (!includeHidden) {
+      $and.push({
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      });
+    }
+    const rawData = await this.articleModel
+      .find({
+        $and,
       })
       .exec();
     const s = str.toLocaleLowerCase();

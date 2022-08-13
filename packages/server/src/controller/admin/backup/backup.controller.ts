@@ -48,9 +48,9 @@ export class BackupController {
 
   @Get('export')
   async getAll(@Res() res: Response) {
-    const articles = await this.articleProvider.getAll('admin');
+    const articles = await this.articleProvider.getAll('admin', true);
     const categories = await this.categoryProvider.getAllCategories();
-    const tags = await this.tagProvider.getAllTags();
+    const tags = await this.tagProvider.getAllTags(true);
     const meta = await this.metaProvider.getAll();
     const drafts = await this.draftProvider.getAll();
     const user = await this.userProvider.getUser();
