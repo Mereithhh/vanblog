@@ -25,11 +25,10 @@ export async function getInitialState() {
       const msg = await fetchAllMeta(option);
       if (msg.statusCode == 233) {
         history.push('/init');
-      } else if (window.location.pathname == '/init' && msg.statusCode == 200) {
+      } else if (history.location.pathname == '/init' && msg.statusCode == 200) {
         history.push('/');
-      } else {
-        return msg.data;
       }
+      return msg.data;
     } catch (error) {
       history.push(loginPath);
     }
@@ -37,7 +36,7 @@ export async function getInitialState() {
     return undefined;
   }; // 如果不是登录页面，执行
   let option = {};
-  if (location.pathname == loginPath || location.pathname == '/init') {
+  if (history.location.pathname == loginPath || history.location.pathname == '/init') {
     option.skipErrorHandler = true;
   }
   const initData = await fetchInitData(option);
