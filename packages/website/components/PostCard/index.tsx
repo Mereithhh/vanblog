@@ -43,7 +43,7 @@ export default function (props: {
   const calContent = useMemo(() => {
     if (props.type == "overview") {
       if (props.private) {
-        return "**该文章已加密，点击 `阅读全文` 并输入密码后方可查看。**";
+        return "该文章已加密，点击 `阅读全文` 并输入密码后方可查看。";
       }
       const r = content.split("<!-- more -->");
       if (r.length == 2) {
