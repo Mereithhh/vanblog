@@ -10,8 +10,10 @@ export default function (props: {
   text: string;
 }) {
   const handleClick = async (ev) => {
+    props.setLoading(true);
     const fileObj = await getClipboardContents();
     if (!fileObj) {
+      props.setLoading(false);
       props.onError();
       return;
     }
@@ -40,7 +42,8 @@ export default function (props: {
       .catch((err) => {
         message.error('上传失败！');
         console.log(err);
-      });
+      })
+      .finally(() => [props.setLoading(false)]);
   };
   return (
     <div>

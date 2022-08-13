@@ -1,7 +1,7 @@
 import { getImgLink } from '@/pages/Static/img/tools';
 import { getClipboardContents } from '@/services/van-blog/clipboard';
-import { message } from 'antd';
-import { useEffect, useRef } from 'react';
+import { message, Spin } from 'antd';
+import { useEffect, useRef, useState } from 'react';
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
 const sleep = (delay: number) => {
@@ -13,15 +13,18 @@ const sleep = (delay: number) => {
 };
 export default function Editor(props) {
   const { current } = useRef<{ editor: Vditor }>({ editor: null });
+  const [loading, setLoading] = useState(false);
   const handleClickMore = async () => {
     current.editor.insertValue('!-- more -->\n');
     await sleep(50);
     current.editor.insertValue('<');
   };
   const handleClickUpload = async () => {
+    setLoading(true);
     const fileObj = await getClipboardContents();
     if (!fileObj) {
       message.warning('剪切板没得图片！');
+      setLoading(false);
       return;
     }
     const formData = new FormData();
@@ -49,6 +52,9 @@ export default function Editor(props) {
       .catch((err) => {
         message.error('上传失败！');
         console.log(err);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   const handleUploadSucc = async (res) => {
@@ -79,6 +85,7 @@ export default function Editor(props) {
         },
         upload: {
           handler(files) {
+            setLoading(true);
             const formData = new FormData();
             formData.append('file', files[0]);
             return fetch('/api/admin/img/upload', {
@@ -107,6 +114,9 @@ export default function Editor(props) {
                 message.error('上传失败！');
                 console.log(err);
                 return null;
+              })
+              .finally(() => {
+                setLoading(false);
               });
           },
         },
@@ -186,13 +196,15 @@ export default function Editor(props) {
     };
   }, [current]);
   return (
-    <div
-      id="vditor"
-      onPaste={(ev) => {
-        console.log(ev);
-      }}
-      className="vditor"
-      style={{ minHeight: 400 }}
-    />
+    <Spin spinning={loading}>
+      <div
+        id="vditor"
+        onPaste={(ev) => {
+          console.log(ev);
+        }}
+        className="vditor"
+        style={{ minHeight: 400 }}
+      />
+    </Spin>
   );
 }
