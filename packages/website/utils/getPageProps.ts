@@ -92,6 +92,7 @@ export async function getAboutPageProps(): Promise<AboutPageProps> {
     layoutProps,
     authorCardProps,
     about,
+    donates: data.meta?.rewards || [],
   };
 }
 export async function getTagPagesProps(

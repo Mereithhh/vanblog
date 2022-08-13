@@ -109,7 +109,10 @@ export default function () {
                   return;
                 }
               }
-              const hasTags = currObj?.tags && currObj.tags.length > 0;
+              const hasTags =
+                ['article', 'draft'].includes(history.location.query?.type) &&
+                currObj?.tags &&
+                currObj.tags.length > 0;
               Modal.confirm({
                 title: `确定保存吗？${hasTags ? '' : '此文章还没设置标签呢'}`,
                 onOk: async () => {

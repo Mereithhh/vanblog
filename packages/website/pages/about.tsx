@@ -1,3 +1,6 @@
+import dayjs from "dayjs";
+import { useMemo } from "react";
+import { DonateItem } from "../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/layout";
 import PostCard from "../components/PostCard";
@@ -11,9 +14,34 @@ export interface About {
 export interface AboutPageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
+  donates: DonateItem[];
   about: About;
 }
+const getDonateTableMarkdown = (donates: DonateItem[]) => {
+  let content = `
+## 捐赠信息
+
+| 捐赠人 | 捐赠金额|捐赠时间|
+|---|---|---|
+  `;
+  for (const each of donates) {
+    content =
+      content +
+      `|${each.name}|${each.value} 元|${dayjs(each.updatedAt).format(
+        "YYYY-MM-DD HH:mm:ss"
+      )}|\n`;
+  }
+  return content;
+};
 const AboutPage = (props: AboutPageProps) => {
+  const content = useMemo(() => {
+    if (props.donates.length == 0) {
+      return props.about.content;
+    } else {
+      return `${props.about.content}${getDonateTableMarkdown(props.donates)}`;
+    }
+  }, [props]);
+
   return (
     <Layout
       title="关于我"
@@ -27,7 +55,7 @@ const AboutPage = (props: AboutPageProps) => {
         updatedAt={new Date(props.about.updatedAt)}
         createdAt={new Date(props.about.updatedAt)}
         catelog={"about"}
-        content={props.about.content}
+        content={content}
         type={"about"}
         walineServerUrl={props.layoutProps.walineServerUrl}
         top={0}

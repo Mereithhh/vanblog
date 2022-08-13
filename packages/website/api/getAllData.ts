@@ -15,6 +15,11 @@ export interface MenuItem {
   name: string;
   value: string;
 }
+export interface DonateItem {
+  name: string;
+  value: string;
+  updatedAt: string;
+}
 export interface LinkItem {
   name: string;
   desc: string;
@@ -25,7 +30,7 @@ export interface LinkItem {
 export interface MetaProps {
   links: LinkItem[];
   socials: SocialItem[];
-  rewards: any[];
+  rewards: DonateItem[];
   menus: MenuItem[];
   categories: string[];
   about: {
