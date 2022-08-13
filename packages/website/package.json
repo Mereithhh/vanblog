@@ -25,8 +25,7 @@
     "rehype-katex": "^6.0.2",
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
-    "remark-math": "^5.1.1",
-    "sweetalert2": "^11.4.23"
+    "remark-math": "^5.1.1"
   },
   "devDependencies": {
     "@types/headroom.js": "^0.12.2",

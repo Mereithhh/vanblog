@@ -1,8 +1,9 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import Swal from "sweetalert2";
 import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
+import toast, { Toaster } from "react-hot-toast";
+
 export default function (props: {
   aliPay: string;
   weChatPay: string;
@@ -35,6 +36,7 @@ export default function (props: {
 
   return (
     <div className="mt-8">
+      <Toaster />
       {props.aliPay != "" && (
         <>
           <div className="text-center  select-none text-sm md:text-base mb-2 dark:text-dark">
@@ -84,12 +86,8 @@ export default function (props: {
           <CopyToClipboard
             text={url}
             onCopy={() => {
-              Swal.fire({
-                position: "center",
-                icon: "success",
-                title: "复制成功！",
-                showConfirmButton: false,
-                timer: 1000,
+              toast.success("复制成功！", {
+                className: "toast",
               });
             }}
           >

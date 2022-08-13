@@ -3,7 +3,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import Swal from "sweetalert2";
+import toast, { Toaster } from "react-hot-toast";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -11,6 +11,7 @@ import "katex/dist/katex.min.css";
 export default function (props: { content: string }) {
   return (
     <>
+      <Toaster />
       <ReactMarkdown
         rehypePlugins={[rehypeKatex, rehypeRaw]}
         remarkPlugins={[remarkMath, remarkGfm]}
@@ -23,12 +24,8 @@ export default function (props: { content: string }) {
                 <CopyToClipboard
                   text={String(children)}
                   onCopy={() => {
-                    Swal.fire({
-                      position: "center",
-                      icon: "success",
-                      title: "复制成功！",
-                      showConfirmButton: false,
-                      timer: 1000,
+                    toast.success("复制成功！", {
+                      className: "toast",
                     });
                   }}
                 >

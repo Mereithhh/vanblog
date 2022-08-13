@@ -181,11 +181,9 @@ body .wl-panel {
 .dark .wl-panel {
   background-color: #26282c;
 }
-.dark .swal2-popup {
-  background-color: #26282c;
-}
-.dark .swal2-title {
-  color: rgb(158, 158, 158);
+.dark .toast {
+  background-color: #232428;
+  color: #9e9e9e;
 }
 .wl-git-popup input {
   background-color: inherit;
