@@ -15,13 +15,30 @@ import { formatTimes } from '@/services/van-blog/tool';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Col, message, Modal, Row, Space, Tag } from 'antd';
-import { useCallback, useEffect, useState } from 'react';
-import { history } from 'umi';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { history, useModel } from 'umi';
 
 export default function () {
   const [vd, setVd] = useState();
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
+  const { initialState } = useModel('@@initialState');
+  const sysTheme = useMemo(() => {
+    return initialState?.settings?.navTheme || 'light';
+  }, [initialState]);
+  const updateCodeTheme = useCallback(() => {
+    if (!vd || !initialState?.settings?.navTheme) {
+      return;
+    }
+    if (initialState?.settings?.navTheme == 'light') {
+      vd?.setTheme('light', undefined, 'github');
+    } else {
+      vd?.setTheme('dark', undefined, 'native');
+    }
+  }, [vd, initialState]);
+  useEffect(() => {
+    updateCodeTheme();
+  }, [updateCodeTheme]);
   // 类型，可以是文章、草稿、或者 about
   const type = history.location.query?.type || 'article';
   const typeMap = {
@@ -297,7 +314,7 @@ export default function () {
       }}
       footer={null}
     >
-      <Editor setVd={setVd} />
+      <Editor setVd={setVd} sysTheme={sysTheme} />
     </PageContainer>
   );
 }

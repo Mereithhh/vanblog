@@ -12,6 +12,8 @@ const sleep = (delay: number) => {
   });
 };
 export default function Editor(props) {
+  const { sysTheme } = props;
+  const initTheme = sysTheme;
   const { current } = useRef<{ editor: Vditor }>({ editor: null });
   const [loading, setLoading] = useState(false);
   const handleClickMore = async () => {
@@ -71,6 +73,9 @@ export default function Editor(props) {
         },
         preview: {
           delay: 200,
+          hljs: {
+            style: initTheme == 'light' ? 'github' : 'native',
+          },
         },
         after: () => {
           props?.setVd(current.editor);
