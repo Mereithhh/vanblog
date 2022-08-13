@@ -49,10 +49,10 @@ export default function (props) {
               }
             }}
           >
-            <Button>导入</Button>
+            <Button>导入全部数据</Button>
           </Upload>
           <Button type="primary" onClick={handleOutPut}>
-            导出
+            导出全部数据
           </Button>
         </Space>
       </Spin>

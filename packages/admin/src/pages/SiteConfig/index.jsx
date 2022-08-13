@@ -65,7 +65,7 @@ export default function () {
           key: 'socials',
         },
         {
-          tab: '导入导出',
+          tab: '备份恢复',
           key: 'backup',
         },
       ]}

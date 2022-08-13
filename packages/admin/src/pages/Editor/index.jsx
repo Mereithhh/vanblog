@@ -109,8 +109,9 @@ export default function () {
                   return;
                 }
               }
+              const hasTags = currObj?.tags && currObj.tags.length > 0;
               Modal.confirm({
-                title: `确定保存吗？`,
+                title: `确定保存吗？${hasTags ? '' : '此文章还没设置标签呢'}`,
                 onOk: async () => {
                   const v = vd?.getValue();
                   setLoading(true);
