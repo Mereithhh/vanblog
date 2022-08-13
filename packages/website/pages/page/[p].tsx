@@ -30,9 +30,10 @@ const PagePages = (props: PagePagesProps) => {
             updatedAt={new Date(article.updatedAt)}
             createdAt={new Date(article.createdAt)}
             catelog={article.category}
-            content={article.content}
+            content={article.content || ""}
             type={"overview"}
             walineServerUrl={props.layoutProps.walineServerUrl}
+            private={article.private}
           ></PostCard>
         ))}
       </div>
