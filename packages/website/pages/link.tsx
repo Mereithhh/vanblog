@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { LinkItem } from "../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/layout";
@@ -14,7 +15,13 @@ export interface LinkPageProps {
   links: LinkItem[];
   walineServerUrl: string;
 }
-const requireContent = `
+
+const LinkPage = (props: LinkPageProps) => {
+  const [url, setUrl] = useState("");
+  useEffect(() => {
+    setUrl(window.location.origin);
+  }, [setUrl]);
+  const requireContent = `
 **[申领要求]**
 - [x] 请先添加本站为友链后再申请友链，并通过留言或邮件告知
 - [x] 不和剽窃、侵权、无诚信的网站交换，优先和具有原创作品的全站 HTTPS 站点交换
@@ -24,12 +31,11 @@ const requireContent = `
 - [x] 不接受视频站、资源站等非博客类站点交换，原则上只与技术/日志类博客交换友链
 
 **[本站信息]**
-> 名称： mereith<br/>
-> 简介： 技术、折腾<br/>
-> 网址： [https://www.mereith.com](https://www.mereith.com)<br/>
-> 头像： [https://pic.mereith.com/2022/07/19/62d5ff079e73e.png](https://pic.mereith.com/2022/07/19/62d5ff079e73e.png)
+> 名称： ${props.layoutProps.siteName}<br/>
+> 简介： ${props.layoutProps.description}<br/>
+> 网址： [${url}](${url})<br/>
+> 头像： [${props.layoutProps.logo}](${props.layoutProps.logo})
 `;
-const LinkPage = (props: LinkPageProps) => {
   return (
     <Layout
       option={props.layoutProps}
@@ -43,14 +49,14 @@ const LinkPage = (props: LinkPageProps) => {
           </div>
         </div>
         <div className="flex flex-col mt-6 mb-2">
-          <p className="mb-6">以下是本站的友情链接，排名不分先后：</p>
+          <p className="mb-6 ">以下是本站的友情链接，排名不分先后：</p>
           <div className="grid gap-2 sm:gap-4 grid-cols-2 lg:grid-cols-3">
             {props.links.map((link) => (
               <LinkCard link={link} key={`${link.url}${link.name}`} />
             ))}
           </div>
           <hr className="mt-8 dark:border-hr-dark" />
-          <div className="mt-4">
+          <div className="mt-4 text-sm md:text-base ">
             <Markdown content={requireContent} />
           </div>
           <div>
