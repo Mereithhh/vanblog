@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.1](https://github.com/Mereithhh/van-blog/compare/v0.10.0...v0.10.1) (2022-08-13)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复未加 props 导致的构建报错 ([a3bea70](https://github.com/Mereithhh/van-blog/commit/a3bea707a7ceb51732eca6b9b908eff7dfde6acd))
+
 ## [0.10.0](https://github.com/Mereithhh/van-blog/compare/v0.9.0...v0.10.0) (2022-08-13)
 
 
