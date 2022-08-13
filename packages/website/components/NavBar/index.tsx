@@ -18,6 +18,7 @@ export default function (props: {
   links: MenuItem[];
   showSubMenu: "true" | "false";
   showAdminButton: "true" | "false";
+  showFriends: "true" | "false";
   headerLeftContent: "siteName" | "siteLogo";
   subMenuOffset: number;
 }) {
@@ -157,13 +158,15 @@ export default function (props: {
                   </a>
                 </Link>
               </li>
-              <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
-                <Link href={"/link"}>
-                  <a className="h-full flex items-center px-2 md:px-4 ua">
-                    友链
-                  </a>
-                </Link>
-              </li>
+              {props.showFriends == "true" && (
+                <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
+                  <Link href={"/link"}>
+                    <a className="h-full flex items-center px-2 md:px-4 ua">
+                      友链
+                    </a>
+                  </Link>
+                </li>
+              )}
               <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
                 <Link href={"/about"}>
                   <a className="h-full flex items-center px-2 md:px-4 ua">

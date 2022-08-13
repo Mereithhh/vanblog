@@ -88,7 +88,12 @@ export async function getAboutPageProps(): Promise<AboutPageProps> {
   const layoutProps = getLayoutProps(data);
   const authorCardProps = getAuthorCardProps(data);
   const about = data.meta.about;
+  let showDonateInfo: "true" | "false" = "true";
+  if (data.meta.siteInfo?.showDonateInfo == "false") {
+    showDonateInfo = "false";
+  }
   return {
+    showDonateInfo,
     layoutProps,
     authorCardProps,
     about,

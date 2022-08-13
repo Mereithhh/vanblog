@@ -205,7 +205,27 @@ export default function (props: {
               true: '显示',
               false: '隐藏',
             }}
-            tooltip={'默认隐藏，开启后导航栏会显示后台按钮'}
+            tooltip={'默认显示，关闭后导航栏会隐藏后台按钮'}
+          ></ProFormSelect>
+          <ProFormSelect
+            name={'showFriends'}
+            label="是否显示友情链接"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认显示，关闭后导航栏会隐藏友情链接'}
+          ></ProFormSelect>
+          <ProFormSelect
+            name={'showDonateInfo'}
+            label="是否显示捐赠信息"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认显示，关闭后关于页面会隐藏捐赠信息'}
           ></ProFormSelect>
         </>
       )}

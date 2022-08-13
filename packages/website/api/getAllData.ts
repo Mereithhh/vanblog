@@ -62,6 +62,8 @@ export interface MetaProps {
     showAdminButton?: "true" | "false";
     headerLeftContent?: "siteLogo" | "siteName";
     subMenuOffset?: number;
+    showDonateInfo: "true" | "false";
+    showFriends: "true" | "false";
   };
 }
 export interface PublicMetaProp {
@@ -121,6 +123,8 @@ export async function getPublicMeta(): Promise<PublicMetaProp> {
             since: "",
             walineServerUrl: "",
             baseUrl: "",
+            showDonateInfo: "true",
+            showFriends: "true",
           },
         },
       };

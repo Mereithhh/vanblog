@@ -16,6 +16,7 @@ export interface AboutPageProps {
   authorCardProps: AuthorCardProps;
   donates: DonateItem[];
   about: About;
+  showDonateInfo: "true" | "false";
 }
 const getDonateTableMarkdown = (donates: DonateItem[]) => {
   let content = `
@@ -35,7 +36,7 @@ const getDonateTableMarkdown = (donates: DonateItem[]) => {
 };
 const AboutPage = (props: AboutPageProps) => {
   const content = useMemo(() => {
-    if (props.donates.length == 0) {
+    if (props.donates.length == 0 || props.showDonateInfo == "false") {
       return props.about.content;
     } else {
       return `${props.about.content}${getDonateTableMarkdown(props.donates)}`;

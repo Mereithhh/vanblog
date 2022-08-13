@@ -19,6 +19,7 @@ export interface LayoutProps {
   links: MenuItem[];
   showSubMenu: "true" | "false";
   showAdminButton: "true" | "false";
+  showFriends: "true" | "false";
   headerLeftContent: "siteLogo" | "siteName";
   subMenuOffset: number;
 }
@@ -35,7 +36,12 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (siteInfo.showAdminButton && siteInfo.showAdminButton == "true") {
     showAdminButton = "true";
   }
+  let showFriends: "true" | "false" = "true";
+  if (siteInfo?.showFriends == "false") {
+    showFriends = "false";
+  }
   return {
+    showFriends,
     version: data?.version || "dev",
     subMenuOffset: siteInfo?.subMenuOffset || 0,
     showAdminButton,

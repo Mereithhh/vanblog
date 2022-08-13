@@ -23,6 +23,8 @@ export class SiteInfo {
   headerLeftContent?: 'siteLogo' | 'siteName';
   subMenuOffset: number;
   showAdminButton: 'true' | 'false';
+  showDonateInfo: 'true' | 'false';
+  showFriends: 'true' | 'false';
 }
 export interface updateUserDto {
   username: string;
