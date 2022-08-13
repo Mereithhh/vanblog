@@ -20,7 +20,12 @@ export default () => {
     }
   }, [simpleSearch]);
   return (
-    <PageContainer>
+    <PageContainer
+      title={null}
+      extra={null}
+      ghost
+      header={{ title: null, extra: null, ghost: true }}
+    >
       <RcResizeObserver
         key="resize-observer"
         onResize={(offset) => {

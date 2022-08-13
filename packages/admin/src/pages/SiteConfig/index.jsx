@@ -1,6 +1,6 @@
-import StaticForm from '@/components/StaticForm';
 import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
+import thinstyle from '../Welcome/index.less';
 import Backup from './tabs/Backup';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
@@ -26,6 +26,10 @@ export default function () {
 
   return (
     <PageContainer
+      title={null}
+      extra={null}
+      header={{ title: null, extra: null, ghost: true }}
+      className={thinstyle.thinheader}
       tabActiveKey={tab}
       tabList={[
         {

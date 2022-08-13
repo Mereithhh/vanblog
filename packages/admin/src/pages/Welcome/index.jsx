@@ -1,12 +1,9 @@
-import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Space } from 'antd';
-import { useMemo } from 'react';
-import OverView from './tabs/overview';
-import { useModel } from 'umi';
-import Viewer from './tabs/viewer';
 import { useTab } from '@/services/van-blog/useTab';
+import { PageContainer } from '@ant-design/pro-layout';
+import style from './index.less';
 import Article from './tabs/article';
-
+import OverView from './tabs/overview';
+import Viewer from './tabs/viewer';
 const Welcome = () => {
   const [tab, setTab] = useTab('overview', 'tab');
 
@@ -25,7 +22,10 @@ const Welcome = () => {
   // }, [initialState]);
   return (
     <PageContainer
-      className="test"
+      // title={null}
+      extra={null}
+      header={{ title: null, extra: null, ghost: true }}
+      className={style.thinheader}
       onTabChange={(k) => {
         setTab(k);
       }}
@@ -44,7 +44,7 @@ const Welcome = () => {
           key: 'article',
         },
       ]}
-      title={'Hi，今天写了没？'}
+      title={null}
       // extra={
       //   <Space>
       //     {showCommentBtn && (
