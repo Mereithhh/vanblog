@@ -1,4 +1,29 @@
 # Changelog
+## [0.10.0](https://github.com/Mereithhh/van-blog/compare/v0.9.0...v0.10.0) (2022-08-13)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复使用了 admin 相对路由导致的跳转问题 ([215c32e](https://github.com/Mereithhh/van-blog/commit/215c32eeb45239fd457952364bd98282f78398b4))
+* 修复文案错误 ([ad8d0ea](https://github.com/Mereithhh/van-blog/commit/ad8d0ea5ad2bf357e832e39e32e25823a4e8875e))
+
+
+### ✨ Features | 新功能
+
+* 上传图片增加 loading 态 ([f5db57a](https://github.com/Mereithhh/van-blog/commit/f5db57a18bb0ed373942bb55f7e2ab987fdce148))
+* 优化初始化提示文案” ([375e130](https://github.com/Mereithhh/van-blog/commit/375e130a953f4425a3bd8705d5aa68d5de528322))
+* 优化加密文章显示样式 ([853e882](https://github.com/Mereithhh/van-blog/commit/853e882ca60e26eb313453d77b9c12cfde6eabe7))
+* 优化后台友联设置 ([2aedf1d](https://github.com/Mereithhh/van-blog/commit/2aedf1d50219d1787b8e51763066b60c6d6e83ac))
+* 优化后台页容器展示 ([1a96f62](https://github.com/Mereithhh/van-blog/commit/1a96f6238e3f1a2f08d983af765cfa780bdb32f5))
+* 友链展示 ([71c28fc](https://github.com/Mereithhh/van-blog/commit/71c28fce718a5338c04019966bc354649849bbb3))
+* 后台编辑器代码主题随亮暗切换 ([af7adf6](https://github.com/Mereithhh/van-blog/commit/af7adf62893c291f6557960bb52d0932c5798781))
+* 增加是否展示友链和捐赠信息的选项 ([542a068](https://github.com/Mereithhh/van-blog/commit/542a0689ea96fe349061ea6494da0d64c1eba302))
+* 捐赠信息展示 ([b0cfcc2](https://github.com/Mereithhh/van-blog/commit/b0cfcc2eb83db5c2e6d8ae653b51d38c1bd0a824))
+* 文案优化 ([765e8e9](https://github.com/Mereithhh/van-blog/commit/765e8e9607f91138a7f43e6a5e0a7828cf5dfa01))
+* 略微优化初始化页面样式 ([631e1ea](https://github.com/Mereithhh/van-blog/commit/631e1ea41fd5f2ef0e014fef3a649085f6fc93b3))
+* 调整 markdown 分界线样式 ([1b54021](https://github.com/Mereithhh/van-blog/commit/1b540211bc40cc3a1fc822aeb006c6d9d2807439))
+* 隐藏文章功能 ([98d0c23](https://github.com/Mereithhh/van-blog/commit/98d0c23233883e5f6d97c4e8dd68c0f337b52082))
+
 ## [0.9.0](https://github.com/Mereithhh/van-blog/compare/v0.8.0...v0.9.0) (2022-08-12)
 
 
