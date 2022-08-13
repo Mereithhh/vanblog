@@ -1,11 +1,12 @@
 import { deleteDonate, getDonate, updateDonate } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
-import { Modal, Spin } from 'antd';
-import { useState } from 'react';
+import { Alert, Modal, Spin } from 'antd';
+import { useRef, useState } from 'react';
 
 export default function () {
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
+  const actionRef = useRef();
   const fetchData = async () => {
     setLoading(true);
     const { data } = await getDonate();
@@ -77,7 +78,12 @@ export default function () {
   return (
     <>
       <Spin spinning={loading}>
+        <Alert
+          type="warning"
+          message="捐赠模块的前台展示还没开发完，所以暂时还没得显示，不过先加上去也没啥问题。"
+        ></Alert>
         <EditableProTable
+        actionRef={actionRef}
           rowKey="key"
           headerTitle="捐赠详情"
           maxLength={5}
@@ -103,6 +109,7 @@ export default function () {
             editableKeys,
             onSave: async (rowKey, data, row) => {
               await updateDonate(data);
+              actionRef?.current?.reload();
             },
             onChange: setEditableRowKeys,
           }}

@@ -1,12 +1,13 @@
-import { deleteLink, deleteMenu, getMenu, updateLink, updateMenu } from '@/services/van-blog/api';
+import { deleteMenu, getMenu, updateMenu } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function () {
   // const actionRef = useRef();
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
+  const actionRef = useRef();
   const fetchData = async () => {
     setLoading(true);
     const { data } = await getMenu();
@@ -67,6 +68,7 @@ export default function () {
     <>
       <Spin spinning={loading}>
         <EditableProTable
+          actionRef={actionRef}
           rowKey="key"
           headerTitle="导航菜单管理"
           maxLength={5}
@@ -95,6 +97,7 @@ export default function () {
                 value: data.value,
               };
               await updateMenu(toSaveObj);
+              actionRef?.current?.reload();
             },
             onChange: setEditableRowKeys,
           }}

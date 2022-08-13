@@ -240,6 +240,8 @@ export class MetaProvider {
       updatedAt: new Date(),
       url: addLinkDto.url,
       name: addLinkDto.name,
+      desc: addLinkDto.desc,
+      logo: addLinkDto.logo,
     };
     const newLinks = [];
     let pushed = false;

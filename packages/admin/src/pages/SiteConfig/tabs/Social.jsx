@@ -1,12 +1,12 @@
 import { deleteSocial, getSocial, getSocialTypes, updateSocial } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function () {
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
-
+  const actionRef = useRef();
   const fetchData = async () => {
     setLoading(true);
     const { data } = await getSocial();
@@ -83,6 +83,7 @@ export default function () {
     <>
       <Spin spinning={loading}>
         <EditableProTable
+          actionRef={actionRef}
           rowKey="key"
           headerTitle="联系方式"
           maxLength={5}
@@ -112,6 +113,7 @@ export default function () {
                 value: data.value,
               };
               await updateSocial(toSaveObj);
+              actionRef?.current?.reload();
             },
             onChange: setEditableRowKeys,
           }}

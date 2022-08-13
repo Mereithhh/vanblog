@@ -1,11 +1,12 @@
 import { deleteLink, getLink, updateLink } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 export default function () {
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
+  const actionRef = useRef();
   const fetchData = async () => {
     setLoading(true);
     const { data } = await getLink();
@@ -25,6 +26,24 @@ export default function () {
     {
       title: '地址',
       dataIndex: 'url',
+      formItemProps: (form, { rowIndex }) => {
+        return {
+          rules: [{ required: true, message: '此项为必填项' }],
+        };
+      },
+    },
+    {
+      title: '简介',
+      dataIndex: 'desc',
+      formItemProps: (form, { rowIndex }) => {
+        return {
+          rules: [{ required: true, message: '此项为必填项' }],
+        };
+      },
+    },
+    {
+      title: 'Logo',
+      dataIndex: 'logo',
       formItemProps: (form, { rowIndex }) => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
@@ -79,6 +98,7 @@ export default function () {
         <EditableProTable
           rowKey="key"
           headerTitle="友情链接"
+          actionRef={actionRef}
           maxLength={5}
           scroll={{
             x: 960,
@@ -104,9 +124,12 @@ export default function () {
               const toSaveObj = {
                 name: data.name,
                 url: data.url,
+                logo: data.logo,
+                desc: data.desc,
               };
               await updateLink(toSaveObj);
-              // await waitTime(2000);
+              // await waitTime(500);
+              actionRef?.current?.reload();
             },
             onChange: setEditableRowKeys,
           }}
