@@ -2,7 +2,7 @@ import Footer from '@/components/Footer';
 import { fetchInit } from '@/services/van-blog/api';
 import ProCard from '@ant-design/pro-card';
 import { ProFormInstance } from '@ant-design/pro-form';
-import { message } from 'antd';
+import { Alert, message } from 'antd';
 import { useHistory } from 'umi';
 //@ts-ignore
 import styles from './index.less';
@@ -24,6 +24,9 @@ const InitPage = () => {
           title={
             <div>
               <p style={{ fontSize: 20, marginBottom: 0 }}>欢迎使用 VanBlog 个人博客系统</p>
+              <a target={'_blank'} rel="noreferrer" href="https://vanblog.mereith.com">
+                帮助文档
+              </a>
             </div>
           }
         >
@@ -64,6 +67,10 @@ const InitPage = () => {
               ></ProFormText.Password>
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step2" title={'基本配置'} formRef={formRef1}>
+              <Alert
+                type="info"
+                message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。"
+              ></Alert>
               <SiteInfoForm
                 showRequire={true}
                 showOption={false}
@@ -72,6 +79,10 @@ const InitPage = () => {
               />
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step3" title={'额外配置'} formRef={formRef2}>
+              <Alert
+                type="info"
+                message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。"
+              ></Alert>
               <SiteInfoForm
                 showRequire={false}
                 showOption={true}
