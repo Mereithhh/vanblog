@@ -23,6 +23,7 @@ const Home = (props: IndexPageProps) => {
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
+            private={article.private}
             top={article.top || 0}
             id={article.id}
             key={article.title}
@@ -30,7 +31,7 @@ const Home = (props: IndexPageProps) => {
             updatedAt={new Date(article.updatedAt)}
             createdAt={new Date(article.createdAt)}
             catelog={article.category}
-            content={article.content}
+            content={article.content || ""}
             type={"overview"}
             walineServerUrl={props.layoutProps.walineServerUrl}
           ></PostCard>

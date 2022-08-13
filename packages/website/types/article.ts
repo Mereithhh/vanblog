@@ -7,4 +7,5 @@ export interface Article {
   updatedAt: string;
   id: number;
   top?: number;
+  private: boolean;
 }

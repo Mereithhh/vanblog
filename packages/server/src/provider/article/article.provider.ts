@@ -41,6 +41,7 @@ export class ArticleProvider {
     _id: 0,
     viewer: 1,
     visited: 1,
+    private: 1,
   };
 
   adminView = {
@@ -526,10 +527,25 @@ export class ArticleProvider {
         .skip(option.pageSize * option.page - option.pageSize)
         .limit(option.pageSize);
     }
-    const articles = await articlesQuery.exec();
+    let articles = await articlesQuery.exec();
     // withWordCount 只会返回当前分页的文字数量
 
     const total = await this.articleModel.count(query).exec();
+    // 过滤私有文章
+    if (isPublic) {
+      articles = articles.map((a: any) => {
+        const isPrivate = a?._doc?.private || a?.private;
+        if (isPrivate) {
+          return {
+            ...(a?._doc || a),
+            content: undefined,
+            password: undefined,
+          };
+        } else {
+          return { ...(a?._doc || a) };
+        }
+      });
+    }
     const resData: any = {};
     if (option.withWordCount) {
       let totalWordCount = 0;
@@ -571,6 +587,24 @@ export class ArticleProvider {
       )
       .exec();
   }
+  async getByIdWithPassword(id: number, password: string): Promise<any> {
+    const article: any = await this.getById(id, 'admin');
+    if (!password) {
+      return null;
+    }
+    if (!article) {
+      return null;
+    }
+    if (!article.password || article.password == '') {
+      return { ...(article?._doc || article), password: undefined };
+    } else {
+      if (article.password == password) {
+        return { ...(article?._doc || article), password: undefined };
+      } else {
+        return null;
+      }
+    }
+  }
   async getByIdWithPreNext(id: number, view: ArticleView) {
     const curArticle = await this.getById(id, view);
     if (!curArticle) {
@@ -578,6 +612,9 @@ export class ArticleProvider {
     }
     if (curArticle.hidden) {
       throw new NotFoundException('该文章是隐藏文章！');
+    }
+    if (curArticle.private) {
+      curArticle.content = undefined;
     }
     const res: any = { article: curArticle };
     // 找它的前一个和后一个。

@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { SortOrder } from 'src/dto/sort';
@@ -23,6 +23,20 @@ export class PublicController {
   @Get('/article/:id')
   async getArticleById(@Param('id') id: number) {
     const data = await this.articleProvider.getByIdWithPreNext(id, 'public');
+    return {
+      statusCode: 200,
+      data: data,
+    };
+  }
+  @Post('/article/:id')
+  async getArticleByIdWithPassword(
+    @Param('id') id: number,
+    @Body() body: { password: string },
+  ) {
+    const data = await this.articleProvider.getByIdWithPassword(
+      id,
+      body?.password,
+    );
     return {
       statusCode: 200,
       data: data,

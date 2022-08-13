@@ -1,11 +1,12 @@
 import dayjs from "dayjs";
 import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import AlertCard from "../AlertCard";
 import Markdown from "../Markdown";
 import PostViewer from "../PostViewer";
 import Reward from "../Reward";
 import TopPinIcon from "../TopPinIcon";
+import UnLockCard from "../UnLockCard";
 import WaLine from "../WaLine";
 
 export default function (props: {
@@ -24,7 +25,10 @@ export default function (props: {
   pre?: { id: number; title: string };
   walineServerUrl: string;
   top: number;
+  private: boolean;
 }) {
+  const [lock, setLock] = useState(props.type != "overview" && props.private);
+  const [content, setContent] = useState(props.content || "");
   const iconSize = "16";
   const iconClass =
     "mr-1 fill-gray-400 dark:text-dark dark:group-hover:text-dark-hover group-hover:text-gray-900 ";
@@ -35,8 +39,12 @@ export default function (props: {
       return "/post/" + props.id;
     }
   }, [props]);
-  function getContent(content: string) {
+
+  const calContent = useMemo(() => {
     if (props.type == "overview") {
+      if (props.private) {
+        return "**该文章已加密，点击 `阅读全文` 并输入密码后方可查看。**";
+      }
       const r = content.split("<!-- more -->");
       if (r.length == 2) {
         return r[0];
@@ -46,7 +54,8 @@ export default function (props: {
     } else {
       return content.replace("<!-- more -->", "");
     }
-  }
+  }, [props, lock, content]);
+
   return (
     <div>
       <div
@@ -168,8 +177,15 @@ export default function (props: {
               createdAt={props.createdAt}
             ></AlertCard>
           )}
-
-          <Markdown content={getContent(props.content)}></Markdown>
+          {lock ? (
+            <UnLockCard
+              setLock={setLock}
+              setContent={setContent}
+              id={props.id}
+            />
+          ) : (
+            <Markdown content={calContent}></Markdown>
+          )}
         </div>
 
         {props.type == "overview" && (
@@ -181,7 +197,7 @@ export default function (props: {
             </Link>
           </div>
         )}
-        {props.type == "article" && props.pay && (
+        {props.type == "article" && props.pay && !lock && (
           <Reward
             aliPay={props.pay[0]}
             weChatPay={props.pay[1]}
@@ -192,7 +208,7 @@ export default function (props: {
           ></Reward>
         )}
 
-        {props.type == "article" && props.tags && (
+        {props.type == "article" && props.tags && !lock && (
           <div className="mt-4">
             <div className="text-sm  text-gray-500 flex justify-center space-x-2 select-none dark:text-dark">
               {props.tags.map((tag) => (

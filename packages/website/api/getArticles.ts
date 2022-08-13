@@ -96,3 +96,27 @@ export const getArticleById = async (id: number) => {
     }
   }
 };
+export const getArticleByIdWithPassword = async (
+  id: number,
+  password: string
+) => {
+  try {
+    const url = `/api/public/article/${id}`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ password }),
+    });
+    const { data } = await res.json();
+    return data;
+  } catch (err) {
+    if (process.env.isBuild == "t") {
+      console.log("无法连接，采用默认值");
+      return {};
+    } else {
+      throw err;
+    }
+  }
+};

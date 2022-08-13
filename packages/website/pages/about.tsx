@@ -52,6 +52,7 @@ const AboutPage = (props: AboutPageProps) => {
       <PostCard
         id={0}
         key={"about"}
+        private={false}
         title={"关于我"}
         updatedAt={new Date(props.about.updatedAt)}
         createdAt={new Date(props.about.updatedAt)}

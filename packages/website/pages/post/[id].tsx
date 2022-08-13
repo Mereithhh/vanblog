@@ -1,4 +1,3 @@
-import { getPublicMeta } from "../../api/getAllData";
 import { getArticlesByOption } from "../../api/getArticles";
 import Layout from "../../components/layout";
 import PostCard from "../../components/PostCard";
@@ -47,10 +46,11 @@ const PostPages = (props: PostPagesProps) => {
         updatedAt={new Date(props.article.updatedAt)}
         createdAt={new Date(props.article.createdAt)}
         catelog={props.article.category}
-        content={props.article.content}
+        content={props.article.content || ""}
         type={"article"}
         pay={props.pay}
         payDark={props.payDark}
+        private={props.article.private}
         author={props.author}
         tags={props.article.tags}
         pre={props.pre}
