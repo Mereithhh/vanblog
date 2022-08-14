@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef } from "react";
-import { initTheme, switchTheme } from "../../utils/theme";
+import { applyTheme, decodeTheme, initTheme } from "../../utils/theme";
 import { GlobalContext } from "../../utils/globalContext";
 
 export default function (props: {}) {
@@ -8,7 +8,16 @@ export default function (props: {}) {
   const { state, setState } = useContext(GlobalContext);
   const { theme } = state;
   const setTheme = (newTheme: "auto" | "light" | "dark") => {
-    setState({ ...state, theme: newTheme });
+    console.log(`[setTheme] ${newTheme}`);
+    clearTimer();
+    localStorage.setItem("theme", newTheme);
+    // 设置真实的主题，然后把真实的主题搞到 state 里。
+    const realTheme = decodeTheme(newTheme);
+    applyTheme(realTheme, "setTheme");
+    setState({ ...state, theme: realTheme });
+    if (realTheme.includes("auto")) {
+      setTimer();
+    }
   };
   const clearTimer = () => {
     clearInterval(currentTimer.timer);
@@ -17,16 +26,8 @@ export default function (props: {}) {
   const setTimer = () => {
     clearTimer();
     currentTimer.timer = setInterval(() => {
-      const d = new Date().getHours();
-      const night = d > 18 || d < 8;
-      console.log("auto theme timer running");
-      if (night || window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        document.documentElement.classList.add("dark");
-        document.documentElement.classList.remove("light");
-      } else {
-        document.documentElement.classList.add("light");
-        document.documentElement.classList.remove("dark");
-      }
+      const realTheme = decodeTheme("auto");
+      applyTheme(realTheme, "autoThemeTimer");
     }, 10000);
   };
 
@@ -34,33 +35,20 @@ export default function (props: {}) {
     if (!current.hasInit) {
       current.hasInit = true;
       const iTheme = initTheme();
-      clearTimer();
-      if (iTheme.includes("auto")) {
-        setTimer();
-      }
       setTheme(iTheme);
-    } else {
       clearTimer();
-      if (theme.includes("auto")) {
-        setTimer();
-      }
     }
     return () => {
       clearInterval(currentTimer.timer);
     };
   }, [current, setTheme, props, currentTimer, theme]);
   const handleSwitch = () => {
-    clearTimer();
     if (theme == "light") {
       setTheme("dark");
-      switchTheme("dark");
     } else if (theme == "dark") {
-      const r = switchTheme("auto");
-      setTheme(r);
-      setTimer();
+      setTheme("auto");
     } else {
       setTheme("light");
-      switchTheme("light");
     }
   };
   return (

@@ -13,11 +13,13 @@ import { addViewer } from "../api/addViewer";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { current } = useRef({ hasInit: false });
+
   const [globalState, setGlobalState] = useState<GlobalState>({
-    theme: "auto",
+    theme: "auto-light",
     viewer: 0,
     visited: 0,
   });
+
   const router = useRouter();
   const reloadViewer = useCallback(
     async (reason: string) => {
@@ -36,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       current.hasInit = true;
       reloadViewer("初始化");
     }
-  }, [current]);
+  }, [current, reloadViewer]);
   useEffect(() => {
     const handleRouteChange = (
       url: string,

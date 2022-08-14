@@ -1,39 +1,49 @@
-function setThemeAuto() {
+export function decodeAuto() {
   const d = new Date().getHours();
   const night = d > 18 || d < 8;
-  if (night || window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    document.documentElement.classList.add("dark");
-    document.documentElement.classList.remove("light");
-    return "dark";
-  } else {
-    document.documentElement.classList.remove("dark");
-    document.documentElement.classList.add("light");
-    return "light";
-  }
-}
-export const initTheme = () => {
-  // 2种情况： 1. 自动。 2.手动
-  if (!("theme" in localStorage) || localStorage.theme == "auto") {
-    return "auto-" + setThemeAuto();
-  } else {
-    if (localStorage.theme === "dark") {
-      document.documentElement.classList.add("dark");
-      document.documentElement.classList.remove("light");
+  if (typeof window == "undefined") {
+    if (night) {
+      return "auto-dark";
     } else {
-      document.documentElement.classList.remove("dark");
-      document.documentElement.classList.add("light");
+      return "auto-light";
     }
   }
-  return localStorage.theme;
-};
-
-export const switchTheme = (to: string) => {
-  if (to == "light") {
-    localStorage.theme = "light";
-  } else if (to == "auto") {
-    localStorage.theme = "auto";
+  if (night || window.matchMedia("(prefers-color-scheme: dark)").matches) {
+    return "auto-dark";
   } else {
-    localStorage.theme = "dark";
+    return "auto-light";
   }
-  return initTheme();
+}
+export const decodeTheme = (t: "auto" | "light" | "dark") => {
+  if (t == "auto") {
+    return decodeAuto();
+  } else {
+    return t;
+  }
+};
+export const applyTheme = (t: string, source: string) => {
+  if (t.includes("light")) {
+    document.documentElement.classList.add("light");
+    document.documentElement.classList.remove("dark");
+    console.log(`[Apply Theme][${source}] ${t}`);
+  } else {
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
+    console.log(`[Apply Theme][${source}] ${t}`);
+  }
+};
+export const initTheme = () => {
+  if (typeof localStorage == "undefined") {
+    return "auto";
+  }
+  // 2种情况： 1. 自动。 2.手动
+  if (!("theme" in localStorage) || localStorage.theme == "auto") {
+    return "auto";
+  } else {
+    if (localStorage.theme === "dark") {
+      return "dark";
+    } else {
+      return "light";
+    }
+  }
 };
