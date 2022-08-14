@@ -65,15 +65,23 @@ export default function (props: {
       >
         {props.top != 0 && <TopPinIcon></TopPinIcon>}
         <div className="flex justify-center">
-          <Link href={`/post/${props.id}`}>
-            <a
-              className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-${
-                props.type == "overview" ? "xl" : "2xl"
-              } ua`}
+          {props.type != "about" ? (
+            <Link href={`/post/${props.id}`}>
+              <a
+                className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-${
+                  props.type == "overview" ? "xl" : "2xl"
+                } ua`}
+              >
+                {props.title}
+              </a>
+            </Link>
+          ) : (
+            <div
+              className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-2xl ua  select-none`}
             >
               {props.title}
-            </a>
-          </Link>
+            </div>
+          )}
         </div>
 
         <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400 dark:text-dark">
