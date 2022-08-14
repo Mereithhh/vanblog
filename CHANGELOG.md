@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.8](https://github.com/Mereithhh/van-blog/compare/v0.10.7...v0.10.8) (2022-08-14)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 安装sharp ([8b46504](https://github.com/Mereithhh/van-blog/commit/8b46504e2356510b3b68ca3ffefadab89dcaed7b))
+
 ### [0.10.7](https://github.com/Mereithhh/van-blog/compare/v0.10.6...v0.10.7) (2022-08-14)
 
 
