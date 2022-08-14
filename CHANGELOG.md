@@ -1,4 +1,18 @@
 # Changelog
+### [0.10.4](https://github.com/Mereithhh/van-blog/compare/v0.10.3...v0.10.4) (2022-08-14)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* prod 安装sharp ([5339c5a](https://github.com/Mereithhh/van-blog/commit/5339c5a1b2846ce67d4c07d8a51534fd46fea578))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* next 多余的无用 Link ([9984d93](https://github.com/Mereithhh/van-blog/commit/9984d930e9358cc6106e097222bcb75479fa49fe))
+* 当无新增访客时，新增访客为负数的问题 ([6c6ab01](https://github.com/Mereithhh/van-blog/commit/6c6ab016c2114b8a636ac6b9e8b6b6afe2c69c1e))
+* 每天晚上0点定时更新当天的访客记录 ([8810907](https://github.com/Mereithhh/van-blog/commit/881090743bb07aba90105fad2b0ce630e92a6cfb))
+
 ### [0.10.3](https://github.com/Mereithhh/van-blog/compare/v0.10.2...v0.10.3) (2022-08-13)
 
 
