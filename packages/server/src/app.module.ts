@@ -54,6 +54,7 @@ import { ImgController } from './controller/admin/img/img.controller';
 import { LocalProvider } from './provider/static/local.provider';
 import { SettingController } from './controller/admin/setting/setting.controller';
 import { PicgoProvider } from './provider/static/picgo.provider';
+import { ViewerTask } from './schedule/viewer.task';
 
 @Module({
   imports: [
@@ -116,6 +117,7 @@ import { PicgoProvider } from './provider/static/picgo.provider';
     SettingProvider,
     StaticProvider,
     LocalProvider,
+    ViewerTask,
   ],
 })
 export class AppModule implements NestModule {
