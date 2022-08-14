@@ -27,7 +27,18 @@ const getAllowDomains = () => {
     return [];
   }
 };
-
+const getCdnUrl = () => {
+  const isDev = process.env.NODE_ENV == "development";
+  if (isDev) {
+    return "";
+  }
+  const UrlInEnv = process.env.VAN_BLOG_CDN_URL || "";
+  if (UrlInEnv && UrlInEnv != "") {
+    return UrlInEnv;
+  } else {
+    return "";
+  }
+};
 module.exports = {
   reactStrictMode: true,
   output: "standalone",
@@ -44,5 +55,6 @@ module.exports = {
   images: {
     domains: getAllowDomains(),
   },
+  assetPrefix: getCdnUrl(),
   ...rewites,
 };

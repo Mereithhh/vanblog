@@ -70,6 +70,7 @@ ENV NODE_ENV production
 ENV VAN_BLOG_SERVER_URL "http://127.0.0.1:3000"
 ENV VAN_BLOG_REVALIDATE_TIME 10
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
+ENV VAN_BLOG_CDN_URL "https://www.mereith.com"
 # 复制静态文件
 WORKDIR /usr/share/nginx/html/
 COPY --from=ADMIN_BUILDER /usr/src/app/dist/ ./admin/
