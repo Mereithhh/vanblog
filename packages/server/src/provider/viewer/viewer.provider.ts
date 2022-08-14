@@ -34,13 +34,22 @@ export class ViewerProvider {
     for (let i = num; i >= 0; i--) {
       const last = curDate.add(-1 * i, 'day').format('YYYY-MM-DD');
       const lastDayData = await this.findByDate(last);
-      if (i == 0 && lastDayData) {
-        today.viewer = lastDayData.viewer;
-        today.visited = lastDayData.visited;
+      if (i == 0) {
+        if (lastDayData) {
+          today.viewer = lastDayData.viewer;
+          today.visited = lastDayData.visited;
+        }
       }
-      if (i == 1 && lastDayData) {
-        lastDay.viewer = lastDayData.viewer;
-        lastDay.visited = lastDayData.visited;
+      if (i == 1) {
+        if (lastDayData) {
+          lastDay.viewer = lastDayData.viewer;
+          lastDay.visited = lastDayData.visited;
+        }
+        if (today.viewer == 0) {
+          // 如果今天没数据，那今天的就和昨天的一样吧。这样新增就都是 0
+          today.viewer = lastDayData.viewer;
+          today.visited = lastDayData.visited;
+        }
       }
       if (lastDayData) {
         res.push({
