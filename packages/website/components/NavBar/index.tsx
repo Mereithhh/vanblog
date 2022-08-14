@@ -8,6 +8,7 @@ import { GlobalContext } from "../../utils/globalContext";
 import { MenuItem } from "../../api/getAllData";
 import Image from "next/future/image";
 import AdminButton from "../AdminButton";
+import ImageBox from "../ImageBox";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -107,12 +108,19 @@ export default function (props: {
             </div>
             {props.headerLeftContent == "siteLogo" && (
               <div className="hidden md:block transform translate-x-2">
-                <Image
+                <ImageBox
                   alt="site logo"
                   src={picUrl}
-                  width={52}
-                  height={52}
-                ></Image>
+                  center={false}
+                  lazyLoad={true}
+                >
+                  <Image
+                    alt="site logo"
+                    src={picUrl}
+                    width={52}
+                    height={52}
+                  ></Image>
+                </ImageBox>
               </div>
             )}
           </div>

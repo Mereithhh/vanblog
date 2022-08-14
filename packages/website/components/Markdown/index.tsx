@@ -8,6 +8,8 @@ import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
+import ImageBox from "../ImageBox";
+
 export default function (props: { content: string }) {
   return (
     <>
@@ -63,11 +65,12 @@ export default function (props: { content: string }) {
           },
           img(props) {
             return (
-              <img
+              <ImageBox
                 alt={props.alt}
                 src={(props.src as string) || ""}
-                loading="lazy"
-              ></img>
+                lazyLoad={true}
+                center={false}
+              />
             );
           },
         }}

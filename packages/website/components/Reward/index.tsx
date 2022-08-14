@@ -3,6 +3,7 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
 import toast, { Toaster } from "react-hot-toast";
+import ImageBox from "../ImageBox";
 
 export default function (props: {
   aliPay: string;
@@ -58,19 +59,33 @@ export default function (props: {
             }}
           >
             <div className="flex justify-center">
-              <Image
+              <ImageBox
                 alt="logo ali pay"
                 src={payUrl[0]}
-                width={180}
-                height={250}
-              ></Image>
+                center={false}
+                lazyLoad={false}
+              >
+                <Image
+                  alt="logo ali pay"
+                  src={payUrl[0]}
+                  width={180}
+                  height={250}
+                ></Image>
+              </ImageBox>
               <div className="w-4 inline-block"></div>
-              <Image
+              <ImageBox
                 alt="logo wechat pay"
                 src={payUrl[1]}
-                width={180}
-                height={250}
-              ></Image>
+                center={false}
+                lazyLoad={false}
+              >
+                <Image
+                  alt="logo wechat pay"
+                  src={payUrl[1]}
+                  width={180}
+                  height={250}
+                ></Image>
+              </ImageBox>
             </div>
           </div>
         </>

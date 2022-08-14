@@ -5,6 +5,7 @@ import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";
 import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
+import ImageBox from "../ImageBox";
 
 export default function (props: { item: SocialItem }) {
   const { state } = useContext(GlobalContext);
@@ -72,12 +73,20 @@ export default function (props: { item: SocialItem }) {
                 className="card-shadow bg-white dark:bg-dark-2 dark:card-shadow-dark"
                 style={{ height: 280 }}
               >
-                <Image
+                <ImageBox
                   alt="logo wechat qrcode"
                   src={weChatUrl}
-                  width={200}
-                  height={280}
-                ></Image>
+                  lazyLoad
+                  center={false}
+                  children={
+                    <Image
+                      alt="logo wechat qrcode"
+                      src={weChatUrl}
+                      width={200}
+                      height={280}
+                    ></Image>
+                  }
+                ></ImageBox>
               </div>
             </ArrowContainer>
           );

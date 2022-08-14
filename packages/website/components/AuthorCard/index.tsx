@@ -5,6 +5,7 @@ import { SocialItem } from "../../api/getAllData";
 import SocialCard from "../SocialCard";
 import { GlobalContext } from "../../utils/globalContext";
 import Image from "next/future/image";
+import ImageBox from "../ImageBox";
 export interface AuthorCardProps {
   author: string;
   desc: string;
@@ -52,13 +53,20 @@ export default function (props: { option: AuthorCardProps }) {
     <div id="author-card" className="fixed ">
       <div className="w-52 flex flex-col justify-center items-center bg-white pt-6  pb-4 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
         <div className="px-10 flex flex-col justify-center items-center">
-          <Image
+          <ImageBox
             alt="author logo"
-            className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
             src={logoUrl}
-            width={120}
-            height={120}
-          ></Image>
+            center={false}
+            lazyLoad={true}
+          >
+            <Image
+              alt="author logo"
+              className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
+              src={logoUrl}
+              width={120}
+              height={120}
+            ></Image>
+          </ImageBox>
 
           <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">
             {props.option.author}
