@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.7](https://github.com/Mereithhh/van-blog/compare/v0.10.6...v0.10.7) (2022-08-14)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 删除导致ci报错的无用代码 ([c4a0514](https://github.com/Mereithhh/van-blog/commit/c4a0514b62f7183c0ea3285fbafef8c5f5f9242a))
+
 ### [0.10.6](https://github.com/Mereithhh/van-blog/compare/v0.10.5...v0.10.6) (2022-08-14)
 
 
