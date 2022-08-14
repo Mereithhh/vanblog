@@ -1,4 +1,14 @@
 # Changelog
+### [0.10.6](https://github.com/Mereithhh/van-blog/compare/v0.10.5...v0.10.6) (2022-08-14)
+
+
+### ✨ Features | 新功能
+
+* 优化主题切换，减少报错 ([cbb5bdb](https://github.com/Mereithhh/van-blog/commit/cbb5bdbd62d4b9a1b16313209a1c8cc91af42f97))
+* 前台图片预览增加小工具 ([1460536](https://github.com/Mereithhh/van-blog/commit/146053657f88f6077672d82a4764150bc59540bd))
+* 图片增加灯箱 ([c811c5a](https://github.com/Mereithhh/van-blog/commit/c811c5a3f5ea9b4ef3bd7f9cc9425218c32199fd))
+* 增加 cdn 配置 ([138c72a](https://github.com/Mereithhh/van-blog/commit/138c72a54f951d0f02c5c739a15aa0bfb3343ae4))
+
 ### [0.10.5](https://github.com/Mereithhh/van-blog/compare/v0.10.4...v0.10.5) (2022-08-14)
 
 
