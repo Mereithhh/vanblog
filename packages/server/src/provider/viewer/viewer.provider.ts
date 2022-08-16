@@ -47,8 +47,8 @@ export class ViewerProvider {
         }
         if (today.viewer == 0) {
           // 如果今天没数据，那今天的就和昨天的一样吧。这样新增就都是 0
-          today.viewer = lastDayData.viewer;
-          today.visited = lastDayData.visited;
+          today.viewer = lastDayData?.viewer || 0;
+          today.visited = lastDayData?.visited || 0;
         }
       }
       if (lastDayData) {
