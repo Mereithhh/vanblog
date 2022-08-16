@@ -55,3 +55,7 @@
 目前就我自己- -
 
 - [Mereith's Blog](https://www.mereith.com)
+
+## Star 趋势图
+
+[![Stargazers over time](https://starchart.cc/Mereithhh/van-blog.svg)](https://starchart.cc/Mereithhh/van-blog)
