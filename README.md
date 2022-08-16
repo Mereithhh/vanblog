@@ -10,6 +10,9 @@
 <p align="center">
 	<strong>项目主页: </strong>  <a target="_blank" href='https://vanblog.mereith.com'>vanblog.mereith.com</a>
 </p>
+<p align="center">
+	<strong>Demo(后台账号密码均为 demo): </strong>  <a target="_blank" href='https://blog-demo.mereith.com'>blog-demo.mereith.com</a>
+</p>
 
 ## 特性
 
