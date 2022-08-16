@@ -5,8 +5,11 @@
 	<strong>VanBlog 一款简洁实用的个人博客系统。支持黑暗模式、支持移动端自适应和评论、内置流量统计与图床，配有完备的、支持黑暗模式、支持移动端、支持一键上传剪切板图片到图床、带有强大的编辑器的后台管理面板。</strong>
 </p>
 <p align="center">
+  <img src="https://img.shields.io/github/v/release/mereithhh/van-blog?display_name=tag" />
+  <img src="https://img.shields.io/github/stars/mereithhh/van-blog?style=social" />
+  <img src="https://img.shields.io/bitbucket/issues/mereithhh/van-blog" />
+  <img src="https://github.com/mereithhh/van-blog/workflows/%E5%8F%91%E7%89%88/badge.svg" />
   <img src="https://img.shields.io/badge/license-GPL%20v3-yellow.svg" />
-  <img src="https://github.com/mereithhh/van-blog/workflows/%E5%8F%91%E5%B8%83%E7%89%88%E6%9C%AC/badge.svg" />
 </p>
 <p align="center">
 	<strong>项目主页: </strong>  <a target="_blank" href='https://vanblog.mereith.com'>vanblog.mereith.com</a>
