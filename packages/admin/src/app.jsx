@@ -153,7 +153,7 @@ export const layout = ({ initialState, setInitialState }) => {
                 }
                 setInitialState((preInitialState) => ({
                   ...preInitialState,
-                  ...settings,
+                  settings,
                 }));
               }}
             />
