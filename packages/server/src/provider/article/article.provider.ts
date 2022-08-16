@@ -434,7 +434,7 @@ export class ArticleProvider {
       },
     ];
     const and = [];
-    const sort: any = { createdAt: -1 };
+    const sort: any = {};
     if (isPublic) {
       $and.push({
         $or: [
@@ -447,11 +447,7 @@ export class ArticleProvider {
         ],
       });
     }
-    if (option.sortCreatedAt) {
-      if (option.sortCreatedAt == 'asc') {
-        sort.createdAt = 1;
-      }
-    }
+
     if (option.sortTop) {
       if (option.sortTop == 'asc') {
         sort.top = 1;
@@ -464,6 +460,12 @@ export class ArticleProvider {
         sort.viewer = 1;
       } else {
         sort.viewer = -1;
+      }
+    }
+    if (!option.sortCreatedAt) {
+      sort.createdAt = -1;
+      if (option.sortCreatedAt == 'asc') {
+        sort.createdAt = 1;
       }
     }
     if (option.tags) {
@@ -514,6 +516,8 @@ export class ArticleProvider {
     }
 
     query.$and = $and;
+    // console.log(JSON.stringify(query, null, 2));
+    // console.log(JSON.stringify(sort, null, 2));
     let view: any = isPublic ? this.publicView : this.adminView;
     if (option.toListView) {
       view = this.listView;
