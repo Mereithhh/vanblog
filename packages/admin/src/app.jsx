@@ -75,7 +75,6 @@ export async function getInitialState() {
   // 暗色模式
   const theme = getInitTheme();
   const sysTheme = mapTheme(theme);
-  console.log(sysTheme);
   return {
     fetchInitData,
     ...initData,
@@ -148,15 +147,13 @@ export const layout = ({ initialState, setInitialState }) => {
               settings={initialState?.settings}
               themeOnly={true}
               onSettingChange={(settings) => {
-                const newTheme = settings.navTheme == 'dark' ? 'realDark' : settings.navTheme;
-                if (newTheme != initialState?.settings?.navTheme) {
+                if (settings.navTheme != initialState?.settings?.navTheme) {
                   // 切换了主题
-                  beforeSwitchTheme(newTheme);
+                  beforeSwitchTheme(settings.navTheme);
                 }
                 setInitialState((preInitialState) => ({
                   ...preInitialState,
                   ...settings,
-                  navTheme: newTheme,
                 }));
               }}
             />
