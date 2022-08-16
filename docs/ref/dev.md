@@ -1,6 +1,5 @@
 ---
 title: 开发指南
-index: false
 icon: vscode
 ---
 
@@ -44,6 +43,8 @@ CI： [docker](https://www.docker.com/)、[nginx](https://www.nginx.com/)、[git
 
 ## 前台开发
 
+采用了 `nextjs`
+
 ```bash
 cd packages/website
 yarn
@@ -56,17 +57,21 @@ yarn dev
 
 ## 后台开发
 
+采用 `ant deign pro`
+
 ```bash
 cd packages/admin
 yarn
 yarn start
 ```
 
-端口号为: `3002`
+端口号为: `3002`，默认开启了 `https`
 
 与后台的跨域代理已经做好了，浏览器打开即可。
 
 ## 后端开发
+
+采用 `nestjs` 框架构建。
 
 ```bash
 cd packages/server
@@ -77,6 +82,17 @@ yarn start:dev
 端口号为: `3000`
 
 `swagger` 路径为: `/swagger`
+
+默认的数据库是本地的 `mongo`，如果你需要修改，可以在本目录（`packages/server`）下新建`config.yaml`：
+
+```
+database:
+  url: mongodb://somemongo:27017/vanBlog?authSource=admin
+# 配置静态图床的文件夹
+static:
+  path: /code/github/van-blog/staticFolder
+
+```
 
 ## 文档开发
 

@@ -1,12 +1,13 @@
 ---
 title: FAQ
-index: false
 icon: question
 ---
 
 ### 如何部署到 CDN
 
-等稳定测试后会增加这个配置项的。
+设置 `VAN_BLOG_CDN_URL` 这个环境变量后，按部就班增加 CDN 即可。
+
+原则上 CDN 只缓存 `/_next/static` 这个目录就够了。
 
 ### 我觉得太丑了||可以自定义样式吗？
 

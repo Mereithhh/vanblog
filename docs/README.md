@@ -4,51 +4,47 @@ icon: home
 heroImage: /logo.svg
 heroText: Van Blog
 heroFullScreen: false
-tagline: 一款简洁实用的个人博客解决方案
+tagline: 一款简洁实用优雅的一站式个人博客系统。
 actions:
   - text: 💡 快速上手
-    link: /get-started.html
+    link: /guide/docker.html
     type: primary
 
   - text: ℹ️ 介绍
     link: /intro.html
     type: secondary
 features:
-  - title: 简洁美观
+  - title: 优雅
     icon: bit
-    details: 专注于博客本身，拒绝花里胡哨
+    details: 前后台都响应式、都支持暗色模式且能自动切换
 
   - title: 功能强大
     icon: contrast
-    details: 搜索、黑暗模式，该有的都有
+    details: 草稿、分类、标签、搜索、TOC、各种自定义
 
-  - title: 响应式
-    icon: card
-    details: 无论是电脑、平板还是手机都完美展示
+  - title: 内置图床
+    icon: pic
+    details: 本地图床，OSS 图床，Github 图床都支持，可一键上传剪切板图片
 
   - title: 高性能
     icon: light
-    details: 秒级相应的增量渲染，内置图片优化与缓存
+    details: 静态页面，自带预加载和缓存，秒级相应的增量渲染，内置图片优化
 
   - title: SEO 友好
     icon: search
-    details: 不需要 SSR，我们选择 SSG
+    details: Lighthouse SEO 近满分，支持百度分析和 GA
 
   - title: 可量化
     icon: table
     details: 内置强大分析系统与精美看板，同时支持百度和GA
 
-  - title: ARM Ready
-    icon: engine
-    details: 树莓派、香橙派，无论什么派
-
   - title: 现代后台
     icon: strong
-    details: 功能齐全的后台页面，可配置化高
+    details: 功能齐全的后台，精心优化的编辑器，极致的写作体验
 
   - title: 易于部署
     icon: linux
-    details: docker 一键部署
+    details: Docker 一键部署
 copyright: false
 footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
 ---
