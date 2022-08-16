@@ -77,6 +77,11 @@ jobs:
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.K8S_CONFIG_DATA }}
           command: set image -n tools deployment/van-blog van-blog=registry.cn-beijing.aliyuncs.com/van-blog/mereith:${{ steps.get_version.outputs.VERSION }}
+      - name: 部署 demo 到集群
+        uses: steebchen/kubectl@v2.0.0
+        with: # defaults to latest kubectl binary version
+          config: ${{ secrets.K8S_CONFIG_DATA }}
+          command: set image -n tools deployment/blog-demo van-blog=registry.cn-beijing.aliyuncs.com/van-blog/mereith:${{ steps.get_version.outputs.VERSION }}
       - name: updateVersionToApiServer
         run: |
           curl -X POST "${{ secrets.VERSIONURL }}${{ steps.get_version.outputs.VERSION }}"
