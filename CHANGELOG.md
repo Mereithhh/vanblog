@@ -1,4 +1,16 @@
 # Changelog
+### [0.10.9](https://github.com/Mereithhh/van-blog/compare/v0.10.8...v0.10.9) (2022-08-16)
+
+
+### ✏️ Documentation | 文档
+
+* 更新大量文档 ([ffed346](https://github.com/Mereithhh/van-blog/commit/ffed346253c4b15b52fc3b5bc5e835d08180a9d6))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复顶置失效 ([85c98c9](https://github.com/Mereithhh/van-blog/commit/85c98c9e11eec72d966b05b9ba0dbaad33c62f57))
+
 ### [0.10.8](https://github.com/Mereithhh/van-blog/compare/v0.10.7...v0.10.8) (2022-08-14)
 
 
