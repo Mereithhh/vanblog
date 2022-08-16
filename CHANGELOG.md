@@ -1,4 +1,30 @@
 # Changelog
+### [0.10.10](https://github.com/Mereithhh/van-blog/compare/v0.10.9...v0.10.10) (2022-08-16)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 增加部署demo 的job ([4cd838c](https://github.com/Mereithhh/van-blog/commit/4cd838c2dc98d26bec7d2b8335b58761d23f06e1))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复初始化后预览面板报错 ([84f5b11](https://github.com/Mereithhh/van-blog/commit/84f5b110296496f5bc454bde96ce7d373eee9e1d))
+* 登录态失效 ([43ea345](https://github.com/Mereithhh/van-blog/commit/43ea345fded8d140ee411d08cec35fca730d594d))
+* 默认隐藏后台按钮 ([4da6c5b](https://github.com/Mereithhh/van-blog/commit/4da6c5bae747ee3ec880067c2cf41d1d7849c0d6))
+
+
+### ✨ Features | 新功能
+
+* 拆分初始化页面&初始化页面自动根据实际适配主题 ([1c92868](https://github.com/Mereithhh/van-blog/commit/1c9286810e13c2282fca8fda975b624e6519ccba))
+* 默认上传图片复制 markdown 链接而不是 url ([3addf1c](https://github.com/Mereithhh/van-blog/commit/3addf1ca1681630afde72f9fbe6bec18d563f353))
+
+
+### ✏️ Documentation | 文档
+
+* 增加初始化文档 ([47e5c55](https://github.com/Mereithhh/van-blog/commit/47e5c550f8926f88b837400b54e7d0205f8aac41))
+* 更新 README.md ([1a7fc4c](https://github.com/Mereithhh/van-blog/commit/1a7fc4ce954d58a63d83d6c7dcdd59b873340977))
+
 ### [0.10.9](https://github.com/Mereithhh/van-blog/compare/v0.10.8...v0.10.9) (2022-08-16)
 
 
