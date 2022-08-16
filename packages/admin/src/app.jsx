@@ -28,13 +28,12 @@ export async function getInitialState() {
         return {};
       } else if (history.location.pathname == '/init' && msg.statusCode == 200) {
         history.push('/');
-        return msg.data;
       }
+      return msg.data;
     } catch (error) {
+      console.log('error', error);
       history.push(loginPath);
     }
-
-    return undefined;
   }; // 如果不是登录页面，执行
   let option = {};
   if (history.location.pathname == loginPath || history.location.pathname == '/init') {
