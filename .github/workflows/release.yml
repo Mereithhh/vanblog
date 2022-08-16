@@ -1,4 +1,4 @@
-name: 发版
+name: release
 
 on:
   push:

@@ -6,9 +6,9 @@
 </p>
 <p align="center">
   <img src="https://img.shields.io/github/v/release/mereithhh/van-blog?display_name=tag" />
-  <img src="https://img.shields.io/github/stars/mereithhh/van-blog?style=social" />
+  <img src="https://img.shields.io/github/stars/mereithhh/van-blog" />
   <img src="https://img.shields.io/bitbucket/issues/mereithhh/van-blog" />
-  <img src="https://github.com/mereithhh/van-blog/workflows/%E5%8F%91%E7%89%88/badge.svg" />
+  <img src="https://github.com/mereithhh/van-blog/workflows/release/badge.svg" />
   <img src="https://img.shields.io/badge/license-GPL%20v3-yellow.svg" />
 </p>
 <p align="center">
