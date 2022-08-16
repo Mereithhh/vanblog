@@ -1,4 +1,16 @@
 # Changelog
+### [0.10.11](https://github.com/Mereithhh/van-blog/compare/v0.10.10...v0.10.11) (2022-08-16)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* demo 站不用自用镜像 ([559ef38](https://github.com/Mereithhh/van-blog/commit/559ef38778616b67be006df907c742e425d823c0))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 尝试修复构建后后台切换页面报错 ([df47e26](https://github.com/Mereithhh/van-blog/commit/df47e26c5814d0b1575b200a575018601aa2d59a))
+
 ### [0.10.10](https://github.com/Mereithhh/van-blog/compare/v0.10.9...v0.10.10) (2022-08-16)
 
 

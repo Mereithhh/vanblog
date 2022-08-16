@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.10.10",
+  "version": "0.10.11",
   "private": true,
   "devDependencies": {
     "@vuepress/client": "^2.0.0-beta.49",
