@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.12](https://github.com/Mereithhh/van-blog/compare/v0.10.11...v0.10.12) (2022-08-16)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 尝试修复后台切换页面报错 ([f25f380](https://github.com/Mereithhh/van-blog/commit/f25f380f257432fe4c24a52b39df5367b04e945f))
+
 ### [0.10.11](https://github.com/Mereithhh/van-blog/compare/v0.10.10...v0.10.11) (2022-08-16)
 
 
