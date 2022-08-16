@@ -6,6 +6,7 @@
 </p>
 <p align="center">
   <img src="https://img.shields.io/badge/license-GPL%20v3-yellow.svg" />
+  <img src="https://github.com/mereithhh/van-blog/workflows/%E5%8F%91%E5%B8%83%E7%89%88%E6%9C%AC/badge.svg" />
 </p>
 <p align="center">
 	<strong>项目主页: </strong>  <a target="_blank" href='https://vanblog.mereith.com'>vanblog.mereith.com</a>
