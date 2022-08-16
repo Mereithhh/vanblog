@@ -27,7 +27,7 @@ services:
       # CDN URL，包含协议，部署到 cdn 的时候用。
       VAN_BLOG_CDN_URL: "https://www.mereith.com"
       # mongodb 的地址
-      VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017"
+      VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017/vanBlog?authSource=admin"
       # jwt 密钥，随机字符串即可
       VAN_BLOG_JWT_SECRET: "AnyString"
     volumes:
