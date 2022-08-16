@@ -2,7 +2,7 @@
 icon: nginx
 title: 反代
 copyright: false
-order: -2
+order: -3
 ---
 
 :::info 注意

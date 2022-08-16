@@ -7,7 +7,7 @@ export default sidebar([
     icon: "creative",
     // activeMatch: "^/guide/$",
     prefix: "/guide/",
-    children: ["docker.md", "nginx.md"],
+    children: ["docker.md", "nginx.md", "init.md"],
   },
   {
     text: "功能",
