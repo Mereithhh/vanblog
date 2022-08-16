@@ -189,7 +189,7 @@ const ImgPage = () => {
               } else {
                 message.warning(`剪切板图片已存在!`);
               }
-              copyImgLink(data.src);
+              copyImgLink(data.src, true);
 
               fetchData();
             }}
@@ -206,7 +206,7 @@ const ImgPage = () => {
               } else {
                 message.warning(`${info.name} 已存在!`);
               }
-              copyImgLink(info?.response?.data?.src);
+              copyImgLink(info?.response?.data?.src, true);
               fetchData();
             }}
             url="/api/admin/img/upload"

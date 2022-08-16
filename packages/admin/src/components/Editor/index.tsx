@@ -1,4 +1,4 @@
-import { getImgLink } from '@/pages/Static/img/tools';
+import { copyImgLink, getImgLink } from '@/pages/Static/img/tools';
 import { getClipboardContents } from '@/services/van-blog/clipboard';
 import { message, Spin } from 'antd';
 import { useEffect, useRef, useState } from 'react';
@@ -63,6 +63,7 @@ export default function Editor(props) {
     const url = getImgLink(res.src);
     current.editor.insertValue(`\n![](${url})\n`);
     await sleep(50);
+    copyImgLink(res.src, true);
   };
   useEffect(() => {
     if (!current.editor) {
