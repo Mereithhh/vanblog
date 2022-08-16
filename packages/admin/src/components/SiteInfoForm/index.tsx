@@ -200,12 +200,12 @@ export default function (props: {
           <ProFormSelect
             name={'showAdminButton'}
             label="后台按钮是否显示"
-            placeholder={'显示'}
+            placeholder={'隐藏'}
             valueEnum={{
               true: '显示',
               false: '隐藏',
             }}
-            tooltip={'默认显示，关闭后导航栏会隐藏后台按钮'}
+            tooltip={'默认隐藏，开启后导航栏会显示后台按钮'}
           ></ProFormSelect>
           <ProFormSelect
             name={'showFriends'}
