@@ -7,6 +7,8 @@ order: -1
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
 
+你也可以先查看 [Demo](https://blog-demo.mereith.com)，账号密码均为 `demo`
+
 ## docker-compose 部署
 
 新建 `docker-compose.yml`文件：
@@ -76,7 +78,7 @@ services:
 docker-compose up -d
 ```
 
-浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。
+浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feat/basic/setting.md)
 
 ## kubernetes
 

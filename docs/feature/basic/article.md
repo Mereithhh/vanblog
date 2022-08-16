@@ -35,7 +35,7 @@ shortTitle: 文章管理
 
 ### 分类
 
-选择分类前需要创建分类，具体请参考[分类管理](/feature/category.md)
+选择分类前需要创建分类，具体请参考[分类管理](/feature/basic/category.md)
 
 ### 是否加密&密码
 

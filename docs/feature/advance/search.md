@@ -14,4 +14,4 @@ title: 文章搜索
 
 ## 后台搜索
 
-直接进入`文章管理`页面即可。具体可参考[文章管理](/feature/article.md)
+直接进入`文章管理`页面即可。具体可参考[文章管理](/feature/basic/article.md)

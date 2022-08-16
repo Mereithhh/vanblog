@@ -23,4 +23,4 @@ icon: async
 
 ## 站点配置
 
-请参考 ：[站点配置](/guide/setting.md)
+请参考 ：[站点配置](/feature/basic/setting.md)

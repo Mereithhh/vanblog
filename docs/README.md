@@ -13,6 +13,10 @@ actions:
   - text: ℹ️ 介绍
     link: /intro.html
     type: secondary
+
+  - text: ✈️ Demo
+    link: https://blog-demo.mereith.com
+    type: secondary
 features:
   - title: 优雅
     icon: bit

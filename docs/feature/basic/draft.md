@@ -32,7 +32,7 @@ title: 草稿管理
 
 ### 分类
 
-选择分类前需要创建分类，具体请参考[分类管理](/feature/category.md)
+选择分类前需要创建分类，具体请参考[分类管理](/feature/basic/category.md)
 
 ## 编辑草稿
 
@@ -50,7 +50,7 @@ title: 草稿管理
 
 当草稿被完善到可以发布的地步，可以在编辑页面点击右上角的`发布草稿按钮`进行发布。
 
-具体选项含义可以参考 [文章管理](/feature/article.md)
+具体选项含义可以参考 [文章管理](/feature/basic/article.md)
 
 ![](https://pic.mereith.com/img/e81cc176a756cf21acfb87ec2bf509d5.clipboard-2022-08-16.png)
 

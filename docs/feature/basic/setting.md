@@ -41,7 +41,7 @@ title: 站点设置
 | 备案网址                   | 否   | 页面底部的备案号点击后的跳转地址                              |
 | Google Analysis ID         | 否   | Google Analysis 的 ID，没有的话就不开启 GA 了                 |
 | Baidu 分析 ID              | 否   | 百度分析的 ID，没有的话就不开启百度分析（统计）了             |
-| WaLine 服务端 Url          | 否   | waline 服务端的网址，具体参考 [开启评论](/feature/comment.md) |
+| WaLine 服务端 Url          | 否   | waline 服务端的网址，具体参考 [开启评论](/feature/basic/comment.md) |
 | 建站时间                   | 否   | 用于显示页面底部的本站运行时间，没有的话从今天算起            |
 
 ![](https://pic.mereith.com/img/cf276f8eec35c11300a64e4dbd1b7efd.clipboard-2022-08-15.png)
