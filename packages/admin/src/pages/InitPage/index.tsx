@@ -78,7 +78,7 @@ const InitPage = () => {
                 form={formRef1}
               />
             </StepsForm.StepForm>
-            <StepsForm.StepForm name="step3" title={'额外配置'} formRef={formRef2}>
+            <StepsForm.StepForm name="step3" title={'高级配置'} formRef={formRef2}>
               <Alert
                 type="info"
                 message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。"
@@ -86,9 +86,12 @@ const InitPage = () => {
               <SiteInfoForm
                 showRequire={false}
                 showOption={true}
-                showLayout={true}
+                showLayout={false}
                 form={formRef2}
               />
+            </StepsForm.StepForm>
+            <StepsForm.StepForm name="step4" title={'布局配置'}>
+              <SiteInfoForm showRequire={false} showOption={false} showLayout={true} form={null} />
             </StepsForm.StepForm>
           </StepsForm>
         </ProCard>

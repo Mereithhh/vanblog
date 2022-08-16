@@ -25,10 +25,11 @@ export async function getInitialState() {
       const msg = await fetchAllMeta(option);
       if (msg.statusCode == 233) {
         history.push('/init');
+        return {};
       } else if (history.location.pathname == '/init' && msg.statusCode == 200) {
         history.push('/');
+        return msg.data;
       }
-      return msg.data;
     } catch (error) {
       history.push(loginPath);
     }
@@ -40,6 +41,7 @@ export async function getInitialState() {
     option.skipErrorHandler = true;
   }
   const initData = await fetchInitData(option);
+
   const { latestVersion, updatedAt, version } = initData;
   // 来一个横幅提示
   if (version && latestVersion && version != 'dev') {
@@ -74,6 +76,7 @@ export async function getInitialState() {
   // 暗色模式
   const theme = getInitTheme();
   const sysTheme = mapTheme(theme);
+  console.log(sysTheme);
   return {
     fetchInitData,
     ...initData,
@@ -146,11 +149,16 @@ export const layout = ({ initialState, setInitialState }) => {
               settings={initialState?.settings}
               themeOnly={true}
               onSettingChange={(settings) => {
-                if (settings.navTheme != initialState?.settings?.navTheme) {
+                const newTheme = settings.navTheme == 'dark' ? 'realDark' : settings.navTheme;
+                if (newTheme != initialState?.settings?.navTheme) {
                   // 切换了主题
-                  beforeSwitchTheme(settings.navTheme);
+                  beforeSwitchTheme(newTheme);
                 }
-                setInitialState((preInitialState) => ({ ...preInitialState, settings }));
+                setInitialState((preInitialState) => ({
+                  ...preInitialState,
+                  ...settings,
+                  navTheme: newTheme,
+                }));
               }}
             />
           )}

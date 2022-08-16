@@ -4,7 +4,7 @@ export const getInitTheme = () => {
     return 'auto';
   } else {
     if (localStorage.theme === 'dark') {
-      theme = 'dark';
+      theme = 'realDark';
     } else {
       theme = 'light';
     }
