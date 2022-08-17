@@ -1,4 +1,12 @@
 # Changelog
+### [0.10.17](https://github.com/Mereithhh/van-blog/compare/v0.10.16...v0.10.17) (2022-08-17)
+
+
+### ✨ Features | 新功能
+
+* 一页时不显示分页器 ([e091ad4](https://github.com/Mereithhh/van-blog/commit/e091ad4365b2d5243bd30301a1d0c13e7ba8fbde))
+* 优化构建模板信息 ([27a264b](https://github.com/Mereithhh/van-blog/commit/27a264b7c560b108ad531699c649fcc262dbf1eb))
+
 ### [0.10.16](https://github.com/Mereithhh/van-blog/compare/v0.10.15...v0.10.16) (2022-08-17)
 
 
