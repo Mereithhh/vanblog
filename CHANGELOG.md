@@ -1,4 +1,12 @@
 # Changelog
+### [0.10.18](https://github.com/Mereithhh/van-blog/compare/v0.10.17...v0.10.18) (2022-08-17)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* ci 报错 ([9b1f167](https://github.com/Mereithhh/van-blog/commit/9b1f1675d740bfa2132a3c451ce2c9615e7f0fa2))
+* 保存关于提示没有标签 ([701ab8f](https://github.com/Mereithhh/van-blog/commit/701ab8fb95c25b649bf0545e72cc7a2eeedf0a39))
+
 ### [0.10.17](https://github.com/Mereithhh/van-blog/compare/v0.10.16...v0.10.17) (2022-08-17)
 
 
