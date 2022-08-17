@@ -1,4 +1,20 @@
 # Changelog
+### [0.10.15](https://github.com/Mereithhh/van-blog/compare/v0.10.14...v0.10.15) (2022-08-17)
+
+
+### ✨ Features | 新功能
+
+* 优化 console.log 提示语 ([cce36ba](https://github.com/Mereithhh/van-blog/commit/cce36baec0d24351ae3e57aa1155f81e6837bf0c))
+* 后台优化文案细节 ([f58fc32](https://github.com/Mereithhh/van-blog/commit/f58fc325fe2b7511cf776834c9fb3c1163b04dcf))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复访客信息展示&增加console.log 欢迎语 ([210bc93](https://github.com/Mereithhh/van-blog/commit/210bc93fc93f24bc6495692b5843e12f70993ffc))
+* 修复顶置失效问题 ([c5a1d66](https://github.com/Mereithhh/van-blog/commit/c5a1d66ed433663bc7a86dc0026950f8c4112915))
+* 后台第一次登录后不显示版本“ ([07d6654](https://github.com/Mereithhh/van-blog/commit/07d66544d3514da571628f48482ac5510d47f997))
+* 更改文章排序逻辑为排他性 ([b9085d3](https://github.com/Mereithhh/van-blog/commit/b9085d3f0d75d5fbb9c9e17e4b532542908e866e))
+
 ### [0.10.14](https://github.com/Mereithhh/van-blog/compare/v0.10.13...v0.10.14) (2022-08-17)
 
 
