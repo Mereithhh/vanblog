@@ -30,13 +30,13 @@ const getAllowDomains = () => {
 const getCdnUrl = () => {
   const isDev = process.env.NODE_ENV == "development";
   if (isDev) {
-    return "";
+    return {};
   }
   const UrlInEnv = process.env.VAN_BLOG_CDN_URL || "";
   if (UrlInEnv && UrlInEnv != "") {
-    return UrlInEnv;
+    return { assetPrefix: UrlInEnv };
   } else {
-    return "";
+    return {};
   }
 };
 module.exports = {
@@ -55,6 +55,6 @@ module.exports = {
   images: {
     domains: getAllowDomains(),
   },
-  assetPrefix: getCdnUrl(),
+  ...getCdnUrl(),
   ...rewites,
 };
