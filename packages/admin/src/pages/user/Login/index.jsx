@@ -30,6 +30,13 @@ const Login = () => {
           user: user,
         }));
         // 获取一下 init 的数据。
+        const meta = await initialState?.fetchInitData();
+        await setInitialState((s) => ({
+          ...s,
+          token: token,
+          user: user,
+          ...meta,
+        }));
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
         const { query } = history.location;
