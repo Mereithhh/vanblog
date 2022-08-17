@@ -1,4 +1,25 @@
 # Changelog
+### [0.10.13](https://github.com/Mereithhh/van-blog/compare/v0.10.12...v0.10.13) (2022-08-17)
+
+
+### ✏️ Documentation | 文档
+
+* 修改图标 ([fcbbdb2](https://github.com/Mereithhh/van-blog/commit/fcbbdb2a4ef3f2da3a446ef5a8ff4a5f7cbc31e9))
+* 增加图标 ([e805a74](https://github.com/Mereithhh/van-blog/commit/e805a747d07a43f2182be538c86fbebd28bb5b00))
+* 增加构建图标 ([72392b8](https://github.com/Mereithhh/van-blog/commit/72392b8059d0241432db42111b10882d92f09ca8))
+
+
+### ✨ Features | 新功能
+
+* 增加趋势图 ([924cf3b](https://github.com/Mereithhh/van-blog/commit/924cf3b5f49d6de1fcc307d180cad97fdf3f725a))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修改文档 ([abdb7bb](https://github.com/Mereithhh/van-blog/commit/abdb7bb8f25eb72ca5ed5f55d24f6853fcd10248))
+* 登录页面主题自适应 ([e6e88d4](https://github.com/Mereithhh/van-blog/commit/e6e88d4ae29d3488515818c66b22bffefc1bce80))
+* 配置文件报错 ([6f2cd92](https://github.com/Mereithhh/van-blog/commit/6f2cd9299d3200d748e69c3c72439725af868fa3))
+
 ### [0.10.12](https://github.com/Mereithhh/van-blog/compare/v0.10.11...v0.10.12) (2022-08-16)
 
 
