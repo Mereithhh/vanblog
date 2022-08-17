@@ -226,6 +226,18 @@ export class ArticleProvider {
     }
   }
 
+  async washViewerInfoToVisitProvider() {
+    // 用 visitProvider 里面的数据洗一下 article 的。
+    const articles = await this.getAll('list', true);
+    for (const a of articles) {
+      await this.visitProvider.rewriteToday(
+        `/post/${a.id}`,
+        a.viewer,
+        a.visited,
+      );
+    }
+  }
+
   async importArticles(articles: Article[]) {
     // 先获取一遍新的 id
     // for (let i = 0; i < articles.length; i++) {

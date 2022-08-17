@@ -42,12 +42,31 @@ export class VisitProvider {
     }
   }
 
+  async rewriteToday(pathname: string, viewer: number, visited: number) {
+    const today = dayjs().format('YYYY-MM-DD');
+    const todayData = await this.findByDateAndPath(today, pathname);
+    if (todayData) {
+      await this.visitModel.updateOne(
+        { _id: todayData.id },
+        { viewer, visited },
+      );
+    } else {
+      await this.visitModel.create({
+        date: today,
+        viewer,
+        visited,
+        pathname,
+      });
+    }
+  }
+
   async getLastData(pathname: string) {
     const lastData = await this.visitModel
-      .findOne({ pathname })
-      .sort({ date: -1 });
-    if (lastData) {
-      return lastData;
+      .find({ pathname })
+      .sort({ date: -1 })
+      .limit(1);
+    if (lastData && lastData.length > 0) {
+      return lastData[0];
     }
     return null;
   }

@@ -33,6 +33,8 @@ async function bootstrap() {
   await metaProvider.updateTotalWords();
   // 测试用的
   // const articleProvider = app.get(ArticleProvider);
+  // await articleProvider.washViewerInfoToVisitProvider();
+  // console.log('done');
   // const res = await articleProvider.getAllImageLinks();
   // console.log(res);
 }
