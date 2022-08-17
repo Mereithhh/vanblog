@@ -48,12 +48,12 @@ export default function Editor(props) {
           handleUploadSucc(res.data);
         } else {
           message.error('上传失败！');
-          console.log(res);
+          // console.log(res);
         }
       })
       .catch((err) => {
         message.error('上传失败！');
-        console.log(err);
+        // console.log(err);
       })
       .finally(() => {
         setLoading(false);
@@ -112,13 +112,13 @@ export default function Editor(props) {
                   return null;
                 } else {
                   message.error('上传失败！');
-                  console.log(res);
+                  // console.log(res);
                   return null;
                 }
               })
               .catch((err) => {
                 message.error('上传失败！');
-                console.log(err);
+                // console.log(err);
                 return null;
               })
               .finally(() => {
@@ -203,14 +203,7 @@ export default function Editor(props) {
   }, [current]);
   return (
     <Spin spinning={loading}>
-      <div
-        id="vditor"
-        onPaste={(ev) => {
-          console.log(ev);
-        }}
-        className="vditor"
-        style={{ minHeight: 400 }}
-      />
+      <div id="vditor" className="vditor" style={{ minHeight: 400 }} />
     </Spin>
   );
 }

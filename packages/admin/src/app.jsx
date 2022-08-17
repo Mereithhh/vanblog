@@ -31,7 +31,7 @@ export async function getInitialState() {
       }
       return msg.data;
     } catch (error) {
-      console.log('fet init data error', error);
+      // console.log('fet init data error', error);
       history.push(loginPath);
       return {};
     }

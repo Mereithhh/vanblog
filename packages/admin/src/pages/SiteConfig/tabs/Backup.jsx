@@ -38,7 +38,7 @@ export default function (props) {
             onChange={(info) => {
               setLoading(true);
               if (info.file.status !== 'uploading') {
-                console.log(info.file, info.fileList);
+                // console.log(info.file, info.fileList);
               }
               if (info.file.status === 'done') {
                 message.success(`${info.file.name} 上传成功! 稍后刷新就生效了!`);

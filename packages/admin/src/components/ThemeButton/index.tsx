@@ -27,7 +27,7 @@ export default function (props: {}) {
   const setTimer = () => {
     clearTimer();
     currentTimer.timer = setInterval(() => {
-      console.log('auto theme timer running');
+      // console.log('auto theme timer running');
       setTheme('auto');
     }, 10000);
   };

@@ -115,7 +115,7 @@ const ImgPage = () => {
             />
           ),
         });
-        console.log(data);
+        // console.log(data);
         break;
     }
   }

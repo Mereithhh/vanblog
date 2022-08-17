@@ -36,12 +36,12 @@ export default function (props: {
           props?.onFinish(res?.data);
         } else {
           message.error('上传失败！');
-          console.log(res);
+          // console.log(res);
         }
       })
       .catch((err) => {
         message.error('上传失败！');
-        console.log(err);
+        // console.log(err);
       })
       .finally(() => [props.setLoading(false)]);
   };
