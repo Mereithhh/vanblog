@@ -525,12 +525,41 @@ export class ArticleProvider {
       view = isPublic ? this.publicView : this.adminView;
     }
     let articlesQuery = this.articleModel.find(query, view).sort(sort);
-    if (option.pageSize != -1) {
+    if (option.pageSize != -1 && !isPublic) {
       articlesQuery = articlesQuery
         .skip(option.pageSize * option.page - option.pageSize)
         .limit(option.pageSize);
     }
+
     let articles = await articlesQuery.exec();
+    // public 下 包括所有的，
+    if (isPublic && option.pageSize != -1) {
+      // 把 top 的诺到前面去
+      const topArticles = articles.filter((a: any) => {
+        const top = a?._doc?.top || a?.top;
+        return Boolean(top) && top != '';
+      });
+      const notTopArticles = articles.filter((a: any) => {
+        const top = a?._doc?.top || a?.top;
+        return !Boolean(top) || top == '';
+      });
+      const sortedTopArticles = topArticles.sort((a: any, b: any) => {
+        const topA = a?._doc?.top || a?.top;
+        const topB = b?._doc?.top || b?.top;
+        if (topA > topB) {
+          return -1;
+        } else if (topB > topA) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+      articles = [...sortedTopArticles, ...notTopArticles];
+      const skip = option.pageSize * option.page - option.pageSize;
+      const rawEnd = skip + option.pageSize;
+      const end = rawEnd > articles.length - 1 ? articles.length : rawEnd;
+      articles = articles.slice(skip, end);
+    }
     // withWordCount 只会返回当前分页的文字数量
 
     const total = await this.articleModel.count(query).exec();
