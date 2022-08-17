@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.14](https://github.com/Mereithhh/van-blog/compare/v0.10.13...v0.10.14) (2022-08-17)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 锁定版本 ([f78d582](https://github.com/Mereithhh/van-blog/commit/f78d5826628c0abf56ec86141975d16dde8ad41e))
+
 ### [0.10.13](https://github.com/Mereithhh/van-blog/compare/v0.10.12...v0.10.13) (2022-08-17)
 
 
