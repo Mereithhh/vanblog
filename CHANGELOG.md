@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.16](https://github.com/Mereithhh/van-blog/compare/v0.10.15...v0.10.16) (2022-08-17)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 完善访客记录逻辑&增加一个洗数据脚本 ([ea7f5c1](https://github.com/Mereithhh/van-blog/commit/ea7f5c13d8fb9c98555166ed01cf51bb44638089))
+
 ### [0.10.15](https://github.com/Mereithhh/van-blog/compare/v0.10.14...v0.10.15) (2022-08-17)
 
 
