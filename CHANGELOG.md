@@ -1,4 +1,16 @@
 # Changelog
+### [0.10.19](https://github.com/Mereithhh/van-blog/compare/v0.10.18...v0.10.19) (2022-08-17)
+
+
+### ✏️ Documentation | 文档
+
+* 更新 README 错字 ([956eda7](https://github.com/Mereithhh/van-blog/commit/956eda7349dad5803a27c99196bb8c49c0ac206c))
+
+
+### ✨ Features | 新功能
+
+* url 表单输入也会更新图片预览 ([14b6b62](https://github.com/Mereithhh/van-blog/commit/14b6b62f8d789355709f1ada8e640e1d59cbef8f))
+
 ### [0.10.18](https://github.com/Mereithhh/van-blog/compare/v0.10.17...v0.10.18) (2022-08-17)
 
 
