@@ -43,8 +43,9 @@ export class VisitProvider {
   }
 
   async getLastData(pathname: string) {
-    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
-    const lastData = await this.findByDateAndPath(lastDay, pathname);
+    const lastData = await this.visitModel
+      .findOne({ pathname })
+      .sort({ date: -1 });
     if (lastData) {
       return lastData;
     }
@@ -60,11 +61,8 @@ export class VisitProvider {
   }
   async getByArticleId(id: number) {
     const pathname = id == 0 ? `/about` : `/post/${id}`;
-    const today = dayjs().format('YYYY-MM-DD');
-    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
     const result = await this.visitModel
       .find({
-        date: { $in: [today, lastDay] },
         pathname,
       })
       .sort({ date: -1 })
@@ -75,11 +73,8 @@ export class VisitProvider {
     return null;
   }
   async getLastVisitItem() {
-    const today = dayjs().format('YYYY-MM-DD');
-    const lastDay = dayjs().add(-1, 'day').format('YYYY-MM-DD');
     const result = await this.visitModel
       .find({
-        date: { $in: [today, lastDay] },
         lastVisitedTime: { $exists: true },
       })
       .sort({ lastVisitedTime: -1 })

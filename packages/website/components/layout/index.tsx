@@ -4,7 +4,7 @@ import BackToTopBtn from "../BackToTop";
 import NavBar from "../NavBar";
 import Viewer from "../Viewer";
 import { slide as Menu } from "react-burger-menu";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import BaiduAnalysis from "../baiduAnalysis";
 import GaAnalysis from "../gaAnalysis";
@@ -18,11 +18,19 @@ export default function (props: {
   children: any;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { current } = useRef({ hasInit: false });
   useEffect(() => {
+    if (!current.hasInit) {
+      current.hasInit = true;
+      console.log("欢迎使用 VanBlog 博客系统🚀");
+      console.log("当前版本：", props?.option?.version || "未知");
+      console.log("项目主页：", "https://vanblog.mereith.com");
+      console.log("开源地址：", "https://github.com/mereithhh/van-blog");
+    }
     return () => {
       document.body.style.overflow = "auto";
     };
-  });
+  }, [props]);
   const renderLinks = useCallback(() => {
     const arr: any[] = [];
     props.option.links.forEach((item) => {
