@@ -31,8 +31,9 @@ export async function getInitialState() {
       }
       return msg.data;
     } catch (error) {
-      console.log('error', error);
+      console.log('fet init data error', error);
       history.push(loginPath);
+      return {};
     }
   }; // 如果不是登录页面，执行
   let option = {};
@@ -139,7 +140,7 @@ export const layout = ({ initialState, setInitialState }) => {
       return (
         <>
           {children}
-          {!props.location?.pathname?.includes('/login') && (
+          {
             <SettingDrawer
               disableUrlParams
               enableDarkTheme
@@ -157,7 +158,7 @@ export const layout = ({ initialState, setInitialState }) => {
                 }));
               }}
             />
-          )}
+          }
         </>
       );
     },
