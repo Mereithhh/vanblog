@@ -25,7 +25,6 @@ export async function getIndexPageProps(): Promise<IndexPageProps> {
   const { articles } = await getArticlesByOption({
     page: 1,
     pageSize: 5,
-    sortTop: "desc",
   });
   return {
     layoutProps,
@@ -169,7 +168,6 @@ export async function getPagePagesProps(
   const { articles } = await getArticlesByOption({
     page: currPage,
     pageSize: 5,
-    sortTop: "desc",
   });
   return {
     layoutProps,

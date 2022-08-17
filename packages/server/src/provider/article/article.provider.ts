@@ -434,7 +434,7 @@ export class ArticleProvider {
       },
     ];
     const and = [];
-    const sort: any = {};
+    let sort: any = { createdAt: -1 };
     if (isPublic) {
       $and.push({
         $or: [
@@ -450,22 +450,21 @@ export class ArticleProvider {
 
     if (option.sortTop) {
       if (option.sortTop == 'asc') {
-        sort.top = 1;
+        sort = { top: 1 };
       } else {
-        sort.top = -1;
+        sort = { top: -1 };
       }
     }
     if (option.sortViewer) {
       if (option.sortViewer == 'asc') {
-        sort.viewer = 1;
+        sort = { viewer: 1 };
       } else {
-        sort.viewer = -1;
+        sort = { viewer: -1 };
       }
     }
-    if (!option.sortCreatedAt) {
-      sort.createdAt = -1;
+    if (option.sortCreatedAt) {
       if (option.sortCreatedAt == 'asc') {
-        sort.createdAt = 1;
+        sort = { createdAt: 1 };
       }
     }
     if (option.tags) {

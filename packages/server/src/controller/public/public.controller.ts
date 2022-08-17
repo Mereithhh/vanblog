@@ -125,6 +125,7 @@ export class PublicController {
       sortCreatedAt,
       withWordCount,
     };
+    // 三个 sort 是完全排他的。
     const data = await this.articleProvider.getByOption(option, true);
     return {
       statusCode: 200,
