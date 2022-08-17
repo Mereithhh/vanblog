@@ -2,6 +2,7 @@ import { errorImg } from '@/pages/Static/img';
 import { getImgLink } from '@/pages/Static/img/tools';
 import { ProFormText } from '@ant-design/pro-form';
 import { Image, message } from 'antd';
+import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import UploadBtn from '../UploadBtn';
 
@@ -13,6 +14,12 @@ export default function (props: {
   formRef: any;
 }) {
   const [url, setUrl] = useState('');
+  const handleOnChange = debounce((ev) => {
+    const val = ev?.target?.value;
+    if (val && val != url) {
+      setUrl(val);
+    }
+  }, 500);
   useEffect(() => {
     if (props.formRef && props.formRef.getFieldValue) {
       const src = props.formRef.getFieldValue(props.name);
@@ -31,6 +38,9 @@ export default function (props: {
         required={props.required}
         placeholder={props.placeholder}
         tooltip="上传之前需要设置好图床哦"
+        fieldProps={{
+          onChange: handleOnChange,
+        }}
         extra={
           <div style={{ display: 'flex', marginTop: '10px' }}>
             <Image src={url || ''} fallback={errorImg} height={100} width={100} />
