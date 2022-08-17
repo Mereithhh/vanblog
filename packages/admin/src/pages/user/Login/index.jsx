@@ -2,7 +2,7 @@ import Footer from '@/components/Footer';
 import { login } from '@/services/van-blog/api';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { Alert, message } from 'antd';
+import { message } from 'antd';
 import { history, useModel } from 'umi';
 import styles from './index.less';
 
@@ -29,6 +29,7 @@ const Login = () => {
           token: token,
           user: user,
         }));
+        // 获取一下 init 的数据。
         /** 此方法会跳转到 redirect 参数所在的位置 */
         if (!history) return;
         const { query } = history.location;

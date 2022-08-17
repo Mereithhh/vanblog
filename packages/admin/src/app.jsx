@@ -168,10 +168,14 @@ export const layout = ({ initialState, setInitialState }) => {
 export const request = {
   errorConfig: {
     adaptor: (resData) => {
+      let errorMessage = resData.message;
+      if (resData?.statusCode == 401) {
+        errorMessage = '登录失效';
+      }
       return {
         ...resData,
         success: resData?.statusCode == 200 || resData?.statusCode == 233,
-        errorMessage: resData.message,
+        errorMessage,
       };
     },
   },
