@@ -78,7 +78,7 @@ services:
 docker-compose up -d
 ```
 
-浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feat/basic/setting.md)
+浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
 
 ## kubernetes
 
