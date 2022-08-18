@@ -1,7 +1,7 @@
 import { calItemList, PageNavProps } from "./core";
 import { RenderItemList } from "./render";
 export default function (props: PageNavProps) {
-  const pageSize = props?.pageSize || 0;
+  const pageSize = props?.pageSize || 5;
   const show = props.total > pageSize;
   return show ? (
     <div className="mt-4">
