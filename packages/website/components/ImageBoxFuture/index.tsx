@@ -43,9 +43,10 @@ export default function (props: {
           onError={() => {
             setIpError(true);
           }}
+          className={props.className}
         ></img>
       );
     }
-    return <img src={errorImg} alt={props.alt} />;
+    return <img src={errorImg} alt={props.alt} className={props.className} />;
   }
 }
