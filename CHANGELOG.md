@@ -1,4 +1,12 @@
 # Changelog
+### [0.10.23](https://github.com/Mereithhh/van-blog/compare/v0.10.22...v0.10.23) (2022-08-18)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 后台前往主站不依赖设置中的 baseUrl ([075334a](https://github.com/Mereithhh/van-blog/commit/075334a9434b8fc30cc8a243db73642fe36d1d27))
+* 用 ip 地址时本地图床前端无法正常展示 ([da50209](https://github.com/Mereithhh/van-blog/commit/da502097c4cb12e742190e7bc419e07502c86b06))
+
 ### [0.10.22](https://github.com/Mereithhh/van-blog/compare/v0.10.21...v0.10.22) (2022-08-18)
 
 
