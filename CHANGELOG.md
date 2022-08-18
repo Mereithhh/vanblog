@@ -1,4 +1,16 @@
 # Changelog
+### [0.10.24](https://github.com/Mereithhh/van-blog/compare/v0.10.23...v0.10.24) (2022-08-18)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图片加载失败情况下样式不一致 ([f714b22](https://github.com/Mereithhh/van-blog/commit/f714b2232436f90e51a6988aff9e56ececf41029))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 调整 ci 顺序 ([9fb6859](https://github.com/Mereithhh/van-blog/commit/9fb68591de95a7f77f0da53478a0b20ce41a5911))
+
 ### [0.10.23](https://github.com/Mereithhh/van-blog/compare/v0.10.22...v0.10.23) (2022-08-18)
 
 
