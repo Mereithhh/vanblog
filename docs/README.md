@@ -1,9 +1,9 @@
 ---
 home: true
 icon: home
-heroImage: /logo.svg
+heroImage: /前台-白色.png
 heroText: Van Blog
-heroFullScreen: false
+heroFullScreen: true
 tagline: 一款简洁实用优雅的一站式个人博客系统。
 actions:
   - text: 💡 快速上手

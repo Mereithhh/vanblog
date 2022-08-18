@@ -24,7 +24,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 ### 图片加载不出来
 
 可能是你没设置 `VAN_BLOG_ALLOW_DOMAINS` 这个环境变量。
-请参考 [启动配置](/guide/env.md#环境变量)
+请参考 [启动配置](/ref/env.md#环境变量)
 
 <!-- ### 什么是 SSG / SSR
 

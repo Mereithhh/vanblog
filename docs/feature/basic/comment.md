@@ -10,7 +10,7 @@ title: 评论
 
 ## 部署 waline
 
-在 [快速开始](/guide/README.md) 章节，取消注释掉下面的 `waline` 即可。
+在 [快速开始](/guide/docker.md) 章节，取消注释掉下面的 `waline` 即可。
 
 或者你用下面的也行：
 
