@@ -1,11 +1,10 @@
 import { useContext, useMemo, useState } from "react";
-import { SocialItem, SocialType } from "../../api/getAllData";
+import { SocialItem } from "../../api/getAllData";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { topUpper } from "../../utils/TopUpper";
 import { GlobalContext } from "../../utils/globalContext";
-import Image from "next/future/image";
-import ImageBox from "../ImageBox";
+import ImageBoxFuture from "../ImageBoxFuture";
 
 export default function (props: { item: SocialItem }) {
   const { state } = useContext(GlobalContext);
@@ -73,20 +72,13 @@ export default function (props: { item: SocialItem }) {
                 className="card-shadow bg-white dark:bg-dark-2 dark:card-shadow-dark"
                 style={{ height: 280 }}
               >
-                <ImageBox
+                <ImageBoxFuture
                   alt="logo wechat qrcode"
                   src={weChatUrl}
-                  lazyLoad
-                  center={false}
-                  children={
-                    <Image
-                      alt="logo wechat qrcode"
-                      src={weChatUrl}
-                      width={200}
-                      height={280}
-                    ></Image>
-                  }
-                ></ImageBox>
+                  width={200}
+                  height={280}
+                  className={""}
+                />
               </div>
             </ArrowContainer>
           );
