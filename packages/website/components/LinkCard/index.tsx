@@ -10,7 +10,7 @@ export default function (props: { link: LinkItem }) {
         target="_blank"
         rel="referrer"
         style={{ overflow: "hidden" }}
-        className="flex group p-3 sm:p-4 dark:bg-dark-2 card-shadow dark:card-shadow-dark transition  sm:hover:-translate-y-2 hover:-translate-y-1 duration-300 "
+        className="flex p-3 sm:p-4 dark:bg-dark-2 card-shadow dark:card-shadow-dark transition  sm:hover:-translate-y-2 hover:-translate-y-1 duration-300 "
       >
         <div className="mr-2 flex-shrink-0 sm:mr-4 flex  items-center justify-center">
           <ImageBox
@@ -19,7 +19,7 @@ export default function (props: { link: LinkItem }) {
             lazyLoad={true}
             children={
               <img
-                className="rounded-full w-10 h-10 sm:w-16 sm:h-16 group-hover:rotate-180 duration-500 transition-all dark:filter-dark"
+                className="rounded-full w-10 h-10 sm:w-16 sm:h-16  duration-500 transition-all dark:filter-dark"
                 src={props.link.logo}
                 alt={props.link.name}
                 loading="lazy"
