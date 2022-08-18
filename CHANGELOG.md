@@ -1,4 +1,11 @@
 # Changelog
+### [0.10.22](https://github.com/Mereithhh/van-blog/compare/v0.10.21...v0.10.22) (2022-08-18)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 本地图床图片上传不显示问题 ([9f5bdfb](https://github.com/Mereithhh/van-blog/commit/9f5bdfbbdb89b69caf20b4ebbd65be05c0a7b0c8))
+
 ### [0.10.21](https://github.com/Mereithhh/van-blog/compare/v0.10.20...v0.10.21) (2022-08-18)
 
 
