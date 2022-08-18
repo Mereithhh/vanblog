@@ -8,7 +8,7 @@ title: 图床
 
 ## 外置图床
 
-`vanBlog` 可以对接第三方图床，是基于 [picgo-code](https://picgo.github.io/PicGo-Core-Doc/) 实现的。
+`vanBlog` 可以对接第三方图床，是基于 [picgo-core](https://picgo.github.io/PicGo-Core-Doc/) 实现的。
 
 具体支持：
 
