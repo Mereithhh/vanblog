@@ -12,6 +12,7 @@ export default function (props: {
   placeholder: string;
   required: boolean;
   formRef: any;
+  isInit: boolean;
 }) {
   const [url, setUrl] = useState('');
   const handleOnChange = debounce((ev) => {
@@ -67,7 +68,7 @@ export default function (props: {
                     props?.formRef?.current.setFieldsValue({ ...oldVal, [props.name]: src });
                   }
                 }}
-                url="/api/admin/img/upload"
+                url={props.isInit ? '/api/admin/init/upload' : '/api/admin/img/upload'}
                 accept=".png,.jpg,.jpeg,.webp,.jiff"
               />
             </div>

@@ -76,6 +76,7 @@ const InitPage = () => {
                 showOption={false}
                 showLayout={false}
                 form={formRef1}
+                isInit={true}
               />
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step3" title={'高级配置'} formRef={formRef2}>
@@ -88,10 +89,17 @@ const InitPage = () => {
                 showOption={true}
                 showLayout={false}
                 form={formRef2}
+                isInit={true}
               />
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step4" title={'布局配置'}>
-              <SiteInfoForm showRequire={false} showOption={false} showLayout={true} form={null} />
+              <SiteInfoForm
+                isInit={true}
+                showRequire={false}
+                showOption={false}
+                showLayout={true}
+                form={null}
+              />
             </StepsForm.StepForm>
           </StepsForm>
         </ProCard>

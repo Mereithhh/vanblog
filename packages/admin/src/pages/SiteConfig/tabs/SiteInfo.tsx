@@ -43,6 +43,7 @@ export default function () {
           showLayout={tab == 'layout'}
           showOption={tab == 'more'}
           showRequire={tab == 'basic'}
+          isInit={false}
         />
       </ProForm>
     </Card>

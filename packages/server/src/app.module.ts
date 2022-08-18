@@ -124,7 +124,10 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(InitMiddleware)
-      .exclude({ path: '/api/admin/img/upload', method: RequestMethod.POST })
+      .exclude(
+        { path: '/api/admin/img/upload', method: RequestMethod.POST },
+        { path: '/api/admin/init/upload', method: RequestMethod.POST },
+      )
       .forRoutes({
         path: '*',
         method: RequestMethod.ALL,

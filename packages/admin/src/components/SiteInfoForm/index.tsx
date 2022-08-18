@@ -11,6 +11,7 @@ export default function (props: {
   showRequire: boolean;
   showLayout: boolean;
   form: any;
+  isInit: boolean;
 }) {
   return (
     <>
@@ -31,6 +32,7 @@ export default function (props: {
             rules={[{ required: true, message: '这是必填项' }]}
           ></ProFormText>
           <UrlFormItem
+            isInit={props.isInit}
             formRef={props.form}
             name="authorLogo"
             required
@@ -46,6 +48,7 @@ export default function (props: {
           name="authorLogoDark"
           label="作者 Logo（黑暗模式）"
           placeholder={'请输入黑暗模式作者 Logo Url，留空表示沿用上个'}
+          isInit={props.isInit}
         />
       )}
       {props.showOption && (
@@ -56,6 +59,7 @@ export default function (props: {
             required={false}
             label="网站 Logo"
             placeholder={'请输入网站 Logo Url'}
+            isInit={props.isInit}
           />
           <UrlFormItem
             formRef={props.form}
@@ -63,12 +67,14 @@ export default function (props: {
             label="网站 Logo（黑暗模式）"
             required={false}
             placeholder={'请输入网站黑暗模式 Logo Url，留空表示沿用上个'}
+            isInit={props.isInit}
           />
         </>
       )}
       {props.showRequire && (
         <>
           <UrlFormItem
+            isInit={props.isInit}
             formRef={props.form}
             name="favicon"
             required
@@ -95,6 +101,7 @@ export default function (props: {
         <>
           <UrlFormItem
             formRef={props.form}
+            isInit={props.isInit}
             name="payAliPay"
             label="支付宝图片 Url"
             placeholder={'请输入支付宝打赏图片 Url，留空不启用打赏'}
@@ -102,6 +109,7 @@ export default function (props: {
           />
           <UrlFormItem
             formRef={props.form}
+            isInit={props.isInit}
             name="payAliPayDark"
             label="支付宝图片 Url（黑暗模式）"
             placeholder={'请输入黑暗模式支付宝打赏图片 Url，留空沿用上个'}
@@ -109,6 +117,7 @@ export default function (props: {
           />
           <UrlFormItem
             formRef={props.form}
+            isInit={props.isInit}
             name="payWechat"
             label="微信图片 Url"
             placeholder={'请输入微信打赏图片 Url，留空不启用打赏'}
@@ -116,6 +125,7 @@ export default function (props: {
           />
           <UrlFormItem
             formRef={props.form}
+            isInit={props.isInit}
             name="payWechatDark"
             label="微信图片 Url（黑暗模式）"
             placeholder={'请输入黑暗模式微信打赏图片 Url，留空沿用上个'}
