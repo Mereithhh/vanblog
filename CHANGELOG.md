@@ -1,4 +1,20 @@
 # Changelog
+### [0.10.21](https://github.com/Mereithhh/van-blog/compare/v0.10.20...v0.10.21) (2022-08-18)
+
+
+### ✏️ Documentation | 文档
+
+* README 预览图调整到前面 ([1162446](https://github.com/Mereithhh/van-blog/commit/1162446ea844470ba20e6358ad52eeede1fbb916))
+* 修复文档错误 ([ae85336](https://github.com/Mereithhh/van-blog/commit/ae853367553a79b38f334264257d0e4c0587743d))
+* 修复项目文档失效链接&增加预览图 ([e221772](https://github.com/Mereithhh/van-blog/commit/e2217722361c211e148dcec5abe35efeb3de7ac4))
+* 更新README ([ac0ff9d](https://github.com/Mereithhh/van-blog/commit/ac0ff9dd130941307ba3bf3cd2d831a1b61469df))
+* 更新readme 预览图 ([4182cc0](https://github.com/Mereithhh/van-blog/commit/4182cc0a02d714ebbc07815d7ea5a304bde6005e))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 初始化没办法上传图片 ([5d41997](https://github.com/Mereithhh/van-blog/commit/5d41997acce516b00589d3e610dfb9334ee48b2e))
+
 ### [0.10.20](https://github.com/Mereithhh/van-blog/compare/v0.10.19...v0.10.20) (2022-08-18)
 
 
