@@ -1,4 +1,12 @@
 # Changelog
+### [0.10.20](https://github.com/Mereithhh/van-blog/compare/v0.10.19...v0.10.20) (2022-08-18)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 只有一页隐藏分页按钮 ([89afcbc](https://github.com/Mereithhh/van-blog/commit/89afcbca096e23ceb3b25e986e59ac5af2ad39b5))
+* 链接卡片 hover 时图片不旋转 ([285efb5](https://github.com/Mereithhh/van-blog/commit/285efb5b57a6c05e47f32381fa0bb74317baac9d))
+
 ### [0.10.19](https://github.com/Mereithhh/van-blog/compare/v0.10.18...v0.10.19) (2022-08-17)
 
 
