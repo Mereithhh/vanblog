@@ -71,6 +71,10 @@
 - [ ] 后台增加操作日志
 - [ ] 增加一些 e2e 测试，集成到 CI
 
+## 问题反馈
+
+请提 `issue` ，如无特殊情况会在一天内解决。
+
 ## Star 趋势图
 
 [![Stargazers over time](https://starchart.cc/Mereithhh/van-blog.svg)](https://starchart.cc/Mereithhh/van-blog)

@@ -26,6 +26,10 @@ curl -sSL https://get.daocloud.io/docker | sh
 可能是你没设置 `VAN_BLOG_ALLOW_DOMAINS` 这个环境变量。
 请参考 [启动配置](/ref/env.md#环境变量)
 
+### Bug 反馈
+
+请提到项目仓库 `issue`，无特殊情况会在一天内解决。
+
 <!-- ### 什么是 SSG / SSR
 
 ### 能解释一下增量渲染吗？
