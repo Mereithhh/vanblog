@@ -49,13 +49,15 @@ RUN yarn config set registry https://registry.npmmirror.com -g
 RUN yarn build
 
 #运行容器
-FROM node:18 AS RUNNER
+FROM node:alpine AS RUNNER
 WORKDIR /app
 # 安装 nginx
-RUN apt update &&  apt install nginx -y
+RUN apk add --no-cache --update nginx tzdata
 # 设置时区
-RUN /bin/cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && echo 'Asia/Shanghai' >/etc/timezone && \
-  yarn config set registry https://registry.npm.taobao.org
+# 设置时区为上海
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && echo "Asia/Shanghai" > /etc/timezone \
+    && apk del tzdata
 # 复制 server
 WORKDIR /app/server
 COPY --from=SERVER_BUILDER /app/node_modules ./node_modules
@@ -76,7 +78,7 @@ ENV VAN_BLOG_CDN_URL "https://www.mereith.com"
 # 复制静态文件
 WORKDIR /usr/share/nginx/html/
 COPY --from=ADMIN_BUILDER /usr/src/app/dist/ ./admin/
-COPY default.conf /etc/nginx/sites-available/default
+COPY default.conf /etc/nginx/http.d/default.conf
 # 复制入口文件
 WORKDIR /app
 COPY ./entrypoint.sh ./
@@ -86,5 +88,5 @@ ARG VAN_BLOG_VERSIONS
 ENV VAN_BLOG_VERSION ${VAN_BLOG_VERSIONS}
 VOLUME /app/static
 EXPOSE 80
-ENTRYPOINT [ "bash","entrypoint.sh" ]
+ENTRYPOINT [ "sh","entrypoint.sh" ]
 # CMD [ "entrypoint.sh" ]
