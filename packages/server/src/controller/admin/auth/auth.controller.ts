@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
+import { config } from 'src/config/index';
 import { UpdateUserDto } from 'src/dto/user.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { AuthProvider } from 'src/provider/auth/auth.provider';
@@ -32,6 +33,9 @@ export class AuthController {
   @UseGuards(AdminGuard)
   @Put()
   async updateUser(@Body() updateUserDto: UpdateUserDto) {
+    if (config.demo) {
+      return { statusCode: 401, message: '演示站禁止修改账号密码！' };
+    }
     return {
       statusCode: 200,
       data: await this.userProvider.updateUser(updateUserDto),

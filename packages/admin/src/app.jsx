@@ -169,7 +169,7 @@ export const request = {
   errorConfig: {
     adaptor: (resData) => {
       let errorMessage = resData.message;
-      if (resData?.statusCode == 401) {
+      if (resData?.statusCode == 401 && resData?.message == 'Unauthorized') {
         errorMessage = '登录失效';
       }
       return {

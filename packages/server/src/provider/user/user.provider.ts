@@ -12,6 +12,7 @@ export class UserProvider {
   }
   async updateUser(updateUserDto: UpdateUserDto) {
     const currUser = await this.getUser();
+
     if (!currUser) {
       throw new NotFoundException();
     } else {
