@@ -4,6 +4,14 @@ title: 部署
 copyright: false
 order: -1
 ---
+::: info VanBlog
+
+VanBlog 是一款简洁实用的个人博客系统。支持黑暗模式、支持移动端自适应和评论、内置流量统计与图床，配有完备的、支持黑暗模式、支持移动端、支持一键上传剪切板图片到图床、带有强大的编辑器的后台管理面板。
+
+你也可以先查看 [Demo](https://blog-demo.mereith.com)，账号密码均为 `demo`
+
+目前 VanBlog 还在快速迭代中，如果后台出现升级提示，推荐进行升级。
+:::
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
 
@@ -18,8 +26,9 @@ version: "3"
 
 services:
   vanblog:
-    # 默认国内原的
+    # 默认国内源的
     image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
+    # 下面的是 dockerhub 的
     # image: mereith/van-blog:latest
     restart: always
     environment:

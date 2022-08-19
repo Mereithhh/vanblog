@@ -6,7 +6,7 @@ order: -3
 ---
 
 :::info 注意
-使用反向代理之前记得要修改默认的 80 端口号哦
+使用反向代理之前记得要按需修改默认的 80 端口号哦
 :::
 
 ### nginx-proxy-manager
@@ -30,7 +30,8 @@ example.com {
 
 ### nginx
 
-如果你还是想想用 nginx 的话，那好吧。
+如果你还是想想用 nginx 的话，那好吧。安利一个 nginx 配置在线生成工具： [https://nginxconfig.io/](https://nginxconfig.io/)
+
 http 版本的：
 
 ```nginx
