@@ -63,6 +63,13 @@
 
 - [Mereith's Blog](https://www.mereith.com)
 
+## 开发计划
+
+- [ ] 精简打包体积
+- [ ] 精简前台 js 体积，优化性能
+- [ ] 后台增加操作日志
+- [ ] 增加一些 e2e 测试，集成到 CI
+
 ## Star 趋势图
 
 [![Stargazers over time](https://starchart.cc/Mereithhh/van-blog.svg)](https://starchart.cc/Mereithhh/van-blog)
