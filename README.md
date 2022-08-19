@@ -47,7 +47,7 @@
 
 ## 快速上手
 
-请移步项目文档：[快速上手](https://vanblog.mereith.com/get-started.html)
+请移步项目文档：[快速上手](https://vanblog.mereith.com/guide/docker.html)
 
 ## 说明与文档
 
