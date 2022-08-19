@@ -4,7 +4,7 @@ export interface Config {
   mongoUrl: string;
   jwtSecret: string;
   staticPath: string;
-  demo: boolean;
+  demo?: boolean | string;
 }
 
 export const config: Config = {

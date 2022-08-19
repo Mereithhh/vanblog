@@ -33,7 +33,7 @@ export class AuthController {
   @UseGuards(AdminGuard)
   @Put()
   async updateUser(@Body() updateUserDto: UpdateUserDto) {
-    if (config.demo) {
+    if (config?.demo == true || config?.demo == 'true') {
       return { statusCode: 401, message: '演示站禁止修改账号密码！' };
     }
     return {
