@@ -1,4 +1,24 @@
 # Changelog
+## [0.11.0](https://github.com/Mereithhh/van-blog/compare/v0.10.24...v0.11.0) (2022-08-19)
+
+
+### ✨ Features | 新功能
+
+* 增加演示站禁止修改账号密码的配置项 ([8c52fa6](https://github.com/Mereithhh/van-blog/commit/8c52fa61faa9f5bd15b4c7e9ee9dac1d5caffc2e))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化构建，镜像体积倍减 ([6b2d54d](https://github.com/Mereithhh/van-blog/commit/6b2d54dc03e1ef6f2dccdb426474d510bf0eefbc))
+
+
+### ✏️ Documentation | 文档
+
+* 修复 README 坏链 ([e9d74ce](https://github.com/Mereithhh/van-blog/commit/e9d74ce0ca6ecca354b07d87465dd12544b9a1e8))
+* 修复文档错字 ([8a206bc](https://github.com/Mereithhh/van-blog/commit/8a206bc563f5e4cb70dfccf858b282f846b55c5e))
+* 更新文档 ([fb72e15](https://github.com/Mereithhh/van-blog/commit/fb72e15135cc7dc3e7a81901b39fe2f0d7da04cc))
+* 更新文档 ([761eef5](https://github.com/Mereithhh/van-blog/commit/761eef51898f68240ee85b953e67379c8e3769f4))
+
 ### [0.10.24](https://github.com/Mereithhh/van-blog/compare/v0.10.23...v0.10.24) (2022-08-18)
 
 
