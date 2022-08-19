@@ -1,4 +1,11 @@
 # Changelog
+### [0.11.1](https://github.com/Mereithhh/van-blog/compare/v0.11.0...v0.11.1) (2022-08-19)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 演示站修改密码锁定用环境变量传参不生效 ([be663bf](https://github.com/Mereithhh/van-blog/commit/be663bfaeb89e84b03003e7364c404201661f900))
+
 ## [0.11.0](https://github.com/Mereithhh/van-blog/compare/v0.10.24...v0.11.0) (2022-08-19)
 
 
