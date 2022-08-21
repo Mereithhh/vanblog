@@ -1,4 +1,16 @@
 # Changelog
+## [0.12.0](https://github.com/Mereithhh/van-blog/compare/v0.11.1...v0.12.0) (2022-08-21)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([55e8974](https://github.com/Mereithhh/van-blog/commit/55e89748e7fd1fc5d187d19b64ff52ae67869776))
+
+
+### ✨ Features | 新功能
+
+* https 证书全自动按需申请&文档更新 ([ac36e7a](https://github.com/Mereithhh/van-blog/commit/ac36e7abfcdc3c5b3c9792cf22741325535afa7c))
+
 ### [0.11.1](https://github.com/Mereithhh/van-blog/compare/v0.11.0...v0.11.1) (2022-08-19)
 
 
