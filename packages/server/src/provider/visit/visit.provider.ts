@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { Model } from 'mongoose';
 import { createVisitDto } from 'src/dto/visit.dto';
 import { Visit } from 'src/scheme/visit.schema';

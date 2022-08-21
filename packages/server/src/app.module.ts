@@ -55,6 +55,8 @@ import { LocalProvider } from './provider/static/local.provider';
 import { SettingController } from './controller/admin/setting/setting.controller';
 import { PicgoProvider } from './provider/static/picgo.provider';
 import { ViewerTask } from './schedule/viewer.task';
+import { CaddyController } from './controller/admin/caddy/caddy.controller';
+import { CaddyProvider } from './provider/caddy/caddy.provider';
 
 @Module({
   imports: [
@@ -97,6 +99,7 @@ import { ViewerTask } from './schedule/viewer.task';
     AnalysisController,
     SettingController,
     ImgController,
+    CaddyController,
   ],
   providers: [
     AppService,
@@ -118,6 +121,7 @@ import { ViewerTask } from './schedule/viewer.task';
     StaticProvider,
     LocalProvider,
     ViewerTask,
+    CaddyProvider,
   ],
 })
 export class AppModule implements NestModule {
@@ -127,6 +131,7 @@ export class AppModule implements NestModule {
       .exclude(
         { path: '/api/admin/img/upload', method: RequestMethod.POST },
         { path: '/api/admin/init/upload', method: RequestMethod.POST },
+        { path: '/api/admin/caddy/ask', method: RequestMethod.GET },
       )
       .forRoutes({
         path: '*',

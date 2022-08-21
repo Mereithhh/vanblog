@@ -48,7 +48,7 @@ features:
 
   - title: 易于部署
     icon: linux
-    details: Docker 一键部署
+    details: Docker 一键部署，全自动 HTTPS 证书自动申请续期，甚至不用写域名
 copyright: false
 footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
 ---

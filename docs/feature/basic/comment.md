@@ -33,13 +33,23 @@ services:
       VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017"
       # jwt 密钥，随机字符串即可
       VAN_BLOG_JWT_SECRET: "AnyString"
+      # 邮箱地址，用于自动申请 https 证书
+      EMAIL: "someone@mereith.com"
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static
+      # 日志文件
+      - ${PWD}/log:/var/log
+      # caddy 配置存储
+      - ${PWD}/caddy/config:/root/.config/caddy
+      # caddy 证书存储
+      - ${PWD}/caddy/data:/root/.local/share/caddy
     ports:
       - 80:80
+      - 443:443
   mongo:
-    image: mongo
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:mongo
+    # image: mongo
     restart: always
     environment:
       TZ: "Asia/Shanghai"
@@ -50,6 +60,7 @@ services:
     volumes:
       # mongoDB 数据存放地址，按需修改。
       - ${PWD}/data/mongo:/data/db
+
 # 如果你需要评论系统就加上
 # 具体请看参数请看 waline 文档：
 # https://waline.js.org/

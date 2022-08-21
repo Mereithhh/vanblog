@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { StaticType, StoragePath } from 'src/dto/setting.dto';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -6,7 +6,6 @@ import { config } from 'src/config';
 import { imageSize } from 'image-size';
 import { formatBytes } from 'src/utils/size';
 import { PicGo } from 'picgo';
-import { SettingProvider } from '../setting/setting.provider';
 import { ImgMeta } from 'src/dto/img';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -21,7 +20,7 @@ export class PicgoProvider {
     this.picgo = new PicGo();
     this.initDriver();
   }
-  async getSetting() {
+  async getSetting(): Promise<any> {
     const res = await this.settingModel.findOne({ type: 'static' }).exec();
     if (res) {
       return res?.value || { storageType: 'local', picgoConfig: null };

@@ -52,7 +52,7 @@ RUN yarn build
 FROM node:alpine AS RUNNER
 WORKDIR /app
 # 安装 nginx
-RUN apk add --no-cache --update nginx tzdata
+RUN apk add --no-cache --update tzdata caddy nss-tools
 # 设置时区
 # 设置时区为上海
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
@@ -76,9 +76,9 @@ ENV VAN_BLOG_REVALIDATE_TIME 10
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
 ENV VAN_BLOG_CDN_URL "https://www.mereith.com"
 # 复制静态文件
-WORKDIR /usr/share/nginx/html/
-COPY --from=ADMIN_BUILDER /usr/src/app/dist/ ./admin/
-COPY default.conf /etc/nginx/http.d/default.conf
+WORKDIR /app/admin
+COPY --from=ADMIN_BUILDER /usr/src/app/dist/ ./
+COPY CaddyfileTemplate /app/CaddyfileTemplate
 # 复制入口文件
 WORKDIR /app
 COPY ./entrypoint.sh ./
@@ -87,6 +87,8 @@ ENV PORT 3001
 ARG VAN_BLOG_VERSIONS
 ENV VAN_BLOG_VERSION ${VAN_BLOG_VERSIONS}
 VOLUME /app/static
+VOLUME /var/log
+
 EXPOSE 80
 ENTRYPOINT [ "sh","entrypoint.sh" ]
 # CMD [ "entrypoint.sh" ]

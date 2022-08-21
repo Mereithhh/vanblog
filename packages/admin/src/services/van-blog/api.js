@@ -9,6 +9,32 @@ export async function fetchAllMeta(options) {
     ...(options || {}),
   });
 }
+export async function getHttpsConfig() {
+  return request('/api/admin/caddy/https', {
+    method: 'GET',
+  });
+}
+export async function clearCaddyLog() {
+  return request('/api/admin/caddy/log', {
+    method: 'DELETE',
+  });
+}
+export async function getCaddyConfig() {
+  return request('/api/admin/caddy/config', {
+    method: 'GET',
+  });
+}
+export async function getCaddyLog() {
+  return request('/api/admin/caddy/log', {
+    method: 'GET',
+  });
+}
+export async function setHttpsConfig(data) {
+  return request('/api/admin/caddy/https', {
+    method: 'PUT',
+    data: data,
+  });
+}
 
 export async function fetchInit(body) {
   return request('/api/admin/init', {

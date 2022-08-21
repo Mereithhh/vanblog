@@ -1,0 +1,42 @@
+{
+  auto_https disable_redirects
+  on_demand_tls {
+    ask http://127.0.0.1:3000/api/admin/caddy/ask
+  }
+  admin 0.0.0.0:2019
+  email VAN_BLOG_EMAIL
+	log {
+		output file /var/log/caddy.log
+	}
+}
+
+(van) {
+  encode zstd gzip
+	log {
+		output file /var/log/vanblog-access.log
+		format json
+	}
+  tls {
+    on_demand
+  }
+	handle /static/* {
+		reverse_proxy 127.0.0.1:3000
+	}
+	handle /swagger* {
+		reverse_proxy 127.0.0.1:3000
+	}
+	handle /api/* {
+		reverse_proxy 127.0.0.1:3000
+	}
+	handle_path /admin* {
+		root * /app/admin
+		try_files {path} /index.html
+		file_server
+	}
+	reverse_proxy 127.0.0.1:3001
+}
+
+:80, :443 {
+  import van
+}
+

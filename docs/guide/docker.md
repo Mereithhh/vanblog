@@ -4,6 +4,7 @@ title: 部署
 copyright: false
 order: -1
 ---
+
 ::: info VanBlog
 
 VanBlog 是一款简洁实用的个人博客系统。支持黑暗模式、支持移动端自适应和评论、内置流量统计与图床，配有完备的、支持黑暗模式、支持移动端、支持一键上传剪切板图片到图床、带有强大的编辑器的后台管理面板。
@@ -18,6 +19,16 @@ VanBlog 是一款简洁实用的个人博客系统。支持黑暗模式、支持
 你也可以先查看 [Demo](https://blog-demo.mereith.com)，账号密码均为 `demo`
 
 ## docker-compose 部署
+
+如果你没有安装 `docker` 和 `docker-compose`，可以通过以下命令一键安装：
+
+```bash
+curl -sSL https://get.daocloud.io/docker | sh
+```
+
+如果你没有接触过 `docker`，但是想了解一下，可以看下面的教程：
+
+> [Docker 入门教程](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 
 新建 `docker-compose.yml`文件：
 
@@ -41,13 +52,23 @@ services:
       VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017/vanBlog?authSource=admin"
       # jwt 密钥，随机字符串即可
       VAN_BLOG_JWT_SECRET: "AnyString"
+      # 邮箱地址，用于自动申请 https 证书
+      EMAIL: "someone@mereith.com"
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static
+      # 日志文件
+      - ${PWD}/log:/var/log
+      # caddy 配置存储
+      - ${PWD}/caddy/config:/root/.config/caddy
+      # caddy 证书存储
+      - ${PWD}/caddy/data:/root/.local/share/caddy
     ports:
       - 80:80
+      - 443:443
   mongo:
-    image: mongo
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:mongo
+    # image: mongo
     restart: always
     environment:
       TZ: "Asia/Shanghai"
@@ -89,6 +110,14 @@ docker-compose up -d
 
 浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
 
+::: info VanBlog
+首次运行默认是关闭 `https` 的，请通过 `http` 协议访问。初始化后，进入后台确认 https 证书已自动生成后可选择开启 https 自动重定向。
+
+无论 `HTTPS 自动重定向` 是否开启，都暂不支持通过 `https + ip 地址` 来访问。需要 ip 访问请用 `http` 协议并关闭 https 自动重定向。
+
+具体请参考： [HTTPS](/guide/https.md)
+:::
+
 ## kubernetes
 
 什么？你想用 `kubernetes`，当然没问题。
@@ -119,6 +148,9 @@ spec:
           ports:
             - name: http-80
               containerPort: 80
+              protocol: TCP
+            - name: https-443
+              containerPort: 443
               protocol: TCP
           env:
             - name: VAN_BLOG_DATABASE_URL

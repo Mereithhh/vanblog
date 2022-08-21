@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { StaticSetting } from 'src/dto/setting.dto';
+import { HttpsSetting, SettingType, StaticSetting } from 'src/dto/setting.dto';
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
 
@@ -12,7 +12,7 @@ export class SettingProvider {
     private settingModel: Model<SettingDocument>,
     private readonly picgoProvider: PicgoProvider,
   ) {}
-  async getStaticSetting() {
+  async getStaticSetting(): Promise<any> {
     const res = await this.settingModel.findOne({ type: 'static' }).exec();
     if (res) {
       return res?.value || { storageType: 'local', picgoConfig: null };
@@ -28,6 +28,28 @@ export class SettingProvider {
   }
   async importStaticSetting(dto: StaticSetting) {
     await this.updateStaticSetting(dto);
+  }
+  async getHttpsSetting(): Promise<HttpsSetting> {
+    const res = await this.settingModel.findOne({ type: 'https' }).exec();
+    if (res) {
+      return (res?.value as any) || { redirect: false };
+    }
+    return null;
+  }
+  async updateHttpsSetting(dto: HttpsSetting) {
+    const oldValue = await this.getHttpsSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'https',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'https' },
+      { value: newValue },
+    );
+    return res;
   }
   async updateStaticSetting(dto: StaticSetting) {
     const oldValue = await this.getStaticSetting();

@@ -26,6 +26,10 @@ curl -sSL https://get.daocloud.io/docker | sh
 可能是你没设置 `VAN_BLOG_ALLOW_DOMAINS` 这个环境变量。
 请参考 [启动配置](/ref/env.md#环境变量)
 
+### 无法通过 https + ip 访问网址
+
+很遗憾，目前不支持通过 `https + ip` 访问，请通过 `https + 域名` 或者 `http + ip` 访问。用 `http + ip` 访问前请在后台设置中关闭 `https 自动重定向`
+
 ### Bug 反馈
 
 请提到项目仓库 `issue`，无特殊情况会在一天内解决。

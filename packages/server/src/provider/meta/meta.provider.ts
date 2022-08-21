@@ -10,7 +10,7 @@ import { UserProvider } from '../user/user.provider';
 import { MenuItem } from 'src/dto/menu.dto';
 import { VisitProvider } from '../visit/visit.provider';
 import { ArticleProvider } from '../article/article.provider';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { isTrue } from 'src/utils/isTrue';
 import { ViewerProvider } from '../viewer/viewer.provider';
 @Injectable()

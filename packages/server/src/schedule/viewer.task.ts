@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { ViewerProvider } from 'src/provider/viewer/viewer.provider';
 @Injectable()

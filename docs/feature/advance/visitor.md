@@ -20,9 +20,11 @@ title: 访客统计
 ## 前台
 
 在前台，你可以在文章卡片看到每篇文章的访问量：
+
 ![](https://pic.mereith.com/img/3c2539ad7586a5a73a68e8cfb58e0957.clipboard-2022-08-16.png)
 
 以及在页脚处，你可以看到全站的访客数和访问量：
+
 ![](https://pic.mereith.com/img/35aa485d737c99ef73505a8ec3a5e2f9.clipboard-2022-08-16.png)
 
 ## 进阶分析
