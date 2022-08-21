@@ -16,7 +16,7 @@ export class CaddyProvider {
     // await this.updateSubjects(this.subjects);
     const configInDB = await this.settingProvider.getHttpsSetting();
     let txt = '初始化 caddy 配置完成！';
-    if (configInDB.redirect) {
+    if (configInDB?.redirect) {
       await this.setRedirect(true);
       txt = txt + 'https 自动重定向已开启';
     } else {
