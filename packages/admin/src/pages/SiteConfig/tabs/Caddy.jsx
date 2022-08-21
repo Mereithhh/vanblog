@@ -91,6 +91,7 @@ export default function (props) {
               访问时，如果没有证书会自动申请证书的。你也可以点击下面的按钮手动触发证书申请。
             </p>
             <p>稳定后可打开 https 自动重定向功能，开启通过 http 访问将自动跳转至 https </p>
+            <p>如果你用了 80 端口反代，请不要开启 https 自动重定向！否则你的反代可能会失效。</p>
           </div>
         }
         style={{ marginBottom: 20 }}
