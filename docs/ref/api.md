@@ -11,3 +11,7 @@ icon: http
 
 > swagger 路径： /swagger
 > 参考： [https://blog-demo.mereith.com/swagger](https://blog-demo.mereith.com/swagger)
+
+举个例子，你可以通过 GET /api/public/article/:id ，获取置顶文章的 JSON 内容。
+
+你可以点击这个链接看一下效果： [https://blog-demo.mereith.com/api/public/article/1](https://blog-demo.mereith.com/api/public/article/1)
