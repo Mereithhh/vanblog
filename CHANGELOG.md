@@ -1,4 +1,13 @@
 # Changelog
+### [0.12.2](https://github.com/Mereithhh/van-blog/compare/v0.12.1...v0.12.2) (2022-08-21)
+
+
+### ✨ Features | 新功能
+
+* https 自动重定向增加提示 ([9ce2dd8](https://github.com/Mereithhh/van-blog/commit/9ce2dd8c76ba230a7d35059cb16317b5fb3adf2f))
+* 开启 https 自动重定向前增加提示文案 ([5896121](https://github.com/Mereithhh/van-blog/commit/5896121b4176131a4caa510af0ecacf005c1db33))
+* 演示站禁止修改 https 自动重定向 ([4fe65e7](https://github.com/Mereithhh/van-blog/commit/4fe65e718584347d86b456625348759599e1dd09))
+
 ### [0.12.1](https://github.com/Mereithhh/van-blog/compare/v0.12.0...v0.12.1) (2022-08-21)
 
 
