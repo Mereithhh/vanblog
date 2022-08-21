@@ -1,4 +1,16 @@
 # Changelog
+### [0.12.1](https://github.com/Mereithhh/van-blog/compare/v0.12.0...v0.12.1) (2022-08-21)
+
+
+### ✏️ Documentation | 文档
+
+* 修复文档错误 ([9276de9](https://github.com/Mereithhh/van-blog/commit/9276de9c9aca19a7f6c21498962920d311b68757))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 老版本迁移无法启动服务 ([1daee14](https://github.com/Mereithhh/van-blog/commit/1daee14c59e46c7567a373f789d98fb2623c1211))
+
 ## [0.12.0](https://github.com/Mereithhh/van-blog/compare/v0.11.1...v0.12.0) (2022-08-21)
 
 
