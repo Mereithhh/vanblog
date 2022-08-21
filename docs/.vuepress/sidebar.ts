@@ -36,7 +36,7 @@ export default sidebar([
         collapsable: true,
         icon: "advance",
         children: [
-          "guide/https.md",
+          "/guide/https.md",
           "advance/backup.md",
           "advance/dark-mode.md",
           "advance/links.md",
