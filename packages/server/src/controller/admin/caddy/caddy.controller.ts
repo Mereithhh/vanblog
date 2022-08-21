@@ -6,7 +6,6 @@ import {
   UseGuards,
   Logger,
   Delete,
-  Res,
   Query,
   BadRequestException,
 } from '@nestjs/common';

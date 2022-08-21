@@ -1,7 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import * as fs from 'fs';
-import { getDefaultSubjects } from 'src/utils/ip';
 import { SettingProvider } from '../setting/setting.provider';
 @Injectable()
 export class CaddyProvider {
