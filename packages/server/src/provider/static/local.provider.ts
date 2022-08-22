@@ -22,8 +22,16 @@ export class LocalProvider {
     };
   }
   async deleteFile(fileName: string, type: StaticType) {
-    const storagePath = StoragePath[type] || StoragePath['img'];
-    const srcPath = path.join(config.staticPath, storagePath, fileName);
-    fs.rmSync(srcPath);
+    try {
+      const storagePath = StoragePath[type] || StoragePath['img'];
+      const srcPath = path.join(config.staticPath, storagePath, fileName);
+      fs.rmSync(srcPath);
+    } catch (err) {
+      console.log(
+        '删除实际文件失败：',
+        fileName,
+        '可能是更新版本后没映射静态文件目录导致的',
+      );
+    }
   }
 }
