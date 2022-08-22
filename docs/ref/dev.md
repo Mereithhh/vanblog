@@ -122,6 +122,12 @@ git tag doc-1.0.0
 git push --tags
 ```
 
+在发版之后自动拷贝 changelog 并发布文档脚本：
+
+```
+yarn release-doc
+```
+
 ## Release
 
 本项目使用 [standard-version](https://github.com/conventional-changelog/standard-version) 管理版本，并有了对应的 `github actions`，执行下列命令会发布版本并触发流水线打包发版。
