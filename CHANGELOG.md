@@ -1,4 +1,16 @@
 # Changelog
+### [0.13.3](https://github.com/Mereithhh/van-blog/compare/v0.13.2...v0.13.3) (2022-08-22)
+
+
+### ✏️ Documentation | 文档
+
+* 更新 changelog ([0ae0447](https://github.com/Mereithhh/van-blog/commit/0ae04471ae178535b592529a07bb046035d12b93))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 过度编码导致图片无法显示 ([18cfd82](https://github.com/Mereithhh/van-blog/commit/18cfd8221842c13cd8915364b969a8f1bbc6be0a))
+
 ### [0.13.2](https://github.com/Mereithhh/van-blog/compare/v0.13.1...v0.13.2) (2022-08-22)
 
 
