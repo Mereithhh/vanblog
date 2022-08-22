@@ -7,6 +7,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { config as globalConfig } from './config/index';
 import { checkOrCreate } from './utils/checkFolder';
 import * as path from 'path';
+import { activeISR } from './utils/activeISR';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -31,6 +32,14 @@ async function bootstrap() {
   console.log('swagger 地址: http://localhost:3000/swagger');
   const metaProvider = app.get(MetaProvider);
   await metaProvider.updateTotalWords();
+
+  // 触发增量渲染生成静态页面，防止升级后内容为空
+  console.log('INFO', '首次启动会尝试触发两次增量渲染！');
+  await activeISR();
+
+  setTimeout(() => {
+    activeISR();
+  }, 5000);
   // 测试用的
   // const articleProvider = app.get(ArticleProvider);
   // await articleProvider.washViewerInfoToVisitProvider();
