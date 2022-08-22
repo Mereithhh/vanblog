@@ -31,6 +31,7 @@ export default function (props: {
       console.log("当前版本：", props?.option?.version || "未知");
       console.log("项目主页：", "https://vanblog.mereith.com");
       console.log("开源地址：", "https://github.com/mereithhh/van-blog");
+      console.log("喜欢的话可以给个 star 哦🙏");
       window.onbeforeunload = handleClose;
     }
     return () => {
