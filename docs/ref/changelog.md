@@ -4,6 +4,25 @@ icon: update
 ---
 
 # Changelog
+### [0.13.2](https://github.com/Mereithhh/van-blog/compare/v0.13.1...v0.13.2) (2022-08-22)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图片 url 特殊字符未转义导致无法正常显示 ([920e5fa](https://github.com/Mereithhh/van-blog/commit/920e5faca039013f6af992bb20b4a779cd35c2e7))
+
+### [0.13.1](https://github.com/Mereithhh/van-blog/compare/v0.13.0...v0.13.1) (2022-08-22)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([9f92bb9](https://github.com/Mereithhh/van-blog/commit/9f92bb906c74a28fa465275251e0318a387d70eb))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图片名称包含有括号的时候 markdown 链接无法加载成功 ([a11d9b5](https://github.com/Mereithhh/van-blog/commit/a11d9b55f4f56ca535575661824cdf9bd3c82caf))
+
 ## [0.13.0](https://github.com/Mereithhh/van-blog/compare/v0.12.3...v0.13.0) (2022-08-22)
 
 
