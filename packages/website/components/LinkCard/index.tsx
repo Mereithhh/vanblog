@@ -17,15 +17,7 @@ export default function (props: { link: LinkItem }) {
             src={props.link.logo}
             alt={props.link.name}
             lazyLoad={true}
-            children={
-              <img
-                className="rounded-full w-10 h-10 sm:w-16 sm:h-16  duration-500 transition-all dark:filter-dark"
-                src={props.link.logo}
-                alt={props.link.name}
-                loading="lazy"
-              />
-            }
-            center={false}
+            className="rounded-full w-10 h-10 sm:w-16 sm:h-16  duration-500 transition-all dark:filter-dark"
           />
         </div>
         <div className="flex flex-col flex-grow-0 overflow-hidden">

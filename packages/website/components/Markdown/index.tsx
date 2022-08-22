@@ -69,7 +69,6 @@ export default function (props: { content: string }) {
                 alt={props.alt}
                 src={(props.src as string) || ""}
                 lazyLoad={true}
-                center={false}
               />
             );
           },

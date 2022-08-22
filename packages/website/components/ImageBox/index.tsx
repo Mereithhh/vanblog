@@ -8,40 +8,33 @@ export default function (props: {
   src: string;
   alt: string | undefined;
   lazyLoad: boolean;
-  children?: React.ReactElement;
-  center: boolean;
+  className?: string;
 }) {
   const [error, setError] = useState(false);
   if (!error) {
     return (
       <>
         <PhotoView src={props.src}>
-          {props.children || (
-            <div className={props.center ? "w-full flex justify-center " : ""}>
-              <img
-                src={props.src}
-                alt={props.alt}
-                onError={() => {
-                  setError(true);
-                }}
-                loading={props.lazyLoad ? "lazy" : undefined}
-              />
-            </div>
-          )}
+          <img
+            className={props.className}
+            src={props.src}
+            alt={props.alt}
+            onError={() => {
+              setError(true);
+            }}
+            loading={props.lazyLoad ? "lazy" : undefined}
+          />
         </PhotoView>
       </>
     );
   } else {
     return (
-      props.children || (
-        <div className={props.center ? "w-full flex justify-center " : ""}>
-          <img
-            src={errorImg}
-            alt={props.alt}
-            loading={props.lazyLoad ? "lazy" : undefined}
-          />
-        </div>
-      )
+      <img
+        className={props.className}
+        src={errorImg}
+        alt={props.alt}
+        loading={props.lazyLoad ? "lazy" : undefined}
+      />
     );
   }
 }
