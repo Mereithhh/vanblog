@@ -79,24 +79,24 @@ export default function () {
         children: (
           <>
             <Row>
-              <Col span={8}>
+              <Col span={12}>
                 <span>类型：</span>
                 <span>{typeMap[type] || '-'}</span>
               </Col>
-              <Col span={16}>
+              <Col span={12}>
                 <span>更新：</span>
                 <span>{formatTimes(currObj?.updatedAt, currObj?.createdAt)}</span>
               </Col>
             </Row>
             {type != 'about' && (
               <Row style={{ marginTop: 8 }}>
-                <Col span={8}>
+                <Col span={12}>
                   <span>标签：</span>
                   <span>
                     <Tags tags={currObj?.tags} />
                   </span>
                 </Col>
-                <Col span={16}>
+                <Col span={12}>
                   <span>分类：</span>
                   <span>{currObj?.category || '-'}</span>
                 </Col>

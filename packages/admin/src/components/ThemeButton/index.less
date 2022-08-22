@@ -3,7 +3,7 @@
   align-items: center;
   cursor: pointer;
   height: 100%;
-  margin-right: 8px;
+  margin-right: 6px;
 }
 .theme-icon {
   fill: #4b5563;
@@ -13,7 +13,13 @@
     fill: #7a7e84;
   }
 }
-
+:global {
+  .ant-menu-inline-collapsed {
+    .theme-text {
+      display: none;
+    }
+  }
+}
 .theme-icon-dark {
   fill: rgb(158, 158, 158);
   height: 100%;

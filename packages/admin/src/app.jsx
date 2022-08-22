@@ -105,12 +105,33 @@ export async function getInitialState() {
   };
 } // ProLayout 支持的api https://procomponents.ant.design/components/layout
 
+const handleSizeChange = () => {
+  const headerPoint = 768;
+  const show = window.innerWidth > headerPoint ? false : true;
+  if (show) {
+    const el = document.querySelector('header.ant-layout-header');
+    if (el) {
+      el.style.display = 'block';
+    }
+    // console.log('show');
+  } else {
+    const el = document.querySelector('header.ant-layout-header');
+    if (el) {
+      el.style.display = 'none';
+    }
+    // console.log('hidden');
+  }
+};
+
+window.onresize = handleSizeChange;
+
 export const layout = ({ initialState, setInitialState }) => {
+  handleSizeChange();
   return {
     rightContentRender: () => {
       return (
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <ThemeButton />
+          <ThemeButton showText={false} />
           <LogoutButton
             key="logoutRightContent"
             trigger={
@@ -156,6 +177,7 @@ export const layout = ({ initialState, setInitialState }) => {
         <ApiOutlined />
         <span>API 文档</span>
       </a>,
+      <ThemeButton key="themeBtn" showText={true} />,
       <LogoutButton
         key="logoutSider"
         trigger={
@@ -179,9 +201,9 @@ export const layout = ({ initialState, setInitialState }) => {
             <SettingDrawer
               disableUrlParams
               enableDarkTheme
-              colorList={false}
+              // colorList={false}
               settings={initialState?.settings}
-              themeOnly={true}
+              // themeOnly={true}
               onSettingChange={(settings) => {
                 if (settings.navTheme != initialState?.settings?.navTheme) {
                   // 切换了主题
