@@ -7,6 +7,8 @@ order: -3
 
 目前 `VanBlog` 处于快速迭代期，如果后台出现新版本提醒，推荐进行升级。
 
+![](https://pic.mereith.com/img/e314ee92dd1ad9b5b6c0b814b014c247.clipboard-2022-08-22.png)
+
 升级前建议在后台 `站点管理/备份恢复` 点击导出全部数据进行备份。
 
 ![](https://pic.mereith.com/img/4eba8540c5a7a5ae41885289abf98514.clipboard-2022-08-15.png)
@@ -47,3 +49,7 @@ docker run -d \
     containrrr/watchtower -c \
     $(cat ~/watchtower.list)
 ```
+
+## 更新日志
+
+请前往 [更新日志](/ref/changelog.md)

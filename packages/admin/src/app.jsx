@@ -60,6 +60,7 @@ export async function getInitialState() {
     } else {
       // 老的
       notification.info({
+        duration: 5000,
         message: (
           <div>
             <p style={{ marginBottom: 4 }}>有新版本！</p>
@@ -68,6 +69,26 @@ export async function getInitialState() {
             <p style={{ marginBottom: 4 }}>{`更新时间:\t${moment(updatedAt).format(
               'YYYY-MM-DD HH:mm:ss',
             )}`}</p>
+            <p style={{ marginBottom: 4 }}>
+              {`更新日志:\t`}
+              <a
+                target={'_blank'}
+                href="https://github.com/Mereithhh/van-blog/blob/master/CHANGELOG.md"
+                rel="noreferrer"
+              >
+                点击查看
+              </a>
+            </p>
+            <p style={{ marginBottom: 4 }}>
+              {`更新方法:\t`}
+              <a
+                target={'_blank'}
+                href="https://vanblog.mereith.com/guide/update.html#%E5%8D%87%E7%BA%A7%E6%96%B9%E6%B3%95"
+                rel="noreferrer"
+              >
+                点击查看
+              </a>
+            </p>
           </div>
         ),
       });
