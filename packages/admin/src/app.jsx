@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import { HomeOutlined, LogoutOutlined } from '@ant-design/icons';
+import { ApiOutlined, HomeOutlined, LogoutOutlined, ProjectOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { notification } from 'antd';
 import moment from 'moment';
@@ -120,6 +120,14 @@ export const layout = ({ initialState, setInitialState }) => {
       <a key="mainSiste" rel="noreferrer" target="_blank" href={'/'}>
         <HomeOutlined />
         <span>主站</span>
+      </a>,
+      <a key="projDoc" rel="noreferrer" target="_blank" href={'https://vanblog.mereith.com'}>
+        <ProjectOutlined />
+        <span>项目文档</span>
+      </a>,
+      <a key="apiDoc" rel="noreferrer" target="_blank" href={'/swagger'}>
+        <ApiOutlined />
+        <span>API 文档</span>
       </a>,
       <LogoutButton
         key="logoutSider"
