@@ -1,4 +1,29 @@
 # Changelog
+## [0.13.0](https://github.com/Mereithhh/van-blog/compare/v0.12.3...v0.13.0) (2022-08-22)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 全称标题过长导致在微信电脑浏览器中侧边栏标题换行 ([0431e97](https://github.com/Mereithhh/van-blog/commit/0431e97b865143806510403d9b8c1b1fcd32623a))
+* 文档脚本错误 ([19bb12f](https://github.com/Mereithhh/van-blog/commit/19bb12ff5f92be12643dba410cd4f2ee1943adfa))
+
+
+### ✏️ Documentation | 文档
+
+* 文档增加 faq ([c53fc56](https://github.com/Mereithhh/van-blog/commit/c53fc56f0f0847bdbb0e13c9c140868dc8767d36))
+* 更新 changelog 文档 ([fcec8ef](https://github.com/Mereithhh/van-blog/commit/fcec8ef10bca37abf031a7bdd82db0d35aa40065))
+
+
+### ✨ Features | 新功能
+
+* console.log 增加求 star 文案🙏’ ([78aa2bc](https://github.com/Mereithhh/van-blog/commit/78aa2bc659abdbd2e8c71a9d861d433afc3f0030))
+* 优化 more 标记提醒逻辑，点击确认依然可以保存 ([a1870db](https://github.com/Mereithhh/van-blog/commit/a1870db4ed9835046e49e5acecee80f3f7dbde7e))
+* 后台更新提示的更新日志切换成项目文档中的链接 ([c98878c](https://github.com/Mereithhh/van-blog/commit/c98878c784b0d7ab67b35985aeaaa7a093d0c5f3))
+* 后台编辑器切换预览模式持久化保存到设备 ([270beb5](https://github.com/Mereithhh/van-blog/commit/270beb52138dc3d0743cf59730b7fa330e6c275b))
+* 后台编辑器自动满屏幕 ([f49a99e](https://github.com/Mereithhh/van-blog/commit/f49a99e649ac9ddec73d15f1f5530104decaec87))
+* 后台编辑器页面增加宽度提升体验 ([c14bd6c](https://github.com/Mereithhh/van-blog/commit/c14bd6c7359e2d40df689f4bf3c44fc438fc59ab))
+* 编辑器右上角增加字数统计 ([9f29f30](https://github.com/Mereithhh/van-blog/commit/9f29f30f162c4f1c6925063ff0dc7bbf918eb3e3))
+
 ### [0.12.3](https://github.com/Mereithhh/van-blog/compare/v0.12.2...v0.12.3) (2022-08-22)
 
 
