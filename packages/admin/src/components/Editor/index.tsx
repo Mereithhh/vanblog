@@ -126,6 +126,9 @@ export default function Editor(props) {
               });
           },
         },
+        toolbarConfig: {
+          pin: true,
+        },
         toolbar: [
           {
             name: 'more',
