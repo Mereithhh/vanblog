@@ -124,7 +124,13 @@ export const layout = ({ initialState, setInitialState }) => {
       );
     },
     // disableContentMargin: true,
-    footerRender: () => <Footer />,
+    footerRender: () => {
+      const { location } = history;
+      if (location.pathname == '/editor') {
+        return false;
+      }
+      return <Footer />;
+    },
     onPageChange: () => {
       const { location } = history; // 如果没有登录，重定向到 login
       if (location.pathname === '/init' && !initialState?.user) {

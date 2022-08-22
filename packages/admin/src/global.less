@@ -112,10 +112,17 @@ body .dark-switch {
 }
 
 .editor-full  {
-    .ant-pro-grid-content {
-      max-width: 50000px !important;
-    }
-    .ant-pro-page-container-children-content {
-      margin: 0 !important;
-    }
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  .ant-pro-grid-content {
+    max-width: 50000px !important;
+    height: 100%;
+  }
+  .ant-pro-page-container-children-content {
+    margin: 0 !important;
+  }
+  .ant-pro-grid-content-children,.ant-pro-page-container-children-content,.ant-spin-nested-loading,.ant-spin-container {
+    height: 100%;
+  }
 }

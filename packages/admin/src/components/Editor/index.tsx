@@ -246,6 +246,7 @@ export default function Editor(props) {
         counter: {
           enable: true,
         },
+        height: '100%',
       });
     }
 
@@ -289,7 +290,7 @@ export default function Editor(props) {
     //   }}
     // >
     <Spin spinning={loading}>
-      <div id="vditor" className="vditor" style={{ minHeight: 400 }} />
+      <div id="vditor" className="vditor" style={{ minHeight: 400, height: '100%' }} />
     </Spin>
     // </RcResizeObserver>
   );
