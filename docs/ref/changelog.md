@@ -4,6 +4,23 @@ icon: update
 ---
 
 # Changelog
+## [0.14.0](https://github.com/Mereithhh/van-blog/compare/v0.13.3...v0.14.0) (2022-08-22)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([da05ee9](https://github.com/Mereithhh/van-blog/commit/da05ee9555a86b5bc6e2e6e5b02d61c37b344ba1))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 增加发版 doc 脚本” ([1d32329](https://github.com/Mereithhh/van-blog/commit/1d3232991bebcee303aa1fd36908dfb9b90f2bea))
+
+
+### ✨ Features | 新功能
+
+* 优化布局，大尺寸不显示顶栏，主题切换放到侧边栏 ([193403f](https://github.com/Mereithhh/van-blog/commit/193403fa8eaaf0901a6e96a20c050fad323173b4))
+
 ### [0.13.3](https://github.com/Mereithhh/van-blog/compare/v0.13.2...v0.13.3) (2022-08-22)
 
 
