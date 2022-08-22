@@ -52,8 +52,8 @@ const Login = () => {
       <div className={styles.content}>
         <LoginForm
           logo={<img alt="logo" src="/admin/logo.svg" />}
-          title="Van Blog"
-          subTitle={'Van Blog 博客管理后台'}
+          title="VanBlog"
+          subTitle={'VanBlog 博客管理后台'}
           initialValues={{
             autoLogin: true,
           }}

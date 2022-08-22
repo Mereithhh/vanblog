@@ -8,7 +8,7 @@ const Settings = {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Van Blog Admin',
+  title: 'VanBlog',
   headerHeight: 48,
   splitMenus: false,
   // headerRender: false,

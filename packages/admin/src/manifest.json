@@ -1,6 +1,6 @@
 {
-  "name": "Van Blog Admin",
-  "short_name": "Van Blog Admin",
+  "name": "VanBlog",
+  "short_name": "VanBlog",
   "display": "standalone",
   "start_url": "/admin",
   "theme_color": "#002140",
