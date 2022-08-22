@@ -1,4 +1,34 @@
 # Changelog
+### [0.12.3](https://github.com/Mereithhh/van-blog/compare/v0.12.2...v0.12.3) (2022-08-22)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* React Hydration Error ([e47e3f2](https://github.com/Mereithhh/van-blog/commit/e47e3f29fcce1c8aff90ba5e94f00514a8e9a83d))
+* 切换页面控制台重复说 hello ([a693a06](https://github.com/Mereithhh/van-blog/commit/a693a06c5ce3736952c59cf011554ad99a4fe2e2))
+* 因后端客户端时区不同导致的 Hydration Error ([1f82816](https://github.com/Mereithhh/van-blog/commit/1f82816ed4fb0affdcaa16cfbf991d5093023654))
+* 没映射静态文件目录时无法删除本地图床文件 ([80203d7](https://github.com/Mereithhh/van-blog/commit/80203d7a454b38f7d5179ebeba8dc7bac359a46d))
+* 长标题+顶置情况下，文章标题样式稍微错位 ([d4c228e](https://github.com/Mereithhh/van-blog/commit/d4c228e2a1e66c884457722b60eaa8e62c32cf0a))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 拆分多个 job 并行提高效率 ([d8e8cb9](https://github.com/Mereithhh/van-blog/commit/d8e8cb929cb182ad6216371d4a7a9e63d3c5d934))
+
+
+### ✏️ Documentation | 文档
+
+* 更新了文档 ([6e5e2df](https://github.com/Mereithhh/van-blog/commit/6e5e2dff3da2468c7d0ead432cddbf72bf586491))
+* 更新文档 ([1373781](https://github.com/Mereithhh/van-blog/commit/13737813b65a1c8320d44dfff673effaab2e24a1))
+
+
+### ✨ Features | 新功能
+
+* 升级提示展示文档和更新日志链接&项目文档增加更新日志 ([aa4514c](https://github.com/Mereithhh/van-blog/commit/aa4514c8ff25042dd1ae193685255f6dcb5e0bbf))
+* 后台增加项目文档、API 文档跳转按钮 ([3f2a49e](https://github.com/Mereithhh/van-blog/commit/3f2a49e8cc3eae158000727720e760dab71cd933))
+* 后台编辑器工具栏默认固定在最顶端 ([49b44dc](https://github.com/Mereithhh/van-blog/commit/49b44dc9492438fbcc35eb984979cb0895f39410))
+* 容器启动时触发两次增量渲染 ([65de8f3](https://github.com/Mereithhh/van-blog/commit/65de8f375a4ed51a13aaf5f3d897a9ae16266df8))
+
 ### [0.12.2](https://github.com/Mereithhh/van-blog/compare/v0.12.1...v0.12.2) (2022-08-21)
 
 
