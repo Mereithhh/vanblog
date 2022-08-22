@@ -6,7 +6,10 @@ export const getImgLink = (realPath) => {
   if (realPath.includes('http://') || realPath.includes('https://')) {
     url = realPath;
   }
-  return url.replace(/\)/g, '%29');
+  url = encodeURIComponent(url);
+  url = url.replace(/\)/g, '%29');
+  url = url.replace(/\(/g, '%28');
+  return url;
 };
 export const copyImgLink = (realPath, isMarkdown = false) => {
   let url = getImgLink(realPath);
