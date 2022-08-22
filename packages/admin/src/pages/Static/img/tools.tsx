@@ -6,7 +6,6 @@ export const getImgLink = (realPath) => {
   if (realPath.includes('http://') || realPath.includes('https://')) {
     url = realPath;
   }
-  url = encodeURIComponent(url);
   url = url.replace(/\)/g, '%29');
   url = url.replace(/\(/g, '%28');
   return url;
