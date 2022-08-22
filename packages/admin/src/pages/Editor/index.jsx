@@ -74,6 +74,7 @@ export default function () {
   }, [currObj, vd, loading]);
   return (
     <PageContainer
+      className="editor-full"
       header={{
         children: (
           <>
