@@ -73,7 +73,7 @@ export async function getInitialState() {
               {`更新日志:\t`}
               <a
                 target={'_blank'}
-                href="https://github.com/Mereithhh/van-blog/blob/master/CHANGELOG.md"
+                href="https://vanblog.mereith.com/ref/changelog.html"
                 rel="noreferrer"
               >
                 点击查看
