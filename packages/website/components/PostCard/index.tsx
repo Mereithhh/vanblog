@@ -68,7 +68,7 @@ export default function (props: {
           {props.type != "about" ? (
             <Link href={`/post/${props.id}`}>
               <a
-                className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-${
+                className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 md:text-${
                   props.type == "overview" ? "xl" : "2xl"
                 } ua`}
               >
