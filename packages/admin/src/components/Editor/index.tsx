@@ -96,6 +96,7 @@ const mobileToolBar = [
   },
   'upload',
 ];
+
 export default function Editor(props) {
   const { sysTheme } = props;
   const initTheme = sysTheme;
@@ -150,10 +151,22 @@ export default function Editor(props) {
     await sleep(50);
     copyImgLink(res.src, true);
   };
+  const handleClickChangeModeSW = (ev) => {
+    localStorage.setItem('vditorMode', 'wysiwyg');
+    // console.log('sw');
+  };
+  const handleClickChangeModeIR = (ev) => {
+    localStorage.setItem('vditorMode', 'ir');
+    // console.log('ir');
+  };
+  const handleClickChangeModeSV = (ev) => {
+    localStorage.setItem('vditorMode', 'sv');
+    // console.log('sv');
+  };
   useEffect(() => {
     if (!current.editor) {
       current.editor = new Vditor('vditor', {
-        mode: 'wysiwyg',
+        mode: (window.localStorage.getItem('vditorMode') as any) || 'wysiwyg',
         fullscreen: {
           index: 9999,
         },
@@ -172,6 +185,18 @@ export default function Editor(props) {
           const elUpload = document.querySelector('.toolbar-clip-upload');
           if (elUpload) {
             elUpload.addEventListener('click', handleClickUpload);
+          }
+          const swBtn = document.querySelector('button[data-mode="wysiwyg"]');
+          if (swBtn) {
+            swBtn.addEventListener('click', handleClickChangeModeSW);
+          }
+          const irBtn = document.querySelector('button[data-mode="ir"]');
+          if (irBtn) {
+            irBtn.addEventListener('click', handleClickChangeModeIR);
+          }
+          const svBtn = document.querySelector('button[data-mode="sv"]');
+          if (svBtn) {
+            svBtn.addEventListener('click', handleClickChangeModeSV);
           }
         },
         upload: {
@@ -229,6 +254,18 @@ export default function Editor(props) {
       const elUpload = document.querySelector('.toolbar-clip-upload');
       if (elUpload) {
         elUpload.removeEventListener('click', handleClickUpload);
+      }
+      const swBtn = document.querySelector('button[data-mode="wysiwyg"]');
+      if (swBtn) {
+        swBtn.removeEventListener('click', handleClickChangeModeSW);
+      }
+      const irBtn = document.querySelector('button[data-mode="ir"]');
+      if (irBtn) {
+        irBtn.removeEventListener('click', handleClickChangeModeIR);
+      }
+      const svBtn = document.querySelector('button[data-mode="sv"]');
+      if (svBtn) {
+        svBtn.removeEventListener('click', handleClickChangeModeSV);
       }
     };
   }, [current]);
