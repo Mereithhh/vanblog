@@ -118,13 +118,14 @@ export default function () {
             key="saveButton"
             onClick={async () => {
               // 先检查一下有没有 more .
+              let hasMore = true;
               if (['article', 'draft'].includes(history.location.query?.type)) {
                 const v = vd?.getValue();
                 if (!v?.includes('<!-- more -->')) {
-                  message.warning(
-                    '缺少more标记，请点击工具栏第一个按钮在合适的地方插入标记！这样阅读全文前的内容才能被正确识别。',
-                  );
-                  return;
+                  hasMore = false;
+                  // message.warning(
+                  //   '缺少more标记，请点击工具栏第一个按钮在合适的地方插入标记！ 这样阅读全文前的内容才能被正确识别。',
+                  // );
                 }
               }
               let hasTags =
@@ -132,10 +133,26 @@ export default function () {
                 currObj?.tags &&
                 currObj.tags.length > 0;
               if (history.location.query?.type == 'about') {
-                return true;
+                hasTags = true;
               }
               Modal.confirm({
                 title: `确定保存吗？${hasTags ? '' : '此文章还没设置标签呢'}`,
+                content: hasMore ? undefined : (
+                  <div style={{ marginTop: 8 }}>
+                    <p>缺少完整的 more 标记！</p>
+                    <p>将截取指定的文字数量作为阅读全文前的内容！</p>
+                    <p>
+                      或者您可以点击工具栏第一个按钮在合适的地方插入标记。
+                      <a
+                        target={'_blank'}
+                        rel="noreferrer"
+                        href="https://vanblog.mereith.com/feature/basic/editor.html#%E4%B8%80%E9%94%AE%E6%8F%92%E5%85%A5-more-%E6%A0%87%E8%AE%B0"
+                      >
+                        相关文档
+                      </a>
+                    </p>
+                  </div>
+                ),
                 onOk: async () => {
                   const v = vd?.getValue();
                   setLoading(true);
@@ -155,6 +172,7 @@ export default function () {
                   }
                   setLoading(false);
                 },
+                okText: '确认保存',
               });
             }}
           >
