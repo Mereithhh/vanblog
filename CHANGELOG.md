@@ -1,4 +1,11 @@
 # Changelog
+### [0.13.2](https://github.com/Mereithhh/van-blog/compare/v0.13.1...v0.13.2) (2022-08-22)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图片 url 特殊字符未转义导致无法正常显示 ([920e5fa](https://github.com/Mereithhh/van-blog/commit/920e5faca039013f6af992bb20b4a779cd35c2e7))
+
 ### [0.13.1](https://github.com/Mereithhh/van-blog/compare/v0.13.0...v0.13.1) (2022-08-22)
 
 
