@@ -240,6 +240,12 @@ export default function Editor(props) {
           pin: true,
         },
         toolbar: defaultToolBar,
+        cache: {
+          enable: false,
+        },
+        counter: {
+          enable: true,
+        },
       });
     }
 

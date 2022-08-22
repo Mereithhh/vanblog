@@ -89,7 +89,7 @@ export default function () {
               </Col>
             </Row>
             {type != 'about' && (
-              <Row>
+              <Row style={{ marginTop: 8 }}>
                 <Col span={8}>
                   <span>标签：</span>
                   <span>
