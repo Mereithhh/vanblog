@@ -109,7 +109,9 @@ export default function () {
             <Tag style={{ marginBottom: '5px' }} color="blue">
               {type == 'about' ? '关于' : currObj?.id || '未知'}
             </Tag>
-            <span>{type == 'about' ? '关于' : currObj?.title}</span>
+            <span title={type == 'about' ? '关于' : currObj?.title}>
+              {type == 'about' ? '关于' : currObj?.title}
+            </span>
           </Space>
         ),
         extra: [
@@ -331,6 +333,14 @@ export default function () {
               trigger={<Button key={'publishBtn' + currObj?.id}>发布草稿</Button>}
             />
           ),
+          <Button
+            key="help"
+            onClick={() => {
+              window.open('https://vanblog.mereith.com/feature/basic/editor.html', '_blank');
+            }}
+          >
+            帮助文档
+          </Button>,
         ],
         breadcrumb: {},
       }}
