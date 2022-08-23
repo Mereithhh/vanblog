@@ -18,6 +18,7 @@ export class LogProvider {
       { stream: process.stdout },
     ];
     this.logger = pino({ level: 'debug' }, pino.multistream(streams));
+    this.logger.info({ event: 'start' });
   }
   async login(req: Request, success: boolean) {
     const logger = this.logger;
