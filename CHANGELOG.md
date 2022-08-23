@@ -1,4 +1,16 @@
 # Changelog
+### [0.16.2](https://github.com/Mereithhh/van-blog/compare/v0.16.1...v0.16.2) (2022-08-23)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档截图&修复文档错误 ([a20835e](https://github.com/Mereithhh/van-blog/commit/a20835e67361ec0f21c919982948c7d1c88543b3))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图片管理鼠标右键菜单栏跑位 ([943fad2](https://github.com/Mereithhh/van-blog/commit/943fad299c6ce4025e6cfe6c7ed19f7e9b7e0434))
+
 ### [0.16.1](https://github.com/Mereithhh/van-blog/compare/v0.16.0...v0.16.1) (2022-08-23)
 
 
