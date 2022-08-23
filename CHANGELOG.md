@@ -1,4 +1,28 @@
 # Changelog
+## [0.15.0](https://github.com/Mereithhh/van-blog/compare/v0.14.0...v0.15.0) (2022-08-23)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 还是不展示大纲 ([a1826f8](https://github.com/Mereithhh/van-blog/commit/a1826f8270e263689a6015f6162ec976f2622c1d))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([8a2f394](https://github.com/Mereithhh/van-blog/commit/8a2f394391b389d25ce6262f5363f83e0823a4e1))
+* 更新文档 ([0f51dff](https://github.com/Mereithhh/van-blog/commit/0f51dff931a181e690485a42728b472f808b1973))
+
+
+### ✨ Features | 新功能
+
+* 后台编辑器增加参考文档按钮 ([18cc4ab](https://github.com/Mereithhh/van-blog/commit/18cc4ab21364704dca11b77972d8e2772edb315c))
+* 大尺寸下编辑器展示大纲 ([a4661c4](https://github.com/Mereithhh/van-blog/commit/a4661c4d034ae01061e04f6b4def0b98e3c5b2fc))
+* 失焦自动保存草稿 ([4a4a26d](https://github.com/Mereithhh/van-blog/commit/4a4a26d4a42f1f5c42de19a5c9ea7e34737033d5))
+* 拆分站点管理为多个菜单 ([b858e00](https://github.com/Mereithhh/van-blog/commit/b858e00f1715ffc42c215e50036a86f8fab0b0d4))
+* 文章页面和草稿页面默认展示 10 行 ([1918050](https://github.com/Mereithhh/van-blog/commit/19180501dcedfe7f89732b9f2f1de79e5dca9b6f))
+* 编辑器移动端工具栏删减 ([e7e0e65](https://github.com/Mereithhh/van-blog/commit/e7e0e6593b09e560b8d8afbd1a539de6985694d8))
+* 调整编辑器工具栏 ([97b90ee](https://github.com/Mereithhh/van-blog/commit/97b90eea9b090ef138c9d3c6aa4189a4ee6ba016))
+
 ## [0.14.0](https://github.com/Mereithhh/van-blog/compare/v0.13.3...v0.14.0) (2022-08-22)
 
 
