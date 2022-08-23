@@ -187,7 +187,7 @@ export default function (props: {
                 target={"_blank"}
                 className="hover:text-gray-900 hover:underline-offset-4 hover:underline dark:hover:text-dark-hover transition"
               >
-                Van Blog <span>{props.option.version}</span>
+                VanBlog <span>{props.option.version}</span>
               </a>
             </p>
 

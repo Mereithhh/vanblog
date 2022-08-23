@@ -38,9 +38,13 @@ title: 草稿管理
 
 点击编辑按钮，即可跳转到编辑器编辑该草稿。
 
-![](https://pic.mereith.com/img/f190f4af382144eb5b14f1bbec10eac9.clipboard-2022-08-16.png)
+![](https://pic.mereith.com/img/017ee0a9f39f47727250b082e7e6fb21.clipboard-2022-08-23.png)
 
 如需修改草稿信息，点击 `修改信息` 按钮即可。
+
+在编辑草稿时，当编辑器失去焦点的时候将会自动保存。
+
+![](https://pic.mereith.com/img/085bc90dc25a832a3c89988027fc6e64.clipboard-2022-08-23.png)
 
 ## 修改草稿信息
 
@@ -52,7 +56,7 @@ title: 草稿管理
 
 具体选项含义可以参考 [文章管理](/feature/basic/article.md)
 
-![](https://pic.mereith.com/img/e81cc176a756cf21acfb87ec2bf509d5.clipboard-2022-08-16.png)
+![](https://pic.mereith.com/img/c54f76ee3fc3d96b0b4744e4b4ec8a66.clipboard-2022-08-23.png)
 
 注意的是，草稿发布后会在草稿管理页面消失，而文章管理页面会出现已经发布的草稿。
 
@@ -63,3 +67,5 @@ title: 草稿管理
 ## 自动保存
 
 当编辑器失去焦点的时候将会自动保存。只针对草稿生效。
+
+![](https://pic.mereith.com/img/085bc90dc25a832a3c89988027fc6e64.clipboard-2022-08-23.png)

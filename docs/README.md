@@ -2,7 +2,7 @@
 home: true
 icon: home
 heroImage: /前台-白色.png
-heroText: Van Blog
+heroText: VanBlog
 heroFullScreen: true
 tagline: 一款简洁实用优雅的一站式个人博客系统。
 actions:
@@ -40,7 +40,7 @@ features:
 
   - title: 可量化
     icon: table
-    details: 内置强大分析系统与精美看板，同时支持百度和GA
+    details: 内置强大分析系统与精美看板，同时支持百度和GA，同时具有完善的日志。
 
   - title: 现代后台
     icon: strong

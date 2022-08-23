@@ -7,7 +7,7 @@ export default sidebar([
     icon: "creative",
     // activeMatch: "^/guide/$",
     prefix: "/guide/",
-    children: ["docker.md", "nginx.md", "https.md", "init.md", "update.md"],
+    children: ["docker.md", "https.md", "init.md", "update.md", "nginx.md"],
   },
   {
     text: "功能",
@@ -36,8 +36,9 @@ export default sidebar([
         collapsable: true,
         icon: "advance",
         children: [
-          "/guide/https.md",
+          "advance/https.md",
           "advance/backup.md",
+          "advance/log.md",
           "advance/dark-mode.md",
           "advance/links.md",
           "advance/donate.md",

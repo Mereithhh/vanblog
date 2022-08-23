@@ -142,6 +142,14 @@ spec:
           hostPath:
             path: /etc/localtime
             type: ""
+        - name: static
+          hostPath:
+            path: /var/k8s/van-blog/static
+            type: ''
+        - name: log
+          hostPath:
+            path: /var/k8s/van-blog/log
+            type: ''
       containers:
         - name: van-blog
           image: "mereith/van-blog:latest"
@@ -159,6 +167,12 @@ spec:
             - name: VAN_BLOG_ALLOW_DOMAINS
               value: >-
                 pic.mereith.com
+            - name: VAN_BLOG_JWT_SECRET
+              value: >-
+                AnyRandomString
+            - name: EMAIL
+              value: >-
+                vanblog@mereith.com
           resources:
             requests:
               memory: "300Mi"
@@ -170,5 +184,9 @@ spec:
             - name: host-time
               readOnly: true
               mountPath: /etc/localtime
+            - name: static
+              mountPath: /app/static
+            - name: log
+              mountPath: /var/log
           imagePullPolicy: Always
 ```

@@ -1,5 +1,4 @@
 ---
-icon: selection
 title: HTTPS
 copyright: false
 order: -3

@@ -9,7 +9,7 @@ order: -3
 
 ![](https://pic.mereith.com/img/e314ee92dd1ad9b5b6c0b814b014c247.clipboard-2022-08-22.png)
 
-升级前建议在后台 `站点管理/备份恢复` 点击导出全部数据进行备份。
+升级前建议在后台 `站点管理/系统设置/备份恢复` 点击导出全部数据进行备份。
 
 ![](https://pic.mereith.com/img/4eba8540c5a7a5ae41885289abf98514.clipboard-2022-08-15.png)
 

@@ -2,7 +2,7 @@
 title: 站点设置
 ---
 
-`vanBlog` 可以配置一系列的站点配置项，可在 `/admin/site?tab=siteInfo` 路径下查看。
+`vanBlog` 可以配置一系列的站点配置项，可在 `/admin/site/setting` 路径下查看。
 
 包括三类：
 
@@ -10,7 +10,7 @@ title: 站点设置
 - 高级设置：博客系统的进阶选项
 - 布局设置：改变前台展示布局的设置。
 
-![](https://pic.mereith.com/img/c472c29fb480ebcd123b883199f34aab.clipboard-2022-08-15.png)
+![](https://pic.mereith.com/img/abb9afde6ccf1ee82cfe41e083df4daf.clipboard-2022-08-15.png)
 
 ## 基本设置
 

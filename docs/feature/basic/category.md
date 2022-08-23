@@ -2,7 +2,7 @@
 title: 分类管理
 ---
 
-`vanBlog` 支持管理 `分类`，具体在后台的 `站点管理/分类管理`:
+`vanBlog` 支持管理 `分类`，具体在后台的 `站点管理/数据管理/分类管理`:
 
 ![](https://pic.mereith.com/img/c10f265006dc326fbc76b0425eeb4914.clipboard-2022-08-15.png)
 
