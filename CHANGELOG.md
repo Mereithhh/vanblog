@@ -1,4 +1,17 @@
 # Changelog
+### [0.16.1](https://github.com/Mereithhh/van-blog/compare/v0.16.0...v0.16.1) (2022-08-23)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([01c563d](https://github.com/Mereithhh/van-blog/commit/01c563d5ae497e265f2b8da9841694f4ad31ecdc))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 初次更新后日志接口超时 ([c91e411](https://github.com/Mereithhh/van-blog/commit/c91e4114799f693e6b2dcc50c19bbcfbe7f08032))
+* 更新后第一次进入获取登录日志接口超时 ([360590a](https://github.com/Mereithhh/van-blog/commit/360590af0540e44f569520ec8d52dd20fa3efd07))
+
 ## [0.16.0](https://github.com/Mereithhh/van-blog/compare/v0.15.0...v0.16.0) (2022-08-23)
 
 
