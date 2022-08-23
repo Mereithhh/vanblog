@@ -13,7 +13,7 @@ export default () => {
   const [colKeys, setColKeys] = useState(articleObjAll);
   const [simplePage, setSimplePage] = useState(false);
   const [simpleSearch, setSimpleSearch] = useState(false);
-  const [pageSize, setPageSize] = useNum(5, 'article-page-size');
+  const [pageSize, setPageSize] = useNum(10, 'article-page-size');
   const searchSpan = useMemo(() => {
     if (!simpleSearch) {
       return 8;

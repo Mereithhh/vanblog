@@ -11,7 +11,7 @@ export default () => {
   const [colKeys, setColKeys] = useState(draftKeysObj);
   const [simplePage, setSimplePage] = useState(false);
   const [simpleSearch, setSimpleSearch] = useState(false);
-  const [pageSize, setPageSize] = useNum(5, 'draft-page-size');
+  const [pageSize, setPageSize] = useNum(10, 'draft-page-size');
   const searchSpan = useMemo(() => {
     if (!simpleSearch) {
       return 8;
