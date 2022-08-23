@@ -50,6 +50,9 @@ export class LogProvider {
               }
               res.push(data);
             }
+            if (!line || line.trim() == '' || line == '\n') {
+              resolve({ data: res, total });
+            }
             if (last) {
               resolve({ data: res, total });
             }
