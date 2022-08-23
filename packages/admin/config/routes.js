@@ -25,16 +25,17 @@ export default [
     hideInBreadcrumb: true,
     component: './Static/img',
   },
-  // {
-  //   name: '文件管理',
-  //   icon: 'container',
-  //   path: '/static',
-  //   hideInBreadcrumb: true,
-  //   routes: [
-  //     { name: '图片管理', icon: 'container', path: '/static/img', component: './Static/img' },
-  //   ],
-  // },
-  { name: '站点管理', icon: 'tool', path: '/site', component: './SiteConfig' },
+  {
+    name: '站点管理',
+    icon: 'tool',
+    path: '/site',
+    hideInBreadcrumb: true,
+    routes: [
+      { name: '数据管理', path: '/site/data', component: './DataManage' },
+      { name: '系统设置', path: '/site/setting', component: './SystemConfig' },
+      // { name: '日志管理', path: '/site/log', component: './SiteConfig' },
+    ],
+  },
   { path: '/', redirect: '/welcome' },
   { component: './404' },
 ];
