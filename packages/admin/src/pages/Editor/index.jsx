@@ -72,6 +72,15 @@ export default function () {
       vd?.setValue(currObj.content);
     }
   }, [currObj, vd, loading]);
+  const handleBlur = async (value) => {
+    const type = history.location.query?.type || 'article';
+    const id = history.location.query?.id;
+    if (type == 'draft') {
+      await updateDraft(id, { content: value });
+      await fetchData();
+      message.success('失焦自动保存草稿成功！');
+    }
+  };
   return (
     <PageContainer
       className="editor-full"
@@ -346,7 +355,7 @@ export default function () {
       }}
       footer={null}
     >
-      <Editor setVd={setVd} sysTheme={sysTheme} />
+      <Editor setVd={setVd} sysTheme={sysTheme} onBlur={handleBlur} />
     </PageContainer>
   );
 }

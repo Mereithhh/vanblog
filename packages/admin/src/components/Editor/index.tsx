@@ -157,7 +157,11 @@ export default function Editor(props) {
         fullscreen: {
           index: 9999,
         },
-
+        blur: (value) => {
+          if (props.onBlur) {
+            props.onBlur(value);
+          }
+        },
         preview: {
           delay: 200,
           hljs: {
