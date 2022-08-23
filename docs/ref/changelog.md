@@ -4,6 +4,19 @@ icon: update
 ---
 
 # Changelog
+## [0.16.0](https://github.com/Mereithhh/van-blog/compare/v0.15.0...v0.16.0) (2022-08-23)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([2f3f67c](https://github.com/Mereithhh/van-blog/commit/2f3f67cd98da095207a49cfc603dff483da48c13))
+
+
+### ✨ Features | 新功能
+
+* 后台加载页面去掉大 logo ([b09937a](https://github.com/Mereithhh/van-blog/commit/b09937ad17bf0d369ef6be0416ca4333f873f503))
+* 登录日志' ([c320761](https://github.com/Mereithhh/van-blog/commit/c3207619daf4b430569d0ea45dd93e5a5582c6ad))
+
 ## [0.15.0](https://github.com/Mereithhh/van-blog/compare/v0.14.0...v0.15.0) (2022-08-23)
 
 
