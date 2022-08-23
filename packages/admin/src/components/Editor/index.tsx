@@ -54,20 +54,9 @@ const defaultToolBar = [
   '|',
   'fullscreen',
   'edit-mode',
-  {
-    name: 'more',
-    toolbar: [
-      'both',
-      'code-theme',
-      'content-theme',
-      'export',
-      'outline',
-      'preview',
-      'devtools',
-      'info',
-      'help',
-    ],
-  },
+  'export',
+  'outline',
+  'preview',
 ];
 const mobileToolBar = [
   {
