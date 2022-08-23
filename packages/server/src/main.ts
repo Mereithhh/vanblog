@@ -8,6 +8,8 @@ import { config as globalConfig } from './config/index';
 import { checkOrCreate } from './utils/checkFolder';
 import * as path from 'path';
 import { activeISR } from './utils/activeISR';
+// import { LogProvider } from './provider/log/log.provider';
+// import { EventType } from './provider/log/types';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -41,6 +43,8 @@ async function bootstrap() {
     activeISR();
   }, 5000);
   // 测试用的
+  // const logProvider = app.get(LogProvider);
+  // logProvider.searchLog(1, 1, EventType.LOGIN);
   // const articleProvider = app.get(ArticleProvider);
   // await articleProvider.washViewerInfoToVisitProvider();
   // console.log('done');

@@ -5,6 +5,7 @@ import {
   UseGuards,
   Put,
   Body,
+  UnauthorizedException,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
@@ -12,6 +13,7 @@ import { config } from 'src/config/index';
 import { UpdateUserDto } from 'src/dto/user.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { AuthProvider } from 'src/provider/auth/auth.provider';
+import { LogProvider } from 'src/provider/log/log.provider';
 import { UserProvider } from 'src/provider/user/user.provider';
 
 @ApiTags('tag')
@@ -20,11 +22,21 @@ export class AuthController {
   constructor(
     private readonly authProvider: AuthProvider,
     private readonly userProvider: UserProvider,
+    private readonly logProvider: LogProvider,
   ) {}
 
   @UseGuards(AuthGuard('local'))
   @Post('/login')
-  async login(@Request() request) {
+  async login(@Request() request: any) {
+    if (request?.user?.fail) {
+      this.logProvider.login(request, false);
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: '用户名或密码错误！',
+      });
+    }
+    // 能到这里登陆就成功了
+    this.logProvider.login(request, true);
     return {
       statusCode: 200,
       data: await this.authProvider.login(request.user),

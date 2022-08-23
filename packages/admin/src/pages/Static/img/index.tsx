@@ -149,6 +149,7 @@ const ImgPage = () => {
   }, [initialState]);
   return (
     <PageContainer
+      className="t-0"
       header={{
         title: (
           <TipTitle

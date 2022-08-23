@@ -33,7 +33,7 @@ export default [
     routes: [
       { name: '数据管理', path: '/site/data', component: './DataManage' },
       { name: '系统设置', path: '/site/setting', component: './SystemConfig' },
-      // { name: '日志管理', path: '/site/log', component: './SiteConfig' },
+      { name: '日志管理', path: '/site/log', component: './LogManage' },
     ],
   },
   { path: '/', redirect: '/welcome' },

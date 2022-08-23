@@ -26,6 +26,7 @@ export default () => {
       title={null}
       extra={null}
       ghost
+      className="t-8"
       header={{ title: null, extra: null, ghost: true }}
     >
       <RcResizeObserver

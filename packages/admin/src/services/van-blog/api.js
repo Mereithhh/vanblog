@@ -85,6 +85,11 @@ export async function getAllCategories() {
     method: 'GET',
   });
 }
+export async function getLog(type, page, pageSize = 10) {
+  return request(`/api/admin/log?event=${type}&pageSize=${pageSize}&page=${page}`, {
+    method: 'GET',
+  });
+}
 export async function updateSiteInfo(body) {
   return request(`/api/admin/meta/site`, {
     method: 'PUT',

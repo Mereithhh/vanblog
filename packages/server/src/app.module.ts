@@ -57,6 +57,8 @@ import { PicgoProvider } from './provider/static/picgo.provider';
 import { ViewerTask } from './schedule/viewer.task';
 import { CaddyController } from './controller/admin/caddy/caddy.controller';
 import { CaddyProvider } from './provider/caddy/caddy.provider';
+import { LogProvider } from './provider/log/log.provider';
+import { LogController } from './controller/admin/log/log.controller';
 
 @Module({
   imports: [
@@ -100,6 +102,7 @@ import { CaddyProvider } from './provider/caddy/caddy.provider';
     SettingController,
     ImgController,
     CaddyController,
+    LogController,
   ],
   providers: [
     AppService,
@@ -122,6 +125,7 @@ import { CaddyProvider } from './provider/caddy/caddy.provider';
     LocalProvider,
     ViewerTask,
     CaddyProvider,
+    LogProvider,
   ],
 })
 export class AppModule implements NestModule {
