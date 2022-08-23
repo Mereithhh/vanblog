@@ -248,10 +248,6 @@ export default function Editor(props) {
           enable: true,
         },
         height: '100%',
-        outline: {
-          enable: true,
-          position: 'left',
-        },
       });
     }
 
