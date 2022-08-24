@@ -8,7 +8,7 @@ export default function (props: {}) {
   const { state, setState } = useContext(GlobalContext);
   const { theme } = state;
   const setTheme = (newTheme: "auto" | "light" | "dark") => {
-    console.log(`[setTheme] ${newTheme}`);
+    // console.log(`[setTheme] ${newTheme}`);
     clearTimer();
     localStorage.setItem("theme", newTheme);
     // 设置真实的主题，然后把真实的主题搞到 state 里。
