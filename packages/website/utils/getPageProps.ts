@@ -152,14 +152,7 @@ export async function getPostPagesProps(
   const currArticleProps = await getArticleById(parseInt(curId));
   return {
     layoutProps,
-    ...{
-      ...currArticleProps,
-      pre: { title: currArticleProps.pre.title, id: currArticleProps.pre.id },
-      next: {
-        title: currArticleProps.next.title,
-        id: currArticleProps.next.id,
-      },
-    },
+    ...currArticleProps,
     ...payProps,
     author: data.meta.siteInfo.author,
     showSubMenu: layoutProps.showSubMenu,

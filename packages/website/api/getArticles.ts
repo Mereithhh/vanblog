@@ -86,7 +86,15 @@ export const getArticleById = async (id: number) => {
     const url = `${config.baseUrl}api/public/article/${id}`;
     const res = await fetch(url);
     const { data } = await res.json();
-    return data;
+    const { article, pre, next } = data;
+    const r: any = { article };
+    if (pre) {
+      r.pre = { title: pre.title, id: pre.id };
+    }
+    if (next) {
+      r.next = { title: next.title, id: next.id };
+    }
+    return r;
   } catch (err) {
     if (process.env.isBuild == "t") {
       console.log("无法连接，采用默认值");
