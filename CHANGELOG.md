@@ -1,4 +1,16 @@
 # Changelog
+### [0.18.1](https://github.com/Mereithhh/van-blog/compare/v0.18.0...v0.18.1) (2022-08-24)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([a8ea4fb](https://github.com/Mereithhh/van-blog/commit/a8ea4fb30af4c5c8f6b78780808a2c51336ada7b))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 减少数据量但是没考虑边缘情况引起的构建错误 ([748cfe5](https://github.com/Mereithhh/van-blog/commit/748cfe55d6810cd4aa5198f68ec7455610296cb4))
+
 ## [0.18.0](https://github.com/Mereithhh/van-blog/compare/v0.17.0...v0.18.0) (2022-08-24)
 
 
