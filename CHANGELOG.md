@@ -1,4 +1,30 @@
 # Changelog
+## [0.18.0](https://github.com/Mereithhh/van-blog/compare/v0.17.0...v0.18.0) (2022-08-24)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([340dd99](https://github.com/Mereithhh/van-blog/commit/340dd996a913316cf9c22b80fea43e1e491b7bfd))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 更新脚本 ([b5a876f](https://github.com/Mereithhh/van-blog/commit/b5a876fe78ada1c53d6b1ace9c7568074e4fd967))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 因为接口类型转换错误导致的页面显示数量过多 ([3c3258c](https://github.com/Mereithhh/van-blog/commit/3c3258cae2265697863c468db9837d603bfdc999))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 去掉多余的评论获取请求 ([63a712b](https://github.com/Mereithhh/van-blog/commit/63a712b1b5f8b9cb9fb5c1d57f5352d83fddbf8e))
+
+
+### ✨ Features | 新功能
+
+* 优化 logo 展示&404 页面优化 ([3191e0f](https://github.com/Mereithhh/van-blog/commit/3191e0f262f8186c6ba29e751b44abd53a3ec338))
 
 ## [0.17.0](https://github.com/Mereithhh/van-blog/compare/v0.16.2...v0.17.0) (2022-08-24)
 
