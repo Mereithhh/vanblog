@@ -18,7 +18,7 @@ const insertLog = () => {
   // 添加并应用
   const { execSync } = require("child_process");
   execSync(
-    `git add . && git commit -m 'docs: 更新文档' && git tag doc-${newVersion} && git push --tags`,
+    `git add . && git commit -m 'docs: 更新文档' && git tag doc-${newVersion} && git push --follow-tags origin master`,
     (err, stdout, stderr) => {
       if (err) {
         console.log(err);
