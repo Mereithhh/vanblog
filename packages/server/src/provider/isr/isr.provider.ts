@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import { Article } from 'src/scheme/article.schema';
+import { sleep } from 'src/utils/sleep';
 import { ArticleProvider } from '../article/article.provider';
 import { CategoryProvider } from '../category/category.provider';
 import { TagProvider } from '../tag/tag.provider';
@@ -14,7 +15,7 @@ export class ISRProvider {
     private readonly categoryProvider: CategoryProvider,
     private readonly tagProvider: TagProvider,
   ) {}
-  async activeAll(info?: string) {
+  async activeAllFn(info?: string) {
     if (info) {
       this.logger.log(info);
     } else {
@@ -32,7 +33,46 @@ export class ISRProvider {
       }
     });
   }
+  async activeAll(info?: string) {
+    this.activeWithRetry(() => {
+      this.activeAllFn(info);
+    });
+  }
 
+  async testConn() {
+    try {
+      await axios.get(encodeURI(this.base + '/'));
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  async activeWithRetry(fn: any, info?: string) {
+    const max = 6;
+    const delay = 3000;
+    let succ = false;
+    for (let t = 0; t < max; t++) {
+      const r = await this.testConn();
+      if (t > 0) {
+        this.logger.warn(
+          `第${t}次重试触发增量渲染！来源：${info || '首次启动触发全量渲染！'}`,
+        );
+      }
+      if (r) {
+        fn(info);
+        succ = true;
+        break;
+      } else {
+        // 延迟
+        await sleep(delay);
+      }
+    }
+    if (!succ) {
+      this.logger.error(
+        `达到最大增量渲染重试次数！来源：${info || '首次启动触发全量渲染！'}`,
+      );
+    }
+  }
   async activeUrls(urls: string[], log: boolean) {
     for (const each of urls) {
       this.activeUrl(each, log);
@@ -112,12 +152,16 @@ export class ISRProvider {
   }
 
   async activeAbout(info: string) {
-    this.logger.log(info);
-    this.activeUrl(`/about`, false);
+    this.activeWithRetry(() => {
+      this.logger.log(info);
+      this.activeUrl(`/about`, false);
+    }, info);
   }
   async activeLink(info: string) {
-    this.logger.log(info);
-    this.activeUrl(`/link`, false);
+    this.activeWithRetry(() => {
+      this.logger.log(info);
+      this.activeUrl(`/link`, false);
+    }, info);
   }
 
   async activeUrl(url: string, log: boolean) {
