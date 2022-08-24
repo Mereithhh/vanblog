@@ -41,7 +41,7 @@ export class ArticleController {
   ) {
     const option = {
       page,
-      pageSize,
+      pageSize: parseInt(pageSize as any),
       category,
       tags,
       title,

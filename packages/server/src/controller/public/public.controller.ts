@@ -116,7 +116,7 @@ export class PublicController {
   ) {
     const option = {
       page,
-      pageSize,
+      pageSize: parseInt(pageSize as any),
       category,
       tags,
       toListView,
