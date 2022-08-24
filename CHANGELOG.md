@@ -1,4 +1,18 @@
 # Changelog
+## [0.17.0](https://github.com/Mereithhh/van-blog/compare/v0.16.2...v0.17.0) (2022-08-24)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([6d9945a](https://github.com/Mereithhh/van-blog/commit/6d9945a476c6b5df6f128771b770a655790a3db1))
+
+
+### ✨ Features | 新功能
+
+* 按需触发 ISR，优化增量渲染体验&优化字数缓存日志 ([6f11f83](https://github.com/Mereithhh/van-blog/commit/6f11f831bf5222a5f93d46bc3dc641712ee3d8e6))
+* 按需触发 ISR，优化增量渲染体验&优化字数缓存日志 ([d494f76](https://github.com/Mereithhh/van-blog/commit/d494f766d2db06fc48a2bde7972866ebdc587d72))
+* 触发 ISR 之前测试链接并超时重试 ([2b5777c](https://github.com/Mereithhh/van-blog/commit/2b5777c0bfb4a32beab3d287d6cb450ce9986a6e))
+
 ### [0.16.2](https://github.com/Mereithhh/van-blog/compare/v0.16.1...v0.16.2) (2022-08-23)
 
 
