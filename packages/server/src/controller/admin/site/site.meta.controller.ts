@@ -1,13 +1,17 @@
 import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { SiteInfo, UpdateSiteInfoDto } from 'src/dto/site.dto';
+import { UpdateSiteInfoDto } from 'src/dto/site.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
+import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('site')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/meta/site')
 export class SiteMetaController {
-  constructor(private readonly metaProvider: MetaProvider) {}
+  constructor(
+    private readonly metaProvider: MetaProvider,
+    private readonly isrProvider: ISRProvider,
+  ) {}
 
   @Get()
   async get() {
@@ -21,6 +25,7 @@ export class SiteMetaController {
   @Put()
   async update(@Body() updateDto: UpdateSiteInfoDto) {
     const data = await this.metaProvider.updateSiteInfo(updateDto);
+    this.isrProvider.activeAll('更新站点配置触发增量渲染！');
     return {
       statusCode: 200,
       data,

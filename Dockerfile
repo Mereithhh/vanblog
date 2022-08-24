@@ -72,7 +72,6 @@ COPY --from=WEBSITE_BUILDER  /app/.next/static ./.next/static
 RUN cd  /app/website &&  npm install sharp && cd ..
 ENV NODE_ENV production
 ENV VAN_BLOG_SERVER_URL "http://127.0.0.1:3000"
-ENV VAN_BLOG_REVALIDATE_TIME 10
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
 ENV VAN_BLOG_CDN_URL "https://www.mereith.com"
 ENV EMAIL "vanblog@mereith.com"

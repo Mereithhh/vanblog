@@ -13,12 +13,16 @@ import { ApiTags } from '@nestjs/swagger';
 import { CreateCategoryDto } from 'src/dto/category.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
+import { ISRProvider } from 'src/provider/isr/isr.provider';
 
 @ApiTags('category')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/category/')
 export class CategoryController {
-  constructor(private readonly categoryProvider: CategoryProvider) {}
+  constructor(
+    private readonly categoryProvider: CategoryProvider,
+    private readonly isrProvider: ISRProvider,
+  ) {}
 
   @Get('/all')
   async getAllTags() {
@@ -41,6 +45,7 @@ export class CategoryController {
   @Post()
   async createCategory(@Body() body: CreateCategoryDto) {
     const data = await this.categoryProvider.addOne(body.name);
+    this.isrProvider.activeAll('创建分类触发增量渲染！');
     return {
       statusCode: 200,
       data,
@@ -50,6 +55,7 @@ export class CategoryController {
   @Delete('/:name')
   async deleteCategory(@Param('name') name: string) {
     const data = await this.categoryProvider.deleteOne(name);
+    this.isrProvider.activeAll('删除分类触发增量渲染！');
     return {
       statusCode: 200,
       data,
@@ -65,6 +71,7 @@ export class CategoryController {
       name,
       newValue,
     );
+    this.isrProvider.activeAll('迁移分类触发增量渲染！');
     return {
       statusCode: 200,
       data,

@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Meta, MetaDocument } from 'src/scheme/meta.schema';
@@ -15,6 +15,7 @@ import { isTrue } from 'src/utils/isTrue';
 import { ViewerProvider } from '../viewer/viewer.provider';
 @Injectable()
 export class MetaProvider {
+  logger = new Logger(MetaProvider.name);
   constructor(
     @InjectModel('Meta')
     private metaModel: Model<MetaDocument>,
@@ -25,15 +26,10 @@ export class MetaProvider {
     private readonly articleProvider: ArticleProvider,
   ) {}
 
-  async updateTotalWords() {
+  async updateTotalWords(reason: string) {
     const total = await this.articleProvider.countTotalWords();
     await this.update({ totalWordCount: total });
-    console.log(
-      `[ ${dayjs().format(
-        'YYYY-MM-DD HH:mm:ss',
-      )} ]更新字数缓存：当前文章总字数: `,
-      total,
-    );
+    this.logger.log(`${reason}触发更新字数缓存：当前文章总字数: ${total}`);
     return total;
   }
 

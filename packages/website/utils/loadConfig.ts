@@ -9,6 +9,8 @@ function washUrl(url: string) {
   return u.toString();
 }
 
-export const revalidate = process.env.VAN_BLOG_REVALIDATE_TIME
-  ? { revalidate: parseInt(process.env.VAN_BLOG_REVALIDATE_TIME) }
-  : {};
+// 改为服务端触发 isr
+export const revalidate = {};
+// export const revalidate = process.env.VAN_BLOG_REVALIDATE_TIME
+//   ? { revalidate: parseInt(process.env.VAN_BLOG_REVALIDATE_TIME) }
+//   : {};

@@ -11,12 +11,16 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { RewardDto } from 'src/dto/reward.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
+import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('reward')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/meta/reward')
 export class RewardMetaController {
-  constructor(private readonly metaProvider: MetaProvider) {}
+  constructor(
+    private readonly metaProvider: MetaProvider,
+    private readonly isrProvider: ISRProvider,
+  ) {}
 
   @Get()
   async get() {
@@ -30,6 +34,7 @@ export class RewardMetaController {
   @Put()
   async update(@Body() updateDto: RewardDto) {
     const data = await this.metaProvider.addOrUpdateReward(updateDto);
+    this.isrProvider.activeAbout('更新打赏信息触发增量渲染！');
     return {
       statusCode: 200,
       data,
@@ -39,6 +44,7 @@ export class RewardMetaController {
   @Post()
   async create(@Body() updateDto: RewardDto) {
     const data = await this.metaProvider.addOrUpdateReward(updateDto);
+    this.isrProvider.activeAbout('新建打赏信息触发增量渲染！');
     return {
       statusCode: 200,
       data,
@@ -48,6 +54,7 @@ export class RewardMetaController {
   @Delete('/:name')
   async delete(@Param('name') name: string) {
     const data = await this.metaProvider.deleteReward(name);
+    this.isrProvider.activeAbout('删除打赏信息触发增量渲染！');
     return {
       statusCode: 200,
       data,

@@ -9,6 +9,6 @@ export class CountTask {
 
   @Interval(1000 * 60 * 5)
   async handleCron() {
-    await this.metaProvider.updateTotalWords();
+    await this.metaProvider.updateTotalWords('定时任务');
   }
 }

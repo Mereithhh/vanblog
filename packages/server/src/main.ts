@@ -7,7 +7,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import { config as globalConfig } from './config/index';
 import { checkOrCreate } from './utils/checkFolder';
 import * as path from 'path';
-import { activeISR } from './utils/activeISR';
+import { ISRProvider } from './provider/isr/isr.provider';
 // import { LogProvider } from './provider/log/log.provider';
 // import { EventType } from './provider/log/types';
 
@@ -29,19 +29,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
   await app.listen(3000);
+
+  const metaProvider = app.get(MetaProvider);
+  metaProvider.updateTotalWords('首次启动');
+
+  // 触发增量渲染生成静态页面，防止升级后内容为空
+  const isrProvider = app.get(ISRProvider);
+  isrProvider.activeAll();
   console.log('应用已启动，端口: 3000');
   console.log('API 端点地址: http://localhost:3000/api');
   console.log('swagger 地址: http://localhost:3000/swagger');
-  const metaProvider = app.get(MetaProvider);
-  await metaProvider.updateTotalWords();
-
-  // 触发增量渲染生成静态页面，防止升级后内容为空
-  console.log('INFO', '首次启动会尝试触发两次增量渲染！');
-  await activeISR();
-
-  setTimeout(() => {
-    activeISR();
-  }, 5000);
   // 测试用的
   // const logProvider = app.get(LogProvider);
   // logProvider.searchLog(1, 1, EventType.LOGIN);

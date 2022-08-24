@@ -12,7 +12,6 @@ icon: async
 | VAN_BLOG_DATABASE_URL    | 是   | mongoDB URL                      | `mongodb://localhost:27017/vanBlog?authSource=admin` |
 | VAN_BLOG_ALLOW_DOMAINS   | 否   | 允许的外部图片域名               | `""`                                                 |
 | VAN_BLOG_JWT_SECRET      | 否   | 后端 JWT 密钥                    | `boynextdoor`                                        |
-| VAN_BLOG_REVALIDATE_TIME | 否   | 增量渲染验证时间间隔(秒)         | `10`                                                 |
 | VAN_BLOG_CDN_URL         | 否   | CDN 部署的 url，不用的话不写也行 | `""`                                                 |
 | EMAIL                    | 否   | 用于自动申请 https 证书的邮箱    | `""`                                                 |
 
