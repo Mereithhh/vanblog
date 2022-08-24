@@ -175,7 +175,9 @@ export default function (props: {
                 ></path>
               </svg>
             </span>
-            <span className="waline-comment-count" data-path={dataPath}></span>
+            <span className="waline-comment-count" data-path={dataPath}>
+              0
+            </span>
           </span>
         </div>
         <div className="text-sm md:text-base  text-gray-600 mt-4 mx-2">
@@ -254,10 +256,9 @@ export default function (props: {
         )}
         <div style={{ height: props.type == "about" ? "16px" : "0" }}></div>
       </div>
-      <WaLine
-        serverUrl={props.walineServerUrl}
-        visible={props.type != "overview"}
-      />
+      {props.type != "overview" && (
+        <WaLine serverUrl={props.walineServerUrl} visible={true} />
+      )}
     </div>
   );
 }

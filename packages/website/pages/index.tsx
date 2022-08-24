@@ -6,7 +6,7 @@ import { Article } from "../types/article";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getIndexPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
-
+import Waline from "../components/WaLine";
 export interface IndexPageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
@@ -43,6 +43,7 @@ const Home = (props: IndexPageProps) => {
         base={"/"}
         more={"/page"}
       ></PageNav>
+      <Waline serverUrl={props.layoutProps.walineServerUrl} visible={false} />
     </Layout>
   );
 };

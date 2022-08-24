@@ -3,6 +3,7 @@ import AuthorCard, { AuthorCardProps } from "../../components/AuthorCard";
 import Layout from "../../components/layout";
 import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
+import Waline from "../../components/WaLine";
 import { Article } from "../../types/article";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPagePagesProps } from "../../utils/getPageProps";
@@ -43,6 +44,7 @@ const PagePages = (props: PagePagesProps) => {
         base={"/"}
         more={"/page"}
       ></PageNav>
+      <Waline serverUrl={props.layoutProps.walineServerUrl} visible={false} />
     </Layout>
   );
 };
