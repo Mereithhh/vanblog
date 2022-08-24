@@ -52,7 +52,7 @@ export class CaddyProvider {
         return '关闭成功！';
       } catch (err) {
         // console.log(err);
-        console.log('关闭 https 自动重定向失败');
+        this.logger.error('关闭 https 自动重定向失败');
         return false;
       }
     } else {
@@ -67,7 +67,7 @@ export class CaddyProvider {
         return '开启成功！';
       } catch (err) {
         // console.log(err);
-        console.log('开启 https 自动重定向失败');
+        this.logger.error('开启 https 自动重定向失败');
         return false;
       }
     }
@@ -81,7 +81,7 @@ export class CaddyProvider {
       return res?.data;
     } catch (err) {
       // console.log(err);
-      console.log('更新 subjects 失败，通过 IP 进行 https 访问可能受限');
+      this.logger.error('更新 subjects 失败，通过 IP 进行 https 访问可能受限');
     }
   }
   async getAutomaticDomains() {
