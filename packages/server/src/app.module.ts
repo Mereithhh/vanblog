@@ -59,6 +59,7 @@ import { CaddyController } from './controller/admin/caddy/caddy.controller';
 import { CaddyProvider } from './provider/caddy/caddy.provider';
 import { LogProvider } from './provider/log/log.provider';
 import { LogController } from './controller/admin/log/log.controller';
+import { ISRProvider } from './provider/isr/isr.provider';
 
 @Module({
   imports: [
@@ -126,6 +127,7 @@ import { LogController } from './controller/admin/log/log.controller';
     ViewerTask,
     CaddyProvider,
     LogProvider,
+    ISRProvider,
   ],
 })
 export class AppModule implements NestModule {

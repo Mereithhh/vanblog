@@ -18,12 +18,16 @@ import {
 import { SortOrder } from 'src/dto/sort';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
+import { ISRProvider } from 'src/provider/isr/isr.provider';
 
 @ApiTags('draft')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/draft')
 export class DraftController {
-  constructor(private readonly draftProvider: DraftProvider) {}
+  constructor(
+    private readonly draftProvider: DraftProvider,
+    private readonly isrProvider: ISRProvider,
+  ) {}
 
   @Get('/')
   async getByOption(
@@ -83,8 +87,8 @@ export class DraftController {
   }
   @Post('/publish')
   async publish(@Query('id') id: number, @Body() publishDto: PublishDraftDto) {
-    
     const data = await this.draftProvider.publish(id, publishDto);
+    this.isrProvider.activeAll('发布草稿触发增量渲染！');
     return {
       statusCode: 200,
       data,

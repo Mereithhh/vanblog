@@ -92,11 +92,16 @@ export class ArticleProvider {
       };
     });
   }
-  async create(createArticleDto: CreateArticleDto): Promise<Article> {
+  async create(
+    createArticleDto: CreateArticleDto,
+    skipUpdateWordCount?: boolean,
+  ): Promise<Article> {
     const createdData = new this.articleModel(createArticleDto);
     const newId = await this.getNewId();
     createdData.id = newId;
-    this.metaProvider.updateTotalWords();
+    if (!skipUpdateWordCount) {
+      this.metaProvider.updateTotalWords('新建文章');
+    }
     return createdData.save();
   }
   async searchArticlesByLink(link: string) {
@@ -251,19 +256,26 @@ export class ArticleProvider {
       const title = a.title;
       const oldArticle = await this.findOneByTitle(title);
       if (oldArticle) {
-        this.updateById(oldArticle.id, {
-          ...createDto,
-          deleted: false,
-          updatedAt: oldArticle.updatedAt || oldArticle.createdAt,
-        });
+        this.updateById(
+          oldArticle.id,
+          {
+            ...createDto,
+            deleted: false,
+            updatedAt: oldArticle.updatedAt || oldArticle.createdAt,
+          },
+          true,
+        );
       } else {
-        await this.create({
-          ...createDto,
-          updatedAt: createDto.updatedAt || createDto.createdAt || new Date(),
-        });
+        await this.create(
+          {
+            ...createDto,
+            updatedAt: createDto.updatedAt || createDto.createdAt || new Date(),
+          },
+          true,
+        );
       }
     }
-    this.metaProvider.updateTotalWords();
+    this.metaProvider.updateTotalWords('导入文章');
   }
 
   async countTotalWords() {
@@ -810,11 +822,15 @@ export class ArticleProvider {
     const res = await this.articleModel
       .updateOne({ id }, { deleted: true })
       .exec();
-    this.metaProvider.updateTotalWords();
+    this.metaProvider.updateTotalWords('删除文章');
     return res;
   }
 
-  async updateById(id: number, updateArticleDto: UpdateArticleDto) {
+  async updateById(
+    id: number,
+    updateArticleDto: UpdateArticleDto,
+    skipUpdateWordCount?: boolean,
+  ) {
     const res = await this.articleModel.updateOne(
       { id },
       {
@@ -822,7 +838,9 @@ export class ArticleProvider {
         updatedAt: updateArticleDto.updatedAt || new Date(),
       },
     );
-    this.metaProvider.updateTotalWords();
+    if (!skipUpdateWordCount) {
+      this.metaProvider.updateTotalWords('更新文章');
+    }
     return res;
   }
 

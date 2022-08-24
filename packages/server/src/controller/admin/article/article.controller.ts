@@ -14,11 +14,15 @@ import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { SortOrder } from 'src/dto/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
+import { ISRProvider } from 'src/provider/isr/isr.provider';
 @ApiTags('article')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/article')
 export class ArticleController {
-  constructor(private readonly articleProvider: ArticleProvider) {}
+  constructor(
+    private readonly articleProvider: ArticleProvider,
+    private readonly isrProvider: ISRProvider,
+  ) {}
 
   @Get('/')
   async getByOption(
@@ -68,6 +72,7 @@ export class ArticleController {
   @Put('/:id')
   async update(@Param('id') id: number, @Body() updateDto: UpdateArticleDto) {
     const data = await this.articleProvider.updateById(id, updateDto);
+    this.isrProvider.activeAll('更新文章触发增量渲染！');
     return {
       statusCode: 200,
       data,
@@ -77,6 +82,7 @@ export class ArticleController {
   @Post()
   async create(@Body() createDto: CreateArticleDto) {
     const data = await this.articleProvider.create(createDto);
+    this.isrProvider.activeAll('创建文章触发增量渲染！');
     return {
       statusCode: 200,
       data,
@@ -95,6 +101,7 @@ export class ArticleController {
   @Delete('/:id')
   async delete(@Param('id') id: number) {
     const data = await this.articleProvider.deleteById(id);
+    this.isrProvider.activeAll('删除文章触发增量渲染！');
     return {
       statusCode: 200,
       data,
