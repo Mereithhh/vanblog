@@ -1,4 +1,21 @@
 # Changelog
+### [0.19.1](https://github.com/Mereithhh/van-blog/compare/v0.19.0...v0.19.1) (2022-08-25)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([c58d717](https://github.com/Mereithhh/van-blog/commit/c58d717789ce9b339acc2a10f1fa8877373e2798))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 因为反代 waline 加路径前缀会出现功能不正常，所以在没路径冲突的前提下，把内嵌 waline 的 uri 直接反代到根级别了 ([1c9aa3c](https://github.com/Mereithhh/van-blog/commit/1c9aa3c0c7a3c32ca98279df5a0c9c8ac86dd7b9))
+
+
+### ✨ Features | 新功能
+
+* 默认显示管理员按钮 ([c25606b](https://github.com/Mereithhh/van-blog/commit/c25606befb3363cc91c111914ac126214c8e136e))
+
 ## [0.19.0](https://github.com/Mereithhh/van-blog/compare/v0.18.1...v0.19.0) (2022-08-25)
 
 
