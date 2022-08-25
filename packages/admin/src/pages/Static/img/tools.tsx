@@ -10,16 +10,18 @@ export const getImgLink = (realPath) => {
   url = url.replace(/\(/g, '%28');
   return url;
 };
-export const copyImgLink = (realPath, isMarkdown = false) => {
+export const copyImgLink = (realPath, isMarkdown = false, info = undefined) => {
   let url = getImgLink(realPath);
   if (isMarkdown) {
     url = `![](${url})`;
   }
   writeClipBoardText(url).then((res) => {
     if (res) {
-      message.success(`已复制${isMarkdown ? ' markdown ' : '图片'}链接到剪切板！`);
+      message.success(
+        `${info ? info  : ''}已复制${isMarkdown ? ' markdown ' : '图片'}链接到剪切板！`,
+      );
     } else {
-      message.error('复制链接到剪切板失败！');
+      message.error(`${info ? info  : ''}复制链接到剪切板失败！`);
     }
   });
 };

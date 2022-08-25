@@ -193,12 +193,11 @@ const ImgPage = () => {
             }}
             text="剪切板上传"
             onFinish={(data) => {
-              if (data.isNew) {
-                message.success(`剪切板图片上传成功!`);
-              } else {
-                message.warning(`剪切板图片已存在!`);
-              }
-              copyImgLink(data.src, true);
+              copyImgLink(
+                data.src,
+                true,
+                data.isNew ? '剪切板图片上传成功! ' : '剪切板图片已存在! ',
+              );
 
               fetchData();
             }}
@@ -210,12 +209,12 @@ const ImgPage = () => {
             muti={true}
             text="上传图片"
             onFinish={(info) => {
-              if (info?.response?.data?.isNew) {
-                message.success(`${info.name} 上传成功!`);
-              } else {
-                message.warning(`${info.name} 已存在!`);
-              }
-              copyImgLink(info?.response?.data?.src, true);
+              copyImgLink(
+                info?.response?.data?.src,
+                true,
+                info?.response?.data?.isNew ? `${info.name} 上传成功! ` : `${info.name} 已存在! `,
+              );
+
               fetchData();
             }}
             url="/api/admin/img/upload"
