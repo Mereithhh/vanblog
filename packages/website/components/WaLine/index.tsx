@@ -1,22 +1,25 @@
 import "@waline/client/dist/waline.css";
 import { useEffect, useRef } from "react";
 import { init, commentCount } from "@waline/client";
-export default function (props: { serverUrl: string; visible: boolean }) {
+export default function (props: {
+  enable: "true" | "false";
+  visible: boolean;
+}) {
   const { current } = useRef<any>({ hasInit: false, wa: null });
   useEffect(() => {
-    if (!current.hasInit && props.serverUrl && props.serverUrl != "") {
+    if (!current.hasInit && props.enable && props.enable == "true") {
       current.hasInit = true;
       if (props.visible) {
         current.wa = init({
           el: "#waline",
-          serverURL: props.serverUrl,
+          serverURL: `${window.location.protocol}//${window.location.host}/api`,
           comment: true,
           pageview: false,
           dark: ".dark",
         });
       } else {
         current.wa = commentCount({
-          serverURL: props.serverUrl,
+          serverURL: `${window.location.protocol}//${window.location.host}/api`,
         });
       }
     }
@@ -28,7 +31,7 @@ export default function (props: { serverUrl: string; visible: boolean }) {
       }
     };
   }, [current]);
-  if (!props.serverUrl || props.serverUrl == "") {
+  if (!props.enable || props.enable == "false") {
     return null;
   }
   return (

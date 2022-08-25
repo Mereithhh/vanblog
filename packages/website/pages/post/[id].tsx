@@ -55,7 +55,7 @@ const PostPages = (props: PostPagesProps) => {
         tags={props.article.tags}
         pre={props.pre}
         next={props.next}
-        walineServerUrl={props.layoutProps.walineServerUrl}
+        enableComment={props.layoutProps.enableComment}
       ></PostCard>
     </Layout>
   );

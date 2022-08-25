@@ -147,7 +147,8 @@ export const layout = ({ initialState, setInitialState }) => {
     // disableContentMargin: true,
     footerRender: () => {
       const { location } = history;
-      if (location.pathname == '/editor') {
+      const disableArr = ['/editor', '/site/comment'];
+      if (disableArr.includes(location.pathname)) {
         return false;
       }
       return <Footer />;

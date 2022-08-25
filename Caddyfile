@@ -22,6 +22,9 @@
 		output file /var/log/vanblog-access.log
 		format json
 	}
+  handle /comment* {
+		reverse_proxy 127.0.0.1:8360
+	}
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}

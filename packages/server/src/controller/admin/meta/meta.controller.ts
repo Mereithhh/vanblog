@@ -21,7 +21,7 @@ export class MetaController {
       updatedAt: serverData?.updatedAt || new Date(),
       user: req.user,
       baseUrl: meta.siteInfo.baseUrl,
-      walineServerUrl: meta.siteInfo.walineServerUrl || '',
+      enableComment: meta.siteInfo.enableComment || 'true',
     };
     return {
       statusCode: 200,

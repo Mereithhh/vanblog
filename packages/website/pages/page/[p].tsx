@@ -33,7 +33,7 @@ const PagePages = (props: PagePagesProps) => {
             catelog={article.category}
             content={article.content || ""}
             type={"overview"}
-            walineServerUrl={props.layoutProps.walineServerUrl}
+            enableComment={props.layoutProps.enableComment}
             private={article.private}
           ></PostCard>
         ))}
@@ -44,7 +44,7 @@ const PagePages = (props: PagePagesProps) => {
         base={"/"}
         more={"/page"}
       ></PageNav>
-      <Waline serverUrl={props.layoutProps.walineServerUrl} visible={false} />
+      <Waline enable={props.layoutProps.enableComment} visible={false} />
     </Layout>
   );
 };

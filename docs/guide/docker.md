@@ -79,27 +79,6 @@ services:
     volumes:
       # mongoDB 数据存放地址，按需修改。
       - ${PWD}/data/mongo:/data/db
-# 如果你需要评论系统就加上
-# 具体请看参数请看 waline 文档：
-# https://waline.js.org/
-# waline:
-#   image: lizheming/waline:latest
-#   restart: always
-#   ports:
-#     - 127.0.0.1:8360:8360
-#   volumes:
-#     - /var/docker/waline/data:/app/data
-#   environment:
-#     TZ: 'Asia/Shanghai'
-#     SITE_NAME: 'Mereith Blog'
-#     SITE_URL: 'https://www.mereith.com'
-#     SECURE_DOMAINS: 'mereith.com'
-#     AUTHOR_EMAIL: 'wanglu@mereith.com'
-#     MONGO_HOST: "mongo"
-#     MONGO_DB: "waline"
-#     MONGO_USER: "vanBlog"
-#     MONGO_PASSWORD: "vanBlog"
-#     MONGO_AUTHSOURCE: "admin"
 ```
 
 按注释说明修改`docker-compose.yml`的配置后：
@@ -145,11 +124,11 @@ spec:
         - name: static
           hostPath:
             path: /var/k8s/van-blog/static
-            type: ''
+            type: ""
         - name: log
           hostPath:
             path: /var/k8s/van-blog/log
-            type: ''
+            type: ""
       containers:
         - name: van-blog
           image: "mereith/van-blog:latest"

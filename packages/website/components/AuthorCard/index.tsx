@@ -13,7 +13,7 @@ export interface AuthorCardProps {
   postNum: number;
   catelogNum: number;
   tagNum: number;
-  walineServerUrl?: string;
+  enableComment?: "true" | "false";
   socials: SocialItem[];
   showSubMenu: "true" | "false";
 }
@@ -104,10 +104,6 @@ export default function (props: { option: AuthorCardProps }) {
           <SocialCard socials={props.option.socials}></SocialCard>
         </div>
       </div>
-      {/* <RecentComment
-        walineServerUrl={props.walineServerUrl}
-        count={10}
-      ></RecentComment> */}
     </div>
   );
 }

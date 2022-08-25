@@ -75,12 +75,10 @@ export async function getLinkPageProps(): Promise<LinkPageProps> {
   const data = await getPublicMeta();
   const layoutProps = getLayoutProps(data);
   const authorCardProps = getAuthorCardProps(data);
-  const walineServerUrl = data.meta.siteInfo?.walineServerUrl || "";
   return {
     layoutProps,
     authorCardProps,
     links: data.meta.links,
-    walineServerUrl,
   };
 }
 export async function getAboutPageProps(): Promise<AboutPageProps> {

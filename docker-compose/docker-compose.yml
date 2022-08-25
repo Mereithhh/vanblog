@@ -40,23 +40,3 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: vanBlog
     volumes:
       - ${PWD}/data/mongo:/data/db
-  # 如果你需要评论系统就加上
-  # https://waline.js.org/
-  # waline:
-  #   image: lizheming/waline:latest
-  #   restart: always
-  #   ports:
-  #     - 127.0.0.1:8360:8360
-  #   volumes:
-  #     - /var/docker/waline/data:/app/data
-  #   environment:
-  #     TZ: 'Asia/Shanghai'
-  #     SITE_NAME: 'Mereith Blog'
-  #     SITE_URL: 'https://www.mereith.com'
-  #     SECURE_DOMAINS: 'mereith.com'
-  #     AUTHOR_EMAIL: 'wanglu@mereith.com'
-  #     MONGO_HOST: "tx4.mereith.top"
-  #     MONGO_DB: "waline"
-  #     MONGO_USER: "mereith"
-  #     MONGO_PASSWORD: "vanlusg2!"
-  #     MONGO_AUTHSOURCE: "admin"

@@ -9,7 +9,6 @@ export interface LayoutProps {
   logo: string;
   categories: string[];
   favicon: string;
-  walineServerUrl: string;
   siteName: string;
   siteDesc: string;
   baiduAnalysisID: string;
@@ -21,6 +20,7 @@ export interface LayoutProps {
   showAdminButton: "true" | "false";
   showFriends: "true" | "false";
   headerLeftContent: "siteLogo" | "siteName";
+  enableComment: "true" | "false";
   subMenuOffset: number;
 }
 
@@ -46,7 +46,6 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     subMenuOffset: siteInfo?.subMenuOffset || 0,
     showAdminButton,
     headerLeftContent,
-    walineServerUrl: siteInfo?.walineServerUrl || "",
     ipcHref: siteInfo?.beianUrl || "",
     ipcNumber: siteInfo?.beianNumber || "",
     since: siteInfo?.since || dayjs().format("YYYY-MM-DD"),
@@ -61,6 +60,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     links: data?.meta?.menus || [],
     categories: data.meta.categories,
     showSubMenu: showSubMenu ? "true" : "false",
+    enableComment: siteInfo?.enableComment || "true",
   };
 }
 

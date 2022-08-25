@@ -6,8 +6,12 @@ const rewites =
         async rewrites() {
           return [
             {
+              source: "/api/comment",
+              destination: "http://127.0.0.1:8360/comment", // Proxy to Backend
+            },
+            {
               source: "/api/:path*",
-              destination: "http://localhost:3000/api/:path*", // Proxy to Backend
+              destination: "http://127.0.0.1:3000/api/:path*", // Proxy to Backend
             },
           ];
         },

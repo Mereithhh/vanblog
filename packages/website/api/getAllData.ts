@@ -53,7 +53,6 @@ export interface MetaProps {
     payAliPayDark?: string;
     payWechatDark?: string;
     since: string;
-    walineServerUrl: string;
     baseUrl: string;
     baiduAnalysisId?: string;
     gaAnalysisId?: string;
@@ -64,6 +63,7 @@ export interface MetaProps {
     subMenuOffset?: number;
     showDonateInfo: "true" | "false";
     showFriends: "true" | "false";
+    enableComment: "true" | "false";
   };
 }
 export interface PublicMetaProp {
@@ -121,7 +121,7 @@ export async function getPublicMeta(): Promise<PublicMetaProp> {
             payAliPayDark: "",
             payWechatDark: "",
             since: "",
-            walineServerUrl: "",
+            enableComment: "true",
             baseUrl: "",
             showDonateInfo: "true",
             showFriends: "true",

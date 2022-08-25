@@ -165,11 +165,16 @@ export default function (props: {
             label="Baidu 分析 ID"
             placeholder={'请输入 Baidu 分析 ID，留空表示不启用'}
           ></ProFormText>
-          <ProFormText
-            name="walineServerUrl"
-            label="WaLine 服务端 Url"
-            placeholder={'请输入 WaLine 服务端 Url，留空表示不启用'}
-          ></ProFormText>
+          <ProFormSelect
+            name={'enableComment'}
+            label="是否开启评论系统"
+            placeholder={'开启'}
+            valueEnum={{
+              true: '开启',
+              false: '关闭',
+            }}
+            tooltip={'默认开启'}
+          ></ProFormSelect>
           <ProFormDatePicker name="since" width={'lg'} label="建站时间" />
         </>
       )}

@@ -60,6 +60,7 @@ import { CaddyProvider } from './provider/caddy/caddy.provider';
 import { LogProvider } from './provider/log/log.provider';
 import { LogController } from './controller/admin/log/log.controller';
 import { ISRProvider } from './provider/isr/isr.provider';
+import { WalineProvider } from './provider/waline/waline.provider';
 
 @Module({
   imports: [
@@ -128,6 +129,7 @@ import { ISRProvider } from './provider/isr/isr.provider';
     CaddyProvider,
     LogProvider,
     ISRProvider,
+    WalineProvider,
   ],
 })
 export class AppModule implements NestModule {

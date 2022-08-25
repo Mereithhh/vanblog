@@ -8,6 +8,7 @@ import { config as globalConfig } from './config/index';
 import { checkOrCreate } from './utils/checkFolder';
 import * as path from 'path';
 import { ISRProvider } from './provider/isr/isr.provider';
+import { WalineProvider } from './provider/waline/waline.provider';
 // import { LogProvider } from './provider/log/log.provider';
 // import { EventType } from './provider/log/types';
 
@@ -36,9 +37,16 @@ async function bootstrap() {
   // 触发增量渲染生成静态页面，防止升级后内容为空
   const isrProvider = app.get(ISRProvider);
   isrProvider.activeAll();
-  console.log('应用已启动，端口: 3000');
-  console.log('API 端点地址: http://localhost:3000/api');
-  console.log('swagger 地址: http://localhost:3000/swagger');
+
+  const walineProvider = app.get(WalineProvider);
+  walineProvider.init();
+  setTimeout(() => {
+    console.log('应用已启动，端口: 3000');
+    console.log('API 端点地址: http://<domain>/api');
+    console.log('swagger 地址: http://<domain>/swagger');
+    console.log('项目主页: https://vanblog.mereith.com');
+    console.log('开源地址: https://github.mereith/mereithhh/van-blog');
+  }, 3000);
   // 测试用的
   // const logProvider = app.get(LogProvider);
   // logProvider.searchLog(1, 1, EventType.LOGIN);

@@ -4,9 +4,9 @@ import { Tooltip } from 'antd';
 export default function (props: { tip: string; title: string; isButton?: boolean }) {
   return (
     <span>
-      <span style={{ marginRight: 2 }}>{props.title}</span>
+      <span style={{ marginRight: 4 }}>{props.title}</span>
       <Tooltip title={props.tip} placement="bottom">
-        <QuestionCircleOutlined />
+        <QuestionCircleOutlined style={{ fontSize: 16, fontWeight: 400 }} />
       </Tooltip>
     </span>
   );

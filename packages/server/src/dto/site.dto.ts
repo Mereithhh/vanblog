@@ -16,9 +16,9 @@ export class SiteInfo {
   payWechatDark: string;
   since: Date;
   baseUrl: string;
-  walineServerUrl: string;
   gaAnalysisId: string;
   baiduAnalysisId: string;
+  enableComment?: 'true' | 'false';
   showSubMenu?: 'true' | 'false';
   headerLeftContent?: 'siteLogo' | 'siteName';
   subMenuOffset: number;

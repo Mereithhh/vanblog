@@ -19,11 +19,19 @@
   tls {
     on_demand
   }
+  handle /comment* {
+    uri strip_prefix /comment
+    reverse_proxy 127.0.0.1:8360
+  }
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}
 	handle /swagger* {
 		reverse_proxy 127.0.0.1:3000
+	}
+  handle /api/comment {
+    uri strip_prefix /api
+		reverse_proxy 127.0.0.1:8360
 	}
 	handle /api/* {
 		reverse_proxy 127.0.0.1:3000

@@ -24,7 +24,7 @@ features:
 
   - title: 功能强大
     icon: contrast
-    details: 草稿、分类、标签、搜索、TOC、各种自定义
+    details: 草稿、分类、标签、搜索、TOC、内嵌评论系统
 
   - title: 内置图床
     icon: pic
@@ -52,9 +52,3 @@ features:
 copyright: false
 footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
 ---
-
-<!-- 这是一个博客主页的案例。
-
-要使用此布局，你应该在页面前端设置 `layout: Blog` 和 `home: true`。
-
-相关配置文档请见 [博客主页](https://vuepress-theme-hope.github.io/v2/zh/guide/blog/home/)。 -->

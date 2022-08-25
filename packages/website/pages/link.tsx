@@ -13,7 +13,6 @@ export interface LinkPageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
   links: LinkItem[];
-  walineServerUrl: string;
 }
 
 const LinkPage = (props: LinkPageProps) => {
@@ -66,7 +65,7 @@ const LinkPage = (props: LinkPageProps) => {
           </div>
         </div>
       </div>
-      <WaLine serverUrl={props.walineServerUrl} visible={true} />
+      <WaLine enable={props.layoutProps.enableComment} visible={true} />
     </Layout>
   );
 };

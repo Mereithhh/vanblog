@@ -33,7 +33,7 @@ const Home = (props: IndexPageProps) => {
             catelog={article.category}
             content={article.content || ""}
             type={"overview"}
-            walineServerUrl={props.layoutProps.walineServerUrl}
+            enableComment={props.layoutProps.enableComment}
           ></PostCard>
         ))}
       </div>
@@ -43,7 +43,7 @@ const Home = (props: IndexPageProps) => {
         base={"/"}
         more={"/page"}
       ></PageNav>
-      <Waline serverUrl={props.layoutProps.walineServerUrl} visible={false} />
+      <Waline enable={props.layoutProps.enableComment} visible={false} />
     </Layout>
   );
 };

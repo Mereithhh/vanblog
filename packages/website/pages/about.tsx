@@ -59,7 +59,7 @@ const AboutPage = (props: AboutPageProps) => {
         catelog={"about"}
         content={content}
         type={"about"}
-        walineServerUrl={props.layoutProps.walineServerUrl}
+        enableComment={props.layoutProps.enableComment}
         top={0}
       ></PostCard>
     </Layout>
