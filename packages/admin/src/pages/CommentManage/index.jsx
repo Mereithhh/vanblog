@@ -10,7 +10,7 @@ export default function () {
     if (initialState?.version && initialState?.version == 'dev') {
       return 'http://192.168.5.11:8360/ui';
     } else {
-      return '/comment/ui';
+      return '/ui/';
     }
   }, [initialState]);
   const showTips = () => {

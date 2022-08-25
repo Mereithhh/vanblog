@@ -19,8 +19,22 @@
   tls {
     on_demand
   }
+  handle /ui* {
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /user* {
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /token* {
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /db* {
+    reverse_proxy 127.0.0.1:8360
+  }
   handle /comment* {
-    uri strip_prefix /comment
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /oauth* {
     reverse_proxy 127.0.0.1:8360
   }
 	handle /static/* {

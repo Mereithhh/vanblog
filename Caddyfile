@@ -22,9 +22,25 @@
 		output file /var/log/vanblog-access.log
 		format json
 	}
+  handle /ui* {
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /user* {
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /token* {
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /db* {
+    reverse_proxy 127.0.0.1:8360
+  }
   handle /comment* {
-		reverse_proxy 127.0.0.1:8360
-	}
+    reverse_proxy 127.0.0.1:8360
+  }
+  handle /oauth* {
+    reverse_proxy 127.0.0.1:8360
+  }
+
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}
