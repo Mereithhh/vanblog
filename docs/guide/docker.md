@@ -91,6 +91,8 @@ docker-compose up -d
 
 浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
 
+也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
+
 ::: info VanBlog
 首次运行默认是关闭 `https` 的，请通过 `http` 协议访问。初始化后，进入后台确认 https 证书已自动生成后可选择开启 https 自动重定向。
 

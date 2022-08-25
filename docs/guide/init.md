@@ -7,6 +7,8 @@ order: -2
 
 部署`vanBlog`后，浏览器打开 `http://<your-ip>/admin/init` 将会展示初始化页面。具体设置项可以参考 [站点配置](/feature/basic/setting.md)。
 
+也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
+
 ![](https://pic.mereith.com/img/c088fa93f4e7aeab33dac821d1dc7dc5.clipboard-2022-08-16.png)
 
 具体分为四部分：

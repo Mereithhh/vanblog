@@ -32,9 +32,9 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (data.meta.siteInfo.siteLogo && siteInfo.headerLeftContent == "siteLogo") {
     headerLeftContent = "siteLogo";
   }
-  let showAdminButton: "true" | "false" = "false";
-  if (siteInfo.showAdminButton && siteInfo.showAdminButton == "true") {
-    showAdminButton = "true";
+  let showAdminButton: "true" | "false" = "true";
+  if (siteInfo.showAdminButton && siteInfo.showAdminButton == "false") {
+    showAdminButton = "false";
   }
   let showFriends: "true" | "false" = "true";
   if (siteInfo?.showFriends == "false") {
