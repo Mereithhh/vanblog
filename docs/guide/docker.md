@@ -54,6 +54,8 @@ services:
       VAN_BLOG_JWT_SECRET: "AnyString"
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: "someone@mereith.com"
+      # 内嵌评论系统的 db 名，默认为 waline
+      VAN_BLOG_WALINE_DB: "waline"
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static

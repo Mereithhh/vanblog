@@ -4,7 +4,8 @@ export interface Config {
   mongoUrl: string;
   jwtSecret: string;
   staticPath: string;
-  demo?: boolean | string;
+  walineDB: string;
+  demo: boolean | string;
 }
 
 export const config: Config = {
@@ -15,4 +16,5 @@ export const config: Config = {
   jwtSecret: loadConfig('jwt.secret', 'boynextdoor'),
   staticPath: loadConfig('static.path', '/app/static'),
   demo: loadConfig('demo', false),
+  walineDB: loadConfig('waline.db', 'waline'),
 };

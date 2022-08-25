@@ -16,7 +16,7 @@ export class WalineProvider {
       MONGO_PORT: url.port,
       MONGO_USER: url.username,
       MONGO_PASSWORD: url.password,
-      MONGO_DB: 'waline',
+      MONGO_DB: config.walineDB,
       MONGO_AUTHSOURCE: 'admin',
     };
     const siteInfo = await this.metaProvider.getSiteInfo();
