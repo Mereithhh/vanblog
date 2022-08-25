@@ -33,26 +33,20 @@ function MyApp({ Component, pageProps }: AppProps) {
     },
     [globalState, setGlobalState]
   );
+  const handleRouteChange = (
+    url: string,
+    { shallow }: { shallow: boolean }
+  ) => {
+    reloadViewer(`页面跳转`);
+  };
   useEffect(() => {
     if (!current.hasInit) {
       current.hasInit = true;
       reloadViewer("初始化");
+      router.events.on("routeChangeComplete", handleRouteChange);
     }
   }, [current, reloadViewer]);
-  useEffect(() => {
-    const handleRouteChange = (
-      url: string,
-      { shallow }: { shallow: boolean }
-    ) => {
-      reloadViewer(`页面跳转`);
-    };
 
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, []);
   return (
     <GlobalContext.Provider
       value={{ state: globalState, setState: setGlobalState }}

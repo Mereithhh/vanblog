@@ -7,17 +7,6 @@ export default function (props: {
   showYear?: boolean;
   onClick?: () => void;
 }) {
-  const [dateArr, setDateArr] = useState(
-    props.articles.map((a) => a.createdAt)
-  );
-  useEffect(() => {
-    let fmt = "YYYY-MM-DD";
-    if (!props.showYear) {
-      fmt = "MM-DD";
-    }
-    const newArr = dateArr.map((a) => dayjs(a).format(fmt));
-    setDateArr(newArr);
-  }, [dateArr, setDateArr, props]);
   return (
     <div className="space-y-2" onClick={props.onClick}>
       {props.articles.map((article, index) => {
@@ -28,7 +17,9 @@ export default function (props: {
               key={article.id}
             >
               <div className="text-gray-400 flex-grow-0 flex-shrink-0 text-sm  group-hover:text-gray-600 dark:text-dark-400 dark:group-hover:text-dark-light">
-                {dateArr[index]}
+                {props.showYear
+                  ? dayjs(article.createdAt).format("YYYY-MM-DD")
+                  : dayjs(article.createdAt).format("MM-DD")}
               </div>
               <div className="ml-2 md:ml-4 text-base flex-grow flex-shrink overflow-hidden text-gray-600 group-hover:text-gray-800 dark:text-dark dark:group-hover:text-dark">
                 {article.title}
