@@ -1,4 +1,23 @@
 # Changelog
+## [0.19.0](https://github.com/Mereithhh/van-blog/compare/v0.18.1...v0.19.0) (2022-08-25)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([394bde7](https://github.com/Mereithhh/van-blog/commit/394bde71dcd5b9e144460ff27249c57021221ef2))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 去掉多余 webhook ([065d042](https://github.com/Mereithhh/van-blog/commit/065d042dfcb48d22e869e537332b07c3cb27aaa1))
+
+
+### ✨ Features | 新功能
+
+* 优化上传图片提示（合二为一) ([f7aa86a](https://github.com/Mereithhh/van-blog/commit/f7aa86aec8e95f46d8bfe0fb058076285a8ee9eb))
+* 内嵌评论系统 ([0874a85](https://github.com/Mereithhh/van-blog/commit/0874a850e381baf8f9a325f6c30cda39dfb2e2d3))
+* 自定义评论所用 db 名 ([1723fe6](https://github.com/Mereithhh/van-blog/commit/1723fe6a39c8445a8c8cafb41e82a76e2312dedd))
+
 ### [0.18.1](https://github.com/Mereithhh/van-blog/compare/v0.18.0...v0.18.1) (2022-08-24)
 
 
