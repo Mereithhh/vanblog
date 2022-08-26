@@ -37,10 +37,7 @@ version: "3"
 
 services:
   vanblog:
-    # 默认国内源的
-    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
-    # 下面的是 dockerhub 的
-    # image: mereith/van-blog:latest
+    image: mereith/van-blog:latest
     restart: always
     environment:
       TZ: "Asia/Shanghai"
@@ -69,8 +66,7 @@ services:
       - 80:80
       - 443:443
   mongo:
-    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:mongo
-    # image: mongo
+    image: mongo
     restart: always
     environment:
       TZ: "Asia/Shanghai"
