@@ -4,12 +4,14 @@ import { Model } from 'mongoose';
 import { InitDto } from 'src/dto/init.dto';
 import { MetaDocument } from 'src/scheme/meta.schema';
 import { UserDocument } from 'src/scheme/user.schema';
+import { WalineProvider } from '../waline/waline.provider';
 
 @Injectable()
 export class InitProvider {
   constructor(
     @InjectModel('Meta') private metaModel: Model<MetaDocument>,
     @InjectModel('User') private userModel: Model<UserDocument>,
+    private readonly walineProvider: WalineProvider,
   ) {}
 
   async init(initDto: InitDto) {
@@ -31,6 +33,8 @@ export class InitProvider {
         },
         categories: [],
       });
+      // 运行 waline
+      this.walineProvider.init();
       return '初始化成功!';
     } catch (err) {
       throw new BadRequestException('初始化失败');

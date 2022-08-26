@@ -9,6 +9,7 @@ import { checkOrCreate } from './utils/checkFolder';
 import * as path from 'path';
 import { ISRProvider } from './provider/isr/isr.provider';
 import { WalineProvider } from './provider/waline/waline.provider';
+import { InitProvider } from './provider/init/init.provider';
 // import { LogProvider } from './provider/log/log.provider';
 // import { EventType } from './provider/log/types';
 
@@ -38,8 +39,11 @@ async function bootstrap() {
   const isrProvider = app.get(ISRProvider);
   isrProvider.activeAll();
 
-  const walineProvider = app.get(WalineProvider);
-  walineProvider.init();
+  const initProvider = app.get(InitProvider);
+  if (await initProvider.checkHasInited()) {
+    const walineProvider = app.get(WalineProvider);
+    walineProvider.init();
+  }
   setTimeout(() => {
     console.log('应用已启动，端口: 3000');
     console.log('API 端点地址: http://<domain>/api');

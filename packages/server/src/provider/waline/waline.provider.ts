@@ -21,14 +21,14 @@ export class WalineProvider {
     };
     const siteInfo = await this.metaProvider.getSiteInfo();
     const otherEnv = {
-      SITE_NAME: siteInfo.siteName,
-      SITE_URL: siteInfo.baseUrl,
+      SITE_NAME: siteInfo?.siteName || undefined,
+      SITE_URL: siteInfo?.baseUrl || undefined,
     };
     this.env = { ...mongoEnv, ...otherEnv };
   }
   async init() {
     const siteInfo = await this.metaProvider.getSiteInfo();
-    const enable = siteInfo.enableComment != 'false';
+    const enable = siteInfo?.enableComment != 'false';
     this.logger.log(`评论服务已${enable ? '开启' : '关闭'}`);
     if (enable) {
       this.run();

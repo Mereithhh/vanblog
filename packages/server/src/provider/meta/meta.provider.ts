@@ -118,22 +118,22 @@ export class MetaProvider {
     return this.metaModel.updateOne({}, updateMetaDto);
   }
   async getAbout() {
-    return (await this.getAll()).about;
+    return (await this.getAll())?.about;
   }
   async getSiteInfo() {
-    return (await this.getAll()).siteInfo;
+    return (await this.getAll())?.siteInfo;
   }
   async getRewards() {
-    return (await this.getAll()).rewards;
+    return (await this.getAll())?.rewards;
   }
   async getSocials() {
-    return (await this.getAll()).socials;
+    return (await this.getAll())?.socials;
   }
   async getLinks() {
-    return (await this.getAll()).links;
+    return (await this.getAll())?.links;
   }
   async getMenus() {
-    return (await this.getAll()).menus;
+    return (await this.getAll())?.menus;
   }
   async updateAbout(newContent: string) {
     return this.metaModel.updateOne(
