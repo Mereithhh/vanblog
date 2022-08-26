@@ -1,4 +1,16 @@
 # Changelog
+### [0.20.4](https://github.com/Mereithhh/van-blog/compare/v0.20.3...v0.20.4) (2022-08-26)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([07a0d88](https://github.com/Mereithhh/van-blog/commit/07a0d887e3bdd85cc090444643ab4ab58f326694))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 内嵌评论无法获取真实 ip ([85bc564](https://github.com/Mereithhh/van-blog/commit/85bc56432ad6f256fd57a5dbc530ebe05290890b))
+
 ### [0.20.3](https://github.com/Mereithhh/van-blog/compare/v0.20.2...v0.20.3) (2022-08-26)
 
 
