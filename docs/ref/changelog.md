@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.20.3](https://github.com/Mereithhh/van-blog/compare/v0.20.2...v0.20.3) (2022-08-26)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([c480fb3](https://github.com/Mereithhh/van-blog/commit/c480fb3f6453cf058ede1e0ded7357247ccb40b0))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 作者logo无法正常显示 ([8365275](https://github.com/Mereithhh/van-blog/commit/8365275ef0218c17e15f0f29a9e9c63b3e534ff9))
+
 ### [0.20.2](https://github.com/Mereithhh/van-blog/compare/v0.20.1...v0.20.2) (2022-08-26)
 
 
