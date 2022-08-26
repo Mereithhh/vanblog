@@ -9,6 +9,14 @@
 		output file /var/log/caddy.log
 	}
 }
+(h) {
+  header_up +Host {host}
+  header_up +X-Real-IP {remote_host}
+  header_up +X-Forwarded-For {remote_host}
+  header_up +REMOTE-HOST  {remote_host}
+  header_up +X-Forwarded-Proto {scheme}
+}
+
 
 (van) {
   encode zstd gzip
@@ -19,30 +27,36 @@
   tls {
     on_demand
   }
-  header {
-    Host {host}
-    X-Real-IP {remote}
-    X-Forwarded-For {remote}
-    REMOTE-HOST  {remote}
-    X-Forwarded-Proto {scheme}
-  }
+
   handle /ui* {
-    reverse_proxy 127.0.0.1:8360
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
   }
   handle /user* {
-    reverse_proxy 127.0.0.1:8360
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
   }
   handle /token* {
-    reverse_proxy 127.0.0.1:8360
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
   }
   handle /db* {
-    reverse_proxy 127.0.0.1:8360
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
   }
   handle /comment* {
-    reverse_proxy 127.0.0.1:8360
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
   }
   handle /oauth* {
-    reverse_proxy 127.0.0.1:8360
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
   }
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
@@ -52,7 +66,9 @@
 	}
   handle /api/comment {
     uri strip_prefix /api
-		reverse_proxy 127.0.0.1:8360
+		reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
 	}
 	handle /api/* {
 		reverse_proxy 127.0.0.1:3000

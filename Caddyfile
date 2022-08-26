@@ -4,17 +4,19 @@
     ask http://127.0.0.1:3000/api/admin/caddy/ask
   }
   admin 0.0.0.0:2019
-  email wanglu@mereith.com
+  email vanblog@mereith.com
 	log {
 		output file /var/log/caddy.log
 	}
 }
-
-(tls) {
-  tls {
-    on_demand
-  }
+(h) {
+  header_up +Host {host}
+  header_up +X-Real-IP {remote_host}
+  header_up +X-Forwarded-For {remote_host}
+  header_up +REMOTE-HOST  {remote_host}
+  header_up +X-Forwarded-Proto {scheme}
 }
+
 
 (van) {
   encode zstd gzip
@@ -22,37 +24,51 @@
 		output file /var/log/vanblog-access.log
 		format json
 	}
-  header {
-    Host {host}
-    X-Real-IP {remote}
-    X-Forwarded-For {remote}
-    REMOTE-HOST  {remote}
-    X-Forwarded-Proto {scheme}
-  }
-  handle /ui* {
-    reverse_proxy 127.0.0.1:8360
-  }
-  handle /user* {
-    reverse_proxy 127.0.0.1:8360
-  }
-  handle /token* {
-    reverse_proxy 127.0.0.1:8360
-  }
-  handle /db* {
-    reverse_proxy 127.0.0.1:8360
-  }
-  handle /comment* {
-    reverse_proxy 127.0.0.1:8360
-  }
-  handle /oauth* {
-    reverse_proxy 127.0.0.1:8360
+  tls {
+    on_demand
   }
 
+  handle /ui* {
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
+  }
+  handle /user* {
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
+  }
+  handle /token* {
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
+  }
+  handle /db* {
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
+  }
+  handle /comment* {
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
+  }
+  handle /oauth* {
+    reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
+  }
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}
 	handle /swagger* {
 		reverse_proxy 127.0.0.1:3000
+	}
+  handle /api/comment {
+    uri strip_prefix /api
+		reverse_proxy 127.0.0.1:8360 {
+      import h
+    }
 	}
 	handle /api/* {
 		reverse_proxy 127.0.0.1:3000
@@ -64,8 +80,8 @@
 	}
 	reverse_proxy 127.0.0.1:3001
 }
+
 :80, :443 {
-  import tls
   import van
 }
 
