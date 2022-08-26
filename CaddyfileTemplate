@@ -19,6 +19,13 @@
   tls {
     on_demand
   }
+  header {
+    Host {host}
+    X-Real-IP {remote}
+    X-Forwarded-For {remote}
+    REMOTE-HOST  {remote}
+    X-Forwarded-Proto {scheme}
+  }
   handle /ui* {
     reverse_proxy 127.0.0.1:8360
   }
