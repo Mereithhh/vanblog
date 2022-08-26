@@ -148,3 +148,4 @@ docs/.vuepress/dist/
 # yarn.lock
 temp.json
 staticFolder
+localBuild.sh

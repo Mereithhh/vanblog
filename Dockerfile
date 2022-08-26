@@ -73,7 +73,6 @@ RUN cd  /app/website &&  npm install sharp && cd ..
 ENV NODE_ENV production
 ENV VAN_BLOG_SERVER_URL "http://127.0.0.1:3000"
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
-ENV VAN_BLOG_CDN_URL "https://www.mereith.com"
 ENV EMAIL "vanblog@mereith.com"
 ENV VAN_BLOG_WALINE_DB "waline"
 # 复制静态文件

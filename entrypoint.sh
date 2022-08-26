@@ -5,5 +5,5 @@ echo "mongo_url: ${VAN_BLOG_DATABASE_URL}"
 sed "s/VAN_BLOG_EMAIL/${EMAIL}/g" /app/CaddyfileTemplate >/app/Caddyfile
 caddy start --config /app/Caddyfile
 
-nohup node /app/website/server.js -p 3001 >/var/log/vanblog-website.log 2>&1 &
+cd /app/website/ && nohup yarn start >/var/log/vanblog-website.log 2>&1 &
 cd /app/server && node main.js
