@@ -22,7 +22,10 @@ export const getArticlesByOption = async (
   try {
     const url = `${config.baseUrl}api/public/article?${queryString}`;
     const res = await fetch(url);
-    const { data } = await res.json();
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return { articles: [], total: 0, totalWordCount: 0 };
+    }
     return data;
   } catch (err) {
     if (process.env.isBuild == "t") {

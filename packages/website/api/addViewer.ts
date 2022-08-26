@@ -17,7 +17,10 @@ export async function addViewer(pathname: string): Promise<any> {
     const res = await fetch(url, {
       method: "POST",
     });
-    const { data } = await res.json();
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return { viewer: 0, visited: 0 };
+    }
     return data;
   } catch (err) {
     console.log(err);

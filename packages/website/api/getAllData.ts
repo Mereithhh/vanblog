@@ -81,11 +81,53 @@ export interface PublicAllProp {
 }
 export const version = process.env["VAN_BLOG_VERSION"] || "dev";
 
+const defaultMeta: MetaProps = {
+  categories: [],
+  menus: [],
+  links: [],
+  socials: [],
+  rewards: [],
+  about: {
+    updatedAt: new Date().toISOString(),
+    content: "",
+  },
+  siteInfo: {
+    author: "作者名字",
+    authorDesc: "作者描述",
+    authorLogo: "/logo.svg",
+    siteLogo: "/logo.svg",
+    favicon: "/logo.svg",
+    siteName: "VanBlog",
+    siteDesc: "Vanblog",
+    beianNumber: "",
+    beianUrl: "",
+    payAliPay: "",
+    payWechat: "",
+    payAliPayDark: "",
+    payWechatDark: "",
+    since: "",
+    enableComment: "true",
+    baseUrl: "",
+    showDonateInfo: "true",
+    showFriends: "true",
+    showAdminButton: "true",
+  },
+};
+
 export async function getPublicMeta(): Promise<PublicMetaProp> {
   try {
     const url = `${config.baseUrl}api/public/meta`;
     const res = await fetch(url);
-    const { data } = await res.json();
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return {
+        version: version,
+        totalWordCount: 0,
+        tags: [],
+        totalArticles: 0,
+        meta: defaultMeta,
+      };
+    }
     return data;
   } catch (err) {
     if (process.env.isBuild == "t") {
@@ -96,38 +138,7 @@ export async function getPublicMeta(): Promise<PublicMetaProp> {
         totalWordCount: 0,
         tags: [],
         totalArticles: 0,
-        meta: {
-          categories: [],
-          menus: [],
-          links: [],
-          socials: [],
-          rewards: [],
-          about: {
-            updatedAt: new Date().toISOString(),
-            content: "",
-          },
-          siteInfo: {
-            author: "作者名字",
-            authorDesc: "作者描述",
-            authorLogo: "",
-            siteLogo: "/logo.svg",
-            favicon: "/logo.svg",
-            siteName: "VanBlog",
-            siteDesc: "Vanblog",
-            beianNumber: "",
-            beianUrl: "",
-            payAliPay: "",
-            payWechat: "",
-            payAliPayDark: "",
-            payWechatDark: "",
-            since: "",
-            enableComment: "true",
-            baseUrl: "",
-            showDonateInfo: "true",
-            showFriends: "true",
-            showAdminButton: "true",
-          },
-        },
+        meta: defaultMeta,
       };
     } else {
       throw err;
