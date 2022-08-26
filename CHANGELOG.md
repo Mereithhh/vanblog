@@ -1,4 +1,16 @@
 # Changelog
+### [0.20.1](https://github.com/Mereithhh/van-blog/compare/v0.20.0...v0.20.1) (2022-08-26)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([9630c59](https://github.com/Mereithhh/van-blog/commit/9630c590a58669e784d0b13048e192b160d86a98))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 首次使用无法加载 waline 导致报错 ([cb9b11e](https://github.com/Mereithhh/van-blog/commit/cb9b11e0aa303c1367aab1678742d20f4873bfa3))
+
 ## [0.20.0](https://github.com/Mereithhh/van-blog/compare/v0.19.1...v0.20.0) (2022-08-25)
 
 
