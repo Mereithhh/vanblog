@@ -2,7 +2,7 @@ import Footer from '@/components/Footer';
 import { fetchInit } from '@/services/van-blog/api';
 import ProCard from '@ant-design/pro-card';
 import { ProFormInstance } from '@ant-design/pro-form';
-import { Alert, message } from 'antd';
+import { Alert, Modal } from 'antd';
 import { useHistory } from 'umi';
 //@ts-ignore
 import styles from './index.less';
@@ -43,8 +43,17 @@ const InitPage = () => {
               };
               const res = await fetchInit(newData);
               if (res?.statusCode == 200 || res?.statusCode == 500) {
-                message.success('初始化成功!');
-                history.push('/user/login');
+                Modal.success({
+                  title: '初始化成功!',
+                  content:
+                    '首次使用请记得去后台 “站点管理/评论管理” 中注册一下评论系统的管理员账号哦！',
+                  onOk: () => {
+                    history.push('/user/login');
+                  },
+                  onCancel: () => {
+                    history.push('/user/login');
+                  },
+                });
                 return true;
               }
               return false;
