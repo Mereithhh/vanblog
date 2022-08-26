@@ -4,6 +4,23 @@ icon: update
 ---
 
 
+### [0.20.8](https://github.com/Mereithhh/van-blog/compare/v0.20.7...v0.20.8) (2022-08-26)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([4ade609](https://github.com/Mereithhh/van-blog/commit/4ade609b7d088b058418e19aec970b58a34635a8))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* ICP 文案错误 ([a09486e](https://github.com/Mereithhh/van-blog/commit/a09486efcb5185c9c61c7412fdc60be71a30b5ac))
+
+
+### ✨ Features | 新功能
+
+* 初始化后增加注册评论管理员提示 ([44e8021](https://github.com/Mereithhh/van-blog/commit/44e802111a083f2a9fa392230fb61203c7b7a5e0))
+
 ### [0.20.7](https://github.com/Mereithhh/van-blog/compare/v0.20.6...v0.20.7) (2022-08-26)
 
 
