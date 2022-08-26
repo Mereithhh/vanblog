@@ -4,6 +4,22 @@ icon: update
 ---
 
 
+### [0.20.2](https://github.com/Mereithhh/van-blog/compare/v0.20.1...v0.20.2) (2022-08-26)
+
+
+### ✏️ Documentation | 文档
+
+* 切换成 dockerbub 源(aliyun 的被限流了) ([b307a2a](https://github.com/Mereithhh/van-blog/commit/b307a2a2ab6682def5a27ff1796d1b897ccf21d4))
+* 更新文档 ([51c9cd8](https://github.com/Mereithhh/van-blog/commit/51c9cd81a6cf9d71ccfa1bc08f7a5dd24aa86419))
+* 更新文档 ([3c71ace](https://github.com/Mereithhh/van-blog/commit/3c71ace3c3e314522d987c30b5d64687b3f23ee7))
+* 更新文档 ([a0031b7](https://github.com/Mereithhh/van-blog/commit/a0031b7850e28c3581ce0aa3631693045b2cfba3))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 初始化不触发增量渲染 ([31fca3b](https://github.com/Mereithhh/van-blog/commit/31fca3be64e84baae855a713f673c0bd7c5f90bd))
+* 前台构建器减少初始化边缘情况引起的错误日志 ([f28525b](https://github.com/Mereithhh/van-blog/commit/f28525bd8d8055612c84dcb93c782183aa64a15b))
+
 ### [0.20.1](https://github.com/Mereithhh/van-blog/compare/v0.20.0...v0.20.1) (2022-08-26)
 
 
