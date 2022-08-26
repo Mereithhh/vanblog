@@ -1,4 +1,21 @@
 # Changelog
+### [0.20.5](https://github.com/Mereithhh/van-blog/compare/v0.20.4...v0.20.5) (2022-08-26)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([69cad9c](https://github.com/Mereithhh/van-blog/commit/69cad9c2f87ef0c501bb8f1ca6421f89eceb44c3))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 优化 caddyfile 反代配置 ([891f1b0](https://github.com/Mereithhh/van-blog/commit/891f1b069a7ee8904217db4c0b6cbb538f29ef18))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 首次启动错误 ([7eaa6fa](https://github.com/Mereithhh/van-blog/commit/7eaa6fa328e3d96f0c22bada5066e06f33efd4fb))
+
 ### [0.20.4](https://github.com/Mereithhh/van-blog/compare/v0.20.3...v0.20.4) (2022-08-26)
 
 
