@@ -32,17 +32,15 @@ async function bootstrap() {
   SwaggerModule.setup('swagger', app, document);
   await app.listen(3000);
 
-  const metaProvider = app.get(MetaProvider);
-  metaProvider.updateTotalWords('首次启动');
-
-  // 触发增量渲染生成静态页面，防止升级后内容为空
-  const isrProvider = app.get(ISRProvider);
-  isrProvider.activeAll();
-
   const initProvider = app.get(InitProvider);
   if (await initProvider.checkHasInited()) {
+    const metaProvider = app.get(MetaProvider);
+    metaProvider.updateTotalWords('首次启动');
     const walineProvider = app.get(WalineProvider);
     walineProvider.init();
+    // 触发增量渲染生成静态页面，防止升级后内容为空
+    const isrProvider = app.get(ISRProvider);
+    isrProvider.activeAll();
   }
   setTimeout(() => {
     console.log('应用已启动，端口: 3000');
