@@ -48,6 +48,7 @@ RUN yarn config set network-timeout 60000 -g
 RUN yarn config set registry https://registry.npmmirror.com -g
 RUN yarn build
 
+
 #运行容器
 FROM node:alpine AS RUNNER
 WORKDIR /app
@@ -58,6 +59,9 @@ RUN apk add --no-cache --update tzdata caddy nss-tools
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
     && apk del tzdata
+# 安装 waline
+WORKDIR /app/waline
+RUN npm install @waline/vercel
 # 复制 server
 WORKDIR /app/server
 COPY --from=SERVER_BUILDER /app/node_modules ./node_modules

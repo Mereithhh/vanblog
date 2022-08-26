@@ -30,7 +30,6 @@
     "@nestjs/schedule": "^2.1.0",
     "@nestjs/swagger": "^5.2.1",
     "@types/line-reader": "^0.0.34",
-    "@waline/vercel": "^1.19.3",
     "axios": "^0.27.2",
     "crypto": "^1.0.1",
     "dayjs": "^1.11.4",

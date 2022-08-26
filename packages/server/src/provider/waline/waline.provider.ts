@@ -27,22 +27,18 @@ export class WalineProvider {
     this.env = { ...mongoEnv, ...otherEnv };
   }
   async init() {
-    const siteInfo = await this.metaProvider.getSiteInfo();
-    const enable = siteInfo?.enableComment != 'false';
-    this.logger.log(`评论服务已${enable ? '开启' : '关闭'}`);
-    if (enable) {
-      this.run();
-    }
+    this.run();
   }
   async stop() {
     if (this.ctx) {
-      this.ctx.kill();
+      this.ctx.kill('SIGINT');
+      this.ctx = null;
       this.logger.log('waline 停止成功！');
     }
   }
   async run(): Promise<any> {
     await this.loadEnv();
-    const base = 'node_modules/@waline/vercel/vanilla.js';
+    const base = '../waline/node_modules/@waline/vercel/vanilla.js';
     if (this.ctx == null) {
       this.ctx = spawn('node', [base], {
         env: {

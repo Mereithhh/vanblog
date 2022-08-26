@@ -1,0 +1,13 @@
+{
+  "name": "waline",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@waline/vercel": "^1.19.3"
+  },
+  "scripts": {
+    "start": "node node_modules/@waline/vercel/vanilla.js"
+  }
+}
