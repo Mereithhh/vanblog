@@ -46,8 +46,8 @@ export class WalineProvider {
     if (this.ctx == null) {
       this.ctx = spawn('node', [base], {
         env: {
-          ...this.env,
           ...process.env,
+          ...this.env,
         },
         cwd: process.cwd(),
       });
