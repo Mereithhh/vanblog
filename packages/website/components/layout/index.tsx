@@ -169,7 +169,7 @@ export default function (props: {
           <footer className="text-center text-sm space-y-1 mt-8 md:mt-12 dark:text-dark">
             {Boolean(props.option.ipcNumber) && props.option.ipcNumber != "" && (
               <p className="">
-                IPC 编号:{" "}
+                ICP 编号:{" "}
                 <a
                   href={props.option.ipcHref}
                   target="_blank"
