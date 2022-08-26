@@ -37,7 +37,9 @@ version: "3"
 
 services:
   vanblog:
-    image: mereith/van-blog:latest
+    # 默认国内原的，如果被限速可以用下面的
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
+    # image: mereith/van-blog:latest
     restart: always
     environment:
       TZ: "Asia/Shanghai"
@@ -66,7 +68,9 @@ services:
       - 80:80
       - 443:443
   mongo:
-    image: mongo
+    # 默认国内原的，如果被限速可以用下面的
+    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:mongo
+    # image: mongo
     restart: always
     environment:
       TZ: "Asia/Shanghai"
