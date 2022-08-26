@@ -1,4 +1,16 @@
 # Changelog
+### [0.20.7](https://github.com/Mereithhh/van-blog/compare/v0.20.6...v0.20.7) (2022-08-26)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([ae1e6eb](https://github.com/Mereithhh/van-blog/commit/ae1e6eb783d3a671839d40e8a649dc80a3c549af))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复内置 waline 后台的一些问题 ([dbd25b9](https://github.com/Mereithhh/van-blog/commit/dbd25b9a63e73512c42d6ec5561a99309733d1e7))
+
 ### [0.20.6](https://github.com/Mereithhh/van-blog/compare/v0.20.5...v0.20.6) (2022-08-26)
 
 
