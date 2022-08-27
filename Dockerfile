@@ -1,17 +1,16 @@
 # 具体每个服务的去看 packages 里面的 Dockerfile
 # 这个是 all in one 的。
-FROM node:18 as ADMIN_BUILDER
+FROM circleci/node:latest-browsers as ADMIN_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /usr/src/app
-RUN yarn config set registry https://registry.npmmirror.com -g
-RUN yarn config set network-timeout 60000 -g
-COPY ./packages/admin/package.json ./
-COPY ./packages/admin/yarn.lock ./
-RUN yarn
-COPY ./packages/admin/ ./
+RUN yarn global add umi
+# RUN npm install -g cnpm --registry=https://registry.npmmirror.com
 ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
-# RUN sed -i 's/\/assets/\/admin\/assets/g' dist/admin/index.html
 ENV EEE=production
+COPY ./packages/admin/ ./
+USER root
+RUN yarn
+# RUN sed -i 's/\/assets/\/admin\/assets/g' dist/admin/index.html
 RUN yarn build
 
 FROM node:18 as SERVER_BUILDER
@@ -26,7 +25,7 @@ RUN yarn build
 
 FROM node:16-alpine AS WEBSITE_DEPS
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-RUN apk add --no-cache libc6-compat
+# RUN apk add --no-cache libc6-compat
 WORKDIR /app
 COPY ./packages/website/package.json ./packages/website/yarn.lock* ./packages/website/package-lock.json* ./packages/website/pnpm-lock.yaml* ./
 RUN yarn config set network-timeout 60000 -g
