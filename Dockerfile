@@ -92,6 +92,8 @@ ARG VAN_BLOG_VERSIONS
 ENV VAN_BLOG_VERSION ${VAN_BLOG_VERSIONS}
 VOLUME /app/static
 VOLUME /var/log
+VOLUME /root/.config/caddy
+VOLUME /root/.local/share/caddy
 
 EXPOSE 80
 ENTRYPOINT [ "sh","entrypoint.sh" ]
