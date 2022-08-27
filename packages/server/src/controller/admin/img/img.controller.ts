@@ -23,8 +23,12 @@ export class ImgController {
   constructor(private readonly staticProvider: StaticProvider) {}
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async upload(@UploadedFile() file: any) {
-    const res = await this.staticProvider.upload(file, 'img');
+  async upload(@UploadedFile() file: any, @Query('favicon') favicon: string) {
+    let isFavicon = false;
+    if (favicon && favicon == 'true') {
+      isFavicon = true;
+    }
+    const res = await this.staticProvider.upload(file, 'img', isFavicon);
     return {
       statusCode: 200,
       data: res,

@@ -58,6 +58,10 @@
       import h
     }
   }
+	handle /favicon* {
+    uri replace /favicon /static/img/favicon
+		reverse_proxy 127.0.0.1:3000
+	}
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}

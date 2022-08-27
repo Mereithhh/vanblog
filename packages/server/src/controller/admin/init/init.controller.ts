@@ -3,6 +3,7 @@ import {
   Controller,
   HttpException,
   Post,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
@@ -38,13 +39,19 @@ export class InitController {
 
   @Post('/init/upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadImg(@UploadedFile() file: any) {
+  async uploadImg(
+    @UploadedFile() file: any,
+    @Query('favicon') favicon: string,
+  ) {
     const hasInit = await this.initProvider.checkHasInited();
     if (hasInit) {
       throw new HttpException('已初始化', 500);
     }
-
-    const res = await this.staticProvider.upload(file, 'img');
+    let isFavicon = false;
+    if (favicon && favicon == 'true') {
+      isFavicon = true;
+    }
+    const res = await this.staticProvider.upload(file, 'img', isFavicon);
     return {
       statusCode: 200,
       data: res,

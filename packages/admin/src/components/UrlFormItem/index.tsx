@@ -3,7 +3,7 @@ import { getImgLink } from '@/pages/Static/img/tools';
 import { ProFormText } from '@ant-design/pro-form';
 import { Image, message } from 'antd';
 import { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import UploadBtn from '../UploadBtn';
 
 export default function (props: {
@@ -13,6 +13,7 @@ export default function (props: {
   required: boolean;
   formRef: any;
   isInit: boolean;
+  isFavicon?: boolean;
 }) {
   const [url, setUrl] = useState('');
   const handleOnChange = debounce((ev) => {
@@ -31,6 +32,13 @@ export default function (props: {
       setUrl(src);
     }
   }, [props, setUrl]);
+  const dest = useMemo(() => {
+    let r = props.isInit ? '/api/admin/init/upload' : '/api/admin/img/upload';
+    if (props.isFavicon) {
+      r = r + '?favicon=true';
+    }
+    return r;
+  }, [props]);
   return (
     <>
       <ProFormText
@@ -38,7 +46,7 @@ export default function (props: {
         label={props.label}
         required={props.required}
         placeholder={props.placeholder}
-        tooltip="上传之前需要设置好图床哦"
+        tooltip="上传之前需要设置好图床哦，默认为本地图床。"
         fieldProps={{
           onChange: handleOnChange,
         }}
@@ -68,7 +76,7 @@ export default function (props: {
                     props?.formRef?.current.setFieldsValue({ ...oldVal, [props.name]: src });
                   }
                 }}
-                url={props.isInit ? '/api/admin/init/upload' : '/api/admin/img/upload'}
+                url={dest}
                 accept=".png,.jpg,.jpeg,.webp,.jiff"
               />
             </div>

@@ -80,6 +80,7 @@ export default function (props: {
             required
             label="网站图标(favicon)"
             placeholder={'请输入网站图标 Url'}
+            isFavicon={true}
           />
           <ProFormText
             name="siteName"

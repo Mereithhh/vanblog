@@ -36,7 +36,7 @@ export class StaticProvider {
     }
     return this.publicView;
   }
-  async upload(file: any, type: StaticType) {
+  async upload(file: any, type: StaticType, isFavicon?: boolean) {
     const { buffer } = file;
 
     const currentSign = encryptFileMD5(buffer);
@@ -54,10 +54,11 @@ export class StaticProvider {
     const fileName = currentSign + '.' + file.originalname;
     const realPath = await this.saveFile(
       fileType,
-      fileName,
+      isFavicon ? `favicon.${fileType}` : fileName,
       buffer,
       type,
       currentSign,
+      isFavicon,
     );
     if (!realPath) {
       throw new HttpException('上传失败', HttpStatus.INTERNAL_SERVER_ERROR);
@@ -143,6 +144,7 @@ export class StaticProvider {
     buffer: Buffer,
     type: StaticType,
     sign: string,
+    toRootPath?: boolean,
   ) {
     const storageSetting = await this.settingProvider.getStaticSetting();
     const storageType = storageSetting?.storageType || 'local';
@@ -152,6 +154,7 @@ export class StaticProvider {
           fileName,
           buffer,
           type,
+          toRootPath,
         );
         await this.createInDB({
           fileType: meta?.type || fileType,

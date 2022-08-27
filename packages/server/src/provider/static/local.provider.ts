@@ -6,11 +6,24 @@ import { config } from 'src/config';
 import { imageSize } from 'image-size';
 import { formatBytes } from 'src/utils/size';
 import { ImgMeta } from 'src/dto/img';
+import { isProd } from 'src/utils/isProd';
 @Injectable()
 export class LocalProvider {
-  async saveFile(fileName: string, buffer: Buffer, type: StaticType) {
+  async saveFile(
+    fileName: string,
+    buffer: Buffer,
+    type: StaticType,
+    toRootPath?: boolean,
+  ) {
     const storagePath = StoragePath[type] || StoragePath['img'];
     const srcPath = path.join(config.staticPath, storagePath, fileName);
+    let realPath = `/static/${type}/${fileName}`;
+
+    if (isProd()) {
+      if (toRootPath) {
+        realPath = `/${fileName}`;
+      }
+    }
     const result = imageSize(buffer);
     const byteLength = buffer.byteLength;
 
@@ -18,7 +31,7 @@ export class LocalProvider {
     const meta: ImgMeta = { ...result, size: formatBytes(byteLength) };
     return {
       meta,
-      realPath: `/static/${type}/${fileName}`,
+      realPath,
     };
   }
   async deleteFile(fileName: string, type: StaticType) {
