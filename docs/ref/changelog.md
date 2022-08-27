@@ -4,19 +4,6 @@ icon: update
 ---
 
 
-### [0.21.1](https://github.com/Mereithhh/van-blog/compare/v0.21.0...v0.21.1) (2022-08-27)
-
-
-### ✏️ Documentation | 文档
-
-* 更新文档 ([6b4bb75](https://github.com/Mereithhh/van-blog/commit/6b4bb7522135dc5e90f42681982c20dde60e4fcd))
-
-
-### 👷 Continuous Integration | CI 配置
-
-* test ([c9c3564](https://github.com/Mereithhh/van-blog/commit/c9c35646efe278bbf72c21aaf9168445661e7177))
-* 因为 runner 推阿 里云镜像超时改用 selfhost runner ([8c743b3](https://github.com/Mereithhh/van-blog/commit/8c743b3d40bf186b1500a0ea218217437e41e793))
-
 ## [0.21.0](https://github.com/Mereithhh/van-blog/compare/v0.20.8...v0.21.0) (2022-08-27)
 
 
@@ -25,214 +12,198 @@ icon: update
 * 本地图床上传网站图标时自动防止到根目录 ([5ac6f82](https://github.com/Mereithhh/van-blog/commit/5ac6f822d865f73eee244557daacc0c192d4786b))
 
 
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **release:** 0.21.0 ([7a40dd0](https://github.com/Mereithhh/van-blog/commit/7a40dd02cfac01dd5351fd8a26c6696fd3b885b6))
+* **release:** 0.21.1 ([5e832b9](https://github.com/Mereithhh/van-blog/commit/5e832b9891d4503567fc8e786ee695c256cfad2b))
+
+
+### ⏪ Revert | 回退
+
+* actions 运行失败 ([23c7726](https://github.com/Mereithhh/van-blog/commit/23c7726db89e148307f15bfd6e35df51fc492097))
+
+
 ### 👷 Continuous Integration | CI 配置
 
 * Caddy 增加默认 valume ([c2f0d30](https://github.com/Mereithhh/van-blog/commit/c2f0d30c0de6ebfebe9cd3eee59465bd90b44fe8))
+* test ([255cc5a](https://github.com/Mereithhh/van-blog/commit/255cc5a7b0490ab6a11582f1bd81989a0036d840))
+* test ([c9c3564](https://github.com/Mereithhh/van-blog/commit/c9c35646efe278bbf72c21aaf9168445661e7177))
+* 因为 runner 推阿 里云镜像超时改用 selfhost runner ([8c743b3](https://github.com/Mereithhh/van-blog/commit/8c743b3d40bf186b1500a0ea218217437e41e793))
 * 增加测试流水线 ([9ab30d6](https://github.com/Mereithhh/van-blog/commit/9ab30d6b0bf5231413fec52fcd11107cec62226b))
 * 支持 arm64 ([f0fa4f4](https://github.com/Mereithhh/van-blog/commit/f0fa4f4bf45997b725e55c7739684635b28172ca))
 
 
 ### ✏️ Documentation | 文档
 
+* 更新文档 ([eb8682f](https://github.com/Mereithhh/van-blog/commit/eb8682ff658a011220cd8ff6fc617f8d14994eb5))
+* 更新文档 ([6b4bb75](https://github.com/Mereithhh/van-blog/commit/6b4bb7522135dc5e90f42681982c20dde60e4fcd))
 * 更新文档 ([17d7f36](https://github.com/Mereithhh/van-blog/commit/17d7f367214d02b98032b78dded5e43740bdedef))
 * 更新文档 ([8b111b2](https://github.com/Mereithhh/van-blog/commit/8b111b2edfe3e382df8e98df0fdd7c65e5aaa4f5))
+* 镜像切换成 dockerHub（阿里云ci推不上去了) ([dff2ba7](https://github.com/Mereithhh/van-blog/commit/dff2ba7c4d81b229274a69f4ada032e2e51090c7))
 
 ### [0.20.8](https://github.com/Mereithhh/van-blog/compare/v0.20.7...v0.20.8) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([4ade609](https://github.com/Mereithhh/van-blog/commit/4ade609b7d088b058418e19aec970b58a34635a8))
-
+- 更新文档 ([4ade609](https://github.com/Mereithhh/van-blog/commit/4ade609b7d088b058418e19aec970b58a34635a8))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* ICP 文案错误 ([a09486e](https://github.com/Mereithhh/van-blog/commit/a09486efcb5185c9c61c7412fdc60be71a30b5ac))
-
+- ICP 文案错误 ([a09486e](https://github.com/Mereithhh/van-blog/commit/a09486efcb5185c9c61c7412fdc60be71a30b5ac))
 
 ### ✨ Features | 新功能
 
-* 初始化后增加注册评论管理员提示 ([44e8021](https://github.com/Mereithhh/van-blog/commit/44e802111a083f2a9fa392230fb61203c7b7a5e0))
+- 初始化后增加注册评论管理员提示 ([44e8021](https://github.com/Mereithhh/van-blog/commit/44e802111a083f2a9fa392230fb61203c7b7a5e0))
 
 ### [0.20.7](https://github.com/Mereithhh/van-blog/compare/v0.20.6...v0.20.7) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([ae1e6eb](https://github.com/Mereithhh/van-blog/commit/ae1e6eb783d3a671839d40e8a649dc80a3c549af))
-
+- 更新文档 ([ae1e6eb](https://github.com/Mereithhh/van-blog/commit/ae1e6eb783d3a671839d40e8a649dc80a3c549af))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 修复内置 waline 后台的一些问题 ([dbd25b9](https://github.com/Mereithhh/van-blog/commit/dbd25b9a63e73512c42d6ec5561a99309733d1e7))
+- 修复内置 waline 后台的一些问题 ([dbd25b9](https://github.com/Mereithhh/van-blog/commit/dbd25b9a63e73512c42d6ec5561a99309733d1e7))
 
 ### [0.20.6](https://github.com/Mereithhh/van-blog/compare/v0.20.5...v0.20.6) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([c786b5f](https://github.com/Mereithhh/van-blog/commit/c786b5f7e20f29aebe883bb1a1b8d2b134408811))
-
+- 更新文档 ([c786b5f](https://github.com/Mereithhh/van-blog/commit/c786b5f7e20f29aebe883bb1a1b8d2b134408811))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 关闭评论系统导致报错 ([bad6bd4](https://github.com/Mereithhh/van-blog/commit/bad6bd422d4fef5e5cbf7a0821689b35a7ac2649))
+- 关闭评论系统导致报错 ([bad6bd4](https://github.com/Mereithhh/van-blog/commit/bad6bd422d4fef5e5cbf7a0821689b35a7ac2649))
 
 ### [0.20.5](https://github.com/Mereithhh/van-blog/compare/v0.20.4...v0.20.5) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([69cad9c](https://github.com/Mereithhh/van-blog/commit/69cad9c2f87ef0c501bb8f1ca6421f89eceb44c3))
-
+- 更新文档 ([69cad9c](https://github.com/Mereithhh/van-blog/commit/69cad9c2f87ef0c501bb8f1ca6421f89eceb44c3))
 
 ### 👷 Continuous Integration | CI 配置
 
-* 优化 caddyfile 反代配置 ([891f1b0](https://github.com/Mereithhh/van-blog/commit/891f1b069a7ee8904217db4c0b6cbb538f29ef18))
-
+- 优化 caddyfile 反代配置 ([891f1b0](https://github.com/Mereithhh/van-blog/commit/891f1b069a7ee8904217db4c0b6cbb538f29ef18))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 首次启动错误 ([7eaa6fa](https://github.com/Mereithhh/van-blog/commit/7eaa6fa328e3d96f0c22bada5066e06f33efd4fb))
+- 首次启动错误 ([7eaa6fa](https://github.com/Mereithhh/van-blog/commit/7eaa6fa328e3d96f0c22bada5066e06f33efd4fb))
 
 ### [0.20.4](https://github.com/Mereithhh/van-blog/compare/v0.20.3...v0.20.4) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([07a0d88](https://github.com/Mereithhh/van-blog/commit/07a0d887e3bdd85cc090444643ab4ab58f326694))
-
+- 更新文档 ([07a0d88](https://github.com/Mereithhh/van-blog/commit/07a0d887e3bdd85cc090444643ab4ab58f326694))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 内嵌评论无法获取真实 ip ([85bc564](https://github.com/Mereithhh/van-blog/commit/85bc56432ad6f256fd57a5dbc530ebe05290890b))
+- 内嵌评论无法获取真实 ip ([85bc564](https://github.com/Mereithhh/van-blog/commit/85bc56432ad6f256fd57a5dbc530ebe05290890b))
 
 ### [0.20.3](https://github.com/Mereithhh/van-blog/compare/v0.20.2...v0.20.3) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([c480fb3](https://github.com/Mereithhh/van-blog/commit/c480fb3f6453cf058ede1e0ded7357247ccb40b0))
-
+- 更新文档 ([c480fb3](https://github.com/Mereithhh/van-blog/commit/c480fb3f6453cf058ede1e0ded7357247ccb40b0))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 作者logo无法正常显示 ([8365275](https://github.com/Mereithhh/van-blog/commit/8365275ef0218c17e15f0f29a9e9c63b3e534ff9))
+- 作者 logo 无法正常显示 ([8365275](https://github.com/Mereithhh/van-blog/commit/8365275ef0218c17e15f0f29a9e9c63b3e534ff9))
 
 ### [0.20.2](https://github.com/Mereithhh/van-blog/compare/v0.20.1...v0.20.2) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 切换成 dockerbub 源(aliyun 的被限流了) ([b307a2a](https://github.com/Mereithhh/van-blog/commit/b307a2a2ab6682def5a27ff1796d1b897ccf21d4))
-* 更新文档 ([51c9cd8](https://github.com/Mereithhh/van-blog/commit/51c9cd81a6cf9d71ccfa1bc08f7a5dd24aa86419))
-* 更新文档 ([3c71ace](https://github.com/Mereithhh/van-blog/commit/3c71ace3c3e314522d987c30b5d64687b3f23ee7))
-* 更新文档 ([a0031b7](https://github.com/Mereithhh/van-blog/commit/a0031b7850e28c3581ce0aa3631693045b2cfba3))
-
+- 切换成 dockerbub 源(aliyun 的被限流了) ([b307a2a](https://github.com/Mereithhh/van-blog/commit/b307a2a2ab6682def5a27ff1796d1b897ccf21d4))
+- 更新文档 ([51c9cd8](https://github.com/Mereithhh/van-blog/commit/51c9cd81a6cf9d71ccfa1bc08f7a5dd24aa86419))
+- 更新文档 ([3c71ace](https://github.com/Mereithhh/van-blog/commit/3c71ace3c3e314522d987c30b5d64687b3f23ee7))
+- 更新文档 ([a0031b7](https://github.com/Mereithhh/van-blog/commit/a0031b7850e28c3581ce0aa3631693045b2cfba3))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 初始化不触发增量渲染 ([31fca3b](https://github.com/Mereithhh/van-blog/commit/31fca3be64e84baae855a713f673c0bd7c5f90bd))
-* 前台构建器减少初始化边缘情况引起的错误日志 ([f28525b](https://github.com/Mereithhh/van-blog/commit/f28525bd8d8055612c84dcb93c782183aa64a15b))
+- 初始化不触发增量渲染 ([31fca3b](https://github.com/Mereithhh/van-blog/commit/31fca3be64e84baae855a713f673c0bd7c5f90bd))
+- 前台构建器减少初始化边缘情况引起的错误日志 ([f28525b](https://github.com/Mereithhh/van-blog/commit/f28525bd8d8055612c84dcb93c782183aa64a15b))
 
 ### [0.20.1](https://github.com/Mereithhh/van-blog/compare/v0.20.0...v0.20.1) (2022-08-26)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([9630c59](https://github.com/Mereithhh/van-blog/commit/9630c590a58669e784d0b13048e192b160d86a98))
-
+- 更新文档 ([9630c59](https://github.com/Mereithhh/van-blog/commit/9630c590a58669e784d0b13048e192b160d86a98))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 首次使用无法加载 waline 导致报错 ([cb9b11e](https://github.com/Mereithhh/van-blog/commit/cb9b11e0aa303c1367aab1678742d20f4873bfa3))
+- 首次使用无法加载 waline 导致报错 ([cb9b11e](https://github.com/Mereithhh/van-blog/commit/cb9b11e0aa303c1367aab1678742d20f4873bfa3))
 
 ## [0.20.0](https://github.com/Mereithhh/van-blog/compare/v0.19.1...v0.20.0) (2022-08-25)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([6386a6b](https://github.com/Mereithhh/van-blog/commit/6386a6bfd43ec6e92e314eabba3a3a341d50c00e))
-
+- 更新文档 ([6386a6b](https://github.com/Mereithhh/van-blog/commit/6386a6bfd43ec6e92e314eabba3a3a341d50c00e))
 
 ### ⚡ Performance Improvements | 性能优化
 
-* 页面跳转有时候不反应 ([889f6ad](https://github.com/Mereithhh/van-blog/commit/889f6ada261695e7be258cf51ddf7adda488e6ad))
+- 页面跳转有时候不反应 ([889f6ad](https://github.com/Mereithhh/van-blog/commit/889f6ada261695e7be258cf51ddf7adda488e6ad))
 
 ### [0.19.1](https://github.com/Mereithhh/van-blog/compare/v0.19.0...v0.19.1) (2022-08-25)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([c58d717](https://github.com/Mereithhh/van-blog/commit/c58d717789ce9b339acc2a10f1fa8877373e2798))
-
+- 更新文档 ([c58d717](https://github.com/Mereithhh/van-blog/commit/c58d717789ce9b339acc2a10f1fa8877373e2798))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 因为反代 waline 加路径前缀会出现功能不正常，所以在没路径冲突的前提下，把内嵌 waline 的 uri 直接反代到根级别了 ([1c9aa3c](https://github.com/Mereithhh/van-blog/commit/1c9aa3c0c7a3c32ca98279df5a0c9c8ac86dd7b9))
-
+- 因为反代 waline 加路径前缀会出现功能不正常，所以在没路径冲突的前提下，把内嵌 waline 的 uri 直接反代到根级别了 ([1c9aa3c](https://github.com/Mereithhh/van-blog/commit/1c9aa3c0c7a3c32ca98279df5a0c9c8ac86dd7b9))
 
 ### ✨ Features | 新功能
 
-* 默认显示管理员按钮 ([c25606b](https://github.com/Mereithhh/van-blog/commit/c25606befb3363cc91c111914ac126214c8e136e))
+- 默认显示管理员按钮 ([c25606b](https://github.com/Mereithhh/van-blog/commit/c25606befb3363cc91c111914ac126214c8e136e))
 
 ## [0.19.0](https://github.com/Mereithhh/van-blog/compare/v0.18.1...v0.19.0) (2022-08-25)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([394bde7](https://github.com/Mereithhh/van-blog/commit/394bde71dcd5b9e144460ff27249c57021221ef2))
-
+- 更新文档 ([394bde7](https://github.com/Mereithhh/van-blog/commit/394bde71dcd5b9e144460ff27249c57021221ef2))
 
 ### 👷 Continuous Integration | CI 配置
 
-* 去掉多余 webhook ([065d042](https://github.com/Mereithhh/van-blog/commit/065d042dfcb48d22e869e537332b07c3cb27aaa1))
-
+- 去掉多余 webhook ([065d042](https://github.com/Mereithhh/van-blog/commit/065d042dfcb48d22e869e537332b07c3cb27aaa1))
 
 ### ✨ Features | 新功能
 
-* 优化上传图片提示（合二为一) ([f7aa86a](https://github.com/Mereithhh/van-blog/commit/f7aa86aec8e95f46d8bfe0fb058076285a8ee9eb))
-* 内嵌评论系统 ([0874a85](https://github.com/Mereithhh/van-blog/commit/0874a850e381baf8f9a325f6c30cda39dfb2e2d3))
-* 自定义评论所用 db 名 ([1723fe6](https://github.com/Mereithhh/van-blog/commit/1723fe6a39c8445a8c8cafb41e82a76e2312dedd))
+- 优化上传图片提示（合二为一) ([f7aa86a](https://github.com/Mereithhh/van-blog/commit/f7aa86aec8e95f46d8bfe0fb058076285a8ee9eb))
+- 内嵌评论系统 ([0874a85](https://github.com/Mereithhh/van-blog/commit/0874a850e381baf8f9a325f6c30cda39dfb2e2d3))
+- 自定义评论所用 db 名 ([1723fe6](https://github.com/Mereithhh/van-blog/commit/1723fe6a39c8445a8c8cafb41e82a76e2312dedd))
 
 ### [0.18.1](https://github.com/Mereithhh/van-blog/compare/v0.18.0...v0.18.1) (2022-08-24)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([a8ea4fb](https://github.com/Mereithhh/van-blog/commit/a8ea4fb30af4c5c8f6b78780808a2c51336ada7b))
-
+- 更新文档 ([a8ea4fb](https://github.com/Mereithhh/van-blog/commit/a8ea4fb30af4c5c8f6b78780808a2c51336ada7b))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 减少数据量但是没考虑边缘情况引起的构建错误 ([748cfe5](https://github.com/Mereithhh/van-blog/commit/748cfe55d6810cd4aa5198f68ec7455610296cb4))
+- 减少数据量但是没考虑边缘情况引起的构建错误 ([748cfe5](https://github.com/Mereithhh/van-blog/commit/748cfe55d6810cd4aa5198f68ec7455610296cb4))
 
 ## [0.18.0](https://github.com/Mereithhh/van-blog/compare/v0.17.0...v0.18.0) (2022-08-24)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([340dd99](https://github.com/Mereithhh/van-blog/commit/340dd996a913316cf9c22b80fea43e1e491b7bfd))
-
+- 更新文档 ([340dd99](https://github.com/Mereithhh/van-blog/commit/340dd996a913316cf9c22b80fea43e1e491b7bfd))
 
 ### 👷 Continuous Integration | CI 配置
 
-* 更新脚本 ([b5a876f](https://github.com/Mereithhh/van-blog/commit/b5a876fe78ada1c53d6b1ace9c7568074e4fd967))
-
+- 更新脚本 ([b5a876f](https://github.com/Mereithhh/van-blog/commit/b5a876fe78ada1c53d6b1ace9c7568074e4fd967))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 因为接口类型转换错误导致的页面显示数量过多 ([3c3258c](https://github.com/Mereithhh/van-blog/commit/3c3258cae2265697863c468db9837d603bfdc999))
-
+- 因为接口类型转换错误导致的页面显示数量过多 ([3c3258c](https://github.com/Mereithhh/van-blog/commit/3c3258cae2265697863c468db9837d603bfdc999))
 
 ### ⚡ Performance Improvements | 性能优化
 
-* 去掉多余的评论获取请求 ([63a712b](https://github.com/Mereithhh/van-blog/commit/63a712b1b5f8b9cb9fb5c1d57f5352d83fddbf8e))
-
+- 去掉多余的评论获取请求 ([63a712b](https://github.com/Mereithhh/van-blog/commit/63a712b1b5f8b9cb9fb5c1d57f5352d83fddbf8e))
 
 ### ✨ Features | 新功能
 
-* 优化 logo 展示&404 页面优化 ([3191e0f](https://github.com/Mereithhh/van-blog/commit/3191e0f262f8186c6ba29e751b44abd53a3ec338))
+- 优化 logo 展示&404 页面优化 ([3191e0f](https://github.com/Mereithhh/van-blog/commit/3191e0f262f8186c6ba29e751b44abd53a3ec338))
 
 ## [0.17.0](https://github.com/Mereithhh/van-blog/compare/v0.16.2...v0.17.0) (2022-08-24)
 
