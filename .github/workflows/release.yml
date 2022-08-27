@@ -26,18 +26,15 @@ jobs:
         run: echo ${{ steps.get_version.outputs.VERSION }}
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
-
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
-
       - name: Login to AliyunCS
         uses: docker/login-action@v1
         with:
           registry: registry.cn-beijing.aliyuncs.com
           username: ${{ secrets.ALI_USER  }}
           password: ${{ secrets.ALI_PASSWORD  }}
-
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
@@ -56,8 +53,12 @@ jobs:
           tags: |
             "docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "docker.io/mereith/van-blog:latest"
-            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
-            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
+      - name: sync-to-aliyuncs
+        run: |
+          docker tag "docker.io/mereith/van-blog:latest" "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
+          docker push "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
+          docker tag "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}" "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
+          docker push "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
       - name: Release
         uses: softprops/action-gh-release@v1
       - name: updateVersionToApiServer
@@ -67,9 +68,9 @@ jobs:
         uses: steebchen/kubectl@v2.0.0
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.K8S_CONFIG_DATA }}
-          command: set image -n tools deployment/van-blog van-blog=registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
+          command: set image -n tools deployment/van-blog van-blog=docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
       - name: 部署 demo 到集群
         uses: steebchen/kubectl@v2.0.0
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.K8S_CONFIG_DATA }}
-          command: set image -n tools deployment/blog-demo van-blog=registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
+          command: set image -n tools deployment/blog-demo van-blog=docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
