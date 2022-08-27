@@ -4,6 +4,19 @@ icon: update
 ---
 
 
+### [0.21.1](https://github.com/Mereithhh/van-blog/compare/v0.21.0...v0.21.1) (2022-08-27)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([6b4bb75](https://github.com/Mereithhh/van-blog/commit/6b4bb7522135dc5e90f42681982c20dde60e4fcd))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* test ([c9c3564](https://github.com/Mereithhh/van-blog/commit/c9c35646efe278bbf72c21aaf9168445661e7177))
+* 因为 runner 推阿 里云镜像超时改用 selfhost runner ([8c743b3](https://github.com/Mereithhh/van-blog/commit/8c743b3d40bf186b1500a0ea218217437e41e793))
+
 ## [0.21.0](https://github.com/Mereithhh/van-blog/compare/v0.20.8...v0.21.0) (2022-08-27)
 
 
