@@ -4,9 +4,9 @@ index: false
 icon: pic
 ---
 
-## LightHouse
+## Lighthouse
 
-![LightHouse](./assets/lighthouse.png)
+![Lighthouse](./assets/lighthouse.png)
 
 ## 后台
 

@@ -32,7 +32,7 @@ features:
 
   - title: 高性能
     icon: light
-    details: 快到极致的静态页面，秒响应的增量渲染，LightHouse 近满分
+    details: 快到极致的静态页面，秒响应的增量渲染，Lighthouse 近满分
 
   - title: SEO 友好
     icon: search
