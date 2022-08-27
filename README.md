@@ -24,7 +24,10 @@
 ![前台-黑色](/img/前台-黑色.png)
 ![后台-白色](/img/后台-白色.png)
 ![后台-黑色](/img/后台-黑色.png)
-![LightHouse](/img/lighthouse.png)
+
+<p align="center"> 
+  <img src="/img/lighthouse.png" style="width: 400px"></img>
+</p>
 
 ## 特性
 
