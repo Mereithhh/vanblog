@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" id="图层_1" data-name="图层 1" viewBox="0 0 1741.44 1955"><defs><style>.cls-1{fill:#1772b4;}</style></defs><polyline class="cls-1" points="872.21 0 691.51 626.82 872.21 968.64"/><polyline class="cls-1" points="871.56 0.31 1052.26 627.13 871.56 968.95"/><polyline class="cls-1" points="872.59 1955 691.89 1328.18 872.59 986.36"/><polyline class="cls-1" points="871.93 1954.69 1052.63 1327.87 871.93 986.05"/><polyline class="cls-1" points="1741.44 985.35 1194.35 1159.03 896.01 985.35"/><polyline class="cls-1" points="1741.17 985.98 1194.08 812.3 895.75 985.98"/><polyline class="cls-1" points="0 985.33 547.08 1159 845.42 985.33"/><polyline class="cls-1" points="0.27 985.96 547.35 812.28 845.69 985.96"/></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 26.0.3, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="图层_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 1741.4 1955" style="enable-background:new 0 0 1741.4 1955;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#1772B4;}
+</style>
+<polyline class="st0" points="871.6,0.3 1052.3,627.1 871.6,969 872.2,968.6 691.5,626.8 872.2,0 "/>
+<polyline class="st0" points="871.9,1954.7 1052.6,1327.9 871.9,986 872.6,986.4 691.9,1328.2 872.6,1955 "/>
+<polyline class="st0" points="1741.2,986 1194.1,812.3 895.8,986 896,985.3 1194.3,1159 1741.4,985.3 "/>
+<polyline class="st0" points="845.7,986 547.3,812.3 0.3,986 0,985.3 547.1,1159 845.4,985.3 "/>
+</svg>

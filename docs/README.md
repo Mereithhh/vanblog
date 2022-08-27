@@ -40,7 +40,7 @@ features:
 
   - title: 可量化
     icon: table
-    details: 内置强大分析系统与精美看板，同时支持百度和GA，同时具有完善的日志。
+    details: 内置强大分析系统与精美看板，同时支持百度和GA，同时具有完善的日志
 
   - title: 现代后台
     icon: strong
@@ -48,7 +48,7 @@ features:
 
   - title: 易于部署
     icon: linux
-    details: Docker 一键部署，全自动 HTTPS 证书自动申请续期，甚至不用写域名
+    details: Docker 一键部署，全自动 HTTPS 证书自动申请续期，支持 ARM
 copyright: false
 footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
 ---
