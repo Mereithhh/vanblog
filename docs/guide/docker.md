@@ -37,9 +37,8 @@ version: "3"
 
 services:
   vanblog:
-    # 默认国内原的，如果被限速可以用下面的
-    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
-    # image: mereith/van-blog:latest
+    # 默认 dockerhub 源
+    image: mereith/van-blog:latest
     restart: always
     environment:
       TZ: "Asia/Shanghai"
@@ -68,9 +67,7 @@ services:
       - 80:80
       - 443:443
   mongo:
-    # 默认国内原的，如果被限速可以用下面的
-    image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:mongo
-    # image: mongo
+    image: mongo
     restart: always
     environment:
       TZ: "Asia/Shanghai"

@@ -22,9 +22,9 @@ order: -3
 # 关闭原有服务
 docker-compose down
 # 删除原有镜像
-docker rmi registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
+docker rmi mereith/van-blog:latest
 # 重新拉取最新镜像
-docker pull registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
+docker pull mereith/van-blog:latest
 # 重新启动服务
 docker-compose up -d
 ```
