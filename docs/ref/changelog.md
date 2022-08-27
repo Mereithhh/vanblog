@@ -3,35 +3,35 @@ title: 更新日志
 icon: update
 ---
 
-
 ### [0.21.1](https://github.com/Mereithhh/van-blog/compare/v0.21.0...v0.21.1) (2022-08-27)
-
 
 ### ✨ Features | 新功能
 
-* 外置图床配置中帮助链接指向项目文档 ([176e9f5](https://github.com/Mereithhh/van-blog/commit/176e9f53d070850c5be3ce1180c82e4e1e3998d1))
+- 外置图床配置中帮助链接指向项目文档 ([176e9f5](https://github.com/Mereithhh/van-blog/commit/176e9f53d070850c5be3ce1180c82e4e1e3998d1))
 
+### 🐛 Bug Fixes | Bug 修复
+
+- 修复了隔了多层反代无法获取真实 ip 问题 ([feee634](https://github.com/Mereithhh/van-blog/commit/feee634a8456815d4e297b1046f03d0e93944a26))
 
 ### 👷 Continuous Integration | CI 配置
 
-* 加一个同步到阿里云的脚本 ([25acdbe](https://github.com/Mereithhh/van-blog/commit/25acdbeb6b4a0f46443dbaf974941d439852332b))
-* 文档切换到 dockerhub ([92db955](https://github.com/Mereithhh/van-blog/commit/92db95569560190e02317dba4179ca4374dcfc2a))
-* 调试测试流水线&整理文件&尝试修复隔了ingress无法获取真实ip问题 ([feee634](https://github.com/Mereithhh/van-blog/commit/feee634a8456815d4e297b1046f03d0e93944a26))
-
+- 加一个同步到阿里云的脚本 ([25acdbe](https://github.com/Mereithhh/van-blog/commit/25acdbeb6b4a0f46443dbaf974941d439852332b))
+- 文档切换到 dockerhub ([92db955](https://github.com/Mereithhh/van-blog/commit/92db95569560190e02317dba4179ca4374dcfc2a))
+- 调试测试流水线&整理文件 ([feee634](https://github.com/Mereithhh/van-blog/commit/feee634a8456815d4e297b1046f03d0e93944a26))
 
 ### ✏️ Documentation | 文档
 
-* 修改图片宽度 ([e9ba718](https://github.com/Mereithhh/van-blog/commit/e9ba718acb6f69a7e41e4ed381d58261210abd53))
-* 修改大小写 ([26904b4](https://github.com/Mereithhh/van-blog/commit/26904b45ae41c67be76b281543898b18c7eaf274))
-* 修改措辞 ([1ce0a53](https://github.com/Mereithhh/van-blog/commit/1ce0a53d97792489e0a74f4dd68cdb071ea24414))
-* 大小写 ([e1401c9](https://github.com/Mereithhh/van-blog/commit/e1401c985a6f70291bae25e9e0dccba977d0155b))
-* 更新文档 ([3bccc55](https://github.com/Mereithhh/van-blog/commit/3bccc55228161f443b55da3b316aae4da8cba961))
-* 更新文档 ([2d2e330](https://github.com/Mereithhh/van-blog/commit/2d2e3302b9365a13bcb9ea694eac13c47a08db9b))
-* 更新文档 ([494a6d7](https://github.com/Mereithhh/van-blog/commit/494a6d73a2abe9d7d84fd552ed12ce3cb5484f74))
-* 更新文档 ([c052ad2](https://github.com/Mereithhh/van-blog/commit/c052ad2ee8b31483bd32eb3b1d511bf2ad49e2c6))
-* 更新文档 ([426fd31](https://github.com/Mereithhh/van-blog/commit/426fd3131a7e36021e5a1b983ee01f0953aa0efa))
-* 更新文档&logo ([3876b2c](https://github.com/Mereithhh/van-blog/commit/3876b2ccdcb2fb14780c1b082965af56b0197622))
-* 补充 LightHouse 评分截图 ([48e866d](https://github.com/Mereithhh/van-blog/commit/48e866da05825fe642eca93593ad2e27e2f60e54))
+- 修改图片宽度 ([e9ba718](https://github.com/Mereithhh/van-blog/commit/e9ba718acb6f69a7e41e4ed381d58261210abd53))
+- 修改大小写 ([26904b4](https://github.com/Mereithhh/van-blog/commit/26904b45ae41c67be76b281543898b18c7eaf274))
+- 修改措辞 ([1ce0a53](https://github.com/Mereithhh/van-blog/commit/1ce0a53d97792489e0a74f4dd68cdb071ea24414))
+- 大小写 ([e1401c9](https://github.com/Mereithhh/van-blog/commit/e1401c985a6f70291bae25e9e0dccba977d0155b))
+- 更新文档 ([3bccc55](https://github.com/Mereithhh/van-blog/commit/3bccc55228161f443b55da3b316aae4da8cba961))
+- 更新文档 ([2d2e330](https://github.com/Mereithhh/van-blog/commit/2d2e3302b9365a13bcb9ea694eac13c47a08db9b))
+- 更新文档 ([494a6d7](https://github.com/Mereithhh/van-blog/commit/494a6d73a2abe9d7d84fd552ed12ce3cb5484f74))
+- 更新文档 ([c052ad2](https://github.com/Mereithhh/van-blog/commit/c052ad2ee8b31483bd32eb3b1d511bf2ad49e2c6))
+- 更新文档 ([426fd31](https://github.com/Mereithhh/van-blog/commit/426fd3131a7e36021e5a1b983ee01f0953aa0efa))
+- 更新文档&logo ([3876b2c](https://github.com/Mereithhh/van-blog/commit/3876b2ccdcb2fb14780c1b082965af56b0197622))
+- 补充 LightHouse 评分截图 ([48e866d](https://github.com/Mereithhh/van-blog/commit/48e866da05825fe642eca93593ad2e27e2f60e54))
 
 ## [0.21.0](https://github.com/Mereithhh/van-blog/compare/v0.20.8...v0.21.0) (2022-08-27)
 
