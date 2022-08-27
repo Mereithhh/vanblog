@@ -10,11 +10,7 @@
 	}
 }
 (h) {
-  header_up +Host {host}
-  header_up +X-Real-IP {remote_host}
-  header_up +X-Forwarded-For {remote_host}
-  header_up +REMOTE-HOST  {remote_host}
-  header_up +X-Forwarded-Proto {scheme}
+  trusted_proxies private_ranges
 }
 
 
