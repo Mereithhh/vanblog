@@ -4,7 +4,7 @@ icon: home
 heroImage: /前台-白色.png
 heroText: VanBlog
 heroFullScreen: true
-tagline: 一款简洁实用优雅的一站式个人博客系统。
+tagline: 一款简洁实用优雅的高性能个人博客系统。
 actions:
   - text: 💡 快速上手
     link: /guide/docker.html
@@ -32,7 +32,7 @@ features:
 
   - title: 高性能
     icon: light
-    details: 静态页面，自带预加载和缓存，秒级相应的增量渲染，内置图片优化
+    details: 快到极致的静态页面，秒响应的增量渲染，LightHouse 近满分
 
   - title: SEO 友好
     icon: search

@@ -51,7 +51,7 @@ const Login = () => {
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
-          logo={<img alt="logo" src="/admin/logo.svg" />}
+          logo={<img alt="logo" src="/logo.svg" />}
           title="VanBlog"
           subTitle={'VanBlog 博客管理后台'}
           initialValues={{
