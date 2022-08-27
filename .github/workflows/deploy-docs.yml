@@ -27,12 +27,11 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Login to AliyunCS
+      - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
-          registry: registry.cn-beijing.aliyuncs.com
-          username: ${{ secrets.ALI_USER  }}
-          password: ${{ secrets.ALI_PASSWORD  }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: 设置 Node.js
         uses: actions/setup-node@v3
@@ -58,12 +57,12 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
+            "docker.io/mereith/van-blog-website:${{ steps.get_version.outputs.VERSION }}"
       - name: 部署到集群
         uses: steebchen/kubectl@v2.0.0
         with: # defaults to latest kubectl binary version
           config: ${{ secrets.K8S_CONFIG_DATA }}
-          command: set image -n tools deployment/vanblog-doc vanblog-doc=registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
+          command: set image -n tools deployment/vanblog-doc vanblog-doc=docker.io/mereith/van-blog-website:${{ steps.get_version.outputs.VERSION }}
       # - name: send Message To me
       #   run: |
       #     curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-doc","message":"流水线运行完毕，${{ steps.get_version.outputs.VERSION }} 已部署"}'  ${{ secrets.WEBHOOK_URL }}
