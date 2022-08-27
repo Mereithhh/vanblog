@@ -61,7 +61,7 @@ export default function (props: {}) {
               name="picgoConfig"
               label={
                 <a
-                  href="https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90"
+                  href="https://vanblog.mereith.com/feature/basic/pic.html#%E5%A4%96%E7%BD%AE%E5%9B%BE%E5%BA%8A"
                   target={'_blank'}
                   rel="norefferrer"
                 >
