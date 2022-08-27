@@ -1,4 +1,40 @@
 # Changelog
+## [0.21.0](https://github.com/Mereithhh/van-blog/compare/v0.20.8...v0.21.0) (2022-08-27)
+
+
+### ✨ Features | 新功能
+
+* 本地图床上传网站图标时自动防止到根目录 ([5ac6f82](https://github.com/Mereithhh/van-blog/commit/5ac6f822d865f73eee244557daacc0c192d4786b))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **release:** 0.21.0 ([7a40dd0](https://github.com/Mereithhh/van-blog/commit/7a40dd02cfac01dd5351fd8a26c6696fd3b885b6))
+* **release:** 0.21.1 ([5e832b9](https://github.com/Mereithhh/van-blog/commit/5e832b9891d4503567fc8e786ee695c256cfad2b))
+
+
+### ⏪ Revert | 回退
+
+* actions 运行失败 ([23c7726](https://github.com/Mereithhh/van-blog/commit/23c7726db89e148307f15bfd6e35df51fc492097))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* Caddy 增加默认 valume ([c2f0d30](https://github.com/Mereithhh/van-blog/commit/c2f0d30c0de6ebfebe9cd3eee59465bd90b44fe8))
+* test ([255cc5a](https://github.com/Mereithhh/van-blog/commit/255cc5a7b0490ab6a11582f1bd81989a0036d840))
+* test ([c9c3564](https://github.com/Mereithhh/van-blog/commit/c9c35646efe278bbf72c21aaf9168445661e7177))
+* 因为 runner 推阿 里云镜像超时改用 selfhost runner ([8c743b3](https://github.com/Mereithhh/van-blog/commit/8c743b3d40bf186b1500a0ea218217437e41e793))
+* 增加测试流水线 ([9ab30d6](https://github.com/Mereithhh/van-blog/commit/9ab30d6b0bf5231413fec52fcd11107cec62226b))
+* 支持 arm64 ([f0fa4f4](https://github.com/Mereithhh/van-blog/commit/f0fa4f4bf45997b725e55c7739684635b28172ca))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([eb8682f](https://github.com/Mereithhh/van-blog/commit/eb8682ff658a011220cd8ff6fc617f8d14994eb5))
+* 更新文档 ([6b4bb75](https://github.com/Mereithhh/van-blog/commit/6b4bb7522135dc5e90f42681982c20dde60e4fcd))
+* 更新文档 ([17d7f36](https://github.com/Mereithhh/van-blog/commit/17d7f367214d02b98032b78dded5e43740bdedef))
+* 更新文档 ([8b111b2](https://github.com/Mereithhh/van-blog/commit/8b111b2edfe3e382df8e98df0fdd7c65e5aaa4f5))
+* 镜像切换成 dockerHub（阿里云ci推不上去了) ([dff2ba7](https://github.com/Mereithhh/van-blog/commit/dff2ba7c4d81b229274a69f4ada032e2e51090c7))
 
 ### [0.20.8](https://github.com/Mereithhh/van-blog/compare/v0.20.7...v0.20.8) (2022-08-26)
 
