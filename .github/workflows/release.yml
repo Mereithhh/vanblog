@@ -9,7 +9,8 @@ permissions:
 
 jobs:
   release:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
+    # runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -53,12 +54,8 @@ jobs:
           tags: |
             "docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "docker.io/mereith/van-blog:latest"
-      - name: sync-to-aliyuncs
-        run: |
-          docker tag "docker.io/mereith/van-blog:latest" "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
-          docker push "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
-          docker tag "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}" "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
-          docker push "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
+            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
+            "registry.cn-beijing.aliyuncs.com/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
       - name: Release
         uses: softprops/action-gh-release@v1
       - name: updateVersionToApiServer
