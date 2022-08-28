@@ -71,6 +71,7 @@ services:
     restart: always
     environment:
       TZ: "Asia/Shanghai"
+      # 如果你改了这两个，那上面的数据库连接地址也要同步修改。
       # mongoDB 初始化用户名
       MONGO_INITDB_ROOT_USERNAME: vanBlog
       # mongoDB 初始化密码

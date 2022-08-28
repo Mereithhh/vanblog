@@ -90,6 +90,10 @@
 - [ ] 精简配置项，尽可能移动到运行时配置
 - [ ] 增加一些 e2e 测试，集成到 CI
 
+## FAQ
+
+> [常见问题](https://vanblog.mereith.com/ref/faq.html)
+
 ## 问题反馈
 
 请提 `issue` ，如无特殊情况会在一天内解决。

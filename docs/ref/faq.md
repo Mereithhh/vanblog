@@ -3,6 +3,22 @@ title: FAQ
 icon: question
 ---
 
+### 部署后 http error
+
+![](https://pic.mereith.com/img/ae28e582a7dce7be4816c1bf82dd77de.clipboard-2022-08-28.png)
+
+请检查一下 docker-compose 编排文件，如果修改了下面的数据库账号密码，上面的也要同步修改。
+
+![](https://pic.mereith.com/img/eb46eabfff8856c84ccd54a97d7f333c.clipboard-2022-08-28.png)
+
+这两个地方的账号密码是对应的，实际上数据库是不会暴露到外面的（因为没有映射端口），所以默认账号密码不改也行。
+
+改的要话要同步改。
+
+比如您把下面的数据库账号密码改成了 admin 与 xxxx。
+
+那对应的数据库链接地址也要改成: mongodb://admin:xxxx@mongo:27017
+
 ### 在编辑器复制后格式错乱
 
 默认粘贴的格式可能带有一些额外信息，你可以鼠标右键选择复制为纯文本，或者使用快捷键 `ctrl+shift+v` 。
