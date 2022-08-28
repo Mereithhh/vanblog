@@ -4,6 +4,29 @@ icon: update
 ---
 
 
+### [0.22.1](https://github.com/Mereithhh/van-blog/compare/v0.22.0...v0.22.1) (2022-08-28)
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* 完善同步镜像脚本 ([85d4216](https://github.com/Mereithhh/van-blog/commit/85d4216bc3f89df3db197375727aeaadd6778a19))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 编辑器黑暗模式 toolbar 颜色不对 ([3ad0988](https://github.com/Mereithhh/van-blog/commit/3ad09888bf820246d8eef43bfbeaeec5a728d979))
+* 设置站点图标失效 ([89dfdd6](https://github.com/Mereithhh/van-blog/commit/89dfdd600dacea976e64bf0d43ce43c3c85d5d71))
+
+
+### ✏️ Documentation | 文档
+
+* update todo ([0ef3075](https://github.com/Mereithhh/van-blog/commit/0ef3075c3eb211c373977671ba5d8419c78697c6))
+* 修正文档错误 ([7984c94](https://github.com/Mereithhh/van-blog/commit/7984c9462efd5b76dd55353e647eca267bb1f51a))
+* 更新文档 ([f88d643](https://github.com/Mereithhh/van-blog/commit/f88d643bb67e0234320c18e4db9a13fd234cc613))
+* 更新文档 ([01066a5](https://github.com/Mereithhh/van-blog/commit/01066a5801a7a16c59b436f26c0e588c1a9e97f1))
+* 更新文档 ([e2f29bf](https://github.com/Mereithhh/van-blog/commit/e2f29bfc7babad39826f08a755f6f29e31473d26))
+* 补充 faq ([a225ba0](https://github.com/Mereithhh/van-blog/commit/a225ba0de6aee4436958f9f7314f997bec170b80))
+
 ## [0.22.0](https://github.com/Mereithhh/van-blog/compare/v0.21.1...v0.22.0) (2022-08-28)
 
 
