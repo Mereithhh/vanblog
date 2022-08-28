@@ -58,6 +58,16 @@
 
 请移步项目文档：[快速上手](https://vanblog.mereith.com/guide/docker.html)
 
+## 常见问题
+
+> [作者 logo 无法加载](https://vanblog.mereith.com/ref/faq.html#%E5%9B%BE%E7%89%87%EF%BC%88%E4%BD%9C%E8%80%85%20logo%EF%BC%89%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%87%BA%E6%9D%A5)
+>
+> [http error](https://vanblog.mereith.com/ref/faq.html#%E9%83%A8%E7%BD%B2%E5%90%8E-http-error)
+>
+> [docker 镜像拉取慢](https://www.runoob.com/docker/docker-mirror-acceleration.html)
+>
+> [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
+
 ## 说明与文档
 
 请移步项目主页： [https://vanblog.mereith.com](https://vanblog.mereith.com)
@@ -90,14 +100,6 @@
 - [ ] RSS 订阅
 - [ ] 精简配置项，尽可能移动到运行时配置
 - [ ] 增加一些 e2e 测试，集成到 CI
-
-## FAQ
-
-> [http error](https://vanblog.mereith.com/ref/faq.html#%E9%83%A8%E7%BD%B2%E5%90%8E-http-error)
->
-> [docker 镜像拉取慢](https://www.runoob.com/docker/docker-mirror-acceleration.html)
->
-> [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
 
 ## 问题反馈
 
