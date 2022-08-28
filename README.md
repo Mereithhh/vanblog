@@ -43,7 +43,7 @@
 - [x] 基于 React，项目工程化，二次开发友好。
 - [x] 内置强大的分析功能，可统计访客等数据。并配有精美看板。
 - [x] 内嵌评论系统。
-- [x] 强大的 markdown 编辑器，支持图表和数学公式，一键插入 more 标记，一键剪切板及本地图片上传，
+- [x] 强大的 markdown 编辑器，支持图表和数学公式，一键插入 more 标记，一键剪切板及本地图片上传
 - [x] TOC、草稿、代码复制、访客数、评论数、分类、标签、搜索、加密、友链、打赏、自定义导航栏。
 - [x] 多个布局设置，可自定义页面细节。
 - [x] 内置图床，并支持各种 OSS 图床、github 图床（外部图床基于 picgo）等。
@@ -92,7 +92,11 @@
 
 ## FAQ
 
-> [常见问题](https://vanblog.mereith.com/ref/faq.html)
+> [http error](https://vanblog.mereith.com/ref/faq.html#%E9%83%A8%E7%BD%B2%E5%90%8E-http-error)
+>
+> [docker 镜像拉取慢](https://www.runoob.com/docker/docker-mirror-acceleration.html)
+>
+> [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
 
 ## 问题反馈
 

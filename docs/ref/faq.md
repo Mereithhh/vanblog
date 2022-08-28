@@ -3,6 +3,12 @@ title: FAQ
 icon: question
 ---
 
+### docker 镜像拉取慢
+
+您可以设置一下 docker 镜像加速器：
+
+> [Docker 镜像加速](https://www.runoob.com/docker/docker-mirror-acceleration.html)
+
 ### 部署后 http error
 
 ![](https://pic.mereith.com/img/ae28e582a7dce7be4816c1bf82dd77de.clipboard-2022-08-28.png)
