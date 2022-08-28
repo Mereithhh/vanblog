@@ -12,6 +12,7 @@
     "vuepress-theme-hope": "^2.0.0-beta.87"
   },
   "scripts": {
+    "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
     "release": "standard-version",
     "release-doc": "node scripts/releaseDoc.js",
     "release-major": "standard-version --release-as major",

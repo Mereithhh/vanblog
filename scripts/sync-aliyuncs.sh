@@ -1,6 +1,16 @@
-version=v0.21.0
-tag="docker.io/mereith/van-blog:${version}"
-tag1="registry.cn-beijing.aliyuncs.com/mereith/van-blog:${version}"
+VERSION=''
+re="\"(version)\": \"([^\"]*)\""
+
+while read -r l; do
+  if [[ $l =~ $re ]]; then
+    value="${BASH_REMATCH[2]}"
+    VERSION="$value"
+  fi
+done <package.json
+
+echo ${VERSION}
+tag="docker.io/mereith/van-blog:${VERSION}"
+tag1="registry.cn-beijing.aliyuncs.com/mereith/van-blog:${VERSION}"
 tag2="registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest"
 docker rmi ${tag}
 docker pull ${tag}
