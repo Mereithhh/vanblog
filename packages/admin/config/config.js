@@ -7,7 +7,7 @@ const { REACT_APP_ENV } = process.env;
 export default defineConfig({
   hash: true,
   base: '/admin/',
-  devServer: { https: false, port: 3002 },
+  devServer: { https: true, port: 3002 },
   publicPath: process.env.EEE === 'production' ? '/admin/' : '/',
   antd: {},
   dva: {

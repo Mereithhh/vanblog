@@ -15,30 +15,17 @@ import { formatTimes } from '@/services/van-blog/tool';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Col, message, Modal, Row, Space, Tag } from 'antd';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { debounce } from 'lodash';
+import { useCallback, useEffect, useState } from 'react';
 import { history, useModel } from 'umi';
-
 export default function () {
-  const [vd, setVd] = useState();
+  const [value, setValue] = useState('');
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
   const { initialState } = useModel('@@initialState');
-  const sysTheme = useMemo(() => {
-    return initialState?.settings?.navTheme || 'light';
-  }, [initialState]);
-  const updateCodeTheme = useCallback(() => {
-    if (!vd || !initialState?.settings?.navTheme) {
-      return;
-    }
-    if (initialState?.settings?.navTheme == 'light') {
-      vd?.setTheme('light', undefined, 'github');
-    } else {
-      vd?.setTheme('dark', undefined, 'native');
-    }
-  }, [vd, initialState]);
-  useEffect(() => {
-    updateCodeTheme();
-  }, [updateCodeTheme]);
+  // const sysTheme = useMemo(() => {
+  //   return initialState?.settings?.navTheme || 'light';
+  // }, [initialState]);
   // 类型，可以是文章、草稿、或者 about
   const type = history.location.query?.type || 'article';
   const typeMap = {
@@ -52,35 +39,34 @@ export default function () {
     const id = history.location.query?.id;
     if (type == 'about') {
       const { data } = await getAbout();
+      setValue(data?.content || '');
       setCurrObj(data);
     }
     if (type == 'article' && id) {
       const { data } = await getArticleById(id);
+      setValue(data?.content || '');
       setCurrObj(data);
     }
     if (type == 'draft' && id) {
       const { data } = await getDraftById(id);
+      setValue(data?.content || '');
       setCurrObj(data);
     }
     setLoading(false);
-  }, [history, setLoading]);
+  }, [history, setLoading, setValue]);
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-  useEffect(() => {
-    if (vd && currObj?.content && !loading) {
-      vd?.setValue(currObj.content);
-    }
-  }, [currObj, vd, loading]);
-  const handleBlur = async (value) => {
+  const handleBlurFn = async () => {
     const type = history.location.query?.type || 'article';
     const id = history.location.query?.id;
     if (type == 'draft') {
       await updateDraft(id, { content: value });
       await fetchData();
-      message.success('失焦自动保存草稿成功！');
+      console.log('失焦保存草稿成功！');
     }
   };
+  const handleBlur = debounce(handleBlurFn, 1000);
   return (
     <PageContainer
       className="editor-full"
@@ -131,12 +117,8 @@ export default function () {
               // 先检查一下有没有 more .
               let hasMore = true;
               if (['article', 'draft'].includes(history.location.query?.type)) {
-                const v = vd?.getValue();
-                if (!v?.includes('<!-- more -->')) {
+                if (!value?.includes('<!-- more -->')) {
                   hasMore = false;
-                  // message.warning(
-                  //   '缺少more标记，请点击工具栏第一个按钮在合适的地方插入标记！ 这样阅读全文前的内容才能被正确识别。',
-                  // );
                 }
               }
               let hasTags =
@@ -165,7 +147,7 @@ export default function () {
                   </div>
                 ),
                 onOk: async () => {
-                  const v = vd?.getValue();
+                  const v = value;
                   setLoading(true);
                   if (type == 'article') {
                     await updateArticle(currObj?.id, { content: v });
@@ -192,7 +174,7 @@ export default function () {
           <Button
             key="resetButton"
             onClick={() => {
-              vd.setValue(currObj?.content || '');
+              setValue(currObj?.content || '');
               message.success('重置为初始值成功！');
             }}
           >
@@ -355,7 +337,7 @@ export default function () {
       }}
       footer={null}
     >
-      <Editor setVd={setVd} sysTheme={sysTheme} onBlur={handleBlur} />
+      <Editor value={value} onChange={setValue} onBlur={handleBlur} />
     </PageContainer>
   );
 }
