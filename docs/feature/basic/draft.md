@@ -66,6 +66,7 @@ title: 草稿管理
 
 ## 自动保存
 
-当编辑器失去焦点的时候将会自动保存。只针对草稿生效。
+当编辑器失去焦点的时候将会自动保存。console 日志会打印此行为，但前台不会有提示。
 
-![](https://pic.mereith.com/img/085bc90dc25a832a3c89988027fc6e64.clipboard-2022-08-23.png)
+![](https://pic.mereith.com/img/c27465503f120c91d356ca5d91b94fbb.clipboard-2022-08-28.png)
+
