@@ -87,6 +87,7 @@ version="1.1"
 xmlns="http://www.w3.org/2000/svg"
 p-id="1689"
 width="16"
+fill="currentColor"
 height="16"
 >
 <path
