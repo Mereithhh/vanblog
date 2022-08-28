@@ -3,6 +3,36 @@ title: 更新日志
 icon: update
 ---
 
+
+## [0.22.0](https://github.com/Mereithhh/van-blog/compare/v0.21.1...v0.22.0) (2022-08-28)
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* 手动发版文档 ([e7f4b4c](https://github.com/Mereithhh/van-blog/commit/e7f4b4c2efac8df6f34a11d822869424196fe0fd))
+
+
+### ✨ Features | 新功能
+
+* mermaid 图片全屏预览 ([8576e40](https://github.com/Mereithhh/van-blog/commit/8576e408335fc96711de21212e8afddd2b309321))
+* 后台编辑器改为 bytemd，性能更好支持更多语法 ([e72caf0](https://github.com/Mereithhh/van-blog/commit/e72caf0d137611766e9f37d1ed2f31abf57382c5))
+* 完整支持 mermaid 图表语法 ([846cc19](https://github.com/Mereithhh/van-blog/commit/846cc1994e5f8b4bb4c5fdbb977e6f7a4d765630))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复缺少 mermaid 类型导致的构建报错 ([16e33a0](https://github.com/Mereithhh/van-blog/commit/16e33a04e9e9893919cc1b222cdab5d3e5f7c996))
+
+
+### ✏️ Documentation | 文档
+
+* 修正文档中的反代配置 ([3d12b20](https://github.com/Mereithhh/van-blog/commit/3d12b20b965e2669514c05b8b446b87c963f4ddb))
+* 手动修改一下 changelog ([3f67ffd](https://github.com/Mereithhh/van-blog/commit/3f67ffd41718dc367161a40f00f0c6119bb46d24))
+* 更新文档 ([3592378](https://github.com/Mereithhh/van-blog/commit/3592378750afc8421eaadb21c16f660bf41ba617))
+* 更新文档 ([e4426a5](https://github.com/Mereithhh/van-blog/commit/e4426a506414ce793ebb8bb1bc5c2ed3e034b131))
+* 更新文档 ([80f5d58](https://github.com/Mereithhh/van-blog/commit/80f5d58c1f032949aa6dd3f6b424937ab8e89649))
+* 补充一下常见问题 ([219e638](https://github.com/Mereithhh/van-blog/commit/219e6389e8b80357e7d186f7b5936e8b15763213))
+
 ### [0.21.1](https://github.com/Mereithhh/van-blog/compare/v0.21.0...v0.21.1) (2022-08-27)
 
 ### ✨ Features | 新功能
