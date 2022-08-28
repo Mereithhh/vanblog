@@ -6,6 +6,9 @@ order: -3
 ---
 
 :::info 注意
+
+vanblog 内置了 caddy，可以全自动申请 https 证书，如没有其他服务需要共存，是不建议再加一层反代的。
+
 使用反向代理之前记得要按需修改默认的 80 端口号哦。如果你要反代，请不要开启 `https 自动重定向` (默认是关闭的)
 :::
 
@@ -22,8 +25,8 @@ order: -3
 ```
 example.com {
   tls admin@example.com
-  proxy / <IP:端口号> {
-    transparent
+  reverse_proxy  127.0.0.1:<你映射的端口号> {
+    trusted_proxies private_ranges
   }
 }
 ```
