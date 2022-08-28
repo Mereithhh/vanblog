@@ -1050,3 +1050,6 @@
 .markdown-body * {
   word-break: break-word;
 }
+.language-mermaid {
+  background-color: white;
+}

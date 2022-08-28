@@ -9,7 +9,8 @@ import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import ImageBox from "../ImageBox";
-
+import mermaid from "mermaid";
+import { useEffect, useRef } from "react";
 export default function (props: { content: string }) {
   return (
     <>
@@ -20,7 +21,35 @@ export default function (props: { content: string }) {
         components={{
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
-
+            const lang = match?.length ? match[1] : undefined;
+            const domRef: any = useRef();
+            const domIdRef: any = useRef(`mermaid${Date.now()}`);
+            let { current: hasInit } = useRef(false);
+            useEffect(() => {
+              if (lang == "mermaid" && !hasInit) {
+                hasInit = true;
+                try {
+                  mermaid.initialize({ startOnLoad: false });
+                  mermaid.render(
+                    domIdRef.current,
+                    String(children),
+                    (s) => {
+                      domRef.current.innerHTML = s;
+                    },
+                    domRef.current
+                  );
+                } catch (err) {
+                  console.log("mermaid 渲染失败", err);
+                }
+              }
+            }, [children, lang, domRef, domIdRef, hasInit]);
+            if (lang == "mermaid") {
+              return (
+                <div ref={domRef} className={className}>
+                  <div id={domIdRef.current} className="mermaid"></div>
+                </div>
+              );
+            }
             return !inline ? (
               <div className="relative">
                 <CopyToClipboard
