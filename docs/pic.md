@@ -20,7 +20,7 @@ icon: pic
 
 ### 编辑器
 
-![admin](./assets/admin-editor.png)
+![](https://pic.mereith.com/img/17e354201c423273399e840a73b01685.clipboard-2022-08-28.png)
 
 ### 设置
 

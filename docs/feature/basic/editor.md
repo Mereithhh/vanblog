@@ -2,17 +2,16 @@
 title: 编辑器
 ---
 
-`vanBlog` 后台内置了魔改的 [vditor](https://b3log.org/vditor/) 作为 `markdown` 编辑器：
+::: info 公告
+自 `v0.22.1` 起，`VanBlog` 切换为 [bytemd](https://github.com/bytedance/bytemd)（掘金同款编） 作为 markdown 编辑器。因为老的编辑器有些臃肿，还有些小毛病。
 
-![](https://pic.mereith.com/img/6329b39f917d12434fa2ed02465b3c29.clipboard-2022-08-15.png)
+虽然新的编辑器不支持即时预览模式，但比较稳定简洁，易于拓展。
+:::
+`vanBlog` 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金同款） 作为 `markdown` 编辑器：
 
-支持多种编辑模式、一键上传剪切板图片到图床、一键插入 `more` 标记、快捷键、自动保存等功能。具体请查看 [vditor 官网](https://b3log.org/vditor/)
+![](https://pic.mereith.com/img/17e354201c423273399e840a73b01685.clipboard-2022-08-28.png)
 
-## 切换编辑模式
-
-点击编辑器上方工具栏可切换编辑模式，默认为 `所见即所得` 模式。切换模式后，在当前设备将会保存该设置，刷新页面后不会丢失。
-
-![](https://pic.mereith.com/img/f8ceae420b2b829a8e55447c9350530a.clipboard-2022-08-15.png)
+支持数学公式和图表、支持一键上传剪切板图片到图床、一键插入 `more` 标记、快捷键、自动保存等功能。
 
 ## 一键插入 more 标记
 
@@ -24,34 +23,30 @@ title: 编辑器
 
 ![](https://pic.mereith.com/img/b613474a616f7e2b714735cb79aeff6a.clipboard-2022-08-15.png)
 
-你可以点击工具栏第一个按钮快速在当前焦点插入 more 标记。
+你可以点击工具栏最后第一个按钮快速在当前焦点插入 more 标记。
 
-![](https://pic.mereith.com/img/d4b6837b20d6a6eb68193ae9b3f88c91.clipboard-2022-08-23.png)
+![](https://pic.mereith.com/img/ec8aea5770b56521647e3bd512c0f835.clipboard-2022-08-28.png)
 
 ## 上传到图床
 
 编辑器支持两种方式上传到图床：剪切板快捷上传、从文件上传。点击编辑器工具栏按钮后，后在当前焦点处插入上传后的图片并复制图片链接到剪切板，如果没有焦点就会上传到最上面。
 
-![](https://pic.mereith.com/img/46a028dc164de913c64a1f158f09b292.clipboard-2022-08-15.png)
+![](https://pic.mereith.com/img/777e71bbc41e3d7439d9b3cb1429ef62.clipboard-2022-08-28.png)
 
 ## 自动保存
 
-如果当前编辑的是 `草稿`，那当编辑器失去焦点的时候将会自动保存。
+如果当前编辑的是 `草稿`，那当编辑器失去焦点的时候将会自动保存。console 日志会打印此行为，但前台不会有提示。
 
-## 在编辑器复制后格式错乱
+![](https://pic.mereith.com/img/c27465503f120c91d356ca5d91b94fbb.clipboard-2022-08-28.png)
 
-默认粘贴的格式可能带有一些额外信息，你可以鼠标右键选择复制为纯文本，或者使用快捷键 `ctrl+shift+v` 。
+## 语法速查、快捷键与帮助
 
-![](https://pic.mereith.com/img/88b29bad4ad0ef7d6e411e43f80ec1bc.clipboard-2022-08-22.png)
+点击编辑器帮助按钮会显示 markdown 语法与快捷键信息：
 
-## Markdown 语法速查
+![](https://pic.mereith.com/img/03d774603a742da925b4d9b4bc54cad2.clipboard-2022-08-28.png)
 
-> [Markdown 使用指南 - 基础语法](https://ld246.com/article/1583129520165)
+## 图标和数学公式
+
+> 图表语法速查 [Mermaid 从入门到入土——Markdown 进阶语法](https://zhuanlan.zhihu.com/p/355997933)
 >
-> [Markdown 使用指南 - 语法速查手册](https://ld246.com/article/1583308420519)
->
-> [Markdown 使用指南 - 扩展语法](https://ld246.com/article/1583305480675)
-
-## 快捷键
-
-> [Vditor 快捷键](https://ld246.com/article/1582778815353)
+> 数学公式语法速查 [使用 Markdown 输出 LaTex 数学公式](https://zhuanlan.zhihu.com/p/59412540)

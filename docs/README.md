@@ -24,7 +24,7 @@ features:
 
   - title: 功能强大
     icon: contrast
-    details: 草稿、分类、标签、搜索、TOC、内嵌评论系统
+    details: 草稿、分类、标签、搜索、TOC、内嵌评论系统、图标和数学公式支持
 
   - title: 内置图床
     icon: pic
