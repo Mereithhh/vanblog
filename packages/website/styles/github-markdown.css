@@ -1053,3 +1053,6 @@
 .language-mermaid {
   background-color: white;
 }
+.markdown-body ol {
+  list-style: decimal;
+}
