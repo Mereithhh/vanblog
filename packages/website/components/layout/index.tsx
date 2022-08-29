@@ -65,6 +65,7 @@ export default function (props: {
           process.env.NODE_ENV != "development" && (
             <BaiduAnalysis id={props.option.baiduAnalysisID}></BaiduAnalysis>
           )}
+
         {props.option.gaAnalysisID != "" &&
           process.env.NODE_ENV != "development" && (
             <GaAnalysis id={props.option.gaAnalysisID}></GaAnalysis>
