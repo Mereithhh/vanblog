@@ -1,3 +1,4 @@
+import ImportArticleModal from '@/components/ImportArticleModal ';
 import NewArticleModal from '@/components/NewArticleModal';
 import { getArticlesByOption } from '@/services/van-blog/api';
 import { useNum } from '@/services/van-blog/useNum';
@@ -154,6 +155,12 @@ export default () => {
             </Button>,
             <NewArticleModal
               key="newArticle123"
+              onFinish={() => {
+                actionRef?.current?.reload();
+              }}
+            />,
+            <ImportArticleModal
+              key="importArticleBtn"
               onFinish={() => {
                 actionRef?.current?.reload();
               }}
