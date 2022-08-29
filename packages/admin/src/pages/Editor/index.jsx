@@ -89,9 +89,10 @@ export default function () {
       content: hasMore ? undefined : (
         <div style={{ marginTop: 8 }}>
           <p>缺少完整的 more 标记！</p>
-          <p>将截取指定的文字数量作为阅读全文前的内容！</p>
+          <p>这可能会造成阅读全文前的图片语句被截断从而无法正常显示！</p>
+          <p>默认将截取指定的字符数量作为阅读全文前的内容。</p>
           <p>
-            或者您可以点击工具栏第一个按钮在合适的地方插入标记。
+            您可以点击编辑器工具栏最后第一个按钮在合适的地方插入标记。
             <a
               target={'_blank'}
               rel="noreferrer"
@@ -100,6 +101,11 @@ export default function () {
               相关文档
             </a>
           </p>
+          <img
+            src="https://pic.mereith.com/img/d0eaad2ec63ec895c7d009fbbb0c1893.clipboard-2022-08-29.png"
+            alt="more"
+            width={200}
+          ></img>
         </div>
       ),
       onOk: async () => {
