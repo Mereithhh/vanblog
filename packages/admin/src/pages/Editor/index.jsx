@@ -22,10 +22,6 @@ export default function () {
   const [value, setValue] = useState('');
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
-  // const sysTheme = useMemo(() => {
-  //   return initialState?.settings?.navTheme || 'light';
-  // }, [initialState]);
-  // 类型，可以是文章、草稿、或者 about
   const type = history.location.query?.type || 'article';
   const typeMap = {
     article: '文章',
