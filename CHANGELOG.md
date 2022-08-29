@@ -1,4 +1,16 @@
 # Changelog
+### [0.23.2](https://github.com/Mereithhh/van-blog/compare/v0.23.1...v0.23.2) (2022-08-29)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([ba40cbc](https://github.com/Mereithhh/van-blog/commit/ba40cbcdfdc2a006b04d53772ec61ddf37b01f2a))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 后台图片管理右键无法下载图片 ([28a1bc4](https://github.com/Mereithhh/van-blog/commit/28a1bc4366555182d8a864b1f6948012ef4fe1e1))
+
 ### [0.23.1](https://github.com/Mereithhh/van-blog/compare/v0.23.0...v0.23.1) (2022-08-29)
 
 
