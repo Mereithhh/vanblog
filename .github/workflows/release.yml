@@ -56,8 +56,17 @@ jobs:
           tags: |
             "docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
             "docker.io/mereith/van-blog:latest"
+      - name: 设置 Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: yarn
+      - name: generateReleaseNote
+        run: yarn release-note
       - name: Release
         uses: softprops/action-gh-release@v1
+        with:
+          body_path: CHANGE.md
       - name: updateVersionToApiServer
         run: |
           curl -X POST "${{ secrets.VERSIONURL }}${{ steps.get_version.outputs.VERSION }}"

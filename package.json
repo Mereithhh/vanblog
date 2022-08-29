@@ -14,6 +14,7 @@
   "scripts": {
     "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
     "release": "standard-version",
+    "release-note": "node scripts/releaseNote.js",
     "release-doc": "node scripts/releaseDoc.js",
     "release-major": "standard-version --release-as major",
     "release-minor": "standard-version --release-as minor",
