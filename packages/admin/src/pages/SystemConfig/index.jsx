@@ -1,6 +1,7 @@
 import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
 import thinstyle from '../Welcome/index.less';
+import About from './tabs/About';
 import Backup from './tabs/Backup';
 import Caddy from './tabs/Caddy';
 import ImgTab from './tabs/ImgTab';
@@ -11,7 +12,7 @@ export default function () {
     siteInfo: <SiteInfo />,
 
     backup: <Backup />,
-
+    about: <About />,
     user: <User />,
     img: <ImgTab />,
     caddy: <Caddy />,
@@ -46,6 +47,10 @@ export default function () {
         {
           tab: 'HTTPS',
           key: 'caddy',
+        },
+        {
+          tab: '关于',
+          key: 'about',
         },
       ]}
       onTabChange={setTab}
