@@ -146,11 +146,12 @@ export const layout = ({ initialState, setInitialState }) => {
     },
     // disableContentMargin: true,
     footerRender: () => {
-      const { location } = history;
-      const disableArr = ['/editor', '/site/comment'];
-      if (disableArr.includes(location.pathname)) {
-        return false;
-      }
+      // const { location } = history;
+      // const disableArr = ['/editor', '/site/comment'];
+      // if (disableArr.includes(location.pathname)) {
+      //   return false;
+      // }
+      // 目前 footer 只有发 console.log 一个功能了。
       return <Footer />;
     },
     onPageChange: () => {
