@@ -57,6 +57,13 @@ export default function () {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+  useEffect(()=>{
+    // 进入默认收起侧边栏
+    const el = document.querySelector(".ant-pro-sider-collapsed-button");
+    if (el && el.style.paddingLeft != '') {
+      el.click();
+    }
+  },[])
   const handleBlurFn = async () => {
     const type = history.location.query?.type || 'article';
     const id = history.location.query?.id;
