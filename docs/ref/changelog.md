@@ -4,6 +4,23 @@ icon: update
 ---
 
 
+### [0.23.4](https://github.com/Mereithhh/van-blog/compare/v0.23.3...v0.23.4) (2022-08-29)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([9ffe4ea](https://github.com/Mereithhh/van-blog/commit/9ffe4ea2f8b2cb94b0b835f7d676bbd41e22a55e))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 草稿中用剪切板一键上传图片后失焦并闪一下 ([6b44e80](https://github.com/Mereithhh/van-blog/commit/6b44e80e8f90ea983aac7791f2532888eb56e39f))
+
+
+### ✨ Features | 新功能
+
+* 编辑器页面保存按钮和操作并列 ([241a48e](https://github.com/Mereithhh/van-blog/commit/241a48e223574a126b2f48ca3da39cb70ede65c2))
+
 ### [0.23.3](https://github.com/Mereithhh/van-blog/compare/v0.23.2...v0.23.3) (2022-08-29)
 
 
