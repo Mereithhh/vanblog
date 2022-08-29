@@ -1,4 +1,22 @@
 # Changelog
+## [0.23.0](https://github.com/Mereithhh/van-blog/compare/v0.22.1...v0.23.0) (2022-08-29)
+
+
+### ✨ Features | 新功能
+
+* 优化编辑器页面结构，更多位置留给编辑器本身 ([8212ade](https://github.com/Mereithhh/van-blog/commit/8212ade8964a446e588ad299763d3389259806de))
+* 后台优化滚动条样式 ([17609e7](https://github.com/Mereithhh/van-blog/commit/17609e756e86c2268522db5bae9973b5d9cea29d))
+* 移动端编辑器页面文章标题过长的显示优化 ([3b45059](https://github.com/Mereithhh/van-blog/commit/3b4505953198b7536d6df50f4aa69a7100c1f283))
+* 进入编辑器默认收起侧边栏 ([63ed7c4](https://github.com/Mereithhh/van-blog/commit/63ed7c471597918d995fc6ef6323ce4ece3f7d72))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([ad9f4ee](https://github.com/Mereithhh/van-blog/commit/ad9f4eeea4b1879468b7701dacb59ed5b2327d74))
+* 更新文档 ([891f423](https://github.com/Mereithhh/van-blog/commit/891f42366044dd55989cf392a9a163efce7eb2e4))
+* 更新编辑器截图 ([18ec43d](https://github.com/Mereithhh/van-blog/commit/18ec43d5e44f47bac0c490262d87938dd3413edc))
+* 补充常见问题 ([6b8cf69](https://github.com/Mereithhh/van-blog/commit/6b8cf69e5a512ae0e5a8e06ad4330a75a9bbc71c))
+
 ### [0.22.1](https://github.com/Mereithhh/van-blog/compare/v0.22.0...v0.22.1) (2022-08-28)
 
 
