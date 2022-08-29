@@ -34,7 +34,9 @@ export default function (props: {
           目录
         </div>
         <MarkdownNavbar
-          updateHashAuto={true}
+          ordered={false}
+          // declarative={true}
+          // updateHashAuto={true}
           source={props.content}
           headingTopOffset={56}
           onHashChange={(newHash, oldHash) => {
