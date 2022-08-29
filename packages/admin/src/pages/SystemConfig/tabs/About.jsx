@@ -42,7 +42,7 @@ export default function (props) {
               Github
             </a>
             <a target={'_blank'} rel="noreferrer" href="https://vanblog.mereith.com">
-              项目主页
+              项目文档
             </a>
             <a target={'_blank'} rel="noreferrer" href="/swagger">
               API文档

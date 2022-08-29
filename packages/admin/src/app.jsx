@@ -1,9 +1,9 @@
 import Footer from '@/components/Footer';
-import { ApiOutlined, HomeOutlined, LogoutOutlined, ProjectOutlined } from '@ant-design/icons';
+import { HomeOutlined, LogoutOutlined, ProjectOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
 import { notification } from 'antd';
 import moment from 'moment';
-import { history } from 'umi';
+import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';
 import LogoutButton from './components/LogoutButton';
 import ThemeButton from './components/ThemeButton';
@@ -171,14 +171,10 @@ export const layout = ({ initialState, setInitialState }) => {
         <HomeOutlined />
         <span>主站</span>
       </a>,
-      <a key="projDoc" rel="noreferrer" target="_blank" href={'https://vanblog.mereith.com'}>
+      <Link key="AboutLink" to={'/site/setting?tab=about'}>
         <ProjectOutlined />
-        <span>项目文档</span>
-      </a>,
-      <a key="apiDoc" rel="noreferrer" target="_blank" href={'/swagger'}>
-        <ApiOutlined />
-        <span>API 文档</span>
-      </a>,
+        <span>关于</span>
+      </Link>,
       <ThemeButton key="themeBtn" showText={true} />,
       <LogoutButton
         key="logoutSider"
