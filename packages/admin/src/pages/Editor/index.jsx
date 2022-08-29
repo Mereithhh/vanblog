@@ -100,11 +100,7 @@ export default function () {
               相关文档
             </a>
           </p>
-          <img
-            src="https://pic.mereith.com/img/d0eaad2ec63ec895c7d009fbbb0c1893.clipboard-2022-08-29.png"
-            alt="more"
-            width={200}
-          ></img>
+          <img src="/more.png" alt="more" width={200}></img>
         </div>
       ),
       onOk: async () => {
