@@ -133,11 +133,6 @@ export default function () {
     <Menu
       items={[
         {
-          key: 'saveBtn',
-          label: '保存',
-          onClick: handleSave,
-        },
-        {
           key: 'resetBtn',
           label: '重置',
           onClick: () => {
@@ -328,8 +323,11 @@ export default function () {
           </Space>
         ),
         extra: [
+          <Button key="extraSaveBtn" type="primary" onClick={handleSave}>
+            保存
+          </Button>,
           <Dropdown key="moreAction" overlay={actionMenu} trigger={['click']}>
-            <Button type="primary" size="middle">
+            <Button size="middle">
               操作
               <DownOutlined />
             </Button>
