@@ -1,3 +1,4 @@
+import ImportDraftModal from '@/components/ImportDraftModal';
 import NewDraftModal from '@/components/NewDraftModal';
 import { getDraftsByOption } from '@/services/van-blog/api';
 import { useNum } from '@/services/van-blog/useNum';
@@ -137,6 +138,12 @@ export default () => {
           toolBarRender={() => [
             <NewDraftModal
               key="newDraft123"
+              onFinish={() => {
+                actionRef?.current?.reload();
+              }}
+            />,
+            <ImportDraftModal
+              key="importDraftMarkdown"
               onFinish={() => {
                 actionRef?.current?.reload();
               }}

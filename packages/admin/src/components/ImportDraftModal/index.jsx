@@ -1,4 +1,4 @@
-import { createArticle, getAllCategories, getTags } from '@/services/van-blog/api';
+import { createDraft, getAllCategories, getTags } from '@/services/van-blog/api';
 import { parseMarkdownFile } from '@/services/van-blog/parseMarkdownFile';
 import {
   ModalForm,
@@ -27,7 +27,7 @@ export default function (props) {
       </Upload>
       <ModalForm
         form={form}
-        title="导入文章"
+        title="导入草稿"
         visible={visible}
         onVisibleChange={(v) => {
           setVisible(v);
@@ -41,7 +41,7 @@ export default function (props) {
             washedValues[k.replace('C', '')] = v;
           }
 
-          await createArticle(washedValues);
+          await createDraft(washedValues);
           if (onFinish) {
             onFinish();
           }
@@ -60,13 +60,6 @@ export default function (props) {
           label="文章标题"
           placeholder="请输入标题"
           rules={[{ required: true, message: '这是必填项' }]}
-        />
-        <ProFormText
-          width="md"
-          id="top"
-          name="top"
-          label="置顶优先级"
-          placeholder="留空或0表示不置顶，其余数字越大表示优先级越高"
         />
         <ProFormSelect
           mode="tags"
@@ -99,53 +92,6 @@ export default function (props) {
           }}
         />
         <ProFormDateTimePicker name="createdAt" id="createdAt" label="创建时间" />
-        <ProFormSelect
-          width="md"
-          name="private"
-          id="private"
-          label="是否加密"
-          placeholder="是否加密"
-          request={async () => {
-            return [
-              {
-                label: '否',
-                value: false,
-              },
-              {
-                label: '是',
-                value: true,
-              },
-            ];
-          }}
-        />
-        <ProFormText.Password
-          label="密码"
-          width="md"
-          id="password"
-          name="password"
-          autocomplete="new-password"
-          placeholder="请输入密码"
-          dependencies={['private']}
-        />
-        <ProFormSelect
-          width="md"
-          name="hidden"
-          id="hidden"
-          label="是否隐藏"
-          placeholder="是否隐藏"
-          request={async () => {
-            return [
-              {
-                label: '否',
-                value: false,
-              },
-              {
-                label: '是',
-                value: true,
-              },
-            ];
-          }}
-        />
         <ProFormTextArea
           name="content"
           label="内容"

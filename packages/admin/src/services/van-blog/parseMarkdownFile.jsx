@@ -1,0 +1,71 @@
+import { getAllCategories } from '@/services/van-blog/api';
+import { message, Modal } from 'antd';
+import fm from 'front-matter';
+
+export const parseMarkdownFile = async (file) => {
+  const name = file.name.split('.')[0];
+  const type = file.name.split('.').pop();
+  if (type != 'md') {
+    Modal.error({ title: '目前仅支持导入 Markdown 文件！' });
+    return;
+  }
+  const txt = await file.text();
+
+  const { attributes, body } = fm(txt);
+  const title = attributes?.title || name;
+  const categoris = attributes?.categories || [];
+  let allCategories = undefined;
+  try {
+    const { data } = await getAllCategories();
+    allCategories = data;
+  } catch (err) {
+    message.error('获取当前系统分析信息失败！');
+    return;
+  }
+  let category = undefined;
+  if (categoris.length > 0 && allCategories?.length > 0) {
+    for (const each of categoris) {
+      if (allCategories.includes(each)) {
+        category = each;
+        break;
+      }
+    }
+  }
+  const categoryInFile = attributes?.category;
+  if (categoryInFile && allCategories.includes(categoryInFile)) {
+    category = categoryInFile;
+  }
+  const tags = attributes?.tags || [];
+  if (attributes?.tag) {
+    tags.push(attributes?.tag);
+  }
+  const top = attributes?.top || 0;
+  let createdAt = new Date().toISOString();
+  try {
+    if (attributes?.date) {
+      createdAt = new Date(attributes?.date).toISOString();
+    }
+  } catch (err) {}
+  let updatedAt = new Date().toISOString();
+  try {
+    if (attributes?.updated) {
+      updatedAt = new Date(attributes?.updated).toISOString();
+    }
+  } catch (err) {}
+  const password = attributes?.password || undefined;
+  const privateAttr = password ? true : false;
+  const hidden = attributes?.hidden || attributes?.hide || false;
+  const vals = {
+    title,
+    top,
+    tags,
+    category,
+    password,
+    private: privateAttr,
+    hidden,
+    createdAt,
+    content: body,
+    updatedAt,
+  };
+  return vals;
+};
