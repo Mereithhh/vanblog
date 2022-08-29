@@ -1,4 +1,19 @@
 # Changelog
+### [0.23.3](https://github.com/Mereithhh/van-blog/compare/v0.23.2...v0.23.3) (2022-08-29)
+
+
+### ✏️ Documentation | 文档
+
+* 更新 api 文档描述 ([291ba73](https://github.com/Mereithhh/van-blog/commit/291ba73a90b76feb1a171c86e1d432d0934eb24c))
+* 更新文档 ([200b037](https://github.com/Mereithhh/van-blog/commit/200b03799cc6ca4a37d27b2685ff607da9c0d46d))
+* 更新文档 ([6704e44](https://github.com/Mereithhh/van-blog/commit/6704e446c775f3471b25f3ce59fac80de6237303))
+* 补充截图 ([e521615](https://github.com/Mereithhh/van-blog/commit/e521615f9e0610436aea0b1cd955e64bb6721d80))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 有序列表与无序列表的前后台展示不一致 ([079f66a](https://github.com/Mereithhh/van-blog/commit/079f66a981e6091917948adeefa93c4e14b08ddc))
+
 ### [0.23.2](https://github.com/Mereithhh/van-blog/compare/v0.23.1...v0.23.2) (2022-08-29)
 
 
