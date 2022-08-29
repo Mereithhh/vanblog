@@ -53,7 +53,7 @@ shortTitle: 文章管理
 
 在文章页面的表格点击编辑按钮，即可跳转到编辑器编辑文章。
 
-![](https://pic.mereith.com/img/81070bb1810bb728b5f8cb7a72d794cb.clipboard-2022-08-23.png)
+![](https://pic.mereith.com/img/58163d12af78386b710be04572282729.clipboard-2022-08-29.png)
 
 如需修改文章信息，点击 `修改信息` 按钮即可。
 

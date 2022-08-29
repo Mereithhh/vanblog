@@ -38,13 +38,11 @@ title: 草稿管理
 
 点击编辑按钮，即可跳转到编辑器编辑该草稿。
 
-![](https://pic.mereith.com/img/017ee0a9f39f47727250b082e7e6fb21.clipboard-2022-08-23.png)
+![](https://pic.mereith.com/img/58163d12af78386b710be04572282729.clipboard-2022-08-29.png)
 
 如需修改草稿信息，点击 `修改信息` 按钮即可。
 
 在编辑草稿时，当编辑器失去焦点的时候将会自动保存。
-
-![](https://pic.mereith.com/img/085bc90dc25a832a3c89988027fc6e64.clipboard-2022-08-23.png)
 
 ## 修改草稿信息
 
@@ -52,11 +50,11 @@ title: 草稿管理
 
 ## 发布草稿
 
-当草稿被完善到可以发布的地步，可以在编辑页面点击右上角的`发布草稿按钮`进行发布。
+当草稿被完善到可以发布的地步，可以在编辑页面点击右上角操作菜单中的`发布草稿按钮`进行发布。
 
 具体选项含义可以参考 [文章管理](/feature/basic/article.md)
 
-![](https://pic.mereith.com/img/c54f76ee3fc3d96b0b4744e4b4ec8a66.clipboard-2022-08-23.png)
+![](https://pic.mereith.com/img/16470169279f8677e55125e813957730.clipboard-2022-08-29.png)
 
 注意的是，草稿发布后会在草稿管理页面消失，而文章管理页面会出现已经发布的草稿。
 
@@ -69,4 +67,3 @@ title: 草稿管理
 当编辑器失去焦点的时候将会自动保存。console 日志会打印此行为，但前台不会有提示。
 
 ![](https://pic.mereith.com/img/c27465503f120c91d356ca5d91b94fbb.clipboard-2022-08-28.png)
-

@@ -9,7 +9,7 @@ title: 编辑器
 :::
 `vanBlog` 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金同款） 作为 `markdown` 编辑器：
 
-![](https://pic.mereith.com/img/17e354201c423273399e840a73b01685.clipboard-2022-08-28.png)
+![](https://pic.mereith.com/img/58163d12af78386b710be04572282729.clipboard-2022-08-29.png)
 
 支持数学公式和图表、支持一键上传剪切板图片到图床、一键插入 `more` 标记、快捷键、自动保存等功能。
 
@@ -25,13 +25,13 @@ title: 编辑器
 
 你可以点击工具栏最后第一个按钮快速在当前焦点插入 more 标记。
 
-![](https://pic.mereith.com/img/ec8aea5770b56521647e3bd512c0f835.clipboard-2022-08-28.png)
+![](https://pic.mereith.com/img/59550a500ed84dea504f897dbe12ed07.clipboard-2022-08-29.png)
 
 ## 上传到图床
 
 编辑器支持两种方式上传到图床：剪切板快捷上传、从文件上传。点击编辑器工具栏按钮后，后在当前焦点处插入上传后的图片并复制图片链接到剪切板，如果没有焦点就会上传到最上面。
 
-![](https://pic.mereith.com/img/777e71bbc41e3d7439d9b3cb1429ef62.clipboard-2022-08-28.png)
+![](https://pic.mereith.com/img/0a54a1e4fe8ac47cea8fa7aea89964ca.clipboard-2022-08-29.png)
 
 ## 自动保存
 
@@ -43,7 +43,7 @@ title: 编辑器
 
 点击编辑器帮助按钮会显示 markdown 语法与快捷键信息：
 
-![](https://pic.mereith.com/img/03d774603a742da925b4d9b4bc54cad2.clipboard-2022-08-28.png)
+![](https://pic.mereith.com/img/cabe5cdfddeedbd6e592f7aaea2f4afc.clipboard-2022-08-29.png)
 
 ## 图标和数学公式
 
