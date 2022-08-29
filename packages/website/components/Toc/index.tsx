@@ -35,7 +35,7 @@ export default function (props: {
         </div>
         <MarkdownNavbar
           ordered={false}
-          // declarative={true}
+          declarative={true}
           // updateHashAuto={true}
           source={props.content}
           headingTopOffset={56}
