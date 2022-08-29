@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.23.1](https://github.com/Mereithhh/van-blog/compare/v0.23.0...v0.23.1) (2022-08-29)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([f75a3bc](https://github.com/Mereithhh/van-blog/commit/f75a3bc6918e162f7c9fcea6a2085ea88869d454))
+
+
+### ✨ Features | 新功能
+
+* 完善缺少 more 标记的提示并增加截图 ([a8f3d10](https://github.com/Mereithhh/van-blog/commit/a8f3d106ceb5b7c9e9d211bfd73a2c2e6638c50e))
+
 ## [0.23.0](https://github.com/Mereithhh/van-blog/compare/v0.22.1...v0.23.0) (2022-08-29)
 
 
