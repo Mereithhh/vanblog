@@ -5,9 +5,9 @@ icon: http
 
 目前还没写专门的 API 参考，但是可以用生成的 `swagger` 做为参考。其中 `public` 标签下的都是不需要鉴权的。
 
-可以在后台侧边栏快速进入 API 文档页面：
+可以在后台侧边栏中点击关于，然后点击关于界面的`API文档`来进入 API 文档页面：
 
-![API 文档入口](https://pic.mereith.com/img/cacbf2d9173c139fbefb0f5cd284ed6a.clipboard-2022-08-29.png)
+![API 文档入口](https://pic.mereith.com/img/0b487fe87735562feff3825b040c5353.clipboard-2022-08-29.png)
 
 由于分离式的设计，你完全可以把本项目当作无头 CMS 来使用。只用本项目的后端和 server，自己写前端，或者自己写一个 `hexo` 的渲染器。
 

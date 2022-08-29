@@ -20,6 +20,30 @@ title: 草稿管理
 
 ![](https://pic.mereith.com/img/00809c704c83e67c946b73e951306fd7.clipboard-2022-08-16.png)
 
+## 导入 markdown
+
+## 导入 markdown
+
+你可以点击 `导入` 按钮导入 `markdown` 文件来创建草稿，暂不支持其他类型的文件。
+
+![](https://pic.mereith.com/img/513d3fa66a42e3832682d623a0f0f664.clipboard-2022-08-29.png)
+
+其中，`markdown` 文件的 [front-matter](https://hexo.bootcss.com/docs/front-matter.html) 将会被自动解析成 `vanblog` 的字段并展示在 弹出的确认表单中，具体而言：
+
+| 字段名称   | 映射到 vanblog 中的字段 | 说明                                                            |
+| ---------- | ----------------------- | --------------------------------------------------------------- |
+| title      | 标题                    | 如果没有的话会以文件名为标题                                    |
+| tags       | 标签                    | 没有的话标签为空                                                |
+| categories | 分类                    | 会从中选择第一个包含在 vanblog 系统中的分类，没有的话分类将为空 |
+| category   | 分类                    | 如果该分类未包含在 vanblog 系统中，分类将为空                   |
+| date       | 创建日期                | 如果没有的话默认为当前时间                                      |
+
+选择文件后，会弹出确认窗口，您可以在这里继续编辑或修改信息：
+
+![](https://pic.mereith.com/img/507093b889194a9726439c74474e90b0.clipboard-2022-08-29.png)
+
+点击确定后，则以该表单为数据进行草稿创建。
+
 ### 文章标题
 
 这个没啥好说的，没有特殊要求

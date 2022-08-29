@@ -19,6 +19,32 @@ shortTitle: 文章管理
 
 ![](https://pic.mereith.com/img/586d268137547ea2bfe259fd356735f6.clipboard-2022-08-15.png)
 
+## 导入 markdown
+
+你可以点击 `导入` 按钮导入 `markdown` 文件来创建文章，暂不支持其他类型的文件。
+
+![](https://pic.mereith.com/img/537490f086ff26ab0b339bd68f7f9016.clipboard-2022-08-29.png)
+
+其中，`markdown` 文件的 [front-matter](https://hexo.bootcss.com/docs/front-matter.html) 将会被自动解析成 `vanblog` 的字段并展示在 弹出的确认表单中，具体而言：
+
+| 字段名称   | 映射到 vanblog 中的字段 | 说明                                                            |
+| ---------- | ----------------------- | --------------------------------------------------------------- |
+| title      | 标题                    | 如果没有的话会以文件名为标题                                    |
+| tags       | 标签                    | 没有的话标签为空                                                |
+| categories | 分类                    | 会从中选择第一个包含在 vanblog 系统中的分类，没有的话分类将为空 |
+| category   | 分类                    | 如果该分类未包含在 vanblog 系统中，分类将为空                   |
+| date       | 创建日期                | 如果没有的话默认为当前时间                                      |
+| hide       | 是否隐藏文章            | 没有的话默认不隐藏                                              |
+| hidden     | 是否隐藏文章            | 没有的话默认不隐藏                                              |
+| password   | 是否加密/密码           | 如果有，则文章自动为加密，且该字段为密码                        |
+| top        | 置顶优先级              | 默认为 0                                                        |
+
+选择文件后，会弹出确认窗口，您可以在这里继续编辑或修改信息：
+
+![](https://pic.mereith.com/img/1f0d74ef0ac87dd8f4b6e3e65b84bf84.clipboard-2022-08-29.png)
+
+点击确定后，则以该表单为数据进行文章创建。
+
 ### 文章标题
 
 这个没啥好说的，没有特殊要求
