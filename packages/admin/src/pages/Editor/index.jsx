@@ -64,7 +64,6 @@ export default function () {
     const id = history.location.query?.id;
     if (type == 'draft') {
       await updateDraft(id, { content: value });
-      await fetchData();
       console.log('失焦保存草稿成功！');
     }
   };
