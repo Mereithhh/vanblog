@@ -11,7 +11,7 @@ import 'bytemd/dist/index.css';
 import 'github-markdown-css/github-markdown.css';
 import 'highlight.js/styles/vs.css';
 import 'katex/dist/katex.css';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { imgUploadPlugin, uploadImg } from './imgUpload';
 import { insertMore } from './insertMore';
 import { cn } from './locales';
@@ -19,9 +19,11 @@ import { cn } from './locales';
 export default function EditorComponent(props: {
   value: string;
   onChange: (string: string) => void;
+  loading: boolean;
+  setLoading: (l: boolean) => void;
   onBlur: any;
 }) {
-  const [loading, setLoading] = useState(false);
+  const { loading, setLoading } = props;
   const plugins = useMemo(() => {
     return [
       gfm({ locale: cn }),
