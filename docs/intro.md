@@ -94,3 +94,4 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持 HTTPS
 ![前台-黑色](./assets/前台-黑色.png)
 ![后台-白色](./assets/后台-白色.png)
 ![后台-黑色](./assets/后台-黑色.png)
+![Lighthouse](./assets/lighthouse.png)
