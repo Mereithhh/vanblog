@@ -10,6 +10,7 @@ import {
   updateArticle,
   updateDraft,
 } from '@/services/van-blog/api';
+import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Menu, message, Modal, Space, Tag } from 'antd';
@@ -123,6 +124,15 @@ export default function () {
       okText: '确认保存',
     });
   };
+  const handleExport = async () => {
+    const md = parseObjToMarkdown(currObj);
+    const data = new Blob([md]);
+    const url = URL.createObjectURL(data);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${currObj?.title || '关于'}.md`;
+    link.click();
+  };
   const actionMenu = (
     <Menu
       items={[
@@ -160,6 +170,11 @@ export default function () {
               ),
             }
           : null,
+        {
+          key: 'exportBtn',
+          label: '导出',
+          onClick: handleExport,
+        },
         {
           key: 'helpBtn',
           label: '帮助文档',

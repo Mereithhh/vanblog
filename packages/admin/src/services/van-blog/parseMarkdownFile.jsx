@@ -69,3 +69,42 @@ export const parseMarkdownFile = async (file) => {
   };
   return vals;
 };
+
+export const parseObjToMarkdown = (obj) => {
+  const frontmatter = {};
+  for (const key of [
+    'title',
+    'category',
+    'tags',
+    'top',
+    'updatedAt',
+    'createdAt',
+    'hidden',
+    'password',
+  ]) {
+    if (Object.keys(obj).includes(key)) {
+      if (['updatedAt', 'createdAt'].includes(key)) {
+        let date = obj[key];
+        try {
+          date = new Date(date).toISOString();
+        } catch (err) {}
+        frontmatter[key] = date;
+      } else if (key == 'tags') {
+        if (obj[key] && obj[key].length > 0) {
+          frontmatter[key] = obj[key];
+        }
+      } else {
+        if (obj[key]) {
+          frontmatter[key] = obj[key];
+        }
+      }
+    }
+  }
+  let result = '---';
+  for (const [k, v] of Object.entries(frontmatter)) {
+    result = result + `\n${k}: ${v}`;
+  }
+  result = result + '\n---\n\n';
+  result = result + obj.content;
+  return result;
+};
