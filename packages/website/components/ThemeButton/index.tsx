@@ -2,7 +2,7 @@ import { useContext, useEffect, useRef } from "react";
 import { applyTheme, decodeTheme, initTheme } from "../../utils/theme";
 import { GlobalContext } from "../../utils/globalContext";
 
-export default function (props: {}) {
+export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
   const { current } = useRef<any>({ hasInit: false });
   const { current: currentTimer } = useRef<any>({ timer: null });
   const { state, setState } = useContext(GlobalContext);
@@ -34,9 +34,15 @@ export default function (props: {}) {
   useEffect(() => {
     if (!current.hasInit) {
       current.hasInit = true;
-      const iTheme = initTheme();
-      setTheme(iTheme);
-      clearTimer();
+      if (!!!localStorage.getItem("theme")) {
+        // 第一次用默认的
+        setTheme(props.defaultTheme);
+        clearTimer();
+      } else {
+        const iTheme = initTheme();
+        setTheme(iTheme);
+        clearTimer();
+      }
     }
     return () => {
       clearInterval(currentTimer.timer);

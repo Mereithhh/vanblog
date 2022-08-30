@@ -64,6 +64,7 @@ export interface MetaProps {
     showDonateInfo: "true" | "false";
     showFriends: "true" | "false";
     enableComment: "true" | "false";
+    defaultTheme: "auto" | "light" | "dark";
   };
 }
 export interface PublicMetaProp {
@@ -111,6 +112,7 @@ const defaultMeta: MetaProps = {
     showDonateInfo: "true",
     showFriends: "true",
     showAdminButton: "true",
+    defaultTheme: "auto",
   },
 };
 

@@ -21,6 +21,7 @@ export interface LayoutProps {
   showFriends: "true" | "false";
   headerLeftContent: "siteLogo" | "siteName";
   enableComment: "true" | "false";
+  defaultTheme: "auto" | "dark" | "light";
   subMenuOffset: number;
 }
 
@@ -61,6 +62,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     categories: data.meta.categories,
     showSubMenu: showSubMenu ? "true" : "false",
     enableComment: siteInfo?.enableComment || "true",
+    defaultTheme: siteInfo?.defaultTheme || "auto",
   };
 }
 

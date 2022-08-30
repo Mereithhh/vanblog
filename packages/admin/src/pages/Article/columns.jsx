@@ -107,7 +107,7 @@ export const columns = [
     title: '操作',
     valueType: 'option',
     key: 'option',
-    width: 140,
+    width: 120,
     render: (text, record, _, action) => {
       return (
         <Space>

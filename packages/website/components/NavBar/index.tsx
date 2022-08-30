@@ -20,6 +20,7 @@ export default function (props: {
   showAdminButton: "true" | "false";
   showFriends: "true" | "false";
   headerLeftContent: "siteName" | "siteLogo";
+  defaultTheme: "dark" | "auto" | "light";
   subMenuOffset: number;
 }) {
   const [showSearch, setShowSearch] = useState(false);
@@ -208,7 +209,7 @@ export default function (props: {
                   <KeyCard type="search"></KeyCard>
                 </div>
               </div>
-              <ThemeButton />
+              <ThemeButton defaultTheme={props.defaultTheme} />
               {props.showAdminButton == "true" && <AdminButton />}
             </div>
           </div>

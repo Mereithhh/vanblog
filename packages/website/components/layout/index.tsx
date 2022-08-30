@@ -72,6 +72,7 @@ export default function (props: {
           )}
 
         <NavBar
+          defaultTheme={props.option.defaultTheme}
           showSubMenu={props.option.showSubMenu}
           headerLeftContent={props.option.headerLeftContent}
           subMenuOffset={props.option.subMenuOffset}
