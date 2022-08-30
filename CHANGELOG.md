@@ -1,4 +1,18 @@
 # Changelog
+### [0.25.2](https://github.com/Mereithhh/van-blog/compare/v0.25.1...v0.25.2) (2022-08-30)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([edf50fb](https://github.com/Mereithhh/van-blog/commit/edf50fb0d5908bdcde1ed77bb21799d4b33e6e60))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* importArticleModal 目录后面有空格 ([2cf3350](https://github.com/Mereithhh/van-blog/commit/2cf335015b9c0ba114c7317c75a497fc28b56286))
+* 上次更新后前台不显示浏览量&mermaid图表渲染的一些问题 ([fbcd3ff](https://github.com/Mereithhh/van-blog/commit/fbcd3ff2546a291e78f903225d9f5a5b66d51d45))
+* 锚点过长时小屏幕出现横向滚动条 ([9afb7ff](https://github.com/Mereithhh/van-blog/commit/9afb7ff797207aa2532395f93e7f4d06650299a5))
+
 ### [0.25.1](https://github.com/Mereithhh/van-blog/compare/v0.25.0...v0.25.1) (2022-08-30)
 
 
