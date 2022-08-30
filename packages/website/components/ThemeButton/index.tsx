@@ -34,18 +34,21 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
   useEffect(() => {
     if (!current.hasInit) {
       //TODO 下面这个是处理主题切换持久化保存失效的，但会导致闪一下。一时间想不到更好的办法，先这样做。
+      current.hasInit = true;
+      const timer = setInterval(() => {
+        if (!!!localStorage.getItem("theme")) {
+          // 第一次用默认的
+          setTheme(props.defaultTheme);
+          clearTimer();
+        } else {
+          const iTheme = initTheme();
+          setTheme(iTheme);
+          clearTimer();
+        }
+      }, 100);
       setTimeout(() => {
-        current.hasInit = true;
+        clearInterval(timer);
       }, 1000);
-      if (!!!localStorage.getItem("theme")) {
-        // 第一次用默认的
-        setTheme(props.defaultTheme);
-        clearTimer();
-      } else {
-        const iTheme = initTheme();
-        setTheme(iTheme);
-        clearTimer();
-      }
     }
     return () => {
       clearInterval(currentTimer.timer);
