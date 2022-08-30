@@ -2,20 +2,20 @@ import { useCallback, useContext, useEffect, useRef } from "react";
 import mermaid from "mermaid";
 import { ThemeContext } from "../../utils/themeContext";
 
-const encodeSvg = (s: string) => {
-  return (
-    "data:image/svg+xml," +
-    s
-      .replace(/"/g, "'")
-      .replace(/%/g, "%25")
-      .replace(/#/g, "%23")
-      .replace(/{/g, "%7B")
-      .replace(/}/g, "%7D")
-      .replace(/</g, "%3C")
-      .replace(/>/g, "%3E")
-      .replace(`style='`, `style='background-color: white; `)
-  );
-};
+// const encodeSvg = (s: string) => {
+//   return (
+//     "data:image/svg+xml," +
+//     s
+//       .replace(/"/g, "'")
+//       .replace(/%/g, "%25")
+//       .replace(/#/g, "%23")
+//       .replace(/{/g, "%7B")
+//       .replace(/}/g, "%7D")
+//       .replace(/</g, "%3C")
+//       .replace(/>/g, "%3E")
+//       .replace(`style='`, `style='background-color: white; `)
+//   );
+// };
 export default function (props: {
   children: any;
   className: string | undefined;
