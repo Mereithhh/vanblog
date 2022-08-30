@@ -3,9 +3,11 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development next dev -p 3001 --hostname 0.0.0.0",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "anlysis": "cross-env ANALYZE=true next build"
   },
   "dependencies": {
+    "@next/bundle-analyzer": "^12.2.5",
     "@types/markdown-navbar": "^1.4.0",
     "@types/mermaid": "^8.2.9",
     "@waline/client": "^2.6.1",

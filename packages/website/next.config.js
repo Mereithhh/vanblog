@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
 const rewites =
   process.env.NODE_ENV == "development"
@@ -43,7 +46,7 @@ const getCdnUrl = () => {
     return {};
   }
 };
-module.exports = {
+module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   output: "standalone",
   experimental: {
@@ -61,4 +64,4 @@ module.exports = {
   },
   ...getCdnUrl(),
   ...rewites,
-};
+});
