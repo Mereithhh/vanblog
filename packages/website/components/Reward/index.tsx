@@ -93,7 +93,10 @@ export default function (props: {
               });
             }}
           >
-            <span className="cursor-pointer border-b border-white hover:border-gray-500 dark:text-dark dark-border-hover dark:border-nav-dark">
+            <span
+              className="cursor-pointer border-b border-white hover:border-gray-500 dark:text-dark dark-border-hover dark:border-nav-dark"
+              style={{ wordBreak: "break-all" }}
+            >
               {url}
             </span>
           </CopyToClipboard>
