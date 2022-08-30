@@ -4,6 +4,31 @@ icon: update
 ---
 
 
+### [0.25.4](https://github.com/Mereithhh/van-blog/compare/v0.25.3...v0.25.4) (2022-08-30)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([472e760](https://github.com/Mereithhh/van-blog/commit/472e7604bdb8d874c2e2dae7654bdfd66ab6f4d1))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 主题切换非持久化 ([8bda262](https://github.com/Mereithhh/van-blog/commit/8bda26273b2708c02a6066557e6fb4985b8dc9cb))
+* 加密文章密码输入错误 loading 不结束 ([a7e4c72](https://github.com/Mereithhh/van-blog/commit/a7e4c7295b3795f0985c0b9a4aa58c493f456637))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 减少主题初始化闪屏时间 ([a5bbae6](https://github.com/Mereithhh/van-blog/commit/a5bbae691fba39ec8f6a55db7719a3c820659262))
+* 删除一些前台未使用的代码 ([663e439](https://github.com/Mereithhh/van-blog/commit/663e4392208f1ec8a2f3e6056cce294ea94abf2f))
+* 尝试动态引入评论组件 ([f8ceb94](https://github.com/Mereithhh/van-blog/commit/f8ceb9415f4fb1014be7a90a9120ead78441184a))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* 增加前台构建分析器 ([c88b3c1](https://github.com/Mereithhh/van-blog/commit/c88b3c10084739862e25248029228b5adf307e05))
+
 ### [0.25.3](https://github.com/Mereithhh/van-blog/compare/v0.25.2...v0.25.3) (2022-08-30)
 
 
