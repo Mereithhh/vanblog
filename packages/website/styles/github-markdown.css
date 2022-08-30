@@ -1050,9 +1050,12 @@
 .markdown-body * {
   word-break: break-word;
 }
-.language-mermaid {
-  background-color: white;
-}
 .markdown-body ol {
   list-style: decimal;
+}
+.dark .language-mermaid {
+  background-color: #26282c;
+}
+.language-mermaid {
+  background-color: white;
 }

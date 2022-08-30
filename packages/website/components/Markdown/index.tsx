@@ -21,9 +21,16 @@ export default function (props: { content: string }) {
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             const lang = match?.length ? match[1] : undefined;
+            const id = node.position?.end?.offset;
             if (lang == "mermaid") {
-              const DynamicMermaid = dynamic(() => import('./mermaid'))
-              return <DynamicMermaid children={children} className={className} />;
+              const DynamicMermaid = dynamic(() => import("./mermaid"));
+              return (
+                <DynamicMermaid
+                  id={id}
+                  children={children}
+                  className={className}
+                />
+              );
             }
 
             return !inline ? (
