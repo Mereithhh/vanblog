@@ -4,7 +4,6 @@
     ask http://127.0.0.1:3000/api/admin/caddy/ask
   }
   admin 0.0.0.0:2019
-  email vanblog@mereith.com
 	log {
 		output file /var/log/caddy.log
 	}
@@ -54,6 +53,10 @@
       import h
     }
   }
+	handle /favicon* {
+    uri replace /favicon /static/img/favicon
+		reverse_proxy 127.0.0.1:3000
+	}
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}

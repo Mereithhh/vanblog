@@ -13,6 +13,7 @@
   },
   "scripts": {
     "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
+    "build:test": "act -j test --secret-file=.env",
     "release": "standard-version",
     "release-note": "node scripts/releaseNote.js",
     "release-doc": "node scripts/releaseDoc.js",
