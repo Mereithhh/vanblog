@@ -1,4 +1,51 @@
 # Changelog
+## [0.25.0](https://github.com/Mereithhh/van-blog/compare/v0.24.0...v0.25.0) (2022-08-30)
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 后台抽离修改信息弹窗组件 ([3838c48](https://github.com/Mereithhh/van-blog/commit/3838c48877ba0f76480d874847dece91ec424790))
+
+
+### ✨ Features | 新功能
+
+* 文章管理页面支持导出文章和修改文章信息 ([f8b820b](https://github.com/Mereithhh/van-blog/commit/f8b820b8af852f247a18552f962db1dd6b87886a))
+* 编辑器页面从文件导入内容 ([be73e60](https://github.com/Mereithhh/van-blog/commit/be73e6015cff71d357dfdf5b87cd85f950c0493d))
+* 编辑器页面可导出文章 ([32fd874](https://github.com/Mereithhh/van-blog/commit/32fd874b6a9287f27b91e9effdb7db9ecce8f771))
+* 草稿管理页面支持导出草稿和修改草稿信息 ([2dd5245](https://github.com/Mereithhh/van-blog/commit/2dd5245814bc852fdd12a53c6a8a395f84a3fa85))
+* 设置前台用户默认主题模式 ([582df60](https://github.com/Mereithhh/van-blog/commit/582df602112b5c0c80f55eda6d53dd799f233418))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 前台主题切换按钮显示和实际主题不一致 ([4a2f943](https://github.com/Mereithhh/van-blog/commit/4a2f943bee92228c1022d8cdc0b60e50396549cf))
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化一下主题初始化逻辑 ([bf12394](https://github.com/Mereithhh/van-blog/commit/bf1239466c92242597716a5c085b514d61021214))
+
+
+### ✏️ Documentation | 文档
+
+* 换一个好看点的 star history 图 ([c4c8f44](https://github.com/Mereithhh/van-blog/commit/c4c8f443f4c21f0f1d600616767bc79d8be27bf8))
+* 更新 TODO ([66e5796](https://github.com/Mereithhh/van-blog/commit/66e5796c6b5de08f9e54496efc253e53ffb68ade))
+* 更新文档 ([842c005](https://github.com/Mereithhh/van-blog/commit/842c00570d9a8b0814ddc62552fb0f83f79fe9cb))
+* 更新文档 ([75c8b0a](https://github.com/Mereithhh/van-blog/commit/75c8b0a4296c2c34fc96e26ee1c4f5abf1817b4b))
+* 更新文档 ([f637216](https://github.com/Mereithhh/van-blog/commit/f637216ea4525b46eeef02e3320f507680e35910))
+* 更新文档截图和描述 ([1961aad](https://github.com/Mereithhh/van-blog/commit/1961aadeafa308c1a6e1f03fa9adc794f35d4828))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **release:** 0.25.0 ([5158055](https://github.com/Mereithhh/van-blog/commit/5158055d7882341f2ca2dedffe2e62a3ba912e57))
+* 修复生成 note 脚本错误 ([92bf19f](https://github.com/Mereithhh/van-blog/commit/92bf19f22f5e8edf51ad25ec6a1063e8c2ce488a))
+* 修正 releaseNote 脚本错误 ([570a527](https://github.com/Mereithhh/van-blog/commit/570a527de33e839363bf216caf2445df18708f45))
+
+
+### ⏪ Revert | 回退
+
+* 因为 note 脚本错误回退版本再重发 ([af0fa06](https://github.com/Mereithhh/van-blog/commit/af0fa06a42e957b83bded98d9982f77217d22903))
 
 ## [0.24.0](https://github.com/Mereithhh/van-blog/compare/v0.23.4...v0.24.0) (2022-08-29)
 
