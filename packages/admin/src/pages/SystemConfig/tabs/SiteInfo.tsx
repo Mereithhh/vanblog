@@ -2,7 +2,7 @@ import SiteInfoForm from '@/components/SiteInfoForm';
 import { getSiteInfo, updateSiteInfo } from '@/services/van-blog/api';
 import { useTab } from '@/services/van-blog/useTab';
 import { ProForm } from '@ant-design/pro-components';
-import { Card, message } from 'antd';
+import { Card, message, Modal } from 'antd';
 export default function () {
   const [tab, setTab] = useTab('basic', 'subTab');
   const [form] = ProForm.useForm();
@@ -34,6 +34,10 @@ export default function () {
         }}
         syncToInitialValues={true}
         onFinish={async (data) => {
+          if (location.hostname == 'blog-demo.mereith.com') {
+            Modal.info({ title: '演示站禁止修改站点配置！' });
+            return;
+          }
           await updateSiteInfo(data);
           message.success('更新成功！');
         }}

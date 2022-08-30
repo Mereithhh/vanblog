@@ -1,6 +1,6 @@
 import { getStaticSetting, updateStaticSetting } from '@/services/van-blog/api';
 import { ProForm, ProFormSelect, ProFormTextArea } from '@ant-design/pro-components';
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import { useState } from 'react';
 export default function (props: {}) {
   const [storageType, setStorageType] = useState<any>('local');
@@ -22,6 +22,10 @@ export default function (props: {}) {
         }}
         syncToInitialValues={true}
         onFinish={async (data) => {
+          if (location.hostname == 'blog-demo.mereith.com') {
+            Modal.info({ title: '演示站禁止修改图床配置！' });
+            return;
+          }
           setStorageType(data?.storageType || 'local');
           // 验证一下 json 格式
           let picgoConfig = null;

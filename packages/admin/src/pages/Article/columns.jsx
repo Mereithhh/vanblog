@@ -162,6 +162,12 @@ export const columns = [
                   Modal.confirm({
                     title: `确定删除 "${record.title}"吗？`,
                     onOk: async () => {
+                      if (location.hostname == 'blog-demo.mereith.com') {
+                        if ([28, 29].includes(record.id)) {
+                          message.warn('演示站禁止删除此文章！');
+                          return false;
+                        }
+                      }
                       await deleteArticle(record.id);
                       message.success('删除成功!');
                       action?.reload();
