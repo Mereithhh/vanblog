@@ -1,8 +1,11 @@
-import { Tag, Modal, message } from 'antd';
-import { deleteDraft, getAllCategories } from '@/services/van-blog/api';
+import ColumnsToolBar from '@/components/ColumnsToolBar';
 import PublishDraftModal from '@/components/PublishDraftModal';
-import { history } from 'umi';
+import UpdateModal from '@/components/UpdateModal';
 import { genActiveObj } from '@/services/van-blog/activeColTools';
+import { deleteDraft, getAllCategories, getDraftById } from '@/services/van-blog/api';
+import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
+import { message, Modal, Tag } from 'antd';
+import { history } from 'umi';
 export const columns = [
   {
     dataIndex: 'id',
@@ -90,39 +93,70 @@ export const columns = [
     valueType: 'option',
     key: 'option',
     width: 140,
-    render: (text, record, _, action) => [
-      <a
-        key={'editable' + record.id}
-        onClick={() => {
-          history.push(`/editor?type=draft&id=${record.id}`);
-        }}
-      >
-        编辑
-      </a>,
-      ,
-      <PublishDraftModal
-        key="publishRecord1213"
-        title={record.title}
-        id={record.id}
-        action={action}
-        trigger={<a key="publishRecord123">发布</a>}
-      />,
-      <a
-        key={'deleteDraft' + record.id}
-        onClick={() => {
-          Modal.confirm({
-            title: `确定删除草稿 "${record.title}" 吗？`,
-            onOk: async () => {
-              await deleteDraft(record.id);
-              message.success('删除成功!');
-              action?.reload();
-            },
-          });
-        }}
-      >
-        删除
-      </a>,
-    ],
+    render: (text, record, _, action) => {
+      return (
+        <ColumnsToolBar
+          outs={[
+            <a
+              key={'editable' + record.id}
+              onClick={() => {
+                history.push(`/editor?type=draft&id=${record.id}`);
+              }}
+            >
+              编辑
+            </a>,
+            ,
+            <PublishDraftModal
+              key="publishRecord1213"
+              title={record.title}
+              id={record.id}
+              action={action}
+              trigger={<a key="publishRecord123">发布</a>}
+            />,
+          ]}
+          nodes={[
+            <UpdateModal
+              currObj={record}
+              setLoading={() => {}}
+              type="draft"
+              onFinish={() => {
+                action?.reload();
+              }}
+            />,
+            <a
+              key={'exportDraft' + record.id}
+              onClick={async () => {
+                const { data: obj } = await getDraftById(record.id);
+                const md = parseObjToMarkdown(obj);
+                const data = new Blob([md]);
+                const url = URL.createObjectURL(data);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `${record.title}.md`;
+                link.click();
+              }}
+            >
+              导出
+            </a>,
+            <a
+              key={'deleteDraft' + record.id}
+              onClick={() => {
+                Modal.confirm({
+                  title: `确定删除草稿 "${record.title}" 吗？`,
+                  onOk: async () => {
+                    await deleteDraft(record.id);
+                    message.success('删除成功!');
+                    action?.reload();
+                  },
+                });
+              }}
+            >
+              删除
+            </a>,
+          ]}
+        ></ColumnsToolBar>
+      );
+    },
   },
 ];
 export const draftKeys = ['category', 'id', 'option', 'showTime', 'tags', 'title'];
