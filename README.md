@@ -107,4 +107,4 @@
 
 ## Star 趋势图
 
-[![Stargazers over time](https://starchart.cc/Mereithhh/van-blog.svg)](https://starchart.cc/Mereithhh/van-blog)
+[![Star History Chart](https://api.star-history.com/svg?repos=mereithhh/van-blog&type=Date)](https://star-history.com/#mereithhh/van-blog&Date)
