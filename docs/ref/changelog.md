@@ -4,6 +4,19 @@ icon: update
 ---
 
 
+### [0.25.5](https://github.com/Mereithhh/van-blog/compare/v0.25.4...v0.25.5) (2022-08-30)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([ed83161](https://github.com/Mereithhh/van-blog/commit/ed83161cabf0c8ed9b53c5cc95389172cf8fe448))
+
+
+### ✨ Features | 新功能
+
+* 演示站禁止修改关于页面内容 ([796784c](https://github.com/Mereithhh/van-blog/commit/796784c64f5caf84dffa953cd28a8f9c2cfa4009))
+* 演示站禁止修改图床配置和站点配置以及删除默认公告文章 ([8f67a76](https://github.com/Mereithhh/van-blog/commit/8f67a769a0fec743b5c07983bb007b1c3b1fe3da))
+
 ### [0.25.4](https://github.com/Mereithhh/van-blog/compare/v0.25.3...v0.25.4) (2022-08-30)
 
 
