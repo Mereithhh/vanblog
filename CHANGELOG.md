@@ -1,4 +1,16 @@
 # Changelog
+### [0.25.1](https://github.com/Mereithhh/van-blog/compare/v0.25.0...v0.25.1) (2022-08-30)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([21aacab](https://github.com/Mereithhh/van-blog/commit/21aacaba1fdb9a8da5e4c5e6c7ffa43f368be93f))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* mermaid 图表无法展示&黑暗模式样式 ([417e6c3](https://github.com/Mereithhh/van-blog/commit/417e6c3e5e24b2ca62337da6f2592fbda98528dd))
+
 ## [0.25.0](https://github.com/Mereithhh/van-blog/compare/v0.24.0...v0.25.0) (2022-08-30)
 
 
