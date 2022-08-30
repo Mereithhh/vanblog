@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useRef } from "react";
 import mermaid from "mermaid";
-import { GlobalContext } from "../../utils/globalContext";
+import { ThemeContext } from "../../utils/themeContext";
 
 const encodeSvg = (s: string) => {
   return (
@@ -23,9 +23,7 @@ export default function (props: {
 }) {
   const domRef: any = useRef();
   const domIdRef: any = useRef(`mermaid${props.id}`);
-  let { current } = useRef({ hasInit: false });
-  const { state } = useContext(GlobalContext);
-  const { theme } = state;
+  const { theme } = useContext(ThemeContext);
   const render = useCallback(() => {
     try {
       mermaid.initialize({
@@ -44,16 +42,11 @@ export default function (props: {
       // console.log(err);
       // console.log("mermaid 渲染失败，可能是没正确插入 more 标记导致的。");
     }
-  }, []);
+  }, [theme]);
 
   useEffect(() => {
-    if (!current.hasInit) {
-      current.hasInit = true;
-      setTimeout(() => {
-        render();
-      }, 200);
-    }
-  }, [current, render]);
+    render();
+  }, [render]);
 
   return (
     <div className={props.className}>

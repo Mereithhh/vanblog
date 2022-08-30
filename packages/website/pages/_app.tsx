@@ -15,7 +15,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { current } = useRef({ hasInit: false });
 
   const [globalState, setGlobalState] = useState<GlobalState>({
-    theme: "auto-light",
     viewer: 0,
     visited: 0,
   });

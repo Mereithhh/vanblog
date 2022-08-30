@@ -1,8 +1,8 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
-import { GlobalContext } from "../../utils/globalContext";
 import toast, { Toaster } from "react-hot-toast";
 import ImageBoxFuture from "../ImageBoxFuture";
+import { ThemeContext } from "../../utils/themeContext";
 
 export default function (props: {
   aliPay: string;
@@ -13,8 +13,8 @@ export default function (props: {
   id: number;
 }) {
   const [show, setShow] = useState(false);
-  const { state } = useContext(GlobalContext);
-  const { theme } = state;
+  const { theme } = useContext(ThemeContext);
+
   const payUrl = useMemo(() => {
     const r = [];
     if (theme.includes("dark") && props.aliPayDark != "") {
