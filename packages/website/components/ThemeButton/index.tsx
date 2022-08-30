@@ -13,7 +13,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
     localStorage.setItem("theme", newTheme);
     // 设置真实的主题，然后把真实的主题搞到 state 里。
     const realTheme = decodeTheme(newTheme);
-    applyTheme(realTheme, "setTheme");
+    applyTheme(realTheme, "setTheme", true);
     setState({ ...state, theme: realTheme });
     if (realTheme.includes("auto")) {
       setTimer();
@@ -27,13 +27,16 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
     clearTimer();
     currentTimer.timer = setInterval(() => {
       const realTheme = decodeTheme("auto");
-      applyTheme(realTheme, "autoThemeTimer");
+      applyTheme(realTheme, "autoThemeTimer", true);
     }, 10000);
   };
 
   useEffect(() => {
     if (!current.hasInit) {
-      current.hasInit = true;
+      //TODO 下面这个是处理主题切换持久化保存失效的，但会导致闪一下。一时间想不到更好的办法，先这样做。
+      setTimeout(() => {
+        current.hasInit = true;
+      }, 1000);
       if (!!!localStorage.getItem("theme")) {
         // 第一次用默认的
         setTheme(props.defaultTheme);

@@ -21,15 +21,19 @@ export const decodeTheme = (t: "auto" | "light" | "dark") => {
     return t;
   }
 };
-export const applyTheme = (t: string, source: string) => {
+export const applyTheme = (t: string, source: string, disableLog: boolean) => {
   if (t.includes("light")) {
     document.documentElement.classList.add("light");
     document.documentElement.classList.remove("dark");
-    console.log(`[Apply Theme][${source}] ${t}`);
+    if (!disableLog) {
+      console.log(`[Apply Theme][${source}] ${t}`);
+    }
   } else {
     document.documentElement.classList.add("dark");
     document.documentElement.classList.remove("light");
-    console.log(`[Apply Theme][${source}] ${t}`);
+    if (!disableLog) {
+      console.log(`[Apply Theme][${source}] ${t}`);
+    }
   }
 };
 export const initTheme = () => {
