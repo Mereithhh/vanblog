@@ -1,6 +1,9 @@
-import { Tag, Modal, message } from 'antd';
+import ColumnsToolBar from '@/components/ColumnsToolBar';
+import UpdateModal from '@/components/UpdateModal';
+import { deleteArticle, getAllCategories, getArticleById } from '@/services/van-blog/api';
+import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
+import { message, Modal, Space, Tag } from 'antd';
 import { history } from 'umi';
-import { deleteArticle, getAllCategories } from '@/services/van-blog/api';
 import { genActiveObj } from '../../services/van-blog/activeColTools';
 export const columns = [
   {
@@ -105,39 +108,74 @@ export const columns = [
     valueType: 'option',
     key: 'option',
     width: 140,
-    render: (text, record, _, action) => [
-      <a
-        key={'editable' + record.id}
-        onClick={() => {
-          history.push(`/editor?type=${record?.about ? 'about' : 'article'}&id=${record.id}`);
-        }}
-      >
-        编辑
-      </a>,
-      <a
-        href={`/post/${record.id}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        key={'view' + record.id}
-      >
-        查看
-      </a>,
-      <a
-        key={'deleteArticle' + record.id}
-        onClick={() => {
-          Modal.confirm({
-            title: `确定删除 "${record.title}"吗？`,
-            onOk: async () => {
-              await deleteArticle(record.id);
-              message.success('删除成功!');
-              action?.reload();
-            },
-          });
-        }}
-      >
-        删除
-      </a>,
-    ],
+    render: (text, record, _, action) => {
+      return (
+        <Space>
+          <ColumnsToolBar
+            outs={[
+              <a
+                key={'editable' + record.id}
+                onClick={() => {
+                  history.push(
+                    `/editor?type=${record?.about ? 'about' : 'article'}&id=${record.id}`,
+                  );
+                }}
+              >
+                编辑
+              </a>,
+              <a
+                href={`/post/${record.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                key={'view' + record.id}
+              >
+                查看
+              </a>,
+            ]}
+            nodes={[
+              <UpdateModal
+                currObj={record}
+                setLoading={() => {}}
+                type="article"
+                onFinish={() => {
+                  action?.reload();
+                }}
+              />,
+              <a
+                key={'exportArticle' + record.id}
+                onClick={async () => {
+                  const { data: obj } = await getArticleById(record.id);
+                  const md = parseObjToMarkdown(obj);
+                  const data = new Blob([md]);
+                  const url = URL.createObjectURL(data);
+                  const link = document.createElement('a');
+                  link.href = url;
+                  link.download = `${record.title}.md`;
+                  link.click();
+                }}
+              >
+                导出
+              </a>,
+              <a
+                key={'deleteArticle' + record.id}
+                onClick={() => {
+                  Modal.confirm({
+                    title: `确定删除 "${record.title}"吗？`,
+                    onOk: async () => {
+                      await deleteArticle(record.id);
+                      message.success('删除成功!');
+                      action?.reload();
+                    },
+                  });
+                }}
+              >
+                删除
+              </a>,
+            ]}
+          />
+        </Space>
+      );
+    },
   },
 ];
 export const articleKeys = [
