@@ -5,9 +5,10 @@ const run = () => {
     .split("## [")
     .slice(0, 2)
     .join("## [")
-    .replace("# Changelog", "")
-    .substring(0, c.length - 1);
+    .replace("# Changelog", "");
 
-  fs.writeFileSync("CHANGE.md", c, { encoding: "utf-8" });
+  fs.writeFileSync("CHANGE.md", c.substring(0, c.length - 1), {
+    encoding: "utf-8",
+  });
 };
 run();
