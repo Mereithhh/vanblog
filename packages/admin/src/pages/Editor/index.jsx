@@ -10,10 +10,10 @@ import {
   updateArticle,
   updateDraft,
 } from '@/services/van-blog/api';
-import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
+import { parseMarkdownFile, parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Dropdown, Menu, message, Modal, Space, Tag } from 'antd';
+import { Button, Dropdown, Input, Menu, message, Modal, Space, Tag, Upload } from 'antd';
 import { debounce } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 import { history } from 'umi';
@@ -133,6 +133,23 @@ export default function () {
     link.download = `${currObj?.title || '关于'}.md`;
     link.click();
   };
+  const handleImport = async (file) => {
+    setLoading(true);
+    try {
+      const { content } = await parseMarkdownFile(file);
+      Modal.confirm({
+        title: '确认内容',
+        content: <Input.TextArea value={content} autoSize={{ maxRows: 10, minRows: 5 }} />,
+        onOk: () => {
+          setValue(content);
+          message.success('导入成功！');
+        },
+      });
+    } catch (err) {
+      message.error('导入失败！请检查文件格式！');
+    }
+    setLoading(false);
+  };
   const actionMenu = (
     <Menu
       items={[
@@ -171,8 +188,18 @@ export default function () {
             }
           : null,
         {
+          key: 'importBtn',
+          label: '导入内容',
+          onClick: () => {
+            const el = document.querySelector('#importBtn');
+            if (el) {
+              el.click();
+            }
+          },
+        },
+        {
           key: 'exportBtn',
-          label: '导出',
+          label: `导出${typeMap[type]}`,
           onClick: handleExport,
         },
         {
@@ -225,6 +252,17 @@ export default function () {
         onChange={setValue}
         onBlur={handleBlur}
       />
+      <Upload
+        showUploadList={false}
+        multiple={false}
+        accept={'.md'}
+        beforeUpload={handleImport}
+        style={{ display: 'none' }}
+      >
+        <a key="importBtn" type="link" style={{ display: 'none' }} id="importBtn">
+          导入内容
+        </a>
+      </Upload>
     </PageContainer>
   );
 }
