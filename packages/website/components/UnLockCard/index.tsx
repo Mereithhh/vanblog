@@ -47,6 +47,8 @@ export default function (props: {
         onSuccess("解锁成功！");
         props.setContent(article.content);
         props.setLock(false);
+      } else {
+        setLoading(false);
       }
     } catch (err) {
       onError("解锁失败！");
