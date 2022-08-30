@@ -1,8 +1,9 @@
 import { Head, Html, Main, NextScript } from "next/document";
+import { decodeTheme, initTheme } from "../utils/theme";
 
 export default function Document() {
   return (
-    <Html className="light" lang="zh">
+    <Html className={decodeTheme(initTheme()).replace("auto-", "")} lang="zh">
       <Head></Head>
       <body>
         <Main />

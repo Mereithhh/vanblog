@@ -12,6 +12,7 @@ import { LayoutProps } from "../../utils/getLayoutProps";
 import RunningTime from "../RunningTime";
 import ImageProvider from "../ImageProvider";
 import { RealThemeType, ThemeContext } from "../../utils/themeContext";
+import { decodeTheme, initTheme } from "../../utils/theme";
 export default function (props: {
   option: LayoutProps;
   title: string;
@@ -20,7 +21,7 @@ export default function (props: {
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const { current } = useRef({ hasInit: false });
-  const [theme, setTheme] = useState<RealThemeType>("auto-light");
+  const [theme, setTheme] = useState<RealThemeType>(decodeTheme(initTheme()));
   const handleClose = () => {
     console.log("关闭或刷新页面");
     localStorage.removeItem("saidHello");
