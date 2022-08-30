@@ -68,6 +68,10 @@ export default function () {
   };
   const handleBlur = debounce(handleBlurFn, 1000);
   const handleSave = async () => {
+    if (history.location.query?.type == 'about' && location.hostname == 'blog-demo.mereith.com') {
+      message.warning('演示站禁止修改关于页面内容！');
+      return;
+    }
     // 先检查一下有没有 more .
     let hasMore = true;
     if (['article', 'draft'].includes(history.location.query?.type)) {
