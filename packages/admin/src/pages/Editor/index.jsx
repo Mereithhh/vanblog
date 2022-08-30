@@ -14,43 +14,74 @@ import { parseMarkdownFile, parseObjToMarkdown } from '@/services/van-blog/parse
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Input, Menu, message, Modal, Space, Tag, Upload } from 'antd';
-import { debounce } from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { history } from 'umi';
 export default function () {
   const [value, setValue] = useState('');
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
   const type = history.location.query?.type || 'article';
+  const key = useMemo(() => {
+    return `${type}-${history.location.query?.id || '0'}`;
+  }, [type]);
+
   const typeMap = {
     article: '文章',
     draft: '草稿',
     about: '关于',
   };
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    const type = history.location.query?.type || 'article';
-    const id = history.location.query?.id;
-    if (type == 'about') {
-      const { data } = await getAbout();
-      setValue(data?.content || '');
-      setCurrObj(data);
-    }
-    if (type == 'article' && id) {
-      const { data } = await getArticleById(id);
-      setValue(data?.content || '');
-      setCurrObj(data);
-    }
-    if (type == 'draft' && id) {
-      const { data } = await getDraftById(id);
-      setValue(data?.content || '');
-      setCurrObj(data);
-    }
-    setLoading(false);
-  }, [history, setLoading, setValue]);
+  const fetchData = useCallback(
+    async (noMessage) => {
+      setLoading(true);
+
+      const type = history.location.query?.type || 'article';
+      const id = history.location.query?.id;
+      const cache = window.localStorage.getItem(key);
+      if (type == 'about') {
+        const { data } = await getAbout();
+        if (cache && cache != data?.content) {
+          if (!noMessage) {
+            message.success('从缓存中恢复状态！');
+          }
+          setValue(cache);
+        } else {
+          setValue(data?.content || '');
+        }
+        setCurrObj(data);
+      }
+      if (type == 'article' && id) {
+        const { data } = await getArticleById(id);
+        if (cache && cache !== data?.content) {
+          setValue(cache);
+          if (!noMessage) {
+            message.success('从缓存中恢复状态！');
+          }
+        } else {
+          setValue(data?.content || '');
+        }
+        setCurrObj(data);
+      }
+      if (type == 'draft' && id) {
+        const { data } = await getDraftById(id);
+        if (cache && cache != data?.content) {
+          if (!noMessage) {
+            message.success('从缓存中恢复状态！');
+          }
+          setValue(cache);
+        } else {
+          setValue(data?.content || '');
+        }
+        setCurrObj(data);
+      }
+      setLoading(false);
+    },
+    [history, setLoading, setValue, key],
+  );
+
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
   useEffect(() => {
     // 进入默认收起侧边栏
     const el = document.querySelector('.ant-pro-sider-collapsed-button');
@@ -58,15 +89,7 @@ export default function () {
       el.click();
     }
   }, []);
-  const handleBlurFn = async () => {
-    const type = history.location.query?.type || 'article';
-    const id = history.location.query?.id;
-    if (type == 'draft') {
-      await updateDraft(id, { content: value });
-      console.log('失焦保存草稿成功！');
-    }
-  };
-  const handleBlur = debounce(handleBlurFn, 1000);
+
   const handleSave = async () => {
     if (history.location.query?.type == 'about' && location.hostname == 'blog-demo.mereith.com') {
       message.warning('演示站禁止修改关于页面内容！');
@@ -170,7 +193,9 @@ export default function () {
               key: 'updateModalBtn',
               label: (
                 <UpdateModal
-                  onFinish={fetchData}
+                  onFinish={() => {
+                    fetchData(true);
+                  }}
                   type={type}
                   currObj={currObj}
                   setLoading={setLoading}
@@ -253,8 +278,10 @@ export default function () {
         loading={loading}
         setLoading={setLoading}
         value={value}
-        onChange={setValue}
-        onBlur={handleBlur}
+        onChange={(val) => {
+          setValue(val);
+          window.localStorage.setItem(key, val);
+        }}
       />
       <Upload
         showUploadList={false}

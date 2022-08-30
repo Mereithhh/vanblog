@@ -21,7 +21,6 @@ export default function EditorComponent(props: {
   onChange: (string: string) => void;
   loading: boolean;
   setLoading: (l: boolean) => void;
-  onBlur: any;
 }) {
   const { loading, setLoading } = props;
   const plugins = useMemo(() => {
@@ -39,7 +38,7 @@ export default function EditorComponent(props: {
   }, []);
 
   return (
-    <div style={{ height: '100%' }} onBlur={props.onBlur}>
+    <div style={{ height: '100%' }}>
       <Spin spinning={loading} className="editor-wrapper">
         <Editor
           value={props.value}
