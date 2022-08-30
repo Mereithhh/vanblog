@@ -1,4 +1,4 @@
-import ImportArticleModal from '@/components/ImportArticleModal ';
+import ImportArticleModal from '@/components/ImportArticleModal';
 import NewArticleModal from '@/components/NewArticleModal';
 import { getArticlesByOption } from '@/services/van-blog/api';
 import { useNum } from '@/services/van-blog/useNum';
