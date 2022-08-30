@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.25.3](https://github.com/Mereithhh/van-blog/compare/v0.25.2...v0.25.3) (2022-08-30)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([c3e642b](https://github.com/Mereithhh/van-blog/commit/c3e642b2c567ea95eb43df95b5aa35c7603df430))
+
+
+### ✨ Features | 新功能
+
+* 解锁加密文章增加 loading ([cb62dec](https://github.com/Mereithhh/van-blog/commit/cb62dec99e794cffdfed6bf3333f37f8d460c638))
+
 ### [0.25.2](https://github.com/Mereithhh/van-blog/compare/v0.25.1...v0.25.2) (2022-08-30)
 
 
