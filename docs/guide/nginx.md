@@ -20,7 +20,7 @@ vanblog 内置了 caddy，可以全自动申请 https 证书，如没有其他�
 
 第二推荐的是 [caddy](https://caddyserver.com/)，一个现代的高性能 web 服务器，它也可以自动帮你配置好 `https`
 
-配置文件参考：
+配置文件参考（caddy v2）：
 
 ```
 example.com {
@@ -29,6 +29,19 @@ example.com {
     trusted_proxies private_ranges
   }
 }
+```
+
+caddy v1:
+
+```
+example.com {
+  tls admin@example.com
+  proxy / 127.0.0.1:<你映射的端口号> {
+    transparent
+    websocket
+  }
+}
+
 ```
 
 ### nginx

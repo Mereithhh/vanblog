@@ -9,7 +9,7 @@ title: 编辑器
 :::
 `vanBlog` 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金同款） 作为 `markdown` 编辑器：
 
-![](https://pic.mereith.com/img/58163d12af78386b710be04572282729.clipboard-2022-08-29.png)
+![](https://pic.mereith.com/img/577da489715c94c183247ba63887aac5.clipboard-2022-08-30.png)
 
 支持数学公式和图表、支持一键上传剪切板图片到图床、一键插入 `more` 标记、快捷键、自动保存等功能。
 
@@ -38,6 +38,24 @@ title: 编辑器
 如果当前编辑的是 `草稿`，那当编辑器失去焦点的时候将会自动保存。console 日志会打印此行为，但前台不会有提示。
 
 ![](https://pic.mereith.com/img/c27465503f120c91d356ca5d91b94fbb.clipboard-2022-08-28.png)
+
+## 导入内容
+
+点击右上角操作按钮，选择 `导入内容`，选中需要导入的 `markdown` 文件即可。
+
+![](https://pic.mereith.com/img/4218768fe6d1c8d69433bde3fd98c01b.clipboard-2022-08-30.png)
+
+## 导出
+
+点击右上角操作按钮，选择 `导出`，即可导出为 `markdown` 文件，相关数据会自动放置到 `front-matter` 中。
+
+![](https://pic.mereith.com/img/4218768fe6d1c8d69433bde3fd98c01b.clipboard-2022-08-30.png)
+
+## 修改信息
+
+点击右上角操作按钮，选择 `修改信息`，即可对当前编辑的 `文章/草稿` 的信息就行修改。
+
+![](https://pic.mereith.com/img/4218768fe6d1c8d69433bde3fd98c01b.clipboard-2022-08-30.png)
 
 ## 语法速查、快捷键与帮助
 
