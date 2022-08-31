@@ -59,7 +59,8 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 RUN  yarn config set network-timeout 600000
 # 安装 waline
 WORKDIR /app/waline
-RUN yarn add @waline/vercel
+COPY ./packages/waline/ ./
+RUN yarn
 # 复制 server
 WORKDIR /app/server
 COPY --from=SERVER_BUILDER /app/node_modules ./node_modules
