@@ -4,7 +4,7 @@ FROM circleci/node:latest-browsers as ADMIN_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /usr/src/app
 USER root
-RUN npm install -g umi
+# RUN npm install -g umi
 # RUN npm install -g cnpm --registry=https://registry.npmmirror.com
 # RUN yarn config set registry https://registry.npmjs.com -g
 ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
