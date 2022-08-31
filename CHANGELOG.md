@@ -1,4 +1,30 @@
 # Changelog
+### [0.26.1](https://github.com/Mereithhh/van-blog/compare/v0.26.0...v0.26.1) (2022-08-31)
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 修复同步阿里云的脚本错误 ([7ca0bf3](https://github.com/Mereithhh/van-blog/commit/7ca0bf3df1bc57069bd30bcb38c1ab6e4ff8d6fa))
+* 增加本地发布脚本和 workflow（通过act） ([f4a3819](https://github.com/Mereithhh/van-blog/commit/f4a3819b00f1a6fafd9f54f8e51087da30cfdd38))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 优化导出图片文案 ([12ab4ca](https://github.com/Mereithhh/van-blog/commit/12ab4ca2a3f43c742579b6c54a33af3b4631af19))
+
+
+### ✨ Features | 新功能
+
+* 优化备份页面文案 ([62ae234](https://github.com/Mereithhh/van-blog/commit/62ae234924776658a25a51d3fbfafca8a5fa233f))
+* 支持打包导出本地图床全部文件 ([46ce000](https://github.com/Mereithhh/van-blog/commit/46ce0003648f84dcf5a2cebd5b9cce11868cc49c))
+
+
+### ✏️ Documentation | 文档
+
+* 修复项目主页导航栏坏链 ([2e342b6](https://github.com/Mereithhh/van-blog/commit/2e342b6940d3440a6cb615ed4737e997fcff1b05))
+* 更新文档 ([d553905](https://github.com/Mereithhh/van-blog/commit/d553905635ee557ef1e17ff44f9d722bb451d515))
+* 更新文档 ([ef4c55d](https://github.com/Mereithhh/van-blog/commit/ef4c55d2932424f5ae586d96f202a4918a199b7f))
+* 更新新功能文档 ([28bc10d](https://github.com/Mereithhh/van-blog/commit/28bc10dfd5ff75ec967a8d54a3562aca7b15801e))
 
 ## [0.26.0](https://github.com/Mereithhh/van-blog/compare/v0.25.5...v0.26.0) (2022-08-31)
 
