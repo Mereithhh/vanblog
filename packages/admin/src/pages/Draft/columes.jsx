@@ -2,7 +2,7 @@ import ColumnsToolBar from '@/components/ColumnsToolBar';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import UpdateModal from '@/components/UpdateModal';
 import { genActiveObj } from '@/services/van-blog/activeColTools';
-import { deleteDraft, getAllCategories, getDraftById } from '@/services/van-blog/api';
+import { deleteDraft, getAllCategories, getDraftById, getTags } from '@/services/van-blog/api';
 import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
 import { message, Modal, Tag } from 'antd';
 import { history } from 'umi';
@@ -49,9 +49,18 @@ export const columns = [
     title: '标签',
     dataIndex: 'tags',
     search: true,
+    valueType: 'select',
     width: 120,
     renderFormItem: (_, { defaultRender }) => {
       return defaultRender(_);
+    },
+    request: async () => {
+      const { data: tags } = await getTags();
+      const data = tags.map((each) => ({
+        label: each,
+        value: each,
+      }));
+      return data;
     },
     render: (val, record) => {
       if (!record?.tags?.length) {

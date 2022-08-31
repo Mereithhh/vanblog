@@ -1,6 +1,6 @@
 import ColumnsToolBar from '@/components/ColumnsToolBar';
 import UpdateModal from '@/components/UpdateModal';
-import { deleteArticle, getAllCategories, getArticleById } from '@/services/van-blog/api';
+import { deleteArticle, getAllCategories, getArticleById, getTags } from '@/services/van-blog/api';
 import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
 import { message, Modal, Space, Tag } from 'antd';
 import { history } from 'umi';
@@ -45,10 +45,19 @@ export const columns = [
   {
     title: '标签',
     dataIndex: 'tags',
+    valueType: 'select',
     width: 120,
     search: true,
     renderFormItem: (_, { defaultRender }) => {
       return defaultRender(_);
+    },
+    request: async () => {
+      const { data: tags } = await getTags();
+      const data = tags.map((each) => ({
+        label: each,
+        value: each,
+      }));
+      return data;
     },
     render: (val, record) => {
       if (!record?.tags?.length) {
