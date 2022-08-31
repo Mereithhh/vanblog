@@ -19,6 +19,14 @@ const columns = [
     valueType: 'option',
     width: 200,
     render: (text, record, _, action) => [
+      <a
+        key="viewCategory"
+        onClick={() => {
+          window.open(`/category/${record.name}`, '_blank');
+        }}
+      >
+        查看
+      </a>,
       <ModalForm
         key={`editCateoryC%{${record.name}}`}
         title={`修改分类 "${record.name}"`}
