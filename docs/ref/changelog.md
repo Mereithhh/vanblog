@@ -28,21 +28,11 @@ icon: update
 - 后台滚动条样式不美观&编辑器页面不该出现的滚动条 ([a1d8530](https://github.com/Mereithhh/van-blog/commit/a1d853020cdd67dd952d167b5e6902738a299b00))
 - 调整前台滚动条宽度&样式 ([4f17152](https://github.com/Mereithhh/van-blog/commit/4f171527117d09ca8ce8d006f03ceb0cca3401b2))
 
-### 👷 Continuous Integration | CI 配置
-
-- fix ([ec423e4](https://github.com/Mereithhh/van-blog/commit/ec423e4c77e85a8ae4aee990e3103c5ece4423b2))
-- fix ([4b90dc6](https://github.com/Mereithhh/van-blog/commit/4b90dc64a7e728debf714fa203077df34e6396fe))
-- 切换一个 npm 源 ([bdaa6f1](https://github.com/Mereithhh/van-blog/commit/bdaa6f1a5c573b5ad6a85c6aba13867a68488e83))
-- 尝试加快 admin 构建速度 ([db50035](https://github.com/Mereithhh/van-blog/commit/db500352a85ad340dd33a4bf41b19720675a0168))
-
-### 🚀 Chore | 构建/工程依赖/工具
-
-- **release:** 0.26.0 ([8cc58bd](https://github.com/Mereithhh/van-blog/commit/8cc58bda11bf1121ce371c28d46b77b1d607e8e9))
-
 ### ✏️ Documentation | 文档
 
 - 增加一个打赏二维码 😘 ([81319e0](https://github.com/Mereithhh/van-blog/commit/81319e0b5ef8f15a7bf7a650847060417e69332e))
 - 更新截图 ([16257ba](https://github.com/Mereithhh/van-blog/commit/16257ba7b55dc3e47e3571dbc416cc2c7af671ad))
+- 更新文档 ([9cb9ce2](https://github.com/Mereithhh/van-blog/commit/9cb9ce2e62e09d24e23e1f658f7f52a341908aec))
 - 更新文档 ([a0a63e0](https://github.com/Mereithhh/van-blog/commit/a0a63e0543d3f44f25094ac9bccbfa8615a0bbbe))
 - 更新文档 ([9dd7cd6](https://github.com/Mereithhh/van-blog/commit/9dd7cd6f4ba1c90469fad5d2ecab8c53aba2c788))
 - 更新文档 ([d121b56](https://github.com/Mereithhh/van-blog/commit/d121b569cb305f2d02ce6adc486484d0ad719618))
@@ -50,6 +40,10 @@ icon: update
 - 更新文档 ([d74e91f](https://github.com/Mereithhh/van-blog/commit/d74e91f7797b61e422ecd42e4ac4e1fd189ae7b5))
 - 更新新版本对应文档 ([4cb73d3](https://github.com/Mereithhh/van-blog/commit/4cb73d3c44bca946174db8748e10908541ba5d91))
 - 调整图片大小 ([f5beb5b](https://github.com/Mereithhh/van-blog/commit/f5beb5b1e58d4d7ada3364146b8db93785eaa363))
+
+### 👷 Continuous Integration | CI 配置
+
+- 延长 yarn 的超时时间 ([6c89be6](https://github.com/Mereithhh/van-blog/commit/6c89be6365bc851bbec120fc2adfdc4c507a30e2))
 
 ## [0.25.0](https://github.com/Mereithhh/van-blog/compare/v0.24.0...v0.25.0) (2022-08-30)
 
