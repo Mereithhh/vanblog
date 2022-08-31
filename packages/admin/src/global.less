@@ -162,24 +162,7 @@ body .bytemd {
 .ant-tooltip  {
   z-index: 10000;
 }
-// 217.5 (7) 179 48
-/* 滚动槽 */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  // border-radius: 4px;
-}
-::-webkit-scrollbar-track {
-  border-radius: 2px;
-  background: rgba(0, 0, 0, 0.06);
-  -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.08);
-}
-/* 滚动条滑块 */
-::-webkit-scrollbar-thumb {
-  border-radius: 2px;
-  background: #f5f5f5;
-  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
-}
+
 body .ant-page-header-heading-title {
   overflow: auto;
   text-overflow: unset;
@@ -196,4 +179,20 @@ body .ant-page-header-heading-title {
   :hover {
     background-color: #f5f5f5;
   }
+}
+/* 滚动槽 */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 6px;
+  // border-radius: 4px;
+}
+::-webkit-scrollbar-track {
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.06);
+}
+/* 滚动条滑块 */
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: #d7d7d7;
+
 }

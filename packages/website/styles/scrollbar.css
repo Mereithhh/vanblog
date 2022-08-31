@@ -6,14 +6,12 @@
   width: 10px;
 }
 .dark #toc-container::-webkit-scrollbar-thumb {
-  background: #898989;
+  background: #797979;
 }
 .dark ::-webkit-scrollbar-thumb {
   background: #9f9f9f;
 }
 /* 滚动条滑块 */
 ::-webkit-scrollbar-thumb {
-  /* border-radius: 4px; */
-  background: #ebebeb;
-  -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+  background: #dadada;
 }

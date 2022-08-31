@@ -289,26 +289,30 @@ export default function () {
       }}
       footer={null}
     >
-      <Editor
-        loading={loading}
-        setLoading={setLoading}
-        value={value}
-        onChange={(val) => {
-          setValue(val);
-          window.localStorage.setItem(key, val);
-        }}
-      />
-      <Upload
-        showUploadList={false}
-        multiple={false}
-        accept={'.md'}
-        beforeUpload={handleImport}
-        style={{ display: 'none' }}
-      >
-        <a key="importBtn" type="link" style={{ display: 'none' }} id="importBtn">
-          导入内容
-        </a>
-      </Upload>
+      <div style={{ height: '100%' }}>
+        <div style={{ height: '0' }}>
+          <Upload
+            showUploadList={false}
+            multiple={false}
+            accept={'.md'}
+            beforeUpload={handleImport}
+            style={{ display: 'none', height: 0 }}
+          >
+            <a key="importBtn" type="link" style={{ display: 'none' }} id="importBtn">
+              导入内容
+            </a>
+          </Upload>
+        </div>
+        <Editor
+          loading={loading}
+          setLoading={setLoading}
+          value={value}
+          onChange={(val) => {
+            setValue(val);
+            window.localStorage.setItem(key, val);
+          }}
+        />
+      </div>
     </PageContainer>
   );
 }
