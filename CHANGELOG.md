@@ -1,51 +1,5 @@
 # Changelog
 
-## [0.26.0](https://github.com/Mereithhh/van-blog/compare/v0.25.5...v0.26.0) (2022-08-31)
-
-### ✨ Features | 新功能
-
-- 文章管理和草稿管理上方工具栏中，标签可以通过下拉选择进行筛选 ([274591a](https://github.com/Mereithhh/van-blog/commit/274591a2ff914ef9e34ceeec52a6ed14426e0fed))
-- 新增关于页面可配置是否显示打赏按钮配置项 ([f51ec7c](https://github.com/Mereithhh/van-blog/commit/f51ec7c13d00ed32b00524cf088f4dcac1af269e))
-- 标签和分类管理可以快速跳转到相应的前台页面” ([8b7ea89](https://github.com/Mereithhh/van-blog/commit/8b7ea8905d669d33fc106867ffd605be53808b6f))
-- 标签管理：可批量重命名或删除标签了 ([b0946f6](https://github.com/Mereithhh/van-blog/commit/b0946f604df22a8047a9543fc53c786372078bed))
-- 演示站禁止修改捐赠信息&联系方式&导航配置&友情链接 ([063ce9c](https://github.com/Mereithhh/van-blog/commit/063ce9cc93f50e0d04f35d74009adeeac8a14c43))
-- 编辑器实时保存到本地缓存并恢复 ([6c638db](https://github.com/Mereithhh/van-blog/commit/6c638db90371add47c6bf829772e8f7a109b11b2))
-- 编辑器页面增加快速查看前台页面入口 ([42631db](https://github.com/Mereithhh/van-blog/commit/42631db754c962fb89177fee14febc99010009ad))
-- 评论管理加载态 ([6b8c80e](https://github.com/Mereithhh/van-blog/commit/6b8c80ef581c5aba5e1e9e6a551a466053374444))
-
-### 🐛 Bug Fixes | Bug 修复
-
-- 上传站点图标透明度消失 ([a76e720](https://github.com/Mereithhh/van-blog/commit/a76e720db2eace7a4bbc726ae6142af0d8550f93))
-- 关于页面默认隐藏打赏按钮和现在逻辑保持一致 ([2a9b048](https://github.com/Mereithhh/van-blog/commit/2a9b0489665ac3ae4dffd79f1de6e2dd783c3261))
-- 前台略微加深滚动条颜色 ([fb9608d](https://github.com/Mereithhh/van-blog/commit/fb9608dd5daa0d6bc946b9f8a4f6b7c371ce4040))
-- 前台评论无法登录 ([9ea66c8](https://github.com/Mereithhh/van-blog/commit/9ea66c810d15b31f7595715515af44921c6956b0))
-- 后台侧边栏主题切换按钮点击有效区域过小 ([71276e3](https://github.com/Mereithhh/van-blog/commit/71276e378d1d496b447845d6513177ab3d45971e))
-- 后台滚动条样式不美观&编辑器页面不该出现的滚动条 ([a1d8530](https://github.com/Mereithhh/van-blog/commit/a1d853020cdd67dd952d167b5e6902738a299b00))
-- 调整前台滚动条宽度&样式 ([4f17152](https://github.com/Mereithhh/van-blog/commit/4f171527117d09ca8ce8d006f03ceb0cca3401b2))
-
-### 👷 Continuous Integration | CI 配置
-
-- fix ([ec423e4](https://github.com/Mereithhh/van-blog/commit/ec423e4c77e85a8ae4aee990e3103c5ece4423b2))
-- fix ([4b90dc6](https://github.com/Mereithhh/van-blog/commit/4b90dc64a7e728debf714fa203077df34e6396fe))
-- 切换一个 npm 源 ([bdaa6f1](https://github.com/Mereithhh/van-blog/commit/bdaa6f1a5c573b5ad6a85c6aba13867a68488e83))
-- 尝试加快 admin 构建速度 ([db50035](https://github.com/Mereithhh/van-blog/commit/db500352a85ad340dd33a4bf41b19720675a0168))
-
-### 🚀 Chore | 构建/工程依赖/工具
-
-- **release:** 0.26.0 ([8cc58bd](https://github.com/Mereithhh/van-blog/commit/8cc58bda11bf1121ce371c28d46b77b1d607e8e9))
-
-### ✏️ Documentation | 文档
-
-- 增加一个打赏二维码 😘 ([81319e0](https://github.com/Mereithhh/van-blog/commit/81319e0b5ef8f15a7bf7a650847060417e69332e))
-- 更新截图 ([16257ba](https://github.com/Mereithhh/van-blog/commit/16257ba7b55dc3e47e3571dbc416cc2c7af671ad))
-- 更新文档 ([a0a63e0](https://github.com/Mereithhh/van-blog/commit/a0a63e0543d3f44f25094ac9bccbfa8615a0bbbe))
-- 更新文档 ([9dd7cd6](https://github.com/Mereithhh/van-blog/commit/9dd7cd6f4ba1c90469fad5d2ecab8c53aba2c788))
-- 更新文档 ([d121b56](https://github.com/Mereithhh/van-blog/commit/d121b569cb305f2d02ce6adc486484d0ad719618))
-- 更新文档 ([1e16bba](https://github.com/Mereithhh/van-blog/commit/1e16bba5d077298972a55a76c9b772e268883c96))
-- 更新文档 ([d74e91f](https://github.com/Mereithhh/van-blog/commit/d74e91f7797b61e422ecd42e4ac4e1fd189ae7b5))
-- 更新新版本对应文档 ([4cb73d3](https://github.com/Mereithhh/van-blog/commit/4cb73d3c44bca946174db8748e10908541ba5d91))
-- 调整图片大小 ([f5beb5b](https://github.com/Mereithhh/van-blog/commit/f5beb5b1e58d4d7ada3364146b8db93785eaa363))
-
 ## [0.25.0](https://github.com/Mereithhh/van-blog/compare/v0.24.0...v0.25.0) (2022-08-30)
 
 ### ♻️ Code Refactoring | 代码重构
