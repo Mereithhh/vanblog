@@ -7,6 +7,7 @@ WORKDIR /app
 USER root
 COPY ./packages/admin/ ./
 # RUN yarn config set registry https://registry.npmmirror.com
+RUN  yarn config set network-timeout 600000
 RUN yarn global add umi
 RUN yarn
 # RUN sed -i 's/\/assets/\/admin\/assets/g' dist/admin/index.html
