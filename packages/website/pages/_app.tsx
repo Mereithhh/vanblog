@@ -6,6 +6,7 @@ import "../styles/var.css";
 import "../styles/github-markdown.css";
 import "../styles/tip-card.css";
 import "../styles/loader.css";
+import "../styles/scrollbar.css";
 import type { AppProps } from "next/app";
 import { GlobalContext, GlobalState } from "../utils/globalContext";
 import { useCallback, useEffect, useRef, useState } from "react";
