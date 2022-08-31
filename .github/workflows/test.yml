@@ -33,7 +33,7 @@ jobs:
           build-args: |
             VAN_BLOG_BUILD_SERVER=http://localhost:3000
             VAN_BLOG_VERSIONS=test
-          platforms: linux/arm64
+          platforms: linux/amd64
           push: true
           tags: |
             "docker.io/mereith/van-blog:test"

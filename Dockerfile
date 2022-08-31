@@ -1,19 +1,18 @@
 # 具体每个服务的去看 packages 里面的 Dockerfile
 # 这个是 all in one 的。
-FROM circleci/node:latest-browsers as ADMIN_BUILDER
-ENV NODE_OPTIONS=--max_old_space_size=4096
-WORKDIR /usr/src/app
+FROM node:18 as ADMIN_BUILDER
+ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
+WORKDIR /app
 USER root
 # RUN npm install -g umi
 # RUN npm install -g cnpm --registry=https://registry.npmmirror.com
-# RUN yarn config set registry https://registry.npmjs.com -g
-ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
 ENV EEE=production
 COPY ./packages/admin/ ./
-
-RUN npm install
+RUN yarn config set registry https://registry.npmjs.com
+RUN yarn global add umi
+RUN yarn
 # RUN sed -i 's/\/assets/\/admin\/assets/g' dist/admin/index.html
-RUN npm run build
+RUN yarn build
 
 FROM node:18 as SERVER_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
@@ -82,7 +81,7 @@ ENV EMAIL "vanblog@mereith.com"
 ENV VAN_BLOG_WALINE_DB "waline"
 # 复制静态文件
 WORKDIR /app/admin
-COPY --from=ADMIN_BUILDER /usr/src/app/dist/ ./
+COPY --from=ADMIN_BUILDER /app/dist/ ./
 COPY CaddyfileTemplate /app/CaddyfileTemplate
 # 复制入口文件
 WORKDIR /app
