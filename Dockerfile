@@ -5,6 +5,7 @@ ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /usr/src/app
 RUN yarn global add umi
 # RUN npm install -g cnpm --registry=https://registry.npmmirror.com
+RUN yarn config set registry https://registry.npmjs.com -g
 ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
 ENV EEE=production
 COPY ./packages/admin/ ./
