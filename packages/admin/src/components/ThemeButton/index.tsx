@@ -58,7 +58,7 @@ export default function (props: { showText: boolean }) {
   const iconSize = 18;
   const textStyle = { marginLeft: 4 };
   return (
-    <div className={style['theme-button']} onClick={handleSwitch}>
+    <a className={style['theme-button']} onClick={handleSwitch}>
       <div
         style={{
           display: theme == 'light' ? 'flex' : 'none',
@@ -129,6 +129,6 @@ export default function (props: { showText: boolean }) {
           </span>
         ) : null}
       </div>
-    </div>
+    </a>
   );
 }
