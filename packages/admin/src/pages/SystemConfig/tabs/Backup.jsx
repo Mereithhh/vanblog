@@ -20,7 +20,7 @@ export default function (props) {
     <ProCard>
       <Alert
         type="warning"
-        message="注意：导入导出并不会实际导出图床中的图片本身，而是导入导出其图片记录以便检索。所以本地图床时需要手动备份图片哦"
+        message="注意：导入导出并不会实际导出图床中的图片本身，而是导入导出其图片记录以便检索。需要备份本地图床图片的话，可以在图床设置中点击导出全部本地图床内容哦！"
         style={{ marginBottom: 20 }}
       />
       <Spin spinning={loading}>
