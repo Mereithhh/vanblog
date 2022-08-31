@@ -231,6 +231,21 @@ export default function () {
           label: `导出${typeMap[type]}`,
           onClick: handleExport,
         },
+        type != 'draft'
+          ? {
+              key: 'viewFE',
+              label: `查看前台`,
+              onClick: () => {
+                let url = '';
+                if (type == 'article') {
+                  url = `/post/${currObj?.id}`;
+                } else {
+                  url = '/about';
+                }
+                window.open(url, '_blank');
+              },
+            }
+          : undefined,
         {
           key: 'helpBtn',
           label: '帮助文档',
