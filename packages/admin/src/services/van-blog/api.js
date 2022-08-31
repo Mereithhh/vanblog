@@ -55,6 +55,11 @@ export async function scanImgsOfArticles() {
     method: 'POST',
   });
 }
+export async function exportAllImgs() {
+  return request('/api/admin/img/export', {
+    method: 'POST',
+  });
+}
 
 export async function login(body, options) {
   return request('/api/admin/auth/login', {

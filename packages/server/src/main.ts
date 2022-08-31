@@ -22,6 +22,7 @@ async function bootstrap() {
   checkOrCreate(globalConfig.staticPath);
   checkOrCreate(path.join(globalConfig.staticPath, 'img'));
   checkOrCreate(path.join(globalConfig.staticPath, 'tmp'));
+  checkOrCreate(path.join(globalConfig.staticPath, 'export'));
 
   const config = new DocumentBuilder()
     .setTitle('VanBlog API Reference')

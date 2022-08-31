@@ -43,6 +43,7 @@ export class ImgController {
       data: res,
     };
   }
+
   @Post('scan')
   async scanImgsOfArticles() {
     const res = await this.staticProvider.scanLinksOfArticles();
@@ -51,7 +52,14 @@ export class ImgController {
       data: res,
     };
   }
-
+  @Post('export')
+  async exportAllImgs() {
+    const res = await this.staticProvider.exportAllImg();
+    return {
+      statusCode: 200,
+      data: res,
+    };
+  }
   @Delete('/all/delete')
   async deleteALL() {
     const res = await this.staticProvider.deleteAllIMG();

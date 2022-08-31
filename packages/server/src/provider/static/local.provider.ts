@@ -7,6 +7,8 @@ import { imageSize } from 'image-size';
 import { formatBytes } from 'src/utils/size';
 import { ImgMeta } from 'src/dto/img';
 import { isProd } from 'src/utils/isProd';
+import compressing from 'compressing';
+import dayjs from 'dayjs';
 @Injectable()
 export class LocalProvider {
   async saveFile(
@@ -45,6 +47,42 @@ export class LocalProvider {
         fileName,
         '可能是更新版本后没映射静态文件目录导致的',
       );
+    }
+  }
+  async exportAllImg() {
+    const src = path.join(config.staticPath, 'img');
+    const dst = path.join(
+      config.staticPath,
+      'export',
+      `export-img-${dayjs().format('YYYY-MM-DD')}.zip`,
+    );
+    const dstSrc = `/static/export/export-img-${dayjs().format(
+      'YYYY-MM-DD',
+    )}.zip`;
+
+    const compressPromise = new Promise((resolve, reject) => {
+      compressing.zip
+        .compressDir(src, dst)
+        .then((v) => {
+          resolve(v);
+        })
+        .catch((e) => {
+          reject(e);
+        });
+    });
+    try {
+      const r = await Promise.all([compressPromise]);
+      console.log(r);
+      return {
+        success: true,
+        path: dstSrc,
+      };
+    } catch (err) {
+      console.log(err);
+      return {
+        success: false,
+        error: err,
+      };
     }
   }
 }
