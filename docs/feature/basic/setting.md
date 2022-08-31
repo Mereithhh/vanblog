@@ -59,4 +59,4 @@ title: 站点设置
 | 关于页面是否显示打赏按钮 | 隐藏     | 开启后关于页面将会显示打赏按钮                                           |
 | 前台默认主题模式         | 自动模式 | 设置后第一次进入前台的用户将以此作为默认主题模式。                       |
 
-![](https://pic.mereith.com/img/b414f0f08fa28a158ebcd41ef4603569.clipboard-2022-08-30.png)
+![](https://pic.mereith.com/img/dd2bafa95d7380b21fe5f3955bcd130e.clipboard-2022-08-31.png)
