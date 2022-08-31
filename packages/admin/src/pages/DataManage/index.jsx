@@ -6,9 +6,11 @@ import Donate from './tabs/Donate';
 import Link from './tabs/Link';
 import Menu from './tabs/Menu';
 import Social from './tabs/Social';
+import Tag from './tabs/Tag';
 export default function () {
   const tabMap = {
     category: <Category />,
+    tag: <Tag />,
     donateInfo: <Donate />,
     links: <Link />,
     socials: <Social />,
@@ -27,6 +29,10 @@ export default function () {
         {
           tab: '分类管理',
           key: 'category',
+        },
+        {
+          tab: '标签管理',
+          key: 'tag',
         },
         {
           tab: '导航配置',

@@ -113,6 +113,16 @@ export async function updateCategory(name, value) {
     method: 'PUT',
   });
 }
+export async function updateTag(name, value) {
+  return request(`/api/admin/tag/${name}?value=${value}`, {
+    method: 'PUT',
+  });
+}
+export async function deleteTag(name) {
+  return request(`/api/admin/tag/${name}`, {
+    method: 'DELETE',
+  });
+}
 export async function deleteCategory(name) {
   return request(`/api/admin/category/${name}`, {
     method: 'DELETE',
