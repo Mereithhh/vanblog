@@ -4,7 +4,7 @@ title: 分类管理
 
 `vanBlog` 支持管理 `分类`，具体在后台的 `站点管理/数据管理/分类管理`:
 
-![](https://pic.mereith.com/img/c10f265006dc326fbc76b0425eeb4914.clipboard-2022-08-15.png)
+![](https://pic.mereith.com/img/68684a40630f0cf89f51bcded633d9b9.clipboard-2022-08-31.png)
 
 ## 删除分类
 
@@ -17,3 +17,7 @@ title: 分类管理
 ## 新建分类
 
 没啥好说的。
+
+## 查看
+
+跳转到前台的对应标签页面进行查看。

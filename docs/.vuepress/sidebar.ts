@@ -36,6 +36,7 @@ export default sidebar([
           "basic/pic.md",
           "basic/overview.md",
           "basic/category.md",
+          "basic/tag.md",
         ],
       },
       {

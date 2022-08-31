@@ -33,11 +33,11 @@ title: 编辑器
 
 ![](https://pic.mereith.com/img/0a54a1e4fe8ac47cea8fa7aea89964ca.clipboard-2022-08-29.png)
 
-## 自动保存
+## 自动实时保存
 
-如果当前编辑的是 `草稿`，那当编辑器失去焦点的时候将会自动保存。console 日志会打印此行为，但前台不会有提示。
+当编辑时，会自动实时保存内容到本地缓存，如果没有点击保存按钮就退出了编辑器，下次进入后会自动回复上次的状态。
 
-![](https://pic.mereith.com/img/c27465503f120c91d356ca5d91b94fbb.clipboard-2022-08-28.png)
+![](https://pic.mereith.com/img/85fa1dc72226c92b7b176cc40690999d.clipboard-2022-08-31.png)
 
 ## 导入内容
 
