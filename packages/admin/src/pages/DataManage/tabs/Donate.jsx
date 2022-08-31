@@ -104,6 +104,7 @@ export default function () {
             type: 'multiple',
             editableKeys,
             onSave: async (rowKey, data, row) => {
+              
               await updateDonate(data);
               actionRef?.current?.reload();
             },

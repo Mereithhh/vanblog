@@ -121,6 +121,10 @@ export default function () {
             type: 'multiple',
             editableKeys,
             onSave: async (rowKey, data, row) => {
+              if (location.hostname == 'blog-demo.mereith.com') {
+                Modal.info({ title: '演示站禁止修改此项！' });
+                return;
+              }
               const toSaveObj = {
                 name: data.name,
                 url: data.url,
