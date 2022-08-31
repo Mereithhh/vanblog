@@ -17,6 +17,7 @@ FROM node:18 as SERVER_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /app
 COPY ./packages/server/ .
+RUN  yarn config set network-timeout 600000
 RUN yarn
 RUN yarn build
 
@@ -55,9 +56,10 @@ RUN apk add --no-cache --update tzdata caddy nss-tools
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
     && apk del tzdata
+RUN  yarn config set network-timeout 600000
 # 安装 waline
 WORKDIR /app/waline
-RUN npm install @waline/vercel
+RUN yarn add @waline/vercel
 # 复制 server
 WORKDIR /app/server
 COPY --from=SERVER_BUILDER /app/node_modules ./node_modules
