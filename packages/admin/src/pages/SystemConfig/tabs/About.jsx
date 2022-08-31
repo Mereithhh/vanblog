@@ -54,6 +54,13 @@ export default function (props) {
             >
               提交BUG
             </a>
+            <a
+              target={'_blank'}
+              rel="noreferrer"
+              href="https://github.com/Mereithhh/van-blog#%E6%89%93%E8%B5%8F"
+            >
+              打赏
+            </a>
           </Space>
         </div>
       </ProCard>
