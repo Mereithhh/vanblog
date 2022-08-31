@@ -246,12 +246,12 @@ export default function (props: {
           <ProFormSelect
             name={'showDonateInAbout'}
             label="关于页面是否显示打赏按钮"
-            placeholder={'显示'}
+            placeholder={'隐藏'}
             valueEnum={{
               true: '显示',
               false: '隐藏',
             }}
-            tooltip={'默认显示，关闭后关于页面会隐藏打赏按钮'}
+            tooltip={'默认隐藏，开启后关于页面会显示打赏按钮'}
           ></ProFormSelect>
           <ProFormSelect
             name={'defaultTheme'}

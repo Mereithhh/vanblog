@@ -114,7 +114,7 @@ const defaultMeta: MetaProps = {
     showFriends: "true",
     showAdminButton: "true",
     defaultTheme: "auto",
-    showDonateInAbout: "true",
+    showDonateInAbout: "false",
   },
 };
 

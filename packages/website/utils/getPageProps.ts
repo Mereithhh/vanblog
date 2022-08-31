@@ -106,7 +106,7 @@ export async function getAboutPageProps(): Promise<AboutPageProps> {
     authorCardProps,
     about,
     donates: data.meta?.rewards || [],
-    showDonateInAbout: data.meta?.siteInfo?.showDonateInAbout || "true",
+    showDonateInAbout: data.meta?.siteInfo?.showDonateInAbout || "false",
     ...payProps,
   };
 }
