@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import AlertCard from "../AlertCard";
+import CopyRight from "../CopyRight";
 import Markdown from "../Markdown";
 import PostViewer from "../PostViewer";
 import Reward from "../Reward";
@@ -26,6 +27,7 @@ export default function (props: {
   enableComment: "true" | "false";
   top: number;
   private: boolean;
+  showDonateInAbout?: boolean;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
@@ -39,6 +41,22 @@ export default function (props: {
       return "/post/" + props.id;
     }
   }, [props]);
+
+  const showDonate = useMemo(() => {
+    if (lock) {
+      return false;
+    }
+    if (!props.pay || props.pay.length <= 0) {
+      return false;
+    }
+    if (props.type == "article") {
+      return true;
+    }
+    if (props.type == "about" && props.showDonateInAbout) {
+      return true;
+    }
+    return false;
+  }, [props, lock]);
 
   const calContent = useMemo(() => {
     if (props.type == "overview") {
@@ -209,15 +227,18 @@ export default function (props: {
             </Link>
           </div>
         )}
-        {props.type == "article" && props.pay && !lock && (
+        {showDonate && props.pay && (
           <Reward
-            aliPay={props.pay[0]}
-            weChatPay={props.pay[1]}
+            aliPay={(props?.pay as any)[0]}
+            weChatPay={(props?.pay as any)[1]}
             aliPayDark={(props?.payDark || ["", ""])[0]}
             weChatPayDark={(props?.payDark || ["", ""])[1]}
             author={props.author as any}
             id={props.id}
           ></Reward>
+        )}
+        {props.type == "article" && !lock && (
+          <CopyRight author={props.author as any} id={props.id}></CopyRight>
         )}
 
         {props.type == "article" && props.tags && !lock && (
@@ -256,7 +277,11 @@ export default function (props: {
             </div>
           </div>
         )}
-        <div style={{ height: props.type == "about" ? "16px" : "0" }}></div>
+        <div
+          style={{
+            height: props.type == "about" && !showDonate ? "16px" : "0",
+          }}
+        ></div>
       </div>
       {props.type != "overview" && (
         <WaLine enable={props.enableComment} visible={true} />

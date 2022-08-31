@@ -16,7 +16,10 @@ export interface AboutPageProps {
   authorCardProps: AuthorCardProps;
   donates: DonateItem[];
   about: About;
+  pay: string[];
+  payDark: string[];
   showDonateInfo: "true" | "false";
+  showDonateInAbout: "true" | "false";
 }
 const getDonateTableMarkdown = (donates: DonateItem[]) => {
   let content = `
@@ -56,11 +59,14 @@ const AboutPage = (props: AboutPageProps) => {
         title={"关于我"}
         updatedAt={new Date(props.about.updatedAt)}
         createdAt={new Date(props.about.updatedAt)}
+        pay={props.pay}
+        payDark={props.payDark}
         catelog={"about"}
         content={content}
         type={"about"}
         enableComment={props.layoutProps.enableComment}
         top={0}
+        showDonateInAbout={props.showDonateInAbout == "true"}
       ></PostCard>
     </Layout>
   );

@@ -244,6 +244,16 @@ export default function (props: {
             tooltip={'默认显示，关闭后关于页面会隐藏捐赠信息'}
           ></ProFormSelect>
           <ProFormSelect
+            name={'showDonateInAbout'}
+            label="关于页面是否显示打赏按钮"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认显示，关闭后关于页面会隐藏打赏按钮'}
+          ></ProFormSelect>
+          <ProFormSelect
             name={'defaultTheme'}
             label="前台默认主题模式"
             placeholder={'自动模式'}

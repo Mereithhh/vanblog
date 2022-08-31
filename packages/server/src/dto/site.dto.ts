@@ -25,6 +25,7 @@ export class SiteInfo {
   showAdminButton: 'true' | 'false';
   showDonateInfo: 'true' | 'false';
   showFriends: 'true' | 'false';
+  showDonateInAbout: 'true' | 'false';
   defaultTheme: 'auto' | 'dark' | 'light';
 }
 export interface updateUserDto {

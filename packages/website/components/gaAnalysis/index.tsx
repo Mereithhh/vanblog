@@ -14,7 +14,6 @@ export default function (props: { id: string }) {
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
           gtag('js', new Date());
-          console.log("door")
           gtag('config', '${props.id}');
         `}
           </Script>

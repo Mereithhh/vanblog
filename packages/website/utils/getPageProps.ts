@@ -90,12 +90,24 @@ export async function getAboutPageProps(): Promise<AboutPageProps> {
   if (data.meta.siteInfo?.showDonateInfo == "false") {
     showDonateInfo = "false";
   }
+  const payProps = {
+    pay: [
+      data.meta.siteInfo?.payAliPay || "",
+      data.meta.siteInfo?.payWechat || "",
+    ],
+    payDark: [
+      data.meta.siteInfo?.payAliPayDark || "",
+      data.meta.siteInfo?.payWechatDark || "",
+    ],
+  };
   return {
     showDonateInfo,
     layoutProps,
     authorCardProps,
     about,
     donates: data.meta?.rewards || [],
+    showDonateInAbout: data.meta?.siteInfo?.showDonateInAbout || "true",
+    ...payProps,
   };
 }
 export async function getTagPagesProps(
