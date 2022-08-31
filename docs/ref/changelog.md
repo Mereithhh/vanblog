@@ -4,12 +4,7 @@ icon: update
 ---
 
 
-## [0.26.0](https://github.com/Mereithhh/van-blog/compare/v0.25.5...v0.26.0) (2022-08-31)
-
-
-### 🚀 Chore | 构建/工程依赖/工具
-
-* **release:** 0.26.0 ([8cc58bd](https://github.com/Mereithhh/van-blog/commit/8cc58bda11bf1121ce371c28d46b77b1d607e8e9))
+## [0.27.0](https://github.com/Mereithhh/van-blog/compare/v0.25.5...v0.27.0) (2022-08-31)
 
 
 ### ✨ Features | 新功能
@@ -39,6 +34,7 @@ icon: update
 
 * 增加一个打赏二维码 😘 ([81319e0](https://github.com/Mereithhh/van-blog/commit/81319e0b5ef8f15a7bf7a650847060417e69332e))
 * 更新截图 ([16257ba](https://github.com/Mereithhh/van-blog/commit/16257ba7b55dc3e47e3571dbc416cc2c7af671ad))
+* 更新文档 ([9dd7cd6](https://github.com/Mereithhh/van-blog/commit/9dd7cd6f4ba1c90469fad5d2ecab8c53aba2c788))
 * 更新文档 ([d121b56](https://github.com/Mereithhh/van-blog/commit/d121b569cb305f2d02ce6adc486484d0ad719618))
 * 更新文档 ([1e16bba](https://github.com/Mereithhh/van-blog/commit/1e16bba5d077298972a55a76c9b772e268883c96))
 * 更新文档 ([d74e91f](https://github.com/Mereithhh/van-blog/commit/d74e91f7797b61e422ecd42e4ac4e1fd189ae7b5))
@@ -48,12 +44,23 @@ icon: update
 
 ### 👷 Continuous Integration | CI 配置
 
+* fix ([ec423e4](https://github.com/Mereithhh/van-blog/commit/ec423e4c77e85a8ae4aee990e3103c5ece4423b2))
+* fix ([4b90dc6](https://github.com/Mereithhh/van-blog/commit/4b90dc64a7e728debf714fa203077df34e6396fe))
 * 切换一个 npm 源 ([bdaa6f1](https://github.com/Mereithhh/van-blog/commit/bdaa6f1a5c573b5ad6a85c6aba13867a68488e83))
+* 尝试加快 admin 构建速度 ([db50035](https://github.com/Mereithhh/van-blog/commit/db500352a85ad340dd33a4bf41b19720675a0168))
 
 
 ### ⏪ Revert | 回退
 
+* ci 错误重新发版 ([952b3d7](https://github.com/Mereithhh/van-blog/commit/952b3d74ceb451889bc24ca879a56ea5dd378616))
 * 由于ci总是失败，回退重新发版 ([69cce16](https://github.com/Mereithhh/van-blog/commit/69cce1694d719704e81da9e173095c1ad665acc5))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **release:** 0.26.0 ([ea0aabb](https://github.com/Mereithhh/van-blog/commit/ea0aabbf928ddef1aaffd00d06a14f833a9ddb11))
+* **release:** 0.26.0 ([44f9e42](https://github.com/Mereithhh/van-blog/commit/44f9e425d8e7312c43c9b1d85f4eb545293b5511))
+* **release:** 0.26.0 ([8cc58bd](https://github.com/Mereithhh/van-blog/commit/8cc58bda11bf1121ce371c28d46b77b1d607e8e9))
 
 ### [0.25.5](https://github.com/Mereithhh/van-blog/compare/v0.25.4...v0.25.5) (2022-08-30)
 
