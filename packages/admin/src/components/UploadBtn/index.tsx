@@ -39,7 +39,11 @@ export default function (props: {
     </Upload>
   );
   if (props.crop) {
-    return <ImgCrop>{Core}</ImgCrop>;
+    return (
+      <ImgCrop quality={1} fillColor="rgba(255,255,255,0)">
+        {Core}
+      </ImgCrop>
+    );
   } else {
     return Core;
   }
