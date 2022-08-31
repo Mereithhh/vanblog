@@ -109,8 +109,10 @@
 
 如果觉得项目不错的话可以打赏哦。您的支持就是我最大的动力！
 
-![打赏-微信](/img/wechat.jpg)
-![打赏-支付宝](/img/ali-pay.jpg)
+<p align="center">
+  <img  alt="打赏-微信" src="/img/wechat.jpg"  style="width: 200px;margin-right: 4px;" />
+  <img  alt="打赏-支付宝" src="/img/ali-pay.jpg"  style="width: 200px" />
+</p>
 
 ## Star 趋势图
 

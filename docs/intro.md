@@ -88,6 +88,15 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持 HTTPS
 - [x] 搜索可以快捷键选择
 - [x] 高级一点的 404 页面
 
+## 打赏
+
+如果你觉得本项目还不错，可以打赏哦。您的支持就是我最大的动力！
+
+<p align="center">
+  <img  alt="打赏-微信" src="./assets/wechat.jpg"  style="width: 200px;margin-right: 4px;" />
+  <img  alt="打赏-支付宝" src="./assets/ali-pay.jpg"  style="width: 200px" />
+</p>
+
 ## 预览图
 
 ![前台-白色](./assets/前台-白色.png)
@@ -95,10 +104,3 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持 HTTPS
 ![后台-白色](./assets/后台-白色.png)
 ![后台-黑色](./assets/后台-黑色.png)
 ![Lighthouse](./assets/lighthouse.png)
-
-## 打赏
-
-如果你觉得本项目还不错，可以打赏哦。您的支持就是我最大的动力！
-
-![打赏-微信](./assets/wechat.jpg)
-![打赏-支付宝](./assets/ali-pay.jpg)
