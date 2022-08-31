@@ -1,14 +1,12 @@
 # 具体每个服务的去看 packages 里面的 Dockerfile
 # 这个是 all in one 的。
-FROM node:18 as ADMIN_BUILDER
+FROM  circleci/node:latest-browsers as ADMIN_BUILDER
 ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
+ENV EEE=production
 WORKDIR /app
 USER root
-# RUN npm install -g umi
-# RUN npm install -g cnpm --registry=https://registry.npmmirror.com
-ENV EEE=production
 COPY ./packages/admin/ ./
-RUN yarn config set registry https://registry.npmjs.com
+# RUN yarn config set registry https://registry.npmmirror.com
 RUN yarn global add umi
 RUN yarn
 # RUN sed -i 's/\/assets/\/admin\/assets/g' dist/admin/index.html
@@ -17,9 +15,6 @@ RUN yarn build
 FROM node:18 as SERVER_BUILDER
 ENV NODE_OPTIONS=--max_old_space_size=4096
 WORKDIR /app
-# RUN yarn config set registry https://registry.npmmirror.com -g
-# RUN yarn config set network-timeout 60000 -g
-# RUN yarn config set registry https://registry.npm.taobao.org
 COPY ./packages/server/ .
 RUN yarn
 RUN yarn build
