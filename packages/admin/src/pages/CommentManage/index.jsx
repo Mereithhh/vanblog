@@ -1,10 +1,11 @@
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Modal, Space } from 'antd';
-import { useEffect, useMemo, useRef } from 'react';
+import { Button, Modal, Space, Spin } from 'antd';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useModel } from 'umi';
 import TipTitle from '../../components/TipTitle';
 export default function () {
   const { initialState } = useModel('@@initialState');
+  const [loading, setLoading] = useState(true);
   const { current } = useRef({ hasInit: false });
   const src = useMemo(() => {
     if (initialState?.version && initialState?.version == 'dev') {
@@ -72,7 +73,17 @@ export default function () {
         ),
       }}
     >
-      <iframe title="waline 后台" src={src} width="100%" height={'100%'}></iframe>
+      <Spin spinning={loading}>
+        <iframe
+          onLoad={() => {
+            setLoading(false);
+          }}
+          title="waline 后台"
+          src={src}
+          width="100%"
+          height={'100%'}
+        ></iframe>
+      </Spin>
     </PageContainer>
   );
 }
