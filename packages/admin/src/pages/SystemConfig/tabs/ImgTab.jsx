@@ -83,7 +83,7 @@ export default function () {
             }
           }}
         >
-          导出全部图片（压缩包）
+          导出全部本地图床内容（压缩包）
         </Button>
         <Alert
           type="info"
