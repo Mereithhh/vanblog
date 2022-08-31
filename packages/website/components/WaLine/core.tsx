@@ -12,14 +12,14 @@ export default function (props: {
       if (props.visible) {
         current.wa = init({
           el: "#waline",
-          serverURL: `${window.location.protocol}//${window.location.host}/api`,
+          serverURL: `${window.location.protocol}//${window.location.host}`,
           comment: true,
           pageview: false,
           dark: ".dark",
         });
       } else {
         current.wa = commentCount({
-          serverURL: `${window.location.protocol}//${window.location.host}/api`,
+          serverURL: `${window.location.protocol}//${window.location.host}`,
         });
       }
     }

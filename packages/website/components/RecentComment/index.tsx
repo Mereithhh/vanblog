@@ -21,7 +21,7 @@ export default function (props: {
     if (!current.hasInit && props.enableComment == "true") {
       current.hasInit = true;
       RecentComments({
-        serverURL: `${window.location.protocol}//${window.location.host}/api`,
+        serverURL: `${window.location.protocol}//${window.location.host}`,
         count: props.count,
       }).then(({ comments }) => {
         setData(comments);
