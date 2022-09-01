@@ -1,7 +1,7 @@
 import { getAllCategories, getTags, updateArticle, updateDraft } from '@/services/van-blog/api';
-import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-form';
+import { ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { message } from 'antd';
-
+import moment from 'moment';
 export default function (props: {
   currObj: any;
   setLoading: any;
@@ -84,6 +84,16 @@ export default function (props: {
               value: e,
             };
           });
+        }}
+      />
+      <ProFormDateTimePicker
+        width="md"
+        name="createdAt"
+        id="createdAt"
+        label="创建时间"
+        placeholder="不填默认为此刻"
+        showTime={{
+          defaultValue: moment('00:00:00', 'HH:mm:ss'),
         }}
       />
       {type == 'article' && (

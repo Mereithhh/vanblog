@@ -1,6 +1,12 @@
-import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
-import { Button } from 'antd';
 import { createDraft, getAllCategories, getTags } from '@/services/van-blog/api';
+import {
+  ModalForm,
+  ProFormDateTimePicker,
+  ProFormSelect,
+  ProFormText,
+} from '@ant-design/pro-components';
+import { Button } from 'antd';
+import moment from 'moment';
 export default function (props) {
   const { onFinish } = props;
   return (
@@ -67,6 +73,16 @@ export default function (props) {
               value: e,
             };
           });
+        }}
+      />
+      <ProFormDateTimePicker
+        width="md"
+        name="createdAtC"
+        id="createdAtC"
+        label="创建时间"
+        placeholder="不填默认为此刻"
+        showTime={{
+          defaultValue: moment('00:00:00', 'HH:mm:ss'),
         }}
       />
     </ModalForm>

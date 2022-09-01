@@ -1,7 +1,22 @@
-export type SettingType = 'static' | 'https' | 'waline';
-export type SettingValue = StaticSetting | HttpsSetting | WalineSetting;
+export type SettingType = 'static' | 'https' | 'waline' | 'layout';
+export type SettingValue =
+  | StaticSetting
+  | HttpsSetting
+  | WalineSetting
+  | LayoutSetting;
 export type StorageType = 'picgo' | 'local';
 export type StaticType = 'img';
+
+export interface ScriptItem {
+  type: 'code' | 'link';
+  value: string;
+}
+
+export interface LayoutSetting {
+  customScripts: ScriptItem[];
+  customHtml: string;
+  customCSS: string;
+}
 
 export interface WalineSetting {
   'smtp.enabled': boolean;

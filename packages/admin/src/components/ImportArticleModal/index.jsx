@@ -8,6 +8,7 @@ import {
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { Button, Form, Upload } from 'antd';
+import moment from 'moment';
 import { useState } from 'react';
 export default function (props) {
   const { onFinish } = props;
@@ -98,7 +99,15 @@ export default function (props) {
             });
           }}
         />
-        <ProFormDateTimePicker name="createdAt" id="createdAt" label="创建时间" />
+        <ProFormDateTimePicker
+          showTime={{
+            defaultValue: moment('00:00:00', 'HH:mm:ss'),
+          }}
+          width="md"
+          name="createdAt"
+          id="createdAt"
+          label="创建时间"
+        />
         <ProFormSelect
           width="md"
           name="private"
