@@ -1,4 +1,18 @@
 # Changelog
+### [0.27.2](https://github.com/Mereithhh/van-blog/compare/v0.27.1...v0.27.2) (2022-09-01)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([c5f919b](https://github.com/Mereithhh/van-blog/commit/c5f919b4d319d85f868ed2848a04eedf08049650))
+
+
+### ✨ Features | 新功能
+
+* 增加是否可通过 URL 打开隐藏文章配置项[#13](https://github.com/Mereithhh/van-blog/issues/13) ([c77e233](https://github.com/Mereithhh/van-blog/commit/c77e233bc4807d577035a6dd7ccbf7e5c9ee9880))
+* 文章/分类管理可以搜索标签（标签太多了选择不过来） ([f4aa62b](https://github.com/Mereithhh/van-blog/commit/f4aa62bcc4b0bcc4461c08a562e763ecd1b36b7a))
+* 标签管理页面可以搜索/筛选标签 ([cb9e079](https://github.com/Mereithhh/van-blog/commit/cb9e0797e3dadac78a3d83712ce3551a45e93b10))
+
 ### [0.27.1](https://github.com/Mereithhh/van-blog/compare/v0.27.0...v0.27.1) (2022-09-01)
 
 
