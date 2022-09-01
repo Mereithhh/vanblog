@@ -134,6 +134,12 @@ export const columns = [
               </a>,
               <a
                 href={`/post/${record.id}`}
+                onClick={(ev) => {
+                  if (record?.hidden) {
+                    message.warning('隐藏页面无法查看前台！');
+                    ev.preventDefault();
+                  }
+                }}
                 target="_blank"
                 rel="noopener noreferrer"
                 key={'view' + record.id}

@@ -103,7 +103,8 @@ export const getArticleById = async (id: number) => {
       console.log("无法连接，采用默认值");
       return {};
     } else {
-      throw err;
+      // console.log(err);
+      return {};
     }
   }
 };

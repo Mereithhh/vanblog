@@ -240,6 +240,10 @@ export default function () {
               onClick: () => {
                 let url = '';
                 if (type == 'article') {
+                  if (currObj.hidden) {
+                    message.warning('隐藏页面无法查看前台！');
+                    return;
+                  }
                   url = `/post/${currObj?.id}`;
                 } else {
                   url = '/about';

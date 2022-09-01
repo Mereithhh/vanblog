@@ -198,16 +198,7 @@ export class ISRProvider {
     });
   }
   async getArticleUrls() {
-    const { articles } = await this.articleProvider.getByOption(
-      {
-        regMatch: false,
-        page: 1,
-        pageSize: -1,
-        toListView: true,
-        withWordCount: false,
-      },
-      true,
-    );
+    const articles = await this.articleProvider.getAll('list', true, true);
     return articles.map((a) => {
       return `/post/${a.id}`;
     });

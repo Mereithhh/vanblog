@@ -8,6 +8,7 @@ import { Article } from "../../types/article";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPagePagesProps } from "../../utils/getPageProps";
 import { revalidate } from "../../utils/loadConfig";
+import Custom404 from "../404";
 export interface PagePagesProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
@@ -15,6 +16,9 @@ export interface PagePagesProps {
   articles: Article[];
 }
 const PagePages = (props: PagePagesProps) => {
+  if (props.articles.length == 0) {
+    return <Custom404 name="页码" />;
+  }
   return (
     <Layout
       option={props.layoutProps}

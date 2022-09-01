@@ -146,6 +146,9 @@ export class ArticleProvider {
 
   async updateViewer(id: number, isNew: boolean) {
     const article = await this.getById(id, 'list');
+    if (!article) {
+      return;
+    }
     const oldViewer = article.viewer || 0;
     const oldVIsited = article.visited || 0;
     const newViewer = oldViewer + 1;
@@ -360,10 +363,15 @@ export class ArticleProvider {
     return thisView;
   }
 
-  async getAll(view: ArticleView, includeHidden: boolean): Promise<Article[]> {
+  async getAll(
+    view: ArticleView,
+    includeHidden: boolean,
+    includeDelete?: boolean,
+  ): Promise<Article[]> {
     const thisView: any = this.getView(view);
-    const $and: any = [
-      {
+    const $and: any = [];
+    if (!includeDelete) {
+      $and.push({
         $or: [
           {
             deleted: false,
@@ -372,8 +380,8 @@ export class ArticleProvider {
             deleted: { $exists: false },
           },
         ],
-      },
-    ];
+      });
+    }
     if (!includeHidden) {
       $and.push({
         $or: [
@@ -386,11 +394,14 @@ export class ArticleProvider {
         ],
       });
     }
+
     const articles = await this.articleModel
       .find(
-        {
-          $and,
-        },
+        $and.length > 0
+          ? {
+              $and,
+            }
+          : undefined,
         thisView,
       )
       .sort({ createdAt: -1 })
@@ -626,18 +637,35 @@ export class ArticleProvider {
   }
 
   async getById(id: number, view: ArticleView): Promise<Article> {
+    const $and: any = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+    ];
+    if (view == 'public') {
+      $and.push({
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      });
+    }
     return await this.articleModel
       .findOne(
         {
           id,
-          $or: [
-            {
-              deleted: false,
-            },
-            {
-              deleted: { $exists: false },
-            },
-          ],
+          $and,
         },
         this.getView(view),
       )

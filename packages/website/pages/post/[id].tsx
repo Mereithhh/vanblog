@@ -7,6 +7,7 @@ import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPostPagesProps } from "../../utils/getPageProps";
 import { hasToc } from "../../utils/hasToc";
 import { revalidate } from "../../utils/loadConfig";
+import Custom404 from "../404";
 
 export interface PostPagesProps {
   layoutProps: LayoutProps;
@@ -25,6 +26,9 @@ export interface PostPagesProps {
   showSubMenu: "true" | "false";
 }
 const PostPages = (props: PostPagesProps) => {
+  if (!props.article) {
+    return <Custom404 name="文章" />;
+  }
   return (
     <Layout
       option={props.layoutProps}

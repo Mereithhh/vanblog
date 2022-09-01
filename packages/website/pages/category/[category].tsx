@@ -6,6 +6,7 @@ import { Article } from "../../types/article";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getCategoryPagesProps } from "../../utils/getPageProps";
 import { revalidate } from "../../utils/loadConfig";
+import Custom404 from "../404";
 export interface CategoryPagesProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
@@ -15,6 +16,9 @@ export interface CategoryPagesProps {
   wordTotal: number;
 }
 const CategoryPages = (props: CategoryPagesProps) => {
+  if (Object.keys(props.sortedArticles).length == 0) {
+    return <Custom404 name="分类" />;
+  }
   return (
     <Layout
       option={props.layoutProps}
