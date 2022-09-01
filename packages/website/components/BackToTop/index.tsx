@@ -21,7 +21,7 @@ const BackToTopBtn: React.FC<BackToTopBtnProps> = (props) => {
   const [visibleBackTopBtn, setVisibleBackTopBtn] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("scroll", handleScroll, true);
+    document.addEventListener("scroll", handleScroll);
     return () => document.removeEventListener("scroll", handleScroll);
   }, [visibleBackTopBtn]);
 
@@ -33,7 +33,7 @@ const BackToTopBtn: React.FC<BackToTopBtnProps> = (props) => {
     } else {
       setVisibleBackTopBtn(false);
     }
-  }, 100);
+  }, 500);
 
   const backToTopHandle = () => {
     scroll.animateScroll.scrollToTop();
