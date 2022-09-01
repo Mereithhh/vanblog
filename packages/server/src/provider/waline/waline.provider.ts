@@ -134,9 +134,7 @@ export class WalineProvider {
       });
       this.ctx.stdout.on('data', (data) => {
         const t = data.toString();
-        if (
-          !t.includes("Cannot find module '/app/server/node_modules/sqlite3")
-        ) {
+        if (!t.includes('Cannot find module')) {
           this.logger.log(data.toString());
         }
       });
