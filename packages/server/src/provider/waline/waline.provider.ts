@@ -29,9 +29,17 @@ export class WalineProvider {
   async init() {
     this.run();
   }
+  async restart(reason: string) {
+    this.logger.log(`${reason}重启 waline`);
+    if (this.ctx) {
+      await this.stop();
+    }
+    await this.run();
+  }
   async stop() {
     if (this.ctx) {
-      this.ctx.kill('SIGINT');
+      this.ctx.unref();
+      process.kill(-this.ctx.pid);
       this.ctx = null;
       this.logger.log('waline 停止成功！');
     }
@@ -46,6 +54,7 @@ export class WalineProvider {
           ...this.env,
         },
         cwd: process.cwd(),
+        detached: true,
       });
       this.ctx.on('message', (message) => {
         this.logger.log(message);
