@@ -1,7 +1,13 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { HttpsSetting, SettingType, StaticSetting } from 'src/dto/setting.dto';
+import { config } from 'process';
+import {
+  HttpsSetting,
+  SettingType,
+  StaticSetting,
+  WalineSetting,
+} from 'src/dto/setting.dto';
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
 
@@ -35,6 +41,34 @@ export class SettingProvider {
       return (res?.value as any) || { redirect: false };
     }
     return null;
+  }
+  async getWalineSetting(): Promise<WalineSetting> {
+    const res = await this.settingModel.findOne({ type: 'waline' }).exec();
+    if (res) {
+      return (
+        (res?.value as any) || {
+          email: process.env.EMAIL || undefined,
+          'smtp.enabled': false,
+          forceLoginComment: false,
+        }
+      );
+    }
+    return null;
+  }
+  async updateWalineSetting(dto: WalineSetting) {
+    const oldValue = await this.getWalineSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'waline',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'waline' },
+      { value: newValue },
+    );
+    return res;
   }
   async updateHttpsSetting(dto: HttpsSetting) {
     const oldValue = await this.getHttpsSetting();

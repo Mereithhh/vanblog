@@ -1,14 +1,69 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcess, spawn } from 'node:child_process';
 import { config } from 'src/config';
+import { WalineSetting } from 'src/dto/setting.dto';
 import { MetaProvider } from '../meta/meta.provider';
+import { SettingProvider } from '../setting/setting.provider';
 @Injectable()
 export class WalineProvider {
   // constructor() {}
   ctx: ChildProcess = null;
   logger = new Logger(WalineProvider.name);
   env = {};
-  constructor(private metaProvider: MetaProvider) {}
+  constructor(
+    private metaProvider: MetaProvider,
+    private readonly settingProvider: SettingProvider,
+  ) {}
+
+  mapConfig2Env(config: WalineSetting) {
+    const walineEnvMapping = {
+      'smtp.port': 'SMTP_PORT',
+      'smtp.host': 'SMTP_HOST',
+      'smtp.user': 'SMTP_USER',
+      'sender.name': 'SENDER_NAME',
+      'sender.email': 'SENDER_EMAIL',
+      'smtp.password': 'SMTP_PASS',
+      authorEmail: 'AUTHOR_EMAIL',
+      webhook: 'WEBHOOK',
+      forceLoginComment: 'LOGIN',
+    };
+    const result = {};
+    if (!config) {
+      return result;
+    }
+    for (const key of Object.keys(config)) {
+      if (key == 'forceLoginComment') {
+        if (config.forceLoginComment) {
+          result['LOGIN'] = 'force';
+        }
+      } else {
+        const rKey = walineEnvMapping[key];
+        if (rKey) {
+          result[rKey] = config[key];
+        }
+      }
+    }
+    if (!config['smtp.enabled']) {
+      const r2 = {};
+      for (const [k, v] of Object.entries(result)) {
+        if (
+          ![
+            'SMTP_PASS',
+            'SMTP_USER',
+            'SMTP_HOST',
+            'SMTP_PORT',
+            'SENDER_NAME',
+            'SENDER_EMAIL',
+          ].includes(k)
+        ) {
+          r2[k] = v;
+        }
+      }
+      return r2;
+    }
+    // console.log(result);
+    return result;
+  }
   async loadEnv() {
     const url = new URL(config.mongoUrl);
     const mongoEnv = {
@@ -24,7 +79,14 @@ export class WalineProvider {
       SITE_NAME: siteInfo?.siteName || undefined,
       SITE_URL: siteInfo?.baseUrl || undefined,
     };
-    this.env = { ...mongoEnv, ...otherEnv };
+    const walineConfig = await this.settingProvider.getWalineSetting();
+    const walineConfigEnv = this.mapConfig2Env(walineConfig);
+    this.env = {
+      ...mongoEnv,
+      ...otherEnv,
+      ...walineConfigEnv,
+    };
+    this.logger.log(`waline 配置： ${JSON.stringify(this.env, null, 2)}`);
   }
   async init() {
     this.run();

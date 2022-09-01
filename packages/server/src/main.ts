@@ -39,6 +39,14 @@ async function bootstrap() {
     metaProvider.updateTotalWords('首次启动');
     const walineProvider = app.get(WalineProvider);
     walineProvider.init();
+    process.on('SIGINT', () => {
+      walineProvider.stop();
+
+      console.log('waline 子进程停止成功！正在关闭!');
+      app.close().then(() => {
+        console.log('关闭成功！');
+      });
+    });
     // 触发增量渲染生成静态页面，防止升级后内容为空
     const isrProvider = app.get(ISRProvider);
     isrProvider.activeAll();

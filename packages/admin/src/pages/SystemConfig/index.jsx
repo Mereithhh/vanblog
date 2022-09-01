@@ -7,6 +7,7 @@ import Caddy from './tabs/Caddy';
 import ImgTab from './tabs/ImgTab';
 import SiteInfo from './tabs/SiteInfo';
 import User from './tabs/User';
+import WalineTab from './tabs/WalineTab';
 export default function () {
   const tabMap = {
     siteInfo: <SiteInfo />,
@@ -15,6 +16,7 @@ export default function () {
     about: <About />,
     user: <User />,
     img: <ImgTab />,
+    waline: <WalineTab />,
     caddy: <Caddy />,
   };
   const [tab, setTab] = useTab('siteInfo', 'tab');
@@ -39,7 +41,10 @@ export default function () {
           tab: '图床设置',
           key: 'img',
         },
-
+        {
+          tab: '评论设置',
+          key: 'waline',
+        },
         {
           tab: '备份恢复',
           key: 'backup',
@@ -48,6 +53,7 @@ export default function () {
           tab: 'HTTPS',
           key: 'caddy',
         },
+
         {
           tab: '关于',
           key: 'about',

@@ -14,6 +14,17 @@ export async function getHttpsConfig() {
     method: 'GET',
   });
 }
+export async function getWalineConfig() {
+  return request('/api/admin/setting/waline', {
+    method: 'GET',
+  });
+}
+export async function updateWalineConfig(body) {
+  return request('/api/admin/setting/waline', {
+    method: 'PUT',
+    data: body,
+  });
+}
 export async function clearCaddyLog() {
   return request('/api/admin/caddy/log', {
     method: 'DELETE',
