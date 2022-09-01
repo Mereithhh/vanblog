@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 
 import { ApiTags } from '@nestjs/swagger';
+import { config } from 'src/config/index';
 import { StaticSetting, WalineSetting } from 'src/dto/setting.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
@@ -43,6 +44,12 @@ export class SettingController {
   }
   @Get('waline')
   async getWalineSetting() {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 200,
+        data: null,
+      };
+    }
     const res = await this.settingProvider.getWalineSetting();
     return {
       statusCode: 200,
