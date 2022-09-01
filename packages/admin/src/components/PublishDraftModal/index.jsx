@@ -2,7 +2,7 @@ import { publishDraft } from '@/services/van-blog/api';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 export default function (props) {
-  const { title, id, trigger, action } = props;
+  const { title, id, trigger, action, onFinish } = props;
   return (
     <>
       <ModalForm
@@ -14,9 +14,12 @@ export default function (props) {
         submitTimeout={3000}
         onFinish={async (values) => {
           await publishDraft(id, values);
+          message.success('发布成功！');
           if (action && action.reload) {
             action.reload();
-            message.success('发布成功！');
+          }
+          if (props.onFinish) {
+            props.onFinish();
           }
           return true;
         }}

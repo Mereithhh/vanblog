@@ -214,6 +214,9 @@ export default function () {
                   key="publishModal1"
                   id={currObj?.id}
                   trigger={<a key={'publishBtn' + currObj?.id}>发布草稿</a>}
+                  onFinish={() => {
+                    history.push(`/article`);
+                  }}
                 />
               ),
             }
