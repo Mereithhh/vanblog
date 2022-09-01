@@ -171,3 +171,124 @@ spec:
               mountPath: /var/log
           imagePullPolicy: Always
 ```
+
+## 直接部署
+
+::: warning 须知
+
+`VanBlog` 内部由很多微服务组成，直接部署到裸机环境可能会由于硬件、系统版本不同、软件不同而出现很多意料之外的问题，容器化可以提供很好的隔离环境，避免因这些差异导致的问题。
+
+容器的话，基本上没什么学习成本，和一键部署也没区别了，迁移和升级都非常方便。
+
+实际上，第一版方案是至少由 3 个微服务组成的分体式部署。后来才打包成了一个镜像。
+
+`VanBlog` 的定位是简洁实用的，尽可能的减少复杂的配置。
+
+裸机部署需要的`知识储备`的`可能遇到的坑`（不同的 node 版本、端口被占用、不同的系统、部署路径的影响等等）可能远大于简单的学习 `docker-compose up -d` 这一个指令。
+
+（容器化真的是很好的技术，我很推荐大家都去学习一下）
+
+裸机部署需要的时间远远大于您起一个容器的时间，如果您执意要裸机部署，请继续往下看。
+
+裸机部署遇到的问题，请自行百度。
+
+:::
+
+### 环境要求
+
+| 项目         | 要求  | 备注                                                              |
+| ------------ | ----- | ----------------------------------------------------------------- |
+| Nodejs       | >=16  | 长期支持版即可，可用 nvm 管理 node 版本                           |
+| yarn         | v1    | yarn 包管理器，其他管理器不能识别 yarn.lock 可能导致问题          |
+| 操作系统     | Linux | 主流 linux 发行版即可                                             |
+| MongoDB      | -     | 主流 mongodb 版本                                                 |
+| Caddy        | v2    | Caddy v2 反代各个微服务，其他的反代理论上可以，但是需要自己写配置 |
+| 后台运行程序 | -     | 可以让服务后台运行,比如 systemd、tmux 等                          |
+
+### 步骤
+
+#### 下载代码
+
+```bash
+# 假设你满足上面所有的条件
+# 下载源码
+git clone https://github.com/Mereithhh/van-blog
+```
+
+#### 构建并运行前台
+
+```bash
+# 切换目录
+cd packages/website
+# 安装依赖
+yarn
+# 构建
+isBuild=t yarn build
+# 用你自己的方式把下面的服务后台运行
+yarn start -p 3001
+
+```
+
+#### 安装内嵌 waline 依赖
+
+```bash
+cd packages/waline
+yarn
+```
+
+#### 运行后端
+
+```
+# 切换目录
+cd packages/server
+# 安装依赖
+yarn
+# 创建一个 config.yml 文件
+touch config.yml
+```
+
+在创建的 `config.yml` 文件中写入
+
+```yml
+database:
+  url: mongodb://someMongo:27017/vanBlog
+static:
+  path: 你想要保存图床图片的路径，要绝对路径
+waline:
+  db: walineDev
+```
+
+然后按照自己的方法把下面的命令运行到后台:
+
+```
+# 必须在 packages/server 目录下运行
+yarn start
+```
+
+#### 构建后台页面并运行
+
+```bash
+# 切换目录
+cd packages/admin
+# 安装依赖
+yarn
+# 构建
+yarn build
+# 运行后台页面，按照你自己的方式把下面的页面运行在后台
+PORT=3002 yarn serve
+```
+
+#### 启动反代 Caddy
+
+```bash
+# 在项目根目录
+# 把 <YOUR_EMAIL> 替换成你自己的邮箱，然后执行下面的命令
+sed "s/VAN_BLOG_EMAIL/<YOUR_EMAIL>/g" CaddyfileTemplateLocal > Caddyfile
+caddy start --config ./Caddyfile
+```
+
+#### 完成
+
+浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
+
+也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
