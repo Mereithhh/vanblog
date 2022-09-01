@@ -23,14 +23,15 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 如果你没有安装 `docker` 和 `docker-compose`，可以通过以下命令一键安装：
 
 ```bash
-curl -sSL https://get.daocloud.io/docker | sh
+sudo curl -sSL https://get.daocloud.io/docker | sh
+sudo systemctl enable --now docker
 ```
 
 如果你没有接触过 `docker`，但是想了解一下，可以看下面的教程：
 
 > [Docker 入门教程](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 
-新建 `docker-compose.yml`文件：
+在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件：
 
 ```yaml
 version: "3"
@@ -84,7 +85,7 @@ services:
 按注释说明修改`docker-compose.yml`的配置后：
 
 ```bash
-docker-compose up -d
+sudo docker-compose up -d
 ```
 
 浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
