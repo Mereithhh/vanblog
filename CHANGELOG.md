@@ -1,4 +1,27 @@
 # Changelog
+## [0.28.0](https://github.com/Mereithhh/van-blog/compare/v0.27.3...v0.28.0) (2022-09-01)
+
+
+### ✏️ Documentation | 文档
+
+* update todo’ ([b32d7ce](https://github.com/Mereithhh/van-blog/commit/b32d7ceb430e54704e5963964a9918e80f0fe115))
+* 增加裸机部署指南 ([dcdc94e](https://github.com/Mereithhh/van-blog/commit/dcdc94e86be63b5bc70945d0b36bde463980ff7f))
+* 更新文档 ([2abe492](https://github.com/Mereithhh/van-blog/commit/2abe492e5dda2aace2196ed54df43a01c91de613))
+* 更新文档 ([b00597f](https://github.com/Mereithhh/van-blog/commit/b00597fbe4519f7090f7d7f04bfd59d69ed7501d))
+* 更新文档 ([a58a7a9](https://github.com/Mereithhh/van-blog/commit/a58a7a97f5ea9c3fd3e3960e4b85a1167ebe2ab3))
+* 部署说明增加 sudo; ([13bcbc2](https://github.com/Mereithhh/van-blog/commit/13bcbc2e7e378107f869171f35bc4dd97a5801f5))
+
+
+### ✨ Features | 新功能
+
+* 创建或修改文章/草稿时可指定创建时间 [#18](https://github.com/Mereithhh/van-blog/issues/18) ([f886d4b](https://github.com/Mereithhh/van-blog/commit/f886d4be1d829b915cd3260c2bb585d3a7a5303c))
+* 编辑器页面发布草稿后跳转到文章管理页面 ([f1fb898](https://github.com/Mereithhh/van-blog/commit/f1fb898a568b9282b922cabc87da11cc804c49af))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 文章下方本文链接携带了锚点 [#18](https://github.com/Mereithhh/van-blog/issues/18) ([279e0fe](https://github.com/Mereithhh/van-blog/commit/279e0fe6b7cbd7fd854aa0ecffc210395d300d1e))
+
 ### [0.27.3](https://github.com/Mereithhh/van-blog/compare/v0.27.2...v0.27.3) (2022-09-01)
 
 
