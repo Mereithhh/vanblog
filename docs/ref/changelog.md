@@ -4,6 +4,40 @@ icon: update
 ---
 
 
+## [0.27.0](https://github.com/Mereithhh/van-blog/compare/v0.26.1...v0.27.0) (2022-09-01)
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 优化滚动监听，减少可能的性能问题 ([df5d308](https://github.com/Mereithhh/van-blog/commit/df5d308241af88548c0ca0491af13a2f6bc2a001))
+* 去掉 jsx 里面的随机 key ([29fdb23](https://github.com/Mereithhh/van-blog/commit/29fdb2385635101102ce1f098690e4509137c99b))
+
+
+### ✨ Features | 新功能
+
+* 后台系统设置页面统一卡片样式 ([d52e5c7](https://github.com/Mereithhh/van-blog/commit/d52e5c79eee908a8365c66a0eef68a906cdf831f))
+* 增加 robots 和 viewport 标签 ([c5f5c6f](https://github.com/Mereithhh/van-blog/commit/c5f5c6fe7c14b0396619755d59176a72c6479a88))
+* 更新站点重启 waline 服务 ([2c982b0](https://github.com/Mereithhh/van-blog/commit/2c982b0a3ae33fe84f36ed94136ffd9654413edb))
+* 编辑器页面删除文章/草稿 ([ec13d53](https://github.com/Mereithhh/van-blog/commit/ec13d53287e8dcc5f79800bd0348262dd9cefa41))
+* 评论支持邮件通知&webhook了 ([17b50c6](https://github.com/Mereithhh/van-blog/commit/17b50c62927a7fa0c3d8a22c0c589d2011c5a635))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* viewport warning ([17ffa74](https://github.com/Mereithhh/van-blog/commit/17ffa74ca56f51a11c6ce1c77a1e9834fdac2bef))
+* 增加一点前台滚动监听防抖时间 ([db311ae](https://github.com/Mereithhh/van-blog/commit/db311aee8dea4444994d89d60a34e24168cfbecc))
+* 无法新建捐赠条目 ([1cd9f2a](https://github.com/Mereithhh/van-blog/commit/1cd9f2aa2c2c23bc4bf771da4a7c8de3915890b4))
+* 由于愚蠢的单词拼写问题导致的更新时间错误 ([0dff565](https://github.com/Mereithhh/van-blog/commit/0dff5658b54fc319186fdd107bef302a3d648ea6))
+
+
+### ✏️ Documentation | 文档
+
+* 更新 todo ([a4700af](https://github.com/Mereithhh/van-blog/commit/a4700afaff6765673aaf975f84c6e2022d866081))
+* 更新todo ([fde68ab](https://github.com/Mereithhh/van-blog/commit/fde68ab8018df784aa593594739d8dc54761dd0f))
+* 更新文档 ([8e92532](https://github.com/Mereithhh/van-blog/commit/8e925321775fdb2e940c9da48ae32cbab461e05e))
+* 更新文档 ([c5c297b](https://github.com/Mereithhh/van-blog/commit/c5c297b03211ac0baab4ad9f5acc2855e5c86658))
+* 更新新功能文档 ([3330a92](https://github.com/Mereithhh/van-blog/commit/3330a92877da502b69f57c1d1a04dd7cb9ccc34b))
+
 ### [0.26.1](https://github.com/Mereithhh/van-blog/compare/v0.26.0...v0.26.1) (2022-08-31)
 
 
