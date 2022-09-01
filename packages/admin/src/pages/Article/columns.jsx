@@ -137,7 +137,33 @@ export const columns = [
                 href={`/post/${record.id}`}
                 onClick={(ev) => {
                   if (record?.hidden) {
-                    message.warning('隐藏页面无法查看前台！');
+                    Modal.confirm({
+                      title: '此文章为隐藏文章！',
+                      content: (
+                        <div>
+                          <p>
+                            隐藏文章在未开启通过 URL 访问的情况下（默认关闭），会出现 404 页面！
+                          </p>
+                          <p>
+                            您可以在{' '}
+                            <a
+                              onClick={() => {
+                                history.push('/site/setting?subTab=layout');
+                              }}
+                            >
+                              布局配置
+                            </a>{' '}
+                            中修改此项。
+                          </p>
+                        </div>
+                      ),
+                      onOk: () => {
+                        window.open(`/post/${record.id}`, '_blank');
+                        return true;
+                      },
+                      okText: '仍然访问',
+                      cancelText: '返回',
+                    });
                     ev.preventDefault();
                   }
                 }}
