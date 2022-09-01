@@ -88,6 +88,7 @@ export default function () {
           }}
           recordCreatorProps={{
             position: 'bottom',
+            record: () => ({ key: Date.now() }),
           }}
           loading={false}
           columns={columns}
