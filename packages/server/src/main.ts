@@ -42,10 +42,8 @@ async function bootstrap() {
     process.on('SIGINT', () => {
       walineProvider.stop();
 
-      console.log('waline 子进程停止成功！正在关闭!');
-      app.close().then(() => {
-        console.log('关闭成功！');
-      });
+      console.log('waline 子进程停止成功！关闭服务!');
+      process.exit();
     });
     // 触发增量渲染生成静态页面，防止升级后内容为空
     const isrProvider = app.get(ISRProvider);

@@ -18,7 +18,7 @@ http
         response.on("error", (err) => {
           console.error(err);
         });
-
+        console.log(body);
         response.statusCode = 200;
         response.setHeader("Content-Type", "application/json");
         const responseBody = { headers, method, url, body };
