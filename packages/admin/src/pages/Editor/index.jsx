@@ -3,6 +3,8 @@ import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
 import UpdateModal from '@/components/UpdateModal';
 import {
+  deleteArticle,
+  deleteDraft,
   getAbout,
   getArticleById,
   getDraftById,
@@ -243,6 +245,34 @@ export default function () {
                   url = '/about';
                 }
                 window.open(url, '_blank');
+              },
+            }
+          : undefined,
+        type != 'about'
+          ? {
+              key: 'deleteBtn',
+              label: `删除${typeMap[type]}`,
+              onClick: () => {
+                Modal.confirm({
+                  title: `确定删除 “${currObj.title}” 吗？`,
+                  onOk: async () => {
+                    if (location.hostname == 'blog-demo.mereith.com' && type == 'article') {
+                      if ([28, 29].includes(currObj.id)) {
+                        message.warn('演示站禁止删除此文章！');
+                        return false;
+                      }
+                    }
+                    if (type == 'article') {
+                      await deleteArticle(currObj.id);
+                      message.success('删除文章成功！返回列表页！');
+                      history.push('/article');
+                    } else if (type == 'draft') {
+                      await deleteDraft(currObj.id);
+                      message.success('删除草稿成功！返回列表页！');
+                      history.push('/draft');
+                    }
+                  },
+                });
               },
             }
           : undefined,
