@@ -10,6 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { config } from 'src/config';
 import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
 import { SortOrder } from 'src/dto/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
@@ -100,6 +101,9 @@ export class ArticleController {
   }
   @Delete('/:id')
   async delete(@Param('id') id: number) {
+    if (config.demo && config.demo == 'true') {
+      return { statusCode: 401, message: '演示站禁止删除文章！' };
+    }
     const data = await this.articleProvider.deleteById(id);
     this.isrProvider.activeAll('删除文章触发增量渲染！');
     return {
