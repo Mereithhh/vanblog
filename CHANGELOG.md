@@ -1,4 +1,34 @@
 # Changelog
+### [0.27.1](https://github.com/Mereithhh/van-blog/compare/v0.27.0...v0.27.1) (2022-09-01)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 目录内联代码块被错误识别 [#12](https://github.com/Mereithhh/van-blog/issues/12) ([8cd4f56](https://github.com/Mereithhh/van-blog/commit/8cd4f5675fbcb7d82749f3d004d33f69bec98a5a))
+* 隐藏页面输入地址依然可以打开&增加其他一些404页面 [#13](https://github.com/Mereithhh/van-blog/issues/13) ([51e58e7](https://github.com/Mereithhh/van-blog/commit/51e58e7729dec7611c8155aa44bd8365b08bfc44))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **release:** 0.27.1 ([823c445](https://github.com/Mereithhh/van-blog/commit/823c445247d51a9c1fb35c9ba937047807b36b6b))
+
+
+### ⏪ Revert | 回退
+
+* 新加个功能再发版 ([ba89ee1](https://github.com/Mereithhh/van-blog/commit/ba89ee115ed5f1305612371e8cbb79ed085b5888))
+
+
+### ✨ Features | 新功能
+
+* demo 站无法查看waline 配置 ([211137c](https://github.com/Mereithhh/van-blog/commit/211137cecdd0b9db3c0960cd6d1646ec7243f912))
+* 演示站禁止删除文章 ([0ca1bb2](https://github.com/Mereithhh/van-blog/commit/0ca1bb2b7fbc40540e51501180606abf040c26ba))
+
+
+### ✏️ Documentation | 文档
+
+* revert changelog ([03633ab](https://github.com/Mereithhh/van-blog/commit/03633ab261990fa3744feea170c4bd9a747c9a92))
+* 更新文档 ([881fe87](https://github.com/Mereithhh/van-blog/commit/881fe876882c5f65515fe810713d55481d10455f))
+* 更新文档 ([717f026](https://github.com/Mereithhh/van-blog/commit/717f026e0f4ab057d3bdf720a283238a5b469ef6))
 
 ## [0.27.0](https://github.com/Mereithhh/van-blog/compare/v0.26.1...v0.27.0) (2022-09-01)
 
