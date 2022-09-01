@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export default function (props: { author: string; id: number }) {
   const [url, setUrl] = useState("");
   useEffect(() => {
-    setUrl(window.location.href);
+    setUrl(`${location.protocol}//${location.host}${location.pathname}`);
   }, [setUrl]);
 
   return (
