@@ -5,9 +5,8 @@ import {
   getHttpsConfig,
   setHttpsConfig,
 } from '@/services/van-blog/api';
-import ProCard from '@ant-design/pro-card';
 import ProForm, { ProFormSwitch } from '@ant-design/pro-form';
-import { Alert, Button, Input, message, Modal, Row, Space, Spin } from 'antd';
+import { Alert, Button, Card, Input, message, Modal, Row, Space, Spin } from 'antd';
 import lodash from 'lodash';
 import { useMemo, useState } from 'react';
 import { useModel } from 'umi';
@@ -56,7 +55,7 @@ export default function (props) {
     }
   };
   return (
-    <ProCard>
+    <Card title="HTTPS 相关配置">
       <Alert
         type="info"
         message={
@@ -296,6 +295,6 @@ export default function (props) {
           /> */}
         </ProForm>
       </Spin>
-    </ProCard>
+    </Card>
   );
 }

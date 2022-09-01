@@ -1,11 +1,11 @@
 import { updateUser } from '@/services/van-blog/api';
-import { ProCard, ProForm, ProFormText } from '@ant-design/pro-components';
-import { message } from 'antd';
+import { ProForm, ProFormText } from '@ant-design/pro-components';
+import { Card, message } from 'antd';
 import { history, useModel } from 'umi';
 export default function () {
   const { initialState, setInitialState } = useModel('@@initialState');
   return (
-    <ProCard>
+    <Card title="用户设置">
       <ProForm
         grid={true}
         layout={'horizontal'}
@@ -43,6 +43,6 @@ export default function () {
           placeholder={'请输入登录密码'}
         />
       </ProForm>
-    </ProCard>
+    </Card>
   );
 }
