@@ -21,11 +21,13 @@ const BackToTopBtn: React.FC<BackToTopBtnProps> = (props) => {
   const [visibleBackTopBtn, setVisibleBackTopBtn] = useState(false);
 
   useEffect(() => {
-    document.addEventListener("scroll", handleScroll);
-    return () => document.removeEventListener("scroll", handleScroll);
+    document.addEventListener("scroll", handleScroll, true);
+    return () => document.removeEventListener("scroll", handleScroll, true);
   }, [visibleBackTopBtn]);
 
   const handleScroll = debounce((ev: any) => {
+    ev.stopPropagation();
+    ev.preventDefault();
     const scrollTop = getScrollTop();
     // scrollHeight为整个文档高度
     if (scrollTop > 300) {
