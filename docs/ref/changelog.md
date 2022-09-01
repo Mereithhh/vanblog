@@ -4,6 +4,24 @@ icon: update
 ---
 
 
+### [0.27.1](https://github.com/Mereithhh/van-blog/compare/v0.27.0...v0.27.1) (2022-09-01)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([717f026](https://github.com/Mereithhh/van-blog/commit/717f026e0f4ab057d3bdf720a283238a5b469ef6))
+
+
+### ✨ Features | 新功能
+
+* demo 站无法查看waline 配置 ([211137c](https://github.com/Mereithhh/van-blog/commit/211137cecdd0b9db3c0960cd6d1646ec7243f912))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 目录内联代码块被错误识别 [#12](https://github.com/Mereithhh/van-blog/issues/12) ([8cd4f56](https://github.com/Mereithhh/van-blog/commit/8cd4f5675fbcb7d82749f3d004d33f69bec98a5a))
+* 隐藏页面输入地址依然可以打开&增加其他一些404页面 [#13](https://github.com/Mereithhh/van-blog/issues/13) ([51e58e7](https://github.com/Mereithhh/van-blog/commit/51e58e7729dec7611c8155aa44bd8365b08bfc44))
+
 ## [0.27.0](https://github.com/Mereithhh/van-blog/compare/v0.26.1...v0.27.0) (2022-09-01)
 
 
