@@ -6,8 +6,16 @@ const columns = [
   {
     dataIndex: 'name',
     title: '标签名',
-    search: false,
-
+    search: true,
+    fieldProps: { showSearch: true, placeholder: '请搜索或选择' },
+    request: async () => {
+      const { data: tags } = await getTags();
+      const data = tags.map((each) => ({
+        label: each,
+        value: each,
+      }));
+      return data;
+    },
     // render: (text) => {
     //   return <span style={{ marginLeft: 8 }}>{text}</span>;
     // },
@@ -89,46 +97,20 @@ export default function () {
       <ProTable
         rowKey="name"
         columns={columns}
-        search={false}
         dateFormatter="string"
-        // headerTitle="分类"
         actionRef={actionRef}
+        search={{
+          collapseRender: () => {
+            return null;
+          },
+          collapsed: false,
+        }}
         options={false}
-        // toolBarRender={() => [
-        //   <ModalForm
-        //     title="新建分类"
-        //     key="newCategoryN"
-        //     trigger={
-        //       <Button key="buttonCN" icon={<PlusOutlined />} type="primary">
-        //         新建分类
-        //       </Button>
-        //     }
-        //     width={450}
-        //     autoFocusFirstInput
-        //     submitTimeout={3000}
-        //     onFinish={async (values) => {
-        //       await createCategory(values);
-        //       actionRef?.current?.reload();
-        //       message.success('新建分类成功！');
-        //       return true;
-        //     }}
-        //     layout="horizontal"
-        //     labelCol={{ span: 6 }}
-        //   >
-        //     <ProFormText
-        //       width="md"
-        //       required
-        //       id="nameC"
-        //       name="name"
-        //       label="分类名称"
-        //       key="nameCCCC"
-        //       placeholder="请输入分类名称"
-        //       rules={[{ required: true, message: '这是必填项' }]}
-        //     />
-        //   </ModalForm>,
-        // ]}
-        request={async () => {
-          const data = await fetchData();
+        request={async (params = {}) => {
+          let data = await fetchData();
+          if (params?.name) {
+            data = [{ key: params?.name, name: params?.name }];
+          }
           return {
             data,
             // success 请返回 true，
