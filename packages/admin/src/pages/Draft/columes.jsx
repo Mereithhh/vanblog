@@ -49,6 +49,7 @@ export const columns = [
     title: '标签',
     dataIndex: 'tags',
     search: true,
+    fieldProps: { showSearch: true, placeholder: '请搜索或选择' },
     valueType: 'select',
     width: 120,
     renderFormItem: (_, { defaultRender }) => {
