@@ -32,7 +32,7 @@ const TimeLine = (props: TimeLinePageProps) => {
               return (
                 <TimeLineItem
                   defaultOpen={true}
-                  key={Math.floor(Math.random() * 1000000)}
+                  key={`timeline-dateitem-${eachDate}`}
                   date={eachDate}
                   articles={props.sortedArticles[eachDate]}
                 ></TimeLineItem>

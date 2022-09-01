@@ -77,7 +77,6 @@ export default function () {
           }}
           recordCreatorProps={{
             position: 'bottom',
-            record: () => ({ key: Math.floor(Math.random() * 1000000) }),
           }}
           loading={false}
           columns={columns}

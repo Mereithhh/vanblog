@@ -46,11 +46,11 @@ export default function (props: { socials: SocialItem[] }) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      {data.map((eachRow: SocialItem[]) => {
+      {data.map((eachRow: SocialItem[], index) => {
         return (
           <div
             className="w-full flex flex-row justify-between items-center"
-            key={Math.floor(Math.random() * 1000000)}
+            key={`socalRow-${index}`}
           >
             {renderEach(eachRow[0])}
             {renderEach(eachRow[1])}

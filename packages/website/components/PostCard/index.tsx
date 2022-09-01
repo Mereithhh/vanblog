@@ -245,7 +245,7 @@ export default function (props: {
           <div className="mt-4">
             <div className="text-sm  text-gray-500 flex justify-center space-x-2 select-none dark:text-dark">
               {props.tags.map((tag) => (
-                <div key={Math.floor(Math.random() * 100000)}>
+                <div key={`article-tag-${tag}`}>
                   <Link href={`/tag/${tag}`}>
                     <a className=" border-b border-white hover:border-gray-500 dark:border-dark dark:hover:border-gray-300 dark:hover:text-gray-300">{`#${tag}`}</a>
                   </Link>

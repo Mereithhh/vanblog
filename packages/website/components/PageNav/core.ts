@@ -178,7 +178,3 @@ export const calItemList = (props: PageNavProps) => {
   }
   return res;
 };
-
-export const randomKey = (item: PageItem) => {
-  return `${Math.floor(Math.random() * 100000)}-${item.href}`;
-};

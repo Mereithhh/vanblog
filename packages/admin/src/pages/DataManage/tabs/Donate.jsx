@@ -88,7 +88,6 @@ export default function () {
           }}
           recordCreatorProps={{
             position: 'bottom',
-            record: () => ({ key: Math.floor(Math.random() * 1000000) }),
           }}
           loading={false}
           columns={columns}
@@ -104,7 +103,6 @@ export default function () {
             type: 'multiple',
             editableKeys,
             onSave: async (rowKey, data, row) => {
-              
               await updateDonate(data);
               actionRef?.current?.reload();
             },

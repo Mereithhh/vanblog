@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { CSSProperties, HTMLAttributes } from "react";
-import { PageItem, randomKey } from "./core";
+import { CSSProperties } from "react";
+import { PageItem } from "./core";
 const commonCls =
   "inline-flex justify-center items-center   transition-all text-gray-600";
 const btnCls =
@@ -13,7 +13,10 @@ const commonStyle: CSSProperties = {
 };
 const renderLink = (item: PageItem, isCur: boolean) => {
   return (
-    <Link href={item.href} key={randomKey(item)}>
+    <Link
+      href={item.href}
+      key={`LinkItem-${item.page}-${item.type}-${item.href}`}
+    >
       <a
         style={commonStyle}
         className={`${commonCls} ${btnCls}  ${
@@ -31,7 +34,7 @@ const renderBtn = (item: PageItem, disable: boolean, isNext: boolean) => {
   return (
     <Link
       href={item.href}
-      key={randomKey(item)}
+      key={`pagenav-btn-${item.page}-${item.href}-${isNext}`}
       // className="justify-center items-center "
     >
       <a
@@ -45,7 +48,10 @@ const renderBtn = (item: PageItem, disable: boolean, isNext: boolean) => {
 };
 const renderMore = (item: PageItem, isNext: boolean) => {
   return (
-    <Link href={item.href} key={randomKey(item)}>
+    <Link
+      href={item.href}
+      key={`pagenav-more-${item.page}-${item.href}-${isNext}`}
+    >
       <a style={commonStyle} className={`dark:pg-text-dark ${commonCls}`}>
         •••
       </a>
