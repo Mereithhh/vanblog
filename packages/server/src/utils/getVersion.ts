@@ -8,7 +8,7 @@ export const getVersionFromServer = async () => {
     }
     return {
       version: data.version,
-      updatedAt: data.updatedAt,
+      updatedAt: data?.updatedAt || data?.upadtedAt,
     };
   } catch (err) {
     return null;
