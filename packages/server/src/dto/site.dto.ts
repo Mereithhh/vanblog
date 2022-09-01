@@ -26,6 +26,7 @@ export class SiteInfo {
   showDonateInfo: 'true' | 'false';
   showFriends: 'true' | 'false';
   showDonateInAbout: 'true' | 'false';
+  allowOpenHiddenPostByUrl: 'true' | 'false';
   defaultTheme: 'auto' | 'dark' | 'light';
 }
 export interface updateUserDto {

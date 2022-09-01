@@ -264,6 +264,16 @@ export default function (props: {
             }}
             tooltip={'设置后第一次进入前台的用户将以此作为默认主题模式'}
           ></ProFormSelect>
+          <ProFormSelect
+            name={'allowOpenHiddenPostByUrl'}
+            label="是否允许通过 URL 打开隐藏的文章"
+            placeholder={'不允许'}
+            valueEnum={{
+              true: '允许',
+              false: '不允许',
+            }}
+            tooltip={'默认不允许，开启后可通过 URL 打开隐藏文章。'}
+          ></ProFormSelect>
         </>
       )}
     </>

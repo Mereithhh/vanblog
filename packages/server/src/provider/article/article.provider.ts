@@ -42,6 +42,7 @@ export class ArticleProvider {
     viewer: 1,
     visited: 1,
     private: 1,
+    hidden: 1,
   };
 
   adminView = {
@@ -649,18 +650,7 @@ export class ArticleProvider {
         ],
       },
     ];
-    if (view == 'public') {
-      $and.push({
-        $or: [
-          {
-            hidden: false,
-          },
-          {
-            hidden: { $exists: false },
-          },
-        ],
-      });
-    }
+
     return await this.articleModel
       .findOne(
         {
@@ -694,8 +684,15 @@ export class ArticleProvider {
     if (!curArticle) {
       throw new NotFoundException('找不到文章');
     }
+
     if (curArticle.hidden) {
-      throw new NotFoundException('该文章是隐藏文章！');
+      const siteInfo = await this.metaProvider.getSiteInfo();
+      if (
+        !siteInfo?.allowOpenHiddenPostByUrl ||
+        siteInfo?.allowOpenHiddenPostByUrl == 'false'
+      ) {
+        throw new NotFoundException('该文章是隐藏文章！');
+      }
     }
     if (curArticle.private) {
       curArticle.content = undefined;
