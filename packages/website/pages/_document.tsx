@@ -4,7 +4,9 @@ import { decodeTheme, initTheme } from "../utils/theme";
 export default function Document() {
   return (
     <Html className={decodeTheme(initTheme()).replace("auto-", "")} lang="zh">
-      <Head></Head>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
       <body>
         <Main />
         <NextScript />

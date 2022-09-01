@@ -164,6 +164,7 @@ export default function (props: {
                 name="description"
                 content={props.option.description}
               ></meta>
+              <meta name="robots" content="index, follow"></meta>
             </Head>
 
             {
