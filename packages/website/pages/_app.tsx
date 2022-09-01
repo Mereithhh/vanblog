@@ -12,6 +12,7 @@ import { GlobalContext, GlobalState } from "../utils/globalContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import { addViewer } from "../api/addViewer";
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { current } = useRef({ hasInit: false });
@@ -49,11 +50,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [current, reloadViewer]);
 
   return (
-    <GlobalContext.Provider
-      value={{ state: globalState, setState: setGlobalState }}
-    >
-      <Component {...pageProps} />
-    </GlobalContext.Provider>
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+      </Head>
+      <GlobalContext.Provider
+        value={{ state: globalState, setState: setGlobalState }}
+      >
+        <Component {...pageProps} />
+      </GlobalContext.Provider>
+    </>
   );
 }
 
