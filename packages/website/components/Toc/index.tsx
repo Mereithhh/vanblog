@@ -37,7 +37,7 @@ export default function (props: {
           ordered={false}
           declarative={true}
           // updateHashAuto={true}
-          source={props.content}
+          source={props.content.replace(/`#/g, "")}
           headingTopOffset={56}
           onHashChange={(newHash, oldHash) => {
             // 判断一下当前激活的元素
