@@ -4,7 +4,7 @@ title: 标签管理
 
 `vanBlog` 支持管理 `标签`，具体在后台的 `站点管理/数据管理/标签管理`:
 
-![](https://pic.mereith.com/img/a7c9fd66fe5e66bbda5ca50a95632005.clipboard-2022-08-31.png)
+![](https://www.mereith.com/static/img/40e8150b4c40fcdbcb9353bebabf5e1f.clipboard-2022-09-01.png)
 
 ## 删除标签
 
