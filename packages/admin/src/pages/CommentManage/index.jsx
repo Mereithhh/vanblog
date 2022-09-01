@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Modal, Space, Spin } from 'antd';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useModel } from 'umi';
+import { history, useModel } from 'umi';
 import TipTitle from '../../components/TipTitle';
 export default function () {
   const { initialState } = useModel('@@initialState');
@@ -61,6 +61,14 @@ export default function () {
       title={null}
       extra={
         <Space>
+          <Button
+            type="primary"
+            onClick={() => {
+              history.push(`/site/setting?tab=waline`);
+            }}
+          >
+            设置
+          </Button>
           <Button onClick={showTips}>帮助</Button>
         </Space>
       }
