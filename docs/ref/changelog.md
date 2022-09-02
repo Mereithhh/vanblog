@@ -4,6 +4,22 @@ icon: update
 ---
 
 
+## [0.29.0](https://github.com/Mereithhh/van-blog/compare/v0.28.1...v0.29.0) (2022-09-02)
+
+
+### ✨ Features | 新功能
+
+* 后台和 server 的自定义 CSS、HTML、Script 框架搭建 ([279f018](https://github.com/Mereithhh/van-blog/commit/279f0182251c1ecb7209cafc9f0f5251dfd99b9a))
+* 完善客制化功能（可自定义 HTML、CSS、Script） ([889533f](https://github.com/Mereithhh/van-blog/commit/889533f0876cd38633969a8a9f0dd9b9f0a6a61b))
+
+
+### ✏️ Documentation | 文档
+
+* 完善一下部署教程 ([c2fbeb3](https://github.com/Mereithhh/van-blog/commit/c2fbeb3a853f36418399a35d9e132f24a9da51d8))
+* 更新文档 ([bbf0f85](https://github.com/Mereithhh/van-blog/commit/bbf0f850c37dae0a8aa704bb5849e61534ff09ba))
+* 更新文档 ([3d2007b](https://github.com/Mereithhh/van-blog/commit/3d2007bd22ab50819632b5be4880d5fb991869f6))
+* 更新新功能文档 ([68ef6c1](https://github.com/Mereithhh/van-blog/commit/68ef6c135a4a42c9fee95687b950a8a83e32b3f3))
+
 ### [0.28.1](https://github.com/Mereithhh/van-blog/compare/v0.28.0...v0.28.1) (2022-09-02)
 
 

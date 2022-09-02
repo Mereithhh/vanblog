@@ -36,4 +36,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            "docker.io/mereith/van-blog:test-0831"
+            "docker.io/mereith/van-blog:test-0902"
