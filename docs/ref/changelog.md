@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.29.4](https://github.com/Mereithhh/van-blog/compare/v0.29.3...v0.29.4) (2022-09-02)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([642fc2a](https://github.com/Mereithhh/van-blog/commit/642fc2af8a05d1340a1a7973e93817e071aceaef))
+
+
+### ✨ Features | 新功能
+
+* 演示站禁止发布草稿 ([5727dfb](https://github.com/Mereithhh/van-blog/commit/5727dfb6077475f3f77db4242ff5ea6e1f007ba9))
+
 ### [0.29.3](https://github.com/Mereithhh/van-blog/compare/v0.29.2...v0.29.3) (2022-09-02)
 
 
