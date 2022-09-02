@@ -19,6 +19,7 @@ import { SortOrder } from 'src/types/sort';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
+import { config } from 'src/config';
 
 @ApiTags('draft')
 @UseGuards(AdminGuard)
@@ -87,6 +88,12 @@ export class DraftController {
   }
   @Post('/publish')
   async publish(@Query('id') id: number, @Body() publishDto: PublishDraftDto) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止发布草稿！',
+      };
+    }
     const data = await this.draftProvider.publish(id, publishDto);
     this.isrProvider.activeAll('发布草稿触发增量渲染！');
     return {

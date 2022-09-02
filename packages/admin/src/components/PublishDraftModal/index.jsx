@@ -1,5 +1,5 @@
 import { publishDraft } from '@/services/van-blog/api';
-import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import { Modal, ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { message } from 'antd';
 export default function (props) {
   const { title, id, trigger, action, onFinish } = props;
@@ -13,6 +13,14 @@ export default function (props) {
         autoFocusFirstInput
         submitTimeout={3000}
         onFinish={async (values) => {
+          if (location.hostname == 'blog-demo.mereith.com') {
+            Modal.info({
+              title: '演示站禁止新建文章！',
+              content:
+                '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。这是这个人的微信，有兴趣的可以帮我问问他为什么这么做： 15342713588',
+            });
+            return;
+          }
           await publishDraft(id, values);
           message.success('发布成功！');
           if (action && action.reload) {
