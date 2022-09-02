@@ -25,8 +25,7 @@ export default function (props: {
         if (location.hostname == 'blog-demo.mereith.com' && type != 'draft') {
           Modal.info({
             title: '演示站禁止修改信息！',
-            content:
-              '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。这是这个人的微信，有兴趣的可以帮我问问他为什么这么做： 15342713588',
+            content: '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
           });
           return;
         }

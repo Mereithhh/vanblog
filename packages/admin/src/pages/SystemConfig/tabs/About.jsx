@@ -44,6 +44,13 @@ export default function (props) {
             <a target={'_blank'} rel="noreferrer" href="https://vanblog.mereith.com">
               项目文档
             </a>
+            <a
+              target={'_blank'}
+              rel="noreferrer"
+              href="https://vanblog.mereith.com/ref/changelog.html"
+            >
+              更新日志
+            </a>
             <a target={'_blank'} rel="noreferrer" href="/swagger">
               API文档
             </a>
