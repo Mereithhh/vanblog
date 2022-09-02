@@ -174,7 +174,7 @@ export default function (props: {
 
             {
               <div className="flex mx-auto justify-center">
-                <div className="flex-shrink flex-grow md:max-w-3xl xl:max-w-4xl">
+                <div className="flex-shrink flex-grow md:max-w-3xl xl:max-w-4xl w-full">
                   {props.children}
                 </div>
                 <div

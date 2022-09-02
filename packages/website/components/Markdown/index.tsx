@@ -65,6 +65,15 @@ export default function (props: { content: string }) {
                   children={String(children).replace(/\n$/, "")}
                   style={vscDarkPlus as any}
                   language={match?.length ? match[1] : undefined}
+                  wrapLines={true}
+                  lineProps={() => {
+                    return {
+                      style: {
+                        display: "block",
+                        whiteSpace: "pre",
+                      },
+                    };
+                  }}
                   PreTag="pre"
                   {...props}
                 />

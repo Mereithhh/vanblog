@@ -95,9 +95,6 @@
 .markdown-body ol {
   list-style: unset;
 } */
-.markdown-body code {
-  word-break: break-word;
-}
 .markdown-body {
   /* font: 400 16px/1.75 "Open Sans", "PingFang SC", "Hiragino Sans GB",
     "Microsoft Yahei", "WenQuanYi Micro Hei", "Segoe UI Emoji",
@@ -1046,9 +1043,6 @@
 .markdown-body li > p {
   margin-top: 0px;
   margin-bottom: 0;
-}
-.markdown-body * {
-  word-break: break-word;
 }
 .markdown-body ol {
   list-style: decimal;
