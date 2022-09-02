@@ -67,7 +67,7 @@
 >
 > [docker 镜像拉取慢](https://www.runoob.com/docker/docker-mirror-acceleration.html)
 >
-> [docker 镜像拉取慢](https://vanblog.mereith.com/ref/faq.html#%E5%A6%82%E4%BD%95%E5%9C%A8%E5%A4%96%E9%83%A8%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93)
+> [如何外部访问数据库](https://vanblog.mereith.com/ref/faq.html#%E5%A6%82%E4%BD%95%E5%9C%A8%E5%A4%96%E9%83%A8%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93)
 >
 > [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
 
