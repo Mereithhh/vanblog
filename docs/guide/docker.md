@@ -31,7 +31,7 @@ sudo systemctl enable --now docker
 
 > [Docker 入门教程](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
 
-> **_只需要安装 docker 和 docker-compose 就可以了，不需要手动安装 mongoDB _**，因为编排中已经包含了数据库（数据库是通过 docker 容器化运行的，不需要手动安装）。
+**只需要安装 `docker` 和 `docker-compose` 就可以了，不需要手动安装 `mongoDB`**，因为编排中已经包含了数据库（数据库是通过 docker 容器化运行的，不需要手动安装）。
 
 在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件：
 
