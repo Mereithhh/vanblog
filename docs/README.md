@@ -26,6 +26,10 @@ features:
     icon: contrast
     details: 草稿、分类、标签、搜索、TOC、内嵌评论系统、图标和数学公式支持
 
+  - title: 客制化
+    icon: vscode
+    details: 可添加自定义 HTML、CSS、JS
+
   - title: 内置图床
     icon: pic
     details: 本地图床，OSS 图床，Github 图床都支持，可一键上传剪切板图片

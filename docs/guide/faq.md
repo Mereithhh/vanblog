@@ -62,7 +62,15 @@ VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行
 
 ### 我觉得太丑了||可以自定义样式吗？
 
-暂时没有自定义 css，后面会加上。暂时你可以 fork 一下，自己改一下 `packages/website` 的代码。
+可以！请参考[客制化功能](/feature/advance/customizing.md)
+
+### 自定义页面
+
+其实现在就可以！您可以通过隐藏某篇文章，然后在后台开启通过 URL 访问被隐藏文章的功能。然后把这个 URL 添加到导航栏（在自定义导航栏设置中），或者到任何您想要的位置即可。这时候这篇文章其实就是自定义页面了。
+
+在前台，您写在 markdown 里的 html 代码也会被正常渲染，所以完全可以当自定义页面来用。
+
+完整的自定义页面功能在排期中，但比较靠后。
 
 ### 如何安装 docker ?
 
@@ -75,6 +83,22 @@ curl -sSL https://get.daocloud.io/docker | sh
 ### 无法通过 https + ip 访问网址
 
 很遗憾，目前不支持通过 `https + ip` 访问，请通过 `https + 域名` 或者 `http + ip` 访问。用 `http + ip` 访问前请在后台设置中关闭 `https 自动重定向`
+
+### 如何在外部访问数据库
+
+为了安全考虑默认的 docker-compose.yml 编排中的 mongoDB 是仅容器内访问的（换句话说不会对外保留端口）。
+
+如果你想连接的话，首先需要修改编排中 mongoDB 的账密（对外暴漏端口有安全风险，一定要设置强密码！）
+
+![](https://www.mereith.com/static/img/06f19fe68043cd4e8780e1e2484b70d9.clipboard-2022-09-02.png)
+
+注意画红圈的地方要同步改，然后加上下图画红线的语句：
+
+![](https://www.mereith.com/static/img/e2bc119c1408d50f73a2da526dec96c8.clipboard-2022-09-02.png)
+
+然后运行 `docker-compose down && docker-compose up -d` 重启容器，就可以通过 27017 端口访问 mongoDB 了。
+
+具体访问方式可以自行查阅资料，我一般都是用 [mongoDBCompass](https://www.mongodb.com/try/download/compass) 这个工具。
 
 ### Bug 反馈
 
