@@ -49,7 +49,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     headerLeftContent,
     ipcHref: siteInfo?.beianUrl || "",
     ipcNumber: siteInfo?.beianNumber || "",
-    since: siteInfo?.since || dayjs().format("YYYY-MM-DD"),
+    since: siteInfo?.since || dayjs().toISOString(),
     logo: siteInfo?.siteLogo || "",
     favicon: siteInfo.favicon,
     siteName: siteInfo.siteName,

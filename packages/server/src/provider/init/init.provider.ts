@@ -16,6 +16,10 @@ export class InitProvider {
 
   async init(initDto: InitDto) {
     const { user, siteInfo } = initDto;
+    let toUpdateDto = siteInfo;
+    if (!siteInfo.since) {
+      toUpdateDto = { ...siteInfo, since: new Date() };
+    }
     try {
       await this.userModel.create({
         id: 0,
@@ -23,7 +27,7 @@ export class InitProvider {
         password: user.password,
       });
       await this.metaModel.create({
-        siteInfo,
+        siteInfo: toUpdateDto,
         links: [],
         socials: [],
         rewards: [],

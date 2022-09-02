@@ -1,5 +1,5 @@
 import {
-  ProFormDatePicker,
+  ProFormDateTimePicker,
   ProFormDigit,
   ProFormSelect,
   ProFormText,
@@ -176,7 +176,12 @@ export default function (props: {
             }}
             tooltip={'默认开启'}
           ></ProFormSelect>
-          <ProFormDatePicker name="since" width={'lg'} label="建站时间" />
+          <ProFormDateTimePicker
+            name="since"
+            width={'lg'}
+            label="建站时间"
+            placeholder="不填默认为此刻"
+          />
         </>
       )}
       {/* 布局选项 */}
