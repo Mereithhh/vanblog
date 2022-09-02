@@ -14,6 +14,17 @@ export async function getHttpsConfig() {
     method: 'GET',
   });
 }
+export async function getLayoutConfig() {
+  return request('/api/admin/setting/layout', {
+    method: 'GET',
+  });
+}
+export async function updateLayoutConfig(body) {
+  return request('/api/admin/setting/layout', {
+    method: 'PUT',
+    data: body,
+  });
+}
 export async function getWalineConfig() {
   return request('/api/admin/setting/waline', {
     method: 'GET',

@@ -1,4 +1,5 @@
 // https://umijs.org/config/
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 import { defineConfig } from 'umi';
 import defaultSettings from './defaultSettings';
 import proxy from './proxy';
@@ -52,4 +53,11 @@ export default defineConfig({
   mfsu: {},
   webpack5: {},
   exportStatic: {},
+  chainWebpack(memo, { env, webpack, createCSSRule }) {
+    memo
+      .plugin('monaco-editor-webpack-plugin')
+      .use(MonacoWebpackPlugin, [
+        { languages: ['css', 'json', 'html', 'javascript', 'typescript'] },
+      ]);
+  },
 });

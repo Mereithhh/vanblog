@@ -10326,7 +10326,7 @@ loader-utils@^1.1.0:
     emojis-list "^3.0.0"
     json5 "^1.0.1"
 
-loader-utils@^2.0.0:
+loader-utils@^2.0.0, loader-utils@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-2.0.2.tgz#d6e3b4fb81870721ae4e0868ab11dd638368c129"
   integrity sha512-TM57VeHptv569d/GKh6TAYdzKblwDNiumOdkFnejjD0XwTH87K90w3O7AiJRqdQoXygvi1VQTJTLGhJl7WqA7A==
@@ -11573,6 +11573,18 @@ moment@^2.24.0, moment@^2.27.0, moment@^2.29.0, moment@^2.29.1, moment@^2.29.2:
   version "2.29.3"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.3.tgz#edd47411c322413999f7a5940d526de183c031f3"
   integrity sha512-c6YRvhEo//6T2Jz/vVtYzqBzwvPT95JBQ+smCytzf7c50oMZRsR/a4w88aD34I+/QVSfnoAnSBFPJHItlOMJVw==
+
+monaco-editor-webpack-plugin@^7.0.1:
+  version "7.0.1"
+  resolved "https://registry.npmjs.org/monaco-editor-webpack-plugin/-/monaco-editor-webpack-plugin-7.0.1.tgz#ba19c60aba990184e36ad8722b1ed6a564527c7c"
+  integrity sha512-M8qIqizltrPlIbrb73cZdTWfU9sIsUVFvAZkL3KGjAHmVWEJ0hZKa/uad14JuOckc0GwnCaoGHvMoYtJjVyCzw==
+  dependencies:
+    loader-utils "^2.0.2"
+
+monaco-editor@^0.34.0:
+  version "0.34.0"
+  resolved "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.34.0.tgz#b1749870a1f795dbfc4dc03d8e9b646ddcbeefa7"
+  integrity sha512-VF+S5zG8wxfinLKLrWcl4WUizMx+LeJrG4PM/M78OhcwocpV0jiyhX/pG6Q9jIOhrb/ckYi6nHnaR5OojlOZCQ==
 
 mri@^1.1.0:
   version "1.2.0"
@@ -14023,6 +14035,13 @@ react-lifecycles-compat@^3.0.4:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
+
+react-monaco-editor@^0.50.1:
+  version "0.50.1"
+  resolved "https://registry.npmjs.org/react-monaco-editor/-/react-monaco-editor-0.50.1.tgz#3b68ce03e4b316f435b9bcd8ec13ffd4c050c605"
+  integrity sha512-qvYdJhQdkPIrPDMxCrEl0T2x9TfBB+aUbrpFv69FwoTybeyfAjxgJ219MYSsgn3c/g06BgyLX4ENrXM4niZ9ag==
+  dependencies:
+    prop-types "^15.8.1"
 
 react-motion@^0.5.2:
   version "0.5.2"

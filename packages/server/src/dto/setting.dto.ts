@@ -7,13 +7,13 @@ export type SettingValue =
 export type StorageType = 'picgo' | 'local';
 export type StaticType = 'img';
 
-export interface ScriptItem {
-  type: 'code' | 'link';
-  value: string;
-}
+// export interface ScriptItem {
+//   type: 'code' | 'link';
+//   value: string;
+// }
 
 export interface LayoutSetting {
-  customScripts: ScriptItem[];
+  customScripts: string;
   customHtml: string;
   customCSS: string;
 }

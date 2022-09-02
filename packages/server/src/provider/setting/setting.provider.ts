@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { config } from 'process';
 import {
   HttpsSetting,
+  LayoutSetting,
   SettingType,
   StaticSetting,
   WalineSetting,
@@ -42,6 +43,13 @@ export class SettingProvider {
     }
     return null;
   }
+  async getLayoutSetting(): Promise<LayoutSetting> {
+    const res = await this.settingModel.findOne({ type: 'layout' }).exec();
+    if (res) {
+      return res?.value as any;
+    }
+    return null;
+  }
   async getWalineSetting(): Promise<WalineSetting> {
     const res = await this.settingModel.findOne({ type: 'waline' }).exec();
     if (res) {
@@ -66,6 +74,21 @@ export class SettingProvider {
     }
     const res = await this.settingModel.updateOne(
       { type: 'waline' },
+      { value: newValue },
+    );
+    return res;
+  }
+  async updateLayoutSetting(dto: LayoutSetting) {
+    const oldValue = await this.getLayoutSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'layout',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'layout' },
       { value: newValue },
     );
     return res;

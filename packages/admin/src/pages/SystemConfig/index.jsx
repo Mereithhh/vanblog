@@ -4,6 +4,7 @@ import thinstyle from '../Welcome/index.less';
 import About from './tabs/About';
 import Backup from './tabs/Backup';
 import Caddy from './tabs/Caddy';
+import Customizing from './tabs/Customizing';
 import ImgTab from './tabs/ImgTab';
 import SiteInfo from './tabs/SiteInfo';
 import User from './tabs/User';
@@ -11,7 +12,7 @@ import WalineTab from './tabs/WalineTab';
 export default function () {
   const tabMap = {
     siteInfo: <SiteInfo />,
-
+    customizing: <Customizing />,
     backup: <Backup />,
     about: <About />,
     user: <User />,
@@ -32,6 +33,10 @@ export default function () {
         {
           tab: '站点配置',
           key: 'siteInfo',
+        },
+        {
+          tab: '客制化',
+          key: 'customizing',
         },
         {
           tab: '用户设置',
