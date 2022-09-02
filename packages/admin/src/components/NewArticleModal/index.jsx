@@ -5,8 +5,9 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
 import moment from 'moment';
+
 export default function (props) {
   const { onFinish } = props;
   return (
@@ -21,6 +22,14 @@ export default function (props) {
       autoFocusFirstInput
       submitTimeout={3000}
       onFinish={async (values) => {
+        if (location.hostname == 'blog-demo.mereith.com') {
+          Modal.info({
+            title: '演示站禁止新建文章！',
+            content:
+              '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。这是这个人的微信，有兴趣的可以帮我问问他为什么这么做： 15342713588',
+          });
+          return;
+        }
         const washedValues = {};
         for (const [k, v] of Object.entries(values)) {
           washedValues[k.replace('C', '')] = v;

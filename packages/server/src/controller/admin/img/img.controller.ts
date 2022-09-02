@@ -15,6 +15,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { SearchStaticOption } from 'src/types/setting.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { StaticProvider } from 'src/provider/static/static.provider';
+import { config } from 'src/config';
 
 @ApiTags('img')
 @UseGuards(AdminGuard)
@@ -46,6 +47,12 @@ export class ImgController {
 
   @Post('scan')
   async scanImgsOfArticles() {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const res = await this.staticProvider.scanLinksOfArticles();
     return {
       statusCode: 200,
@@ -62,6 +69,12 @@ export class ImgController {
   }
   @Delete('/all/delete')
   async deleteALL() {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const res = await this.staticProvider.deleteAllIMG();
     return {
       statusCode: 200,
@@ -70,6 +83,12 @@ export class ImgController {
   }
   @Delete('/:sign')
   async delete(@Param('sign') sign: string) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const res = await this.staticProvider.deleteOneBySign(sign);
     return {
       statusCode: 200,

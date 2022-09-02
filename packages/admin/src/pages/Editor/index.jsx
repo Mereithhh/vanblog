@@ -93,8 +93,12 @@ export default function () {
   }, []);
 
   const handleSave = async () => {
-    if (history.location.query?.type == 'about' && location.hostname == 'blog-demo.mereith.com') {
-      message.warning('演示站禁止修改关于页面内容！');
+    if (location.hostname == 'blog-demo.mereith.com' && type != 'draft') {
+      Modal.info({
+        title: '演示站禁止修改此信息！',
+        content:
+          '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。这是这个人的微信，有兴趣的可以帮我问问他为什么这么做： 15342713588',
+      });
       return;
     }
     // 先检查一下有没有 more .

@@ -16,43 +16,47 @@ export default function () {
           style={{ margin: '20px 0' }}
           onClick={async () => {
             setLoading(true);
-            const { data } = await scanImgsOfArticles();
-            message.success(`扫描成功！共 ${data?.total || 0} 项`);
-            setLoading(false);
-            const { errorLinks } = data;
-            if (errorLinks && errorLinks.length) {
-              Modal.info({
-                title: '失效链接：',
-                content: (
-                  <Table
-                    pagination={{
-                      hideOnSinglePage: true,
-                    }}
-                    rowKey={'link'}
-                    dataSource={errorLinks}
-                    size="small"
-                    columns={[
-                      { title: '文章 ID', dataIndex: 'artcileId', key: 'artcileId' },
-                      { title: '标题', dataIndex: 'title', key: 'title' },
-                      {
-                        title: '链接',
-                        dataIndex: 'link',
-                        key: 'link',
-                        render: (val) => {
-                          return (
-                            <Typography.Text
-                              copyable={val.length > 20}
-                              style={{ wordBreak: 'break-all', wordWrap: 'break-word' }}
-                            >
-                              {val}
-                            </Typography.Text>
-                          );
+            try {
+              const { data } = await scanImgsOfArticles();
+              message.success(`扫描成功！共 ${data?.total || 0} 项`);
+              setLoading(false);
+              const { errorLinks } = data;
+              if (errorLinks && errorLinks.length) {
+                Modal.info({
+                  title: '失效链接：',
+                  content: (
+                    <Table
+                      pagination={{
+                        hideOnSinglePage: true,
+                      }}
+                      rowKey={'link'}
+                      dataSource={errorLinks}
+                      size="small"
+                      columns={[
+                        { title: '文章 ID', dataIndex: 'artcileId', key: 'artcileId' },
+                        { title: '标题', dataIndex: 'title', key: 'title' },
+                        {
+                          title: '链接',
+                          dataIndex: 'link',
+                          key: 'link',
+                          render: (val) => {
+                            return (
+                              <Typography.Text
+                                copyable={val.length > 20}
+                                style={{ wordBreak: 'break-all', wordWrap: 'break-word' }}
+                              >
+                                {val}
+                              </Typography.Text>
+                            );
+                          },
                         },
-                      },
-                    ]}
-                  />
-                ),
-              });
+                      ]}
+                    />
+                  ),
+                });
+              }
+            } catch (err) {
+              setLoading(false);
             }
           }}
           type="primary"

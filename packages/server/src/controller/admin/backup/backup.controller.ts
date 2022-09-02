@@ -27,6 +27,7 @@ import { ViewerProvider } from 'src/provider/viewer/viewer.provider';
 import { VisitProvider } from 'src/provider/visit/visit.provider';
 import { StaticProvider } from 'src/provider/static/static.provider';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
+import { config } from 'src/config';
 
 @ApiTags('backup')
 @UseGuards(AdminGuard)
@@ -88,6 +89,12 @@ export class BackupController {
   @Post('/import')
   @UseInterceptors(FileInterceptor('file'))
   async importAll(@UploadedFile() file: Express.Multer.File) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const json = file.buffer.toString();
     const data = JSON.parse(json);
     const { meta, user, setting } = data;

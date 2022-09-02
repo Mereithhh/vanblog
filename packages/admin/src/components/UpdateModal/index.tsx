@@ -1,6 +1,6 @@
 import { getAllCategories, getTags, updateArticle, updateDraft } from '@/services/van-blog/api';
 import { ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText } from '@ant-design/pro-form';
-import { message } from 'antd';
+import { message, Modal } from 'antd';
 import moment from 'moment';
 export default function (props: {
   currObj: any;
@@ -22,6 +22,14 @@ export default function (props: {
       submitTimeout={3000}
       initialValues={currObj || {}}
       onFinish={async (values) => {
+        if (location.hostname == 'blog-demo.mereith.com' && type != 'draft') {
+          Modal.info({
+            title: '演示站禁止修改信息！',
+            content:
+              '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。这是这个人的微信，有兴趣的可以帮我问问他为什么这么做： 15342713588',
+          });
+          return;
+        }
         if (!currObj || !currObj.id) {
           return false;
         }

@@ -72,6 +72,12 @@ export class ArticleController {
 
   @Put('/:id')
   async update(@Param('id') id: number, @Body() updateDto: UpdateArticleDto) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改文章！',
+      };
+    }
     const data = await this.articleProvider.updateById(id, updateDto);
     this.isrProvider.activeAll('更新文章触发增量渲染！');
     return {
@@ -82,6 +88,12 @@ export class ArticleController {
 
   @Post()
   async create(@Body() createDto: CreateArticleDto) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止创建文章！',
+      };
+    }
     const data = await this.articleProvider.create(createDto);
     this.isrProvider.activeAll('创建文章触发增量渲染！');
     return {

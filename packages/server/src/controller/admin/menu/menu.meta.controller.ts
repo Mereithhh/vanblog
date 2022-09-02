@@ -13,6 +13,7 @@ import { MenuItem } from 'src/types/menu.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+import { config } from 'src/config';
 @ApiTags('menu')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/meta/menu')
@@ -33,6 +34,12 @@ export class MenuMetaController {
 
   @Put()
   async update(@Body() updateDto: Partial<MenuItem>) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.metaProvider.addOrUpdateMemu(updateDto);
     this.isrProvider.activeAll('更新导航栏配置触发增量渲染！');
     return {
@@ -43,6 +50,12 @@ export class MenuMetaController {
 
   @Post()
   async create(@Body() updateDto: Partial<MenuItem>) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.metaProvider.addOrUpdateMemu(updateDto);
     this.isrProvider.activeAll('修改导航栏配置触发增量渲染！');
 
@@ -54,6 +67,12 @@ export class MenuMetaController {
 
   @Delete('/:name')
   async delete(@Param('name') name: string) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.metaProvider.deleteMenuItem(name);
     this.isrProvider.activeAll('修改导航栏配置触发增量渲染！');
 

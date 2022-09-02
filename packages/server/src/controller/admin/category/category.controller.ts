@@ -14,6 +14,7 @@ import { CreateCategoryDto } from 'src/types/category.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
+import { config } from 'src/config';
 
 @ApiTags('category')
 @UseGuards(AdminGuard)
@@ -44,6 +45,12 @@ export class CategoryController {
 
   @Post()
   async createCategory(@Body() body: CreateCategoryDto) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.categoryProvider.addOne(body.name);
     this.isrProvider.activeAll('创建分类触发增量渲染！');
     return {
@@ -54,6 +61,12 @@ export class CategoryController {
 
   @Delete('/:name')
   async deleteCategory(@Param('name') name: string) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.categoryProvider.deleteOne(name);
     this.isrProvider.activeAll('删除分类触发增量渲染！');
     return {
@@ -67,6 +80,12 @@ export class CategoryController {
     @Param('name') name: string,
     @Query('value') newValue: string,
   ) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.categoryProvider.updateCategoryByName(
       name,
       newValue,

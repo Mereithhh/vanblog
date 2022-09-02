@@ -13,6 +13,7 @@ import { LinkDto } from 'src/types/link.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+import { config } from 'src/config';
 @ApiTags('link')
 @UseGuards(AdminGuard)
 @Controller('/api/admin/meta/link')
@@ -33,6 +34,12 @@ export class LinkMetaController {
 
   @Put()
   async update(@Body() updateLinkDto: LinkDto) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.metaProvider.addOrUpdateLink(updateLinkDto);
     this.isrProvider.activeLink('更新友链触发增量渲染！');
     return {
@@ -43,6 +50,12 @@ export class LinkMetaController {
 
   @Post()
   async create(@Body() updateLinkDto: LinkDto) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.metaProvider.addOrUpdateLink(updateLinkDto);
     this.isrProvider.activeLink('创建友链触发增量渲染！');
     return {
@@ -52,6 +65,12 @@ export class LinkMetaController {
   }
   @Delete('/:name')
   async delete(@Param('name') name: string) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const data = await this.metaProvider.deleteLink(name);
     this.isrProvider.activeLink('删除友链触发增量渲染！');
     return {

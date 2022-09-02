@@ -1,5 +1,5 @@
 import { exportAll } from '@/services/van-blog/api';
-import { Alert, Button, Card, message, Space, Spin, Upload } from 'antd';
+import { Alert, Button, Card, message, Modal, Space, Spin, Upload } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
 
@@ -40,6 +40,14 @@ export default function (props) {
                 // console.log(info.file, info.fileList);
               }
               if (info.file.status === 'done') {
+                if (location.hostname == 'blog-demo.mereith.com') {
+                  Modal.info({
+                    title: '演示站禁止修改此项！',
+                    content:
+                      '因为有个人在演示站首页放黄色信息，所以关了这个权限了。这是这个人的微信，有兴趣的可以帮我问问他为什么这么做： 15342713588',
+                  });
+                  return;
+                }
                 message.success(`${info.file.name} 上传成功! 稍后刷新就生效了!`);
                 setLoading(false);
               } else if (info.file.status === 'error') {

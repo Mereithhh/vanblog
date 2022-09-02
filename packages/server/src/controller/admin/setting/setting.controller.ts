@@ -33,6 +33,12 @@ export class SettingController {
 
   @Put('static')
   async updateStaticSetting(@Body() body: StaticSetting) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const res = await this.settingProvider.updateStaticSetting(body);
     return {
       statusCode: 200,
@@ -41,6 +47,12 @@ export class SettingController {
   }
   @Put('waline')
   async updateWalineSetting(@Body() body: WalineSetting) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const res = await this.settingProvider.updateWalineSetting(body);
     await this.walineProvider.restart('更新 waline 设置，');
     return {

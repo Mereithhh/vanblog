@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
-
+import { config } from 'src/config';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { HttpsSetting } from 'src/types/setting.dto';
 import { CaddyProvider } from 'src/provider/caddy/caddy.provider';
@@ -52,6 +52,12 @@ export class CaddyController {
   @UseGuards(AdminGuard)
   @Delete('log')
   async clearLog() {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     await this.caddyProvider.clearLog();
     return {
       statusCode: 200,
@@ -79,6 +85,12 @@ export class CaddyController {
   @UseGuards(AdminGuard)
   @Put('https')
   async updateHttpsConfig(@Body() dto: HttpsSetting) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
     const result = await this.caddyProvider.setRedirect(dto.redirect || false);
     if (!result) {
       return {
