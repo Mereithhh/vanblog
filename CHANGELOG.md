@@ -1,4 +1,17 @@
 # Changelog
+### [0.29.3](https://github.com/Mereithhh/van-blog/compare/v0.29.2...v0.29.3) (2022-09-02)
+
+
+### ✏️ Documentation | 文档
+
+* 修正 readme 错误 ([ef7ea39](https://github.com/Mereithhh/van-blog/commit/ef7ea395c10b6e6f3844daf8d1f8587c2dd22104))
+* 更新文档 ([c63fcd6](https://github.com/Mereithhh/van-blog/commit/c63fcd636d8a3b77989d8ce88359d55e55698429))
+
+
+### ✨ Features | 新功能
+
+* 演示站紧急收缩权限（因为有人放黄色信息） ([8bdb47e](https://github.com/Mereithhh/van-blog/commit/8bdb47e8c0a9641ac44cf4dad7eaeed5c3fc4c2b))
+
 ### [0.29.2](https://github.com/Mereithhh/van-blog/compare/v0.29.1...v0.29.2) (2022-09-02)
 
 
