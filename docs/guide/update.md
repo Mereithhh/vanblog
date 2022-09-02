@@ -20,13 +20,13 @@ order: -3
 ```bash
 # 切换到部署 vanblog 的目录下（docker-compose.yml)存放的路径下
 # 关闭原有服务
-docker-compose down
+sudo docker-compose down
 # 删除原有镜像
-docker rmi mereith/van-blog:latest
+sudo docker rmi mereith/van-blog:latest
 # 重新拉取最新镜像
-docker pull mereith/van-blog:latest
+sudo docker pull mereith/van-blog:latest
 # 重新启动服务
-docker-compose up -d
+sudo docker-compose up -d
 ```
 
 升级完成~
