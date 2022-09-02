@@ -63,7 +63,11 @@ export default function () {
       content: (
         <div>
           <p>{helpMap[tab]}</p>
-          <a target="_blank" href="" rel="noreferrer">
+          <a
+            target="_blank"
+            href="https://vanblog.mereith.com/feature/advance/customizing.html"
+            rel="noreferrer"
+          >
             帮助文档
           </a>
         </div>
