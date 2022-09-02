@@ -1,4 +1,18 @@
 # Changelog
+### [0.28.1](https://github.com/Mereithhh/van-blog/compare/v0.28.0...v0.28.1) (2022-09-02)
+
+
+### ✏️ Documentation | 文档
+
+* 更新 tudo ([9556b3f](https://github.com/Mereithhh/van-blog/commit/9556b3f32c92198c0f2fae130363a6b4509c9086))
+* 更新文档 ([3dbb04a](https://github.com/Mereithhh/van-blog/commit/3dbb04a5d12fdd2e97c54c372b5bea202b3c074b))
+* 更新文档 ([3b5cb58](https://github.com/Mereithhh/van-blog/commit/3b5cb58b5901ce9ce941cdcb5caab049f3096a97))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 隐藏文章会出现在其他文章的上一篇/下一篇 [#19](https://github.com/Mereithhh/van-blog/issues/19) ([9033e4a](https://github.com/Mereithhh/van-blog/commit/9033e4a2bed0f296a90b71c96fe8494f3a490c36))
+
 ## [0.28.0](https://github.com/Mereithhh/van-blog/compare/v0.27.3...v0.28.0) (2022-09-01)
 
 
