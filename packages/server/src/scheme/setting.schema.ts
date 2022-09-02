@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, SchemaTypes } from 'mongoose';
-import { SettingType, SettingValue } from 'src/dto/setting.dto';
+import { SettingType, SettingValue } from 'src/types/setting.dto';
 
 export type SettingDocument = Setting & Document;
 

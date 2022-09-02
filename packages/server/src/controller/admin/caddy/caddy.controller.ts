@@ -13,7 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 
 import { SettingProvider } from 'src/provider/setting/setting.provider';
-import { HttpsSetting } from 'src/dto/setting.dto';
+import { HttpsSetting } from 'src/types/setting.dto';
 import { CaddyProvider } from 'src/provider/caddy/caddy.provider';
 import { isIpv4 } from 'src/utils/ip';
 

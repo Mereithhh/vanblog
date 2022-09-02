@@ -1,11 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { AboutDto } from 'src/dto/about.dto';
-import { LinkItem } from 'src/dto/link.dto';
-import { MenuItem } from 'src/dto/menu.dto';
-import { RewardItem } from 'src/dto/reward.dto';
-import { SiteInfo } from 'src/dto/site.dto';
-import { SocialItem } from 'src/dto/social.dto';
+import { AboutDto } from 'src/types/about.dto';
+import { LinkItem } from 'src/types/link.dto';
+import { MenuItem } from 'src/types/menu.dto';
+import { RewardItem } from 'src/types/reward.dto';
+import { SiteInfo } from 'src/types/site.dto';
+import { SocialItem } from 'src/types/social.dto';
 
 export type MetaDocument = Meta & Document;
 

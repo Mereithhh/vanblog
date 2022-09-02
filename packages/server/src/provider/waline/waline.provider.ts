@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcess, spawn } from 'node:child_process';
 import { config } from 'src/config';
-import { WalineSetting } from 'src/dto/setting.dto';
+import { WalineSetting } from 'src/types/setting.dto';
 import { MetaProvider } from '../meta/meta.provider';
 import { SettingProvider } from '../setting/setting.provider';
 @Injectable()

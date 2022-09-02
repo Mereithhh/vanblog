@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { ArticleProvider } from '../article/article.provider';
 import { ViewerProvider } from '../viewer/viewer.provider';
 import { MetaProvider } from '../meta/meta.provider';
-import { ArticleTabData, ViewerTabData } from 'src/dto/analysis';
+import { ArticleTabData, ViewerTabData } from 'src/types/analysis';
 import { VisitProvider } from '../visit/visit.provider';
 import { TagProvider } from '../tag/tag.provider';
 import { CategoryProvider } from '../category/category.provider';

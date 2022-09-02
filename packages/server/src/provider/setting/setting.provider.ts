@@ -7,7 +7,7 @@ import {
   SettingType,
   StaticSetting,
   WalineSetting,
-} from 'src/dto/setting.dto';
+} from 'src/types/setting.dto';
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
 import { encode, decode } from 'js-base64';

@@ -6,7 +6,7 @@ import {
   LayoutSetting,
   StaticSetting,
   WalineSetting,
-} from 'src/dto/setting.dto';
+} from 'src/types/setting.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { SettingProvider } from 'src/provider/setting/setting.provider';

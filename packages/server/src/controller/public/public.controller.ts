@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
-import { SortOrder } from 'src/dto/sort';
+import { SortOrder } from 'src/types/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';

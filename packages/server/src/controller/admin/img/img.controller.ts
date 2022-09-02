@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
-import { SearchStaticOption } from 'src/dto/setting.dto';
+import { SearchStaticOption } from 'src/types/setting.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { StaticProvider } from 'src/provider/static/static.provider';
 

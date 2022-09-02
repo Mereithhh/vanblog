@@ -10,7 +10,7 @@ import {
   SearchStaticOption,
   StaticType,
   StorageType,
-} from 'src/dto/setting.dto';
+} from 'src/types/setting.dto';
 import { Static, StaticDocument } from 'src/scheme/static.schema';
 import { encryptFileMD5 } from 'src/utils/crypto';
 import { ArticleProvider } from '../article/article.provider';
@@ -18,7 +18,7 @@ import { SettingProvider } from '../setting/setting.provider';
 import { LocalProvider } from './local.provider';
 import { PicgoProvider } from './picgo.provider';
 import { imageSize } from 'image-size';
-import { ImgMeta } from 'src/dto/img';
+import { ImgMeta } from 'src/types/img';
 import { formatBytes } from 'src/utils/size';
 import axios from 'axios';
 @Injectable()

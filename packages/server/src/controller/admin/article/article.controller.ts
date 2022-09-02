@@ -11,8 +11,8 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { config } from 'src/config';
-import { CreateArticleDto, UpdateArticleDto } from 'src/dto/article.dto';
-import { SortOrder } from 'src/dto/sort';
+import { CreateArticleDto, UpdateArticleDto } from 'src/types/article.dto';
+import { SortOrder } from 'src/types/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';

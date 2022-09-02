@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import dayjs from 'dayjs';
 import { Model } from 'mongoose';
-import { createVisitDto } from 'src/dto/visit.dto';
+import { createVisitDto } from 'src/types/visit.dto';
 import { Visit } from 'src/scheme/visit.schema';
 import { VisitDocument } from 'src/scheme/visit.schema';
 

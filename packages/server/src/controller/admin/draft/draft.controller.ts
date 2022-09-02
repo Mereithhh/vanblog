@@ -14,8 +14,8 @@ import {
   CreateDraftDto,
   PublishDraftDto,
   UpdateDraftDto,
-} from 'src/dto/draft.dto';
-import { SortOrder } from 'src/dto/sort';
+} from 'src/types/draft.dto';
+import { SortOrder } from 'src/types/sort';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';

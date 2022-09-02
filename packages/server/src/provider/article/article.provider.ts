@@ -10,7 +10,7 @@ import {
   CreateArticleDto,
   SearchArticleOption,
   UpdateArticleDto,
-} from 'src/dto/article.dto';
+} from 'src/types/article.dto';
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
 import { parseImgLinksOfMarkdown } from 'src/utils/parseImgOfMarkdown';
 import { wordCount } from 'src/utils/wordCount';

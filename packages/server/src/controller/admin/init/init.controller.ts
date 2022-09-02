@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
-import { InitDto } from 'src/dto/init.dto';
+import { InitDto } from 'src/types/init.dto';
 import { InitProvider } from 'src/provider/init/init.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { StaticProvider } from 'src/provider/static/static.provider';

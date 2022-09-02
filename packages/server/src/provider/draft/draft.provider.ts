@@ -1,13 +1,13 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateArticleDto } from 'src/dto/article.dto';
+import { CreateArticleDto } from 'src/types/article.dto';
 import {
   CreateDraftDto,
   PublishDraftDto,
   SearchDraftOption,
   UpdateDraftDto,
-} from 'src/dto/draft.dto';
+} from 'src/types/draft.dto';
 import { Draft, DraftDocument } from 'src/scheme/draft.schema';
 import { ArticleProvider } from '../article/article.provider';
 export type DraftView = 'admin' | 'public' | 'list';

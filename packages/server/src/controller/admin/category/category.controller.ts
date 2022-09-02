@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateCategoryDto } from 'src/dto/category.dto';
+import { CreateCategoryDto } from 'src/types/category.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';

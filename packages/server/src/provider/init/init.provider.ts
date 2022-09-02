@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { InitDto } from 'src/dto/init.dto';
+import { InitDto } from 'src/types/init.dto';
 import { MetaDocument } from 'src/scheme/meta.schema';
 import { UserDocument } from 'src/scheme/user.schema';
 import { WalineProvider } from '../waline/waline.provider';

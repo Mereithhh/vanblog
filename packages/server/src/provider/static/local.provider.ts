@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { StaticType, StoragePath } from 'src/dto/setting.dto';
+import { StaticType, StoragePath } from 'src/types/setting.dto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { config } from 'src/config';
 import { imageSize } from 'image-size';
 import { formatBytes } from 'src/utils/size';
-import { ImgMeta } from 'src/dto/img';
+import { ImgMeta } from 'src/types/img';
 import { isProd } from 'src/utils/isProd';
 import compressing from 'compressing';
 import dayjs from 'dayjs';

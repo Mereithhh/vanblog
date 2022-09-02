@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { createViewerDto } from 'src/dto/viewer.dto';
+import { createViewerDto } from 'src/types/viewer.dto';
 import { Viewer, ViewerDocument } from 'src/scheme/viewer.schema';
 import dayjs from 'dayjs';
 @Injectable()
