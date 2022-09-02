@@ -31,7 +31,8 @@ services:
       - 80:80
       - 443:443
   mongo:
-    image: mongo
+    # 某些机器不支持 avx 会报错，所以默认用 v4 版本。有的话用最新的。
+    image: mongo:4.4.16
     restart: always
     environment:
       TZ: "Asia/Shanghai"
