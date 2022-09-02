@@ -48,3 +48,25 @@ window.onload = () => {
 可以实现很多好玩的功能，比如最近我发现了一个项目： [Sakana! Widget](https://github.com/dsrkafuu/sakana-widget)
 
 就完全可以通过客制化来自己加个小挂件。
+
+![](https://www.mereith.com/static/img/d2964344217c8db07f80e3e9350495c3.clipboard-2022-09-02.png)
+
+```html
+<div id="sakana-widget" style="position: fixed;bottom: 20px;right:40px;"></div>
+<script>
+  function initSakanaWidget() {
+    new SakanaWidget({ autoFit: true })
+      .setState({ i: 0.001, d: 1 })
+      .mount("#sakana-widget");
+  }
+</script>
+<script
+  async
+  onload="initSakanaWidget()"
+  src="https://cdn.jsdelivr.net/npm/sakana-widget@2.2.2/lib/sakana.min.js"
+></script>
+```
+
+效果：
+
+![](https://www.mereith.com/static/img/1490762740df7e864117dfd46a66470e.clipboard-2022-09-02.png)
