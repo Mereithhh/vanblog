@@ -66,6 +66,7 @@ export interface MetaProps {
     enableComment: "true" | "false";
     defaultTheme: "auto" | "light" | "dark";
     showDonateInAbout?: "true" | "false";
+    enableCustomizing: "true" | "false";
   };
 }
 export interface PublicMetaProp {
@@ -74,12 +75,22 @@ export interface PublicMetaProp {
   totalArticles: number;
   meta: MetaProps;
   totalWordCount: number;
+  layout?: {
+    css?: string;
+    script?: string;
+    html?: string;
+  };
 }
 export interface PublicAllProp {
   articles: any[];
   categories: any[];
   tags: string[];
   meta: MetaProps;
+  layout?: {
+    customCss?: string;
+    customScript?: string;
+    customHtml?: string;
+  };
 }
 export const version = process.env["VAN_BLOG_VERSION"] || "dev";
 
@@ -115,6 +126,7 @@ const defaultMeta: MetaProps = {
     showAdminButton: "true",
     defaultTheme: "auto",
     showDonateInAbout: "false",
+    enableCustomizing: "true",
   },
 };
 

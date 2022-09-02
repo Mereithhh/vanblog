@@ -28,6 +28,7 @@ export class SiteInfo {
   showDonateInAbout: 'true' | 'false';
   allowOpenHiddenPostByUrl: 'true' | 'false';
   defaultTheme: 'auto' | 'dark' | 'light';
+  enableCustomizing: 'true' | 'false';
 }
 export interface updateUserDto {
   username: string;

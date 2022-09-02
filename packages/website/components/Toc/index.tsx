@@ -7,7 +7,7 @@ export default function (props: {
   showSubMenu: "true" | "false";
 }) {
   useEffect(() => {
-    const el = document.querySelector("#author-card");
+    const el = document.querySelector("#toc-card");
     if (el) {
       const headroom = new Headroom(el, {
         classes: {
@@ -24,7 +24,7 @@ export default function (props: {
     }
   });
   return (
-    <div className="fixed" id="author-card">
+    <div className="fixed" id="toc-card">
       <div
         id="toc-container"
         className="bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark overflow-y-auto pb-2"

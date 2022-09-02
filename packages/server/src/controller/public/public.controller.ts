@@ -5,6 +5,7 @@ import { SortOrder } from 'src/dto/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 import { VisitProvider } from 'src/provider/visit/visit.provider';
 import { version } from 'src/utils/loadConfig';
@@ -18,6 +19,7 @@ export class PublicController {
     private readonly tagProvider: TagProvider,
     private readonly metaProvider: MetaProvider,
     private readonly visitProvider: VisitProvider,
+    private readonly settingProvider: SettingProvider,
   ) {}
 
   @Get('/article/:id')
@@ -163,12 +165,15 @@ export class PublicController {
     const meta = await this.metaProvider.getAll();
     const totalArticles = await this.articleProvider.getTotalNum(false);
     const totalWordCount = await this.metaProvider.getTotalWords();
+    const LayoutSetting = await this.settingProvider.getLayoutSetting();
+    const LayoutRes = this.settingProvider.encodeLayoutSetting(LayoutSetting);
     const data = {
       version: version,
       tags,
       meta,
       totalArticles,
       totalWordCount,
+      ...(LayoutSetting ? { layout: LayoutRes } : {}),
     };
     return {
       statusCode: 200,

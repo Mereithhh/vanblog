@@ -13,12 +13,16 @@ import RunningTime from "../RunningTime";
 import ImageProvider from "../ImageProvider";
 import { RealThemeType, ThemeContext } from "../../utils/themeContext";
 import { decodeTheme } from "../../utils/theme";
+import CustomLayout from "../CustomLayout";
 export default function (props: {
   option: LayoutProps;
   title: string;
   sideBar: any;
   children: any;
 }) {
+  // console.log("css", props.option.customCss);
+  // console.log("html", props.option.customHtml);
+  // console.log("script", decode(props.option.customScript as string));
   const [isOpen, setIsOpen] = useState(false);
   const { current } = useRef({ hasInit: false });
   const [theme, setTheme] = useState<RealThemeType>(decodeTheme("auto"));
@@ -98,6 +102,7 @@ export default function (props: {
           <BackToTopBtn></BackToTopBtn>
           <div>
             <Menu
+              id="nav-mobile"
               disableAutoFocus={true}
               customCrossIcon={false}
               customBurgerIcon={false}
@@ -217,6 +222,13 @@ export default function (props: {
           </div>
         </ImageProvider>
       </ThemeContext.Provider>
+      {props.option.enableCustomizing == "true" && (
+        <CustomLayout
+          customCss={props.option.customCss}
+          customHtml={props.option.customHtml}
+          customScript={props.option.customScript}
+        />
+      )}
     </>
   );
 }

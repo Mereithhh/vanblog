@@ -279,6 +279,16 @@ export default function (props: {
             }}
             tooltip={'默认不允许，开启后可通过 URL 打开隐藏文章。'}
           ></ProFormSelect>
+          <ProFormSelect
+            name={'enableCustomizing'}
+            label="是否开启客制化功能"
+            placeholder={'开启'}
+            valueEnum={{
+              true: '开启',
+              false: '关闭',
+            }}
+            tooltip={'默认开启，关闭后即使通过客制化面板，自定义了 CSS、Script、HTML 也不会生效。'}
+          ></ProFormSelect>
         </>
       )}
     </>

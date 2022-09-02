@@ -1,7 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { config } from 'process';
 import {
   HttpsSetting,
   LayoutSetting,
@@ -11,6 +10,7 @@ import {
 } from 'src/dto/setting.dto';
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
+import { encode, decode } from 'js-base64';
 
 @Injectable()
 export class SettingProvider {
@@ -49,6 +49,16 @@ export class SettingProvider {
       return res?.value as any;
     }
     return null;
+  }
+  encodeLayoutSetting(dto: LayoutSetting) {
+    if (!dto) {
+      return null;
+    }
+    const res: any = {};
+    for (const key of Object.keys(dto)) {
+      res[key] = encode(dto[key]);
+    }
+    return res;
   }
   async getWalineSetting(): Promise<WalineSetting> {
     const res = await this.settingModel.findOne({ type: 'waline' }).exec();

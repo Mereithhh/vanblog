@@ -22,7 +22,11 @@ export interface LayoutProps {
   headerLeftContent: "siteLogo" | "siteName";
   enableComment: "true" | "false";
   defaultTheme: "auto" | "dark" | "light";
+  enableCustomizing: "true" | "false";
   subMenuOffset: number;
+  customCss?: string;
+  customScript?: string;
+  customHtml?: string;
 }
 
 export function getLayoutProps(data: PublicMetaProp): LayoutProps {
@@ -41,6 +45,20 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (siteInfo?.showFriends == "false") {
     showFriends = "false";
   }
+  const customSetting: any = { enableCustomizing: "true" };
+  if (siteInfo.enableCustomizing && siteInfo.enableCustomizing == "false") {
+    customSetting.enableCustomizing = "false";
+  }
+  if (data?.layout?.css) {
+    customSetting.customCss = data?.layout?.css;
+  }
+  if (data?.layout?.html) {
+    customSetting.customHtml = data?.layout?.html;
+  }
+  if (data?.layout?.script) {
+    customSetting.customScript = data?.layout?.script;
+  }
+
   return {
     showFriends,
     version: data?.version || "dev",
@@ -63,6 +81,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showSubMenu: showSubMenu ? "true" : "false",
     enableComment: siteInfo?.enableComment || "true",
     defaultTheme: siteInfo?.defaultTheme || "auto",
+    ...customSetting,
   };
 }
 
