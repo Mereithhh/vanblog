@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.29.1](https://github.com/Mereithhh/van-blog/compare/v0.29.0...v0.29.1) (2022-09-02)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([4cbe723](https://github.com/Mereithhh/van-blog/commit/4cbe7239d9818da9aab7446305d4faf4efd6ac19))
+
+
+### ✨ Features | 新功能
+
+* 优化代码块展示样式（超出不会截断而是会横向滚动） ([61e968c](https://github.com/Mereithhh/van-blog/commit/61e968c30e123773e69457fcb5c798bfb57947a2))
+
 ## [0.29.0](https://github.com/Mereithhh/van-blog/compare/v0.28.1...v0.29.0) (2022-09-02)
 
 
