@@ -248,6 +248,27 @@ export default function (props: {
             }}
             tooltip={'默认显示，关闭后关于页面会隐藏捐赠信息'}
           ></ProFormSelect>
+
+          <ProFormSelect
+            name={'showCopyRight'}
+            label="是否显示版权声明"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认显示，关闭后文章页面将不显示版权声明'}
+          ></ProFormSelect>
+          <ProFormSelect
+            name={'showDonateButton'}
+            label="是否显示打赏按钮"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认显示（前提是设置了支付宝和微信支付图片），关闭后所有位置将不显示打赏按钮'}
+          ></ProFormSelect>
           <ProFormSelect
             name={'showDonateInAbout'}
             label="关于页面是否显示打赏按钮"

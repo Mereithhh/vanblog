@@ -67,6 +67,8 @@ export interface MetaProps {
     defaultTheme: "auto" | "light" | "dark";
     showDonateInAbout?: "true" | "false";
     enableCustomizing: "true" | "false";
+    showDonateButton: "true" | "false";
+    showCopyRight: "true" | "false";
   };
 }
 export interface PublicMetaProp {
@@ -127,6 +129,8 @@ const defaultMeta: MetaProps = {
     defaultTheme: "auto",
     showDonateInAbout: "false",
     enableCustomizing: "true",
+    showCopyRight: "true",
+    showDonateButton: "true",
   },
 };
 

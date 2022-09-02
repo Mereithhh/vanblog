@@ -25,6 +25,8 @@ export class SiteInfo {
   showAdminButton: 'true' | 'false';
   showDonateInfo: 'true' | 'false';
   showFriends: 'true' | 'false';
+  showCopyRight: 'true' | 'false';
+  showDonateButton: 'true' | 'false';
   showDonateInAbout: 'true' | 'false';
   allowOpenHiddenPostByUrl: 'true' | 'false';
   defaultTheme: 'auto' | 'dark' | 'light';

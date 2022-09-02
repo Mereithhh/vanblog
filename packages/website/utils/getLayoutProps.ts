@@ -23,6 +23,8 @@ export interface LayoutProps {
   enableComment: "true" | "false";
   defaultTheme: "auto" | "dark" | "light";
   enableCustomizing: "true" | "false";
+  showDonateButton: "true" | "false";
+  showCopyRight: "true" | "false";
   subMenuOffset: number;
   customCss?: string;
   customScript?: string;
@@ -58,6 +60,14 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (data?.layout?.script) {
     customSetting.customScript = data?.layout?.script;
   }
+  let showDonateButton = "true";
+  let showCopyRight = "true";
+  if (siteInfo?.showCopyRight == "false") {
+    showCopyRight = "false";
+  }
+  if (siteInfo?.showDonateButton == "false") {
+    showDonateButton = "false";
+  }
 
   return {
     showFriends,
@@ -81,6 +91,8 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showSubMenu: showSubMenu ? "true" : "false",
     enableComment: siteInfo?.enableComment || "true",
     defaultTheme: siteInfo?.defaultTheme || "auto",
+    showCopyRight,
+    showDonateButton,
     ...customSetting,
   };
 }

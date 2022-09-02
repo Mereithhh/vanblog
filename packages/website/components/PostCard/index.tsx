@@ -28,6 +28,8 @@ export default function (props: {
   top: number;
   private: boolean;
   showDonateInAbout?: boolean;
+  hideDonate?: boolean;
+  hideCopyRight?: boolean;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
@@ -44,6 +46,9 @@ export default function (props: {
 
   const showDonate = useMemo(() => {
     if (lock) {
+      return false;
+    }
+    if (props.hideDonate) {
       return false;
     }
     if (!props.pay || props.pay.length <= 0) {
@@ -237,7 +242,7 @@ export default function (props: {
             id={props.id}
           ></Reward>
         )}
-        {props.type == "article" && !lock && (
+        {props.type == "article" && !lock && !props?.hideCopyRight && (
           <CopyRight author={props.author as any} id={props.id}></CopyRight>
         )}
 

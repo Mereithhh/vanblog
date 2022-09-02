@@ -90,6 +90,14 @@ export async function getAboutPageProps(): Promise<AboutPageProps> {
   if (data.meta.siteInfo?.showDonateInfo == "false") {
     showDonateInfo = "false";
   }
+  let showDonateInAbout: "true" | "false" = "false";
+
+  if (data.meta.siteInfo?.showDonateInAbout == "true") {
+    showDonateInAbout = "true";
+  }
+  if (data.meta.siteInfo?.showDonateButton == "false") {
+    showDonateInAbout = "false";
+  }
   const payProps = {
     pay: [
       data.meta.siteInfo?.payAliPay || "",
@@ -106,7 +114,7 @@ export async function getAboutPageProps(): Promise<AboutPageProps> {
     authorCardProps,
     about,
     donates: data.meta?.rewards || [],
-    showDonateInAbout: data.meta?.siteInfo?.showDonateInAbout || "false",
+    showDonateInAbout,
     ...payProps,
   };
 }

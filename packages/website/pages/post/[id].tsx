@@ -60,6 +60,8 @@ const PostPages = (props: PostPagesProps) => {
         pre={props.pre}
         next={props.next}
         enableComment={props.layoutProps.enableComment}
+        hideDonate={props.layoutProps.showDonateButton == "false"}
+        hideCopyRight={props.layoutProps.showCopyRight == "false"}
       ></PostCard>
     </Layout>
   );
