@@ -709,19 +709,40 @@ export class ArticleProvider {
     }
     return res;
   }
-  async getPreArticleByArticle(article: Article, view: ArticleView) {
+  async getPreArticleByArticle(
+    article: Article,
+    view: ArticleView,
+    includeHidden?: boolean,
+  ) {
+    const $and: any = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+      { createdAt: { $lt: article.createdAt } },
+    ];
+    if (!includeHidden) {
+      $and.push({
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      });
+    }
     const result = await this.articleModel
       .find(
         {
-          createdAt: { $lt: article.createdAt },
-          $or: [
-            {
-              deleted: false,
-            },
-            {
-              deleted: { $exists: false },
-            },
-          ],
+          $and,
         },
         this.getView(view),
       )
@@ -732,19 +753,40 @@ export class ArticleProvider {
     }
     return null;
   }
-  async getNextArticleByArticle(article: Article, view: ArticleView) {
+  async getNextArticleByArticle(
+    article: Article,
+    view: ArticleView,
+    includeHidden?: boolean,
+  ) {
+    const $and: any = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+      { createdAt: { $gt: article.createdAt } },
+    ];
+    if (!includeHidden) {
+      $and.push({
+        $or: [
+          {
+            hidden: false,
+          },
+          {
+            hidden: { $exists: false },
+          },
+        ],
+      });
+    }
     const result = await this.articleModel
       .find(
         {
-          createdAt: { $gt: article.createdAt },
-          $or: [
-            {
-              deleted: false,
-            },
-            {
-              deleted: { $exists: false },
-            },
-          ],
+          $and,
         },
         this.getView(view),
       )
