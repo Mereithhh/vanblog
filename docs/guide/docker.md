@@ -94,7 +94,7 @@ services:
 sudo docker-compose up -d
 ```
 
-浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
+浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
 
 也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
 
@@ -180,6 +180,10 @@ spec:
               mountPath: /var/log
           imagePullPolicy: Always
 ```
+
+## 宝塔面板部署
+
+请移步 [通过宝塔面板部署 VanBlog](/ref/baota.md)
 
 ## 直接部署
 
@@ -298,6 +302,6 @@ caddy start --config ./Caddyfile
 
 #### 完成
 
-浏览器打开 `http://<your-ip>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
+浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
 
 也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
