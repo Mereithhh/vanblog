@@ -4,6 +4,19 @@ icon: update
 ---
 
 
+### [0.30.1](https://github.com/Mereithhh/van-blog/compare/v0.30.0...v0.30.1) (2022-09-03)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 更新后无法登录[#26](https://github.com/Mereithhh/van-blog/issues/26) ([040cfe9](https://github.com/Mereithhh/van-blog/commit/040cfe9e42f6ffca711d5755d4dd36046db6293a))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([b0dcd7a](https://github.com/Mereithhh/van-blog/commit/b0dcd7af7c04f09a72076c72d362e26fdf5343b8))
+* 更新文档 ([ab44644](https://github.com/Mereithhh/van-blog/commit/ab4464427cc5ee357fda9b46138cb320d1628e44))
+
 ## [0.30.0](https://github.com/Mereithhh/van-blog/compare/v0.29.4...v0.30.0) (2022-09-03)
 
 
