@@ -30,6 +30,7 @@
     "@nestjs/schedule": "^2.1.0",
     "@nestjs/swagger": "^5.2.1",
     "@types/line-reader": "^0.0.34",
+    "@types/request-ip": "^0.0.37",
     "axios": "^0.27.2",
     "compressing": "^1.6.2",
     "crypto": "^1.0.1",
@@ -45,6 +46,7 @@
     "picgo": "^1.5.0-alpha.0",
     "pino": "^8.4.2",
     "reflect-metadata": "^0.1.13",
+    "request-ip": "^3.3.0",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "swagger-ui-express": "^4.4.0"

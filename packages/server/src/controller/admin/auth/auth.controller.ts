@@ -15,6 +15,7 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { AuthProvider } from 'src/provider/auth/auth.provider';
 import { LogProvider } from 'src/provider/log/log.provider';
 import { UserProvider } from 'src/provider/user/user.provider';
+import { LoginGuard } from 'src/provider/auth/login.guard';
 
 @ApiTags('tag')
 @Controller('/api/admin/auth/')
@@ -25,7 +26,7 @@ export class AuthController {
     private readonly logProvider: LogProvider,
   ) {}
 
-  @UseGuards(AuthGuard('local'))
+  @UseGuards(LoginGuard, AuthGuard('local'))
   @Post('/login')
   async login(@Request() request: any) {
     if (request?.user?.fail) {
