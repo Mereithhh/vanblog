@@ -1,4 +1,23 @@
 # Changelog
+## [0.31.0](https://github.com/Mereithhh/van-blog/compare/v0.30.1...v0.31.0) (2022-09-03)
+
+
+### ✏️ Documentation | 文档
+
+* 更新FAQ ([a703299](https://github.com/Mereithhh/van-blog/commit/a70329939b3ab75832e2ce4468189c981a990f3a))
+* 更新文档 ([994c603](https://github.com/Mereithhh/van-blog/commit/994c603726422cf9202792c97c114e1bdb4bc39e))
+* 更新文档 ([9c8913e](https://github.com/Mereithhh/van-blog/commit/9c8913e187e788cca90fcf94fb1461b5a3b262ea))
+* 更新文档 ([14ffe90](https://github.com/Mereithhh/van-blog/commit/14ffe90ae160b777c5ff730897cf9d4c7d59a59a))
+* 自定义页面文档 ([a0ea105](https://github.com/Mereithhh/van-blog/commit/a0ea1053e2ee4252bcc0bbd6c325e749bf8ef105))
+
+
+### ✨ Features | 新功能
+
+* 完整的自定义页面功能 ([c53321a](https://github.com/Mereithhh/van-blog/commit/c53321ab9c50ab60dc2bae852073ca4502b86ea0))
+* 更新提示增加清理浏览器缓存提醒 ([ac65bc2](https://github.com/Mereithhh/van-blog/commit/ac65bc20152a3333e3f0e248b9f395c1cf1543cf))
+* 演示站不可自定义页面（怕有人搞事情） ([a826d46](https://github.com/Mereithhh/van-blog/commit/a826d46b5fc1c70a63d7080cace6aa05ec3a1239))
+* 自定义页面的代码编辑器增加查看按钮 ([7a32948](https://github.com/Mereithhh/van-blog/commit/7a32948c8ce745c1466e556a81679c79c7aa5aca))
+
 ### [0.30.1](https://github.com/Mereithhh/van-blog/compare/v0.30.0...v0.30.1) (2022-09-03)
 
 
