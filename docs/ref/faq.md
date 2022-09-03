@@ -100,6 +100,16 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 具体访问方式可以自行查阅资料，我一般都是用 [mongoDBCompass](https://www.mongodb.com/try/download/compass) 这个工具。
 
+### 如何回滚
+
+您可以通过指定镜像的版本号来实现，比如您想回滚到 `v0.29.0`，那您可以修改编排中的：
+
+`mereith/van-blog:latest` 为 `mereith/van-blog:v0.29.0` ，然后运行：
+
+```bash
+sudo docker-compose down && sudo docker-compose up -d
+```
+
 ### Bug 反馈
 
 请提到项目仓库 `issue`，无特殊情况会在一天内解决。
