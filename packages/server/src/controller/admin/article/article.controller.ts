@@ -41,7 +41,7 @@ export class ArticleController {
     @Query('endTime') endTime?: string,
   ) {
     const option = {
-      page,
+      page: parseInt(page as any),
       pageSize: parseInt(pageSize as any),
       category,
       tags,

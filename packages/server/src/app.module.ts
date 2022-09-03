@@ -65,6 +65,7 @@ import { CacheProvider } from './provider/cache/cache.provider';
 import { LoginGuard } from './provider/auth/login.guard';
 import { AccessGuard } from './provider/access/access.guard';
 import { CollaboratorController } from './controller/admin/collaborator/collaborator.controller';
+import { ISRController } from './controller/admin/isr/isr.controller';
 
 @Module({
   imports: [
@@ -110,6 +111,7 @@ import { CollaboratorController } from './controller/admin/collaborator/collabor
     CaddyController,
     LogController,
     CollaboratorController,
+    ISRController,
   ],
   providers: [
     AppService,

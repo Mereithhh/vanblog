@@ -9,6 +9,11 @@ export async function fetchAllMeta(options) {
     ...(options || {}),
   });
 }
+export async function activeISR() {
+  return request('/api/admin/isr', {
+    method: 'POST',
+  });
+}
 export async function getHttpsConfig() {
   return request('/api/admin/caddy/https', {
     method: 'GET',

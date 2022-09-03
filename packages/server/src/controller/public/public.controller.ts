@@ -117,7 +117,7 @@ export class PublicController {
     @Query('sortTop') sortTop?: SortOrder,
   ) {
     const option = {
-      page,
+      page: parseInt(page as any),
       pageSize: parseInt(pageSize as any),
       category,
       tags,
