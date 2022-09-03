@@ -16,9 +16,6 @@ export interface CategoryPagesProps {
   wordTotal: number;
 }
 const CategoryPages = (props: CategoryPagesProps) => {
-  if (Object.keys(props.sortedArticles).length == 0) {
-    return <Custom404 name="分类" />;
-  }
   return (
     <Layout
       option={props.layoutProps}
