@@ -13,6 +13,12 @@ export default function (props) {
       submitTimeout={3000}
       initialValues={initialValues || undefined}
       onFinish={async (values) => {
+        if (location.hostname == 'blog-demo.mereith.com') {
+          Modal.info({
+            title: '演示站不可修改此项！',
+          });
+          return;
+        }
         const path = values.path as string;
         if (path.substring(0, 1) != '/') {
           Modal.info({

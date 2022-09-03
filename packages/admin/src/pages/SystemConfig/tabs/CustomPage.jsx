@@ -44,6 +44,12 @@ const columns = [
           <a
             key="delete"
             onClick={() => {
+              if (location.hostname == 'blog-demo.mereith.com') {
+                Modal.info({
+                  title: '演示站不可修改此项！',
+                });
+                return;
+              }
               Modal.confirm({
                 title: '删除确认',
                 content: '是否确认删除该自定义页面？',
@@ -66,25 +72,6 @@ export default function () {
   // const [loading, setLoading] = useState(true);
   const actionRef = useRef();
 
-  const handleSave = async () => {
-    Modal.confirm({
-      title: '保存确认',
-      content:
-        '在保存前请确认代码的正确性,有问题的代码可能导致前台报错！如不生效，请检查是否在站点配置/布局设置中打开了客制化功能。',
-      onOk: async () => {
-        setLoading(true);
-        try {
-          await updateLayoutConfig(values);
-          setLoading(false);
-          message.success('更新成功！');
-        } catch (err) {
-          throw err;
-        } finally {
-          setLoading(false);
-        }
-      },
-    });
-  };
 
   const handleHelp = () => {
     Modal.info({

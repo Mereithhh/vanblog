@@ -1,7 +1,7 @@
 import CodeEditor from '@/components/CodeEditor';
 import { getCustomPageByPath, updateCustomPage } from '@/services/van-blog/api';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, message, Space, Tag } from 'antd';
+import { Button, message, Modal, Space, Tag } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { history } from 'umi';
 
@@ -26,6 +26,12 @@ export default function () {
     }
   }, [setCurrObj, setValue, path]);
   const handleSave = async () => {
+    if (location.hostname == 'blog-demo.mereith.com') {
+      Modal.info({
+        title: '演示站不可修改此项！',
+      });
+      return;
+    }
     if (type != 'customPage') {
       message.error('未知类型，无法保存！');
       return;
