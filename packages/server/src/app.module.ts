@@ -66,6 +66,7 @@ import { LoginGuard } from './provider/auth/login.guard';
 import { AccessGuard } from './provider/access/access.guard';
 import { CollaboratorController } from './controller/admin/collaborator/collaborator.controller';
 import { ISRController } from './controller/admin/isr/isr.controller';
+import { ISRTask } from './schedule/isr.task';
 
 @Module({
   imports: [
@@ -140,6 +141,7 @@ import { ISRController } from './controller/admin/isr/isr.controller';
     CacheProvider,
     LoginGuard,
     AccessGuard,
+    ISRTask,
   ],
 })
 export class AppModule implements NestModule {
