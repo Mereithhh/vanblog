@@ -4,6 +4,7 @@ import { Article } from 'src/scheme/article.schema';
 import { sleep } from 'src/utils/sleep';
 import { ArticleProvider } from '../article/article.provider';
 import { CategoryProvider } from '../category/category.provider';
+import { CustomPageProvider } from '../customPage/customPage.provider';
 import { TagProvider } from '../tag/tag.provider';
 @Injectable()
 export class ISRProvider {
@@ -14,6 +15,7 @@ export class ISRProvider {
     private readonly articleProvider: ArticleProvider,
     private readonly categoryProvider: CategoryProvider,
     private readonly tagProvider: TagProvider,
+    private readonly customPageProvider: CustomPageProvider,
   ) {}
   async activeAllFn(info?: string) {
     if (info) {
@@ -27,6 +29,7 @@ export class ISRProvider {
       this.activePath('tag'),
       this.activePath('page'),
       this.activePath('post'),
+      this.activePath('custom'),
     ]).then(() => {
       if (!info) {
         this.logger.log('触发全量渲染完成！');
@@ -78,7 +81,7 @@ export class ISRProvider {
       this.activeUrl(each, log);
     }
   }
-  async activePath(type: 'category' | 'tag' | 'page' | 'post') {
+  async activePath(type: 'category' | 'tag' | 'page' | 'post' | 'custom') {
     switch (type) {
       case 'category':
         const categoryUrls = await this.getCategoryUrls();
@@ -95,6 +98,10 @@ export class ISRProvider {
       case 'post':
         const articleUrls = await this.getArticleUrls();
         await this.activeUrls(articleUrls, false);
+        break;
+      case 'custom':
+        const customUrls = await this.getCustomUrls();
+        await this.activeUrls(customUrls, false);
         break;
     }
   }
@@ -157,6 +164,14 @@ export class ISRProvider {
       this.activeUrl(`/about`, false);
     }, info);
   }
+  async activeCustomPages(info: string) {
+    this.activeWithRetry(() => {
+      this.logger.log(info);
+      this.getCustomUrls().then((datas) => {
+        this.activeUrls(datas, false);
+      });
+    }, info);
+  }
   async activeLink(info: string) {
     this.activeWithRetry(() => {
       this.logger.log(info);
@@ -201,6 +216,12 @@ export class ISRProvider {
     const articles = await this.articleProvider.getAll('list', true, true);
     return articles.map((a) => {
       return `/post/${a.id}`;
+    });
+  }
+  async getCustomUrls() {
+    const data = await this.customPageProvider.getAll();
+    return data.map((c) => {
+      return `/custom${c.path}`;
     });
   }
 }

@@ -67,6 +67,9 @@ import { AccessGuard } from './provider/access/access.guard';
 import { CollaboratorController } from './controller/admin/collaborator/collaborator.controller';
 import { ISRController } from './controller/admin/isr/isr.controller';
 import { ISRTask } from './schedule/isr.task';
+import { CustomPage, CustomPageSchema } from './scheme/customPage.schema';
+import { CustomPageProvider } from './provider/customPage/customPage.provider';
+import { CustomPageController } from './controller/admin/customPage/customPage.controller';
 
 @Module({
   imports: [
@@ -80,6 +83,7 @@ import { ISRTask } from './schedule/isr.task';
       { name: Visit.name, schema: VisitSchema },
       { name: Setting.name, schema: SettingSchema },
       { name: Static.name, schema: StaticSchema },
+      { name: CustomPage.name, schema: CustomPageSchema },
     ]),
     JwtModule.register({
       secret: config.jwtSecret,
@@ -113,6 +117,7 @@ import { ISRTask } from './schedule/isr.task';
     LogController,
     CollaboratorController,
     ISRController,
+    CustomPageController,
   ],
   providers: [
     AppService,
@@ -142,6 +147,7 @@ import { ISRTask } from './schedule/isr.task';
     LoginGuard,
     AccessGuard,
     ISRTask,
+    CustomPageProvider,
   ],
 })
 export class AppModule implements NestModule {

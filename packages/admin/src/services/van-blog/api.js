@@ -128,6 +128,33 @@ export async function createCollaborator(body) {
     data: body,
   });
 }
+export async function createCustomPage(body) {
+  return request('/api/admin/customPage', {
+    method: 'POST',
+    data: body,
+  });
+}
+export async function updateCustomPage(body) {
+  return request('/api/admin/customPage', {
+    method: 'PUT',
+    data: body,
+  });
+}
+export async function deleteCustomPageByPath(path) {
+  return request('/api/admin/customPage?path=' + path, {
+    method: 'DELETE',
+  });
+}
+export async function getCustomPages() {
+  return request('/api/admin/customPage/all', {
+    method: 'GET',
+  });
+}
+export async function getCustomPageByPath(path) {
+  return request('/api/admin/customPage?path=' + path, {
+    method: 'GET',
+  });
+}
 export async function updateCollaborator(body) {
   return request('/api/admin/collaborator', {
     method: 'PUT',

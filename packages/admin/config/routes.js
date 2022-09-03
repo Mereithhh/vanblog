@@ -18,6 +18,14 @@ export default [
     hideInMenu: true,
   },
   {
+    name: '代码编辑器',
+    icon: 'tool',
+    path: '/code',
+    component: './Code',
+    hideInMenu: true,
+    access: 'isAdmin',
+  },
+  {
     name: '关于',
     icon: 'form',
     path: '/about',

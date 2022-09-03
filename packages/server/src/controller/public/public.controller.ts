@@ -9,6 +9,8 @@ import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 import { VisitProvider } from 'src/provider/visit/visit.provider';
 import { version } from 'src/utils/loadConfig';
+import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
+import { encode } from 'js-base64';
 
 @ApiTags('public')
 @Controller('/api/public/')
@@ -20,8 +22,27 @@ export class PublicController {
     private readonly metaProvider: MetaProvider,
     private readonly visitProvider: VisitProvider,
     private readonly settingProvider: SettingProvider,
+    private readonly customPageProvider: CustomPageProvider,
   ) {}
+  @Get('/customPage/all')
+  async getAll() {
+    return {
+      statusCode: 200,
+      data: await this.customPageProvider.getAll(),
+    };
+  }
+  @Get('/customPage')
+  async getOneByPath(@Query('path') path: string) {
+    const data = await this.customPageProvider.getCustomPageByPath(path);
 
+    return {
+      statusCode: 200,
+      data: {
+        ...data,
+        html: data?.html ? encode(data?.html) : '',
+      },
+    };
+  }
   @Get('/article/:id')
   async getArticleById(@Param('id') id: number) {
     const data = await this.articleProvider.getByIdWithPreNext(id, 'public');

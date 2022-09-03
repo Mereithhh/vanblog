@@ -1,12 +1,21 @@
 import MonacoEditor from 'react-monaco-editor';
-export default function (props: { value; onChange; language: string; height; width; style }) {
+import { useModel } from 'umi';
+export default function (props: {
+  value;
+  onChange;
+  language: string;
+  height?: any;
+  width?: any;
+  style?: any;
+}) {
+  const { initialState } = useModel('@@initialState');
   return (
     <div style={props.style || undefined}>
       <MonacoEditor
         width={props?.width || undefined}
         height={props?.height || undefined}
         language={props.language}
-        theme="vs-light"
+        theme={initialState?.settings?.navTheme == 'light' ? 'vs-light' : 'vs-dark'}
         value={props.value}
         // options={options}
         onChange={(v) => {

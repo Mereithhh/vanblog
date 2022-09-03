@@ -5,6 +5,14 @@ export type SocialType =
   | "github"
   | "wechat"
   | "wechat-dark";
+
+export interface CustomPageList {
+  name: string;
+  path: string;
+}
+export interface CustomPage extends CustomPageList {
+  html: string;
+}
 export interface SocialItem {
   updatedAt: string;
   type: SocialType;
@@ -160,6 +168,48 @@ export async function getPublicMeta(): Promise<PublicMetaProp> {
         totalArticles: 0,
         meta: defaultMeta,
       };
+    } else {
+      throw err;
+    }
+  }
+}
+export async function getAllCustomPages(): Promise<CustomPageList[]> {
+  try {
+    const url = `${config.baseUrl}api/public/customPage/all`;
+    const res = await fetch(url);
+    const { statusCode, data } = await res.json();
+    if (statusCode == 200) {
+      return data;
+    } else {
+      return [];
+    }
+  } catch (err) {
+    if (process.env.isBuild == "t") {
+      console.log("无法连接，采用默认值");
+      // 给一个默认的吧。
+      return [];
+    } else {
+      throw err;
+    }
+  }
+}
+export async function getCustomPageByPath(
+  path: string
+): Promise<CustomPage | null> {
+  try {
+    const url = `${config.baseUrl}api/public/customPage?path=${path}`;
+    const res = await fetch(url);
+    const { statusCode, data } = await res.json();
+    if (statusCode == 200) {
+      return data;
+    } else {
+      return null;
+    }
+  } catch (err) {
+    if (process.env.isBuild == "t") {
+      console.log("无法连接，采用默认值");
+      // 给一个默认的吧。
+      return null;
     } else {
       throw err;
     }

@@ -5,6 +5,7 @@ import Advance from './tabs/Advance';
 import Backup from './tabs/Backup';
 import Caddy from './tabs/Caddy';
 import Customizing from './tabs/Customizing';
+import CustomPage from './tabs/CustomPage';
 import ImgTab from './tabs/ImgTab';
 import SiteInfo from './tabs/SiteInfo';
 import User from './tabs/User';
@@ -13,6 +14,7 @@ export default function () {
   const tabMap = {
     siteInfo: <SiteInfo />,
     customizing: <Customizing />,
+    customPage: <CustomPage />,
     backup: <Backup />,
     user: <User />,
     img: <ImgTab />,
@@ -37,6 +39,10 @@ export default function () {
         {
           tab: '客制化',
           key: 'customizing',
+        },
+        {
+          tab: '自定义页面',
+          key: 'customPage',
         },
         {
           tab: '用户设置',
