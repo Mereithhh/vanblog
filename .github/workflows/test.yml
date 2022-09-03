@@ -43,4 +43,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            "docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
+            "docker.io/mereith/van-blog:test-${{ steps.get_version.outputs.VERSION }}"

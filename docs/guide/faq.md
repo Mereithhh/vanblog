@@ -62,15 +62,11 @@ VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行
 
 ### 我觉得太丑了||可以自定义样式吗？
 
-可以！请参考[客制化功能](/feature/advance/customizing.md)
+可以！请参考 [客制化功能](/feature/advance/customizing.md)
 
 ### 自定义页面
 
-其实现在就可以！您可以通过隐藏某篇文章，然后在后台开启通过 URL 访问被隐藏文章的功能。然后把这个 URL 添加到导航栏（在自定义导航栏设置中），或者到任何您想要的位置即可。这时候这篇文章其实就是自定义页面了。
-
-在前台，您写在 markdown 里的 html 代码也会被正常渲染，所以完全可以当自定义页面来用。
-
-完整的自定义页面功能在排期中，但比较靠后。
+现在已经可以自定义页面了！请参考 [自定义页面](/feature/advance/customPage.md)
 
 ### 如何安装 docker ?
 
@@ -99,6 +95,16 @@ curl -sSL https://get.daocloud.io/docker | sh
 然后运行 `docker-compose down && docker-compose up -d` 重启容器，就可以通过 27017 端口访问 mongoDB 了。
 
 具体访问方式可以自行查阅资料，我一般都是用 [mongoDBCompass](https://www.mongodb.com/try/download/compass) 这个工具。
+
+### 如何回滚
+
+您可以通过指定镜像的版本号来实现，比如您想回滚到 `v0.29.0`，那您可以修改编排中的：
+
+`mereith/van-blog:latest` 为 `mereith/van-blog:v0.29.0` ，然后运行：
+
+```bash
+sudo docker-compose down && sudo docker-compose up -d
+```
 
 ### Bug 反馈
 
