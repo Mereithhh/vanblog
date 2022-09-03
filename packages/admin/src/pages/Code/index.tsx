@@ -54,6 +54,14 @@ export default function () {
             保存
           </Button>,
           <Button
+            key="viewBtn"
+            onClick={() => {
+              window.open(`/custom${path}`);
+            }}
+          >
+            查看
+          </Button>,
+          <Button
             key="backBtn"
             onClick={() => {
               history.go(-1);
