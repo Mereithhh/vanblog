@@ -26,7 +26,7 @@ const Home = (props: IndexPageProps) => {
             private={article.private}
             top={article.top || 0}
             id={article.id}
-            key={article.title}
+            key={article.id}
             title={article.title}
             updatedAt={new Date(article.updatedAt)}
             createdAt={new Date(article.createdAt)}

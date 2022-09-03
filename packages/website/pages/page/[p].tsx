@@ -30,7 +30,7 @@ const PagePages = (props: PagePagesProps) => {
           <PostCard
             top={article.top || 0}
             id={article.id}
-            key={article.title}
+            key={article.id}
             title={article.title}
             updatedAt={new Date(article.updatedAt)}
             createdAt={new Date(article.createdAt)}

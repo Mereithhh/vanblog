@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { LinkItem } from "../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/layout";
@@ -20,6 +20,16 @@ const LinkPage = (props: LinkPageProps) => {
   useEffect(() => {
     setUrl(window.location.origin);
   }, [setUrl]);
+  const logo = useMemo(() => {
+    let logo = props.layoutProps.logo;
+    if (props.layoutProps.logo == "") {
+      logo = props.authorCardProps.logo || "";
+    }
+    if (logo == "") {
+      logo = `${url}/logo.svg`;
+    }
+    return logo;
+  }, [props, url]);
   const requireContent = `
 **[申领要求]**
 - [x] 请先添加本站为友链后再申请友链，并通过留言或邮件告知
@@ -33,7 +43,7 @@ const LinkPage = (props: LinkPageProps) => {
 > 名称： ${props.layoutProps.siteName}<br/>
 > 简介： ${props.layoutProps.description}<br/>
 > 网址： [${url}](${url})<br/>
-> 头像： [${props.layoutProps.logo}](${props.layoutProps.logo})
+> 头像： [${logo}](${logo})
 `;
   return (
     <Layout
