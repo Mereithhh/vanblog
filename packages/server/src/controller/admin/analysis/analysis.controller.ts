@@ -8,7 +8,7 @@ import {
 } from 'src/provider/analysis/analysis.provider';
 
 @ApiTags('analysis')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/analysis')
 export class AnalysisController {
   constructor(private readonly analysisProvider: AnalysisProvider) {}

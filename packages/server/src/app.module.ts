@@ -63,6 +63,8 @@ import { ISRProvider } from './provider/isr/isr.provider';
 import { WalineProvider } from './provider/waline/waline.provider';
 import { CacheProvider } from './provider/cache/cache.provider';
 import { LoginGuard } from './provider/auth/login.guard';
+import { AccessGuard } from './provider/access/access.guard';
+import { CollaboratorController } from './controller/admin/collaborator/collaborator.controller';
 
 @Module({
   imports: [
@@ -107,6 +109,7 @@ import { LoginGuard } from './provider/auth/login.guard';
     ImgController,
     CaddyController,
     LogController,
+    CollaboratorController,
   ],
   providers: [
     AppService,
@@ -134,6 +137,7 @@ import { LoginGuard } from './provider/auth/login.guard';
     WalineProvider,
     CacheProvider,
     LoginGuard,
+    AccessGuard,
   ],
 })
 export class AppModule implements NestModule {

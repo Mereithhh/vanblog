@@ -12,7 +12,6 @@ export default function (props) {
       <ProForm
         grid={true}
         layout={'horizontal'}
-        labelCol={{ span: 6 }}
         request={async (params) => {
           const { data } = await getLoginConfig();
           return data || { enableMaxLoginRetry: false };

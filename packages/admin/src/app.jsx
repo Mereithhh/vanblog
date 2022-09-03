@@ -171,7 +171,7 @@ export const layout = ({ initialState, setInitialState }) => {
         <HomeOutlined />
         <span>主站</span>
       </a>,
-      <Link key="AboutLink" to={'/site/setting?tab=about'}>
+      <Link key="AboutLink" to={'/about'}>
         <ProjectOutlined />
         <span>关于</span>
       </Link>,
@@ -203,6 +203,11 @@ export const layout = ({ initialState, setInitialState }) => {
               settings={initialState?.settings}
               // themeOnly={true}
               onSettingChange={(settings) => {
+                const user = initialState?.user;
+                const isCollaborator = user?.type && user?.type == 'collaborator';
+                if (isCollaborator) {
+                  settings.title = '协作模式';
+                }
                 if (settings.navTheme != initialState?.settings?.navTheme) {
                   // 切换了主题
                   beforeSwitchTheme(settings.navTheme);
@@ -226,6 +231,9 @@ export const request = {
       let errorMessage = resData.message;
       if (resData?.statusCode == 401 && resData?.message == 'Unauthorized') {
         errorMessage = '登录失效';
+      }
+      if (errorMessage == 'Forbidden resource') {
+        errorMessage = '权限不足！';
       }
       return {
         ...resData,

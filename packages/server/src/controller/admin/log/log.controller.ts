@@ -4,7 +4,7 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { LogProvider } from 'src/provider/log/log.provider';
 import { EventType } from 'src/provider/log/types';
 @ApiTags('log')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/log')
 export class LogController {
   constructor(private readonly logProvider: LogProvider) {}

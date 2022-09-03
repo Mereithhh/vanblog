@@ -25,6 +25,7 @@ export class InitProvider {
         id: 0,
         name: user.username,
         password: user.password,
+        type: 'admin',
       });
       await this.metaModel.create({
         siteInfo: toUpdateDto,

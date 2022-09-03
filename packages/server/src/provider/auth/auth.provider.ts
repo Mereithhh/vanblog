@@ -10,8 +10,8 @@ export class AuthProvider {
     private readonly jwtService: JwtService,
   ) {}
   async validateUser(username: string, pass: string): Promise<any> {
-    const user = await this.usersService.getUser();
-    if (user && user.password === pass && user.name === username) {
+    const user = await this.usersService.validateUser(username, pass);
+    if (user) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
@@ -20,7 +20,13 @@ export class AuthProvider {
   }
 
   async login(user: any) {
-    const payload = { username: user.name, sub: user.id };
+    const payload = {
+      username: user.name,
+      sub: user.id,
+      type: (user?._doc || user)?.type || undefined,
+      nickname: (user?._doc || user)?.nickname || undefined,
+      permissions: (user?._doc || user)?.permissions || undefined,
+    };
     if (user._doc) {
       payload.username = user._doc.name;
       payload.sub = user._doc.id;
@@ -30,6 +36,9 @@ export class AuthProvider {
       user: {
         name: payload.username,
         id: payload.sub,
+        type: payload.type,
+        nickname: payload.nickname,
+        permissions: payload.permissions,
       },
     };
   }

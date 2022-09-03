@@ -5,7 +5,7 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { config } from 'src/config';
 @ApiTags('about')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/meta/about')
 export class AboutMetaController {
   constructor(

@@ -50,6 +50,10 @@ features:
     icon: strong
     details: 功能齐全的后台，精心优化的编辑器，极致的写作体验
 
+  - title: 安全第一
+    icon: token
+    details: 内置了可以自定义权限的协作者模式，未来将支持更多登录安全策略
+
   - title: 易于部署
     icon: linux
     details: Docker 一键部署，全自动 HTTPS 证书自动申请续期，支持 ARM

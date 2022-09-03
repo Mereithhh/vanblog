@@ -30,7 +30,7 @@ import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { config } from 'src/config';
 
 @ApiTags('backup')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/backup')
 export class BackupController {
   private readonly logger = new Logger(BackupController.name);

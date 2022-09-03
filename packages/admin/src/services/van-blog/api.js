@@ -117,6 +117,28 @@ export async function deleteArticle(id) {
     method: 'DELETE',
   });
 }
+export async function createCollaborator(body) {
+  return request('/api/admin/collaborator', {
+    method: 'POST',
+    data: body,
+  });
+}
+export async function updateCollaborator(body) {
+  return request('/api/admin/collaborator', {
+    method: 'PUT',
+    data: body,
+  });
+}
+export async function deleteCollaborator(id) {
+  return request(`/api/admin/collaborator/${id}`, {
+    method: 'DELETE',
+  });
+}
+export async function getAllCollaborators() {
+  return request(`/api/admin/collaborator`, {
+    method: 'GET',
+  });
+}
 
 export async function getAllCategories() {
   return request(`/api/admin/category/all`, {

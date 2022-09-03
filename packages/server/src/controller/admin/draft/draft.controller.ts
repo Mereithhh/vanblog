@@ -22,7 +22,7 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { config } from 'src/config';
 
 @ApiTags('draft')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/draft')
 export class DraftController {
   constructor(

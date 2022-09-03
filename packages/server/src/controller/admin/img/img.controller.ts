@@ -18,7 +18,7 @@ import { StaticProvider } from 'src/provider/static/static.provider';
 import { config } from 'src/config';
 
 @ApiTags('img')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/img')
 export class ImgController {
   constructor(private readonly staticProvider: StaticProvider) {}

@@ -7,7 +7,7 @@ import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { WalineProvider } from 'src/provider/waline/waline.provider';
 import { config } from 'src/config';
 @ApiTags('site')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/meta/site')
 export class SiteMetaController {
   constructor(

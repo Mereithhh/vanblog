@@ -7,7 +7,7 @@ import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { getVersionFromServer } from 'src/utils/getVersion';
 
 @ApiTags('meta')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/meta')
 export class MetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

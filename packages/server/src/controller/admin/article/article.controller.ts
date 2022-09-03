@@ -17,7 +17,7 @@ import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 @ApiTags('article')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/article')
 export class ArticleController {
   constructor(

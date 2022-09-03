@@ -25,7 +25,7 @@ export class CaddyController {
     private readonly settingProvider: SettingProvider,
     private readonly caddyProvider: CaddyProvider,
   ) {}
-  @UseGuards(AdminGuard)
+  @UseGuards(...AdminGuard)
   @Get('https')
   async getHttpsConfig() {
     const config = await this.settingProvider.getHttpsSetting();
@@ -49,7 +49,7 @@ export class CaddyController {
       throw new BadRequestException();
     }
   }
-  @UseGuards(AdminGuard)
+  @UseGuards(...AdminGuard)
   @Delete('log')
   async clearLog() {
     if (config.demo && config.demo == 'true') {
@@ -64,7 +64,7 @@ export class CaddyController {
       data: '清除 Caddy 运行日志成功！',
     };
   }
-  @UseGuards(AdminGuard)
+  @UseGuards(...AdminGuard)
   @Get('log')
   async getCaddyLog() {
     const log = await this.caddyProvider.getLog();
@@ -73,7 +73,7 @@ export class CaddyController {
       data: log,
     };
   }
-  @UseGuards(AdminGuard)
+  @UseGuards(...AdminGuard)
   @Get('config')
   async getCaddyConfig() {
     const caddyConfig = await this.caddyProvider.getConfig();
@@ -82,7 +82,7 @@ export class CaddyController {
       data: JSON.stringify(caddyConfig, null, 2),
     };
   }
-  @UseGuards(AdminGuard)
+  @UseGuards(...AdminGuard)
   @Put('https')
   async updateHttpsConfig(@Body() dto: HttpsSetting) {
     if (config.demo && config.demo == 'true') {

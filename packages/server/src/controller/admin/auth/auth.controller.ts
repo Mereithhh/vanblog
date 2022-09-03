@@ -43,7 +43,7 @@ export class AuthController {
       data: await this.authProvider.login(request.user),
     };
   }
-  @UseGuards(AdminGuard)
+  @UseGuards(...AdminGuard)
   @Put()
   async updateUser(@Body() updateUserDto: UpdateUserDto) {
     if (config?.demo == true || config?.demo == 'true') {

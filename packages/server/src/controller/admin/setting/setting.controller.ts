@@ -14,7 +14,7 @@ import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { WalineProvider } from 'src/provider/waline/waline.provider';
 
 @ApiTags('setting')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/setting')
 export class SettingController {
   constructor(

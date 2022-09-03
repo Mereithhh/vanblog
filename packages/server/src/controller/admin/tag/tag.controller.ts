@@ -13,7 +13,7 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 @ApiTags('tag')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/tag/')
 export class TagController {
   constructor(

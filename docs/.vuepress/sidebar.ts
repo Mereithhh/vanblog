@@ -46,6 +46,7 @@ export default sidebar([
         children: [
           "advance/https.md",
           "advance/customizing.md",
+          "advance/collaborator.md",
           "advance/backup.md",
           "advance/log.md",
           "advance/dark-mode.md",

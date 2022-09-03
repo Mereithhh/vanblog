@@ -8,13 +8,20 @@ export default [
     ],
   },
   { path: '/init', layout: false, component: './InitPage' },
-  { path: '/welcome', name: '分析概览', icon: 'smile', component: './Welcome' },
+  { path: '/welcome', name: '分析概览', icon: 'smile', component: './Welcome', access: 'isAdmin' },
   { name: '文章管理', icon: 'form', path: '/article', component: './Article' },
   {
     name: '图形编辑器',
     icon: 'form',
     path: '/editor',
     component: './Editor',
+    hideInMenu: true,
+  },
+  {
+    name: '关于',
+    icon: 'form',
+    path: '/about',
+    component: './About',
     hideInMenu: true,
   },
   { name: '草稿管理', icon: 'container', path: '/draft', component: './Draft' },
@@ -30,6 +37,7 @@ export default [
     icon: 'tool',
     path: '/site',
     hideInBreadcrumb: true,
+    access: 'isAdmin',
     routes: [
       { name: '数据管理', path: '/site/data', component: './DataManage' },
       { name: '评论管理', path: '/site/comment', component: './CommentManage' },
@@ -37,6 +45,6 @@ export default [
       { name: '日志管理', path: '/site/log', component: './LogManage' },
     ],
   },
-  { path: '/', redirect: '/welcome' },
+  { path: '/', redirect: '/article' },
   { component: './404' },
 ];

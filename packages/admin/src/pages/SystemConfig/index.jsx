@@ -1,7 +1,6 @@
 import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
 import thinstyle from '../Welcome/index.less';
-import About from './tabs/About';
 import Advance from './tabs/Advance';
 import Backup from './tabs/Backup';
 import Caddy from './tabs/Caddy';
@@ -15,7 +14,6 @@ export default function () {
     siteInfo: <SiteInfo />,
     customizing: <Customizing />,
     backup: <Backup />,
-    about: <About />,
     user: <User />,
     img: <ImgTab />,
     waline: <WalineTab />,
@@ -63,10 +61,6 @@ export default function () {
         {
           tab: '高级设置',
           key: 'advance',
-        },
-        {
-          tab: '关于',
-          key: 'about',
         },
       ]}
       onTabChange={setTab}

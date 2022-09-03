@@ -37,7 +37,26 @@ const ImgPage = () => {
   const [responsive, setResponsive] = useState(false);
   const [pageSize, setPageSize] = useNum(responsive ? 9 : 15, 'static-img-page-size');
   const [clickItem, setClickItem] = useState<StaticItem>();
-  const { initialState, setInitialState } = useModel('@@initialState');
+  const { initialState } = useModel('@@initialState');
+
+  const showDelBtn = useMemo(() => {
+    if (!initialState?.user) {
+      return false;
+    }
+    if (initialState?.user?.id == 0) {
+      return true;
+    } else {
+      const ps = initialState?.user?.permissions;
+      if (!ps || ps.length == 0) {
+        return false;
+      } else {
+        if (ps.includes('img:delete') || ps.includes('all')) {
+          return true;
+        }
+        return false;
+      }
+    }
+  }, [initialState]);
 
   const { show } = useContextMenu({
     id: MENU_ID,
@@ -235,9 +254,11 @@ const ImgPage = () => {
           <Item onClick={handleItemClick} data="download">
             下载
           </Item>
-          <Item onClick={handleItemClick} data="delete">
-            删除
-          </Item>
+          {showDelBtn && (
+            <Item onClick={handleItemClick} data="delete">
+              删除
+            </Item>
+          )}
           <Separator />
           <Item onClick={handleItemClick} data="info">
             信息

@@ -15,7 +15,7 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { config } from 'src/config';
 @ApiTags('link')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/meta/link')
 export class LinkMetaController {
   constructor(

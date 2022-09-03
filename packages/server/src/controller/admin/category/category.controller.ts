@@ -17,7 +17,7 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { config } from 'src/config';
 
 @ApiTags('category')
-@UseGuards(AdminGuard)
+@UseGuards(...AdminGuard)
 @Controller('/api/admin/category/')
 export class CategoryController {
   constructor(
