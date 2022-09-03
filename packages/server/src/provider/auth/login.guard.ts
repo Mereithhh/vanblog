@@ -23,10 +23,14 @@ export class LoginGuard implements CanActivate {
     return await this.validateRequest(request);
   }
   async validateRequest(request: Request) {
-    const { enableMaxLoginRetry } =
-      await this.settingProvider.getLoginSetting();
-    if (!enableMaxLoginRetry) {
+    const loginSetting = await this.settingProvider.getLoginSetting();
+    if (!loginSetting) {
       return true;
+    } else {
+      const { enableMaxLoginRetry } = loginSetting || {};
+      if (!enableMaxLoginRetry) {
+        return true;
+      }
     }
     const { ip } = await getNetIp(request);
     if (ip.trim() == '') {
