@@ -1,4 +1,37 @@
 # Changelog
+## [0.30.0](https://github.com/Mereithhh/van-blog/compare/v0.29.4...v0.30.0) (2022-09-03)
+
+
+### ✏️ Documentation | 文档
+
+* mongo 默认用 v4 版本（某些机器不支持 avx 无法启动大于 v5 版本） ([9b1295c](https://github.com/Mereithhh/van-blog/commit/9b1295cc3c628b019a4fe7e526e07fd08ad9b76a))
+* 增加宝塔面板部署教程 ([ebe7628](https://github.com/Mereithhh/van-blog/commit/ebe76287b25974585c65d94b35928207f2ea9b5c))
+* 更新文档 ([30dab24](https://github.com/Mereithhh/van-blog/commit/30dab24272f5d8fb2b82b842ac019ec0c8d82601))
+* 更新文档 ([e658519](https://github.com/Mereithhh/van-blog/commit/e65851942410043fd8901f50f7acc530cb985ab3))
+* 更新文档 ([49725f4](https://github.com/Mereithhh/van-blog/commit/49725f461a411a09d524d0d4016f10cfbedd4820))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 完善构建测试镜像脚本 ([cd5dc19](https://github.com/Mereithhh/van-blog/commit/cd5dc199cee15905583cd96705207a29681766d4))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 分类页面不显示 404 ([519f7fd](https://github.com/Mereithhh/van-blog/commit/519f7fdb21b643bba81a2b225e71815667fb9f58))
+* 未设置站点图标时友情链接的站点信息用作者头像或默认头像 ([7b5e8c3](https://github.com/Mereithhh/van-blog/commit/7b5e8c37416c67919e0d4a4dc8bcc83a2ad270f8))
+
+
+### ✨ Features | 新功能
+
+* 协作者模式：添加指定权限的协作者账号 ([ebc8543](https://github.com/Mereithhh/van-blog/commit/ebc85431323cdb66b7c65bf4ff16e52985da5b9e))
+* 后台关于页面增加更新日志跳转链接 ([ac1647c](https://github.com/Mereithhh/van-blog/commit/ac1647cfd239360c4dfd3696e3609aeaca908125))
+* 后台可手动触发增量渲染 ([acb8718](https://github.com/Mereithhh/van-blog/commit/acb87184e34262ff2e1207f448214ee799090b8c))
+* 增加实验性登录安全策略配置（暂不开放） ([70cf98b](https://github.com/Mereithhh/van-blog/commit/70cf98b92fa706ba32e3f69b8fdbea072fab8fa4))
+* 增加是否显示打赏按钮和版权声明的配置项 ([fbfa930](https://github.com/Mereithhh/van-blog/commit/fbfa930fe03280af2241c3c46a7cf6441ee13b38))
+* 增加登录失败检测，同一个 ip 连续三次登录失败需要等 60 秒 ([ba6b663](https://github.com/Mereithhh/van-blog/commit/ba6b663dbf6e1b36f1666938bc17de678dd7d7ee))
+* 每到整点触发一次 ISR（避免某些情况下自动主题模式闪屏） ([cf367a2](https://github.com/Mereithhh/van-blog/commit/cf367a22dd44ad7e23971d704c838521e65465fe))
+
 ### [0.29.4](https://github.com/Mereithhh/van-blog/compare/v0.29.3...v0.29.4) (2022-09-02)
 
 
