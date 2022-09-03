@@ -8,18 +8,27 @@ import {
 import dayjs from 'dayjs';
 import { Request } from 'express';
 import { CacheProvider } from '../cache/cache.provider';
-import { getIp } from '../log/utils';
+import { getNetIp } from '../log/utils';
+import { SettingProvider } from '../setting/setting.provider';
 
 @Injectable()
 export class LoginGuard implements CanActivate {
   logger = new Logger(LoginGuard.name);
-  constructor(private cacheProvider: CacheProvider) {}
+  constructor(
+    private cacheProvider: CacheProvider,
+    private settingProvider: SettingProvider,
+  ) {}
   async canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest();
     return await this.validateRequest(request);
   }
   async validateRequest(request: Request) {
-    const { ip } = getIp(request);
+    const { enableMaxLoginRetry } =
+      await this.settingProvider.getLoginSetting();
+    if (!enableMaxLoginRetry) {
+      return true;
+    }
+    const { ip } = await getNetIp(request);
     if (ip.trim() == '') {
       // 获取不到 ip 就当你🐂吧
       return true;

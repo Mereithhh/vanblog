@@ -4,6 +4,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { config } from 'src/config/index';
 import {
   LayoutSetting,
+  LoginSetting,
   StaticSetting,
   WalineSetting,
 } from 'src/types/setting.dto';
@@ -83,7 +84,6 @@ export class SettingController {
       };
     }
     const res = await this.settingProvider.updateLayoutSetting(body);
-    await this.walineProvider.restart('更新 layout 设置，');
     this.isrProvider.activeAll('更新 layout 设置');
     return {
       statusCode: 200,
@@ -93,6 +93,28 @@ export class SettingController {
   @Get('layout')
   async getLayoutSetting() {
     const res = await this.settingProvider.getLayoutSetting();
+    return {
+      statusCode: 200,
+      data: res,
+    };
+  }
+  @Put('login')
+  async updateLoginSetting(@Body() body: LoginSetting) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改登录安全策略设置！',
+      };
+    }
+    const res = await this.settingProvider.updateLoginSetting(body);
+    return {
+      statusCode: 200,
+      data: res,
+    };
+  }
+  @Get('login')
+  async getLoginSetting() {
+    const res = await this.settingProvider.getLoginSetting();
     return {
       statusCode: 200,
       data: res,

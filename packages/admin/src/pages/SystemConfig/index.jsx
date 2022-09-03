@@ -2,6 +2,7 @@ import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
 import thinstyle from '../Welcome/index.less';
 import About from './tabs/About';
+import Advance from './tabs/Advance';
 import Backup from './tabs/Backup';
 import Caddy from './tabs/Caddy';
 import Customizing from './tabs/Customizing';
@@ -19,6 +20,7 @@ export default function () {
     img: <ImgTab />,
     waline: <WalineTab />,
     caddy: <Caddy />,
+    advance: <Advance />,
   };
   const [tab, setTab] = useTab('siteInfo', 'tab');
 
@@ -58,7 +60,10 @@ export default function () {
           tab: 'HTTPS',
           key: 'caddy',
         },
-
+        {
+          tab: '高级设置',
+          key: 'advance',
+        },
         {
           tab: '关于',
           key: 'about',

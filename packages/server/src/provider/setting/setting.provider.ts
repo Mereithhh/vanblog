@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import {
   HttpsSetting,
   LayoutSetting,
+  LoginSetting,
   SettingType,
   StaticSetting,
   WalineSetting,
@@ -50,6 +51,19 @@ export class SettingProvider {
     }
     return null;
   }
+  async getLoginSetting(): Promise<LoginSetting> {
+    const res = await this.settingModel.findOne({ type: 'login' }).exec();
+    if (res) {
+      return (
+        (res?.value as any) || {
+          enableMaxLoginRetry: false,
+          maxRetryTimes: 3,
+          durationSeconds: 60,
+        }
+      );
+    }
+    return null;
+  }
   encodeLayoutSetting(dto: LayoutSetting) {
     if (!dto) {
       return null;
@@ -73,6 +87,22 @@ export class SettingProvider {
     }
     return null;
   }
+  async updateLoginSetting(dto: LoginSetting) {
+    const oldValue = await this.getLoginSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'login',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'login' },
+      { value: newValue },
+    );
+    return res;
+  }
+
   async updateWalineSetting(dto: WalineSetting) {
     const oldValue = await this.getWalineSetting();
     const newValue = { ...oldValue, ...dto };

@@ -14,6 +14,17 @@ export async function getHttpsConfig() {
     method: 'GET',
   });
 }
+export async function getLoginConfig() {
+  return request('/api/admin/setting/login', {
+    method: 'GET',
+  });
+}
+export async function updateLoginConfig(body) {
+  return request('/api/admin/setting/login', {
+    method: 'PUT',
+    data: body,
+  });
+}
 export async function getLayoutConfig() {
   return request('/api/admin/setting/layout', {
     method: 'GET',

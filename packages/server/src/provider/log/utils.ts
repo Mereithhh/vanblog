@@ -1,12 +1,5 @@
 import axios from 'axios';
-import requestIp from 'request-ip';
-export function getIp(req: any) {
-  let ip = requestIp.getClientIp(req);
-  if (ip.includes('127.0') || ip.includes('192.168') || ip.includes('10.7')) {
-    ip = '';
-  }
-  return { ip };
-}
+
 export async function getNetIp(req: any) {
   const ipArray = [
     ...new Set([
