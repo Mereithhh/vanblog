@@ -1,10 +1,9 @@
 ---
 name: 优化建议
 description: 提出优化/建议/需求
-title: '[Feature]: '
+title: '[优化建议]: '
 labels:
-  - discussion
-  - enhancement
+  - 优化建议
 body:
   - type: textarea
     id: description

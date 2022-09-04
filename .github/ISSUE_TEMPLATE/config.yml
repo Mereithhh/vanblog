@@ -2,7 +2,7 @@ blank_issues_enabled: false
 contact_links:
   - name: 讨论区
     url: https://github.com/Mereithhh/van-blog/discussions/new
-    about: Please ask questions in Discussion.
+    about: 前往讨论区与大家交流
 
   # - name: 官方 QQ 群
   #   url: https://jq.qq.com/?_wv=1027&k=l0NphanY

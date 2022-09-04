@@ -1,9 +1,9 @@
 ---
 name: 问题反馈
 description: 反馈 BUG 帮助我们改进 VanBlog
-title: '[Bug]: '
+title: '[问题反馈]: '
 labels:
-  - bug
+  - 问题反馈
 body:
   - type: textarea
     id: description
@@ -18,17 +18,21 @@ body:
   - type: input
     id: url
     attributes:
-      label: 问题网站 | Website URL
+      label: 复现网址 | Website URL
       description: 请提供下可复现网站地址 | Please supply a website url which can reproduce problem.
       placeholder: ex. https://blog-demo.mereith.com
     validations:
       required: false
 
-  - type: markdown
+  - type: input
     id: version
     attributes:
-      value: |
-        ## 版本 | Version
+      label: 版本 | Version
+      description: 请提供下出现问题的版本号 | Please supply the version which can reproduce problem.
+      placeholder: ex. v0.32.0
+    validations:
+      required: true
+
 
   - type: dropdown
     id: deployMethod
@@ -38,8 +42,8 @@ body:
       label: 部署方式？ | How do you deploy vanblog?
       description:
       options:
-        - Docker (default)
-        - Manual
-        - Other
+        - Docker 部署(文档默认)
+        - 手动部署
+        - 其他方式
 
 
