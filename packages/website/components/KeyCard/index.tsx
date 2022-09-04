@@ -8,9 +8,7 @@ export default function (props: { type: "search" | "esc" }) {
         >
           <span className="sr-only">Press </span>
           <kbd className="font-sans">
-            <abbr title="Control" className="no-underline">
-              Ctrl{" "}
-            </abbr>
+            <abbr className="no-underline">Ctrl </abbr>
           </kbd>
           <span className="sr-only"> and </span>
           <kbd className="font-sans">K</kbd>

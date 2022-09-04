@@ -2,6 +2,7 @@ export default function () {
   return (
     <div
       className="hidden md:flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 sm:-ml-2  lg:ml-2 fill-gray-600 dark:text-dark"
+      title="管理后台"
       onClick={() => {
         window.open("/admin", "_blank");
       }}

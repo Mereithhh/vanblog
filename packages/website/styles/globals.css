@@ -163,7 +163,7 @@ body .wl-panel {
 .dark .wl-editor:focus {
   background-color: inherit;
 }
-body #wl-editor {
+body #wl-edit {
   transition: none;
 }
 .dark .wl-panel {

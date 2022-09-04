@@ -29,6 +29,16 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
       applyTheme(realTheme, "autoThemeTimer", true);
     }, 10000);
   };
+  const getThemeTitleAuto = () => {
+    if ((theme as any) == "auto") {
+      return "自动模式";
+    }
+    if (theme.includes("light")) {
+      return "自动模式-亮色";
+    } else {
+      return "自动模式-暗色";
+    }
+  };
 
   useEffect(() => {
     if (!current.hasInit) {
@@ -67,6 +77,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
           height: 20,
         }}
         className="dark:text-dark "
+        title="亮色模式"
       >
         <svg
           className="fill-gray-600"
@@ -86,6 +97,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
           display: theme == "dark" ? "block" : "none",
           height: 20,
         }}
+        title="暗色模式"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +116,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
           display: theme.includes("auto") ? "block" : "none",
           height: 20,
         }}
+        title={getThemeTitleAuto()}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

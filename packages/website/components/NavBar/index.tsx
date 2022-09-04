@@ -186,6 +186,7 @@ export default function (props: {
                   setShowSearch(true);
                   document.body.style.overflow = "hidden";
                 }}
+                title="搜索"
                 className="flex group transform hover:scale-110 transition-all select-none cursor-pointer"
               >
                 <div className="flex items-center mr-0 sm:mr-2 hover:cursor-pointer   transition-all dark:text-dark fill-gray-600">

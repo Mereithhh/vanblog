@@ -10,6 +10,7 @@ export default function (props: { showAdminButton: boolean }) {
   }, [setUrl]);
   return (
     <div
+      title="RSS 订阅"
       className={`flex items-center  justify-center cursor-pointer hover:scale-125 transform transition-all ${
         props.showAdminButton ? "mr-4 md:mr-6 lg:mr-2 " : "mr-4 md:mr-4 lg:mr-4"
       }`}
