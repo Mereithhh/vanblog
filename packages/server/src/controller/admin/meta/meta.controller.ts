@@ -22,6 +22,7 @@ export class MetaController {
       user: req.user,
       baseUrl: meta.siteInfo.baseUrl,
       enableComment: meta.siteInfo.enableComment || 'true',
+      allowDomains: process.env.VAN_BLOG_ALLOW_DOMAINS || '',
     };
     return {
       statusCode: 200,

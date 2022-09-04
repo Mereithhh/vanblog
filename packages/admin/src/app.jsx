@@ -1,13 +1,15 @@
 import Footer from '@/components/Footer';
 import { HomeOutlined, LogoutOutlined, ProjectOutlined } from '@ant-design/icons';
 import { PageLoading, SettingDrawer } from '@ant-design/pro-layout';
-import { notification } from 'antd';
+import { Modal, notification } from 'antd';
 import moment from 'moment';
 import { history, Link } from 'umi';
 import defaultSettings from '../config/defaultSettings';
 import LogoutButton from './components/LogoutButton';
 import ThemeButton from './components/ThemeButton';
 import { fetchAllMeta } from './services/van-blog/api';
+import { checkAllowDomains } from './services/van-blog/checkDomains';
+import { checkUrl } from './services/van-blog/checkUrl';
 import { beforeSwitchTheme, getInitTheme, mapTheme } from './services/van-blog/theme';
 const isDev = process.env.UMI_ENV === 'dev';
 const loginPath = '/user/login';
@@ -25,7 +27,7 @@ export async function getInitialState() {
       const msg = await fetchAllMeta(option);
       if (msg.statusCode == 233) {
         history.push('/init');
-        return {};
+        return msg.data || {};
       } else if (history.location.pathname == '/init' && msg.statusCode == 200) {
         history.push('/');
       }
@@ -42,21 +44,45 @@ export async function getInitialState() {
   }
   const initData = await fetchInitData(option);
 
-  const { latestVersion, updatedAt, version } = initData;
+  const { latestVersion, updatedAt, version, baseUrl, allowDomains } = initData;
+  if (allowDomains != null && allowDomains != undefined && !checkAllowDomains(allowDomains)) {
+    Modal.warn({
+      title: 'ALLOW_DOMAINS 环境变量与当前访问域名不匹配',
+      content: (
+        <div>
+          <p>您启动 VanBlog 时设置的 VAN_BLOG_ALLOW_DOMAINS 环境变量与当前访问域名不匹配</p>
+          <p>这将造成您无法通过此域名加载作者头像等图片</p>
+          <p>您应在其中增加当前域名： {`${location.hostname}`}</p>
+        </div>
+      ),
+    });
+  }
+  if (baseUrl && !checkUrl(baseUrl)) {
+    Modal.warn({
+      title: '网站 URL 不合法',
+      content: (
+        <div>
+          <p>
+            您在站点设置中填写的“网站 URL”不合法，这将导致一些奇怪的问题（比如生成的 RSS
+            订阅源错误等）
+          </p>
+          <p>网站 URL 需包含完整的协议。</p>
+          <p>例如： https://blog-demo.mereith.com</p>
+          <a
+            onClick={() => {
+              history.push('/site/setting?siteInfoTab=basic');
+              return true;
+            }}
+          >
+            前往修改
+          </a>
+        </div>
+      ),
+    });
+  }
   // 来一个横幅提示
   if (version && latestVersion && version != 'dev') {
-    if (version == latestVersion) {
-      // 新的
-      // notification.success({
-      //   message: (
-      //     <div>
-      //       <p style={{ marginBottom: 4 }}>{`当前版本:\t${version}()`}</p>
-      //       <p style={{ marginBottom: 4 }}>{`更新时间:\t${moment(updatedAt).format(
-      //         'YYYY-MM-DD HH:mm:ss',
-      //       )}`}</p>
-      //     </div>
-      //   ),
-      // });
+    if (version >= latestVersion) {
     } else {
       // 老的
       notification.info({
