@@ -1,4 +1,25 @@
 # Changelog
+### [0.32.1](https://github.com/Mereithhh/van-blog/compare/v0.32.0...v0.32.1) (2022-09-04)
+
+
+### ✏️ Documentation | 文档
+
+* 更新 todo ([9a813d8](https://github.com/Mereithhh/van-blog/commit/9a813d8121c3f13f9add1a80580f239af074c09b))
+* 更新 tudo ([592b5ef](https://github.com/Mereithhh/van-blog/commit/592b5ef39d289277bcd058f1a920ccb4040f648d))
+* 更新文档 ([2efd18f](https://github.com/Mereithhh/van-blog/commit/2efd18f78f5eb192811d554600f9045b95cde4e7))
+* 更新文档 ([6794d6a](https://github.com/Mereithhh/van-blog/commit/6794d6a21085e92ba192648f0dd639241a8852f5))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 增加传输 json 请求体大小限制 ([4a4df3e](https://github.com/Mereithhh/van-blog/commit/4a4df3e4c7880c5d1f013145e9bf53be7d80a1d2))
+* 由于网站 URL 填写格式错误导致的老版本升级后容器无限重启[#27](https://github.com/Mereithhh/van-blog/issues/27) ([4c33704](https://github.com/Mereithhh/van-blog/commit/4c337040ca5ee94a25b641d5b2fd7f17ba6ab96c))
+
+
+### ✨ Features | 新功能
+
+* 首次进入后台时检查 ALLOW_DOMAINS 和 baseUrl，如不合法会弹窗提示 ([15ee5a7](https://github.com/Mereithhh/van-blog/commit/15ee5a733f95fe57d0f513cd1b2f37dcfe309b36))
+
 ## [0.32.0](https://github.com/Mereithhh/van-blog/compare/v0.31.0...v0.32.0) (2022-09-04)
 
 
