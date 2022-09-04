@@ -31,6 +31,7 @@ export class SiteInfo {
   allowOpenHiddenPostByUrl: 'true' | 'false';
   defaultTheme: 'auto' | 'dark' | 'light';
   enableCustomizing: 'true' | 'false';
+  showRSS: 'true' | 'false';
 }
 export interface updateUserDto {
   username: string;

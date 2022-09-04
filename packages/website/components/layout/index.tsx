@@ -85,6 +85,7 @@ export default function (props: {
             )}
 
           <NavBar
+            showRSS={props.option.showRSS}
             defaultTheme={props.option.defaultTheme}
             showSubMenu={props.option.showSubMenu}
             headerLeftContent={props.option.headerLeftContent}
@@ -150,6 +151,20 @@ export default function (props: {
                     <Link href={"/link"}>
                       <a className="w-full inline-block px-4 ">友链</a>
                     </Link>
+                  </li>
+                )}
+                {props.option.showAdminButton == "true" && (
+                  <li
+                    className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2"
+                    key={"rss-phone-nav-btn"}
+                  >
+                    <a
+                      className="w-full inline-block px-4 "
+                      target="_blank"
+                      href={"/admin"}
+                    >
+                      {"后台"}
+                    </a>
                   </li>
                 )}
                 <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">

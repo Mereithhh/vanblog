@@ -310,6 +310,16 @@ export default function (props: {
             }}
             tooltip={'默认开启，关闭后即使通过客制化面板，自定义了 CSS、Script、HTML 也不会生效。'}
           ></ProFormSelect>
+          <ProFormSelect
+            name={'showRSS'}
+            label="是否显示 RSS 按钮"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认显示，关闭后所有位置会隐藏 RSS 按钮。'}
+          ></ProFormSelect>
         </>
       )}
     </>

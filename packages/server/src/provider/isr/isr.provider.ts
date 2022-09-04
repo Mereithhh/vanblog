@@ -5,6 +5,7 @@ import { sleep } from 'src/utils/sleep';
 import { ArticleProvider } from '../article/article.provider';
 import { CategoryProvider } from '../category/category.provider';
 import { CustomPageProvider } from '../customPage/customPage.provider';
+import { RssProvider } from '../rss/rss.provider';
 import { TagProvider } from '../tag/tag.provider';
 @Injectable()
 export class ISRProvider {
@@ -16,6 +17,7 @@ export class ISRProvider {
     private readonly categoryProvider: CategoryProvider,
     private readonly tagProvider: TagProvider,
     private readonly customPageProvider: CustomPageProvider,
+    private readonly rssProvider: RssProvider,
   ) {}
   async activeAllFn(info?: string) {
     if (info) {
@@ -37,6 +39,7 @@ export class ISRProvider {
     });
   }
   async activeAll(info?: string) {
+    this.rssProvider.generateRssFeed(info || '');
     this.activeWithRetry(() => {
       this.activeAllFn(info);
     });

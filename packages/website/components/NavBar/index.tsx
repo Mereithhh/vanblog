@@ -8,6 +8,7 @@ import { MenuItem } from "../../api/getAllData";
 import AdminButton from "../AdminButton";
 import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
+import RssButton from "../RssButton";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -19,6 +20,7 @@ export default function (props: {
   showSubMenu: "true" | "false";
   showAdminButton: "true" | "false";
   showFriends: "true" | "false";
+  showRSS: "true" | "false";
   headerLeftContent: "siteName" | "siteLogo";
   defaultTheme: "dark" | "auto" | "light";
   subMenuOffset: number;
@@ -210,6 +212,9 @@ export default function (props: {
                 </div>
               </div>
               <ThemeButton defaultTheme={props.defaultTheme} />
+              {props.showRSS == "true" && (
+                <RssButton showAdminButton={props.showAdminButton == "true"} />
+              )}
               {props.showAdminButton == "true" && <AdminButton />}
             </div>
           </div>

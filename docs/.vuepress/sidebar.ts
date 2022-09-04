@@ -45,6 +45,7 @@ export default sidebar([
         icon: "advance",
         children: [
           "advance/https.md",
+          "advance/rss.md",
           "advance/customizing.md",
           "advance/customPage.md",
           "advance/collaborator.md",

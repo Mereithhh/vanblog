@@ -25,6 +25,7 @@ export interface LayoutProps {
   enableCustomizing: "true" | "false";
   showDonateButton: "true" | "false";
   showCopyRight: "true" | "false";
+  showRSS: "true" | "false";
   subMenuOffset: number;
   customCss?: string;
   customScript?: string;
@@ -68,6 +69,10 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (siteInfo?.showDonateButton == "false") {
     showDonateButton = "false";
   }
+  let showRSS: "true" | "false" = "true";
+  if (data.meta.siteInfo?.showRSS && data.meta.siteInfo?.showRSS == "false") {
+    showRSS = "false";
+  }
 
   return {
     showFriends,
@@ -93,6 +98,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     defaultTheme: siteInfo?.defaultTheme || "auto",
     showCopyRight,
     showDonateButton,
+    showRSS,
     ...customSetting,
   };
 }
@@ -101,6 +107,10 @@ export function getAuthorCardProps(data: PublicMetaProp): AuthorCardProps {
   const showSubMenu =
     Boolean(data.meta.categories.length) &&
     data.meta.siteInfo?.showSubMenu == "true";
+  let showRSS: "true" | "false" = "true";
+  if (data.meta.siteInfo?.showRSS && data.meta.siteInfo?.showRSS == "false") {
+    showRSS = "false";
+  }
   return {
     postNum: data.totalArticles,
     tagNum: data.tags.length,
@@ -111,5 +121,6 @@ export function getAuthorCardProps(data: PublicMetaProp): AuthorCardProps {
     logo: data.meta.siteInfo.authorLogo,
     logoDark: data.meta.siteInfo.authorLogoDark || "",
     showSubMenu: showSubMenu ? "true" : "false",
+    showRSS,
   };
 }

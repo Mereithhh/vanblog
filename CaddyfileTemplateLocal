@@ -61,6 +61,21 @@
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}
+  handle /feed.json {
+    uri replace /feed.json /rss/feed.json
+    reverse_proxy 127.0.0.1:3000
+  }
+  handle /feed.xml {
+    uri replace /feed.xml /rss/feed.xml
+    reverse_proxy 127.0.0.1:3000
+  }
+  handle /atom.xml {
+    uri replace /feed.xml /rss/atom.xml
+    reverse_proxy 127.0.0.1:3000
+  }
+	handle /rss/* {
+		reverse_proxy 127.0.0.1:3000
+	}
 	handle /swagger* {
 		reverse_proxy 127.0.0.1:3000
 	}

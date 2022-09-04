@@ -62,5 +62,6 @@ title: 站点设置
 | 前台默认主题模式                | 自动模式 | 设置后第一次进入前台的用户将以此作为默认主题模式。                           |
 | 是否允许通过 URL 打开隐藏的文章 | 不允许   | 默认不允许，开启后可通过 URL 打开隐藏文章。                                  |
 | 是否开启客制化功能              | 开启     | 默认开启，关闭后即使通过客制化面板，自定义了 CSS、Script、HTML 也不会生效    |
+| 是否显示 RSS 按钮               | 开启     | 默认开启，关闭后所有位置会隐藏 RSS 按钮                                      |
 
-![](https://www.mereith.com/static/img/562d62b6896a468746661a3947933768.clipboard-2022-09-03.png)
+![](https://www.mereith.com/static/img/d6315de2dbf4fe09a0aad13051b470a6.clipboard-2022-09-04.png)

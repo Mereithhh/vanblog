@@ -10,6 +10,7 @@ import * as path from 'path';
 import { ISRProvider } from './provider/isr/isr.provider';
 import { WalineProvider } from './provider/waline/waline.provider';
 import { InitProvider } from './provider/init/init.provider';
+import fs from 'fs';
 // import { LogProvider } from './provider/log/log.provider';
 // import { EventType } from './provider/log/types';
 
@@ -18,11 +19,18 @@ async function bootstrap() {
   app.useStaticAssets(globalConfig.staticPath, {
     prefix: '/static/',
   });
+
   // 查看文件夹是否存在 并创建.
   checkOrCreate(globalConfig.staticPath);
   checkOrCreate(path.join(globalConfig.staticPath, 'img'));
   checkOrCreate(path.join(globalConfig.staticPath, 'tmp'));
   checkOrCreate(path.join(globalConfig.staticPath, 'export'));
+
+  // rss
+  checkOrCreate(path.join(globalConfig.staticPath, 'rss'));
+  app.useStaticAssets(path.join(globalConfig.staticPath, 'rss'), {
+    prefix: '/rss/',
+  });
 
   const config = new DocumentBuilder()
     .setTitle('VanBlog API Reference')

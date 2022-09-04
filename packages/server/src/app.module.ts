@@ -70,6 +70,8 @@ import { ISRTask } from './schedule/isr.task';
 import { CustomPage, CustomPageSchema } from './scheme/customPage.schema';
 import { CustomPageProvider } from './provider/customPage/customPage.provider';
 import { CustomPageController } from './controller/admin/customPage/customPage.controller';
+import { RssProvider } from './provider/rss/rss.provider';
+import { MarkdownProvider } from './provider/markdown/markdown.provider';
 
 @Module({
   imports: [
@@ -148,6 +150,8 @@ import { CustomPageController } from './controller/admin/customPage/customPage.c
     AccessGuard,
     ISRTask,
     CustomPageProvider,
+    RssProvider,
+    MarkdownProvider,
   ],
 })
 export class AppModule implements NestModule {

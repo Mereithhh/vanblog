@@ -77,6 +77,7 @@ export interface MetaProps {
     enableCustomizing: "true" | "false";
     showDonateButton: "true" | "false";
     showCopyRight: "true" | "false";
+    showRSS: "true" | "false";
   };
 }
 export interface PublicMetaProp {
@@ -139,6 +140,7 @@ const defaultMeta: MetaProps = {
     enableCustomizing: "true",
     showCopyRight: "true",
     showDonateButton: "true",
+    showRSS: "true",
   },
 };
 
