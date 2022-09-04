@@ -11,11 +11,15 @@ import { ISRProvider } from './provider/isr/isr.provider';
 import { WalineProvider } from './provider/waline/waline.provider';
 import { InitProvider } from './provider/init/init.provider';
 import fs from 'fs';
+import { json } from 'express';
 // import { LogProvider } from './provider/log/log.provider';
 // import { EventType } from './provider/log/types';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
+
+  app.use(json({ limit: '50mb' }));
+
   app.useStaticAssets(globalConfig.staticPath, {
     prefix: '/static/',
   });
