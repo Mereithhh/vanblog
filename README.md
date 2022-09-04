@@ -46,8 +46,8 @@
 - [x] 强大的 markdown 编辑器，支持图表和数学公式，一键插入 more 标记，一键剪切板及本地图片上传
 - [x] TOC、草稿、代码复制、访客数、评论数、分类、标签、搜索、加密、友链、打赏、自定义导航栏。
 - [x] 多个布局设置，可自定义页面细节。
-- [x] 支持自定义页面。
 - [x] 高度客制化，可添加自定义 CSS、HTML 和 JS 代码。
+- [x] 支持自定义页面。
 - [x] 可添加具有指定权限的协作者。
 - [x] 内置图床，并支持各种 OSS 图床、github 图床（外部图床基于 picgo）等。
 - [x] 极致轻量化，没有花里胡哨。页面秒切换、图片懒加载。
@@ -63,11 +63,11 @@
 
 ## 常见问题
 
-> [作者 logo 无法加载](https://vanblog.mereith.com/ref/faq.html#%E5%9B%BE%E7%89%87%EF%BC%88%E4%BD%9C%E8%80%85%20logo%EF%BC%89%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%87%BA%E6%9D%A5)
+> [作者 logo 无法加载](https://vanblog.mereith.com/ref/faq.html#%E5%9B%BE%E7%89%87-%E4%BD%9C%E8%80%85-logo-%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%87%BA%E6%9D%A5)
 >
 > [http error](https://vanblog.mereith.com/ref/faq.html#%E9%83%A8%E7%BD%B2%E5%90%8E-http-error)
 >
-> [docker 镜像拉取慢](https://www.runoob.com/docker/docker-mirror-acceleration.html)
+> [docker 镜像拉取慢](https://vanblog.mereith.com/ref/faq.html#docker-%E9%95%9C%E5%83%8F%E6%8B%89%E5%8F%96%E6%85%A2)
 >
 > [如何外部访问数据库](https://vanblog.mereith.com/ref/faq.html#%E5%A6%82%E4%BD%95%E5%9C%A8%E5%A4%96%E9%83%A8%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93)
 >
@@ -75,7 +75,7 @@
 >
 > [如何升级](https://vanblog.mereith.com/guide/update.html)
 >
-> [更新后后台报错||一直加载中](https://vanblog.mereith.com/guide/update.html#%E6%9B%B4%E6%96%B0%E5%90%8E%E5%90%8E%E5%8F%B0%E6%8A%A5%E9%94%99%26%E4%B8%80%E7%9B%B4%E5%8A%A0%E8%BD%BD%E4%B8%AD)
+> [更新后后台报错||一直加载中](https://vanblog.mereith.com/guide/update.html#%E6%9B%B4%E6%96%B0%E5%90%8E%E5%90%8E%E5%8F%B0%E6%8A%A5%E9%94%99-%E4%B8%80%E7%9B%B4%E5%8A%A0%E8%BD%BD%E4%B8%AD)
 >
 > [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
 
