@@ -126,7 +126,7 @@
 
 ## 问题反馈
 
-请提 `issue` ，如无特殊情况会在一天内解决。
+请提 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose) ，如无特殊情况会在一天内解决。
 
 ## 打赏
 

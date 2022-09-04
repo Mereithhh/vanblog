@@ -108,7 +108,7 @@ sudo docker-compose down && sudo docker-compose up -d
 
 ### Bug 反馈
 
-请提到项目仓库 `issue`，无特殊情况会在一天内解决。
+请提到项目仓库 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)，无特殊情况会在一天内解决。
 
 <!-- ### 什么是 SSG / SSR
 

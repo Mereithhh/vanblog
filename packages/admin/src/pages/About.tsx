@@ -59,7 +59,7 @@ export default function (props) {
               <a
                 target={'_blank'}
                 rel="noreferrer"
-                href="https://github.com/Mereithhh/van-blog/issues/new"
+                href="https://github.com/Mereithhh/van-blog/issues/new/choose"
               >
                 提交BUG
               </a>
