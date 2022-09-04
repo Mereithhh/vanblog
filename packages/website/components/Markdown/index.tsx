@@ -3,7 +3,7 @@ import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
@@ -13,7 +13,6 @@ import dynamic from "next/dynamic";
 export default function (props: { content: string }) {
   return (
     <>
-      <Toaster />
       <ReactMarkdown
         rehypePlugins={[rehypeKatex, rehypeRaw]}
         remarkPlugins={[remarkMath, remarkGfm]}

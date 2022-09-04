@@ -14,6 +14,7 @@ import ImageProvider from "../ImageProvider";
 import { RealThemeType, ThemeContext } from "../../utils/themeContext";
 import { decodeTheme } from "../../utils/theme";
 import CustomLayout from "../CustomLayout";
+import { Toaster } from "react-hot-toast";
 export default function (props: {
   option: LayoutProps;
   title: string;
@@ -73,6 +74,7 @@ export default function (props: {
           theme,
         }}
       >
+        <Toaster />
         <ImageProvider>
           {props.option.baiduAnalysisID != "" &&
             process.env.NODE_ENV != "development" && (

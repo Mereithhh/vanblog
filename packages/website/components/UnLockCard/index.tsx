@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { getArticleByIdWithPassword } from "../../api/getArticles";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import Loading from "../Loading";
 
 export default function (props: {
@@ -57,7 +57,6 @@ export default function (props: {
   };
   return (
     <>
-      <Toaster />
       <Loading loading={loading}>
         <div className="mb-2">
           <p className="mb-2 text-gray-600 dark:text-dark ">

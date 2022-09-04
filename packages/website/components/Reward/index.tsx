@@ -1,5 +1,4 @@
 import { useContext, useMemo, useState } from "react";
-import { Toaster } from "react-hot-toast";
 import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
 
@@ -31,7 +30,6 @@ export default function (props: {
 
   return (
     <div className="mt-8">
-      <Toaster />
       {props.aliPay != "" && (
         <>
           <div className="text-center  select-none text-sm md:text-base mb-2 dark:text-dark">
