@@ -1,0 +1,17 @@
+---
+name: 优化建议
+description: 提出优化/建议/需求
+title: '[Feature]: '
+labels:
+  - discussion
+  - enhancement
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: 功能概述 | Describe the feature
+      description: 请描述你需要的新功能 | A clear and concise description of what the feature is.
+      placeholder:
+      value:
+    validations:
+      require: true

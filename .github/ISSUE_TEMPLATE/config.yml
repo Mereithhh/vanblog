@@ -1,0 +1,13 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 讨论区
+    url: https://github.com/Mereithhh/van-blog/discussions/new
+    about: Please ask questions in Discussion.
+
+  # - name: 官方 QQ 群
+  #   url: https://jq.qq.com/?_wv=1027&k=l0NphanY
+  #   about: '加入Waline 用户交流群: 673663898'
+
+  # - name: Telegram
+  #   url: https://t.me/walinejs
+  #   about: 'Official Telegram Group'
