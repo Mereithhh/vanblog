@@ -139,7 +139,8 @@ export default function (props: {
           name="baseUrl"
           rules={[{ required: true, message: '这是必填项' }]}
           label="网站 Url"
-          placeholder={'请输入网站 Url'}
+          placeholder={'请输入包含访问协议的完整 URL'}
+          tooltip={'请输入包含访问协议的完整 URL，此 URL 会被用来生成前后台/RSS的相关数据。'}
           required={true}
         />
       )}

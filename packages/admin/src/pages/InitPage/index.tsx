@@ -84,7 +84,32 @@ const InitPage = () => {
                 placeholder={'请输入登录密码'}
               ></ProFormText.Password>
             </StepsForm.StepForm>
-            <StepsForm.StepForm name="step2" title={'基本配置'} formRef={formRef1}>
+            <StepsForm.StepForm
+              name="step2"
+              title={'基本配置'}
+              formRef={formRef1}
+              onFinish={async (values) => {
+                let ok = true;
+                try {
+                  new URL(values.baseUrl);
+                } catch (err) {
+                  ok = false;
+                }
+                if (!ok) {
+                  Modal.warn({
+                    title: '网站 URL 不合法！',
+                    content: (
+                      <div>
+                        <p>请输入包含完整协议的 URL</p>
+                        <p>例: https://blog-demo.mereith.com</p>
+                      </div>
+                    ),
+                  });
+                  return false;
+                }
+                return true;
+              }}
+            >
               <Alert
                 type="info"
                 message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。初始化页面所有配置都可在初始化后进入后台修改。"

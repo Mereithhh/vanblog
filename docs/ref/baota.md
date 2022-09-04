@@ -35,7 +35,7 @@ services:
     restart: always
     environment:
       TZ: "Asia/Shanghai"
-      # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。
+      # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。不要带协议！
       VAN_BLOG_ALLOW_DOMAINS: "www.mereith.com"
       # CDN URL，包含协议，部署到 cdn 的时候用。在开启 cdn 之前请不要设置此项。
       # VAN_BLOG_CDN_URL: "https://www.mereith.com"

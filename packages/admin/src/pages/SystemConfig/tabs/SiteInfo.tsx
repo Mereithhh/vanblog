@@ -34,6 +34,24 @@ export default function () {
         }}
         syncToInitialValues={true}
         onFinish={async (data) => {
+          let ok = true;
+          try {
+            new URL(data.baseUrl);
+          } catch (err) {
+            ok = false;
+          }
+          if (!ok) {
+            Modal.warn({
+              title: '网站 URL 不合法！',
+              content: (
+                <div>
+                  <p>请输入包含完整协议的 URL</p>
+                  <p>例: https://blog-demo.mereith.com</p>
+                </div>
+              ),
+            });
+            return;
+          }
           if (location.hostname == 'blog-demo.mereith.com') {
             Modal.info({ title: '演示站禁止修改站点配置！' });
             return;
