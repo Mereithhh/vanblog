@@ -163,6 +163,9 @@ body .wl-panel {
 .dark .wl-editor:focus {
   background-color: inherit;
 }
+body #wl-editor {
+  transition: none;
+}
 .dark .wl-panel {
   background-color: #26282c;
 }
