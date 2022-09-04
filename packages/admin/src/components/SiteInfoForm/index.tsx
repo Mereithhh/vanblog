@@ -195,7 +195,7 @@ export default function (props: {
               true: '显示',
               false: '隐藏',
             }}
-            tooltip={'默认隐藏，如果显示的是网站名，开启此项可能会对不齐。'}
+            tooltip={'默认隐藏，开启后将在主导航栏下方显示分类子导航栏（其实就是双层导航栏）。'}
           ></ProFormSelect>
 
           <ProFormDigit
@@ -216,7 +216,7 @@ export default function (props: {
               siteName: '网站名',
             }}
             placeholder="网站名"
-            tooltip={'显示网站logo的前提是已设置正确的网站logo哦。默认显示网站名'}
+            tooltip={'显示网站 logo 的前提是已设置正确的网站 logo 哦。默认显示网站名'}
           ></ProFormSelect>
           <ProFormSelect
             name={'showAdminButton'}
@@ -226,7 +226,7 @@ export default function (props: {
               true: '显示',
               false: '隐藏',
             }}
-            tooltip={'默认显示，关闭后导航栏会隐藏后台按钮'}
+            tooltip={'默认显示，关闭后前台会隐藏后台按钮'}
           ></ProFormSelect>
           <ProFormSelect
             name={'showFriends'}
@@ -236,7 +236,7 @@ export default function (props: {
               true: '显示',
               false: '隐藏',
             }}
-            tooltip={'默认显示，关闭后导航栏会隐藏友情链接'}
+            tooltip={'默认显示，关闭后导航栏会隐藏友情链接入口'}
           ></ProFormSelect>
           <ProFormSelect
             name={'showDonateInfo'}

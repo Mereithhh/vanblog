@@ -24,7 +24,11 @@ const InitPage = () => {
           title={
             <div>
               <p style={{ fontSize: 20, marginBottom: 0 }}>欢迎使用 VanBlog 个人博客系统</p>
-              <a target={'_blank'} rel="noreferrer" href="https://vanblog.mereith.com">
+              <a
+                target={'_blank'}
+                rel="noreferrer"
+                href="https://vanblog.mereith.com/feature/basic/setting.html"
+              >
                 帮助文档
               </a>
             </div>
@@ -60,6 +64,11 @@ const InitPage = () => {
             }}
           >
             <StepsForm.StepForm name="step1" title="配置用户">
+              <Alert
+                type="info"
+                message="初始化页面所有配置都可在初始化后进入后台修改。"
+                style={{ marginBottom: 8 }}
+              ></Alert>
               <ProFormText
                 name="name"
                 required={true}
@@ -78,7 +87,8 @@ const InitPage = () => {
             <StepsForm.StepForm name="step2" title={'基本配置'} formRef={formRef1}>
               <Alert
                 type="info"
-                message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。"
+                message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。初始化页面所有配置都可在初始化后进入后台修改。"
+                style={{ marginBottom: 8 }}
               ></Alert>
               <SiteInfoForm
                 showRequire={true}
@@ -91,7 +101,8 @@ const InitPage = () => {
             <StepsForm.StepForm name="step3" title={'高级配置'} formRef={formRef2}>
               <Alert
                 type="info"
-                message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。"
+                message="默认的上传图片会到内置图床，如需配置 oss 图床，可在初始化后去设置页更改。初始化页面所有配置都可在初始化后进入后台修改。"
+                style={{ marginBottom: 8 }}
               ></Alert>
               <SiteInfoForm
                 showRequire={false}
@@ -102,6 +113,11 @@ const InitPage = () => {
               />
             </StepsForm.StepForm>
             <StepsForm.StepForm name="step4" title={'布局配置'}>
+              <Alert
+                type="info"
+                message="初始化页面所有配置都可在初始化后进入后台修改。"
+                style={{ marginBottom: 8 }}
+              ></Alert>
               <SiteInfoForm
                 isInit={true}
                 showRequire={false}

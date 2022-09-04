@@ -43,10 +43,15 @@ export class RssProvider {
       link: meta.siteInfo.baseUrl,
     };
     const siteUrl = new URL(meta.siteInfo.baseUrl).toString();
-    const siteLogo =
+    const favicon =
       meta.siteInfo.favicon ||
       meta.siteInfo.siteLogo ||
       meta.siteInfo.authorLogo ||
+      `${siteUrl}logo.svg`;
+    const siteLogo =
+      meta.siteInfo.siteLogo ||
+      meta.siteInfo.authorLogo ||
+      meta.siteInfo.favicon ||
       `${siteUrl}logo.svg`;
     const date = new Date();
     const feed = new Feed({
@@ -56,7 +61,7 @@ export class RssProvider {
       link: siteUrl,
       language: '	zh-cn',
       image: siteLogo,
-      favicon: siteLogo,
+      favicon: favicon,
       copyright: `All rights reserved ${date.getFullYear()}, ${
         meta.siteInfo.author
       }`,
