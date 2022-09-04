@@ -1,4 +1,24 @@
 # Changelog
+## [0.32.0](https://github.com/Mereithhh/van-blog/compare/v0.31.0...v0.32.0) (2022-09-04)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([9e3fdab](https://github.com/Mereithhh/van-blog/commit/9e3fdab5afea3fcdbeae95452cb93bfa9b5d40d3))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 评论组件下拉拖动卡顿 ([94f6a3a](https://github.com/Mereithhh/van-blog/commit/94f6a3abadc6277775d2dd375e5bb5b3034f3d87))
+
+
+### ✨ Features | 新功能
+
+* 优化初始化表单样式&文案 || 优化 rss 订阅生成字段取值 ([43d0c93](https://github.com/Mereithhh/van-blog/commit/43d0c932d592837b6026ff509f8c7809beda13e4))
+* 修复 README 中的坏链 ([78f11ef](https://github.com/Mereithhh/van-blog/commit/78f11efe6539a263dfdcf55f7552a5503bd393a9))
+* 导航栏的按钮增加 hover 态的文案（title 属性） ([866456a](https://github.com/Mereithhh/van-blog/commit/866456af1ca3fd26627fa1457cec1b1a1cdf303a))
+* 支持 RSS 订阅（小尺寸管理员按钮转移到了抽屉导航栏中） ([5e08dbf](https://github.com/Mereithhh/van-blog/commit/5e08dbf723d7c4ebfc0f42a88b20e585b204ad37))
+
 ## [0.31.0](https://github.com/Mereithhh/van-blog/compare/v0.30.1...v0.31.0) (2022-09-03)
 
 
