@@ -33,8 +33,8 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 如果你没有安装 `docker` 和 `docker-compose`，可以通过以下命令一键安装：
 
 ```bash
-sudo curl -sSL https://get.daocloud.io/docker | sh
-sudo systemctl enable --now docker
+curl -sSL https://get.daocloud.io/docker | sh
+systemctl enable --now docker
 ```
 
 如果你没有接触过 `docker`，但是想了解一下，可以看下面的教程：
@@ -101,7 +101,7 @@ services:
 按注释说明修改`docker-compose.yml`的配置后：
 
 ```bash
-sudo docker-compose up -d
+docker-compose up -d
 ```
 
 PS: 请检查 `VAN_BLOG_ALLOW_DOMAINS` 变量是否正确，否则作者头像可能无法正常显示。

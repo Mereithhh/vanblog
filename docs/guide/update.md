@@ -20,13 +20,13 @@ order: -3
 ```bash
 # 切换到部署 vanblog 的目录下（docker-compose.yml)存放的路径下
 # 关闭原有服务
-sudo docker-compose down
+docker-compose down
 # 删除原有镜像
-sudo docker rmi mereith/van-blog:latest
+docker rmi mereith/van-blog:latest
 # 重新拉取最新镜像
-sudo docker pull mereith/van-blog:latest
+docker pull mereith/van-blog:latest
 # 重新启动服务
-sudo docker-compose up -d
+docker-compose up -d
 ```
 
 升级完成~
@@ -83,5 +83,5 @@ PS：因为目前只有我一个人开发，所以很多情况测试覆盖不到
 `mereith/van-blog:latest` 为 `mereith/van-blog:v0.29.0` ，然后运行：
 
 ```bash
-sudo docker-compose down && sudo docker-compose up -d
+docker-compose down && docker-compose up -d
 ```

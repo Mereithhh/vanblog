@@ -103,7 +103,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 `mereith/van-blog:latest` 为 `mereith/van-blog:v0.29.0` ，然后运行：
 
 ```bash
-sudo docker-compose down && sudo docker-compose up -d
+docker-compose down && docker-compose up -d
 ```
 
 ### Bug 反馈
