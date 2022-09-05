@@ -4,6 +4,27 @@ icon: update
 ---
 
 
+### [0.32.2](https://github.com/Mereithhh/van-blog/compare/v0.32.1...v0.32.2) (2022-09-05)
+
+
+### ✏️ Documentation | 文档
+
+* 增加 issue 模板 ([9eb44d9](https://github.com/Mereithhh/van-blog/commit/9eb44d9ef0a61dcfa628d39ce47676530aa59004))
+* 更新 issues 模板 ([e806f86](https://github.com/Mereithhh/van-blog/commit/e806f86537f687c1bacac419d03d60315291caa3))
+* 更新一下 issue 链接 ([1d2f9e4](https://github.com/Mereithhh/van-blog/commit/1d2f9e49ff034776a651681be62ca8a9df67dd06))
+* 更新文档 ([3f6d568](https://github.com/Mereithhh/van-blog/commit/3f6d5682c88c6c98ced2a3c692d5a51825957ba2))
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 自己实现目录导航组件 [#29](https://github.com/Mereithhh/van-blog/issues/29) ([7648c1e](https://github.com/Mereithhh/van-blog/commit/7648c1e5351b482d252fb061b045b9321e412db9))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 修复后台布局设置时提示 URL 不合法的问题 [#32](https://github.com/Mereithhh/van-blog/issues/32) ([3b37cbb](https://github.com/Mereithhh/van-blog/commit/3b37cbb518f7d48c83191fa0f71c099e2720e19a))
+* 协作者提示没权限发布草稿 [#31](https://github.com/Mereithhh/van-blog/issues/31) ([708d80a](https://github.com/Mereithhh/van-blog/commit/708d80aeff57373b941ec616c5e61ca8dfe9f2ea))
+
 ### [0.32.1](https://github.com/Mereithhh/van-blog/compare/v0.32.0...v0.32.1) (2022-09-04)
 
 

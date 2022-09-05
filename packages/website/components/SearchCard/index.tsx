@@ -1,5 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import Image from "next/image";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { searchArticles } from "../../api/search";
 import { useDebounce } from "react-use";
 import ArticleList from "../ArticleList";
