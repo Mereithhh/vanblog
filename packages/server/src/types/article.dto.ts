@@ -11,6 +11,7 @@ export class CreateArticleDto {
   password?: string;
   updatedAt?: Date;
   createdAt?: Date;
+  author?: string;
 }
 export class UpdateArticleDto {
   title?: string;
@@ -25,6 +26,7 @@ export class UpdateArticleDto {
   viewer?: number;
   visited?: number;
   updatedAt?: Date;
+  author?: string;
 }
 export class SearchArticleOption {
   page: number;
@@ -40,4 +42,5 @@ export class SearchArticleOption {
   sortViewer?: string;
   toListView?: boolean;
   withWordCount?: boolean;
+  author?: string;
 }

@@ -25,6 +25,9 @@ export class Article extends Document {
   @Prop({ default: false })
   hidden: boolean;
 
+  @Prop()
+  author: string;
+
   @Prop({ default: false })
   private: boolean;
 

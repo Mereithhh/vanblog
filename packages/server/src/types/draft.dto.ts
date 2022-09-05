@@ -5,6 +5,8 @@ export class CreateDraftDto {
   content?: string;
   tags?: string[];
   category: string;
+  author?: string;
+  draft?: string;
 }
 export class UpdateDraftDto {
   title?: string;
@@ -12,6 +14,8 @@ export class UpdateDraftDto {
   tags?: string[];
   category?: string;
   deleted?: boolean;
+  author?: string;
+  draft?: string;
 }
 export class PublishDraftDto {
   hidden?: boolean;

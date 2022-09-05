@@ -25,6 +25,7 @@ export class InitProvider {
         id: 0,
         name: user.username,
         password: user.password,
+        mickname: user?.nickname || user.username,
         type: 'admin',
       });
       await this.metaModel.create({

@@ -24,6 +24,7 @@ export class DraftProvider {
     category: 1,
     updatedAt: 1,
     createdAt: 1,
+    author: 1,
     id: 1,
     _id: 0,
   };
@@ -35,6 +36,7 @@ export class DraftProvider {
     category: 1,
     updatedAt: 1,
     createdAt: 1,
+    author: 1,
     id: 1,
     _id: 0,
   };
@@ -45,6 +47,7 @@ export class DraftProvider {
     category: 1,
     updatedAt: 1,
     createdAt: 1,
+    author: 1,
     id: 1,
     _id: 0,
   };
@@ -171,6 +174,7 @@ export class DraftProvider {
       content: draft.content,
       tags: draft.tags,
       category: draft.category,
+      author: draft.author,
     };
     for (const [k, v] of Object.entries(options || {})) {
       createArticleDto[k] = v;

@@ -7,6 +7,7 @@ import {
 } from '@ant-design/pro-components';
 import { Button, Modal } from 'antd';
 import moment from 'moment';
+import AuthorField from '../AuthorField';
 
 export default function (props) {
   const { onFinish } = props;
@@ -25,8 +26,7 @@ export default function (props) {
         if (location.hostname == 'blog-demo.mereith.com') {
           Modal.info({
             title: '演示站禁止新建文章！',
-            content:
-              '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
+            content: '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
           });
           return;
         }
@@ -55,6 +55,7 @@ export default function (props) {
         placeholder="请输入标题"
         rules={[{ required: true, message: '这是必填项' }]}
       />
+      <AuthorField />
       <ProFormText
         width="md"
         id="topC"

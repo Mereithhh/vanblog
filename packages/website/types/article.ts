@@ -8,4 +8,5 @@ export interface Article {
   id: number;
   top?: number;
   private: boolean;
+  author?: string;
 }

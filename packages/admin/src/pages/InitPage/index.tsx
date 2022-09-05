@@ -76,6 +76,13 @@ const InitPage = () => {
                 label="登录用户名"
                 placeholder={'请输入登录用户名'}
               ></ProFormText>
+              {/* <ProFormText
+                name="nickname"
+                required={true}
+                rules={[{ required: true, message: '这是必填项' }]}
+                label="昵称"
+                placeholder={'请输入昵称（显示的名字）'}
+              ></ProFormText> */}
               <ProFormText.Password
                 name="password"
                 required={true}

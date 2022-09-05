@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -79,7 +80,11 @@ export class DraftController {
   }
 
   @Post()
-  async create(@Body() createDto: CreateDraftDto) {
+  async create(@Req() req: any, @Body() createDto: CreateDraftDto) {
+    const author = req?.user?.nickname || undefined;
+    if (!createDto.author) {
+      createDto.author = author;
+    }
     const data = await this.draftProvider.create(createDto);
     return {
       statusCode: 200,

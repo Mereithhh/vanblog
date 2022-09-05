@@ -45,6 +45,7 @@ export const publicRoutes = [
   'get-/api/admin/draft/:id',
   'get-/api/admin/img/all',
   'get-/api/admin/img',
+  'get-/api/admin/collaborator/list',
   'post-/api/admin/img/upload',
   'post-/api/admin/article/searchByLink',
 ];

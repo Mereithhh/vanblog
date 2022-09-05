@@ -7,6 +7,7 @@ import {
 } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import moment from 'moment';
+import AuthorField from '../AuthorField';
 export default function (props) {
   const { onFinish } = props;
   return (
@@ -45,6 +46,7 @@ export default function (props) {
         placeholder="请输入标题"
         rules={[{ required: true, message: '这是必填项' }]}
       />
+      <AuthorField />
       <ProFormSelect
         mode="tags"
         tokenSeparators={[',']}

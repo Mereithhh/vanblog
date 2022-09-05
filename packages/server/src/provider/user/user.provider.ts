@@ -12,7 +12,13 @@ import { Collaborator } from 'src/types/collaborator';
 @Injectable()
 export class UserProvider {
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
-  async getUser() {
+  async getUser(isList?: boolean) {
+    if (isList) {
+      return await this.userModel.findOne(
+        { id: 0 },
+        { id: 1, name: 1, nickname: 1 },
+      );
+    }
     return await this.userModel.findOne({ id: 0 }).exec();
   }
   async validateUser(name: string, password: string) {
@@ -43,7 +49,13 @@ export class UserProvider {
   async getCollaboratorById(id: number) {
     return await this.userModel.findOne({ id, type: 'collaborator' });
   }
-  async getAllCollaborators() {
+  async getAllCollaborators(isList?: boolean) {
+    if (isList) {
+      return await this.userModel.find(
+        { type: 'collaborator' },
+        { id: 1, name: 1, nickname: 1 },
+      );
+    }
     return await this.userModel.find({ type: 'collaborator' });
   }
 

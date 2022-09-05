@@ -7,6 +7,7 @@ import {
   Post,
   Put,
   Query,
+  Req,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -16,6 +17,8 @@ import { SortOrder } from 'src/types/sort';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
+import { UserProvider } from 'src/provider/user/user.provider';
+import { MetaProvider } from 'src/provider/meta/meta.provider';
 @ApiTags('article')
 @UseGuards(...AdminGuard)
 @Controller('/api/admin/article')
@@ -23,6 +26,8 @@ export class ArticleController {
   constructor(
     private readonly articleProvider: ArticleProvider,
     private readonly isrProvider: ISRProvider,
+    private readonly userProvider: UserProvider,
+    private readonly metaProvider: MetaProvider,
   ) {}
 
   @Get('/')
@@ -87,12 +92,16 @@ export class ArticleController {
   }
 
   @Post()
-  async create(@Body() createDto: CreateArticleDto) {
+  async create(@Req() req: any, @Body() createDto: CreateArticleDto) {
     if (config.demo && config.demo == 'true') {
       return {
         statusCode: 401,
         message: '演示站禁止创建文章！',
       };
+    }
+    const author = req?.user?.nickname || undefined;
+    if (!createDto.author) {
+      createDto.author = author;
     }
     const data = await this.articleProvider.create(createDto);
     this.isrProvider.activeAll('创建文章触发增量渲染！');

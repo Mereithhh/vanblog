@@ -43,6 +43,7 @@ export class ArticleProvider {
     visited: 1,
     private: 1,
     hidden: 1,
+    author: 1,
   };
 
   adminView = {
@@ -61,6 +62,7 @@ export class ArticleProvider {
     _id: 0,
     viewer: 1,
     visited: 1,
+    author: 1,
   };
 
   listView = {
@@ -77,6 +79,7 @@ export class ArticleProvider {
     _id: 0,
     viewer: 1,
     visited: 1,
+    author: 1,
   };
 
   toPublic(oldArticles: Article[]) {

@@ -18,6 +18,9 @@ export class Draft extends Document {
   tags: string[];
 
   @Prop()
+  author: string;
+
+  @Prop()
   category: string;
 
   @Prop({ default: false })

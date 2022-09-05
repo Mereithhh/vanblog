@@ -2,6 +2,7 @@ import { getAllCategories, getTags, updateArticle, updateDraft } from '@/service
 import { ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { message, Modal } from 'antd';
 import moment from 'moment';
+import AuthorField from '../AuthorField';
 export default function (props: {
   currObj: any;
   setLoading: any;
@@ -63,6 +64,7 @@ export default function (props: {
         placeholder="请输入标题"
         rules={[{ required: true, message: '这是必填项' }]}
       />
+      <AuthorField />
       <ProFormSelect
         mode="tags"
         tokenSeparators={[',']}

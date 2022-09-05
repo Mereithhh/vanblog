@@ -318,6 +318,11 @@ export async function getTags() {
     method: 'GET',
   });
 }
+export async function getAllCollaboratorsList() {
+  return request(`/api/admin/collaborator/list`, {
+    method: 'GET',
+  });
+}
 export async function importAll() {
   return request(`/api/admin/backup/import`, {
     method: 'POST',

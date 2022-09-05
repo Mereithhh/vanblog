@@ -87,12 +87,20 @@ export default function () {
             label="登录用户名"
             placeholder={'请输入登录用户名'}
           />
+          {/* <ProFormText
+            width="lg"
+            name="nickname"
+            required={true}
+            rules={[{ required: true, message: '这是必填项' }]}
+            label="昵称"
+            placeholder={'请输入昵称（显示的名字）'}
+          ></ProFormText> */}
           <ProFormText.Password
             width="lg"
             name="password"
-            autocomplete="new-password"
             required={true}
             rules={[{ required: true, message: '这是必填项' }]}
+            autocomplete="new-password"
             label="登录密码"
             placeholder={'请输入登录密码'}
           />

@@ -2,11 +2,15 @@ import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { config } from 'src/config/index';
+import { MetaProvider } from '../meta/meta.provider';
 import { UserProvider } from '../user/user.provider';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private readonly userProvider: UserProvider) {
+  constructor(
+    private readonly userProvider: UserProvider,
+    private readonly metaProvider: MetaProvider,
+  ) {
     super({
       // 获取请求header token值
       jwtFromRequest: ExtractJwt.fromHeader('token'),
@@ -21,6 +25,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     if (payload.sub != 0) {
       const user = await this.userProvider.getCollaboratorById(payload.sub);
       moreDto.permissions = user.permissions;
+      moreDto.nickname = user.nickname;
+    } else {
+      const user = await this.userProvider.getUser();
+      const siteInfo = await this.metaProvider.getSiteInfo();
+      const authorName = siteInfo.author;
+      moreDto.nickname = authorName || user.nickname;
     }
     return { name: payload.username, id: payload.sub, ...moreDto };
   }

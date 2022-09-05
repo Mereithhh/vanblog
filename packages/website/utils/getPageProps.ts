@@ -168,11 +168,13 @@ export async function getPostPagesProps(
     ],
   };
   const currArticleProps = await getArticleById(parseInt(curId));
+  const { article } = currArticleProps;
+  const author = article?.author || data.meta.siteInfo.author;
   return {
     layoutProps,
     ...currArticleProps,
     ...payProps,
-    author: data.meta.siteInfo.author,
+    author,
     showSubMenu: layoutProps.showSubMenu,
   };
 }
