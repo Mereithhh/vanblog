@@ -40,6 +40,9 @@ export default function () {
           } catch (err) {
             ok = false;
           }
+          if(!data.baseUrl) {
+            ok = true;
+          }
           if (!ok) {
             Modal.warn({
               title: '网站 URL 不合法！',
