@@ -1,7 +1,6 @@
 import "../styles/globals.css";
-import "markdown-navbar/dist/navbar.css";
 import "../styles/side-bar.css";
-import "../styles/toc-dark.css";
+import "../styles/toc.css";
 import "../styles/var.css";
 import "../styles/github-markdown.css";
 import "../styles/tip-card.css";

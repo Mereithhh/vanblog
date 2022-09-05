@@ -1,0 +1,101 @@
+.dark .markdown-navigation .title-level1 {
+  color: rgb(158, 158, 158);
+}
+.dark .markdown-navigation .title-level2 {
+  color: rgb(148, 148, 148);
+}
+.dark .markdown-navigation .title-level3 {
+  color: rgb(138, 138, 138);
+}
+.dark .markdown-navigation .title-level4 {
+  color: rgb(128, 128, 128);
+}
+.dark .markdown-navigation .title-level5 {
+  color: rgb(118, 118, 118);
+}
+.dark .markdown-navigation .title-level6 {
+  color: rgb(108, 108, 108);
+}
+.dark .markdown-navigation .title-anchor.active {
+  color: #4f79be;
+}
+.dark .markdown-navigation .title-anchor:hover,
+.dark .markdown-navigation .title-anchor.active {
+  background-color: #3a3c41;
+}
+.markdown-navigation {
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Helvetica", "Arial", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  scrollbar-width: 0;
+  width:200px
+}
+.markdown-navigation::-webkit-scrollbar{
+  width:0;
+}
+
+.markdown-navigation .title-anchor {
+  display: block;
+  color: #bbb;
+  transition: all 0.2s;
+  margin: 0.8em 0;
+  font-weight: lighter;
+  line-height: 2em;
+  padding-right: 1.8em;
+  cursor: pointer;
+}
+
+.markdown-navigation .title-anchor:hover,
+.markdown-navigation .title-anchor.active {
+  background-color: #f8f8f8;
+  text-decoration: inherit;
+}
+
+.markdown-navigation .title-anchor.active {
+  color: #007fff;
+}
+
+.markdown-navigation .title-anchor small {
+  margin: 0 0.8em;
+}
+
+.markdown-navigation .title-level1 {
+  color: #000;
+  font-size: 1.2em;
+  padding-left: 1em;
+  font-weight: normal;
+}
+
+.markdown-navigation .title-level2 {
+  color: #333;
+  font-size: 1em;
+  padding-left: 1em;
+  font-weight: normal;
+}
+
+.markdown-navigation .title-level3 {
+  color: #666;
+  font-size: 0.8em;
+  padding-left: 3em;
+  font-weight: normal;
+}
+
+.markdown-navigation .title-level4 {
+  color: #999;
+  font-size: 0.72em;
+  padding-left: 5em;
+}
+
+.markdown-navigation .title-level5 {
+  color: #aaa;
+  font-size: 0.72em;
+  padding-left: 7em;
+}
+
+.markdown-navigation .title-level6 {
+  color: #bbb;
+  font-size: 0.72em;
+  padding-left: 9em;
+}

@@ -10,6 +10,7 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import ImageBox from "../ImageBox";
 import dynamic from "next/dynamic";
+import { HeadingRender } from "./heading";
 export default function (props: { content: string }) {
   return (
     <>
@@ -83,6 +84,12 @@ export default function (props: { content: string }) {
               </code>
             );
           },
+          h1: HeadingRender,
+          h2: HeadingRender,
+          h3: HeadingRender,
+          h4: HeadingRender,
+          h5: HeadingRender,
+          h6: HeadingRender,
           img(props) {
             return (
               <ImageBox
