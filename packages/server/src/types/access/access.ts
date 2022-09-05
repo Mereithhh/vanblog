@@ -25,6 +25,7 @@ export const pathPermissionMap: Record<string, LimitPermission> = {
   'post-/api/admin/article': 'article:create',
   'delete-/api/admin/article/:id': 'article:delete',
   'put-/api/admin/article/:id': 'article:update',
+  'post-/api/admin/draft/publish': 'draft:publish',
   'post-/api/admin/draft': 'draft:create',
   'delete-/api/admin/draft/:id': 'draft:delete',
   'put-/api/admin/draft/:id': 'draft:update',
