@@ -1,4 +1,5 @@
 import Editor from '@/components/Editor';
+import EditorProfileModal from '@/components/EditorProfileModal';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
 import UpdateModal from '@/components/UpdateModal';
@@ -13,15 +14,18 @@ import {
   updateDraft,
 } from '@/services/van-blog/api';
 import { parseMarkdownFile, parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
+import { useCacheState } from '@/services/van-blog/useCacheState';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Input, Menu, message, Modal, Space, Tag, Upload } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { history } from 'umi';
+
 export default function () {
   const [value, setValue] = useState('');
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
+  const [editorConfig, setEditorConfig] = useCacheState({ afterSave: 'stay' }, 'editorConfig');
   const type = history.location.query?.type || 'article';
   const key = useMemo(() => {
     return `${type}-${history.location.query?.id || '0'}`;
@@ -108,6 +112,9 @@ export default function () {
       await fetchData();
       message.success('保存成功！');
     } else {
+    }
+    if (editorConfig.afterSave && editorConfig.afterSave == 'goBack') {
+      history.go(-1);
     }
     setLoading(false);
   };
@@ -313,6 +320,16 @@ export default function () {
               },
             }
           : undefined,
+        {
+          key: 'settingBtn',
+          label: (
+            <EditorProfileModal
+              value={editorConfig}
+              setValue={setEditorConfig}
+              trigger={<a key={'editerConfigBtn'}>偏好设置</a>}
+            />
+          ),
+        },
         {
           key: 'helpBtn',
           label: '帮助文档',
