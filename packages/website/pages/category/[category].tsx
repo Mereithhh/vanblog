@@ -6,7 +6,6 @@ import { Article } from "../../types/article";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getCategoryPagesProps } from "../../utils/getPageProps";
 import { revalidate } from "../../utils/loadConfig";
-import Custom404 from "../404";
 export interface CategoryPagesProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
