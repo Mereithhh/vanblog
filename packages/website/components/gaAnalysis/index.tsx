@@ -1,5 +1,4 @@
 import Script from "next/script";
-import { useRef } from "react";
 export default function (props: { id: string }) {
   return (
     <>

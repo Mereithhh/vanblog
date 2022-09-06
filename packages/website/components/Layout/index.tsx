@@ -6,7 +6,7 @@ import Viewer from "../Viewer";
 import { slide as Menu } from "react-burger-menu";
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import BaiduAnalysis from "../baiduAnalysis";
+import BaiduAnalysis from "../BaiduAnalysis";
 import GaAnalysis from "../gaAnalysis";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import RunningTime from "../RunningTime";

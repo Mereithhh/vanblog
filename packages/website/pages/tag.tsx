@@ -1,6 +1,6 @@
 import Link from "next/link";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getTagPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";

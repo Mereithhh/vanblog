@@ -32,7 +32,7 @@ export default function (props: {
         }
       }
     };
-  }, [current]);
+  }, [current, props]);
   if (!props.enable || props.enable == "false") {
     return null;
   }

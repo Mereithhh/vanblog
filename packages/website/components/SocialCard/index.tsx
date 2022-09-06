@@ -1,6 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { SocialItem } from "../../api/getAllData";
-import { topUpper } from "../../utils/TopUpper";
 import SocialIcon from "../SocialIcon";
 
 export default function (props: { socials: SocialItem[] }) {

@@ -1,6 +1,6 @@
 import { getPublicMeta } from "../../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../../components/AuthorCard";
-import Layout from "../../components/layout";
+import Layout from "../../components/Layout";
 import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import Waline from "../../components/WaLine";

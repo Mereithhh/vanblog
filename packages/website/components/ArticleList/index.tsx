@@ -1,7 +1,6 @@
 import { Article } from "../../types/article";
 import dayjs from "dayjs";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 export default function (props: {
   articles: Article[];
   showYear?: boolean;

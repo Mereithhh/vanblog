@@ -1,5 +1,5 @@
 import { getArticlesByOption } from "../../api/getArticles";
-import Layout from "../../components/layout";
+import Layout from "../../components/Layout";
 import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
 import { Article } from "../../types/article";

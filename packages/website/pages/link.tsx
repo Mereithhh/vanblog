@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { LinkItem } from "../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
 import LinkCard from "../components/LinkCard";
 import Markdown from "../components/Markdown";
 import WaLine from "../components/WaLine";

@@ -1,4 +1,3 @@
-// import Image from "next/future/image";
 import { LinkItem } from "../../api/getAllData";
 import ImageBox from "../ImageBox";
 
