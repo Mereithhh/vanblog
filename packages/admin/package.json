@@ -68,6 +68,7 @@
     "antd-img-crop": "^4.2.4",
     "btoa": "^1.2.1",
     "classnames": "^2.3.0",
+    "copy-to-clipboard": "^3.3.2",
     "front-matter": "^4.0.2",
     "github-markdown-css": "^5.1.0",
     "lodash": "^4.17.0",

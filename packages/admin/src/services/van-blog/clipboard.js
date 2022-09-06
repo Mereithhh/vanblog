@@ -1,4 +1,5 @@
 import moment from 'moment';
+import copy from 'copy-to-clipboard';
 export async function getClipboardContents() {
   try {
     const clipboardItems = await navigator.clipboard.read();
@@ -20,7 +21,7 @@ export async function getClipboardContents() {
 }
 export async function writeClipBoardText(str) {
   try {
-    await navigator.clipboard.writeText(str);
+    copy(str)
     return true;
   } catch (err) {
     console.error('Failed to copy: ', err);
