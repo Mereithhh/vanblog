@@ -88,6 +88,7 @@ export default function (props) {
           name="category"
           label="分类"
           placeholder="请选择分类"
+          tooltip="首次使用请先在站点管理-数据管理-分类管理中添加分类"
           rules={[{ required: true, message: '这是必填项' }]}
           request={async () => {
             const { data: categories } = await getAllCategories();

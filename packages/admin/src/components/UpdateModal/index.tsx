@@ -81,6 +81,7 @@ export default function (props: {
         width="md"
         required
         id="category"
+        tooltip="首次使用请先在站点管理-数据管理-分类管理中添加分类"
         name="category"
         label="分类"
         placeholder="请选择分类"

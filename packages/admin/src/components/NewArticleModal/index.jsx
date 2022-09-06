@@ -80,6 +80,7 @@ export default function (props) {
         required
         id="categoryC"
         name="categoryC"
+        tooltip="首次使用请先在站点管理-数据管理-分类管理中添加分类"
         label="分类"
         placeholder="请选择分类"
         rules={[{ required: true, message: '这是必填项' }]}
