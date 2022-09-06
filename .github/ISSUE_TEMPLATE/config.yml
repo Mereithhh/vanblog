@@ -4,9 +4,9 @@ contact_links:
     url: https://github.com/Mereithhh/van-blog/discussions/new
     about: 前往讨论区与大家交流
 
-  # - name: 官方 QQ 群
-  #   url: https://jq.qq.com/?_wv=1027&k=l0NphanY
-  #   about: '加入Waline 用户交流群: 673663898'
+  - name: 官方 QQ 群
+    url: https://jq.qq.com/?_wv=1027&k=5NRyK2Sw
+    about: '加入VanBlog 用户交流群: 743037540'
 
   # - name: Telegram
   #   url: https://t.me/walinejs

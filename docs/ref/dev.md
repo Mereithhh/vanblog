@@ -8,6 +8,10 @@ icon: vscode
 :::
 本项目使用了 `JavaScript` 和 `TypeScript` 实现。
 
+如果你想参与 `VanBlog` 开发，可以进群哦：
+
+- [VanBlog 开发群](https://jq.qq.com/?_wv=1027&k=mf2CguM8)
+
 ## 路径结构
 
 ```bash

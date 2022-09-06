@@ -56,6 +56,8 @@ export default function (props) {
               <a target={'_blank'} rel="noreferrer" href="/swagger">
                 API文档
               </a>
+            </Space>
+            <Space style={{ marginTop: 8 }}>
               <a
                 target={'_blank'}
                 rel="noreferrer"
@@ -69,6 +71,9 @@ export default function (props) {
                 href="https://github.com/Mereithhh/van-blog#%E6%89%93%E8%B5%8F"
               >
                 打赏
+              </a>
+              <a target={'_blank'} rel="noreferrer" href="https://jq.qq.com/?_wv=1027&k=5NRyK2Sw">
+                交流群
               </a>
             </Space>
           </div>

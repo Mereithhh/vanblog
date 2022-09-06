@@ -80,6 +80,10 @@
 >
 > [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
 
+## 交流群
+
+- [VanBlog  交流群](https://jq.qq.com/?_wv=1027&k=5NRyK2Sw)
+
 ## 说明与文档
 
 请移步项目主页： [https://vanblog.mereith.com](https://vanblog.mereith.com)
