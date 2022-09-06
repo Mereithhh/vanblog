@@ -92,6 +92,26 @@ export default function () {
     }
   }, []);
 
+  const saveFn = async () => {
+    const v = value;
+    setLoading(true);
+    if (type == 'article') {
+      await updateArticle(currObj?.id, { content: v });
+      await fetchData();
+      message.success('保存成功！');
+    } else if (type == 'draft') {
+      await updateDraft(currObj?.id, { content: v });
+      await fetchData();
+      message.success('保存成功！');
+    } else if (type == 'about') {
+      await updateAbout({ content: v });
+      await fetchData();
+      message.success('保存成功！');
+    } else {
+    }
+    setLoading(false);
+  };
+
   const handleSave = async () => {
     if (location.hostname == 'blog-demo.mereith.com' && type != 'draft') {
       Modal.info({
@@ -134,26 +154,7 @@ export default function () {
           <img src="/more.png" alt="more" width={200}></img>
         </div>
       ),
-      onOk: async () => {
-        const v = value;
-        setLoading(true);
-        if (type == 'article') {
-          await updateArticle(currObj?.id, { content: v });
-          await fetchData();
-          message.success('保存成功！');
-        } else if (type == 'draft') {
-          await updateDraft(currObj?.id, { content: v });
-          await fetchData();
-          message.success('保存成功！');
-        } else if (type == 'about') {
-          await updateAbout({ content: v });
-          await fetchData();
-          message.success('保存成功！');
-        } else {
-        }
-        setLoading(false);
-      },
-      okText: '确认保存',
+      onOk: saveFn,
     });
   };
   const handleExport = async () => {
@@ -343,6 +344,14 @@ export default function () {
         extra: [
           <Button key="extraSaveBtn" type="primary" onClick={handleSave}>
             保存
+          </Button>,
+          <Button
+            key="backBtn"
+            onClick={() => {
+              history.go(-1);
+            }}
+          >
+            返回
           </Button>,
           <Dropdown key="moreAction" overlay={actionMenu} trigger={['click']}>
             <Button size="middle">
