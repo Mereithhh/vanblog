@@ -1,4 +1,27 @@
 # Changelog
+## [0.34.0](https://github.com/Mereithhh/van-blog/compare/v0.33.0...v0.34.0) (2022-09-06)
+
+
+### ✏️ Documentation | 文档
+
+* 修改项目主页文档配置 ([a258328](https://github.com/Mereithhh/van-blog/commit/a258328168c61d59943c7c8ac8fcf14fa22f6a9c))
+* 修正错别字 ([87fcaed](https://github.com/Mereithhh/van-blog/commit/87fcaedc3d33674c9345d0ec79b9e15b836bc10e))
+* 更新文档 ([b7eee7a](https://github.com/Mereithhh/van-blog/commit/b7eee7a16f8b6ad9dc4c49e7fcd22438a818467e))
+* 更新文档 ([0f6fd97](https://github.com/Mereithhh/van-blog/commit/0f6fd9743adafccf7e96aba9074066b30a5d2be9))
+* 更新文档 ([5310877](https://github.com/Mereithhh/van-blog/commit/5310877bca6b1a012ed5b2fe98a1cfceb80d0c73))
+
+
+### ✨ Features | 新功能
+
+* 加一个交流群 ([548bee7](https://github.com/Mereithhh/van-blog/commit/548bee778d804d6596358280e6a96fdef3ffe9e0))
+* 密码加盐&去除所有明文密码 ([61ab13d](https://github.com/Mereithhh/van-blog/commit/61ab13dc2d4a52f281530c5276cda775b66c2404))
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 删除一些前台未使用的引用和代码 ([ac1eb31](https://github.com/Mereithhh/van-blog/commit/ac1eb3199c21570319ff39397349b525e1891bc9))
+* 在前台 Layout 组件中抽离一些组件 ([445c00b](https://github.com/Mereithhh/van-blog/commit/445c00bc012c1ec911d27ad5953690cbc469ac81))
+
 ## [0.33.0](https://github.com/Mereithhh/van-blog/compare/v0.32.2...v0.33.0) (2022-09-06)
 
 
