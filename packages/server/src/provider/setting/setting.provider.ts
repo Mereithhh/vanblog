@@ -1,17 +1,17 @@
-import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
   HttpsSetting,
   LayoutSetting,
   LoginSetting,
-  SettingType,
   StaticSetting,
+  VersionSetting,
   WalineSetting,
 } from 'src/types/setting.dto';
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
-import { encode, decode } from 'js-base64';
+import { encode } from 'js-base64';
 
 @Injectable()
 export class SettingProvider {
@@ -24,6 +24,13 @@ export class SettingProvider {
     const res = await this.settingModel.findOne({ type: 'static' }).exec();
     if (res) {
       return res?.value || { storageType: 'local', picgoConfig: null };
+    }
+    return null;
+  }
+  async getVersionSetting(): Promise<any> {
+    const res = await this.settingModel.findOne({ type: 'version' }).exec();
+    if (res) {
+      return res?.value;
     }
     return null;
   }
@@ -98,6 +105,21 @@ export class SettingProvider {
     }
     const res = await this.settingModel.updateOne(
       { type: 'login' },
+      { value: newValue },
+    );
+    return res;
+  }
+  async updateVersionSetting(dto: VersionSetting) {
+    const oldValue = await this.getVersionSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'version',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'version' },
       { value: newValue },
     );
     return res;

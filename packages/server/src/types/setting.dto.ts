@@ -1,15 +1,25 @@
-export type SettingType = 'static' | 'https' | 'waline' | 'layout' | 'login';
+export type SettingType =
+  | 'static'
+  | 'https'
+  | 'waline'
+  | 'layout'
+  | 'login'
+  | 'version';
 export type SettingValue =
   | StaticSetting
   | HttpsSetting
   | WalineSetting
-  | LayoutSetting;
+  | LayoutSetting
+  | VersionSetting;
 export type StorageType = 'picgo' | 'local';
 export type StaticType = 'img';
 export interface LoginSetting {
   enableMaxLoginRetry: boolean;
   maxRetryTimes: number;
   durationSeconds: number;
+}
+export interface VersionSetting {
+  version: string;
 }
 
 // export interface ScriptItem {

@@ -2,7 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { MetaProvider } from './provider/meta/meta.provider';
-// import { ArticleProvider } from './provider/article/article.provider';
+
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { config as globalConfig } from './config/index';
 import { checkOrCreate } from './utils/checkFolder';
@@ -10,10 +10,7 @@ import * as path from 'path';
 import { ISRProvider } from './provider/isr/isr.provider';
 import { WalineProvider } from './provider/waline/waline.provider';
 import { InitProvider } from './provider/init/init.provider';
-import fs from 'fs';
 import { json } from 'express';
-// import { LogProvider } from './provider/log/log.provider';
-// import { EventType } from './provider/log/types';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -46,6 +43,7 @@ async function bootstrap() {
   await app.listen(3000);
 
   const initProvider = app.get(InitProvider);
+  initProvider.initVersion();
   if (await initProvider.checkHasInited()) {
     const metaProvider = app.get(MetaProvider);
     metaProvider.updateTotalWords('首次启动');
@@ -68,13 +66,5 @@ async function bootstrap() {
     console.log('项目主页: https://vanblog.mereith.com');
     console.log('开源地址: https://github.mereith/mereithhh/van-blog');
   }, 3000);
-  // 测试用的
-  // const logProvider = app.get(LogProvider);
-  // logProvider.searchLog(1, 1, EventType.LOGIN);
-  // const articleProvider = app.get(ArticleProvider);
-  // await articleProvider.washViewerInfoToVisitProvider();
-  // console.log('done');
-  // const res = await articleProvider.getAllImageLinks();
-  // console.log(res);
 }
 bootstrap();
