@@ -7,6 +7,7 @@ import { UserDocument } from 'src/scheme/user.schema';
 import { WalineProvider } from '../waline/waline.provider';
 import { SettingProvider } from '../setting/setting.provider';
 import { version } from '../../utils/loadConfig';
+import { encryptPassword, makeSalt } from 'src/utils/crypto';
 
 @Injectable()
 export class InitProvider {
@@ -25,12 +26,14 @@ export class InitProvider {
       toUpdateDto = { ...siteInfo, since: new Date() };
     }
     try {
+      const salt = makeSalt();
       await this.userModel.create({
         id: 0,
         name: user.username,
-        password: user.password,
+        password: encryptPassword(user.username, user.password, salt),
         mickname: user?.nickname || user.username,
         type: 'admin',
+        salt,
       });
       await this.metaModel.create({
         siteInfo: toUpdateDto,

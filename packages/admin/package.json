@@ -71,6 +71,7 @@
     "copy-to-clipboard": "^3.3.2",
     "front-matter": "^4.0.2",
     "github-markdown-css": "^5.1.0",
+    "js-sha256": "^0.9.0",
     "lodash": "^4.17.0",
     "moment": "^2.29.0",
     "monaco-editor": "^0.34.0",

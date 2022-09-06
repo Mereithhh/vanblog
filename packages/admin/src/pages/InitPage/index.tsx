@@ -10,6 +10,7 @@ import styles from './index.less';
 import { ProFormText, StepsForm } from '@ant-design/pro-components';
 
 import SiteInfoForm from '@/components/SiteInfoForm';
+import { encryptPwd } from '@/services/van-blog/encryptPwd';
 import { useRef } from 'react';
 
 const InitPage = () => {
@@ -41,7 +42,7 @@ const InitPage = () => {
               const newData = {
                 user: {
                   username: name,
-                  password,
+                  password: encryptPwd(name, password),
                 },
                 siteInfo,
               };

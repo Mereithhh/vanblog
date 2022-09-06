@@ -30,6 +30,9 @@ export class User extends Document {
 
   @Prop()
   permissions?: Permission[];
+
+  @Prop()
+  salt: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -1,4 +1,5 @@
 import { createCollaborator, updateCollaborator } from '@/services/van-blog/api';
+import { encryptPwd } from '@/services/van-blog/encryptPwd';
 import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 const permissionOptions = [
   {
@@ -57,9 +58,16 @@ export default function (props) {
       initialValues={initialValues || undefined}
       onFinish={async (values) => {
         if (id) {
-          await updateCollaborator({ id, ...values });
+          await updateCollaborator({
+            id,
+            ...values,
+            password: encryptPwd(values.name, values.password),
+          });
         } else {
-          await createCollaborator(values);
+          await createCollaborator({
+            ...values,
+            password: encryptPwd(values.name, values.password),
+          });
         }
         if (onFinish) {
           onFinish();

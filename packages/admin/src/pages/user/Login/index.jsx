@@ -1,5 +1,6 @@
 import Footer from '@/components/Footer';
 import { login } from '@/services/van-blog/api';
+import { encryptPwd } from '@/services/van-blog/encryptPwd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { message } from 'antd';
@@ -58,7 +59,8 @@ const Login = () => {
             autoLogin: true,
           }}
           onFinish={async (values) => {
-            await handleSubmit(values);
+            const {username,password} = values;
+            await handleSubmit({username,password: encryptPwd(username,password)});
           }}
         >
           {type === 'account' && (

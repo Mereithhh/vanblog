@@ -1,6 +1,7 @@
 import CollaboratorModal, { getPermissionLabel } from '@/components/CollaboratorModal';
 import Tags from '@/components/Tags';
 import { deleteCollaborator, getAllCollaborators, updateUser } from '@/services/van-blog/api';
+import { encryptPwd } from '@/services/van-blog/encryptPwd';
 import { ProForm, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, Card, message, Modal, Space } from 'antd';
 import { useRef } from 'react';
@@ -31,6 +32,7 @@ const columns = [
         key="edit"
         onFinish={() => {
           action?.reload();
+          message.success('修改协作者成功！');
         }}
         trigger={<a>修改</a>}
       />,
@@ -72,7 +74,10 @@ export default function () {
           }}
           syncToInitialValues={true}
           onFinish={async (data) => {
-            await updateUser(data);
+            await updateUser({
+              name: data.name,
+              password: encryptPwd(data.name, data.password),
+            });
             window.localStorage.removeItem('token');
             setInitialState((s) => ({ ...s, user: undefined }));
             history.push('/');
@@ -114,6 +119,7 @@ export default function () {
           <Space>
             <CollaboratorModal
               onFinish={() => {
+                message.success('新建协作者成功！');
                 actionRef.current?.reload();
               }}
               trigger={<Button type="primary">新建</Button>}
