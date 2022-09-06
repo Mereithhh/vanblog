@@ -49,18 +49,17 @@ RUN yarn build
 #运行容器
 FROM node:alpine AS RUNNER
 WORKDIR /app
-# 安装 nginx
 RUN apk add --no-cache --update tzdata caddy nss-tools
-# 设置时区
 # 设置时区为上海
-RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+RUN  apk add --no-cache --update tzdata caddy nss-tools \
+    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
     && apk del tzdata
 RUN  yarn config set network-timeout 600000
 # 安装 waline
 WORKDIR /app/waline
 COPY ./packages/waline/ ./
-RUN yarn
+RUN yarn && yarn cache clean
 # 复制 server
 WORKDIR /app/server
 COPY --from=SERVER_BUILDER /app/node_modules ./node_modules
@@ -72,7 +71,7 @@ COPY --from=WEBSITE_BUILDER /app/public ./public
 COPY --from=WEBSITE_BUILDER /app/package.json ./package.json
 COPY --from=WEBSITE_BUILDER  /app/.next/standalone ./
 COPY --from=WEBSITE_BUILDER  /app/.next/static ./.next/static
-RUN cd  /app/website &&  npm install sharp && cd ..
+RUN cd  /app/website &&  npm install sharp && npm cache clean --force && cd ..
 ENV NODE_ENV production
 ENV VAN_BLOG_SERVER_URL "http://127.0.0.1:3000"
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
