@@ -1,4 +1,35 @@
 # Changelog
+## [0.33.0](https://github.com/Mereithhh/van-blog/compare/v0.32.2...v0.33.0) (2022-09-06)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* http 访问后台无法拷贝链接到截切版 ([6292fc4](https://github.com/Mereithhh/van-blog/commit/6292fc414695ae5dacfecacafd92fbb25a4a48dd))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* 精简镜像体积 [#36](https://github.com/Mereithhh/van-blog/issues/36) ([250c248](https://github.com/Mereithhh/van-blog/commit/250c248e09cd4ff35b549bdc31d8dae927383c78))
+
+
+### ✏️ Documentation | 文档
+
+* 文档中替换掉 sudo（有时候加上反而起不来） ([e85e2da](https://github.com/Mereithhh/van-blog/commit/e85e2da2de176aceb54025ea247dc75dbf0c8fa9))
+* 更新 TODO ([9c592a1](https://github.com/Mereithhh/van-blog/commit/9c592a17ffe671bb35fc88aa49f6c354df640173))
+* 更新开发指南 ([5254186](https://github.com/Mereithhh/van-blog/commit/5254186233dc6aaa4f6965a936517a7e107ec755))
+* 更新文档 ([470f54d](https://github.com/Mereithhh/van-blog/commit/470f54d1672923fe73837d48e3808f640aaf1453))
+* 更新文档 ([3005034](https://github.com/Mereithhh/van-blog/commit/30050345f342876f96549846bcde16940fad59c9))
+* 更新文档 ([442557b](https://github.com/Mereithhh/van-blog/commit/442557bd2c58a9c35e85c984242ebe3793e9abd1))
+
+
+### ✨ Features | 新功能
+
+* 后台创建修改文章或草稿时增加首次使用先创建分类的提示 ([360e2a5](https://github.com/Mereithhh/van-blog/commit/360e2a57431b64ec14e2e5b7d07caf18c93c75da))
+* 后端会在库里记录当前版本信息，方便修改数据结构后的清洗 ([781d747](https://github.com/Mereithhh/van-blog/commit/781d7474d570e4451888e293c0d1d4da750c0b1b))
+* 文章草稿可指定作者，默认为登录用户 [#31](https://github.com/Mereithhh/van-blog/issues/31) ([e2a23e2](https://github.com/Mereithhh/van-blog/commit/e2a23e29fcbbbf644f2d3fb474c373ce6f59d9f9))
+* 编辑器偏好设置（可选择保存按钮点击后的行为）[#35](https://github.com/Mereithhh/van-blog/issues/35) ([d3907e8](https://github.com/Mereithhh/van-blog/commit/d3907e87022f39251ca737a9916dab14b2f71759))
+* 编辑器页面增加一个返回按钮 [#35](https://github.com/Mereithhh/van-blog/issues/35) ([987a8cb](https://github.com/Mereithhh/van-blog/commit/987a8cbaf07366070b70807ab0599b7403bad127))
+
 ### [0.32.2](https://github.com/Mereithhh/van-blog/compare/v0.32.1...v0.32.2) (2022-09-05)
 
 
