@@ -141,6 +141,15 @@
   <img  alt="打赏-支付宝" src="/img/ali-pay.jpg"  style="width: 200px" />
 </p>
 
+## 捐赠信息
+
+PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时候消息多可能会漏掉，十分抱歉）
+
+| 捐赠者 | 捐赠金额 | 捐赠日期 |
+| --- | --- | --- |
+| Sirit | 6.66 元 | 2022-09-01 |
+| jingcheng | 100 元 | 2022-09-06 |
+
 ## Star 趋势图
 
 [![Star History Chart](https://api.star-history.com/svg?repos=mereithhh/van-blog&type=Date)](https://star-history.com/#mereithhh/van-blog&Date)

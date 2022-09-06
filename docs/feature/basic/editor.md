@@ -9,7 +9,7 @@ title: 编辑器
 :::
 `vanBlog` 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金同款） 作为 `markdown` 编辑器：
 
-![](https://pic.mereith.com/img/577da489715c94c183247ba63887aac5.clipboard-2022-08-30.png)
+![](https://www.mereith.com/static/img/e0ce4ddda865c9b7827983a219468599.clipboard-2022-09-06.png)
 
 支持数学公式和图表、支持一键上传剪切板图片到图床、一键插入 `more` 标记、快捷键、自动保存等功能。
 
@@ -49,13 +49,13 @@ title: 编辑器
 
 点击右上角操作按钮，选择 `导出`，即可导出为 `markdown` 文件，相关数据会自动放置到 `front-matter` 中。
 
-![](https://pic.mereith.com/img/4218768fe6d1c8d69433bde3fd98c01b.clipboard-2022-08-30.png)
+![](https://www.mereith.com/static/img/52495adf0928d2034159a398cbc7e050.clipboard-2022-09-06.png)
 
 ## 修改信息
 
 点击右上角操作按钮，选择 `修改信息`，即可对当前编辑的 `文章/草稿` 的信息就行修改。
 
-![](https://pic.mereith.com/img/4218768fe6d1c8d69433bde3fd98c01b.clipboard-2022-08-30.png)
+![](https://www.mereith.com/static/img/52495adf0928d2034159a398cbc7e050.clipboard-2022-09-06.png)
 
 ## 语法速查、快捷键与帮助
 
@@ -68,3 +68,13 @@ title: 编辑器
 > 图表语法速查 [Mermaid 从入门到入土——Markdown 进阶语法](https://zhuanlan.zhihu.com/p/355997933)
 >
 > 数学公式语法速查 [使用 Markdown 输出 LaTex 数学公式](https://zhuanlan.zhihu.com/p/59412540)
+
+## 偏好设置
+
+编辑器现在支持偏好设置，未来将支持更多选项：
+
+![](https://www.mereith.com/static/img/52495adf0928d2034159a398cbc7e050.clipboard-2022-09-06.png)
+
+![](https://www.mereith.com/static/img/031c5d647a21e1f57efbceb615661486.clipboard-2022-09-06.png)
+
+PS：此设置保存在浏览器的 `LocalStorage` 中，切换设备需重新设置。

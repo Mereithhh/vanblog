@@ -18,7 +18,11 @@ title: 草稿管理
 
 具体有以下选项：
 
-![](https://pic.mereith.com/img/00809c704c83e67c946b73e951306fd7.clipboard-2022-08-16.png)
+![](https://www.mereith.com/static/img/4f96f5e2e1d7d289e85f69cabe2a8d35.clipboard-2022-09-06.png)
+
+### 作者
+
+默认为登录者本人，下拉框内的选择范围包括`所有的协作者的昵称`以及后台站点设置中的`作者名称`。
 
 ## 导入 markdown
 
