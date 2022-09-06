@@ -11,7 +11,6 @@ icon: vscode
 ## 路径结构
 
 ```bash
-├── default.conf  # 打包用的 nginx 配置
 ├── docker-compose  # docker-compose 编排
 ├── Dockerfile  # Dockerfile
 ├── docs # 项目文档的代码
@@ -22,6 +21,7 @@ icon: vscode
 ├── packages # 代码主体
  |  ├── admin # 后台前端代码
  |  ├── server # 后端代码
+ |  ├── waline # 内嵌 waline 评论系统
  |  └── website # 前台前端代码
 ├── README.md
 └── yarn.lock
@@ -65,7 +65,7 @@ yarn
 yarn start
 ```
 
-端口号为: `3002`，默认开启了 `https`
+端口号为: `3002`，浏览器打开即可。
 
 与后台的跨域代理已经做好了，浏览器打开即可。
 
@@ -91,6 +91,8 @@ database:
 # 配置静态图床的文件夹
 static:
   path: /code/github/van-blog/staticFolder
+waline:
+  db: walineDev
 
 ```
 
@@ -106,23 +108,29 @@ yarn docs:dev
 
 根目录直接打包就行。
 
+### act
+
+我一般会用 [act](https://github.com/nektos/act) 来做验证镜像，act 可以在本地运行 `Github Actions`。
+
+安装 `act` 后：
+
+```bash
+yarn build:test
+```
+
+### 手动打包
+
 ```bash
 # 这个build server 是第一次打包镜像拿数据的，不写也行，那就得等启动容器后增量渲染生效了。
-VAN_BLOG_BUILD_SERVER="https://www.mereith.com"
-docker build --build-arg VAN_BLOG_BUILD_SERVER=$VAN_BLOG_BUILD_SERVER -t mereith/van-blog:1.0.0 .
-docker push mereith/van-blog:1.0.0
+VAN_BLOG_BUILD_SERVER="https://some.vanblog-server.com"
+docker build --build-arg VAN_BLOG_BUILD_SERVER=$VAN_BLOG_BUILD_SERVER -t mereith/van-blog:test .
 ```
 
 ## 文档发版
 
 已经有了对应的 `github actions`，向远端推送 `doc*` 的 `tag` 会触发然后发布到项目官方。
 
-```bash
-git tag doc-1.0.0
-git push --tags
-```
-
-在发版之后自动拷贝 changelog 并发布文档脚本：
+另外有一键脚本可以在发版之后自动拷贝 changelog 并发布：
 
 ```
 yarn release-doc
