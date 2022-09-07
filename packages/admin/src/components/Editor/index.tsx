@@ -12,6 +12,7 @@ import 'github-markdown-css/github-markdown.css';
 import 'highlight.js/styles/vs.css';
 import 'katex/dist/katex.css';
 import { useMemo } from 'react';
+import { emoji } from './emoji';
 import { imgUploadPlugin, uploadImg } from './imgUpload';
 import './index.less';
 import { insertMore } from './insertMore';
@@ -38,6 +39,7 @@ export default function EditorComponent(props: {
       mermaid({ locale: cn }),
 
       imgUploadPlugin(setLoading),
+      emoji(),
       insertMore(),
     ];
   }, []);
