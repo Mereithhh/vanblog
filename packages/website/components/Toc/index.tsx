@@ -27,7 +27,7 @@ export default function (props: {
     }
   }, [current]);
   return (
-    <div className="fixed" id="toc-card">
+    <div className="sticky" id="toc-card">
       <div
         id="toc-container"
         className="bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark overflow-y-auto pb-2"
