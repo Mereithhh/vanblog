@@ -1053,3 +1053,11 @@
 .language-mermaid {
   background-color: white;
 }
+
+body .markdown-body pre {
+  background-color: inherit;
+}
+
+body .markdown-body .relative > pre {
+  margin-bottom: 0;
+}

@@ -2,14 +2,22 @@ import { useEffect, useState } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 
-export default function (props: { author: string; id: number }) {
+export default function (props: {
+  author: string;
+  id: number;
+  showDonate: boolean;
+}) {
   const [url, setUrl] = useState("");
   useEffect(() => {
     setUrl(`${location.protocol}//${location.host}${location.pathname}`);
   }, [setUrl]);
 
   return (
-    <div className="bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-dark ">
+    <div
+      className={`bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-dark ${
+        !props.showDonate ? "mt-8" : ""
+      }`}
+    >
       <p>
         <span className="mr-2">本文作者:</span>
         <span>{props.author}</span>
@@ -25,7 +33,7 @@ export default function (props: { author: string; id: number }) {
           }}
         >
           <span
-            className="cursor-pointer border-b border-white hover:border-gray-500 dark:text-dark dark-border-hover dark:border-nav-dark"
+            className="cursor-pointer border-b border-gray-100 hover:border-gray-500 dark:text-dark dark-border-hover dark:border-nav-dark"
             style={{ wordBreak: "break-all" }}
           >
             {url}

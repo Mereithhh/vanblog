@@ -243,7 +243,11 @@ export default function (props: {
           ></Reward>
         )}
         {props.type == "article" && !lock && !props?.hideCopyRight && (
-          <CopyRight author={props.author as any} id={props.id}></CopyRight>
+          <CopyRight
+            author={props.author as any}
+            id={props.id}
+            showDonate={showDonate}
+          ></CopyRight>
         )}
 
         {props.type == "article" && props.tags && !lock && (

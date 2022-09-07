@@ -10,13 +10,21 @@ import rehypeKatex from "rehype-katex";
 import "katex/dist/katex.min.css";
 import ImageBox from "../ImageBox";
 import dynamic from "next/dynamic";
+import remarkDirective from "remark-directive";
+import remarkDirectiveRehype from "remark-directive-rehype";
 import { HeadingRender } from "./heading";
+import { Els } from "./directiveEls";
 export default function (props: { content: string }) {
   return (
     <>
       <ReactMarkdown
         rehypePlugins={[rehypeKatex, rehypeRaw]}
-        remarkPlugins={[remarkMath, remarkGfm]}
+        remarkPlugins={[
+          remarkMath,
+          remarkGfm,
+          remarkDirective,
+          remarkDirectiveRehype,
+        ]}
         components={{
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
@@ -84,6 +92,7 @@ export default function (props: { content: string }) {
               </code>
             );
           },
+          ...Els,
           h1: HeadingRender,
           h2: HeadingRender,
           h3: HeadingRender,

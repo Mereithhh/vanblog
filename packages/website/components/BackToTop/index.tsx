@@ -26,7 +26,6 @@ const BackToTopBtn: React.FC<BackToTopBtnProps> = (props) => {
   }, [visibleBackTopBtn]);
 
   const handleScroll = throttle((ev: any) => {
-    console.log("scroll");
     ev.stopPropagation();
     ev.preventDefault();
     const scrollTop = getScrollTop();

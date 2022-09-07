@@ -13,8 +13,11 @@ import 'highlight.js/styles/vs.css';
 import 'katex/dist/katex.css';
 import { useMemo } from 'react';
 import { imgUploadPlugin, uploadImg } from './imgUpload';
+import './index.less';
 import { insertMore } from './insertMore';
 import { cn } from './locales';
+
+import { customContainer } from './customContainer';
 
 export default function EditorComponent(props: {
   value: string;
@@ -25,6 +28,7 @@ export default function EditorComponent(props: {
   const { loading, setLoading } = props;
   const plugins = useMemo(() => {
     return [
+      customContainer(),
       gfm({ locale: cn }),
       highlight(),
       breaks(),
@@ -32,6 +36,7 @@ export default function EditorComponent(props: {
       math({ locale: cn }),
       mediumZoom(),
       mermaid({ locale: cn }),
+
       imgUploadPlugin(setLoading),
       insertMore(),
     ];
