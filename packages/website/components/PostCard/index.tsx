@@ -69,7 +69,7 @@ export default function (props: {
         return "该文章已加密，点击 `阅读全文` 并输入密码后方可查看。";
       }
       const r = content.split("<!-- more -->");
-      if (r.length == 2) {
+      if (r.length > 1) {
         return r[0];
       } else {
         return content.substring(0, 50);
