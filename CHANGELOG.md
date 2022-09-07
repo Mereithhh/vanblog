@@ -1,4 +1,22 @@
 # Changelog
+## [0.36.0](https://github.com/Mereithhh/van-blog/compare/v0.35.0...v0.36.0) (2022-09-07)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 多个more标记时前台内容截取了指定字符 ([953d354](https://github.com/Mereithhh/van-blog/commit/953d3549ecc7e4b626e18486682b60022c77ab55))
+
+
+### ✨ Features | 新功能
+
+* 后台编辑器可以选择emoji表情啦 ([55b73b1](https://github.com/Mereithhh/van-blog/commit/55b73b12df6a9c4a38fb25c54303260c97fbd2cf))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([f678882](https://github.com/Mereithhh/van-blog/commit/f6788823bfdbc9cb93119bdd2d044b107ff5287b))
+* 更新表情选择器文档 ([ca5509a](https://github.com/Mereithhh/van-blog/commit/ca5509a5e1575367965fc608d384ce687f26fce8))
+
 ## [0.35.0](https://github.com/Mereithhh/van-blog/compare/v0.34.0...v0.35.0) (2022-09-07)
 
 
