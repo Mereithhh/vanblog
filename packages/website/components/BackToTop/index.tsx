@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import style from "../../styles/back-to-top.module.css";
 import { scrollTo } from "../../utils/scroll";
-import { debounce } from "../../utils/debounce";
+import throttle from "lodash/throttle";
 interface BackToTopBtnProps {}
 function getScrollTop() {
   var scrollTop = 0,
@@ -25,7 +25,8 @@ const BackToTopBtn: React.FC<BackToTopBtnProps> = (props) => {
     return () => document.removeEventListener("scroll", handleScroll, true);
   }, [visibleBackTopBtn]);
 
-  const handleScroll = debounce((ev: any) => {
+  const handleScroll = throttle((ev: any) => {
+    console.log("scroll");
     ev.stopPropagation();
     ev.preventDefault();
     const scrollTop = getScrollTop();
