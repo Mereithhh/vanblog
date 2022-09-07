@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import style from "../../styles/back-to-top.module.css";
-import scroll from "react-scroll";
+import { scrollTo } from "../../utils/scroll";
 import { debounce } from "../../utils/debounce";
 interface BackToTopBtnProps {}
 function getScrollTop() {
@@ -38,7 +38,12 @@ const BackToTopBtn: React.FC<BackToTopBtnProps> = (props) => {
   }, 500);
 
   const backToTopHandle = () => {
-    scroll.animateScroll.scrollToTop();
+    scrollTo(window, {
+      top: 0,
+      // behavior: "smooth",
+      easing: "ease-in-out",
+      duration: 800,
+    });
   };
 
   return (

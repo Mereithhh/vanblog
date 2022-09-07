@@ -34,35 +34,6 @@ export default function (props: {
         style={{ maxHeight: 450 }}
       >
         <MarkdownTocBar content={props.content} headingOffset={56} />
-        {/* <MarkdownNavbar
-          ordered={false}
-          declarative={true}
-          // updateHashAuto={true}
-          source={props.content.replace(/`#/g, "")}
-          headingTopOffset={56}
-          onHashChange={(newHash: string, oldHash: string) => {
-            // 判断一下当前激活的元素
-            const el = document.querySelector(
-              ".markdown-navigation div.active"
-            );
-
-            let to = (el as any)?.offsetTop;
-            // console.log(to);
-
-            if (to) {
-              if (newHash < oldHash) {
-                to = to - 100;
-              }
-              scroll.animateScroll.scrollTo(to, {
-                containerId: "toc-container",
-                smooth: true,
-                delay: 0,
-                spyThrottle: 0,
-              });
-            }
-            // console.log(newHash, oldHash, el);
-          }}
-        /> */}
       </div>
     </div>
   );

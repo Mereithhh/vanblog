@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import throttle from "lodash/throttle";
 import { NavItem } from "./tools";
-
-import scroll from "react-scroll";
+import { scrollTo } from "../../utils/scroll";
 export default function (props: { items: NavItem[]; headingOffset: number }) {
   const { items } = props;
   const [currIndex, setCurrIndex] = useState(-1);
@@ -40,16 +39,17 @@ export default function (props: { items: NavItem[]; headingOffset: number }) {
   }, 100);
   useEffect(() => {
     const el = document.querySelector(".markdown-navigation div.active");
-    if (el) {
+    const container = document.querySelector("#toc-container");
+    if (el && container) {
       let to = (el as any)?.offsetTop;
       if (to <= props.headingOffset) {
         to = 0;
+      } else {
+        to = to - 100;
       }
-      scroll.animateScroll.scrollTo(to, {
-        containerId: "toc-container",
-        smooth: true,
-        delay: 0,
-        spyThrottle: 0,
+      scrollTo(container, {
+        top: to,
+        behavior: "smooth",
       });
     }
   }, [currIndex, props.headingOffset]);
@@ -77,7 +77,7 @@ export default function (props: { items: NavItem[]; headingOffset: number }) {
             if (to <= 100) {
               to = 0;
             }
-            scroll.animateScroll.scrollTo(to);
+            scrollTo(window, { top: to, easing: "ease-in-out", duration: 800 });
           }
         }}
       >
@@ -90,7 +90,7 @@ export default function (props: { items: NavItem[]; headingOffset: number }) {
       <div
         className="text-center text-lg font-medium mt-4 text-gray-700 dark:text-dark cursor-pointer"
         onClick={() => {
-          scroll.animateScroll.scrollToTop();
+          scrollTo(window, { top: 0, easing: "ease-in-out", duration: 800 });
         }}
       >
         目录
