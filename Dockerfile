@@ -49,8 +49,6 @@ RUN yarn build
 #运行容器
 FROM node:alpine AS RUNNER
 WORKDIR /app
-RUN apk add --no-cache --update tzdata caddy nss-tools
-# 设置时区为上海
 RUN  apk add --no-cache --update tzdata caddy nss-tools \
     && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "Asia/Shanghai" > /etc/timezone \
