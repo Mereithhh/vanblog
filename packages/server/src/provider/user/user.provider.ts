@@ -114,12 +114,12 @@ export class UserProvider {
     if (isList) {
       return await this.userModel.find(
         { type: 'collaborator' },
-        { id: 1, name: 1, nickname: 1, __v: 0, _id: 0 },
+        { id: 1, name: 1, nickname: 1, _id: 0 },
       );
     }
     return await this.userModel.find(
       { type: 'collaborator' },
-      { salt: 0, password: 0, __v: 0, _id: 0 },
+      { salt: 0, password: 0, _id: 0 },
     );
   }
 
