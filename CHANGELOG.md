@@ -1,4 +1,25 @@
 # Changelog
+## [0.35.0](https://github.com/Mereithhh/van-blog/compare/v0.34.0...v0.35.0) (2022-09-07)
+
+
+### ✨ Features | 新功能
+
+* 支持高亮块语法（老费劲了） [#37](https://github.com/Mereithhh/van-blog/issues/37) ([ccf6356](https://github.com/Mereithhh/van-blog/commit/ccf6356294c913401c45accc592e75027c2d2e4f))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([bcbf7e6](https://github.com/Mereithhh/van-blog/commit/bcbf7e6a0aba4ba9bb1d9a93f5e392f6a7d6b823))
+* 更新文档 ([3589feb](https://github.com/Mereithhh/van-blog/commit/3589feb9ddfd766d3d785d1eb9277be3942ecf06))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* mac 下侧边栏卡片溢出滚动下会出现样式问题 ([d452b56](https://github.com/Mereithhh/van-blog/commit/d452b5655af885784840663973987bf5506f086c))
+* mac 下长目录无法跟随滚动 & 优化滚动效果 ([9296820](https://github.com/Mereithhh/van-blog/commit/929682098a10b772708545f58eb0abd98ab74855))
+* 获取协作者列表报错 ([33a1501](https://github.com/Mereithhh/van-blog/commit/33a15017fa1e3831828888b1e8b3b5724f7ea9c8))
+* 返回顶部按钮触发不丝滑 ([8d086f2](https://github.com/Mereithhh/van-blog/commit/8d086f2fd3ecf39f0b53bf49f6d23c8b142158e9))
+
 ## [0.34.0](https://github.com/Mereithhh/van-blog/compare/v0.33.0...v0.34.0) (2022-09-06)
 
 
