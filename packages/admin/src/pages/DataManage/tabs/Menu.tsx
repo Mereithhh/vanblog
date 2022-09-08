@@ -1,19 +1,39 @@
-import { deleteMenu, getMenu, updateMenu } from '@/services/van-blog/api';
+import { getMenu, updateMenu } from '@/services/van-blog/api';
 import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 export default function () {
   // const actionRef = useRef();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [editableKeys, setEditableRowKeys] = useState([]);
+  const [values, setValues] = useState([]);
+  const [expendKeys, setExpendKeys] = useState([]);
   const actionRef = useRef();
   const fetchData = async () => {
     setLoading(true);
     const { data } = await getMenu();
+    const menuData = data?.data || [];
     setLoading(false);
-    return data.map((item) => ({ key: item.name, ...item }));
+    setValues(menuData);
+    // setExpendKeys(menuData.map((m) => m.id));
+    return menuData;
+    // return data.map((item) => ({ key: item.name, ...item }));
   };
+  const getNewId = () => {
+    let id = 0;
+    values.forEach((v) => {
+      if (v.id > id) {
+        id = v.id;
+      }
+    });
+    return id + 1;
+  };
+  const save = useCallback(async (vals) => {
+    await updateMenu({ data: vals });
+    //@ts-ignore
+    actionRef?.current?.reload();
+  }, []);
   const columns = [
     {
       title: '菜单名',
@@ -42,17 +62,42 @@ export default function () {
         <a
           key="editable"
           onClick={() => {
-            action?.startEditable?.(record.name);
+            action?.startEditable?.(record.id);
           }}
         >
           编辑
+        </a>,
+        <a
+          key="addChild"
+          onClick={() => {
+            const newId = getNewId();
+            const vals = values.map((v) => {
+              if (v.id == record.id) {
+                return {
+                  ...v,
+                  children: [
+                    {
+                      id: newId,
+                    },
+                  ],
+                };
+              } else {
+                return v;
+              }
+            });
+            console.log(vals);
+            setValues(vals);
+            setExpendKeys([...expendKeys, newId]);
+            action?.startEditable?.(newId);
+          }}
+        >
+          新增下级
         </a>,
         <a
           key="delete"
           onClick={async () => {
             Modal.confirm({
               onOk: async () => {
-                await deleteMenu(record.name);
                 action?.reload();
               },
               title: `确认删除"${record.name}"吗?`,
@@ -68,8 +113,17 @@ export default function () {
     <>
       <Spin spinning={loading}>
         <EditableProTable
+          expandable={{
+            // 使用 request 请求数据时无效
+            // defaultExpandAllRows: true,
+            expandedRowKeys: expendKeys,
+            onExpandedRowsChange: (ks) => {
+              setExpendKeys(ks as any);
+            },
+            // expandedRowKeys:
+          }}
           actionRef={actionRef}
-          rowKey="key"
+          rowKey="id"
           headerTitle="导航菜单管理"
           maxLength={5}
           scroll={{
@@ -77,7 +131,7 @@ export default function () {
           }}
           recordCreatorProps={{
             position: 'bottom',
-            record: () => ({ key: Date.now() }),
+            record: () => ({ id: getNewId() }),
           }}
           loading={false}
           columns={columns}
@@ -88,20 +142,41 @@ export default function () {
               success: true,
             };
           }}
+          value={values}
+          onValuesChange={(vals) => {
+            setValues(vals);
+          }}
           editable={{
             type: 'multiple',
             editableKeys,
-            onSave: async (rowKey, data, row) => {
+            onDelete: async (rowKey, record) => {
+              const vals = values.filter((v) => v.id != record.id);
+              save(vals);
+            },
+            onSave: async (rowKey, record, data, row) => {
               if (location.hostname == 'blog-demo.mereith.com') {
                 Modal.info({ title: '演示站禁止修改此项！' });
                 return;
               }
-              const toSaveObj = {
-                name: data.name,
-                value: data.value,
-              };
-              await updateMenu(toSaveObj);
-              actionRef?.current?.reload();
+              let has = false;
+              const vals = values.map((v) => {
+                if (v.id == record.id) {
+                  has = true;
+                  return record;
+                } else {
+                  return v;
+                }
+              });
+              if (!has) {
+                vals.push(record);
+              }
+
+              save(vals);
+
+              // await updateMenu({ data: values });
+              // await updateMenu(toSaveObj);
+              //@ts-ignore
+              // actionRef?.current?.reload();
             },
             onChange: setEditableRowKeys,
           }}

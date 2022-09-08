@@ -1,9 +1,12 @@
+import { MenuItem } from './menu.dto';
+
 export type SettingType =
   | 'static'
   | 'https'
   | 'waline'
   | 'layout'
   | 'login'
+  | 'menu'
   | 'version';
 export type SettingValue =
   | StaticSetting
@@ -11,6 +14,11 @@ export type SettingValue =
   | WalineSetting
   | LayoutSetting
   | VersionSetting;
+
+export interface MenuSetting {
+  data: MenuItem[];
+}
+
 export type StorageType = 'picgo' | 'local';
 export type StaticType = 'img';
 export interface LoginSetting {

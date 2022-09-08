@@ -270,11 +270,7 @@ export async function deleteLink(name) {
     method: 'DELETE',
   });
 }
-export async function deleteMenu(name) {
-  return request(`/api/admin/meta/menu/${name}`, {
-    method: 'DELETE',
-  });
-}
+
 export async function createLink(body) {
   return request(`/api/admin/meta/link`, {
     method: 'POST',

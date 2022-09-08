@@ -5,6 +5,7 @@ import {
   HttpsSetting,
   LayoutSetting,
   LoginSetting,
+  MenuSetting,
   StaticSetting,
   VersionSetting,
   WalineSetting,
@@ -12,6 +13,7 @@ import {
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
 import { encode } from 'js-base64';
+import { defaultMenu } from 'src/types/menu.dto';
 
 @Injectable()
 export class SettingProvider {
@@ -33,6 +35,28 @@ export class SettingProvider {
       return res?.value;
     }
     return null;
+  }
+  async getMenuSetting(): Promise<any> {
+    const res = await this.settingModel.findOne({ type: 'menu' }).exec();
+    if (res) {
+      return res?.value;
+    }
+    return null;
+  }
+  async updateMenuSetting(dto: MenuSetting) {
+    const oldValue = await this.getMenuSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'menu',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'menu' },
+      { value: newValue },
+    );
+    return res;
   }
   async importSetting(setting: any) {
     for (const [k, v] of Object.entries(setting)) {
