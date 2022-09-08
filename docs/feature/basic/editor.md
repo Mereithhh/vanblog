@@ -77,7 +77,7 @@ title: 编辑器
 
 ![](https://pic.mereith.com/img/cabe5cdfddeedbd6e592f7aaea2f4afc.clipboard-2022-08-29.png)
 
-## 图标和数学公式
+## 图表和数学公式
 
 > 图表语法速查 [Mermaid 从入门到入土——Markdown 进阶语法](https://zhuanlan.zhihu.com/p/355997933)
 >

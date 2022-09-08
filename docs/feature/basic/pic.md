@@ -54,7 +54,7 @@ title: 图床
 
 `vanBlog` 支持在编辑器中快捷上传图片，见下图：
 
-![](https://pic.mereith.com/img/777e71bbc41e3d7439d9b3cb1429ef62.clipboard-2022-08-28.png)
+![](https://www.mereith.com/static/img/8ad428da63e4380d4b1c2f2a8362b492.clipboard-2022-09-08.png)
 
 ## 图片复用
 

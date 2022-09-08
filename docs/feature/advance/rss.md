@@ -4,9 +4,15 @@ title: RSS
 
 `vanBlog` 内置了 `RSS feed 生成器` ，开箱即用。
 
-订阅地址： `<your-site-url>/feed.xml` 或 `<your-site-url>/feed.json` 或 `<your-site-url>/atom.xml`。
+订阅地址：
 
-我特意实现了后端的 `markdown 渲染器`，所以你可以在 `RSS 阅读器` 上获得与尽可能相近的体验（在读取订阅源中 HTML 的情况下）。
+> `<your-site-url>/feed.xml`
+>
+> `<your-site-url>/feed.json`
+>
+> `<your-site-url>/atom.xml`。
+
+我特意实现了后端的 `markdown 渲染器`，所以你可以在 `RSS 阅读器` 上获得与网站本体尽可能相近的体验（在读取订阅源中 HTML 的情况下）。
 
 PS：但我没找到不增加额外组件优雅的实现后端渲染 `mermaid` 图表的方法，所以 `RSS 订阅中的 HTML` 没法展示 `mermaid 图表` 了。
 
