@@ -331,6 +331,24 @@ export default function () {
           ),
         },
         {
+          key: 'clearCacheBtn',
+          label: '清理缓存',
+          onClick: () => {
+            Modal.confirm({
+              title: '清理实时保存缓存',
+              content:
+                '确定清理当前内容的实时保存缓存吗？清理后未保存的内容将会丢失，编辑器内容将重置为服务端返回的最新数据。',
+              okText: '确认清理',
+              cancelText: '返回',
+              onOk: () => {
+                window.localStorage.removeItem(key);
+                setValue(currObj?.content || '');
+                message.success('清除实时保存缓存成功！已重置为服务端返回数据');
+              },
+            });
+          },
+        },
+        {
           key: 'helpBtn',
           label: '帮助文档',
           onClick: () => {

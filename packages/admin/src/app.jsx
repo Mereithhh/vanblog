@@ -116,7 +116,7 @@ export async function getInitialState() {
               </a>
             </p>
             <p style={{ marginBottom: 4 }}>
-              PS： 更新后如后台一直 loading 请手动清理一下浏览器缓存
+              PS： 更新后如后台一直 loading 或出现 Fetch error 请手动清理一下浏览器缓存
             </p>
           </div>
         ),
