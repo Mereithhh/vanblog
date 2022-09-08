@@ -1,4 +1,18 @@
 # Changelog
+### [0.36.1](https://github.com/Mereithhh/van-blog/compare/v0.36.0...v0.36.1) (2022-09-08)
+
+
+### ✏️ Documentation | 文档
+
+* 更新捐赠信息&修复错误 ([9cc25af](https://github.com/Mereithhh/van-blog/commit/9cc25af7833fb4cd214dc22aa07aa47c829ebbff))
+* 更新文档 ([39bf2dc](https://github.com/Mereithhh/van-blog/commit/39bf2dc56b2fbf7ced6ea85f192236ba45d1f298))
+* 更新文档 ([50aa999](https://github.com/Mereithhh/van-blog/commit/50aa999222b20ce66c26187869ad04db937ef367))
+
+
+### ✨ Features | 新功能
+
+* 编辑器后台增加清理缓存按钮 [#38](https://github.com/Mereithhh/van-blog/issues/38) ([647bd08](https://github.com/Mereithhh/van-blog/commit/647bd080a332c9718270ca5645355f3b48752368))
+
 ## [0.36.0](https://github.com/Mereithhh/van-blog/compare/v0.35.0...v0.36.0) (2022-09-07)
 
 
