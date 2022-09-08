@@ -82,7 +82,6 @@ export default function () {
           actionRef={actionRef}
           rowKey="key"
           headerTitle="捐赠详情"
-          maxLength={5}
           scroll={{
             x: 960,
           }}

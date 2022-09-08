@@ -99,7 +99,6 @@ export default function () {
           rowKey="key"
           headerTitle="友情链接"
           actionRef={actionRef}
-          maxLength={5}
           scroll={{
             x: 960,
           }}

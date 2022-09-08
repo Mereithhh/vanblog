@@ -86,7 +86,6 @@ export default function () {
           actionRef={actionRef}
           rowKey="key"
           headerTitle="联系方式"
-          maxLength={5}
           scroll={{
             x: 960,
           }}

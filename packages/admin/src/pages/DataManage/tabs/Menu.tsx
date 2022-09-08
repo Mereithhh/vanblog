@@ -71,7 +71,6 @@ export default function () {
           actionRef={actionRef}
           rowKey="key"
           headerTitle="导航菜单管理"
-          maxLength={5}
           scroll={{
             x: 960,
           }}
