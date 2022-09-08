@@ -1,4 +1,18 @@
 # Changelog
+### [0.36.2](https://github.com/Mereithhh/van-blog/compare/v0.36.1...v0.36.2) (2022-09-08)
+
+
+### ✏️ Documentation | 文档
+
+* 更新打赏列表 ([73bc1ab](https://github.com/Mereithhh/van-blog/commit/73bc1ab69358298631fe7e4390c6e814801581b9))
+* 更新文档 ([aab5979](https://github.com/Mereithhh/van-blog/commit/aab59793e668bd18086c8ecc0981f2b194705e14))
+* 更新文档 ([85a9cdc](https://github.com/Mereithhh/van-blog/commit/85a9cdc7027082b8734dd1e0e3537e3b47b156af))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 友链超过5个无法添加[#39](https://github.com/Mereithhh/van-blog/issues/39) ([a2b60f2](https://github.com/Mereithhh/van-blog/commit/a2b60f262c0ffdca0da0455fe471587eaaf2a877))
+
 ### [0.36.1](https://github.com/Mereithhh/van-blog/compare/v0.36.0...v0.36.1) (2022-09-08)
 
 
