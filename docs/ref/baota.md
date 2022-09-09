@@ -61,6 +61,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: vanBlog
       # mongoDB 初始化密码
       MONGO_INITDB_ROOT_PASSWORD: vanBlog
+      MONGO_INITDB_DATABASE: vanBlog
 
     # 如果你向在外部访问数据库，并且已经设置了强密码，那可以取消下面的注释
     # ports:

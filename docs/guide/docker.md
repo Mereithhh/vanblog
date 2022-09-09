@@ -90,6 +90,7 @@ services:
       MONGO_INITDB_ROOT_USERNAME: vanBlog
       # mongoDB 初始化密码
       MONGO_INITDB_ROOT_PASSWORD: vanBlog
+      MONGO_INITDB_DATABASE: vanBlog
     volumes:
       # mongoDB 数据存放地址，按需修改。
       - ${PWD}/data/mongo:/data/db
