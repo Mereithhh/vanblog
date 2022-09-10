@@ -1,7 +1,10 @@
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { vscDarkPlus } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import {
+  vscDarkPlus as dark,
+  prism as light,
+} from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 import rehypeRaw from "rehype-raw";
@@ -14,7 +17,17 @@ import remarkDirective from "remark-directive";
 import remarkDirectiveRehype from "remark-directive-rehype";
 import { HeadingRender } from "./heading";
 import { Els } from "./directiveEls";
+import { useContext, useMemo } from "react";
+import { ThemeContext } from "../../utils/themeContext";
 export default function (props: { content: string }) {
+  const { theme } = useContext(ThemeContext);
+  const themeStyle = useMemo(() => {
+    if (theme.includes("dark")) {
+      return dark;
+    } else {
+      return light;
+    }
+  }, [theme]);
   return (
     <>
       <ReactMarkdown
@@ -40,7 +53,6 @@ export default function (props: { content: string }) {
                 />
               );
             }
-
             return !inline ? (
               <div className="relative">
                 <CopyToClipboard
@@ -52,7 +64,7 @@ export default function (props: { content: string }) {
                   }}
                 >
                   <span
-                    className="transition-all rounded inline-block cursor-pointer absolute top-2 right-2  bg-inherit  hover:bg-gray-700"
+                    className="transition-all rounded inline-block cursor-pointer absolute top-2 right-2  bg-inherit hover:bg-gray-200  dark:hover:bg-gray-700"
                     style={{ padding: "6px 10px" }}
                   >
                     <svg
@@ -71,7 +83,7 @@ export default function (props: { content: string }) {
                 </CopyToClipboard>
                 <SyntaxHighlighter
                   children={String(children).replace(/\n$/, "")}
-                  style={vscDarkPlus as any}
+                  style={themeStyle as any}
                   language={match?.length ? match[1] : undefined}
                   wrapLines={true}
                   lineProps={() => {
