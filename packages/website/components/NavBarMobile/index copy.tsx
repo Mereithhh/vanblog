@@ -2,7 +2,6 @@ import { slide as Menu } from "react-burger-menu";
 import Link from "next/link";
 import { useCallback } from "react";
 import { MenuItem } from "../../api/getAllData";
-import Drawer from "../Drawer";
 export default function (props: {
   isOpen: boolean;
   setIsOpen: (i: boolean) => void;
@@ -56,13 +55,29 @@ export default function (props: {
   return (
     <>
       <div>
-        <Drawer open={props.isOpen} setOpen={props.setIsOpen}>
+        <Menu
+          id="nav-mobile"
+          disableAutoFocus={true}
+          customCrossIcon={false}
+          customBurgerIcon={false}
+          isOpen={props.isOpen}
+          onStateChange={(state) => {
+            if (state.isOpen) {
+              // 要打开
+              document.body.style.overflow = "hidden";
+            } else {
+              document.body.style.overflow = "auto";
+            }
+
+            props.setIsOpen(state.isOpen);
+          }}
+        >
           <ul
             onClick={() => {
               document.body.style.overflow = "auto";
               props.setIsOpen(false);
             }}
-            className="flex-col sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark "
+            className=" sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark "
           >
             {renderLinks()}
             {props.showAdminButton == "true" && (
@@ -80,7 +95,7 @@ export default function (props: {
               </li>
             )}
           </ul>
-        </Drawer>
+        </Menu>
       </div>
     </>
   );
