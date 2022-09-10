@@ -4,6 +4,34 @@ icon: update
 ---
 
 
+## [0.37.0](https://github.com/Mereithhh/van-blog/compare/v0.36.2...v0.37.0) (2022-09-10)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([833baeb](https://github.com/Mereithhh/van-blog/commit/833baeb685afe0d0181ab4db25f870515a59283b))
+* 更新文档 ([1ac5dc0](https://github.com/Mereithhh/van-blog/commit/1ac5dc0a2240abce713ccd91f42b7ccaa02ce638))
+* 部署编排更新一个初始化数据库的环境变量 ([72213c8](https://github.com/Mereithhh/van-blog/commit/72213c880caad9a55a63e0a7aa4e4708f99b3e5e))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 关闭用户缩放 [#40](https://github.com/Mereithhh/van-blog/issues/40) ([3bb1117](https://github.com/Mereithhh/van-blog/commit/3bb1117cce24ca2c3f1499a16847a0ae40cc96ef))
+* 草稿导入 ID 重复 [#42](https://github.com/Mereithhh/van-blog/issues/42) ([a69d028](https://github.com/Mereithhh/van-blog/commit/a69d028ba5d0346a94dbc9eb392dcaa386fb0636))
+
+
+### ✨ Features | 新功能
+
+* 前台代码块随主题亮暗切换 [#43](https://github.com/Mereithhh/van-blog/issues/43) ([fe3c09e](https://github.com/Mereithhh/van-blog/commit/fe3c09e29ae49ebc5baa31fa22feebe03ab8b2f1))
+* 升级提示可跳过某个版本 ([35f9f00](https://github.com/Mereithhh/van-blog/commit/35f9f00dd63b62e9c70331b3eb52ee4e82ccde5a))
+* 导航菜单完全自定义&二级菜单 [#34](https://github.com/Mereithhh/van-blog/issues/34) ([12f4577](https://github.com/Mereithhh/van-blog/commit/12f4577b2fc5a65e156351275148b93b76d85963))
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* 代码组件抽离原子化 ([187e48a](https://github.com/Mereithhh/van-blog/commit/187e48ae197fc7f999bc8829f3ec6ecf669a33b1))
+* 文章卡片组件抽离 ([7df186a](https://github.com/Mereithhh/van-blog/commit/7df186abe88b62a543076f06564ca83905caaf4d))
+
 ### [0.36.2](https://github.com/Mereithhh/van-blog/compare/v0.36.1...v0.36.2) (2022-09-08)
 
 
