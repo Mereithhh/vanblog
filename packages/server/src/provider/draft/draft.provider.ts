@@ -224,10 +224,7 @@ export class DraftProvider {
   }
 
   async getNewId() {
-    const maxObj = await this.draftModel
-      .find({})
-      .sort({ createdAt: -1 })
-      .exec();
+    const maxObj = await this.draftModel.find({}).sort({ id: -1 }).limit(1);
     if (maxObj.length) {
       return maxObj[0].id + 1;
     } else {
