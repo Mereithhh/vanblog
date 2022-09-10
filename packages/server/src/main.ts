@@ -12,6 +12,7 @@ import { WalineProvider } from './provider/waline/waline.provider';
 import { InitProvider } from './provider/init/init.provider';
 import { json } from 'express';
 import { UserProvider } from './provider/user/user.provider';
+import { SettingProvider } from './provider/setting/setting.provider';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -49,6 +50,9 @@ async function bootstrap() {
     const userProvider = app.get(UserProvider);
     // 老版本没加盐的用户数据洗一下。
     userProvider.washUserWithSalt();
+    const settingProvider = app.get(SettingProvider);
+    // 老版本菜单数据洗一下。
+    settingProvider.washDefaultMenu();
     const metaProvider = app.get(MetaProvider);
     metaProvider.updateTotalWords('首次启动');
     const walineProvider = app.get(WalineProvider);

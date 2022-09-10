@@ -1,10 +1,11 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
   HttpsSetting,
   LayoutSetting,
   LoginSetting,
+  MenuSetting,
   StaticSetting,
   VersionSetting,
   WalineSetting,
@@ -12,13 +13,16 @@ import {
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
 import { encode } from 'js-base64';
-
+import { defaultMenu, MenuItem } from 'src/types/menu.dto';
+import { MetaProvider } from '../meta/meta.provider';
 @Injectable()
 export class SettingProvider {
+  logger = new Logger(SettingProvider.name);
   constructor(
     @InjectModel('Setting')
     private settingModel: Model<SettingDocument>,
     private readonly picgoProvider: PicgoProvider,
+    private readonly metaProvider: MetaProvider,
   ) {}
   async getStaticSetting(): Promise<any> {
     const res = await this.settingModel.findOne({ type: 'static' }).exec();
@@ -33,6 +37,28 @@ export class SettingProvider {
       return res?.value;
     }
     return null;
+  }
+  async getMenuSetting(): Promise<any> {
+    const res = await this.settingModel.findOne({ type: 'menu' }).exec();
+    if (res) {
+      return res?.value;
+    }
+    return null;
+  }
+  async updateMenuSetting(dto: MenuSetting) {
+    const oldValue = await this.getMenuSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'menu',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'menu' },
+      { value: newValue },
+    );
+    return res;
   }
   async importSetting(setting: any) {
     for (const [k, v] of Object.entries(setting)) {
@@ -186,5 +212,25 @@ export class SettingProvider {
 
     await this.picgoProvider.initDriver();
     return res;
+  }
+  async washDefaultMenu() {
+    const r = await this.settingModel.findOne({ type: 'menu' });
+    if (!r) {
+      // 没有的话需要清洗
+      const toInsert: MenuItem[] = defaultMenu;
+      const meta = await this.metaProvider.getAll();
+      const oldMenus = meta.menus;
+      const d = Date.now();
+      oldMenus.forEach((item: any, index: number) => {
+        toInsert.push({
+          id: d + index,
+          level: 0,
+          name: item.name,
+          value: item.value,
+        });
+      });
+      await this.updateMenuSetting({ data: toInsert });
+      this.logger.log('清洗老 menu 数据成功！');
+    }
   }
 }

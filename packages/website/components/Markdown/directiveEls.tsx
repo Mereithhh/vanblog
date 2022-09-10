@@ -19,17 +19,21 @@ const customContainerTitleMap: Record<string, string> = {
 const customContainer = (props: CustomElProps) => {
   const { node, children, title } = props;
   const showTitle = title || customContainerTitleMap[node.tagName];
-
+  const key = node?.position?.end.offset || "customcontainer";
   const titleEl = createElement(
     "p",
     {
       className: `custom-container-title ${node.tagName}`,
+      key: `customcontainer-p-${key}`,
     },
-    [icons[node.tagName], showTitle]
+    [icons(String(key))[node.tagName], showTitle]
   );
   return createElement(
     "div",
-    { className: `custom-container ${node.tagName}` },
+    {
+      className: `custom-container ${node.tagName}`,
+      key: `customcontainer-div-${key}`,
+    },
     [titleEl, ...children]
   );
 };

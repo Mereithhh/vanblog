@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Headroom from "headroom.js";
-import { useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import SearchCard from "../SearchCard";
 import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
@@ -9,6 +9,7 @@ import AdminButton from "../AdminButton";
 import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
 import RssButton from "../RssButton";
+import Item from "./item";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -16,7 +17,7 @@ export default function (props: {
   setOpen: (open: boolean) => void;
   isOpen: boolean;
   siteName: string;
-  links: MenuItem[];
+  menus: MenuItem[];
   showSubMenu: "true" | "false";
   showAdminButton: "true" | "false";
   showFriends: "true" | "false";
@@ -47,26 +48,6 @@ export default function (props: {
     };
   }, [headroom, setHeadroom]);
 
-  const renderedLinks = useCallback(() => {
-    const arr: any[] = [];
-    props.links.forEach((item) => {
-      arr.push(
-        <li
-          key={item.name}
-          className="nav-item transform hover:scale-110 dark:border-nav-dark  dark:transition-all"
-        >
-          <a
-            className="h-full flex items-center px-2 md:px-4 ua"
-            href={item.value}
-            target="_blank"
-          >
-            {item.name}
-          </a>
-        </li>
-      );
-    });
-    return arr;
-  }, [props]);
   return (
     <>
       <SearchCard visible={showSearch} setVisible={setShowSearch}></SearchCard>
@@ -134,51 +115,9 @@ export default function (props: {
               <div>{props.siteName}</div>
             </div>
             <ul className=" md:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
-              <li className="nav-item transform hover:scale-110  dark:border-nav-dark dark:transition-all">
-                <Link href={"/"}>
-                  <a className="h-full flex items-center px-2 md:px-4 ua ">
-                    首页
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
-                <Link href={"/tag"}>
-                  <a className="h-full flex items-center px-2 md:px-4 ua">
-                    标签
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
-                <Link href={"/category"}>
-                  <a className="h-full flex items-center px-2 md:px-4 ua">
-                    分类
-                  </a>
-                </Link>
-              </li>
-              <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
-                <Link href={"/timeline"}>
-                  <a className="h-full flex items-center px-2 md:px-4 ua">
-                    时间线
-                  </a>
-                </Link>
-              </li>
-              {props.showFriends == "true" && (
-                <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
-                  <Link href={"/link"}>
-                    <a className="h-full flex items-center px-2 md:px-4 ua">
-                      友链
-                    </a>
-                  </Link>
-                </li>
-              )}
-              <li className="nav-item transform hover:scale-110  dark:border-nav-dark  dark:transition-all">
-                <Link href={"/about"}>
-                  <a className="h-full flex items-center px-2 md:px-4 ua">
-                    关于
-                  </a>
-                </Link>
-              </li>
-              {renderedLinks()}
+              {props.menus.map((m) => {
+                return <Item key={m.id} item={m} />;
+              })}
             </ul>
             <div className="flex">
               <div

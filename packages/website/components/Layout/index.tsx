@@ -77,7 +77,7 @@ export default function (props: {
             headerLeftContent={props.option.headerLeftContent}
             subMenuOffset={props.option.subMenuOffset}
             showAdminButton={props.option.showAdminButton}
-            links={props.option.links}
+            menus={props.option.menus}
             siteName={props.option.siteName}
             logo={props.option.logo}
             categories={props.option.categories}
@@ -91,7 +91,7 @@ export default function (props: {
             setIsOpen={setIsOpen}
             showAdminButton={props.option.showAdminButton}
             showFriends={props.option.showFriends}
-            links={props.option.links}
+            menus={props.option.menus}
           />
 
           <div className=" mx-auto  lg:px-6  md:py-4 py-2 px-2 md:px-4  text-gray-700 ">

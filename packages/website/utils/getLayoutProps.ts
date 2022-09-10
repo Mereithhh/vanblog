@@ -1,4 +1,4 @@
-import { MenuItem, PublicMetaProp } from "../api/getAllData";
+import { defaultMenu, MenuItem, PublicMetaProp } from "../api/getAllData";
 import dayjs from "dayjs";
 import { AuthorCardProps } from "../components/AuthorCard";
 export interface LayoutProps {
@@ -15,7 +15,7 @@ export interface LayoutProps {
   gaAnalysisID: string;
   logoDark: string;
   version: string;
-  links: MenuItem[];
+  menus: MenuItem[];
   showSubMenu: "true" | "false";
   showAdminButton: "true" | "false";
   showFriends: "true" | "false";
@@ -91,7 +91,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     gaAnalysisID: siteInfo?.gaAnalysisId || "",
     logoDark: siteInfo?.siteLogoDark || "",
     description: siteInfo?.siteDesc || "",
-    links: data?.meta?.menus || [],
+    menus: data?.menus || defaultMenu,
     categories: data.meta.categories,
     showSubMenu: showSubMenu ? "true" : "false",
     enableComment: siteInfo?.enableComment || "true",

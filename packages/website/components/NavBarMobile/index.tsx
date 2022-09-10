@@ -5,20 +5,19 @@ import { MenuItem } from "../../api/getAllData";
 export default function (props: {
   isOpen: boolean;
   setIsOpen: (i: boolean) => void;
-  showFriends: "true" | "false"
-  showAdminButton: "true" | "false"
-  links: MenuItem[];
+  showFriends: "true" | "false";
+  showAdminButton: "true" | "false";
+  menus: MenuItem[];
 }) {
-  const renderLinks = useCallback(() => {
-    const arr: any[] = [];
-    props.links.forEach((item) => {
-      arr.push(
+  const renderItem = useCallback((item: MenuItem, isSub?: boolean) => {
+    if (item.value.includes("http")) {
+      return (
         <li
           className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2"
-          key={item.name}
+          key={item.id}
         >
           <a
-            className="w-full inline-block px-4 "
+            className={`w-full inline-block  ${isSub ? "px-6" : "px-4"}`}
             target="_blank"
             href={item.value}
           >
@@ -26,6 +25,30 @@ export default function (props: {
           </a>
         </li>
       );
+    } else {
+      return (
+        <li
+          className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2"
+          key={item.id}
+        >
+          <Link href={item.value}>
+            <a className={`w-full inline-block  ${isSub ? "px-8" : "px-4"}`}>
+              {item.name}
+            </a>
+          </Link>
+        </li>
+      );
+    }
+  }, []);
+  const renderLinks = useCallback(() => {
+    const arr: any[] = [];
+    props.menus.forEach((item) => {
+      arr.push(renderItem(item));
+      if (item.children && item.children.length > 0) {
+        item.children.forEach((i) => {
+          arr.push(renderItem(i, true));
+        });
+      }
     });
     return arr;
   }, [props]);
@@ -56,33 +79,7 @@ export default function (props: {
             }}
             className=" sm:flex h-full items-center  text-sm text-gray-600 hidden divide-y divide-dashed dark:text-dark "
           >
-            <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-              <Link href={"/"}>
-                <a className="w-full inline-block px-4 ">主页</a>
-              </Link>
-            </li>
-            <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-              <Link href={"/tag"}>
-                <a className="w-full inline-block px-4 ">标签</a>
-              </Link>
-            </li>
-            <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-              <Link href={"/category"}>
-                <a className="w-full inline-block px-4 ">分类</a>
-              </Link>
-            </li>
-            <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-              <Link href={"/timeline"}>
-                <a className="w-full inline-block px-4 ">时间线</a>
-              </Link>
-            </li>
-            {props.showFriends == "true" && (
-              <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-                <Link href={"/link"}>
-                  <a className="w-full inline-block px-4 ">友链</a>
-                </Link>
-              </li>
-            )}
+            {renderLinks()}
             {props.showAdminButton == "true" && (
               <li
                 className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2"
@@ -97,12 +94,6 @@ export default function (props: {
                 </a>
               </li>
             )}
-            <li className="side-bar-item dark:border-dark-2 dark:hover:bg-dark-2">
-              <Link href={"/about"}>
-                <a className="w-full inline-block px-4 ">关于</a>
-              </Link>
-            </li>
-            {renderLinks()}
           </ul>
         </Menu>
       </div>

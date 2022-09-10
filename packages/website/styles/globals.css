@@ -24,7 +24,7 @@
 }
 @layer components {
   .nav-item {
-    @apply transition cursor-pointer flex items-center h-full  border-b-2 border-white;
+    @apply transition cursor-pointer flex items-center h-full   ;
   }
   .side-bar-item {
     @apply text-base leading-9 w-full hover:bg-gray-100 cursor-pointer;
@@ -185,13 +185,12 @@ body #wl-edit {
 .ua {
   position: relative;
   text-decoration: none;
-  /* font-size: 20px; */
 }
 .ua:before {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: -2px;
+  bottom: 2px;
   width: 0;
   height: 2px;
   background: var(--text-color-sm);

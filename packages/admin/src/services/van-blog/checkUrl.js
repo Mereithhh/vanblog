@@ -5,6 +5,5 @@ export const checkUrl = (url) => {
   } catch (err) {
     ok = false;
   }
-  console.log(ok);
   return ok;
 };
