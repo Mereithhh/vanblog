@@ -4,6 +4,20 @@ icon: update
 ---
 
 
+### [0.37.1](https://github.com/Mereithhh/van-blog/compare/v0.37.0...v0.37.1) (2022-09-12)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([88dab53](https://github.com/Mereithhh/van-blog/commit/88dab53b14b416e1ee4e9458982be5aadcbb46c1))
+* 更新文档 ([5419976](https://github.com/Mereithhh/van-blog/commit/54199760cfe86817ea855ea4c3ddfac443562e39))
+* 更新文档 ([baacf31](https://github.com/Mereithhh/van-blog/commit/baacf31d175b672162268b2ada7c7ca778e15610))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 目录组件 hover 态不填满卡片 ([580d78d](https://github.com/Mereithhh/van-blog/commit/580d78da9599799963eb6f0ccd2081c11a825978))
+
 ## [0.37.0](https://github.com/Mereithhh/van-blog/compare/v0.36.2...v0.37.0) (2022-09-10)
 
 
