@@ -30,7 +30,6 @@
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: 0;
-  width:200px
 }
 .markdown-navigation::-webkit-scrollbar{
   width:0;
