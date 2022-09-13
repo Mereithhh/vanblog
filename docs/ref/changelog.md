@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.38.1](https://github.com/Mereithhh/van-blog/compare/v0.38.0...v0.38.1) (2022-09-13)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([4bd795a](https://github.com/Mereithhh/van-blog/commit/4bd795a47dc1e438e7343070cb96041dfdf7dd4b))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* RSS 订阅中的 HTML 出现了不合时宜的 a 标签 ([dc86650](https://github.com/Mereithhh/van-blog/commit/dc866501c2f58b169383fbca9b653e7b77050217))
+
 ## [0.38.0](https://github.com/Mereithhh/van-blog/compare/v0.37.2...v0.38.0) (2022-09-13)
 
 
