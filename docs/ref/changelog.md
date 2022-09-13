@@ -4,6 +4,19 @@ icon: update
 ---
 
 
+## [0.38.0](https://github.com/Mereithhh/van-blog/compare/v0.37.2...v0.38.0) (2022-09-13)
+
+
+### ✨ Features | 新功能
+
+* 后台编辑器预览内嵌 HTML [#47](https://github.com/Mereithhh/van-blog/issues/47) ([c920a2e](https://github.com/Mereithhh/van-blog/commit/c920a2e8aded13297a2721032ea85b09796c8bee))
+
+
+### ✏️ Documentation | 文档
+
+* 更新 TODO ([a571cfa](https://github.com/Mereithhh/van-blog/commit/a571cfa37063bffaedb04622e9dd928fff64878d))
+* 更新文档 ([4b20720](https://github.com/Mereithhh/van-blog/commit/4b20720d1a64bbc857b1367635e2017712d046a6))
+
 ### [0.37.2](https://github.com/Mereithhh/van-blog/compare/v0.37.1...v0.37.2) (2022-09-13)
 
 
