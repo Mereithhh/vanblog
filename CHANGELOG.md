@@ -1,4 +1,32 @@
 # Changelog
+## [0.38.0](https://github.com/Mereithhh/van-blog/compare/v0.37.2...v0.38.0) (2022-09-13)
+
+
+### ✨ Features | 新功能
+
+* 后台编辑器预览内嵌 HTML [#47](https://github.com/Mereithhh/van-blog/issues/47) ([c920a2e](https://github.com/Mereithhh/van-blog/commit/c920a2e8aded13297a2721032ea85b09796c8bee))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **release:** 0.38.0 ([d16e10b](https://github.com/Mereithhh/van-blog/commit/d16e10b28528610b24639f51bd2236e8d8d6adc2))
+
+
+### ✏️ Documentation | 文档
+
+* 更新 TODO ([a571cfa](https://github.com/Mereithhh/van-blog/commit/a571cfa37063bffaedb04622e9dd928fff64878d))
+* 更新文档 ([883696f](https://github.com/Mereithhh/van-blog/commit/883696f42303dd0ed118c0b9846fa897f5284154))
+* 更新文档 ([4b20720](https://github.com/Mereithhh/van-blog/commit/4b20720d1a64bbc857b1367635e2017712d046a6))
+
+
+### ⏪ Revert | 回退
+
+* 修一个 bug 重新发版 ([cee7445](https://github.com/Mereithhh/van-blog/commit/cee7445e7e5f4672e335ac1f639625051c99b92a))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 初始化未添加默认菜单信息导致前台无法更新 ([8064dbb](https://github.com/Mereithhh/van-blog/commit/8064dbbd41a8c1db5d6c224cfdbff4a417b7c3e3))
 
 ### [0.37.2](https://github.com/Mereithhh/van-blog/compare/v0.37.1...v0.37.2) (2022-09-13)
 
