@@ -8,6 +8,7 @@ import { WalineProvider } from '../waline/waline.provider';
 import { SettingProvider } from '../setting/setting.provider';
 import { version } from '../../utils/loadConfig';
 import { encryptPassword, makeSalt } from 'src/utils/crypto';
+import { defaultMenu } from 'src/types/menu.dto';
 
 @Injectable()
 export class InitProvider {
@@ -46,6 +47,7 @@ export class InitProvider {
         },
         categories: [],
       });
+      await this.settingProvider.updateMenuSetting({ data: defaultMenu });
       // 运行 waline
       this.walineProvider.init();
       return '初始化成功!';
