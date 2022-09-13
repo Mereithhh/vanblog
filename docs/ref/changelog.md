@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.37.2](https://github.com/Mereithhh/van-blog/compare/v0.37.1...v0.37.2) (2022-09-13)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([d1cd10c](https://github.com/Mereithhh/van-blog/commit/d1cd10c5467aba2002b9f168a7dc4347acdd2362))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 无凭证首次进入后台出现登录失效 [#46](https://github.com/Mereithhh/van-blog/issues/46) ([6af8093](https://github.com/Mereithhh/van-blog/commit/6af8093176507d819bcd0496b7595c9eda79c41a))
+
 ### [0.37.1](https://github.com/Mereithhh/van-blog/compare/v0.37.0...v0.37.1) (2022-09-12)
 
 
