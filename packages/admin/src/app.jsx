@@ -39,7 +39,11 @@ export async function getInitialState() {
     }
   }; // 如果不是登录页面，执行
   let option = {};
-  if (history.location.pathname == loginPath || history.location.pathname == '/init') {
+  if (
+    history.location.pathname == loginPath ||
+    history.location.pathname == '/init' ||
+    !localStorage.getItem('token')
+  ) {
     option.skipErrorHandler = true;
   }
   const initData = await fetchInitData(option);
