@@ -19,6 +19,7 @@ import { insertMore } from './insertMore';
 import { cn } from './locales';
 
 import { customContainer } from './customContainer';
+import { rawHTML } from './raw';
 
 export default function EditorComponent(props: {
   value: string;
@@ -37,10 +38,10 @@ export default function EditorComponent(props: {
       math({ locale: cn }),
       mediumZoom(),
       mermaid({ locale: cn }),
-
       imgUploadPlugin(setLoading),
       emoji(),
       insertMore(),
+      rawHTML(),
     ];
   }, []);
 
