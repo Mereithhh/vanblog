@@ -11,7 +11,7 @@ export class MarkdownProvider {
     this.md = new MarkdownIt({
       html: true,
       breaks: true,
-      linkify: true,
+      linkify: false,
       highlight: (str, lang) => {
         if (lang == 'mermaid') {
           return `<div class="mermaid">${str}</div>`;
