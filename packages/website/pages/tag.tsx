@@ -23,8 +23,8 @@ const TagPage = (props: TagPageProps) => {
         </div>
         <div className="flex flex-wrap mt-2">
           {props.tags.map((tag) => (
-            <Link href={`/tag/${tag}`} key={`tag-${tag}`}>
-              <a className="my-2 text-gray-500 block hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 transition-all mr-5 dark:text-dark-400 ">{`#${tag}`}</a>
+            <Link href={`/tag/${tag.replace(/#/g, "%23")}`} key={`tag-${tag}`}>
+              <a className="my-2 text-gray-500 block hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 transition-all mr-5 dark:text-dark-400 ">{`${tag}`}</a>
             </Link>
           ))}
         </div>

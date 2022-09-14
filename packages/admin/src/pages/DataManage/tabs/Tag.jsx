@@ -28,7 +28,7 @@ const columns = [
       <a
         key="viewTag"
         onClick={() => {
-          window.open(`/tag/${record.name}`, '_blank');
+          window.open(`/tag/${record.name.replace(/#/g, '%23')}`, '_blank');
         }}
       >
         查看

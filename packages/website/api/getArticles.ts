@@ -19,6 +19,7 @@ export const getArticlesByOption = async (
     queryString += `${k}=${v}&`;
   }
   queryString = queryString.substring(0, queryString.length - 1);
+  queryString = queryString.replace(/#/g, "%23");
   try {
     const url = `${config.baseUrl}api/public/article?${queryString}`;
     const res = await fetch(url);

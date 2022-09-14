@@ -14,20 +14,21 @@ export const parseNavStructure = (source: string): NavItem[] => {
     .replace(/\*\*?([^*\n]+)\*\*?/g, "$1")
     .replace(/__?([^_\n]+)__?/g, "$1")
     .trim();
-
-  const pattOfTitle = /#+\s([^#\n]+)\n*/g;
+  const pattOfTitle = /#+\s(.+)\n/g;
   const matchResult = contentWithoutCode.match(pattOfTitle);
 
   if (!matchResult) {
     return [];
   }
 
-  const navData = matchResult.map((r, i) => ({
-    index: i,
-    //@ts-ignore
-    level: r.match(/^#+/g)[0].length,
-    text: r.replace(pattOfTitle, "$1"),
-  }));
+  const navData = matchResult.map((r, i) => {
+    return {
+      index: i,
+      //@ts-ignore
+      level: r.match(/^#+/g)[0].length,
+      text: r.replace(pattOfTitle, "$1"),
+    };
+  });
 
   let maxLevel = 0;
   navData.forEach((t) => {

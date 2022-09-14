@@ -135,7 +135,7 @@ export async function getTagPagesProps(
     withWordCount: true,
     toListView: true,
   });
-  const wordTotal = totalWordCount as number;
+  const wordTotal = totalWordCount || 0;
   const curNum = total;
   const sortedArticles = washArticlesByKey(
     articlesInThisTag,
