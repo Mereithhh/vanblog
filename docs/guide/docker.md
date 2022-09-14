@@ -28,6 +28,13 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 
 但比较小的带宽可能会让页面加载变慢（第一次慢，后面的话有缓存加速就会快一些），如果带宽比较小的话可以尝试设置一下 [CDN](/ref/faq.md#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E5%88%B0%20CDN)。
 
+## 部署方式
+
+- [docker-compose 部署](#docker-compose-部署)
+- [直接部署](#直接部署)
+- [宝塔面板部署](/ref/baota.md)
+- [群晖部署](/ref/dsm.md)
+
 ## docker-compose 部署
 
 如果你没有安装 `docker` 和 `docker-compose`，可以通过以下命令一键安装：
@@ -197,6 +204,10 @@ spec:
 ## 宝塔面板部署
 
 请移步 [通过宝塔面板部署 VanBlog](/ref/baota.md)
+
+## 群晖部署
+
+请移步 [群晖部署 VanBlog](/ref/dsm.md)
 
 ## 直接部署
 
