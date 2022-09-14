@@ -10,6 +10,12 @@ VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行
 [升级指南](/guide/update.md)
 :::
 
+### 端口被占用
+
+改一下编排里的端口映射到非常用端口就好了。
+
+![](https://pic.mereith.com/img/47a03229d46e9120ad1e7bf1abf4b504.clipboard-2022-09-14.png)
+
 ### docker 镜像拉取慢
 
 您可以设置一下 docker 镜像加速器：

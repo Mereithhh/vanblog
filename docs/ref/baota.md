@@ -83,3 +83,9 @@ services:
 和普通部署一样，浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
 
 有问题的话可以查看一下容器的日志进行排查。
+
+## 端口被占用
+
+改一下编排里的端口映射到非常用端口就好了。
+
+![](https://pic.mereith.com/img/47a03229d46e9120ad1e7bf1abf4b504.clipboard-2022-09-14.png)
