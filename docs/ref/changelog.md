@@ -4,6 +4,20 @@ icon: update
 ---
 
 
+### [0.38.2](https://github.com/Mereithhh/van-blog/compare/v0.38.1...v0.38.2) (2022-09-14)
+
+
+### ✏️ Documentation | 文档
+
+* 更新捐赠信息 ([398c08c](https://github.com/Mereithhh/van-blog/commit/398c08caa817ce8d880b538ca62e51c7e419058d))
+* 更新文档 ([3c2cfde](https://github.com/Mereithhh/van-blog/commit/3c2cfdeddf04bbe9de4ea474bc1a4500cb2a7095))
+* 更新文档 ([2316912](https://github.com/Mereithhh/van-blog/commit/23169127576d93c5ca433b9a98b0c9fff44a594c))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 标题和标签中携带"#"导致目录和标签页显示不正常 ([81baad5](https://github.com/Mereithhh/van-blog/commit/81baad553342b0e7dd2ce041a90b69be5efe3de7))
+
 ### [0.38.1](https://github.com/Mereithhh/van-blog/compare/v0.38.0...v0.38.1) (2022-09-13)
 
 
