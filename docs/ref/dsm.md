@@ -21,13 +21,13 @@ icon: router
 
 ![](https://pic.mereith.com/img/409c41cbe5ebf9d3be1630965b5a6e46.clipboard-2022-08-29.png)
 
-仿照上面的增加 `mongo` 镜像：
+仿照上面的增加 `mongo` 镜像，版本选择 `4.4.9` 的，如图所示（有些机器不支持 AVX，用最新的会报错）：
 
-![](https://pic.mereith.com/img/8be728335a29ab01601f83964bd700ad.clipboard-2022-08-29.png)
+![](https://pic.mereith.com/img/acd15a0e47c3a28d78a78c9102a7593e.clipboard-2022-09-15.png)
 
 完成后如图：
 
-![](https://pic.mereith.com/img/ac3931557c05a689e808942a4784e97a.clipboard-2022-08-29.png)
+![](https://pic.mereith.com/img/94080b16a8305acbd1552ca3b31596bb.clipboard-2022-09-15.png)
 
 ### 创建容器
 
