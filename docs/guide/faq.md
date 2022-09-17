@@ -112,6 +112,10 @@ curl -sSL https://get.daocloud.io/docker | sh
 docker-compose down && docker-compose up -d
 ```
 
+### https 反代前台点击按钮跳转后页面不更新
+
+参考其他人的经验，用宝塔 + nginx 可能会出现这个问题，这时可以尝试升级一下 nginx 版本应该能得到解决。
+
 ### Bug 反馈
 
 请提到项目仓库 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)，无特殊情况会在一天内解决。

@@ -48,6 +48,11 @@ example.com {
 
 如果你还是想想用 nginx 的话，那好吧。安利一个 nginx 配置在线生成工具： [https://nginxconfig.io/](https://nginxconfig.io/)
 
+::: warning 注意
+- 宝塔面板用 nginx 反代，如果出现问题，可以去升级一下 nginx 版本，有可能会解决问题。
+- location 下面的配置块只保留下面提供配置的那几行就可以了，不要加奇奇怪怪的语句和请求头（看不懂请忽略）
+:::
+
 http 版本的：
 
 ```nginx
