@@ -16,11 +16,13 @@ import { parseImgLinksOfMarkdown } from 'src/utils/parseImgOfMarkdown';
 import { wordCount } from 'src/utils/wordCount';
 import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';
+import { sleep } from 'src/utils/sleep';
 
 export type ArticleView = 'admin' | 'public' | 'list';
 
 @Injectable()
 export class ArticleProvider {
+  idLock = false;
   constructor(
     @InjectModel('Article')
     private articleModel: Model<ArticleDocument>,
@@ -106,7 +108,8 @@ export class ArticleProvider {
     if (!skipUpdateWordCount) {
       this.metaProvider.updateTotalWords('新建文章');
     }
-    return createdData.save();
+    const res = createdData.save();
+    return res;
   }
   async searchArticlesByLink(link: string) {
     const artciles = await this.articleModel.find(
@@ -915,11 +918,16 @@ export class ArticleProvider {
   }
 
   async getNewId() {
-    const maxObj = await this.articleModel.find({}).sort({ id: -1 }).limit(1);
-    if (maxObj.length) {
-      return maxObj[0].id + 1;
-    } else {
-      return 1;
+    while (this.idLock) {
+      await sleep(10);
     }
+    this.idLock = true;
+    const maxObj = await this.articleModel.find({}).sort({ id: -1 }).limit(1);
+    let res = 1;
+    if (maxObj.length) {
+      res = maxObj[0].id + 1;
+    }
+    this.idLock = false;
+    return res;
   }
 }

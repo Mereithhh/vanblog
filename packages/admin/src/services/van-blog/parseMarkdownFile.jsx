@@ -2,7 +2,7 @@ import { getAllCategories } from '@/services/van-blog/api';
 import { message, Modal } from 'antd';
 import fm from 'front-matter';
 
-export const parseMarkdownFile = async (file) => {
+export const parseMarkdownFile = async (file, allowNotExistCategory) => {
   const name = file.name.split('.')[0];
   const type = file.name.split('.').pop();
   if (type != 'md') {
@@ -19,7 +19,7 @@ export const parseMarkdownFile = async (file) => {
     const { data } = await getAllCategories();
     allCategories = data;
   } catch (err) {
-    message.error('获取当前系统分析信息失败！');
+    message.error('获取当前分类信息失败！');
     return;
   }
   let category = undefined;
@@ -34,6 +34,12 @@ export const parseMarkdownFile = async (file) => {
   const categoryInFile = attributes?.category;
   if (categoryInFile && allCategories.includes(categoryInFile)) {
     category = categoryInFile;
+  }
+  if (allowNotExistCategory && !category) {
+    category = categoris[0] || attributes?.category;
+    if (!category) {
+      category = undefined;
+    }
   }
   const tags = attributes?.tags || [];
   if (attributes?.tag) {

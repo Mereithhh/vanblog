@@ -7,6 +7,7 @@ import Caddy from './tabs/Caddy';
 import Customizing from './tabs/Customizing';
 import CustomPage from './tabs/CustomPage';
 import ImgTab from './tabs/ImgTab';
+import Migrate from './tabs/migrate';
 import SiteInfo from './tabs/SiteInfo';
 import User from './tabs/User';
 import WalineTab from './tabs/WalineTab';
@@ -21,6 +22,7 @@ export default function () {
     waline: <WalineTab />,
     caddy: <Caddy />,
     advance: <Advance />,
+    migrate: <Migrate />,
   };
   const [tab, setTab] = useTab('siteInfo', 'tab');
 
@@ -67,6 +69,10 @@ export default function () {
         {
           tab: '高级设置',
           key: 'advance',
+        },
+        {
+          tab: '迁移助手',
+          key: 'migrate',
         },
       ]}
       onTabChange={setTab}

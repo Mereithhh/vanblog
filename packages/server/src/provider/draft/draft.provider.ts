@@ -10,9 +10,11 @@ import {
 } from 'src/types/draft.dto';
 import { Draft, DraftDocument } from 'src/scheme/draft.schema';
 import { ArticleProvider } from '../article/article.provider';
+import { sleep } from 'src/utils/sleep';
 export type DraftView = 'admin' | 'public' | 'list';
 @Injectable()
 export class DraftProvider {
+  idLock = false;
   constructor(
     @InjectModel('Draft') private draftModel: Model<DraftDocument>,
     private readonly articleProvider: ArticleProvider,
@@ -224,11 +226,16 @@ export class DraftProvider {
   }
 
   async getNewId() {
-    const maxObj = await this.draftModel.find({}).sort({ id: -1 }).limit(1);
-    if (maxObj.length) {
-      return maxObj[0].id + 1;
-    } else {
-      return 1;
+    while (this.idLock) {
+      await sleep(10);
     }
+    this.idLock = true;
+    const maxObj = await this.draftModel.find({}).sort({ id: -1 }).limit(1);
+    let res = 1;
+    if (maxObj.length) {
+      res = maxObj[0].id + 1;
+    }
+    this.idLock = false;
+    return res;
   }
 }
