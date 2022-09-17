@@ -1,4 +1,5 @@
 import { Article } from "../types/article";
+import { encodeQuerystring } from "../utils/encode";
 import { config } from "../utils/loadConfig";
 export type SortOrder = "asc" | "desc";
 export interface GetArticleOption {
@@ -19,7 +20,7 @@ export const getArticlesByOption = async (
     queryString += `${k}=${v}&`;
   }
   queryString = queryString.substring(0, queryString.length - 1);
-  queryString = queryString.replace(/#/g, "%23");
+  queryString = encodeQuerystring(queryString)
   try {
     const url = `${config.baseUrl}api/public/article?${queryString}`;
     const res = await fetch(url);

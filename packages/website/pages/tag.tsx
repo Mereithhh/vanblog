@@ -1,6 +1,7 @@
 import Link from "next/link";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/Layout";
+import { encodeQuerystring } from "../utils/encode";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getTagPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
@@ -23,7 +24,7 @@ const TagPage = (props: TagPageProps) => {
         </div>
         <div className="flex flex-wrap mt-2">
           {props.tags.map((tag) => (
-            <Link href={`/tag/${tag.replace(/#/g, "%23")}`} key={`tag-${tag}`}>
+            <Link href={`/tag/${encodeQuerystring(tag)}`} key={`tag-${tag}`}>
               <a className="my-2 text-gray-500 block hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 transition-all mr-5 dark:text-dark-400 ">{`${tag}`}</a>
             </Link>
           ))}

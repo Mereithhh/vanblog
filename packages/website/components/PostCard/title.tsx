@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import Link from "next/link";
 import { useMemo } from "react";
+import { encodeQuerystring } from "../../utils/encode";
 import PostViewer from "../PostViewer";
 
 export function Title(props: {
@@ -94,7 +95,7 @@ export function SubTitle(props: {
               ></path>
             </svg>
           </span>
-          <Link href={`/category/${props.catelog}`}>
+          <Link href={`/category/${encodeQuerystring(props.catelog)}`}>
             <a className="cursor-pointer group-hover:text-gray-900 dark:group-hover:text-dark-hover hover:font-medium ">{`${props.catelog}`}</a>
           </Link>
         </span>

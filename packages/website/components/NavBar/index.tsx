@@ -10,6 +10,7 @@ import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
 import RssButton from "../RssButton";
 import Item from "./item";
+import { encodeQuerystring } from "../../utils/encode";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -172,7 +173,7 @@ export default function (props: {
                     key={catelog}
                     className="flex items-center h-full md:px-2 hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 cursor-pointer transition-all"
                   >
-                    <Link href={`/category/${catelog}`}>
+                    <Link href={`/category/${encodeQuerystring(catelog)}`}>
                       <a>{catelog}</a>
                     </Link>
                   </li>

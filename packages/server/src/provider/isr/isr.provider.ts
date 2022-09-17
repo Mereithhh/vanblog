@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import { Article } from 'src/scheme/article.schema';
 import { sleep } from 'src/utils/sleep';
+import { encodeQuerystring } from 'src/utils/washUrl';
 import { ArticleProvider } from '../article/article.provider';
 import { CategoryProvider } from '../category/category.provider';
 import { CustomPageProvider } from '../customPage/customPage.provider';
@@ -206,13 +207,13 @@ export class ISRProvider {
   async getCategoryUrls() {
     const categories = await this.categoryProvider.getAllCategories();
     return categories.map((c) => {
-      return `/category/${c}`;
+      return `/category/${encodeQuerystring(c)}`;
     });
   }
   async getTagUrls() {
     const tags = await this.tagProvider.getAllTags(false);
     return tags.map((c) => {
-      return `/tag/${c}`;
+      return `/tag/${encodeQuerystring(c)}`;
     });
   }
   async getArticleUrls() {
