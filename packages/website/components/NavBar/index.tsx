@@ -161,7 +161,7 @@ export default function (props: {
           </div>
         </div>
         {Boolean(props.categories.length) && props.showSubMenu == "true" && (
-          <div className="h-10 items-center hidden md:flex border-b border-gray-200 dark:border-nav-dark">
+          <div className="h-10 items-center hidden md:flex border-b border-gray-200 dark:border-nav-dark overflow-hidden">
             <div
               className="mx-5"
               style={{ width: 52 + props.subMenuOffset }}

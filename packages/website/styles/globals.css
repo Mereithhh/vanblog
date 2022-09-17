@@ -201,3 +201,6 @@ body #wl-edit {
   left: 0;
   right: 0;
 }
+#nav li a {
+  word-break: keep-all;
+}
