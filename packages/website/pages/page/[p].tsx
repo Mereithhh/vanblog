@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { getPublicMeta } from "../../api/getAllData";
 import AuthorCard, { AuthorCardProps } from "../../components/AuthorCard";
 import Layout from "../../components/Layout";
@@ -7,6 +8,7 @@ import Waline from "../../components/WaLine";
 import { Article } from "../../types/article";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPagePagesProps } from "../../utils/getPageProps";
+import { getArticlesKeyWord } from "../../utils/keywords";
 import { revalidate } from "../../utils/loadConfig";
 import Custom404 from "../404";
 export interface PagePagesProps {
@@ -25,6 +27,12 @@ const PagePages = (props: PagePagesProps) => {
       title={props.layoutProps.siteName}
       sideBar={<AuthorCard option={props.authorCardProps}></AuthorCard>}
     >
+      <Head>
+        <meta
+          name="keywords"
+          content={getArticlesKeyWord(props.articles).join(",")}
+        ></meta>
+      </Head>
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard

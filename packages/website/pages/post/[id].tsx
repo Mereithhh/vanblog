@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { getArticlesByOption } from "../../api/getArticles";
 import Layout from "../../components/Layout";
 import PostCard from "../../components/PostCard";
@@ -6,6 +7,7 @@ import { Article } from "../../types/article";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPostPagesProps } from "../../utils/getPageProps";
 import { hasToc } from "../../utils/hasToc";
+import { getArticlesKeyWord } from "../../utils/keywords";
 import { revalidate } from "../../utils/loadConfig";
 import Custom404 from "../404";
 
@@ -42,6 +44,12 @@ const PostPages = (props: PostPagesProps) => {
         ) : null
       }
     >
+      <Head>
+        <meta
+          name="keywords"
+          content={getArticlesKeyWord([props.article]).join(",")}
+        ></meta>
+      </Head>
       <PostCard
         top={props.article.top || 0}
         id={props.article.id}

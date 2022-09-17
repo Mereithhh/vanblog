@@ -7,6 +7,8 @@ import { LayoutProps } from "../utils/getLayoutProps";
 import { getIndexPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
 import Waline from "../components/WaLine";
+import Head from "next/head";
+import { getArticlesKeyWord } from "../utils/keywords";
 export interface IndexPageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
@@ -20,6 +22,12 @@ const Home = (props: IndexPageProps) => {
       title={props.layoutProps.siteName}
       sideBar={<AuthorCard option={props.authorCardProps}></AuthorCard>}
     >
+      <Head>
+        <meta
+          name="keywords"
+          content={getArticlesKeyWord(props.articles).join(",")}
+        ></meta>
+      </Head>
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
