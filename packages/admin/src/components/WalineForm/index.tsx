@@ -1,5 +1,11 @@
 import { getWalineConfig, updateWalineConfig } from '@/services/van-blog/api';
-import { ProForm, ProFormDigit, ProFormSelect, ProFormText } from '@ant-design/pro-components';
+import {
+  ProForm,
+  ProFormDigit,
+  ProFormSelect,
+  ProFormText,
+  ProFormTextArea,
+} from '@ant-design/pro-components';
 import { message, Modal } from 'antd';
 import { useState } from 'react';
 export default function (props: {}) {
@@ -26,6 +32,14 @@ export default function (props: {}) {
           if (location.hostname == 'blog-demo.mereith.com') {
             Modal.info({ title: '演示站禁止修改 waline 配置！' });
             return;
+          }
+          if (data.otherConfig) {
+            try {
+              JSON.parse(data.otherConfig);
+            } catch (err) {
+              Modal.info({ title: '自定义环境变量不是合法 JSON 格式！' });
+              return;
+            }
           }
           setEnableEmail(data?.['smtp.enabled'] || false);
           await updateWalineConfig(data);
@@ -128,6 +142,26 @@ export default function (props: {}) {
             />
           </>
         )}
+        <ProFormTextArea
+          name="otherConfig"
+          label={
+            <a
+              href="https://waline.js.org/reference/server.html"
+              target={'_blank'}
+              rel="norefferrer"
+            >
+              自定义环境变量
+            </a>
+          }
+          tooltip={'json 格式的键值对，会传递个 waline 作为环境变量'}
+          placeholder="json 格式的键值对，会传递个 waline 作为环境变量"
+          fieldProps={{
+            autoSize: {
+              minRows: 10,
+              maxRows: 30,
+            },
+          }}
+        />
       </ProForm>
     </>
   );

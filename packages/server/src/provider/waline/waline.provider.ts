@@ -36,6 +36,15 @@ export class WalineProvider {
         if (config.forceLoginComment) {
           result['LOGIN'] = 'force';
         }
+      } else if (key == 'otherConfig') {
+        if (config.otherConfig) {
+          try {
+            const data = JSON.parse(config.otherConfig);
+            for (const [k, v] of Object.entries(data)) {
+              result[k] = v;
+            }
+          } catch (err) {}
+        }
       } else {
         const rKey = walineEnvMapping[key];
         if (rKey) {

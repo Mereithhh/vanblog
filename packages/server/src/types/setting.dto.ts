@@ -52,6 +52,7 @@ export interface WalineSetting {
   authorEmail: string;
   webhook?: string;
   forceLoginComment: boolean;
+  otherConfig?: string;
 }
 
 export interface HttpsSetting {
