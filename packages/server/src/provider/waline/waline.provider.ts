@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcess, spawn } from 'node:child_process';
 import { config } from 'src/config';
 import { WalineSetting } from 'src/types/setting.dto';
+import { makeSalt } from 'src/utils/crypto';
 import { MetaProvider } from '../meta/meta.provider';
 import { SettingProvider } from '../setting/setting.provider';
 @Injectable()
@@ -87,6 +88,7 @@ export class WalineProvider {
     const otherEnv = {
       SITE_NAME: siteInfo?.siteName || undefined,
       SITE_URL: siteInfo?.baseUrl || undefined,
+      JWT_TOKEN: config.jwtSecret || makeSalt(),
     };
     const walineConfig = await this.settingProvider.getWalineSetting();
     const walineConfigEnv = this.mapConfig2Env(walineConfig);
