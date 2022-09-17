@@ -67,6 +67,13 @@ title: 评论
 }
 ```
 
+
+## 自定义环境变量
+
+你也可以传递 JSON 格式的自定义环境变量键值对，具体可配置的选项请参考 waline 文档：
+
+> [服务端配置](https://waline.js.org/reference/server.html)
+
 ## 原理
 
 在后端的 server 中内嵌了控制 `waline.js` 启动停止的服务，后台页面中暂时使用 `iframe` 内嵌 waline 管理页面，后续会考虑陆续替换成自己的评论实现。
@@ -76,3 +83,4 @@ title: 评论
 配置信息也会由后端的服务生成，传递给 `waline.js` 中，具体采用了 `node` 的 `child_process` 模块。
 
 具体可以看 `packages/server/src/provider/waline/waline.provider.ts` 的代码。
+

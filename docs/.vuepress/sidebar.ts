@@ -37,6 +37,7 @@ export default sidebar([
           "basic/overview.md",
           "basic/category.md",
           "basic/tag.md",
+          "basic/migrate.md",
         ],
       },
       {
