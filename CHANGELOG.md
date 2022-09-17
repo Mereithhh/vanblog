@@ -1,4 +1,33 @@
 # Changelog
+## [0.39.0](https://github.com/Mereithhh/van-blog/compare/v0.38.2...v0.39.0) (2022-09-17)
+
+
+### ✨ Features | 新功能
+
+* SEO优化：文章页、首页和列表页会根据标签和分类增加 keywords 的 meta 标签 ([26733ff](https://github.com/Mereithhh/van-blog/commit/26733ff89c1666032160a9154fbe3d9450892fe4))
+* 内置 waline 支持传递自定义的环境变量配置 ([99e4305](https://github.com/Mereithhh/van-blog/commit/99e4305badc67bf21b54f3a9c84c3391cf19c9ce))
+* 后台增加迁移助手，可批量导入草稿/文章 ([d1e3166](https://github.com/Mereithhh/van-blog/commit/d1e3166dd13d7503cdbbaced82823343f5015bcd))
+
+
+### ✏️ Documentation | 文档
+
+* 更新一下 faq ([87dd17c](https://github.com/Mereithhh/van-blog/commit/87dd17c69927e4fc1f678c64af44800656613612))
+* 更新一个群晖部署文档 ([9d9f4ae](https://github.com/Mereithhh/van-blog/commit/9d9f4aee1b4177b2dc347710c69ea7cd3260be52))
+* 更新文档 ([d9844a7](https://github.com/Mereithhh/van-blog/commit/d9844a79e2aaee4c1064500230b1efcbf8e02986))
+* 更新文档 ([4096b34](https://github.com/Mereithhh/van-blog/commit/4096b345dcaa68f54dbb660b3a4a6aa9a90de144))
+* 更新文档 ([7f3c2f8](https://github.com/Mereithhh/van-blog/commit/7f3c2f86ee719e4ba10eab19c118e5307b8d176d))
+* 更新文档 ([fc4686c](https://github.com/Mereithhh/van-blog/commit/fc4686c9a8f536e54c0512636aa544b39f579d7b))
+* 更新文档 ([ba56bf5](https://github.com/Mereithhh/van-blog/commit/ba56bf5efb10ae554d0891b384e6ec498848d9be))
+* 更新文档&捐赠信息 ([1137404](https://github.com/Mereithhh/van-blog/commit/113740425b2d64337b562b671029a4e00074a0df))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 分类导航栏显示时，分类过长导致的排版错乱 ([f42469d](https://github.com/Mereithhh/van-blog/commit/f42469d893e7583ba61a3ebeba9ea5e81de981b0))
+* 分类或标签中含有 # 或 / 出现的 404 问题 ([5e4ae6c](https://github.com/Mereithhh/van-blog/commit/5e4ae6c5c1a2bb8755f21d2e720438496eb458ab))
+* 友链申领要求重复 ([81c03dd](https://github.com/Mereithhh/van-blog/commit/81c03dd9abd2258dccb4419d388fa108f512ab27))
+* 群晖系统无法登录评论后台 ([450d6c6](https://github.com/Mereithhh/van-blog/commit/450d6c6a68a2911dbf3b442b8b7c39c639cb4adf))
+
 ### [0.38.2](https://github.com/Mereithhh/van-blog/compare/v0.38.1...v0.38.2) (2022-09-14)
 
 
