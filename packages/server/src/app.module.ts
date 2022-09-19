@@ -72,6 +72,7 @@ import { CustomPageProvider } from './provider/customPage/customPage.provider';
 import { CustomPageController } from './controller/admin/customPage/customPage.controller';
 import { RssProvider } from './provider/rss/rss.provider';
 import { MarkdownProvider } from './provider/markdown/markdown.provider';
+import { SiteMapProvider } from './provider/sitemap/sitemap.provider';
 
 @Module({
   imports: [
@@ -152,6 +153,7 @@ import { MarkdownProvider } from './provider/markdown/markdown.provider';
     CustomPageProvider,
     RssProvider,
     MarkdownProvider,
+    SiteMapProvider,
   ],
 })
 export class AppModule implements NestModule {

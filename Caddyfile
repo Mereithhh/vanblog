@@ -72,6 +72,10 @@
     uri replace /feed.xml /rss/feed.xml
     reverse_proxy 127.0.0.1:3000
   }
+  handle /sitemap.xml {
+    uri replace /sitemap.xml /sitemap/sitemap.xml
+    reverse_proxy 127.0.0.1:3000
+  }
 	handle /rss/* {
 		reverse_proxy 127.0.0.1:3000
 	}

@@ -35,6 +35,12 @@ async function bootstrap() {
     prefix: '/rss/',
   });
 
+  // sitemap
+  checkOrCreate(path.join(globalConfig.staticPath, 'sitemap'));
+  app.useStaticAssets(path.join(globalConfig.staticPath, 'sitemap'), {
+    prefix: '/sitemap/',
+  });
+
   const config = new DocumentBuilder()
     .setTitle('VanBlog API Reference')
     .setDescription('The VanBlog API description')
@@ -65,7 +71,7 @@ async function bootstrap() {
     });
     // 触发增量渲染生成静态页面，防止升级后内容为空
     const isrProvider = app.get(ISRProvider);
-    isrProvider.activeAll();
+    isrProvider.activeAll('首次启动触发全量渲染！', 1000);
   }
   setTimeout(() => {
     console.log('应用已启动，端口: 3000');

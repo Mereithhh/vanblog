@@ -21,14 +21,14 @@ export class RssProvider {
     private readonly markdownProvider: MarkdownProvider,
   ) {}
 
-  async generateRssFeed(info?: string) {
+  async generateRssFeed(info?: string, delay?: number) {
     // 生成 RSS 订阅需要遍历全部文章数据，所以防抖时间长一点吧。
     if (this.timer) {
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      this.generateRssFeed(info);
-    }, 5 * 60 * 1000);
+      this.generateRssFeedFn(info);
+    }, delay || 3 * 60 * 1000);
   }
 
   async generateRssFeedFn(info?: string) {

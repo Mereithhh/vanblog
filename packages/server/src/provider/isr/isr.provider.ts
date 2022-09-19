@@ -2,12 +2,10 @@ import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import { Article } from 'src/scheme/article.schema';
 import { sleep } from 'src/utils/sleep';
-import { encodeQuerystring } from 'src/utils/washUrl';
 import { ArticleProvider } from '../article/article.provider';
-import { CategoryProvider } from '../category/category.provider';
-import { CustomPageProvider } from '../customPage/customPage.provider';
 import { RssProvider } from '../rss/rss.provider';
-import { TagProvider } from '../tag/tag.provider';
+import { SiteMapProvider } from '../sitemap/sitemap.provider';
+
 @Injectable()
 export class ISRProvider {
   urlList = ['/', '/category', '/tag', '/timeline', '/about', '/link'];
@@ -16,10 +14,8 @@ export class ISRProvider {
   timer = null;
   constructor(
     private readonly articleProvider: ArticleProvider,
-    private readonly categoryProvider: CategoryProvider,
-    private readonly tagProvider: TagProvider,
-    private readonly customPageProvider: CustomPageProvider,
     private readonly rssProvider: RssProvider,
+    private readonly sitemapProvider: SiteMapProvider,
   ) {}
   async activeAllFn(info?: string) {
     if (info) {
@@ -40,12 +36,13 @@ export class ISRProvider {
       }
     });
   }
-  async activeAll(info?: string) {
+  async activeAll(info?: string, delay?: number) {
     if (this.timer) {
       clearTimeout(this.timer);
     }
     this.timer = setTimeout(() => {
-      this.rssProvider.generateRssFeed(info || '');
+      this.rssProvider.generateRssFeed(info || '', delay);
+      this.sitemapProvider.generateSiteMap(info || '', delay);
       this.activeWithRetry(() => {
         this.activeAllFn(info);
       });
@@ -94,15 +91,15 @@ export class ISRProvider {
   async activePath(type: 'category' | 'tag' | 'page' | 'post' | 'custom') {
     switch (type) {
       case 'category':
-        const categoryUrls = await this.getCategoryUrls();
+        const categoryUrls = await this.sitemapProvider.getCategoryUrls();
         await this.activeUrls(categoryUrls, false);
         break;
       case 'page':
-        const pageUrls = await this.getPageUrls();
+        const pageUrls = await this.sitemapProvider.getPageUrls();
         await this.activeUrls(pageUrls, false);
         break;
       case 'tag':
-        const tagUrls = await this.getTagUrls();
+        const tagUrls = await this.sitemapProvider.getTagUrls();
         await this.activeUrls(tagUrls, false);
         break;
       case 'post':
@@ -110,7 +107,7 @@ export class ISRProvider {
         await this.activeUrls(articleUrls, false);
         break;
       case 'custom':
-        const customUrls = await this.getCustomUrls();
+        const customUrls = await this.sitemapProvider.getCustomUrls();
         await this.activeUrls(customUrls, false);
         break;
     }
@@ -177,7 +174,7 @@ export class ISRProvider {
   async activeCustomPages(info: string) {
     this.activeWithRetry(() => {
       this.logger.log(info);
-      this.getCustomUrls().then((datas) => {
+      this.sitemapProvider.getCustomUrls().then((datas) => {
         this.activeUrls(datas, false);
       });
     }, info);
@@ -201,37 +198,10 @@ export class ISRProvider {
     }
   }
 
-  async getPageUrls() {
-    const num = await this.articleProvider.getTotalNum(false);
-    const total = Math.ceil(num / 5);
-    const paths = [];
-    for (let i = 1; i <= total; i++) {
-      paths.push(`/page/${i}`);
-    }
-    return paths;
-  }
-  async getCategoryUrls() {
-    const categories = await this.categoryProvider.getAllCategories();
-    return categories.map((c) => {
-      return `/category/${encodeQuerystring(c)}`;
-    });
-  }
-  async getTagUrls() {
-    const tags = await this.tagProvider.getAllTags(false);
-    return tags.map((c) => {
-      return `/tag/${encodeQuerystring(c)}`;
-    });
-  }
   async getArticleUrls() {
     const articles = await this.articleProvider.getAll('list', true, true);
     return articles.map((a) => {
       return `/post/${a.id}`;
-    });
-  }
-  async getCustomUrls() {
-    const data = await this.customPageProvider.getAll();
-    return data.map((c) => {
-      return `/custom${c.path}`;
     });
   }
 }
