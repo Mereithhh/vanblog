@@ -1,5 +1,5 @@
 import { getStaticSetting, updateStaticSetting } from '@/services/van-blog/api';
-import { ProForm, ProFormSelect, ProFormTextArea } from '@ant-design/pro-components';
+import { ProForm, ProFormSelect, ProFormText, ProFormTextArea } from '@ant-design/pro-components';
 import { message, Modal } from 'antd';
 import { useState } from 'react';
 export default function (props: {}) {
@@ -80,6 +80,12 @@ export default function (props: {}) {
                   maxRows: 30,
                 },
               }}
+            />
+            <ProFormText
+              name="picgoPlugins"
+              label="自定义 picgo 插件"
+              tooltip="请填写插件名（如 s3），多个请用英文逗号分隔"
+              placeholder={'看不懂的话请忽略'}
             />
           </>
         )}

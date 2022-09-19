@@ -71,4 +71,5 @@ export const StoragePath: Record<StaticType, string> = {
 export class StaticSetting {
   storageType: StorageType;
   picgoConfig: any;
+  picgoPlugins: string;
 }
