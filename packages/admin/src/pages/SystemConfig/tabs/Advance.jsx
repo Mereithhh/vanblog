@@ -1,5 +1,5 @@
 import { activeISR, getLoginConfig, updateLoginConfig } from '@/services/van-blog/api';
-import { ProForm, ProFormSelect } from '@ant-design/pro-components';
+import { ProForm, ProFormDigit, ProFormSelect } from '@ant-design/pro-components';
 import { Alert, Button, Card, message, Modal } from 'antd';
 import { useState } from 'react';
 export default function (props) {
@@ -9,7 +9,7 @@ export default function (props) {
       <Card title="登录安全策略">
         <Alert
           type="warning"
-          message="这是一个实验性功能，目前还不稳定！暂时先不可配置，稳定后开放。"
+          message="开启最大登录失败次数限制目前还不稳定！暂时先不可配置，稳定后开放。"
           style={{ marginBottom: 8 }}
         />
         <ProForm
@@ -19,7 +19,6 @@ export default function (props) {
             const { data } = await getLoginConfig();
             return data || { enableMaxLoginRetry: false };
           }}
-          disabled={true}
           syncToInitialValues={true}
           onFinish={async (data) => {
             if (location.hostname == 'blog-demo.mereith.com') {
@@ -31,6 +30,7 @@ export default function (props) {
           }}
         >
           <ProFormSelect
+            disabled={true}
             name={'enableMaxLoginRetry'}
             label="开启最大登录失败次数限制"
             fieldProps={{
@@ -48,6 +48,12 @@ export default function (props) {
             placeholder="关闭"
             tooltip={'默认关闭，开启后同一 ip 登录失败次数过多后需等一分钟后才能再次登录'}
           ></ProFormSelect>
+          <ProFormDigit
+            name={'expiresIn'}
+            label="登录凭证(Token)有效期(秒)"
+            placeholder={'默认为 7 天'}
+            tooltip="默认为 7 天"
+          />
         </ProForm>
       </Card>
       <Card title="手动触发 ISR" style={{ marginTop: 8 }}>

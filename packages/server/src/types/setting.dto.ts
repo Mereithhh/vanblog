@@ -25,6 +25,7 @@ export interface LoginSetting {
   enableMaxLoginRetry: boolean;
   maxRetryTimes: number;
   durationSeconds: number;
+  expiresIn: number;
 }
 export interface VersionSetting {
   version: string;

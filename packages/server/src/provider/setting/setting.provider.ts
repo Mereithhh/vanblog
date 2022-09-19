@@ -92,6 +92,7 @@ export class SettingProvider {
           enableMaxLoginRetry: false,
           maxRetryTimes: 3,
           durationSeconds: 60,
+          expiresIn: 3600 * 24 * 7,
         }
       );
     }

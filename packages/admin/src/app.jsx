@@ -280,7 +280,6 @@ export const request = {
       let errorMessage = resData.message;
       if (resData?.statusCode == 401 && resData?.message == 'Unauthorized') {
         errorMessage = '登录失效';
-        history.push(loginPath);
       }
       if (errorMessage == 'Forbidden resource') {
         errorMessage = '权限不足！';

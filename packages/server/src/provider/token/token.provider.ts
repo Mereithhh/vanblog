@@ -4,6 +4,7 @@ import { TokenDocument } from 'src/scheme/token.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
+import { SettingProvider } from '../setting/setting.provider';
 
 @Injectable()
 export class TokenProvider {
@@ -12,12 +13,17 @@ export class TokenProvider {
   constructor(
     @InjectModel('Token') private tokenModel: Model<TokenDocument>,
     private readonly jwtService: JwtService,
+    private readonly settingProvider: SettingProvider,
   ) {}
 
   async createToken(payload: any) {
     this.logger.debug(`用户 ${payload.username} 登录，创建 Token。`);
-    const token = this.jwtService.sign(payload);
-    this.tokenModel.create({ userId: payload.sub, token });
+    const loginSetting = await this.settingProvider.getLoginSetting();
+    const expiresIn = loginSetting?.expiresIn || 3600 * 24 * 7;
+    const token = this.jwtService.sign(payload, {
+      expiresIn,
+    });
+    this.tokenModel.create({ userId: payload.sub, token, expiresIn });
     return token;
   }
   async disableToken(token: string) {
