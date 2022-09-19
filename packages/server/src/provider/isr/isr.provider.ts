@@ -13,6 +13,7 @@ export class ISRProvider {
   urlList = ['/', '/category', '/tag', '/timeline', '/about', '/link'];
   base = 'http://127.0.0.1:3001/api/revalidate?path=';
   logger = new Logger(ISRProvider.name);
+  timer = null;
   constructor(
     private readonly articleProvider: ArticleProvider,
     private readonly categoryProvider: CategoryProvider,
@@ -40,10 +41,15 @@ export class ISRProvider {
     });
   }
   async activeAll(info?: string) {
-    this.rssProvider.generateRssFeed(info || '');
-    this.activeWithRetry(() => {
-      this.activeAllFn(info);
-    });
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+    this.timer = setTimeout(() => {
+      this.rssProvider.generateRssFeed(info || '');
+      this.activeWithRetry(() => {
+        this.activeAllFn(info);
+      });
+    }, 1000);
   }
 
   async testConn() {

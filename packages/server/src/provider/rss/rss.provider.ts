@@ -13,6 +13,7 @@ import { washUrl } from 'src/utils/washUrl';
 @Injectable()
 export class RssProvider {
   logger = new Logger(RssProvider.name);
+  timer = null;
   constructor(
     private readonly articleProvider: ArticleProvider,
     private readonly metaProvider: MetaProvider,
@@ -21,6 +22,16 @@ export class RssProvider {
   ) {}
 
   async generateRssFeed(info?: string) {
+    // 生成 RSS 订阅需要遍历全部文章数据，所以防抖时间长一点吧。
+    if (this.timer) {
+      clearTimeout(this.timer);
+    }
+    this.timer = setTimeout(() => {
+      this.generateRssFeed(info);
+    }, 5 * 60 * 1000);
+  }
+
+  async generateRssFeedFn(info?: string) {
     this.logger.log(info + '重新生成 RSS 订阅');
     try {
       let articles = await this.articleProvider.getAll('public', false, false);
