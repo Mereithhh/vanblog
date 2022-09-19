@@ -5,10 +5,10 @@ export type CustomPageDocument = CustomPage & Document;
 
 @Schema()
 export class CustomPage extends Document {
-  @Prop()
+  @Prop({ index: true, unique: true })
   name: string;
 
-  @Prop()
+  @Prop({ index: true, unique: true })
   path: string;
 
   @Prop()

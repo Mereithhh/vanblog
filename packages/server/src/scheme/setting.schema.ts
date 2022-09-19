@@ -6,7 +6,7 @@ export type SettingDocument = Setting & Document;
 
 @Schema()
 export class Setting extends Document {
-  @Prop({ default: 'static' })
+  @Prop({ default: 'static', index: true, unique: true })
   type: SettingType;
 
   @Prop({ type: SchemaTypes.Mixed })

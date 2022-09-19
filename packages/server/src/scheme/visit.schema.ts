@@ -11,10 +11,10 @@ export class Visit extends Document {
   @Prop()
   viewer: number;
 
-  @Prop()
+  @Prop({ index: true })
   date: string;
 
-  @Prop()
+  @Prop({ index: true })
   pathname: string;
 
   @Prop()

@@ -6,7 +6,7 @@ export type UserDocument = User & Document;
 
 @Schema()
 export class User extends Document {
-  @Prop()
+  @Prop({ index: true, unique: true })
   id: number;
 
   @Prop()
@@ -22,7 +22,7 @@ export class User extends Document {
   })
   createdAt: Date;
 
-  @Prop()
+  @Prop({ index: true })
   type: UserType;
 
   @Prop()
@@ -31,7 +31,7 @@ export class User extends Document {
   @Prop()
   permissions?: Permission[];
 
-  @Prop()
+  @Prop({ index: true })
   salt: string;
 }
 

@@ -5,7 +5,7 @@ export type ArticleDocument = Article & Document;
 
 @Schema()
 export class Article extends Document {
-  @Prop()
+  @Prop({ index: true, unique: true })
   id: number;
 
   @Prop()
@@ -14,27 +14,28 @@ export class Article extends Document {
   @Prop({ default: '' })
   content: string;
 
-  @Prop({ default: [] })
+  @Prop({ default: [], index: true })
   tags: string[];
 
-  @Prop({ default: 0 })
+  @Prop({ default: 0, index: true })
   top: number;
-  @Prop()
+
+  @Prop({ index: true })
   category: string;
 
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   hidden: boolean;
 
   @Prop()
   author: string;
 
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   private: boolean;
 
   @Prop({ default: '' })
   password: string;
 
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   deleted: boolean;
 
   @Prop({ default: 0 })

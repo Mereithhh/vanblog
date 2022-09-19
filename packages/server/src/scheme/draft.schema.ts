@@ -5,7 +5,7 @@ export type DraftDocument = Draft & Document;
 
 @Schema()
 export class Draft extends Document {
-  @Prop()
+  @Prop({ index: true, unique: true })
   id: number;
 
   @Prop()
@@ -14,16 +14,16 @@ export class Draft extends Document {
   @Prop({ default: '' })
   content: string;
 
-  @Prop({ default: [] })
+  @Prop({ default: [], index: true })
   tags: string[];
 
   @Prop()
   author: string;
 
-  @Prop()
+  @Prop({ index: true })
   category: string;
 
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   deleted: boolean;
 
   @Prop({

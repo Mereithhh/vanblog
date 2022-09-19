@@ -6,13 +6,13 @@ export type StaticDocument = Static & Document;
 
 @Schema()
 export class Static extends Document {
-  @Prop({ default: 'img' })
+  @Prop({ default: 'img', index: true })
   staticType: StaticType;
 
-  @Prop({ default: 'local' })
+  @Prop({ default: 'local', index: true })
   storageType: StorageType;
 
-  @Prop()
+  @Prop({ index: true })
   // 文件类型，实际上是拓展名
   fileType: string;
 
@@ -24,11 +24,11 @@ export class Static extends Document {
   // 元数据，暂时未定义。
   meta: any;
 
-  @Prop()
+  @Prop({ index: true })
   // 实际路径 = type/name
   name: string;
 
-  @Prop()
+  @Prop({ index: true })
   //签名;
   sign: string;
 
