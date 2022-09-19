@@ -14,6 +14,7 @@ import { config } from 'src/config';
 
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+import { TokenProvider } from 'src/provider/token/token.provider';
 
 import { UserProvider } from 'src/provider/user/user.provider';
 import { Collaborator } from 'src/types/collaborator';
@@ -25,6 +26,7 @@ export class CollaboratorController {
   constructor(
     private readonly userProvider: UserProvider,
     private readonly metaProvider: MetaProvider,
+    private readonly tokenProvider: TokenProvider,
   ) {}
   @Get()
   async getAllCollaborators() {
@@ -59,6 +61,7 @@ export class CollaboratorController {
       };
     }
     const data = await this.userProvider.deleteCollaborator(id);
+    await this.tokenProvider.disableAllCollaborator();
     return {
       statusCode: 200,
       data,
@@ -87,6 +90,7 @@ export class CollaboratorController {
       };
     }
     const data = await this.userProvider.updateCollaborator(dto);
+    await this.tokenProvider.disableAllCollaborator();
     return {
       statusCode: 200,
       data,

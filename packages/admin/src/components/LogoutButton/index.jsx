@@ -1,7 +1,9 @@
+import { logout } from '@/services/van-blog/api';
 import { message } from 'antd';
 import { stringify } from 'querystring';
 import { history, useModel } from 'umi';
 const loginOut = async () => {
+  await logout();
   window.localStorage.removeItem('token');
   const { query = {}, search, pathname } = history.location;
   const { redirect } = query; // Note: There may be security issues, please note

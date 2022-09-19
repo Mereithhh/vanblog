@@ -37,6 +37,7 @@ export const permissionRoutes = Object.values(permissionPathMap);
 export const publicRoutes = [
   'get-/api/admin/meta',
   'post-/api/admin/auth/login',
+  'post-/api/admin/auth/logout',
   'get-/api/admin/article',
   'get-/api/admin/draft',
   'get-/api/admin/category/all',

@@ -109,6 +109,12 @@ export async function login(body, options) {
     ...(options || {}),
   });
 }
+export async function logout(options) {
+  return request('/api/admin/auth/logout', {
+    method: 'POST',
+    ...(options || {}),
+  });
+}
 
 export async function createArticle(body) {
   return request('/api/admin/article', {

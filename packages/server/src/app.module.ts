@@ -73,6 +73,9 @@ import { CustomPageController } from './controller/admin/customPage/customPage.c
 import { RssProvider } from './provider/rss/rss.provider';
 import { MarkdownProvider } from './provider/markdown/markdown.provider';
 import { SiteMapProvider } from './provider/sitemap/sitemap.provider';
+import { TokenProvider } from './provider/token/token.provider';
+import { Token, TokenSchema } from './scheme/token.schema';
+import { TokenGuard } from './provider/auth/token.guard';
 
 @Module({
   imports: [
@@ -87,6 +90,7 @@ import { SiteMapProvider } from './provider/sitemap/sitemap.provider';
       { name: Setting.name, schema: SettingSchema },
       { name: Static.name, schema: StaticSchema },
       { name: CustomPage.name, schema: CustomPageSchema },
+      { name: Token.name, schema: TokenSchema },
     ]),
     JwtModule.register({
       secret: config.jwtSecret,
@@ -154,6 +158,8 @@ import { SiteMapProvider } from './provider/sitemap/sitemap.provider';
     RssProvider,
     MarkdownProvider,
     SiteMapProvider,
+    TokenProvider,
+    TokenGuard,
   ],
 })
 export class AppModule implements NestModule {

@@ -16,6 +16,7 @@ import { AuthProvider } from 'src/provider/auth/auth.provider';
 import { LogProvider } from 'src/provider/log/log.provider';
 import { UserProvider } from 'src/provider/user/user.provider';
 import { LoginGuard } from 'src/provider/auth/login.guard';
+import { TokenProvider } from 'src/provider/token/token.provider';
 
 @ApiTags('tag')
 @Controller('/api/admin/auth/')
@@ -24,6 +25,7 @@ export class AuthController {
     private readonly authProvider: AuthProvider,
     private readonly userProvider: UserProvider,
     private readonly logProvider: LogProvider,
+    private readonly tokenProvider: TokenProvider,
   ) {}
 
   @UseGuards(LoginGuard, AuthGuard('local'))
@@ -43,15 +45,37 @@ export class AuthController {
       data: await this.authProvider.login(request.user),
     };
   }
+
+  @Post('/logout')
+  async logout(@Request() request: Request) {
+    const token = request.headers['token'];
+    if (!token) {
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: '无登录凭证！',
+      });
+    }
+    await this.tokenProvider.disableToken(token);
+    return {
+      statusCode: 200,
+      data: '登出成功！',
+    };
+  }
+
   @UseGuards(...AdminGuard)
   @Put()
   async updateUser(@Body() updateUserDto: UpdateUserDto) {
     if (config?.demo == true || config?.demo == 'true') {
       return { statusCode: 401, message: '演示站禁止修改账号密码！' };
     }
+    const data = await this.userProvider.updateUser(updateUserDto);
+    setTimeout(() => {
+      // 在前端清理 localStore 之后
+      this.tokenProvider.disableAll();
+    }, 1000);
     return {
       statusCode: 200,
-      data: await this.userProvider.updateUser(updateUserDto),
+      data,
     };
   }
 }
