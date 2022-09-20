@@ -197,8 +197,8 @@ config() {
     return 0
   fi
 
-  read -ep "请输入您想要安装的版本，默认不填为最新：" vanblog_version &&
-    read -ep "请输入您的邮箱：" vanblog_email &&
+  # read -ep "请输入您想要安装的版本，默认不填为最新：" vanblog_version &&
+  read -ep "请输入您的邮箱：" vanblog_email &&
     read -ep "请输入 http 端口（默认为 80）：" vanblog_http_port &&
     read -ep "请输入 https 端口（默认为 443）：" vanblog_https_port &&
     echo "接下来您需要输入的域名对应着编排文件中的 VAN_BLOG_ALLOW_DOMAINS 变量" &&

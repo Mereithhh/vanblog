@@ -30,17 +30,18 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 
 ## 部署方式
 
-<!-- - [脚本部署](#一键脚本部署) -->
-
+- [脚本部署](#一键脚本部署)
 - [docker-compose 部署](#docker-compose-部署)
 - [直接部署](#直接部署)
 - [宝塔面板部署](/ref/baota.md)
 - [群晖部署](/ref/dsm.md)
 
-<!-- ## 一键脚本部署
+## 一键脚本部署
 
 ::: info VanBlog
 现在可以使用一键脚本来部署 VanBlog 啦！刚开发完试运行中，有问题请及时反馈！
+
+只推荐在纯 linux 环境下使用此脚本，宝塔或者群晖请参考群晖/宝塔面板部署教程！
 :::
 
 输入以下命令即可：
@@ -53,7 +54,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ```bash
 ./vanblog.sh
-``` -->
+```
 
 ## docker-compose 部署
 
