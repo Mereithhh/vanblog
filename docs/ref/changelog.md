@@ -4,6 +4,45 @@ icon: update
 ---
 
 
+## [0.40.0](https://github.com/Mereithhh/van-blog/compare/v0.39.0...v0.40.0) (2022-09-20)
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* ISR 触发和 RSS 生成增加防抖 ([45f39f0](https://github.com/Mereithhh/van-blog/commit/45f39f050c7c2bfb312c3b8f4166fefd39829e73))
+* 增加一些数据库索引 ([2e23496](https://github.com/Mereithhh/van-blog/commit/2e234967003393966daad0b94969b022e2bcf086))
+
+
+### ✨ Features | 新功能
+
+* picgo 可后台配置安装插件 [#48](https://github.com/Mereithhh/van-blog/issues/48) ([2a49110](https://github.com/Mereithhh/van-blog/commit/2a49110f705940656867519b66e7d47ed82d897e))
+* 删除 JWT 密钥配置，每次启动完全随机 ([5ceefd1](https://github.com/Mereithhh/van-blog/commit/5ceefd17cd0e7c34d21d9be45439582593bdfb3d))
+* 增加一个 robots.txt （原来是 robot.txt） ([0bf6563](https://github.com/Mereithhh/van-blog/commit/0bf65638480766dbbde70b0f65c4248e0e7c259c))
+* 增加内置 Token 管理，登出或修改用户会强制失效所有已签发 Token [#45](https://github.com/Mereithhh/van-blog/issues/45) ([4984981](https://github.com/Mereithhh/van-blog/commit/4984981f0df3fab1fe3e29e766f7c1a2a7384ad2))
+* 忘记密码恢复功能 ([48f2728](https://github.com/Mereithhh/van-blog/commit/48f272848de955c60844b4c7c4a2af093dd89773))
+* 登录凭证有效期后台可配置 [#44](https://github.com/Mereithhh/van-blog/issues/44) ([853ca38](https://github.com/Mereithhh/van-blog/commit/853ca38968d13538784659d899b48adaaa202077))
+* 自动生成 SiteMap ([2f4397c](https://github.com/Mereithhh/van-blog/commit/2f4397c542b6a785f0ff3ed1ef8f53f5cec3cdf1))
+
+
+### ✏️ Documentation | 文档
+
+* 先屏蔽一下一键脚本，测试后再打开 ([484e183](https://github.com/Mereithhh/van-blog/commit/484e1836c8bd46df446eb8ed4488be7471dfd87f))
+* 增加全自动部署脚本 ([e7b7325](https://github.com/Mereithhh/van-blog/commit/e7b73253f0a0357e762445a1eac7ec63df327abc))
+* 开放一键部署脚本 ([50f17f0](https://github.com/Mereithhh/van-blog/commit/50f17f058bf9aba7aa3d70eb4fd0835c1058ef11))
+* 更新tudo ([08670b7](https://github.com/Mereithhh/van-blog/commit/08670b7ca95ab18538dea73712c824b21f7b0205))
+* 更新打赏信息 ([bd1cc23](https://github.com/Mereithhh/van-blog/commit/bd1cc235291b0c494dd9ff593cf09f90facc1ab0))
+* 更新文档 ([b97ec09](https://github.com/Mereithhh/van-blog/commit/b97ec0998017d13ef8b600aac2a6a65c18bf5de9))
+* 更新文档 ([417a48f](https://github.com/Mereithhh/van-blog/commit/417a48f1aaaec4fc3b561d128d54dfae5a7bfe58))
+* 更新文档 ([8ef4869](https://github.com/Mereithhh/van-blog/commit/8ef486907498ffaa24ef8222e5b6a065038c98d8))
+* 更新文档 ([cf49a85](https://github.com/Mereithhh/van-blog/commit/cf49a852c9cea5651ec56ff6045171300253a8e8))
+* 更新文档 ([a3fd9ab](https://github.com/Mereithhh/van-blog/commit/a3fd9ab7cf2da916ea316eeeca89aea5506bf186))
+* 更新文档 ([4681052](https://github.com/Mereithhh/van-blog/commit/46810526248110fc44f5c22fe97ddf91f6c4fd98))
+* 更新文档 ([a3989aa](https://github.com/Mereithhh/van-blog/commit/a3989aa3fa2be251b5ac9e9d057edd7f92bd3585))
+* 更新文档（FAQ） ([ead35db](https://github.com/Mereithhh/van-blog/commit/ead35dbae039ff2792c383081564184834fa2dbd))
+* 更新新功能的文档 ([74e689d](https://github.com/Mereithhh/van-blog/commit/74e689d946d220b7a717f55d562a652a43463e23))
+* 精简编排配置项 ([64ad8a8](https://github.com/Mereithhh/van-blog/commit/64ad8a857fb811c8385607d96b4b1dcff767eef0))
+* 群晖和宝塔部署默认推荐映射存储防止数据丢失 ([99f6edc](https://github.com/Mereithhh/van-blog/commit/99f6edc1f730dc8d9defa24a8fb99e355f56010e))
+
 ## [0.39.0](https://github.com/Mereithhh/van-blog/compare/v0.38.2...v0.39.0) (2022-09-17)
 
 
