@@ -52,6 +52,7 @@ async function bootstrap() {
 
   const initProvider = app.get(InitProvider);
   initProvider.initVersion();
+  initProvider.initRestoreKey();
   if (await initProvider.checkHasInited()) {
     const userProvider = app.get(UserProvider);
     // 老版本没加盐的用户数据洗一下。

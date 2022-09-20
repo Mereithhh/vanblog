@@ -59,8 +59,8 @@ const Login = () => {
             autoLogin: true,
           }}
           onFinish={async (values) => {
-            const {username,password} = values;
-            await handleSubmit({username,password: encryptPwd(username,password)});
+            const { username, password } = values;
+            await handleSubmit({ username, password: encryptPwd(username, password) });
           }}
         >
           {type === 'account' && (
@@ -98,11 +98,20 @@ const Login = () => {
           <div
             style={{
               marginBottom: 24,
+              display: 'flex',
+              justifyContent: 'space-between',
             }}
           >
             <ProFormCheckbox noStyle name="autoLogin">
               自动登录
             </ProFormCheckbox>
+            <a
+              onClick={() => {
+                history.push('/user/restore');
+              }}
+            >
+              忘记密码
+            </a>
           </div>
         </LoginForm>
       </div>

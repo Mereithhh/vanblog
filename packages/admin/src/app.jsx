@@ -208,7 +208,7 @@ export const layout = ({ initialState, setInitialState }) => {
       if (location.pathname === '/init' && !initialState?.user) {
         return;
       }
-      if (!initialState?.user && location.pathname !== loginPath) {
+      if (!initialState?.user && ![loginPath, '/user/restore'].includes(location.pathname)) {
         history.push(loginPath);
       }
       if (location.pathname == loginPath && Boolean(initialState?.user)) {

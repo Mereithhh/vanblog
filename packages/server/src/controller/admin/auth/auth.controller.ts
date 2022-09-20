@@ -17,6 +17,8 @@ import { LogProvider } from 'src/provider/log/log.provider';
 import { UserProvider } from 'src/provider/user/user.provider';
 import { LoginGuard } from 'src/provider/auth/login.guard';
 import { TokenProvider } from 'src/provider/token/token.provider';
+import { CacheProvider } from 'src/provider/cache/cache.provider';
+import { InitProvider } from 'src/provider/init/init.provider';
 
 @ApiTags('tag')
 @Controller('/api/admin/auth/')
@@ -26,6 +28,8 @@ export class AuthController {
     private readonly userProvider: UserProvider,
     private readonly logProvider: LogProvider,
     private readonly tokenProvider: TokenProvider,
+    private readonly cacheProvider: CacheProvider,
+    private readonly initProvider: InitProvider,
   ) {}
 
   @UseGuards(LoginGuard, AuthGuard('local'))
@@ -59,6 +63,35 @@ export class AuthController {
     return {
       statusCode: 200,
       data: '登出成功！',
+    };
+  }
+
+  @Post('/restore')
+  async restore(
+    @Request() request: Request,
+    @Body() body: { key: string; name: string; password: string },
+  ) {
+    const token = body.key;
+    const keyInCache = await this.cacheProvider.get('restoreKey');
+    if (!token || token != keyInCache) {
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: '恢复密钥错误！',
+      });
+    }
+    await this.userProvider.updateUser({
+      name: body.name,
+      password: body.password,
+    });
+    await this.initProvider.initRestoreKey();
+    setTimeout(() => {
+      // 在前端清理 localStore 之后
+      this.tokenProvider.disableAll();
+    }, 1000);
+
+    return {
+      statusCode: 200,
+      data: '重置成功！',
     };
   }
 

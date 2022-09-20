@@ -4,6 +4,7 @@ export default [
     layout: false,
     routes: [
       { name: '登录', path: '/user/login', component: './user/Login' },
+      { name: '忘记密码', path: '/user/restore', component: './user/Restore' },
       { component: './404' },
     ],
   },

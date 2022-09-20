@@ -115,6 +115,13 @@ export async function logout(options) {
     ...(options || {}),
   });
 }
+export async function restore(data, options) {
+  return request('/api/admin/auth/restore', {
+    method: 'POST',
+    data,
+    ...(options || {}),
+  });
+}
 
 export async function createArticle(body) {
   return request('/api/admin/article', {

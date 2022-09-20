@@ -9,7 +9,10 @@ import { SettingProvider } from '../setting/setting.provider';
 import { version } from '../../utils/loadConfig';
 import { encryptPassword, makeSalt } from 'src/utils/crypto';
 import { defaultMenu } from 'src/types/menu.dto';
-
+import { CacheProvider } from '../cache/cache.provider';
+import fs from 'fs';
+import path from 'path';
+import { config } from 'src/config';
 @Injectable()
 export class InitProvider {
   logger = new Logger(InitProvider.name);
@@ -18,6 +21,7 @@ export class InitProvider {
     @InjectModel('User') private userModel: Model<UserDocument>,
     private readonly walineProvider: WalineProvider,
     private readonly settingProvider: SettingProvider,
+    private readonly cacheProvider: CacheProvider,
   ) {}
 
   async init(initDto: InitDto) {
@@ -62,6 +66,19 @@ export class InitProvider {
       return false;
     }
     return true;
+  }
+  async initRestoreKey() {
+    const key = makeSalt();
+    await this.cacheProvider.set('restoreKey', key);
+    const filePath = path.join('/var/log/', 'restore.key');
+    try {
+      fs.writeFileSync(filePath, key, { encoding: 'utf-8' });
+    } catch (err) {
+      this.logger.error('写入恢复密钥到文件失败！');
+    }
+    this.logger.warn(
+      `忘记密码恢复密钥为： ${key}\n 注意此密钥也会同时写入到日志目录中的 restore.key 文件中，每次重启 vanblog 或老密钥被使用时都会重新生成此密钥`,
+    );
   }
   async initVersion() {
     if (!version || version == 'dev') {
