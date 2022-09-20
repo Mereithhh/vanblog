@@ -30,6 +30,8 @@ title: 评论
 
 ![](https://www.mereith.com/static/img/3a0157c13c7ed53b5f3a7c360f23c61c.clipboard-2022-09-01.png)
 
+注意：很多邮件服务商默认是关闭 SMTP 的，比如上图中是默认关闭的，你需要先开启才行！
+
 点击官方的帮助文档，可以获取到相应的内容，填入即可。拿我来说，我就这样写的：
 
 ![](https://www.mereith.com/static/img/c55b4837910d893d4431543304ac0585.clipboard-2022-09-01.png)
@@ -67,7 +69,6 @@ title: 评论
 }
 ```
 
-
 ## 自定义环境变量
 
 你也可以传递 JSON 格式的自定义环境变量键值对，具体可配置的选项请参考 waline 文档：
@@ -83,4 +84,3 @@ title: 评论
 配置信息也会由后端的服务生成，传递给 `waline.js` 中，具体采用了 `node` 的 `child_process` 模块。
 
 具体可以看 `packages/server/src/provider/waline/waline.provider.ts` 的代码。
-
