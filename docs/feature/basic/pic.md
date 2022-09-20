@@ -26,7 +26,7 @@ title: 图床
 
 生成后，进入后台`站点管理/系统设置/图床设置`，选择 `OSS` 图床，并把生成的配置文件复制过去，比如我用的七牛云图床，就像下面这样：
 
-![](https://pic.mereith.com/img/c04cb1d8912a0a34cfd39e846caad201.clipboard-2022-08-14.png)
+![](https://pic.mereith.com/img/73d7d98839fb36fa26e450423aa7d147.clipboard-2022-09-20.png)
 
 点击保存后，新上传的图片就是对应的图床了！内置图床已经上传的图片不受影响。
 
@@ -65,3 +65,13 @@ title: 图床
 `VanBlog` 支持导出全部`本地图床图片`为一个压缩包，你可以在后台中的图片设置中点击按钮来导出全部本地图床图片！（oss 图床暂不支持全部导出，因为已经在 oss 中了，完全可以通过 oss 控制台批量导出，而且备份意义不大）
 
 ![](https://www.mereith.com/static/img/dd5f0f0a1ff61a1a5d22c09fcaa8178c.clipboard-2022-09-01.png)
+
+## 安装自定插件
+
+您可以在后台配置安装自定义的 `picgo` 插件，请填入插件名，多个请用英文逗号分隔。
+
+如下图中，想用 `s3` 插件，直接写 s3 就行了，提交后您可以在容器日志中看到插件安装情况。
+
+![](https://pic.mereith.com/img/73d7d98839fb36fa26e450423aa7d147.clipboard-2022-09-20.png)
+
+![](https://pic.mereith.com/img/283fbd4ca8addeaf06b2f3d6ae1c4643.clipboard-2022-09-20.png)
