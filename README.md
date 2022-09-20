@@ -60,7 +60,21 @@
 
 ## 快速上手/部署教程
 
-请移步项目文档：[快速上手](https://vanblog.mereith.com/guide/docker.html)
+### 一键脚本部署
+
+```bash
+curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
+```
+
+将来如果需要再次运行脚本，可以运行：
+
+```bash
+./vanblog.sh
+```
+
+### 其他部署方式
+
+具体请移步项目文档：[快速上手](https://vanblog.mereith.com/guide/docker.html)
 
 ## 常见问题
 
