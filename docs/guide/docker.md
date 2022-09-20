@@ -58,6 +58,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ./vanblog.sh
 ```
 
+![](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
+
 ## docker-compose 部署
 
 ### 1.安装依赖
