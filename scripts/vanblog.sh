@@ -190,7 +190,7 @@ config() {
   echo -e "> 修改配置"
 
   echo -e "正在下载编排文件"
-  rm ${VANBLOG_BASE_PATH}/docker-compose-template.yaml
+  rm ${VANBLOG_BASE_PATH}/docker-compose-template.yaml >/dev/null 2>&1
   wget -t 2 -T 10 -O ${VANBLOG_BASE_PATH}/docker-compose-template.yaml ${COMPOSE_URL} >/dev/null 2>&1
   if [[ $? != 0 ]]; then
     echo -e "${red}下载脚本失败，请检查本机能否连接 ${COMPOSE_URL}${plain}"
@@ -220,8 +220,8 @@ config() {
     vanblog_version="latest"
   fi
 
-  rm ${VANBLOG_BASE_PATH}/docker-compose.yaml
-  cp ${VANBLOG_BASE_PATH}/docker-compose-template.yaml ${VANBLOG_BASE_PATH}/docker-compose.yaml
+  rm ${VANBLOG_BASE_PATH}/docker-compose.yaml >/dev/null 2>&1
+  cp ${VANBLOG_BASE_PATH}/docker-compose-template.yaml ${VANBLOG_BASE_PATH}/docker-compose.yaml >/dev/null 2>&1
   sed -i "s/vanblog_data_path/${VANBLOG_DATA_PATH_RAW}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
   sed -i "s/vanblog_email/${vanblog_email}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
   sed -i "s/vanblog_http_port/${vanblog_http_port}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
