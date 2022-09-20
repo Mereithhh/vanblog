@@ -76,6 +76,10 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 具体请移步项目文档：[快速上手](https://vanblog.mereith.com/guide/docker.html)
 
+## 反代
+
+请参考： [反代](https://vanblog.mereith.com/guide/nginx.html)
+
 ## 常见问题
 
 > [作者 logo 无法加载](https://vanblog.mereith.com/ref/faq.html#%E5%9B%BE%E7%89%87-%E4%BD%9C%E8%80%85-logo-%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%87%BA%E6%9D%A5)

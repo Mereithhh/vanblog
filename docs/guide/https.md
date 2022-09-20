@@ -11,6 +11,10 @@ order: -3
 
 需要 ip 访问请用 `http` 协议并关闭 `https 自动重定向`
 
+各位反代的同学，不要管什么 Caddy ，就当他不存在！VanBlog 是一个整体，反代你映射的 http 端口就好了！
+
+需要反代请前往： [反代配置](/guide/nginx.md)
+
 :::
 
 `VanBlog` 镜像内采用了 `Caddy` 作为反向代理，并支持全自动按需 HTTPS 证书申请配置。

@@ -44,6 +44,10 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 只推荐在纯 linux 环境下使用此脚本，宝塔原则上可以用，但我没有仔细测过，如有问题请反馈！
 
 群晖部署请参考： [群晖部署教程](/ref/dsm.md)
+
+各位反代的同学，不要管什么 Caddy ，就当他不存在！VanBlog 是一个整体，反代你映射的 http 端口就好了！
+
+需要反代请前往： [反代配置](/guide/nginx.md)
 :::
 
 输入以下命令即可：
@@ -78,6 +82,12 @@ systemctl enable --now docker
 **只需要安装 `docker` 和 `docker-compose` 就可以了，不需要手动安装 `mongoDB`**，因为编排中已经包含了数据库（数据库是通过 docker 容器化运行的，不需要手动安装）。
 
 ### 2.新建编排文件
+
+:::info 温馨提示
+各位需要反代的同学，不要管什么 Caddy ，就当他不存在！VanBlog 是一个整体，反代你映射的 80 端口就好了！
+
+部署后如需要反代请前往： [反代配置](/guide/nginx.md)
+:::
 
 在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件，内容如下：
 
