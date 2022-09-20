@@ -4,6 +4,19 @@ icon: update
 ---
 
 
+### [0.40.1](https://github.com/Mereithhh/van-blog/compare/v0.40.0...v0.40.1) (2022-09-20)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([5763ae4](https://github.com/Mereithhh/van-blog/commit/5763ae4c28a68d192131aed03d9e7208a1c7bf5e))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 更新字数缓存防抖错误 & ISR 触发改为串行 ([d8311ac](https://github.com/Mereithhh/van-blog/commit/d8311ac55213ce09d6b9d68833529b1a1358e65c))
+* 第一个一级标题不在目录中出现 ([da898ac](https://github.com/Mereithhh/van-blog/commit/da898acf9ac58f93ec834933713f8029166e904c))
+
 ## [0.40.0](https://github.com/Mereithhh/van-blog/compare/v0.39.0...v0.40.0) (2022-09-20)
 
 
