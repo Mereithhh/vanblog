@@ -30,21 +30,14 @@ version: "3"
 
 services:
   vanblog:
-    # 默认 dockerhub 源
     image: mereith/van-blog:latest
     restart: always
     environment:
       TZ: "Asia/Shanghai"
       # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。不要带协议！
       VAN_BLOG_ALLOW_DOMAINS: "www.mereith.com"
-      # CDN URL，包含协议，部署到 cdn 的时候用。在开启 cdn 之前请不要设置此项。
-      # VAN_BLOG_CDN_URL: "https://www.mereith.com"
-      # mongodb 的地址
-      VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017/vanBlog?authSource=admin"
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: "someone@mereith.com"
-      # 内嵌评论系统的 db 名，默认为 waline
-      VAN_BLOG_WALINE_DB: "waline"
     volumes:
       # 图床文件的存放地址，按需修改。
       - /var/vanblog/data/static:/app/static
@@ -55,26 +48,20 @@ services:
       # caddy 证书存储
       - /var/vanblog/caddy/data:/root/.local/share/caddy
     ports:
-      - 80:80
-      - 443:443
+      # 前面的是映射到宿主机的端口号，该端口的话改前面的。
+      - 8880:80
+      - 4443:443
   mongo:
     # 某些机器不支持 avx 会报错，所以默认用 v4 版本。有的话用最新的。
     image: mongo:4.4.16
     restart: always
     environment:
       TZ: "Asia/Shanghai"
-      # 如果你改了这两个，那上面的数据库连接地址也要同步修改。
-      # mongoDB 初始化用户名
-      MONGO_INITDB_ROOT_USERNAME: vanBlog
-      # mongoDB 初始化密码
-      MONGO_INITDB_ROOT_PASSWORD: vanBlog
-      MONGO_INITDB_DATABASE: vanBlog
     volumes:
       - /var/vanblog/data/mongo:/data/db
-    # 如果你向在外部访问数据库，并且已经设置了强密码，那可以取消下面的注释
-    # ports:
-    # - 27017:27017
 ```
+
+所有可用的环境变量请参考 [启动配置](/ref/env.md)
 
 ## 启动
 

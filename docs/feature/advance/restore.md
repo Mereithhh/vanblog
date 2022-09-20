@@ -4,7 +4,7 @@ title: 忘记密码
 
 `VanBlog` 支持忘记密码恢复，在登录页面点击`忘记密码`，输入正确的恢复密钥即可重置超级管理员用户。
 
-[](https://pic.mereith.com/img/471a81dc548ad543814a6bbf7315ccf1.clipboard-2022-09-20.png)
+![](https://pic.mereith.com/img/471a81dc548ad543814a6bbf7315ccf1.clipboard-2022-09-20.png)
 
 ## 恢复密钥获取方式
 

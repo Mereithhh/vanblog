@@ -7,13 +7,13 @@ icon: async
 
 ## 环境变量
 
-| 名称                   | 必填 | 说明                                                                        | 默认值                                               |
-| ---------------------- | ---- | --------------------------------------------------------------------------- | ---------------------------------------------------- |
-| VAN_BLOG_DATABASE_URL  | 是   | mongoDB URL                                                                 | `mongodb://localhost:27017/vanBlog?authSource=admin` |
-| VAN_BLOG_ALLOW_DOMAINS | 否   | 允许的外部图片域名                                                          | `""`                                                 |
-| VAN_BLOG_CDN_URL       | 否   | CDN 部署的 url，在开启之前请不要设置此项。此项会导致公共资源从此 URL 获取。 | `""`                                                 |
-| VAN_BLOG_WALINE_DB     | 否   | 内嵌评论系统的 db 名，默认为 waline                                         | `""`                                                 |
-| EMAIL                  | 否   | 用于自动申请 https 证书的邮箱                                               | `""`                                                 |
+| 名称                   | 必填 | 说明                                                                        | 默认值                                           |
+| ---------------------- | ---- | --------------------------------------------------------------------------- | ------------------------------------------------ |
+| VAN_BLOG_DATABASE_URL  | 否   | mongoDB URL                                                                 | `mongodb://mongo:27017/vanBlog?authSource=admin` |
+| VAN_BLOG_ALLOW_DOMAINS | 否   | 允许的外部图片域名                                                          | `""`                                             |
+| VAN_BLOG_CDN_URL       | 否   | CDN 部署的 url，在开启之前请不要设置此项。此项会导致公共资源从此 URL 获取。 | `""`                                             |
+| VAN_BLOG_WALINE_DB     | 否   | 内嵌评论系统的 db 名，默认为 waline                                         | `""`                                             |
+| EMAIL                  | 否   | 用于自动申请 https 证书的邮箱                                               | `""`                                             |
 
 ## 目录映射
 

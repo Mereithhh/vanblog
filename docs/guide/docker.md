@@ -37,6 +37,8 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 
 ## docker-compose 部署
 
+### 1.安装依赖
+
 如果你没有安装 `docker` 和 `docker-compose`，可以通过以下命令一键安装：
 
 ```bash
@@ -50,28 +52,23 @@ systemctl enable --now docker
 
 **只需要安装 `docker` 和 `docker-compose` 就可以了，不需要手动安装 `mongoDB`**，因为编排中已经包含了数据库（数据库是通过 docker 容器化运行的，不需要手动安装）。
 
-在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件：
+### 2.新建编排文件
+
+在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件，内容如下：
 
 ```yaml
 version: "3"
 
 services:
   vanblog:
-    # 默认 dockerhub 源
     image: mereith/van-blog:latest
     restart: always
     environment:
       TZ: "Asia/Shanghai"
       # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。不要带协议！
       VAN_BLOG_ALLOW_DOMAINS: "www.mereith.com"
-      # CDN URL，包含协议，部署到 cdn 的时候用。在开启 cdn 之前请不要设置此项。
-      # VAN_BLOG_CDN_URL: "https://www.mereith.com"
-      # mongodb 的地址
-      VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017/vanBlog?authSource=admin"
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: "someone@mereith.com"
-      # 内嵌评论系统的 db 名，默认为 waline
-      VAN_BLOG_WALINE_DB: "waline"
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static
@@ -82,6 +79,7 @@ services:
       # caddy 证书存储
       - ${PWD}/caddy/data:/root/.local/share/caddy
     ports:
+      # 前面的是映射到宿主机的端口号，改端口的话改前面的。
       - 80:80
       - 443:443
   mongo:
@@ -90,21 +88,15 @@ services:
     restart: always
     environment:
       TZ: "Asia/Shanghai"
-      # 如果你改了这两个，那上面的数据库连接地址也要同步修改。
-      # mongoDB 初始化用户名
-      MONGO_INITDB_ROOT_USERNAME: vanBlog
-      # mongoDB 初始化密码
-      MONGO_INITDB_ROOT_PASSWORD: vanBlog
-      MONGO_INITDB_DATABASE: vanBlog
     volumes:
-      # mongoDB 数据存放地址，按需修改。
       - ${PWD}/data/mongo:/data/db
-    # 如果你向在外部访问数据库，并且已经设置了强密码，那可以取消下面的注释
-    # ports:
-    # - 27017:27017
 ```
 
-按注释说明修改`docker-compose.yml`的配置后：
+> 所有可用的环境变量请参考 [启动配置](/ref/env.md)
+
+### 3.启动项目
+
+按注释说明修改`docker-compose.yml`的配置后运行：
 
 ```bash
 docker-compose up -d
@@ -117,6 +109,8 @@ PS: 请检查 `VAN_BLOG_ALLOW_DOMAINS` 变量是否正确，否则作者头像�
 也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
 
 > 如果你想在外部访问数据库，请参考 [常见问题](/guide/faq.md) 中的 `如何从外部访问数据库`
+>
+> 如果你想反代请参考 [反代](/guide/nginx.md)
 
 ::: info VanBlog
 首次运行默认是关闭 `https` 的，请通过 `http` 协议访问。初始化后，进入后台确认 https 证书已自动生成后可选择开启 https 自动重定向。

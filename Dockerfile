@@ -73,6 +73,7 @@ RUN cd  /app/website &&  npm install sharp && npm cache clean --force && cd ..
 ENV NODE_ENV production
 ENV VAN_BLOG_SERVER_URL "http://127.0.0.1:3000"
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
+ENV VAN_BLOG_DATABASE_URL "mongodb://mongo:27017/vanBlog?authSource=admin"
 ENV EMAIL "vanblog@mereith.com"
 ENV VAN_BLOG_WALINE_DB "waline"
 # 复制静态文件
