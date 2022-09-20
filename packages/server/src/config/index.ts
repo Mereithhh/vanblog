@@ -12,7 +12,7 @@ export interface Config {
 export const config: Config = {
   mongoUrl: loadConfig(
     'database.url',
-    `mongodb://localhost:27017/vanBlog?authSource=admin`,
+    `mongodb://mongo:27017/vanBlog?authSource=admin`,
   ),
   jwtSecret: makeSalt(),
   staticPath: loadConfig('static.path', '/app/static'),

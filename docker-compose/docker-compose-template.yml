@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  vanblog:
+    image: mereith/van-blog:vanblog_version
+    restart: always
+    environment:
+      TZ: "Asia/Shanghai"
+      # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。不要带协议！
+      VAN_BLOG_ALLOW_DOMAINS: vanblog_domains
+      # 邮箱地址，用于自动申请 https 证书
+      EMAIL: vanblog_email
+    volumes:
+      # 图床文件的存放地址，按需修改。
+      - vanblog_data_path/data/static:/app/static
+      # 日志文件
+      - vanblog_data_path/log:/var/log
+      # caddy 配置存储
+      - vanblog_data_path/caddy/config:/root/.config/caddy
+      # caddy 证书存储
+      - vanblog_data_path/caddy/data:/root/.local/share/caddy
+    ports:
+      # 前面的是映射到宿主机的端口号，改端口的话该前面的
+      - vanblog_http_port:80
+      - vanblog_https_port:443
+  mongo:
+    # 某些机器不支持 avx 会报错，所以默认用 v4 版本。有的话用最新的。
+    image: mongo:4.4.16
+    restart: always
+    environment:
+      TZ: "Asia/Shanghai"
+    volumes:
+      - vanblog_data_path/data/mongo:/data/db
+
