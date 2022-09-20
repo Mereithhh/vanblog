@@ -15,6 +15,7 @@ import { ViewerProvider } from '../viewer/viewer.provider';
 @Injectable()
 export class MetaProvider {
   logger = new Logger(MetaProvider.name);
+  timer = null;
   constructor(
     @InjectModel('Meta')
     private metaModel: Model<MetaDocument>,
@@ -26,10 +27,12 @@ export class MetaProvider {
   ) {}
 
   async updateTotalWords(reason: string) {
-    const total = await this.articleProvider.countTotalWords();
-    await this.update({ totalWordCount: total });
-    this.logger.log(`${reason}触发更新字数缓存：当前文章总字数: ${total}`);
-    return total;
+    if (this.timer) clearInterval(this.timer);
+    this.timer = setInterval(async () => {
+      const total = await this.articleProvider.countTotalWords();
+      await this.update({ totalWordCount: total });
+      this.logger.log(`${reason}触发更新字数缓存：当前文章总字数: ${total}`);
+    }, 1000 * 30);
   }
 
   async getViewer() {
