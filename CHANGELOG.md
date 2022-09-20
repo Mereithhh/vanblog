@@ -1,4 +1,22 @@
 # Changelog
+### [0.40.2](https://github.com/Mereithhh/van-blog/compare/v0.40.1...v0.40.2) (2022-09-20)
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 调整一下 ISR 页面静态化顺序，这样串行 ISR 的时候修改的文章页和首页会优先更新 ([13641b6](https://github.com/Mereithhh/van-blog/commit/13641b6eb622d11e48d6207cbb7f9168a1112513))
+
+
+### ✏️ Documentation | 文档
+
+* j优化一键脚本 ([9f93939](https://github.com/Mereithhh/van-blog/commit/9f939395b4e16da5b93d7bea668b5e32e211508a))
+* README 增加一键部署脚本 ([1502a8b](https://github.com/Mereithhh/van-blog/commit/1502a8b94b622eabb52ca63019a4ac074cf73051))
+* 更新文档 ([20ae6d2](https://github.com/Mereithhh/van-blog/commit/20ae6d27087dd98235ccb1d2925c4525632fbe68))
+* 更新文档 ([8693c9b](https://github.com/Mereithhh/van-blog/commit/8693c9b672ae95e7cc17248b88bb47fc1c392842))
+* 更新文档 ([b09cad8](https://github.com/Mereithhh/van-blog/commit/b09cad889dc3fba4b55612ae1ee969527939f6aa))
+* 更新文档 ([e463729](https://github.com/Mereithhh/van-blog/commit/e4637296c35bb8aa75f9f1ede75d43faa1da6b5d))
+* 部署脚本加个截图 ([4846520](https://github.com/Mereithhh/van-blog/commit/4846520934dc6da1e1eac10f15465a1cd41c87d1))
+
 ### [0.40.1](https://github.com/Mereithhh/van-blog/compare/v0.40.0...v0.40.1) (2022-09-20)
 
 
