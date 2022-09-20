@@ -5,7 +5,9 @@ import { sleep } from 'src/utils/sleep';
 import { ArticleProvider } from '../article/article.provider';
 import { RssProvider } from '../rss/rss.provider';
 import { SiteMapProvider } from '../sitemap/sitemap.provider';
-
+export interface ActiveConfig {
+  postId?: number;
+}
 @Injectable()
 export class ISRProvider {
   urlList = ['/', '/category', '/tag', '/timeline', '/about', '/link'];
@@ -17,7 +19,7 @@ export class ISRProvider {
     private readonly rssProvider: RssProvider,
     private readonly sitemapProvider: SiteMapProvider,
   ) {}
-  async activeAllFn(info?: string) {
+  async activeAllFn(info?: string, activeConfig?: ActiveConfig) {
     if (info) {
       this.logger.log(info);
     } else {
@@ -26,10 +28,10 @@ export class ISRProvider {
     // ! 配置差的机器可能并发多了会卡，所以改成串行的。
 
     await this.activeUrls(this.urlList, false);
+    await this.activePath('post', activeConfig?.postId || undefined);
+    await this.activePath('page');
     await this.activePath('category');
     await this.activePath('tag');
-    await this.activePath('page');
-    await this.activePath('post');
     await this.activePath('custom');
     this.logger.log('触发全量渲染完成！');
     // Promise.all([
@@ -45,7 +47,7 @@ export class ISRProvider {
     //   }
     // });
   }
-  async activeAll(info?: string, delay?: number) {
+  async activeAll(info?: string, delay?: number, activeConfig?: ActiveConfig) {
     if (this.timer) {
       clearTimeout(this.timer);
     }
@@ -53,7 +55,7 @@ export class ISRProvider {
       this.rssProvider.generateRssFeed(info || '', delay);
       this.sitemapProvider.generateSiteMap(info || '', delay);
       this.activeWithRetry(() => {
-        this.activeAllFn(info);
+        this.activeAllFn(info, activeConfig);
       });
     }, 1000);
   }
@@ -97,7 +99,10 @@ export class ISRProvider {
       await this.activeUrl(each, log);
     }
   }
-  async activePath(type: 'category' | 'tag' | 'page' | 'post' | 'custom') {
+  async activePath(
+    type: 'category' | 'tag' | 'page' | 'post' | 'custom',
+    postId?: number,
+  ) {
     switch (type) {
       case 'category':
         const categoryUrls = await this.sitemapProvider.getCategoryUrls();
@@ -113,7 +118,17 @@ export class ISRProvider {
         break;
       case 'post':
         const articleUrls = await this.getArticleUrls();
-        await this.activeUrls(articleUrls, false);
+        if (postId) {
+          const urlsWithoutThisId = articleUrls.filter(
+            (u) => u !== `/post/${postId}`,
+          );
+          await this.activeUrls(
+            [`/post/${postId}`, ...urlsWithoutThisId],
+            false,
+          );
+        } else {
+          await this.activeUrls(articleUrls, false);
+        }
         break;
       case 'custom':
         const customUrls = await this.sitemapProvider.getCustomUrls();

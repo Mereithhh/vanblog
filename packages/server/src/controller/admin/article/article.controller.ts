@@ -84,7 +84,9 @@ export class ArticleController {
       };
     }
     const data = await this.articleProvider.updateById(id, updateDto);
-    this.isrProvider.activeAll('更新文章触发增量渲染！');
+    this.isrProvider.activeAll('更新文章触发增量渲染！', undefined, {
+      postId: id,
+    });
     return {
       statusCode: 200,
       data,
@@ -104,7 +106,9 @@ export class ArticleController {
       createDto.author = author;
     }
     const data = await this.articleProvider.create(createDto);
-    this.isrProvider.activeAll('创建文章触发增量渲染！');
+    this.isrProvider.activeAll('创建文章触发增量渲染！', undefined, {
+      postId: data.id,
+    });
     return {
       statusCode: 200,
       data,
@@ -126,7 +130,9 @@ export class ArticleController {
       return { statusCode: 401, message: '演示站禁止删除文章！' };
     }
     const data = await this.articleProvider.deleteById(id);
-    this.isrProvider.activeAll('删除文章触发增量渲染！');
+    this.isrProvider.activeAll('删除文章触发增量渲染！', undefined, {
+      postId: id,
+    });
     return {
       statusCode: 200,
       data,
