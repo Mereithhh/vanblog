@@ -27,8 +27,8 @@ export class MetaProvider {
   ) {}
 
   async updateTotalWords(reason: string) {
-    if (this.timer) clearInterval(this.timer);
-    this.timer = setInterval(async () => {
+    if (this.timer) clearTimeout(this.timer);
+    this.timer = setTimeout(async () => {
       const total = await this.articleProvider.countTotalWords();
       await this.update({ totalWordCount: total });
       this.logger.log(`${reason}触发更新字数缓存：当前文章总字数: ${total}`);

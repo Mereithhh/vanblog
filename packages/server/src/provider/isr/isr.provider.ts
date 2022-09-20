@@ -23,18 +23,27 @@ export class ISRProvider {
     } else {
       this.logger.log('首次启动触发全量渲染！');
     }
-    Promise.all([
-      this.activeUrls(this.urlList, false),
-      this.activePath('category'),
-      this.activePath('tag'),
-      this.activePath('page'),
-      this.activePath('post'),
-      this.activePath('custom'),
-    ]).then(() => {
-      if (!info) {
-        this.logger.log('触发全量渲染完成！');
-      }
-    });
+    // ! 配置差的机器可能并发多了会卡，所以改成串行的。
+
+    await this.activeUrls(this.urlList, false);
+    await this.activePath('category');
+    await this.activePath('tag');
+    await this.activePath('page');
+    await this.activePath('post');
+    await this.activePath('custom');
+    this.logger.log('触发全量渲染完成！');
+    // Promise.all([
+    //   this.activeUrls(this.urlList, false),
+    //   this.activePath('category'),
+    //   this.activePath('tag'),
+    //   this.activePath('page'),
+    //   this.activePath('post'),
+    //   this.activePath('custom'),
+    // ]).then(() => {
+    //   if (!info) {
+    //     this.logger.log('触发全量渲染完成！');
+    //   }
+    // });
   }
   async activeAll(info?: string, delay?: number) {
     if (this.timer) {
@@ -85,7 +94,7 @@ export class ISRProvider {
   }
   async activeUrls(urls: string[], log: boolean) {
     for (const each of urls) {
-      this.activeUrl(each, log);
+      await this.activeUrl(each, log);
     }
   }
   async activePath(type: 'category' | 'tag' | 'page' | 'post' | 'custom') {
