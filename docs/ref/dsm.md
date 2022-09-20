@@ -61,7 +61,6 @@ icon: router
 | 名称                   | 值                                      |
 | ---------------------- | --------------------------------------- |
 | VAN_BLOG_DATABASE_URL  | mongodb://mongo:27017/vanBlog           |
-| VAN_BLOG_JWT_SECRET    | 随机字符串（最好 32 位以上）            |
 | EMAIL                  | 你自己的邮箱                            |
 | VAN_BLOG_ALLOW_DOMAINS | 访问 vanblog 的域名，多个用英文逗号隔开 |
 

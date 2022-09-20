@@ -1,20 +1,20 @@
 import { logout } from '@/services/van-blog/api';
 import { message } from 'antd';
-import { stringify } from 'querystring';
 import { history, useModel } from 'umi';
 const loginOut = async () => {
   await logout();
-  window.localStorage.removeItem('token');
+
   const { query = {}, search, pathname } = history.location;
   const { redirect } = query; // Note: There may be security issues, please note
 
-  if (pathname !== '/user/login' && !redirect) {
+  if (pathname !== '/user/login') {
     history.replace({
       pathname: '/user/login',
-      search: stringify({
-        redirect: pathname + search,
-      }),
+      // search: stringify({
+      //   redirect: pathname + search,
+      // }),
     });
+    window.localStorage.removeItem('token');
   }
 };
 export default function (props) {

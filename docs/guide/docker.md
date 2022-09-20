@@ -68,8 +68,6 @@ services:
       # VAN_BLOG_CDN_URL: "https://www.mereith.com"
       # mongodb 的地址
       VAN_BLOG_DATABASE_URL: "mongodb://vanBlog:vanBlog@mongo:27017/vanBlog?authSource=admin"
-      # jwt 密钥，随机字符串即可。请注意保密！所有的密码都由此密钥签发！
-      VAN_BLOG_JWT_SECRET: "AnyString"
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: "someone@mereith.com"
       # 内嵌评论系统的 db 名，默认为 waline
@@ -177,9 +175,6 @@ spec:
             - name: VAN_BLOG_ALLOW_DOMAINS
               value: >-
                 pic.mereith.com
-            - name: VAN_BLOG_JWT_SECRET
-              value: >-
-                AnyRandomString
             - name: EMAIL
               value: >-
                 vanblog@mereith.com
