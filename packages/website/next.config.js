@@ -54,16 +54,6 @@ const getCdnUrl = () => {
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   output: "standalone",
-  experimental: {
-    images: {
-      allowFutureImage: true,
-    },
-  },
-  publicRuntimeConfig: {
-    images: {
-      domains: getAllowDomains(),
-    },
-  },
   images: {
     domains: getAllowDomains(),
   },
