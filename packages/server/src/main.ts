@@ -13,6 +13,7 @@ import { InitProvider } from './provider/init/init.provider';
 import { json } from 'express';
 import { UserProvider } from './provider/user/user.provider';
 import { SettingProvider } from './provider/setting/setting.provider';
+import { WebsiteProvider } from './provider/website/website.provider';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -50,6 +51,9 @@ async function bootstrap() {
   SwaggerModule.setup('swagger', app, document);
   await app.listen(3000);
 
+  const websiteProvider = app.get(WebsiteProvider);
+  websiteProvider.init();
+
   const initProvider = app.get(InitProvider);
   initProvider.initVersion();
   initProvider.initRestoreKey();
@@ -64,10 +68,10 @@ async function bootstrap() {
     metaProvider.updateTotalWords('首次启动');
     const walineProvider = app.get(WalineProvider);
     walineProvider.init();
-    process.on('SIGINT', () => {
-      walineProvider.stop();
-
-      console.log('waline 子进程停止成功！关闭服务!');
+    process.on('SIGINT', async () => {
+      await walineProvider.stop();
+      await websiteProvider.stop();
+      console.log('检测到关闭信号，优雅退出！');
       process.exit();
     });
     // 触发增量渲染生成静态页面，防止升级后内容为空

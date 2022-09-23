@@ -76,6 +76,7 @@ import { SiteMapProvider } from './provider/sitemap/sitemap.provider';
 import { TokenProvider } from './provider/token/token.provider';
 import { Token, TokenSchema } from './scheme/token.schema';
 import { TokenGuard } from './provider/auth/token.guard';
+import { WebsiteProvider } from './provider/website/website.provider';
 
 @Module({
   imports: [
@@ -160,6 +161,7 @@ import { TokenGuard } from './provider/auth/token.guard';
     SiteMapProvider,
     TokenProvider,
     TokenGuard,
+    WebsiteProvider,
   ],
 })
 export class AppModule implements NestModule {

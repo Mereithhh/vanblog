@@ -136,21 +136,15 @@ export class WalineProvider {
         this.ctx = null;
         this.logger.warn('Waline 进程退出');
       });
-      this.ctx.on('error', (err) => {
-        this.logger.error('Waline 错误' + err);
-      });
-      this.ctx.on('close', () => {
-        this.logger.warn('Waline 进程退出');
-        this.ctx = null;
-      });
       this.ctx.stdout.on('data', (data) => {
         const t = data.toString();
         if (!t.includes('Cannot find module')) {
-          this.logger.log(data.toString());
+          this.logger.log(t.substring(0, t.length - 1));
         }
       });
       this.ctx.stderr.on('data', (data) => {
-        this.logger.error(data.toString());
+        const t = data.toString();
+        this.logger.error(t.substring(0, t.length - 1));
       });
     } else {
       this.logger.log('Waline 启动成功！');
