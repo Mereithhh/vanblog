@@ -361,6 +361,7 @@ export default function () {
   return (
     <PageContainer
       className="editor-full"
+      style={{ overflow: 'hidden' }}
       header={{
         title: (
           <Space>
