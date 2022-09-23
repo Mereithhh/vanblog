@@ -13,6 +13,20 @@ order: -3
 
 ![](https://pic.mereith.com/img/4eba8540c5a7a5ae41885289abf98514.clipboard-2022-08-15.png)
 
+## 一键脚本升级
+
+::: info VanBlog
+使用一键脚本升级的前提是：**部署也是使用的一键脚本**
+
+如果您不是通过一键脚本部署的，可以先在后台手动备份后，改为通过脚本部署。
+:::
+
+```bash
+curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
+```
+
+![](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
+
 ## 原理
 
 目前暂不支持热升级（后面会有的），需要手动关闭容器，切换新版镜像后重启。
@@ -95,3 +109,13 @@ PS：因为目前只有我一个人开发，所以很多情况测试覆盖不到
 ```bash
 docker-compose down && docker-compose up -d
 ```
+
+## 群晖升级
+
+群晖按照上面说的原理，如果想用图形化升级的话，备份后，先删除原有镜像和容器，再重新创建即可。
+
+## 宝塔升级
+
+宝塔的话，现在推荐用一键脚本部署，直接用脚本升级就行了。
+
+如果想用图形化升级的话，备份后，先删除原有镜像和容器，再重新创建即可。
