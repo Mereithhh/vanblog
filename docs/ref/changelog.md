@@ -4,6 +4,36 @@ icon: update
 ---
 
 
+## [0.41.0](https://github.com/Mereithhh/van-blog/compare/v0.40.2...v0.41.0) (2022-09-23)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 全文无标题但代码块内有 # 开头注释会被目录组件误识别成标题 ([bba4b48](https://github.com/Mereithhh/van-blog/commit/bba4b48a020e91d5199506dd186af3dbbde2d26b))
+* 前台 markdown 组件渲染时报错 ([42892c1](https://github.com/Mereithhh/van-blog/commit/42892c1f5c1321ccdcb1d79566bcb9480d7005de))
+* 图片名有空格编辑器无法预览 ([afab503](https://github.com/Mereithhh/van-blog/commit/afab50386fda610b83c0e9c9a05e9cdd05471aa0))
+* 精简前台next.js 配置文件去掉多余的报错 ([8c355f7](https://github.com/Mereithhh/van-blog/commit/8c355f781499e3b517fb378b4b983f9f0d9fc92f))
+
+
+### ✨ Features | 新功能
+
+* 前台 next.js 服务增加意外退出自动重启机制（website 由后端通过 child_process 控制） ([930adc8](https://github.com/Mereithhh/van-blog/commit/930adc80f6358d152ebcef529a92b795b4c2a845))
+* 后台增加控制页面链接点击跳转行为配置（可选择为在新窗口打开） ([7d214c8](https://github.com/Mereithhh/van-blog/commit/7d214c8dff2d08fa43393fc9baf769c36f1eccc7))
+* 增加单天访客/访问数的趋势图 ([b55d603](https://github.com/Mereithhh/van-blog/commit/b55d603f72632fa98fbedea4a7f4bd1057a62bbe))
+* 文章内的跳转链接会在新窗口/标签页打开 ([7a63eb4](https://github.com/Mereithhh/van-blog/commit/7a63eb43d2c1d6a32ed12cbcd37fb012bdd99b41))
+
+
+### ✏️ Documentation | 文档
+
+* 更新宝塔部署和升级文档 ([5e244a2](https://github.com/Mereithhh/van-blog/commit/5e244a2e42f65721f0d923e1273c85f770b17186))
+* 更新文档 ([b9d9eed](https://github.com/Mereithhh/van-blog/commit/b9d9eed8c3193b89d9f4af6859678f78d85efeae))
+* 更新文档 ([e51b161](https://github.com/Mereithhh/van-blog/commit/e51b16170bff35c074dc9a8fbc39eee9d0150b30))
+* 更新文档 ([0e0e482](https://github.com/Mereithhh/van-blog/commit/0e0e482c254ac5a6fa3fd7c1043fd3721313aea7))
+* 更新文档 ([7297bbc](https://github.com/Mereithhh/van-blog/commit/7297bbce2d2b0e40a1370396e20461ee9c6ada3c))
+* 更新文档 ([35199c9](https://github.com/Mereithhh/van-blog/commit/35199c9562b59ab246c78ee719bed668c6fe4625))
+* 更新文档 ([edc519f](https://github.com/Mereithhh/van-blog/commit/edc519f4ef454194548d6302dbff28055f405b30))
+* 补充文档关于 caddy 的描述 ([9cc7e70](https://github.com/Mereithhh/van-blog/commit/9cc7e70fbafa3770b974db4d63c58d6d5adc4f9d))
+
 ### [0.40.2](https://github.com/Mereithhh/van-blog/compare/v0.40.1...v0.40.2) (2022-09-20)
 
 
