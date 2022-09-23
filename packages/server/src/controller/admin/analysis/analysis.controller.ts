@@ -22,9 +22,9 @@ export class AnalysisController {
   ) {
     const data = await this.analysisProvider.getWelcomePageData(
       tab,
-      overviewDataNum,
-      viewerDataNum,
-      articleTabDataNum,
+      parseInt(overviewDataNum as any),
+      parseInt(viewerDataNum as any),
+      parseInt(articleTabDataNum as any),
     );
     return {
       statusCode: 200,

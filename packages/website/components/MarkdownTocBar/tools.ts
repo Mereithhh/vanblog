@@ -5,6 +5,7 @@ export interface NavItem {
   text: string;
 }
 export const washMarkdownContent = (source: string) => {
+  if (!source) return "";
   return source
     .replace(/```([\s\S]*?)```[\s]*/g, "")
     .replace(/`#/g, "")
