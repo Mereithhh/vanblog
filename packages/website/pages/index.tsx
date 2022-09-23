@@ -9,6 +9,7 @@ import { revalidate } from "../utils/loadConfig";
 import Waline from "../components/WaLine";
 import Head from "next/head";
 import { getArticlesKeyWord } from "../utils/keywords";
+import AnchorMonitor from "../components/AnchorMonitor";
 export interface IndexPageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
@@ -16,6 +17,7 @@ export interface IndexPageProps {
   articles: Article[];
 }
 const Home = (props: IndexPageProps) => {
+  AnchorMonitor({ offset: 0 });
   return (
     <Layout
       option={props.layoutProps}

@@ -19,6 +19,7 @@ export function Title(props: {
   }, [props]);
   return (
     <div className="flex justify-center">
+      <a id={`${props.id}`} data-title={props.title} className="post-title-anchor"></a>
       {props.type != "about" ? (
         <Link href={`/post/${props.id}`} newTab={newTab}>
           <a
