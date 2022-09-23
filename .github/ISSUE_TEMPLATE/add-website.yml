@@ -1,0 +1,29 @@
+---
+name: 样例提交
+description: 在 "谁在使用" 中加入您的网站
+title: '[样例提交]: '
+labels:
+  - 样例提交
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 网站名 | Site Name
+      description: 请网站名 | Please supply the name of your site.
+      placeholder: ex. Mereith's Blog
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: 网站地址 | Website URL
+      description: 请提供您用 VanBlog 搭建的网站地址 | Please supply a website url which powered by VanBlog.
+      placeholder: ex. https://blog-demo.mereith.com
+    validations:
+      required: true
+
+
+
+
+
