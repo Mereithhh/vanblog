@@ -63,5 +63,6 @@ title: 站点设置
 | 是否允许通过 URL 打开隐藏的文章 | 不允许   | 默认不允许，开启后可通过 URL 打开隐藏文章。                                  |
 | 是否开启客制化功能              | 开启     | 默认开启，关闭后即使通过客制化面板，自定义了 CSS、Script、HTML 也不会生效    |
 | 是否显示 RSS 按钮               | 开启     | 默认开启，关闭后所有位置会隐藏 RSS 按钮                                      |
+| 前台点击链接时的默认行为        | 在当前页面跳转 | 默认在当前页面跳转，会影响除了导航栏之外的大部分链接 |
 
-![](https://www.mereith.com/static/img/d6315de2dbf4fe09a0aad13051b470a6.clipboard-2022-09-04.png)
+![](https://pic.mereith.com/img/f301d655490954bcb437a1e3fd59c1dd.clipboard-2022-09-23.png)
