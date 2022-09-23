@@ -68,6 +68,13 @@ export default function (props) {
               <a
                 target={'_blank'}
                 rel="noreferrer"
+                href="https://github.com/Mereithhh/van-blog/issues/new/choose"
+              >
+                提交案例
+              </a>
+              <a
+                target={'_blank'}
+                rel="noreferrer"
                 href="https://github.com/Mereithhh/van-blog#%E6%89%93%E8%B5%8F"
               >
                 打赏

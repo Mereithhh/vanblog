@@ -116,9 +116,12 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ## 谁在使用
 
-目前就我自己- -
+现在可能用的人有一些了吧 - -
+
+如果您想把自己加进来，请提一个 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)，我会尽快添加的。
 
 - [Mereith's Blog](https://www.mereith.com)
+- [前端｜面试进阶之道](https://www.whyknown.com/)
 
 ## TODO
 
