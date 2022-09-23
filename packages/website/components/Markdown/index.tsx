@@ -10,6 +10,7 @@ import { HeadingRender } from "./heading";
 import { Els } from "./directiveEls";
 import { Code } from "./Code";
 import Img from "./Img";
+import a from "./a";
 export default function (props: { content: string }) {
   return (
     <>
@@ -34,6 +35,7 @@ export default function (props: { content: string }) {
           h5: HeadingRender,
           h6: HeadingRender,
           img: Img,
+          a: a,
         }}
         className={`markdown-body text-base`}
         children={props.content}
