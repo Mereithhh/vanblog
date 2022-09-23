@@ -1,180 +1,135 @@
 # Changelog
-## [0.41.0](https://github.com/Mereithhh/van-blog/compare/v0.40.2...v0.41.0) (2022-09-23)
-
-
-### 🐛 Bug Fixes | Bug 修复
-
-* 全文无标题但代码块内有 # 开头注释会被目录组件误识别成标题 ([bba4b48](https://github.com/Mereithhh/van-blog/commit/bba4b48a020e91d5199506dd186af3dbbde2d26b))
-* 前台 markdown 组件渲染时报错 ([42892c1](https://github.com/Mereithhh/van-blog/commit/42892c1f5c1321ccdcb1d79566bcb9480d7005de))
-* 图片名有空格编辑器无法预览 ([afab503](https://github.com/Mereithhh/van-blog/commit/afab50386fda610b83c0e9c9a05e9cdd05471aa0))
-* 精简前台next.js 配置文件去掉多余的报错 ([8c355f7](https://github.com/Mereithhh/van-blog/commit/8c355f781499e3b517fb378b4b983f9f0d9fc92f))
-
-
-### ✨ Features | 新功能
-
-* 前台 next.js 服务增加意外退出自动重启机制（website 由后端通过 child_process 控制） ([930adc8](https://github.com/Mereithhh/van-blog/commit/930adc80f6358d152ebcef529a92b795b4c2a845))
-* 后台增加控制页面链接点击跳转行为配置（可选择为在新窗口打开） ([7d214c8](https://github.com/Mereithhh/van-blog/commit/7d214c8dff2d08fa43393fc9baf769c36f1eccc7))
-* 增加单天访客/访问数的趋势图 ([b55d603](https://github.com/Mereithhh/van-blog/commit/b55d603f72632fa98fbedea4a7f4bd1057a62bbe))
-* 文章内的跳转链接会在新窗口/标签页打开 ([7a63eb4](https://github.com/Mereithhh/van-blog/commit/7a63eb43d2c1d6a32ed12cbcd37fb012bdd99b41))
-
-
-### ✏️ Documentation | 文档
-
-* 更新宝塔部署和升级文档 ([5e244a2](https://github.com/Mereithhh/van-blog/commit/5e244a2e42f65721f0d923e1273c85f770b17186))
-* 更新文档 ([b9d9eed](https://github.com/Mereithhh/van-blog/commit/b9d9eed8c3193b89d9f4af6859678f78d85efeae))
-* 更新文档 ([e51b161](https://github.com/Mereithhh/van-blog/commit/e51b16170bff35c074dc9a8fbc39eee9d0150b30))
-* 更新文档 ([0e0e482](https://github.com/Mereithhh/van-blog/commit/0e0e482c254ac5a6fa3fd7c1043fd3721313aea7))
-* 更新文档 ([7297bbc](https://github.com/Mereithhh/van-blog/commit/7297bbce2d2b0e40a1370396e20461ee9c6ada3c))
-* 更新文档 ([35199c9](https://github.com/Mereithhh/van-blog/commit/35199c9562b59ab246c78ee719bed668c6fe4625))
-* 更新文档 ([edc519f](https://github.com/Mereithhh/van-blog/commit/edc519f4ef454194548d6302dbff28055f405b30))
-* 补充文档关于 caddy 的描述 ([9cc7e70](https://github.com/Mereithhh/van-blog/commit/9cc7e70fbafa3770b974db4d63c58d6d5adc4f9d))
 
 ### [0.40.2](https://github.com/Mereithhh/van-blog/compare/v0.40.1...v0.40.2) (2022-09-20)
 
-
 ### ⚡ Performance Improvements | 性能优化
 
-* 调整一下 ISR 页面静态化顺序，这样串行 ISR 的时候修改的文章页和首页会优先更新 ([13641b6](https://github.com/Mereithhh/van-blog/commit/13641b6eb622d11e48d6207cbb7f9168a1112513))
-
+- 调整一下 ISR 页面静态化顺序，这样串行 ISR 的时候修改的文章页和首页会优先更新 ([13641b6](https://github.com/Mereithhh/van-blog/commit/13641b6eb622d11e48d6207cbb7f9168a1112513))
 
 ### ✏️ Documentation | 文档
 
-* j优化一键脚本 ([9f93939](https://github.com/Mereithhh/van-blog/commit/9f939395b4e16da5b93d7bea668b5e32e211508a))
-* README 增加一键部署脚本 ([1502a8b](https://github.com/Mereithhh/van-blog/commit/1502a8b94b622eabb52ca63019a4ac074cf73051))
-* 更新文档 ([20ae6d2](https://github.com/Mereithhh/van-blog/commit/20ae6d27087dd98235ccb1d2925c4525632fbe68))
-* 更新文档 ([8693c9b](https://github.com/Mereithhh/van-blog/commit/8693c9b672ae95e7cc17248b88bb47fc1c392842))
-* 更新文档 ([b09cad8](https://github.com/Mereithhh/van-blog/commit/b09cad889dc3fba4b55612ae1ee969527939f6aa))
-* 更新文档 ([e463729](https://github.com/Mereithhh/van-blog/commit/e4637296c35bb8aa75f9f1ede75d43faa1da6b5d))
-* 部署脚本加个截图 ([4846520](https://github.com/Mereithhh/van-blog/commit/4846520934dc6da1e1eac10f15465a1cd41c87d1))
+- j 优化一键脚本 ([9f93939](https://github.com/Mereithhh/van-blog/commit/9f939395b4e16da5b93d7bea668b5e32e211508a))
+- README 增加一键部署脚本 ([1502a8b](https://github.com/Mereithhh/van-blog/commit/1502a8b94b622eabb52ca63019a4ac074cf73051))
+- 更新文档 ([20ae6d2](https://github.com/Mereithhh/van-blog/commit/20ae6d27087dd98235ccb1d2925c4525632fbe68))
+- 更新文档 ([8693c9b](https://github.com/Mereithhh/van-blog/commit/8693c9b672ae95e7cc17248b88bb47fc1c392842))
+- 更新文档 ([b09cad8](https://github.com/Mereithhh/van-blog/commit/b09cad889dc3fba4b55612ae1ee969527939f6aa))
+- 更新文档 ([e463729](https://github.com/Mereithhh/van-blog/commit/e4637296c35bb8aa75f9f1ede75d43faa1da6b5d))
+- 部署脚本加个截图 ([4846520](https://github.com/Mereithhh/van-blog/commit/4846520934dc6da1e1eac10f15465a1cd41c87d1))
 
 ### [0.40.1](https://github.com/Mereithhh/van-blog/compare/v0.40.0...v0.40.1) (2022-09-20)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([5763ae4](https://github.com/Mereithhh/van-blog/commit/5763ae4c28a68d192131aed03d9e7208a1c7bf5e))
-
+- 更新文档 ([5763ae4](https://github.com/Mereithhh/van-blog/commit/5763ae4c28a68d192131aed03d9e7208a1c7bf5e))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 更新字数缓存防抖错误 & ISR 触发改为串行 ([d8311ac](https://github.com/Mereithhh/van-blog/commit/d8311ac55213ce09d6b9d68833529b1a1358e65c))
-* 第一个一级标题不在目录中出现 ([da898ac](https://github.com/Mereithhh/van-blog/commit/da898acf9ac58f93ec834933713f8029166e904c))
+- 更新字数缓存防抖错误 & ISR 触发改为串行 ([d8311ac](https://github.com/Mereithhh/van-blog/commit/d8311ac55213ce09d6b9d68833529b1a1358e65c))
+- 第一个一级标题不在目录中出现 ([da898ac](https://github.com/Mereithhh/van-blog/commit/da898acf9ac58f93ec834933713f8029166e904c))
 
 ## [0.40.0](https://github.com/Mereithhh/van-blog/compare/v0.39.0...v0.40.0) (2022-09-20)
 
-
 ### ⚡ Performance Improvements | 性能优化
 
-* ISR 触发和 RSS 生成增加防抖 ([45f39f0](https://github.com/Mereithhh/van-blog/commit/45f39f050c7c2bfb312c3b8f4166fefd39829e73))
-* 增加一些数据库索引 ([2e23496](https://github.com/Mereithhh/van-blog/commit/2e234967003393966daad0b94969b022e2bcf086))
-
+- ISR 触发和 RSS 生成增加防抖 ([45f39f0](https://github.com/Mereithhh/van-blog/commit/45f39f050c7c2bfb312c3b8f4166fefd39829e73))
+- 增加一些数据库索引 ([2e23496](https://github.com/Mereithhh/van-blog/commit/2e234967003393966daad0b94969b022e2bcf086))
 
 ### ✨ Features | 新功能
 
-* picgo 可后台配置安装插件 [#48](https://github.com/Mereithhh/van-blog/issues/48) ([2a49110](https://github.com/Mereithhh/van-blog/commit/2a49110f705940656867519b66e7d47ed82d897e))
-* 删除 JWT 密钥配置，每次启动完全随机 ([5ceefd1](https://github.com/Mereithhh/van-blog/commit/5ceefd17cd0e7c34d21d9be45439582593bdfb3d))
-* 增加一个 robots.txt （原来是 robot.txt） ([0bf6563](https://github.com/Mereithhh/van-blog/commit/0bf65638480766dbbde70b0f65c4248e0e7c259c))
-* 增加内置 Token 管理，登出或修改用户会强制失效所有已签发 Token [#45](https://github.com/Mereithhh/van-blog/issues/45) ([4984981](https://github.com/Mereithhh/van-blog/commit/4984981f0df3fab1fe3e29e766f7c1a2a7384ad2))
-* 忘记密码恢复功能 ([48f2728](https://github.com/Mereithhh/van-blog/commit/48f272848de955c60844b4c7c4a2af093dd89773))
-* 登录凭证有效期后台可配置 [#44](https://github.com/Mereithhh/van-blog/issues/44) ([853ca38](https://github.com/Mereithhh/van-blog/commit/853ca38968d13538784659d899b48adaaa202077))
-* 自动生成 SiteMap ([2f4397c](https://github.com/Mereithhh/van-blog/commit/2f4397c542b6a785f0ff3ed1ef8f53f5cec3cdf1))
-
+- picgo 可后台配置安装插件 [#48](https://github.com/Mereithhh/van-blog/issues/48) ([2a49110](https://github.com/Mereithhh/van-blog/commit/2a49110f705940656867519b66e7d47ed82d897e))
+- 删除 JWT 密钥配置，每次启动完全随机 ([5ceefd1](https://github.com/Mereithhh/van-blog/commit/5ceefd17cd0e7c34d21d9be45439582593bdfb3d))
+- 增加一个 robots.txt （原来是 robot.txt） ([0bf6563](https://github.com/Mereithhh/van-blog/commit/0bf65638480766dbbde70b0f65c4248e0e7c259c))
+- 增加内置 Token 管理，登出或修改用户会强制失效所有已签发 Token [#45](https://github.com/Mereithhh/van-blog/issues/45) ([4984981](https://github.com/Mereithhh/van-blog/commit/4984981f0df3fab1fe3e29e766f7c1a2a7384ad2))
+- 忘记密码恢复功能 ([48f2728](https://github.com/Mereithhh/van-blog/commit/48f272848de955c60844b4c7c4a2af093dd89773))
+- 登录凭证有效期后台可配置 [#44](https://github.com/Mereithhh/van-blog/issues/44) ([853ca38](https://github.com/Mereithhh/van-blog/commit/853ca38968d13538784659d899b48adaaa202077))
+- 自动生成 SiteMap ([2f4397c](https://github.com/Mereithhh/van-blog/commit/2f4397c542b6a785f0ff3ed1ef8f53f5cec3cdf1))
 
 ### ✏️ Documentation | 文档
 
-* 先屏蔽一下一键脚本，测试后再打开 ([484e183](https://github.com/Mereithhh/van-blog/commit/484e1836c8bd46df446eb8ed4488be7471dfd87f))
-* 增加全自动部署脚本 ([e7b7325](https://github.com/Mereithhh/van-blog/commit/e7b73253f0a0357e762445a1eac7ec63df327abc))
-* 开放一键部署脚本 ([50f17f0](https://github.com/Mereithhh/van-blog/commit/50f17f058bf9aba7aa3d70eb4fd0835c1058ef11))
-* 更新tudo ([08670b7](https://github.com/Mereithhh/van-blog/commit/08670b7ca95ab18538dea73712c824b21f7b0205))
-* 更新打赏信息 ([bd1cc23](https://github.com/Mereithhh/van-blog/commit/bd1cc235291b0c494dd9ff593cf09f90facc1ab0))
-* 更新文档 ([b97ec09](https://github.com/Mereithhh/van-blog/commit/b97ec0998017d13ef8b600aac2a6a65c18bf5de9))
-* 更新文档 ([417a48f](https://github.com/Mereithhh/van-blog/commit/417a48f1aaaec4fc3b561d128d54dfae5a7bfe58))
-* 更新文档 ([8ef4869](https://github.com/Mereithhh/van-blog/commit/8ef486907498ffaa24ef8222e5b6a065038c98d8))
-* 更新文档 ([cf49a85](https://github.com/Mereithhh/van-blog/commit/cf49a852c9cea5651ec56ff6045171300253a8e8))
-* 更新文档 ([a3fd9ab](https://github.com/Mereithhh/van-blog/commit/a3fd9ab7cf2da916ea316eeeca89aea5506bf186))
-* 更新文档 ([4681052](https://github.com/Mereithhh/van-blog/commit/46810526248110fc44f5c22fe97ddf91f6c4fd98))
-* 更新文档 ([a3989aa](https://github.com/Mereithhh/van-blog/commit/a3989aa3fa2be251b5ac9e9d057edd7f92bd3585))
-* 更新文档（FAQ） ([ead35db](https://github.com/Mereithhh/van-blog/commit/ead35dbae039ff2792c383081564184834fa2dbd))
-* 更新新功能的文档 ([74e689d](https://github.com/Mereithhh/van-blog/commit/74e689d946d220b7a717f55d562a652a43463e23))
-* 精简编排配置项 ([64ad8a8](https://github.com/Mereithhh/van-blog/commit/64ad8a857fb811c8385607d96b4b1dcff767eef0))
-* 群晖和宝塔部署默认推荐映射存储防止数据丢失 ([99f6edc](https://github.com/Mereithhh/van-blog/commit/99f6edc1f730dc8d9defa24a8fb99e355f56010e))
+- 先屏蔽一下一键脚本，测试后再打开 ([484e183](https://github.com/Mereithhh/van-blog/commit/484e1836c8bd46df446eb8ed4488be7471dfd87f))
+- 增加全自动部署脚本 ([e7b7325](https://github.com/Mereithhh/van-blog/commit/e7b73253f0a0357e762445a1eac7ec63df327abc))
+- 开放一键部署脚本 ([50f17f0](https://github.com/Mereithhh/van-blog/commit/50f17f058bf9aba7aa3d70eb4fd0835c1058ef11))
+- 更新 tudo ([08670b7](https://github.com/Mereithhh/van-blog/commit/08670b7ca95ab18538dea73712c824b21f7b0205))
+- 更新打赏信息 ([bd1cc23](https://github.com/Mereithhh/van-blog/commit/bd1cc235291b0c494dd9ff593cf09f90facc1ab0))
+- 更新文档 ([b97ec09](https://github.com/Mereithhh/van-blog/commit/b97ec0998017d13ef8b600aac2a6a65c18bf5de9))
+- 更新文档 ([417a48f](https://github.com/Mereithhh/van-blog/commit/417a48f1aaaec4fc3b561d128d54dfae5a7bfe58))
+- 更新文档 ([8ef4869](https://github.com/Mereithhh/van-blog/commit/8ef486907498ffaa24ef8222e5b6a065038c98d8))
+- 更新文档 ([cf49a85](https://github.com/Mereithhh/van-blog/commit/cf49a852c9cea5651ec56ff6045171300253a8e8))
+- 更新文档 ([a3fd9ab](https://github.com/Mereithhh/van-blog/commit/a3fd9ab7cf2da916ea316eeeca89aea5506bf186))
+- 更新文档 ([4681052](https://github.com/Mereithhh/van-blog/commit/46810526248110fc44f5c22fe97ddf91f6c4fd98))
+- 更新文档 ([a3989aa](https://github.com/Mereithhh/van-blog/commit/a3989aa3fa2be251b5ac9e9d057edd7f92bd3585))
+- 更新文档（FAQ） ([ead35db](https://github.com/Mereithhh/van-blog/commit/ead35dbae039ff2792c383081564184834fa2dbd))
+- 更新新功能的文档 ([74e689d](https://github.com/Mereithhh/van-blog/commit/74e689d946d220b7a717f55d562a652a43463e23))
+- 精简编排配置项 ([64ad8a8](https://github.com/Mereithhh/van-blog/commit/64ad8a857fb811c8385607d96b4b1dcff767eef0))
+- 群晖和宝塔部署默认推荐映射存储防止数据丢失 ([99f6edc](https://github.com/Mereithhh/van-blog/commit/99f6edc1f730dc8d9defa24a8fb99e355f56010e))
 
 ## [0.39.0](https://github.com/Mereithhh/van-blog/compare/v0.38.2...v0.39.0) (2022-09-17)
 
-
 ### ✨ Features | 新功能
 
-* SEO优化：文章页、首页和列表页会根据标签和分类增加 keywords 的 meta 标签 ([26733ff](https://github.com/Mereithhh/van-blog/commit/26733ff89c1666032160a9154fbe3d9450892fe4))
-* 内置 waline 支持传递自定义的环境变量配置 ([99e4305](https://github.com/Mereithhh/van-blog/commit/99e4305badc67bf21b54f3a9c84c3391cf19c9ce))
-* 后台增加迁移助手，可批量导入草稿/文章 ([d1e3166](https://github.com/Mereithhh/van-blog/commit/d1e3166dd13d7503cdbbaced82823343f5015bcd))
-
+- SEO 优化：文章页、首页和列表页会根据标签和分类增加 keywords 的 meta 标签 ([26733ff](https://github.com/Mereithhh/van-blog/commit/26733ff89c1666032160a9154fbe3d9450892fe4))
+- 内置 waline 支持传递自定义的环境变量配置 ([99e4305](https://github.com/Mereithhh/van-blog/commit/99e4305badc67bf21b54f3a9c84c3391cf19c9ce))
+- 后台增加迁移助手，可批量导入草稿/文章 ([d1e3166](https://github.com/Mereithhh/van-blog/commit/d1e3166dd13d7503cdbbaced82823343f5015bcd))
 
 ### ✏️ Documentation | 文档
 
-* 更新一下 faq ([87dd17c](https://github.com/Mereithhh/van-blog/commit/87dd17c69927e4fc1f678c64af44800656613612))
-* 更新一个群晖部署文档 ([9d9f4ae](https://github.com/Mereithhh/van-blog/commit/9d9f4aee1b4177b2dc347710c69ea7cd3260be52))
-* 更新文档 ([d9844a7](https://github.com/Mereithhh/van-blog/commit/d9844a79e2aaee4c1064500230b1efcbf8e02986))
-* 更新文档 ([4096b34](https://github.com/Mereithhh/van-blog/commit/4096b345dcaa68f54dbb660b3a4a6aa9a90de144))
-* 更新文档 ([7f3c2f8](https://github.com/Mereithhh/van-blog/commit/7f3c2f86ee719e4ba10eab19c118e5307b8d176d))
-* 更新文档 ([fc4686c](https://github.com/Mereithhh/van-blog/commit/fc4686c9a8f536e54c0512636aa544b39f579d7b))
-* 更新文档 ([ba56bf5](https://github.com/Mereithhh/van-blog/commit/ba56bf5efb10ae554d0891b384e6ec498848d9be))
-* 更新文档&捐赠信息 ([1137404](https://github.com/Mereithhh/van-blog/commit/113740425b2d64337b562b671029a4e00074a0df))
-
+- 更新一下 faq ([87dd17c](https://github.com/Mereithhh/van-blog/commit/87dd17c69927e4fc1f678c64af44800656613612))
+- 更新一个群晖部署文档 ([9d9f4ae](https://github.com/Mereithhh/van-blog/commit/9d9f4aee1b4177b2dc347710c69ea7cd3260be52))
+- 更新文档 ([d9844a7](https://github.com/Mereithhh/van-blog/commit/d9844a79e2aaee4c1064500230b1efcbf8e02986))
+- 更新文档 ([4096b34](https://github.com/Mereithhh/van-blog/commit/4096b345dcaa68f54dbb660b3a4a6aa9a90de144))
+- 更新文档 ([7f3c2f8](https://github.com/Mereithhh/van-blog/commit/7f3c2f86ee719e4ba10eab19c118e5307b8d176d))
+- 更新文档 ([fc4686c](https://github.com/Mereithhh/van-blog/commit/fc4686c9a8f536e54c0512636aa544b39f579d7b))
+- 更新文档 ([ba56bf5](https://github.com/Mereithhh/van-blog/commit/ba56bf5efb10ae554d0891b384e6ec498848d9be))
+- 更新文档&捐赠信息 ([1137404](https://github.com/Mereithhh/van-blog/commit/113740425b2d64337b562b671029a4e00074a0df))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 分类导航栏显示时，分类过长导致的排版错乱 ([f42469d](https://github.com/Mereithhh/van-blog/commit/f42469d893e7583ba61a3ebeba9ea5e81de981b0))
-* 分类或标签中含有 # 或 / 出现的 404 问题 ([5e4ae6c](https://github.com/Mereithhh/van-blog/commit/5e4ae6c5c1a2bb8755f21d2e720438496eb458ab))
-* 友链申领要求重复 ([81c03dd](https://github.com/Mereithhh/van-blog/commit/81c03dd9abd2258dccb4419d388fa108f512ab27))
-* 群晖系统无法登录评论后台 ([450d6c6](https://github.com/Mereithhh/van-blog/commit/450d6c6a68a2911dbf3b442b8b7c39c639cb4adf))
+- 分类导航栏显示时，分类过长导致的排版错乱 ([f42469d](https://github.com/Mereithhh/van-blog/commit/f42469d893e7583ba61a3ebeba9ea5e81de981b0))
+- 分类或标签中含有 # 或 / 出现的 404 问题 ([5e4ae6c](https://github.com/Mereithhh/van-blog/commit/5e4ae6c5c1a2bb8755f21d2e720438496eb458ab))
+- 友链申领要求重复 ([81c03dd](https://github.com/Mereithhh/van-blog/commit/81c03dd9abd2258dccb4419d388fa108f512ab27))
+- 群晖系统无法登录评论后台 ([450d6c6](https://github.com/Mereithhh/van-blog/commit/450d6c6a68a2911dbf3b442b8b7c39c639cb4adf))
 
 ### [0.38.2](https://github.com/Mereithhh/van-blog/compare/v0.38.1...v0.38.2) (2022-09-14)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新捐赠信息 ([398c08c](https://github.com/Mereithhh/van-blog/commit/398c08caa817ce8d880b538ca62e51c7e419058d))
-* 更新文档 ([3c2cfde](https://github.com/Mereithhh/van-blog/commit/3c2cfdeddf04bbe9de4ea474bc1a4500cb2a7095))
-* 更新文档 ([2316912](https://github.com/Mereithhh/van-blog/commit/23169127576d93c5ca433b9a98b0c9fff44a594c))
-
+- 更新捐赠信息 ([398c08c](https://github.com/Mereithhh/van-blog/commit/398c08caa817ce8d880b538ca62e51c7e419058d))
+- 更新文档 ([3c2cfde](https://github.com/Mereithhh/van-blog/commit/3c2cfdeddf04bbe9de4ea474bc1a4500cb2a7095))
+- 更新文档 ([2316912](https://github.com/Mereithhh/van-blog/commit/23169127576d93c5ca433b9a98b0c9fff44a594c))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 标题和标签中携带"#"导致目录和标签页显示不正常 ([81baad5](https://github.com/Mereithhh/van-blog/commit/81baad553342b0e7dd2ce041a90b69be5efe3de7))
+- 标题和标签中携带"#"导致目录和标签页显示不正常 ([81baad5](https://github.com/Mereithhh/van-blog/commit/81baad553342b0e7dd2ce041a90b69be5efe3de7))
 
 ### [0.38.1](https://github.com/Mereithhh/van-blog/compare/v0.38.0...v0.38.1) (2022-09-13)
 
-
 ### ✏️ Documentation | 文档
 
-* 更新文档 ([4bd795a](https://github.com/Mereithhh/van-blog/commit/4bd795a47dc1e438e7343070cb96041dfdf7dd4b))
-
+- 更新文档 ([4bd795a](https://github.com/Mereithhh/van-blog/commit/4bd795a47dc1e438e7343070cb96041dfdf7dd4b))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* RSS 订阅中的 HTML 出现了不合时宜的 a 标签 ([dc86650](https://github.com/Mereithhh/van-blog/commit/dc866501c2f58b169383fbca9b653e7b77050217))
+- RSS 订阅中的 HTML 出现了不合时宜的 a 标签 ([dc86650](https://github.com/Mereithhh/van-blog/commit/dc866501c2f58b169383fbca9b653e7b77050217))
 
 ## [0.38.0](https://github.com/Mereithhh/van-blog/compare/v0.37.2...v0.38.0) (2022-09-13)
 
-
 ### ✨ Features | 新功能
 
-* 后台编辑器预览内嵌 HTML [#47](https://github.com/Mereithhh/van-blog/issues/47) ([c920a2e](https://github.com/Mereithhh/van-blog/commit/c920a2e8aded13297a2721032ea85b09796c8bee))
+- 后台编辑器预览内嵌 HTML [#47](https://github.com/Mereithhh/van-blog/issues/47) ([c920a2e](https://github.com/Mereithhh/van-blog/commit/c920a2e8aded13297a2721032ea85b09796c8bee))
 
 ### 🚀 Chore | 构建/工程依赖/工具
 
-* **release:** 0.38.0 ([d16e10b](https://github.com/Mereithhh/van-blog/commit/d16e10b28528610b24639f51bd2236e8d8d6adc2))
-
+- **release:** 0.38.0 ([d16e10b](https://github.com/Mereithhh/van-blog/commit/d16e10b28528610b24639f51bd2236e8d8d6adc2))
 
 ### ✏️ Documentation | 文档
 
-* 更新 TODO ([a571cfa](https://github.com/Mereithhh/van-blog/commit/a571cfa37063bffaedb04622e9dd928fff64878d))
-* 更新文档 ([883696f](https://github.com/Mereithhh/van-blog/commit/883696f42303dd0ed118c0b9846fa897f5284154))
-* 更新文档 ([4b20720](https://github.com/Mereithhh/van-blog/commit/4b20720d1a64bbc857b1367635e2017712d046a6))
+- 更新 TODO ([a571cfa](https://github.com/Mereithhh/van-blog/commit/a571cfa37063bffaedb04622e9dd928fff64878d))
+- 更新文档 ([883696f](https://github.com/Mereithhh/van-blog/commit/883696f42303dd0ed118c0b9846fa897f5284154))
+- 更新文档 ([4b20720](https://github.com/Mereithhh/van-blog/commit/4b20720d1a64bbc857b1367635e2017712d046a6))
 
 ### 🐛 Bug Fixes | Bug 修复
 
-* 初始化未添加默认菜单信息导致前台无法更新 ([8064dbb](https://github.com/Mereithhh/van-blog/commit/8064dbbd41a8c1db5d6c224cfdbff4a417b7c3e3))
+- 初始化未添加默认菜单信息导致前台无法更新 ([8064dbb](https://github.com/Mereithhh/van-blog/commit/8064dbbd41a8c1db5d6c224cfdbff4a417b7c3e3))
 
 ### [0.37.2](https://github.com/Mereithhh/van-blog/compare/v0.37.1...v0.37.2) (2022-09-13)
 
