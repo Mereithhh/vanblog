@@ -10,7 +10,7 @@ icon: vscode
 
 如果你想参与 `VanBlog` 开发，可以进群哦：
 
-- [VanBlog 开发群](https://jq.qq.com/?_wv=1027&k=mf2CguM8)
+- [VanBlog  开发群](https://jq.qq.com/?_wv=1027&k=mf2CguM8)
 
 ## 路径结构
 
@@ -47,7 +47,9 @@ CI： [docker](https://www.docker.com/)、[nginx](https://www.nginx.com/)、[git
 
 ## 前台开发
 
-采用了 `nextjs`
+现在前台的启动改为嵌入到后端的 `child_process` 中了，所以默认无需单独启动前台！启动后端就会启动前台 `next.js 的 dev 模式`。
+
+<!-- 采用了 `nextjs`
 
 ```bash
 cd packages/website
@@ -57,7 +59,7 @@ yarn dev
 
 端口号为: `3001`
 
-与后台的跨域代理已经做好了，浏览器打开即可。
+与后台的跨域代理已经做好了，浏览器打开即可。 -->
 
 ## 后台开发
 

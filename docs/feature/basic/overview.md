@@ -10,7 +10,7 @@ title: 分析看板
 
 ## 数据概览
 
-![](https://pic.mereith.com/img/be5b54b1328caa0bebc8c870c0a0eaea.clipboard-2022-08-16.png)
+![](https://pic.mereith.com/img/3614afa8057c2fb0c078c62cad4e89b1.clipboard-2022-09-23.png)
 
 ## 访客统计
 

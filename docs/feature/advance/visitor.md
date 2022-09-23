@@ -13,7 +13,7 @@ title: 访客统计
 
 具体的数据可以在后台的`分析概览` 中的`数据概览` 和 `访客统计` 两个 `tab` 中看到。
 
-![](https://pic.mereith.com/img/be5b54b1328caa0bebc8c870c0a0eaea.clipboard-2022-08-16.png)
+![](https://pic.mereith.com/img/3614afa8057c2fb0c078c62cad4e89b1.clipboard-2022-09-23.png)
 
 ![](https://pic.mereith.com/img/067952d6fa53f62b10174690ed3b269a.clipboard-2022-08-16.png)
 

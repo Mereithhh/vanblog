@@ -12,7 +12,7 @@ icon: pic
 
 ### 分析
 
-![admin](./assets/admin-welcome-overview.png)
+![](https://pic.mereith.com/img/3614afa8057c2fb0c078c62cad4e89b1.clipboard-2022-09-23.png)
 
 ![admin](./assets/admin-welcome-viewer.png)
 
