@@ -1,7 +1,7 @@
 ---
 home: true
 icon: home
-heroImage: /前台-白色.png
+heroImage: /合并.png
 heroText: VanBlog
 heroFullScreen: true
 tagline: 一款简洁实用优雅的高性能个人博客系统。

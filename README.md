@@ -20,14 +20,7 @@
 
 ## 预览图
 
-![前台-白色](/img/前台-白色.png)
-![前台-黑色](/img/前台-黑色.png)
-![后台-白色](/img/后台-白色.png)
-![后台-黑色](/img/后台-黑色.png)
-
-<p align="center"> 
-  <img src="/img/lighthouse.png" style="width: 400px"></img>
-</p>
+![前台-白色](/img/合并.png)
 
 ## 特性
 
@@ -193,3 +186,9 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 ## Star 趋势图
 
 [![Star History Chart](https://api.star-history.com/svg?repos=mereithhh/van-blog&type=Date)](https://star-history.com/#mereithhh/van-blog&Date)
+
+## LightHouse 截图
+
+<p align="center"> 
+  <img src="/img/lighthouse.png" style="width: 400px"></img>
+</p>
