@@ -31,6 +31,9 @@ const TimeLine = (props: TimeLinePageProps) => {
             .map((eachDate: string) => {
               return (
                 <TimeLineItem
+                  openArticleLinksInNewWindow={
+                    props.layoutProps.openArticleLinksInNewWindow == "true"
+                  }
                   defaultOpen={true}
                   key={`timeline-dateitem-${eachDate}`}
                   date={eachDate}

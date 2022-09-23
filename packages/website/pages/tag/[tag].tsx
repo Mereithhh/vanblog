@@ -38,6 +38,9 @@ const TagPages = (props: TagPagesProps) => {
             .map((eachDate: string) => {
               return (
                 <TimeLineItem
+                  openArticleLinksInNewWindow={
+                    props.layoutProps.openArticleLinksInNewWindow == "true"
+                  }
                   defaultOpen={true}
                   key={eachDate}
                   date={eachDate}

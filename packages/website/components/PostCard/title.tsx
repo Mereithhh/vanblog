@@ -1,29 +1,39 @@
 import dayjs from "dayjs";
-import Link from "next/link";
+import Link from "../Link";
 import { useMemo } from "react";
 import { encodeQuerystring } from "../../utils/encode";
 import PostViewer from "../PostViewer";
+import { getTarget } from "../Link/tools";
 
 export function Title(props: {
   type: "article" | "about" | "overview";
   id: number;
   title: string;
+  openArticleLinksInNewWindow: boolean;
 }) {
+  const newTab = useMemo(() => {
+    if (props.type == "overview" && props.openArticleLinksInNewWindow) {
+      return true;
+    }
+    return false;
+  }, [props]);
   return (
     <div className="flex justify-center">
       {props.type != "about" ? (
-        <Link href={`/post/${props.id}`}>
+        <Link href={`/post/${props.id}`} newTab={newTab}>
           <a
+            target={getTarget(newTab)}
+            href={`/post/${props.id}`}
             className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 md:text-${
               props.type == "overview" ? "xl" : "2xl"
-            } ua`}
+            } ua ua-link`}
           >
             {props.title}
           </a>
         </Link>
       ) : (
         <div
-          className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-2xl ua  select-none`}
+          className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-2xl ua ua-link  select-none`}
         >
           {props.title}
         </div>
@@ -38,6 +48,7 @@ export function SubTitle(props: {
   catelog: string;
   enableComment: "true" | "false";
   id: number;
+  openArticleLinksInNewWindow: boolean;
 }) {
   const iconSize = "16";
   const iconClass =
@@ -95,8 +106,15 @@ export function SubTitle(props: {
               ></path>
             </svg>
           </span>
-          <Link href={`/category/${encodeQuerystring(props.catelog)}`}>
-            <a className="cursor-pointer group-hover:text-gray-900 dark:group-hover:text-dark-hover hover:font-medium ">{`${props.catelog}`}</a>
+          <Link
+            href={`/category/${encodeQuerystring(props.catelog)}`}
+            newTab={props.openArticleLinksInNewWindow}
+          >
+            <a
+              href={`/category/${encodeQuerystring(props.catelog)}`}
+              target={getTarget(props.openArticleLinksInNewWindow)}
+              className="cursor-pointer group-hover:text-gray-900 dark:group-hover:text-dark-hover hover:font-medium "
+            >{`${props.catelog}`}</a>
           </Link>
         </span>
       )}

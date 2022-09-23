@@ -53,6 +53,7 @@ const AboutPage = (props: AboutPageProps) => {
       sideBar={<AuthorCard option={props.authorCardProps} />}
     >
       <PostCard
+        openArticleLinksInNewWindow={false}
         id={0}
         key={"about"}
         private={false}

@@ -26,6 +26,7 @@ export interface LayoutProps {
   showDonateButton: "true" | "false";
   showCopyRight: "true" | "false";
   showRSS: "true" | "false";
+  openArticleLinksInNewWindow: "true" | "false";
   subMenuOffset: number;
   customCss?: string;
   customScript?: string;
@@ -73,6 +74,13 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (data.meta.siteInfo?.showRSS && data.meta.siteInfo?.showRSS == "false") {
     showRSS = "false";
   }
+  let openArticleLinksInNewWindow: "true" | "false" = "false";
+  if (
+    data.meta.siteInfo?.openArticleLinksInNewWindow &&
+    data.meta.siteInfo?.openArticleLinksInNewWindow == "true"
+  ) {
+    openArticleLinksInNewWindow = "true";
+  }
 
   return {
     showFriends,
@@ -96,6 +104,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showSubMenu: showSubMenu ? "true" : "false",
     enableComment: siteInfo?.enableComment || "true",
     defaultTheme: siteInfo?.defaultTheme || "auto",
+    openArticleLinksInNewWindow,
     showCopyRight,
     showDonateButton,
     showRSS,

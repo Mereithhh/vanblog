@@ -36,6 +36,9 @@ const PagePages = (props: PagePagesProps) => {
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
+            openArticleLinksInNewWindow={
+              props.layoutProps.openArticleLinksInNewWindow == "true"
+            }
             top={article.top || 0}
             id={article.id}
             key={article.id}

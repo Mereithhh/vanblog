@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "../Link";
 import { useMemo, useState } from "react";
 import AlertCard from "../AlertCard";
 import CopyRight from "../CopyRight";
@@ -9,6 +9,7 @@ import UnLockCard from "../UnLockCard";
 import WaLine from "../WaLine";
 import { PostBottom } from "./bottom";
 import { SubTitle, Title } from "./title";
+import { getTarget } from "../Link/tools";
 
 export default function (props: {
   id: number;
@@ -30,6 +31,7 @@ export default function (props: {
   showDonateInAbout?: boolean;
   hideDonate?: boolean;
   hideCopyRight?: boolean;
+  openArticleLinksInNewWindow: boolean;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
@@ -76,9 +78,15 @@ export default function (props: {
         className="overflow-hidden  bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
       >
         {props.top != 0 && <TopPinIcon></TopPinIcon>}
-        <Title type={props.type} id={props.id} title={props.title} />
+        <Title
+          type={props.type}
+          id={props.id}
+          title={props.title}
+          openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
+        />
 
         <SubTitle
+          openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
           type={props.type}
           id={props.id}
           updatedAt={props.updatedAt}
@@ -106,8 +114,15 @@ export default function (props: {
 
         {props.type == "overview" && (
           <div className="w-full flex justify-center mt-4 ">
-            <Link href={`/post/${props.id}`}>
-              <a className=" dark:bg-dark dark:hover:bg-dark-light dark:hover:text-dark-r dark:border-dark dark:text-dark hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded">
+            <Link
+              href={`/post/${props.id}`}
+              newTab={props.openArticleLinksInNewWindow}
+            >
+              <a
+                href={`/post/${props.id}`}
+                target={getTarget(props.openArticleLinksInNewWindow)}
+                className=" dark:bg-dark dark:hover:bg-dark-light dark:hover:text-dark-r dark:border-dark dark:text-dark hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded"
+              >
                 阅读全文
               </a>
             </Link>
@@ -137,6 +152,7 @@ export default function (props: {
           tags={props.tags}
           next={props.next}
           pre={props.pre}
+          openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
         />
         <div
           style={{
