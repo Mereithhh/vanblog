@@ -143,6 +143,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [x] Token 管理
 - [x] picgo 插件安装
 - [x] 忘记密码
+- [ ] 快捷分享按钮
 - [ ] 完善可自定义上传文件的自定义页面功能（现在的自定义页面有潜在的 css 污染问题）
 - [ ] 增加在特定事件后触发执行自定义代码或 webhook 的扩展能力
 - [ ] 插件系统
