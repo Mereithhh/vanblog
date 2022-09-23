@@ -59,7 +59,7 @@ export default function EditorComponent(props: {
             for (const each of files) {
               const url = await uploadImg(each);
               if (url) {
-                res.push({ url: url });
+                res.push({ url: encodeURI(url) });
               }
             }
             setLoading(false);
