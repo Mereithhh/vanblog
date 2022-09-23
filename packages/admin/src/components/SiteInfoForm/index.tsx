@@ -311,6 +311,16 @@ export default function (props: {
             }}
             tooltip={'默认显示，关闭后所有位置会隐藏 RSS 按钮。'}
           ></ProFormSelect>
+          <ProFormSelect
+            name={'openArticleLinksInNewWindow'}
+            label="前台点击链接时的默认行为"
+            placeholder={'在当前页面跳转'}
+            valueEnum={{
+              true: '打开新标签页',
+              false: '在当前页面跳转',
+            }}
+            tooltip={'默认在当前页面跳转，会影响除了导航栏之外的大部分链接'}
+          ></ProFormSelect>
         </>
       )}
     </>

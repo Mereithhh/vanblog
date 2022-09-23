@@ -32,6 +32,7 @@ export class SiteInfo {
   defaultTheme: 'auto' | 'dark' | 'light';
   enableCustomizing: 'true' | 'false';
   showRSS: 'true' | 'false';
+  openArticleLinksInNewWindow: 'true' | 'false';
 }
 export interface updateUserDto {
   username: string;

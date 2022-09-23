@@ -8,11 +8,18 @@ export function Title(props: {
   type: "article" | "about" | "overview";
   id: number;
   title: string;
+  openArticleLinksInNewWindow: boolean;
 }) {
+  const target = useMemo(() => {
+    if (props.type == "overview" && props.openArticleLinksInNewWindow) {
+      return "_blank";
+    }
+    return "_self";
+  }, [props]);
   return (
     <div className="flex justify-center">
       {props.type != "about" ? (
-        <Link href={`/post/${props.id}`}>
+        <Link href={`/post/${props.id}`} target={target}>
           <a
             className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 md:text-${
               props.type == "overview" ? "xl" : "2xl"
@@ -38,6 +45,7 @@ export function SubTitle(props: {
   catelog: string;
   enableComment: "true" | "false";
   id: number;
+  openArticleLinksInNewWindow: boolean;
 }) {
   const iconSize = "16";
   const iconClass =
@@ -95,7 +103,10 @@ export function SubTitle(props: {
               ></path>
             </svg>
           </span>
-          <Link href={`/category/${encodeQuerystring(props.catelog)}`}>
+          <Link
+            href={`/category/${encodeQuerystring(props.catelog)}`}
+            target={props.openArticleLinksInNewWindow ? "_blank" : "_self"}
+          >
             <a className="cursor-pointer group-hover:text-gray-900 dark:group-hover:text-dark-hover hover:font-medium ">{`${props.catelog}`}</a>
           </Link>
         </span>

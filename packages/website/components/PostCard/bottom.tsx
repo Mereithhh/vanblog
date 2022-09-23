@@ -8,6 +8,7 @@ export function PostBottom(props: {
   tags?: string[];
   next?: { id: number; title: string };
   pre?: { id: number; title: string };
+  openArticleLinksInNewWindow: boolean;
 }) {
   const show = useMemo(() => {
     if (props.type == "article" && !props.lock) {
@@ -21,7 +22,10 @@ export function PostBottom(props: {
         <div className="text-sm  text-gray-500 flex justify-center space-x-2 select-none dark:text-dark">
           {props.tags.map((tag) => (
             <div key={`article-tag-${tag}`}>
-              <Link href={`/tag/${encodeQuerystring(tag)}`}>
+              <Link
+                href={`/tag/${encodeQuerystring(tag)}`}
+                newTab={props.openArticleLinksInNewWindow}
+              >
                 <a className=" border-b border-white hover:border-gray-500 dark:border-dark dark:hover:border-gray-300 dark:hover:text-gray-300">{`${tag}`}</a>
               </Link>
             </div>
@@ -32,7 +36,10 @@ export function PostBottom(props: {
       <div className="flex justify-between text-sm mt-2 whitespace-nowrap overflow-hidden ">
         <div className="" style={{ maxWidth: "50%" }}>
           {props.pre?.id && (
-            <Link href={`/post/${props.pre?.id}`}>
+            <Link
+              href={`/post/${props.pre?.id}`}
+              target={props.openArticleLinksInNewWindow ? "_blank" : "_self"}
+            >
               <a
                 style={{ whiteSpace: "break-spaces" }}
                 className="dark:text-dark dark:border-dark dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"
@@ -42,7 +49,10 @@ export function PostBottom(props: {
         </div>
         <div className="" style={{ maxWidth: "50%" }}>
           {props.next?.id && (
-            <Link href={`/post/${props.next?.id}`}>
+            <Link
+              href={`/post/${props.next?.id}`}
+              target={props.openArticleLinksInNewWindow ? "_blank" : "_self"}
+            >
               <a
                 style={{ whiteSpace: "break-spaces" }}
                 className="dark:text-dark dark:border-dark  dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"

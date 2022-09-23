@@ -30,7 +30,9 @@ export default function (props: {
   showDonateInAbout?: boolean;
   hideDonate?: boolean;
   hideCopyRight?: boolean;
+  openArticleLinksInNewWindow: boolean;
 }) {
+  console.log(props.openArticleLinksInNewWindow);
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
   const showDonate = useMemo(() => {
@@ -76,9 +78,15 @@ export default function (props: {
         className="overflow-hidden  bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
       >
         {props.top != 0 && <TopPinIcon></TopPinIcon>}
-        <Title type={props.type} id={props.id} title={props.title} />
+        <Title
+          type={props.type}
+          id={props.id}
+          title={props.title}
+          openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
+        />
 
         <SubTitle
+          openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
           type={props.type}
           id={props.id}
           updatedAt={props.updatedAt}
@@ -106,7 +114,10 @@ export default function (props: {
 
         {props.type == "overview" && (
           <div className="w-full flex justify-center mt-4 ">
-            <Link href={`/post/${props.id}`}>
+            <Link
+              href={`/post/${props.id}`}
+              target={props.openArticleLinksInNewWindow ? "_blank" : "_self"}
+            >
               <a className=" dark:bg-dark dark:hover:bg-dark-light dark:hover:text-dark-r dark:border-dark dark:text-dark hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded">
                 阅读全文
               </a>
@@ -137,6 +148,7 @@ export default function (props: {
           tags={props.tags}
           next={props.next}
           pre={props.pre}
+          openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
         />
         <div
           style={{

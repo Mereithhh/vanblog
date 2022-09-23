@@ -30,6 +30,9 @@ const CategoryPage = (props: CategoryPageProps) => {
           {Object.keys(props.sortedArticles).map((key: string) => {
             return (
               <TimeLineItem
+                openArticleLinksInNewWindow={
+                  props.layoutProps.openArticleLinksInNewWindow == "true"
+                }
                 defaultOpen={false}
                 key={key}
                 date={key}
