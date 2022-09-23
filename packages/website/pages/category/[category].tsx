@@ -34,6 +34,9 @@ const CategoryPages = (props: CategoryPagesProps) => {
             .map((eachDate: string) => {
               return (
                 <TimeLineItem
+                  openArticleLinksInNewWindow={
+                    props.layoutProps.openArticleLinksInNewWindow == "true"
+                  }
                   defaultOpen={true}
                   key={eachDate}
                   date={eachDate}

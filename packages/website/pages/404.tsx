@@ -22,7 +22,7 @@ export default function (props: { name?: string }) {
             {`此${props?.name ? props.name : "页面"}不存在`}
           </div>
           <Link href="/">
-            <a className="mt-4 ua text-base text-gray-600 dark:text-dark">
+            <a className="mt-4 ua ua-link text-base text-gray-600 dark:text-dark">
               返回主页
             </a>
           </Link>

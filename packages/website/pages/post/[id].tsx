@@ -51,6 +51,9 @@ const PostPages = (props: PostPagesProps) => {
         ></meta>
       </Head>
       <PostCard
+        openArticleLinksInNewWindow={
+          props.layoutProps.openArticleLinksInNewWindow == "true"
+        }
         top={props.article.top || 0}
         id={props.article.id}
         key={props.article.title}

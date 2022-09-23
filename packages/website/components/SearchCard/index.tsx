@@ -7,6 +7,7 @@ import KeyCard from "../KeyCard";
 export default function (props: {
   visible: boolean;
   setVisible: (v: boolean) => void;
+  openArticleLinksInNewWindow: boolean;
 }) {
   const [result, setResult] = useState<any>([]);
   const [search, setSearch] = useState("");
@@ -81,6 +82,7 @@ export default function (props: {
           <ArticleList
             showYear={true}
             articles={result}
+            openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
             onClick={() => {
               props.setVisible(false);
               document.body.style.overflow = "auto";

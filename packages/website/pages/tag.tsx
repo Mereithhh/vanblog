@@ -1,10 +1,11 @@
-import Link from "next/link";
+import Link from "../components/Link";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/Layout";
 import { encodeQuerystring } from "../utils/encode";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getTagPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
+import { getTarget } from "../components/Link/tools";
 
 export interface TagPageProps {
   layoutProps: LayoutProps;
@@ -24,8 +25,18 @@ const TagPage = (props: TagPageProps) => {
         </div>
         <div className="flex flex-wrap mt-2">
           {props.tags.map((tag) => (
-            <Link href={`/tag/${encodeQuerystring(tag)}`} key={`tag-${tag}`}>
-              <a className="my-2 text-gray-500 block hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 transition-all mr-5 dark:text-dark-400 ">{`${tag}`}</a>
+            <Link
+              href={`/tag/${encodeQuerystring(tag)}`}
+              key={`tag-${tag}`}
+              newTab={props.layoutProps.openArticleLinksInNewWindow == "true"}
+            >
+              <a
+                href={`/tag/${encodeQuerystring(tag)}`}
+                target={getTarget(
+                  props.layoutProps.openArticleLinksInNewWindow == "true"
+                )}
+                className="my-2 text-gray-500 block hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 transition-all mr-5 dark:text-dark-400 "
+              >{`${tag}`}</a>
             </Link>
           ))}
         </div>

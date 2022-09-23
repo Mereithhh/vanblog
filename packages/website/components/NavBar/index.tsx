@@ -26,6 +26,7 @@ export default function (props: {
   headerLeftContent: "siteName" | "siteLogo";
   defaultTheme: "dark" | "auto" | "light";
   subMenuOffset: number;
+  openArticleLinksInNewWindow: boolean;
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
@@ -51,7 +52,11 @@ export default function (props: {
 
   return (
     <>
-      <SearchCard visible={showSearch} setVisible={setShowSearch}></SearchCard>
+      <SearchCard
+        openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
+        visible={showSearch}
+        setVisible={setShowSearch}
+      ></SearchCard>
       <div
         id="nav"
         className=" bg-white sticky top-0 dark:bg-dark nav-shadow dark:nav-shadow-dark"

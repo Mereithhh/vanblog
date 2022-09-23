@@ -7,6 +7,7 @@ export default function (props: {
   articles: Article[];
   defaultOpen?: boolean;
   showYear?: boolean;
+  openArticleLinksInNewWindow: boolean;
 }) {
   const [visible, setVisible] = useState(Boolean(props.defaultOpen));
   const calMaxHeight = props.articles.length * 50;
@@ -35,6 +36,7 @@ export default function (props: {
         <ArticleList
           articles={props.articles}
           showYear={props.showYear}
+          openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
         ></ArticleList>
       </div>
     </div>

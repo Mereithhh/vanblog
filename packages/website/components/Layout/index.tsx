@@ -71,6 +71,9 @@ export default function (props: {
         <Toaster />
         <ImageProvider>
           <NavBar
+            openArticleLinksInNewWindow={
+              props.option.openArticleLinksInNewWindow == "true"
+            }
             showRSS={props.option.showRSS}
             defaultTheme={props.option.defaultTheme}
             showSubMenu={props.option.showSubMenu}
