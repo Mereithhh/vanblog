@@ -14,6 +14,9 @@ export default function (props: { content: string }) {
   return (
     <>
       <ReactMarkdown
+        remarkRehypeOptions={{
+          allowDangerousHtml: true,
+        }}
         rehypePlugins={[rehypeKatex, rehypeRaw]}
         remarkPlugins={[
           remarkMath,
