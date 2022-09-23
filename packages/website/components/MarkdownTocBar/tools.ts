@@ -4,16 +4,20 @@ export interface NavItem {
   listNo: string;
   text: string;
 }
-export const parseNavStructure = (source: string): NavItem[] => {
-  const contentWithoutCode = source
+export const washMarkdownContent = (source: string) => {
+  return source
+    .replace(/```([\s\S]*?)```[\s]*/g, "")
+    .replace(/`#/g, "")
     .replace(/^[^#]+\n/g, "")
     .replace(/(?:[^\n#]+)#+\s([^#\n]+)\n*/g, "") // 匹配行内出现 # 号的情况
-    // .replace(/^#\s[^#\n]*\n+/, "")
     .replace(/```[^`\n]*\n+[^```]+```\n+/g, "")
     .replace(/`([^`\n]+)`/g, "$1")
     .replace(/\*\*?([^*\n]+)\*\*?/g, "$1")
     .replace(/__?([^_\n]+)__?/g, "$1")
     .trim();
+};
+export const parseNavStructure = (source: string): NavItem[] => {
+  const contentWithoutCode = washMarkdownContent(source);
   const pattOfTitle = /#+\s(.+)\n/g;
   const matchResult = contentWithoutCode.match(pattOfTitle);
 
