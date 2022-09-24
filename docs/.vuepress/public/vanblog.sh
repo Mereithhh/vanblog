@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.0.1"
+VANBLOG_SCRIPT_VERSION="v0.1.1"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -271,9 +271,8 @@ update() {
     echo -e "${red}重启失败，可能是因为启动时间超过了两秒，请稍后查看日志信息${plain}"
   fi
 
-  if [[ $# == 0 ]]; then
-    before_show_menu
-  fi
+  before_show_menu
+
 }
 
 start_vanblog() {
@@ -369,7 +368,7 @@ show_usage() {
 
 show_menu() {
   echo -e "
-    ${green}VanBlog 管理脚本${plain} ${red}${NZ_VERSION}${plain}
+    ${green}VanBlog 管理脚本${plain} ${red}${VANBLOG_SCRIPT_VERSION}${plain}
     --- https://github.com/mereithhh/van-blog ---
     ${green}1.${plain}  安装 VanBlog
     ${green}2.${plain}  修改配置
@@ -454,17 +453,3 @@ if [[ $# > 0 ]]; then
 else
   show_menu
 fi
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About

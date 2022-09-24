@@ -271,9 +271,8 @@ update() {
     echo -e "${red}重启失败，可能是因为启动时间超过了两秒，请稍后查看日志信息${plain}"
   fi
 
-  if [[ $# == 0 ]]; then
-    before_show_menu
-  fi
+  before_show_menu
+
 }
 
 start_vanblog() {
@@ -454,17 +453,3 @@ if [[ $# > 0 ]]; then
 else
   show_menu
 fi
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
