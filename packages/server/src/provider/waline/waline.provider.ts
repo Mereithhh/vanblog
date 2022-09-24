@@ -147,7 +147,9 @@ export class WalineProvider {
         this.logger.error(t.substring(0, t.length - 1));
       });
     } else {
-      this.logger.log('Waline 启动成功！');
+      await this.stop();
+      await this.run();
     }
+    this.logger.log('Waline 启动成功！');
   }
 }
