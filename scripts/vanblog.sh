@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.0.1"
+VANBLOG_SCRIPT_VERSION="v0.1.0"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -369,7 +369,7 @@ show_usage() {
 
 show_menu() {
   echo -e "
-    ${green}VanBlog 管理脚本${plain} ${red}${NZ_VERSION}${plain}
+    ${green}VanBlog 管理脚本${plain} ${red}${VANBLOG_SCRIPT_VERSION}${plain}
     --- https://github.com/mereithhh/van-blog ---
     ${green}1.${plain}  安装 VanBlog
     ${green}2.${plain}  修改配置
