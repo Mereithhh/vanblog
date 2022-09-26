@@ -27,11 +27,21 @@ export const parseNavStructure = (source: string): NavItem[] => {
   }
 
   const navData = matchResult.map((r, i) => {
+    let titleText = r.replace(pattOfTitle, "$1");
+    const urlReg = /\[[\s\S]*?\]\([\s\S]*?\)/g;
+    const results = titleText.match(urlReg);
+    if (results) {
+      results.forEach((r) => {
+        const srcText = r;
+        const dstText = r.split("]")[0].substring(1);
+        titleText = titleText.replace(srcText, dstText);
+      });
+    }
     return {
       index: i,
       //@ts-ignore
       level: r.match(/^#+/g)[0].length,
-      text: r.replace(pattOfTitle, "$1"),
+      text: titleText as string,
     };
   });
 

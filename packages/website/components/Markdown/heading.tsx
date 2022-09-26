@@ -1,14 +1,9 @@
 import React from "react";
 import { HeadingProps } from "react-markdown/lib/ast-to-react";
+import { getChildrenText } from "./tools";
 
 export const HeadingRender = (props: HeadingProps) => {
   const { node, children } = props;
-  let text = "";
-  try {
-    text = children[0] as string;
-  } catch (err) {
-    text = "";
-  }
-
-  return React.createElement(node.tagName, { ["data-id"]: text }, text);
+  let text = getChildrenText(children);
+  return React.createElement(node.tagName, { ["data-id"]: text }, children);
 };
