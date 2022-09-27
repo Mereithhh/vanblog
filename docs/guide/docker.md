@@ -64,6 +64,15 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ![](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
 
+浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
+
+也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
+
+> 如果你想在外部访问数据库，请参考 [常见问题](/guide/faq.md) 中的 `如何从外部访问数据库`
+>
+> 如果你想反代请参考 [反代](/guide/nginx.md)
+
+
 ## docker-compose 部署
 
 ### 1.安装依赖
