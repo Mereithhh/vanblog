@@ -9,6 +9,9 @@ export default function (props: {
   alt: string | undefined;
   lazyLoad: boolean;
   className?: string;
+  width?: any;
+  height?: any;
+  style?: any;
 }) {
   const [error, setError] = useState(false);
   if (!error) {
@@ -22,6 +25,9 @@ export default function (props: {
             onError={() => {
               setError(true);
             }}
+            width={props.width}
+            height={props.height}
+            style={props.style}
             loading={props.lazyLoad ? "lazy" : undefined}
           />
         </PhotoView>
@@ -33,6 +39,9 @@ export default function (props: {
         className={props.className}
         src={errorImg}
         alt={props.alt}
+        width={props.width}
+        height={props.height}
+        style={props.style}
         loading={props.lazyLoad ? "lazy" : undefined}
       />
     );
