@@ -53,6 +53,7 @@ export default function () {
         } else {
           setValue(data?.content || '');
         }
+        document.title = `关于 - VanBlog 编辑器`;
         setCurrObj(data);
       }
       if (type == 'article' && id) {
@@ -65,6 +66,7 @@ export default function () {
         } else {
           setValue(data?.content || '');
         }
+        document.title = `${data?.title || ''} - VanBlog 编辑器`;
         setCurrObj(data);
       }
       if (type == 'draft' && id) {
@@ -78,6 +80,7 @@ export default function () {
           setValue(data?.content || '');
         }
         setCurrObj(data);
+        document.title = `${data?.title || ''} - VanBlog 编辑器`;
       }
       setLoading(false);
     },
