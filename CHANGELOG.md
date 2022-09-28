@@ -1,4 +1,16 @@
 # Changelog
+### [0.41.3](https://github.com/Mereithhh/van-blog/compare/v0.41.2...v0.41.3) (2022-09-28)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([fda963d](https://github.com/Mereithhh/van-blog/commit/fda963dd6cf93bfd70d25b8c78f06364a1dd25d6))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* markdown 中的 img 标签无法调整图片大小 ([3e2dbfa](https://github.com/Mereithhh/van-blog/commit/3e2dbfaf9ad8fe61da91cf64be076e080833db68))
+
 ### [0.41.2](https://github.com/Mereithhh/van-blog/compare/v0.41.1...v0.41.2) (2022-09-28)
 
 
