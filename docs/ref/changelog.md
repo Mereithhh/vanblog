@@ -4,6 +4,28 @@ icon: update
 ---
 
 
+### [0.41.2](https://github.com/Mereithhh/van-blog/compare/v0.41.1...v0.41.2) (2022-09-28)
+
+
+### ✏️ Documentation | 文档
+
+* 增加案例 ([bfa52b8](https://github.com/Mereithhh/van-blog/commit/bfa52b8121dc85d593eec0d66b37f378ceb91d63))
+* 更新宝塔部署教程 ([80bf1ec](https://github.com/Mereithhh/van-blog/commit/80bf1ec53a45daa0817d3af77aa9e30ce6ff338f))
+* 更新文档 ([c00d36f](https://github.com/Mereithhh/van-blog/commit/c00d36f5c94bbc78e424400b9b9eaa6aaf4b7971))
+* 更新文档 ([6b78fce](https://github.com/Mereithhh/van-blog/commit/6b78fce71f5a84b434b111c261f6177a1a024fde))
+* 更新文档 ([c79552e](https://github.com/Mereithhh/van-blog/commit/c79552ef6c3800b5b1772d7c40b1f644b55d7fd4))
+* 更新部署文档 ([48e1ae8](https://github.com/Mereithhh/van-blog/commit/48e1ae8b19c8267dc9e690f1709ac2c00ebf5d4e))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 特殊情形 markdown 标题解析失败会阻塞前台页面更新 ([10db49c](https://github.com/Mereithhh/van-blog/commit/10db49c7938a148c2b5d91bebc35fdf1a2046a99))
+
+
+### ✨ Features | 新功能
+
+* 进入后台编辑页面时，页面标题以编辑内容标题为准 [#56](https://github.com/Mereithhh/van-blog/issues/56) ([0ec23c1](https://github.com/Mereithhh/van-blog/commit/0ec23c1b83c2c96c362c617b011cd144bf4393d6))
+
 ### [0.41.1](https://github.com/Mereithhh/van-blog/compare/v0.41.0...v0.41.1) (2022-09-26)
 
 
