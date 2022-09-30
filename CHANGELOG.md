@@ -1,4 +1,23 @@
 # Changelog
+### [0.41.4](https://github.com/Mereithhh/vanblog/compare/v0.41.3...v0.41.4) (2022-09-30)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([9bd2c03](https://github.com/Mereithhh/vanblog/commit/9bd2c03da6fba370721d672fb119b0328b634a24))
+* 更新样例 ([d053df0](https://github.com/Mereithhh/vanblog/commit/d053df07fc15fef9b4cf8367f0adc1da5210e53d))
+
+
+### 👷 Continuous Integration | CI 配置
+
+* window 开发后端无法正常启动 ([a80eca8](https://github.com/Mereithhh/vanblog/commit/a80eca82abe81aec637e064c2854c1dbc067deaa))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 导航栏下级与副导航栏渲染图层问题[#60](https://github.com/Mereithhh/vanblog/issues/60) ([0cf2f67](https://github.com/Mereithhh/vanblog/commit/0cf2f67ca6db55b06c8c19d1d3f14ad03b117975))
+* 二级导航栏未适配黑色主题 ([0e471b3](https://github.com/Mereithhh/vanblog/commit/0e471b3405aa4a62370d5bfa9b1288cb5182c041))
+
 ### [0.41.3](https://github.com/Mereithhh/van-blog/compare/v0.41.2...v0.41.3) (2022-09-28)
 
 
