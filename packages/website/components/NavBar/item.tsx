@@ -69,7 +69,7 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
         />
 
         <div
-          className="card-shadow bg-white block transition-all"
+          className="card-shadow bg-white block transition-all dark:text-dark dark:bg-dark-1 dark:card-shadow-dark"
           style={{
             position: "absolute",
             minWidth: 100,
@@ -92,7 +92,7 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
                 key={c.id}
                 clsA={"h-full flex items-center px-2 md:px-4 py-2 "}
                 cls={
-                  "cursor-pointer flex items-center h-full hover:bg-gray-300 transition-all"
+                  "transition-all cursor-pointer flex items-center h-full hover:bg-gray-300 transition-all dark:hover:bg-dark-2  dark:text-dark dark:hover:text-dark-hover"
                 }
               />
             );
