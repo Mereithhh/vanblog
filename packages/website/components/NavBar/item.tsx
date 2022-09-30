@@ -76,6 +76,7 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
             top: 50,
             left: "-4px",
             transform: show ? "scale(100%)" : "scale(0)",
+            zIndex: 999,
           }}
           onMouseEnter={() => {
             setHoverSub(true);
@@ -89,9 +90,9 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
               <LinkItemAtom
                 item={c}
                 key={c.id}
-                clsA={"h-full flex items-center px-2 md:px-4 py-2"}
+                clsA={"h-full flex items-center px-2 md:px-4 py-2 "}
                 cls={
-                  "cursor-pointer flex items-center h-full hover:bg-gray-300 transition-all "
+                  "cursor-pointer flex items-center h-full hover:bg-gray-300 transition-all"
                 }
               />
             );
