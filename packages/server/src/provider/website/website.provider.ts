@@ -38,6 +38,7 @@ export class WebsiteProvider {
         },
         cwd: path.join(path.resolve(process.cwd(), '..'), 'website'),
         detached: true,
+        shell: process.platform === 'win32',
       });
       this.ctx.on('message', (message) => {
         this.logger.log(message);
