@@ -20,7 +20,7 @@ export function PostBottom(props: {
   return show ? (
     <div className="mt-4">
       {props.tags && props.tags.length > 0 && (
-        <div className="text-sm  text-gray-500 flex justify-center space-x-2 select-none dark:text-dark">
+        <div className="text-sm flex-wrap text-gray-500 flex justify-center space-x-2 select-none dark:text-dark">
           {props.tags.map((tag) => (
             <div key={`article-tag-${tag}`}>
               <Link
