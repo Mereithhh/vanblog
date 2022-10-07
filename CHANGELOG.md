@@ -1,4 +1,22 @@
 # Changelog
+### [0.41.5](https://github.com/Mereithhh/van-blog/compare/v0.41.4...v0.41.5) (2022-10-07)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([7feeb23](https://github.com/Mereithhh/van-blog/commit/7feeb23199d4d36ed72b2dd6f87b16fabe08068d))
+
+
+### 💄 Styles | 风格
+
+* 多个标签时溢出会换行展示（原来不会） ([0f8cfc6](https://github.com/Mereithhh/van-blog/commit/0f8cfc695261a1314b296367f16c3214c6e7fef3))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* encodeQuerystring 报错 ([b208daf](https://github.com/Mereithhh/van-blog/commit/b208dafb2b693c5cf8cd95c720c824874e9c8ef1))
+* markdown 内部 img 标签加 style 属性报错 [#63](https://github.com/Mereithhh/van-blog/issues/63) ([f94f5cf](https://github.com/Mereithhh/van-blog/commit/f94f5cff9a9ee7751dc5aec833fe2516e1994156))
+
 ### [0.41.4](https://github.com/Mereithhh/vanblog/compare/v0.41.3...v0.41.4) (2022-09-30)
 
 
