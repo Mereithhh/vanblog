@@ -40,6 +40,8 @@ export default function (props: {
         <img
           src={props.src}
           alt={props.alt}
+          width={props.width}
+          height={props.height}
           onError={() => {
             setIpError(true);
           }}

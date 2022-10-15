@@ -202,6 +202,7 @@ config() {
     read -ep "请输入 http 端口（默认为 80）：" vanblog_http_port &&
     read -ep "请输入 https 端口（默认为 443）：" vanblog_https_port &&
     echo "接下来您需要输入的域名对应着编排文件中的 VAN_BLOG_ALLOW_DOMAINS 变量（不含协议、不可包含通配符、多个域名通过英文逗号分隔）" &&
+    echo "如果用了 cdn 或图床，需要把图床或 cdn 的域名也加上" &&
     read -ep "请输入您最终要绑定的域名（小写）:" vanblog_domains
 
   if [[ -z "${vanblog_email}" || -z "${vanblog_domains}" ]]; then
