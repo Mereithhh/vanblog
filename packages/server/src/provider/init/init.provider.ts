@@ -13,6 +13,7 @@ import { CacheProvider } from '../cache/cache.provider';
 import fs from 'fs';
 import path from 'path';
 import { config } from 'src/config';
+import { WebsiteProvider } from '../website/website.provider';
 @Injectable()
 export class InitProvider {
   logger = new Logger(InitProvider.name);
@@ -22,6 +23,7 @@ export class InitProvider {
     private readonly walineProvider: WalineProvider,
     private readonly settingProvider: SettingProvider,
     private readonly cacheProvider: CacheProvider,
+    private readonly websiteProvider: WebsiteProvider,
   ) {}
 
   async init(initDto: InitDto) {
@@ -54,6 +56,8 @@ export class InitProvider {
       await this.settingProvider.updateMenuSetting({ data: defaultMenu });
       // 运行 waline
       this.walineProvider.init();
+      // 重启前台
+      this.websiteProvider.restart('初始化');
       return '初始化成功!';
     } catch (err) {
       throw new BadRequestException('初始化失败');

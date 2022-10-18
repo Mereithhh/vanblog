@@ -14,6 +14,7 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { config } from 'src/config';
+import { WebsiteProvider } from 'src/provider/website/website.provider';
 @ApiTags('social')
 @UseGuards(...AdminGuard)
 @Controller('/api/admin/meta/social')
@@ -21,6 +22,7 @@ export class SocialMetaController {
   constructor(
     private readonly metaProvider: MetaProvider,
     private readonly isrProvider: ISRProvider,
+    private readonly websiteProvider: WebsiteProvider,
   ) {}
 
   @Get()
@@ -50,6 +52,7 @@ export class SocialMetaController {
     }
     const data = await this.metaProvider.addOrUpdateSocial(updateDto);
     this.isrProvider.activeAll('更新联系方式触发增量渲染！');
+    this.websiteProvider.restart('更新联系方式');
     return {
       statusCode: 200,
       data,
@@ -66,6 +69,7 @@ export class SocialMetaController {
     }
     const data = await this.metaProvider.addOrUpdateSocial(updateDto);
     this.isrProvider.activeAll('创建联系方式触发增量渲染！');
+    this.websiteProvider.restart('创建联系方式');
     return {
       statusCode: 200,
       data,
@@ -82,6 +86,7 @@ export class SocialMetaController {
     }
     const data = await this.metaProvider.deleteSocial(type);
     this.isrProvider.activeAll('删除联系方式触发增量渲染！');
+    this.websiteProvider.restart('删除联系方式');
     return {
       statusCode: 200,
       data,

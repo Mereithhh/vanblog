@@ -1,14 +1,52 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcess, spawn } from 'node:child_process';
 import path from 'node:path';
+import { MetaProvider } from '../meta/meta.provider';
 @Injectable()
 export class WebsiteProvider {
   // constructor() {}
   ctx: ChildProcess = null;
   logger = new Logger(WebsiteProvider.name);
-
+  constructor(private metaProvider: MetaProvider) {}
   async init() {
     this.run();
+  }
+  async loadEnv() {
+    const meta = await this.metaProvider.getAll();
+    if (!meta?.siteInfo) return {};
+    const siteinfo = meta.siteInfo;
+    const socials = meta.socials;
+    const urls = [];
+    const addEach = (u: string) => {
+      if (!u) return null;
+      try {
+        const url = new URL(u);
+        if (url?.hostname) {
+          if (!urls.includes(url?.hostname)) {
+            urls.push(url?.hostname);
+          }
+        }
+      } catch (err) {
+        return null;
+      }
+    };
+    addEach(siteinfo?.baseUrl);
+    addEach(siteinfo?.siteLogo);
+    addEach(siteinfo?.authorLogo);
+    addEach(siteinfo?.authorLogoDark);
+    addEach(siteinfo?.payAliPay);
+    addEach(siteinfo?.payAliPayDark);
+    addEach(siteinfo?.payWechat);
+    addEach(siteinfo?.payWechatDark);
+    const wechatItem = socials.find((s) => s.type == 'wechat');
+    if (wechatItem) {
+      addEach(wechatItem?.value);
+    }
+    const wechatDarkItem = socials.find((s) => s.type == 'wechat-dark');
+    if (wechatDarkItem) {
+      addEach(wechatDarkItem?.value);
+    }
+    return { VAN_BLOG_ALLOW_DOMAINS: urls.join(',') };
   }
   async restart(reason: string) {
     this.logger.log(`${reason}重启 website`);
@@ -31,10 +69,13 @@ export class WebsiteProvider {
     if (process.env.NODE_ENV == 'production') {
       cmd = 'start';
     }
+    const loadEnvs = await this.loadEnv();
+    this.logger.log(JSON.stringify(loadEnvs, null, 2));
     if (this.ctx == null) {
       this.ctx = spawn('yarn', [cmd], {
         env: {
           ...process.env,
+          ...loadEnvs,
         },
         cwd: path.join(path.resolve(process.cwd(), '..'), 'website'),
         detached: true,

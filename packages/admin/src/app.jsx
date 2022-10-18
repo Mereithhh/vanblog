@@ -8,7 +8,6 @@ import defaultSettings from '../config/defaultSettings';
 import LogoutButton from './components/LogoutButton';
 import ThemeButton from './components/ThemeButton';
 import { fetchAllMeta } from './services/van-blog/api';
-import { checkAllowDomains } from './services/van-blog/checkDomains';
 import { checkUrl } from './services/van-blog/checkUrl';
 import { beforeSwitchTheme, getInitTheme, mapTheme } from './services/van-blog/theme';
 const isDev = process.env.UMI_ENV === 'dev';
@@ -50,18 +49,6 @@ export async function getInitialState() {
 
   const { latestVersion, updatedAt, baseUrl, allowDomains, version } = initData;
 
-  if (allowDomains != null && allowDomains != undefined && !checkAllowDomains(allowDomains)) {
-    Modal.warn({
-      title: 'ALLOW_DOMAINS 环境变量与当前访问域名不匹配',
-      content: (
-        <div>
-          <p>您启动 VanBlog 时设置的 VAN_BLOG_ALLOW_DOMAINS 环境变量与当前访问域名不匹配</p>
-          <p>这将造成您无法通过此域名加载作者头像等图片</p>
-          <p>您应在其中增加当前域名： {`${location.hostname}`}</p>
-        </div>
-      ),
-    });
-  }
   if (baseUrl && !checkUrl(baseUrl)) {
     Modal.warn({
       title: '网站 URL 不合法',

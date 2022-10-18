@@ -70,6 +70,13 @@ PS: 我怀疑宝塔 nginx 本身会在您自定义的配置文件外自动添加
 
 ### 图片（作者 logo）加载不出来
 
+::: info 提示
+
+VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果出现这个问题，推荐升级到最新版本以解决问题。
+
+[升级指南](/guide/update.md)
+:::
+
 可能是没正确设置 `VAN_BLOG_ALLOW_DOMAINS` 这个环境变量导致的。
 
 作者 logo 用了 next.js 的图片缓存技术，需要显式指明安全的域名。

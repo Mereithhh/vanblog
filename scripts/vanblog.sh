@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.1.0"
+VANBLOG_SCRIPT_VERSION="v0.1.1"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -200,10 +200,10 @@ config() {
   # read -ep "请输入您想要安装的版本，默认不填为最新：" vanblog_version &&
   read -ep "请输入您的邮箱：" vanblog_email &&
     read -ep "请输入 http 端口（默认为 80）：" vanblog_http_port &&
-    read -ep "请输入 https 端口（默认为 443）：" vanblog_https_port &&
-    echo "接下来您需要输入的域名对应着编排文件中的 VAN_BLOG_ALLOW_DOMAINS 变量（不含协议、不可包含通配符、多个域名通过英文逗号分隔）" &&
-    echo "如果用了 cdn 或图床，需要把图床或 cdn 的域名也加上" &&
-    read -ep "请输入您最终要绑定的域名（小写）:" vanblog_domains
+    read -ep "请输入 https 端口（默认为 443）：" vanblog_https_port
+  # echo "接下来您需要输入的域名对应着编排文件中的 VAN_BLOG_ALLOW_DOMAINS 变量（不含协议、不可包含通配符、多个域名通过英文逗号分隔）" &&
+  # echo "如果用了 cdn 或图床，需要把图床或 cdn 的域名也加上" &&
+  # read -ep "请输入您最终要绑定的域名（小写）:" vanblog_domains
 
   if [[ -z "${vanblog_email}" || -z "${vanblog_domains}" ]]; then
     echo -e "${red}除了端口外所有选项都不能为空${plain}"
@@ -227,7 +227,7 @@ config() {
   sed -i "s/vanblog_email/${vanblog_email}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
   sed -i "s/vanblog_http_port/${vanblog_http_port}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
   sed -i "s/vanblog_https_port/${vanblog_https_port}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
-  sed -i "s/vanblog_domains/${vanblog_domains}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
+  # sed -i "s/vanblog_domains/${vanblog_domains}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
   sed -i "s/vanblog_version/${vanblog_version}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
 
   mkdir -p $VANBLOG_DATA_PATH

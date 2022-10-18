@@ -22,15 +22,6 @@ const rewites =
     : {};
 
 const getAllowDomains = () => {
-  const isDev = process.env.NODE_ENV == "development";
-  if (isDev) {
-    return [
-      "www.mereith.com",
-      "pic.mereith.com",
-      "192.168.5.11",
-      "blog-demo.mereith.com",
-    ];
-  }
   const domainsInEnv = process.env.VAN_BLOG_ALLOW_DOMAINS || "";
   if (domainsInEnv && domainsInEnv != "") {
     const arr = domainsInEnv.split(",");

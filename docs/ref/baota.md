@@ -37,7 +37,7 @@ VanBlog 现在支持一键脚本部署了。经过测试，宝塔也可以通过
 
 ![](https://www.mereith.com/static/img/9a207817805fb0f0a4b65a85edb699b4.clipboard-2022-09-02.png)
 
-模板内容请复制下面的代码，注意需要按注释修改 `VAN_BLOG_ALLOW_DOMAINS` 为你的域名， `EMAIL` 为你的邮箱：
+模板内容请复制下面的代码，注意需要按注释修改 `EMAIL` 为你的邮箱：
 
 ```yaml
 version: "3"
@@ -48,8 +48,6 @@ services:
     restart: always
     environment:
       TZ: "Asia/Shanghai"
-      # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。不要带协议！
-      VAN_BLOG_ALLOW_DOMAINS: "www.mereith.com"
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: "someone@mereith.com"
     volumes:
@@ -108,4 +106,3 @@ nginx -s stop
 ## 反代
 
 请移步 [反代](/guide/nginx.md)
-

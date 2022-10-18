@@ -6,8 +6,6 @@ services:
     restart: always
     environment:
       TZ: "Asia/Shanghai"
-      # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。不要带协议！
-      VAN_BLOG_ALLOW_DOMAINS: "www.mereith.com"
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: "someone@mereith.com"
     volumes:

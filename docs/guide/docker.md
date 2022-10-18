@@ -72,7 +72,6 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 >
 > 如果你想反代请参考 [反代](/guide/nginx.md)
 
-
 ## docker-compose 部署
 
 ### 1.安装依赖
@@ -109,8 +108,6 @@ services:
     restart: always
     environment:
       TZ: "Asia/Shanghai"
-      # 图片资源允许的域名，英文逗号分隔。作者 logo 加载不出来请检查此项。不要带协议！
-      VAN_BLOG_ALLOW_DOMAINS: "www.mereith.com"
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: "someone@mereith.com"
     volumes:
@@ -145,8 +142,6 @@ services:
 ```bash
 docker-compose up -d
 ```
-
-PS: 请检查 `VAN_BLOG_ALLOW_DOMAINS` 变量是否正确，否则作者头像可能无法正常显示。
 
 浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
 
@@ -210,9 +205,6 @@ spec:
             - name: VAN_BLOG_DATABASE_URL
               value: >-
                 mongodb://some@some@van.example.com:27017/vanBlog?authSource=admin
-            - name: VAN_BLOG_ALLOW_DOMAINS
-              value: >-
-                pic.mereith.com
             - name: EMAIL
               value: >-
                 vanblog@mereith.com
