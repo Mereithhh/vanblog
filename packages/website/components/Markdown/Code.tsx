@@ -4,10 +4,8 @@ import CopyToClipboard from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 import { CodeComponent, CodeProps } from "react-markdown/lib/ast-to-react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import {
-  vscDarkPlus as dark,
-  prism as light,
-} from "react-syntax-highlighter/dist/cjs/styles/prism";
+import light from "./style/prism";
+import dark from "./style/vsc-dark-plus";
 import { ThemeContext } from "../../utils/themeContext";
 export function CodeBlock(props: { children: any; match: any }) {
   const code = props.children.replace(/\n$/, "");
