@@ -31,6 +31,21 @@ export default function () {
     return `${type}-${history.location.query?.id || '0'}`;
   }, [type]);
 
+  useEffect(() => {
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [currObj, value, type]);
+  const onKeyDown = (ev) => {
+    if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == 's') {
+      event?.preventDefault();
+      ev?.preventDefault();
+      handleSave();
+    }
+    return false;
+  };
+
   const typeMap = {
     article: '文章',
     draft: '草稿',
