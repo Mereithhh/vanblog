@@ -7,6 +7,7 @@ export interface Config {
   staticPath: string;
   walineDB: string;
   demo: boolean | string;
+  log: string;
 }
 
 export const config: Config = {
@@ -18,4 +19,5 @@ export const config: Config = {
   staticPath: loadConfig('static.path', '/app/static'),
   demo: loadConfig('demo', false),
   walineDB: loadConfig('waline.db', 'waline'),
+  log: loadConfig("log",'/var/log')
 };

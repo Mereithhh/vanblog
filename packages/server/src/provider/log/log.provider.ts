@@ -5,13 +5,18 @@ import { EventType } from './types';
 import { Request } from 'express';
 import { getNetIp, getPlatform } from './utils';
 import lineReader from 'line-reader';
+import { config } from 'src/config';
+import path from 'path';
+import { checkOrCreate } from 'src/utils/checkFolder';
 @Injectable()
 export class LogProvider {
   logger = null;
+  logPath= path.join(config.log,"vanblog-event.log");
   constructor() {
+    checkOrCreate(config.log)
     const streams = [
       {
-        stream: fs.createWriteStream('/var/log/vanblog-event.log', {
+        stream: fs.createWriteStream(this.logPath, {
           flags: 'a+',
         }),
       },
@@ -40,7 +45,7 @@ export class LogProvider {
         const res = [];
         let total = 0;
         lineReader.eachLine(
-          '/var/log/vanblog-event.log',
+          this.logPath,
           (line: string, last: boolean) => {
             const data = JSON.parse(line);
             // console.log(eventType, data, last);

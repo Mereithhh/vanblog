@@ -6830,11 +6830,6 @@ emoji-mart@^5.2.1:
   resolved "https://registry.npmjs.org/emoji-mart/-/emoji-mart-5.2.1.tgz#eccd7d650e7bc042a07834a263b87c8153f214e5"
   integrity sha512-q6lz1u8TrGrO5Bv8dL2Z5atTRQaci3YzUfbYN0MzlLmIKdRt3N6vNT7uvCWRKc1tERrI45sn0nQYk3g99cBr/w==
 
-emoji-picker-react@^3.6.2:
-  version "3.6.2"
-  resolved "https://registry.npmjs.org/emoji-picker-react/-/emoji-picker-react-3.6.2.tgz#e414971bf9421b0825484f3b82623fef995c3c4b"
-  integrity sha512-PK3dfljGxeyN8fDz2FAsDYKPYGgo6/tkRyzJjLVaw0fksJg7jA3OJPIlHq2IIzTmlC/NKhcI/oaf0uEo5azYGA==
-
 emoji-regex@^7.0.1:
   version "7.0.3"
   resolved "https://registry.yarnpkg.com/emoji-regex/-/emoji-regex-7.0.3.tgz#933a04052860c85e83c122479c4748a8e4c72156"

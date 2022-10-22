@@ -149,3 +149,4 @@ docs/.vuepress/dist/
 temp.json
 staticFolder
 localBuild.sh
+log
