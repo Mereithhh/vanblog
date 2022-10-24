@@ -50,6 +50,7 @@ const PostPages = (props: PostPagesProps) => {
           content={getArticlesKeyWord([props.article]).join(",")}
         ></meta>
       </Head>
+
       <PostCard
         copyrightAggreement={props.layoutProps.copyrightAggreement}
         openArticleLinksInNewWindow={

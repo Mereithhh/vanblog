@@ -10,6 +10,7 @@ import WaLine from "../WaLine";
 import { PostBottom } from "./bottom";
 import { SubTitle, Title } from "./title";
 import { getTarget } from "../Link/tools";
+import Toc from "../Toc";
 
 export default function (props: {
   id: number;
@@ -33,6 +34,7 @@ export default function (props: {
   hideCopyRight?: boolean;
   openArticleLinksInNewWindow: boolean;
   copyrightAggreement: string;
+  toc?: any;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
@@ -109,7 +111,14 @@ export default function (props: {
               id={props.id}
             />
           ) : (
-            <Markdown content={calContent}></Markdown>
+            <div>
+              <Toc
+                mobileMode={true}
+                content={props.content}
+                showSubMenu={"true"}
+              />
+              <Markdown content={calContent}></Markdown>
+            </div>
           )}
         </div>
 

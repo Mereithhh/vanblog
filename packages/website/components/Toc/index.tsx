@@ -4,6 +4,7 @@ import MarkdownTocBar from "../MarkdownTocBar";
 export default function (props: {
   content: string;
   showSubMenu: "true" | "false";
+  mobileMode?: boolean;
 }) {
   const { current } = useRef({ hasInit: false });
   useEffect(() => {
@@ -26,14 +27,17 @@ export default function (props: {
       }
     }
   }, [current]);
+  const defaultCls =
+    "bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark overflow-y-auto pb-2";
+  const mobileCls = " ml-2 dark:bg-dark  pb-2";
   return (
     <div className="sticky" id="toc-card">
       <div
         id="toc-container"
-        className="bg-white w-60 card-shadow dark:card-shadow-dark ml-2 dark:bg-dark overflow-y-auto pb-2"
-        style={{ maxHeight: 450 }}
+        className={props.mobileMode ? mobileCls : defaultCls}
+        style={props.mobileMode ? undefined : { maxHeight: 450 }}
       >
-        <MarkdownTocBar content={props.content} headingOffset={56} />
+        <MarkdownTocBar  content={props.content} headingOffset={56} />
       </div>
     </div>
   );
