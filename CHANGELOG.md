@@ -1,4 +1,35 @@
 # Changelog
+## [0.42.0](https://github.com/Mereithhh/van-blog/compare/v0.41.5...v0.42.0) (2022-10-24)
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* 增加日志文件配置项 ([ae1e260](https://github.com/Mereithhh/van-blog/commit/ae1e260545a2285e7b0b3eceb4032cae100d770b))
+
+
+### ✏️ Documentation | 文档
+
+* 更新一些 faq ([f507ad1](https://github.com/Mereithhh/van-blog/commit/f507ad1d5f5288fb2e6b6e2ad7b7120dfb0af344))
+* 更新捐赠信息 ([551cb00](https://github.com/Mereithhh/van-blog/commit/551cb00902c4b12c4e7fe8c09bd592d7f1f75cb4))
+* 更新文档 ([7639869](https://github.com/Mereithhh/van-blog/commit/7639869b405f83081166de54ae8c60326791a75a))
+
+
+### ✨ Features | 新功能
+
+* 优化代码块样式: 减少滚动条高度、增加语言显示、复制按钮置顶以免挡住代码 [#72](https://github.com/Mereithhh/van-blog/issues/72) [#71](https://github.com/Mereithhh/van-blog/issues/71) [#73](https://github.com/Mereithhh/van-blog/issues/73) ([ae8cae4](https://github.com/Mereithhh/van-blog/commit/ae8cae4693f666b8bc3e35f638e6d81b731adf2c))
+* 去掉 ALLOW_DOMAINS 环境变量，精简配置，自动读取图片允许域名，避免再出现作者logo无法显示问题 ([dfd1a94](https://github.com/Mereithhh/van-blog/commit/dfd1a9491acb3010da2bec067f7d3806b573466a))
+* 增加版权协议的配置项 ([c9d1d18](https://github.com/Mereithhh/van-blog/commit/c9d1d18c31a66ee8b71d259a2430abc537cd1833))
+* 增加页脚公安备案号展示的配置项 ([9a43d7f](https://github.com/Mereithhh/van-blog/commit/9a43d7f4582a35a6962a97871df3972ff2f46c74))
+* 编辑器页面可按 ctrl+s 快捷保存 ([e92f2ba](https://github.com/Mereithhh/van-blog/commit/e92f2baf743fa139580d14a6db172b8754ecdfba))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 主题切换闪屏 [#54](https://github.com/Mereithhh/van-blog/issues/54) ([dfd9aca](https://github.com/Mereithhh/van-blog/commit/dfd9acaebbba914ef7c0bf608bf2a6a4daede24a))
+* 代码块操作符背景颜色块不一致 ([c961883](https://github.com/Mereithhh/van-blog/commit/c961883ddb069a4c78ff0f5353f70b97ed6da1f2))
+* 减少本地浏览器主题和服务端默认主题不一致时的闪屏时间 [#54](https://github.com/Mereithhh/van-blog/issues/54) ([b581f07](https://github.com/Mereithhh/van-blog/commit/b581f07103131465ce68f186f069167b32794424))
+* 禁止发布草稿时自动填充密码以避免发布报错 ([02754c7](https://github.com/Mereithhh/van-blog/commit/02754c77e01983d7465a58b0302f91fd905aa1b9))
+
 ### [0.41.5](https://github.com/Mereithhh/van-blog/compare/v0.41.4...v0.41.5) (2022-10-07)
 
 
