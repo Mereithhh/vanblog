@@ -6,6 +6,7 @@
 </p>
 <p align="center">
   <img src="https://img.shields.io/github/v/release/mereithhh/van-blog?display_name=tag" />
+  <img src="https://img.shields.io/docker/pulls/mereith/van-blog" />
   <img src="https://img.shields.io/github/stars/mereithhh/van-blog" />
   <img src="https://img.shields.io/bitbucket/issues/mereithhh/van-blog" />
   <img src="https://github.com/mereithhh/van-blog/workflows/release/badge.svg" />
