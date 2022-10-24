@@ -148,15 +148,32 @@ export default function (props: {
         <>
           <ProFormText
             name="beianNumber"
-            label="备案号"
+            label="IPC 备案号"
             placeholder={'请输入备案号，留空不显示备案信息'}
           ></ProFormText>
           <ProFormText
             name="beianUrl"
-            label="备案网址"
+            label="IPC 备案网址"
             placeholder={'请输入备案网址，留空不显示备案信息'}
           ></ProFormText>
-
+          <ProFormText
+            name="gaBeianNumber"
+            label="公安备案号"
+            placeholder={'请输入公安备案号，留空不显示公安备案信息'}
+          ></ProFormText>
+          <ProFormText
+            name="gaBeianUrl"
+            label="公安备案网址"
+            placeholder={'请输入公安备案号点击后跳转的网址，留空则不跳转'}
+          ></ProFormText>
+          <UrlFormItem
+            formRef={props.form}
+            isInit={props.isInit}
+            name="gaBeianLogoUrl"
+            label="公安备案 Logo 地址"
+            placeholder={'请输入公安备案的 logo 的 url，留空不显示公安备案 logo'}
+            required={false}
+          />
           <ProFormText
             name="gaAnalysisId"
             label="Google Analysis ID"

@@ -1,3 +1,4 @@
+import ImageBox from "../ImageBox";
 import RunningTime from "../RunningTime";
 import Viewer from "../Viewer";
 
@@ -6,6 +7,10 @@ export default function (props: {
   ipcHref: string;
   since: string;
   version: string;
+  // 公安备案
+  gaBeianNumber: string;
+  gaBeianUrl: string;
+  gaBeianLogoUrl: string;
 }) {
   return (
     <>
@@ -19,6 +24,26 @@ export default function (props: {
               className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
             >
               {props.ipcNumber}
+            </a>
+          </p>
+        )}
+        {Boolean(props.gaBeianNumber) && props.gaBeianNumber != "" && (
+          <p className="flex justify-center items-center">
+            公安备案:{" "}
+            {Boolean(props.gaBeianLogoUrl) && props.gaBeianLogoUrl != "" && (
+              <ImageBox
+                src={props.gaBeianLogoUrl}
+                lazyLoad={true}
+                alt="公安备案 logo"
+                width={20}
+              />
+            )}
+            <a
+              href={props.gaBeianUrl}
+              target="_blank"
+              className="hover:text-gray-900 hover:underline-offset-2 hover:underline dark:hover:text-dark-hover transition"
+            >
+              {props.gaBeianNumber}
             </a>
           </p>
         )}

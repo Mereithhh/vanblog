@@ -10,6 +10,9 @@ export class SiteInfo {
   siteDesc: string;
   beianNumber: string;
   beianUrl: string;
+  gaBeianNumber: string;
+  gaBeianUrl: string;
+  gaBeianLogoUrl: string;
   payAliPay: string;
   payWechat: string;
   payAliPayDark: string;

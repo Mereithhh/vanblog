@@ -6,6 +6,10 @@ export interface LayoutProps {
   ipcNumber: string;
   since: string;
   ipcHref: string;
+  // 公安备案
+  gaBeianNumber: string;
+  gaBeianUrl: string;
+  gaBeianLogoUrl: string;
   logo: string;
   categories: string[];
   favicon: string;
@@ -90,6 +94,9 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     headerLeftContent,
     ipcHref: siteInfo?.beianUrl || "",
     ipcNumber: siteInfo?.beianNumber || "",
+    gaBeianNumber: siteInfo?.gaBeianNumber || "",
+    gaBeianLogoUrl: siteInfo?.gaBeianLogoUrl || "",
+    gaBeianUrl: siteInfo?.gaBeianUrl || "",
     since: siteInfo?.since || dayjs().toISOString(),
     logo: siteInfo?.siteLogo || "",
     favicon: siteInfo.favicon,

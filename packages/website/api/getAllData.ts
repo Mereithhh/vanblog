@@ -95,6 +95,9 @@ export interface MetaProps {
     siteDesc: string;
     beianNumber: string;
     beianUrl: string;
+    gaBeianNumber: string;
+    gaBeianUrl: string;
+    gaBeianLogoUrl: string;
     payAliPay: string;
     payWechat: string;
     payAliPayDark?: string;
@@ -155,6 +158,9 @@ const defaultMeta: MetaProps = {
     siteDesc: "Vanblog",
     beianNumber: "",
     beianUrl: "",
+    gaBeianNumber: "",
+    gaBeianUrl: "",
+    gaBeianLogoUrl: "",
     payAliPay: "",
     payWechat: "",
     payAliPayDark: "",
