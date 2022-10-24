@@ -1062,5 +1062,13 @@ body .markdown-body .relative > pre {
   margin-bottom: 0;
   padding: 16px !important;
   border: none !important;
-  margin: 0 !important
+  margin: 0 !important;
+  padding-top: 22px !important;
+
+}
+body .markdown-body .relative > pre::-webkit-scrollbar {
+  height: 8px;
+}
+body .markdown-body .relative > pre::-webkit-scrollbar-thumb {
+  border-radius: 6px;
 }
