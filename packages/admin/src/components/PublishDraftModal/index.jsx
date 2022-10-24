@@ -20,7 +20,11 @@ export default function (props) {
             });
             return;
           }
-          await publishDraft(id, values);
+          await publishDraft(id, {
+            ...values,
+            password: values.pc,
+            top: values.Ctop,
+          });
           message.success('发布成功！');
           if (action && action.reload) {
             action.reload();
@@ -56,17 +60,24 @@ export default function (props) {
           label="置顶优先级"
           width="md"
           id="top"
-          name="top"
+          name="Ctop"
           placeholder="留空或0表示不置顶，其余数字越大表示优先级越高"
+          autocomplete="new-password"
+          fieldProps={{
+            autocomplete: 'new-password',
+          }}
         />
         <ProFormText.Password
           label="密码"
           width="md"
           autocomplete="new-password"
           id="password"
-          name="password"
+          name="pc"
           placeholder="请输入密码"
           dependencies={['private']}
+          fieldProps={{
+            autocomplete: 'new-password',
+          }}
         />
         <ProFormSelect
           width="md"
