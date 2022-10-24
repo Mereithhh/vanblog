@@ -147,6 +147,11 @@ export default function (props: {
       {props.showOption && (
         <>
           <ProFormText
+            name="copyrightAggreement"
+            label="版权协议"
+            placeholder={'版权协议'}
+          ></ProFormText>
+          <ProFormText
             name="beianNumber"
             label="IPC 备案号"
             placeholder={'请输入备案号，留空不显示备案信息'}

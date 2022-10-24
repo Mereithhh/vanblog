@@ -32,6 +32,7 @@ export default function (props: {
   hideDonate?: boolean;
   hideCopyRight?: boolean;
   openArticleLinksInNewWindow: boolean;
+  copyrightAggreement: string;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
@@ -143,6 +144,7 @@ export default function (props: {
             author={props.author as any}
             id={props.id}
             showDonate={showDonate}
+            copyrightAggreement={props.copyrightAggreement}
           ></CopyRight>
         )}
 

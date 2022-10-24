@@ -51,6 +51,7 @@ const PostPages = (props: PostPagesProps) => {
         ></meta>
       </Head>
       <PostCard
+        copyrightAggreement={props.layoutProps.copyrightAggreement}
         openArticleLinksInNewWindow={
           props.layoutProps.openArticleLinksInNewWindow == "true"
         }

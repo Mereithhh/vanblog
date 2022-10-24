@@ -21,6 +21,7 @@ export class SiteInfo {
   baseUrl: string;
   gaAnalysisId: string;
   baiduAnalysisId: string;
+  copyrightAggreement: string;
   enableComment?: 'true' | 'false';
   showSubMenu?: 'true' | 'false';
   headerLeftContent?: 'siteLogo' | 'siteName';

@@ -6,6 +6,7 @@ export default function (props: {
   author: string;
   id: number;
   showDonate: boolean;
+  copyrightAggreement: string;
 }) {
   const [url, setUrl] = useState("");
   useEffect(() => {
@@ -43,7 +44,8 @@ export default function (props: {
       <p>
         <span className="mr-2">版权声明:</span>
         <span>
-          本博客所有文章除特别声明外，均采用 BY-NC-SA 许可协议。转载请注明出处！
+          {`本博客所有文章除特别声明外，均采用 ${props.copyrightAggreement}
+          许可协议。转载请注明出处！`}
         </span>
       </p>
     </div>

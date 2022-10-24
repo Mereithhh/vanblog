@@ -10,6 +10,7 @@ export interface LayoutProps {
   gaBeianNumber: string;
   gaBeianUrl: string;
   gaBeianLogoUrl: string;
+  copyrightAggreement: string;
   logo: string;
   categories: string[];
   favicon: string;
@@ -92,6 +93,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     subMenuOffset: siteInfo?.subMenuOffset || 0,
     showAdminButton,
     headerLeftContent,
+    copyrightAggreement: siteInfo.copyrightAggreement || "BY-NC-SA",
     ipcHref: siteInfo?.beianUrl || "",
     ipcNumber: siteInfo?.beianNumber || "",
     gaBeianNumber: siteInfo?.gaBeianNumber || "",

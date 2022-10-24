@@ -68,6 +68,7 @@ const AboutPage = (props: AboutPageProps) => {
         enableComment={props.layoutProps.enableComment}
         top={0}
         showDonateInAbout={props.showDonateInAbout == "true"}
+        copyrightAggreement={props.layoutProps.copyrightAggreement}
       ></PostCard>
     </Layout>
   );
