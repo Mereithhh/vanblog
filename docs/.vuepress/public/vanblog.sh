@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.1.1"
+VANBLOG_SCRIPT_VERSION="v0.1.2"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -205,7 +205,7 @@ config() {
   # echo "如果用了 cdn 或图床，需要把图床或 cdn 的域名也加上" &&
   # read -ep "请输入您最终要绑定的域名（小写）:" vanblog_domains
 
-  if [[ -z "${vanblog_email}" || -z "${vanblog_domains}" ]]; then
+  if [[ -z "${vanblog_email}" ]]; then
     echo -e "${red}除了端口外所有选项都不能为空${plain}"
     before_show_menu
     return 1
