@@ -118,6 +118,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [前端｜面试进阶之道](https://www.whyknown.com/)
 - [小柴の BLOG](https://blog.sepbf.com)
 - [handy 的小窝](https://www.handyzyg.cn)
+- [GT的官方博客](https://gt-it.net)
 
 ## TODO
 
