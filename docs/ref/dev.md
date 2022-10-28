@@ -37,7 +37,7 @@ icon: vscode
 
 前台： [next.js](https://nextjs.org/)、[react.js](https://reactjs.org/)、[tailwind-css](https://tailwindcss.com/)
 
-后台： [and design pro](https://pro.ant.design/zh-CN/)、[ant design](https://ant.design/)
+后台： [ant design pro](https://pro.ant.design/zh-CN/)、[ant design](https://ant.design/)
 
 后端： [nest.js](https://nestjs.com/)、[mongoDB](https://www.mongodb.com/)
 
