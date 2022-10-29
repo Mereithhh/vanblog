@@ -5,6 +5,9 @@ import sidebar from "./sidebar";
 export default hopeTheme({
   hostname: "https://vanblog.mereith.com",
 
+  docsRepo: "Mereithhh/vanblog",
+  docsBranch: "master",
+  docsDir: "docs",
   author: {
     name: "Mereith",
     url: "https://www.mereith.com",
@@ -16,8 +19,6 @@ export default hopeTheme({
   logo: "/logo.svg",
 
   repo: "mereithhh/van-blog",
-
-  docsDir: "demo/src",
 
   // navbar
   navbar: navbar,
