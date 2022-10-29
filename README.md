@@ -92,6 +92,12 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 >
 > [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
 
+## 关于更新
+
+此项目会持续更新的，如果没有恶行 bug（有的话看到了会紧急修复），一般每周发一次新版本。
+
+如果遇到了问题，可以先更新试试看。
+
 ## 交流群
 
 - [VanBlog  交流群](https://jq.qq.com/?_wv=1027&k=5NRyK2Sw)
@@ -118,7 +124,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [前端｜面试进阶之道](https://www.whyknown.com/)
 - [小柴の BLOG](https://blog.sepbf.com)
 - [handy 的小窝](https://www.handyzyg.cn)
-- [GT的官方博客](https://gt-it.net)
+- [GT 的官方博客](https://gt-it.net)
 - [無糧不聚兵‘s Blog](https://www.wongcw.cn)
 
 ## TODO
