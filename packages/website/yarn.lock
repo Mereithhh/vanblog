@@ -2926,6 +2926,15 @@ rehype-raw@^6.1.1:
     hast-util-raw "^7.2.0"
     unified "^10.0.0"
 
+remark-breaks@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/remark-breaks/-/remark-breaks-3.0.2.tgz#f466b9d3474d7323146c0149fc1496dabadd908e"
+  integrity sha512-x96YDJ9X+Ry0/JNZFKfr1hpcAKvGYWfUTszxY9RbxKEqq6uzPPoLCuHdZsLPZZUdAv3nCROyc7FPrQLWr2rxyw==
+  dependencies:
+    "@types/mdast" "^3.0.0"
+    unified "^10.0.0"
+    unist-util-visit "^4.0.0"
+
 remark-directive-rehype@^0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/remark-directive-rehype/-/remark-directive-rehype-0.4.0.tgz#a072d252ca7c7301dd8b6b36692e93daa2b20735"

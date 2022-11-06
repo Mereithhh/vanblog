@@ -3,6 +3,7 @@ import remarkGfm from "remark-gfm";
 import rehypeRaw from "rehype-raw";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
+import remarkBreaks from "remark-breaks";
 import "katex/dist/katex.min.css";
 import remarkDirective from "remark-directive";
 import remarkDirectiveRehype from "remark-directive-rehype";
@@ -20,6 +21,7 @@ export default function (props: { content: string }) {
         }}
         rehypePlugins={[rehypeKatex, rehypeRaw]}
         remarkPlugins={[
+          remarkBreaks,
           remarkMath,
           remarkGfm,
           remarkDirective,

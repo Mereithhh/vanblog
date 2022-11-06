@@ -1,6 +1,6 @@
 //拓展 Markdown 的指令的组件
 import { Element } from "hast";
-import { createElement } from "react";
+import React, { createElement } from "react";
 import { icons } from "./icons";
 interface CustomElProps {
   children: React.ReactNode[];
