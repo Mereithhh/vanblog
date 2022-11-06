@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.1.2"
+VANBLOG_SCRIPT_VERSION="v0.1.3"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -159,7 +159,7 @@ install_vanblog() {
   command -v docker-compose >/dev/null 2>&1
   if [[ $? != 0 ]]; then
     echo -e "正在安装 Docker Compose"
-    wget -t 2 -T 10 -O /usr/local/bin/docker-compose "https://${GITHUB_URL}/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" >/dev/null 2>&1
+    wget -t 2 --no-check-certificate -T 10 -O /usr/local/bin/docker-compose "https://${GITHUB_URL}/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" >/dev/null 2>&1
     if [[ $? != 0 ]]; then
       echo -e "${red}下载脚本失败，请检查本机能否连接 ${GITHUB_URL}${plain}"
       return 0
@@ -191,7 +191,7 @@ config() {
 
   echo -e "正在下载编排文件"
   rm ${VANBLOG_BASE_PATH}/docker-compose-template.yaml >/dev/null 2>&1
-  wget -t 2 -T 10 -O ${VANBLOG_BASE_PATH}/docker-compose-template.yaml ${COMPOSE_URL} >/dev/null 2>&1
+  wget -t 2 --no-check-certificate -T 10 -O ${VANBLOG_BASE_PATH}/docker-compose-template.yaml ${COMPOSE_URL} >/dev/null 2>&1
   if [[ $? != 0 ]]; then
     echo -e "${red}下载脚本失败，请检查本机能否连接 ${COMPOSE_URL}${plain}"
     return 0
