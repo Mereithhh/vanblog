@@ -69,7 +69,7 @@ COPY --from=WEBSITE_BUILDER /app/public ./public
 COPY --from=WEBSITE_BUILDER /app/package.json ./package.json
 COPY --from=WEBSITE_BUILDER  /app/.next/standalone ./
 COPY --from=WEBSITE_BUILDER  /app/.next/static ./.next/static
-RUN cd  /app/website &&  npm install sharp && npm cache clean --force && cd ..
+RUN cd  /app/website &&  yarn add sharp && yarn cache clean --all && cd ..
 ENV NODE_ENV production
 ENV VAN_BLOG_SERVER_URL "http://127.0.0.1:3000"
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
