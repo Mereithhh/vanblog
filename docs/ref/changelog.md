@@ -4,6 +4,39 @@ icon: update
 ---
 
 
+## [0.43.0](https://github.com/Mereithhh/van-blog/compare/v0.42.0...v0.43.0) (2022-11-06)
+
+
+### ✏️ Documentation | 文档
+
+*  样例提交 ([39c66b8](https://github.com/Mereithhh/van-blog/commit/39c66b8447d50661b6a08b3333f46f1d0f14b850))
+* 增加一个 docker pull 数量的图标 ([45caef7](https://github.com/Mereithhh/van-blog/commit/45caef7bf0d59ea54e91c4168d0a036aa75cebf9))
+* 增加关于更新的描述 ([a1994f4](https://github.com/Mereithhh/van-blog/commit/a1994f45034a7f9c0964856dde6789fadba664c7))
+* 更新文档 ([81e8bf6](https://github.com/Mereithhh/van-blog/commit/81e8bf68d00e6c6e890a229c5403f93439b9cb13))
+* 更新文档 ([aff561a](https://github.com/Mereithhh/van-blog/commit/aff561af416d2e6b4039b7720dfcc75c733ca86d))
+* 更新文档 ([5c0ab9d](https://github.com/Mereithhh/van-blog/commit/5c0ab9dfe012407b7ad09df8a2d94ad468ea8bb1))
+* 更新文档 ([c219a77](https://github.com/Mereithhh/van-blog/commit/c219a77bfd74a20a5e70b483d9f11d7f7575c9af))
+* 更新样例 ([289675e](https://github.com/Mereithhh/van-blog/commit/289675e57ba0762deab735b77c2474a985311b81))
+* 更新样例 ([be4761d](https://github.com/Mereithhh/van-blog/commit/be4761d283076012ac4e38bfe99cb989aec7542a))
+* 编辑此页失效 ([3393cbb](https://github.com/Mereithhh/van-blog/commit/3393cbb45bbeb89364de927596eb2a5d532fa72a))
+
+
+### ✨ Features | 新功能
+
+* mac 可以 command + s 保存文章 ([5cc4086](https://github.com/Mereithhh/van-blog/commit/5cc4086fa6ad982b26d013bca63d8f6cdeb0ee18))
+* 增加是否显示文章内容过时提示框的配置项 ([6cac2e0](https://github.com/Mereithhh/van-blog/commit/6cac2e065c33bbdf76c035dd924c73c673544ba4))
+* 屏蔽一些可忽略的 warning 日志 ([d982d4f](https://github.com/Mereithhh/van-blog/commit/d982d4f5e6b089bdbbc270962d43689e558ae1ae))
+* 每篇文章都可设置独立的自定义版权声明文字 ([91ea94a](https://github.com/Mereithhh/van-blog/commit/91ea94a3a2f9504796b747f8c3bd82bcfaf9637d))
+* 移动端文章页面自动生成目录放到最上方 ([dcdee68](https://github.com/Mereithhh/van-blog/commit/dcdee6852db3632d564ee473264c6beb917fad7f))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 一键脚本报错 ([8afab4d](https://github.com/Mereithhh/van-blog/commit/8afab4d9fb71a0f06f5f01bb432e97d59adf303f))
+* 修复一键部署脚本下载编排报错 ([cb99533](https://github.com/Mereithhh/van-blog/commit/cb99533adfcf89257c29e12c9efbbcf1dbe38d1a))
+* 编辑器预览的换行行为和前台换行行为不一致（编辑器预览换行但前台页面不换行） [#78](https://github.com/Mereithhh/van-blog/issues/78) ([680e9a3](https://github.com/Mereithhh/van-blog/commit/680e9a3ae7a4c3e61710cd32106a64476d3d296b))
+* 部署脚本报错选项不为空 ([94eadc2](https://github.com/Mereithhh/van-blog/commit/94eadc28f74f61d41eee8e785270b35c4b3b449a))
+
 ## [0.42.0](https://github.com/Mereithhh/van-blog/compare/v0.41.5...v0.42.0) (2022-10-24)
 
 
