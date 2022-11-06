@@ -36,6 +36,7 @@ export default function (props: {
   openArticleLinksInNewWindow: boolean;
   copyrightAggreement: string;
   customCopyRight: string | null;
+  showExpirationReminder: boolean;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
@@ -107,6 +108,7 @@ export default function (props: {
         <div className="text-sm md:text-base  text-gray-600 mt-4 mx-2">
           {props.type == "article" && (
             <AlertCard
+              showExpirationReminder={props.showExpirationReminder}
               updatedAt={props.updatedAt}
               createdAt={props.createdAt}
             ></AlertCard>

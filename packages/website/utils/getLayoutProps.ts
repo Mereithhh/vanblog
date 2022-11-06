@@ -31,6 +31,7 @@ export interface LayoutProps {
   showDonateButton: "true" | "false";
   showCopyRight: "true" | "false";
   showRSS: "true" | "false";
+  showExpirationReminder: "true" | "false";
   openArticleLinksInNewWindow: "true" | "false";
   subMenuOffset: number;
   customCss?: string;
@@ -79,6 +80,13 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   if (data.meta.siteInfo?.showRSS && data.meta.siteInfo?.showRSS == "false") {
     showRSS = "false";
   }
+  let showExpirationReminder: "true" | "false" = "true";
+  if (
+    data.meta.siteInfo?.showExpirationReminder &&
+    data.meta.siteInfo?.showExpirationReminder == "false"
+  ) {
+    showExpirationReminder = "false";
+  }
   let openArticleLinksInNewWindow: "true" | "false" = "false";
   if (
     data.meta.siteInfo?.openArticleLinksInNewWindow &&
@@ -107,6 +115,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     baiduAnalysisID: siteInfo?.baiduAnalysisId || "",
     gaAnalysisID: siteInfo?.gaAnalysisId || "",
     logoDark: siteInfo?.siteLogoDark || "",
+    showExpirationReminder: showExpirationReminder,
     description: siteInfo?.siteDesc || "",
     menus: data?.menus || defaultMenu,
     categories: data.meta.categories,

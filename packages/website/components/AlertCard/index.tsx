@@ -1,5 +1,10 @@
 import dayjs from "dayjs";
-export default function (props: { updatedAt: Date; createdAt: Date }) {
+export default function (props: {
+  updatedAt: Date;
+  createdAt: Date;
+  showExpirationReminder: boolean;
+}) {
+  if (!props.showExpirationReminder) return null;
   const today = dayjs();
   const diff = today.diff(props.createdAt, "days");
   if (diff > 30) {

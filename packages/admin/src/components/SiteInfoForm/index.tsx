@@ -345,6 +345,16 @@ export default function (props: {
               '默认在当前页面跳转，会影响除了导航栏之外的大部分链接。注意如果打开新标签的话，就不会那么丝滑了哦（当前页面跳转的话是无感切换的）'
             }
           ></ProFormSelect>
+          <ProFormSelect
+            name={'showExpirationReminder'}
+            label="是否显示文章内容过时提醒"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认显示，关闭后文章页面不会显示内容过期提醒。'}
+          ></ProFormSelect>
         </>
       )}
     </>

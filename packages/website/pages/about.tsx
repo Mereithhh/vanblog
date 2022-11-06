@@ -53,6 +53,9 @@ const AboutPage = (props: AboutPageProps) => {
       sideBar={<AuthorCard option={props.authorCardProps} />}
     >
       <PostCard
+        showExpirationReminder={
+          props.layoutProps.showExpirationReminder == "true"
+        }
         openArticleLinksInNewWindow={false}
         id={0}
         key={"about"}

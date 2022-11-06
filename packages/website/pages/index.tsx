@@ -31,6 +31,9 @@ const Home = (props: IndexPageProps) => {
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
+            showExpirationReminder={
+              props.layoutProps.showExpirationReminder == "true"
+            }
             openArticleLinksInNewWindow={
               props.layoutProps.openArticleLinksInNewWindow == "true"
             }

@@ -51,6 +51,7 @@ const PostPages = (props: PostPagesProps) => {
         ></meta>
       </Head>
       <PostCard
+        showExpirationReminder={props.layoutProps.showExpirationReminder == "true"}
         copyrightAggreement={props.layoutProps.copyrightAggreement}
         openArticleLinksInNewWindow={
           props.layoutProps.openArticleLinksInNewWindow == "true"
