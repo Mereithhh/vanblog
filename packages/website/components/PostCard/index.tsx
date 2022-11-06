@@ -10,6 +10,8 @@ import WaLine from "../WaLine";
 import { PostBottom } from "./bottom";
 import { SubTitle, Title } from "./title";
 import { getTarget } from "../Link/tools";
+import TocMobile from "../TocMobile";
+import { hasToc } from "../../utils/hasToc";
 
 export default function (props: {
   id: number;
@@ -72,6 +74,12 @@ export default function (props: {
     }
   }, [props, lock, content]);
 
+  const showToc = useMemo(() => {
+    if (!hasToc(props.content)) return false;
+    if (props.type == "article") return true;
+    return false;
+  }, [props.type]);
+
   return (
     <div>
       <div
@@ -110,7 +118,10 @@ export default function (props: {
               id={props.id}
             />
           ) : (
-            <Markdown content={calContent}></Markdown>
+            <>
+              {showToc && <TocMobile content={calContent} />}
+              <Markdown content={calContent}></Markdown>
+            </>
           )}
         </div>
 

@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import throttle from "lodash/throttle";
 import { NavItem } from "./tools";
 import { scrollTo } from "../../utils/scroll";
-export default function (props: { items: NavItem[]; headingOffset: number }) {
+export default function (props: {
+  items: NavItem[];
+  headingOffset: number;
+  mobile?: boolean;
+}) {
   const { items } = props;
   const [currIndex, setCurrIndex] = useState(-1);
   const handleScroll = throttle((ev: Event) => {
@@ -85,17 +89,28 @@ export default function (props: { items: NavItem[]; headingOffset: number }) {
       </div>
     );
   }
+
   return (
     <>
-      <div
-        className="text-center text-lg font-medium mt-4 text-gray-700 dark:text-dark cursor-pointer"
-        onClick={() => {
-          scrollTo(window, { top: 0, easing: "ease-in-out", duration: 800 });
-        }}
-      >
-        目录
-      </div>
+      {props.mobile ? (
+        <>
+          <h2 style={{ fontWeight: 600, fontSize: "1.5em", marginBottom: 4 }}>
+            目录
+          </h2>
+        </>
+      ) : (
+        <div
+          className="text-center text-lg font-medium mt-4 text-gray-700 dark:text-dark cursor-pointer"
+          onClick={() => {
+            scrollTo(window, { top: 0, easing: "ease-in-out", duration: 800 });
+          }}
+        >
+          目录
+        </div>
+      )}
+
       <div className="markdown-navigation">{res}</div>
+      <hr style={{ marginBottom: 30, marginTop: -2 }} />
     </>
   );
 }
