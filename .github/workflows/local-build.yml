@@ -58,6 +58,3 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           body_path: CHANGE.md
-      - name: updateVersionToApiServer
-        run: |
-          curl -X POST "${{ secrets.VERSIONURL }}${{ steps.get_version.outputs.VERSION }}"
