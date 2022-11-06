@@ -38,7 +38,14 @@ export default function () {
     };
   }, [currObj, value, type]);
   const onKeyDown = (ev) => {
+    let save = false;
+    if (ev.metaKey == true && ev.key.toLocaleLowerCase() == 's') {
+      save = true;
+    }
     if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == 's') {
+      save = true;
+    }
+    if (save) {
       event?.preventDefault();
       ev?.preventDefault();
       handleSave();
