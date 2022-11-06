@@ -34,6 +34,7 @@ const Home = (props: IndexPageProps) => {
             openArticleLinksInNewWindow={
               props.layoutProps.openArticleLinksInNewWindow == "true"
             }
+            customCopyRight={null}
             private={article.private}
             top={article.top || 0}
             id={article.id}

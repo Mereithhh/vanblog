@@ -98,6 +98,14 @@ export default function (props) {
             ];
           }}
         />
+        <ProFormText
+          width="md"
+          id="copyright"
+          name="copyright"
+          label="版权声明"
+          tooltip="设置后会替换掉文章页底部默认的版权声明文字，留空则根据系统设置中的相关选项进行展示"
+          placeholder="设置后会替换掉文章底部默认的版权"
+        />
       </ModalForm>
     </>
   );

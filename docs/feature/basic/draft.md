@@ -24,7 +24,6 @@ title: 草稿管理
 
 默认为登录者本人，下拉框内的选择范围包括`所有的协作者的昵称`以及后台站点设置中的`作者名称`。
 
-
 ## 导入 markdown
 
 你可以点击 `导入` 按钮导入 `markdown` 文件来创建草稿，暂不支持其他类型的文件。
@@ -83,7 +82,7 @@ title: 草稿管理
 
 具体选项含义可以参考 [文章管理](/feature/basic/article.md)
 
-![](https://pic.mereith.com/img/16470169279f8677e55125e813957730.clipboard-2022-08-29.png)
+![](https://pic.mereith.com/img/d44850f1af0ab09269ae8a0d0506093e.clipboard-2022-11-06.png)
 
 注意的是，草稿发布后会在草稿管理页面消失，而文章管理页面会出现已经发布的草稿。
 

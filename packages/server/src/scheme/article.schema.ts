@@ -45,6 +45,9 @@ export class Article extends Document {
   visited: number;
 
   @Prop()
+  copyright?: string;
+
+  @Prop()
   lastVisitedTime: Date;
 
   @Prop({

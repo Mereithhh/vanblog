@@ -21,6 +21,7 @@ export class PublishDraftDto {
   hidden?: boolean;
   private?: boolean;
   password?: string;
+  copyright?: string;
 }
 export class SearchDraftOption {
   page: number;

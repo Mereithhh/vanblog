@@ -17,7 +17,8 @@ shortTitle: 文章管理
 
 具体有以下选项：
 
-![](https://www.mereith.com/static/img/eb61858881bc9651694f8bc5d45c9387.clipboard-2022-09-06.png)
+![](https://pic.mereith.com/img/5d6a6909552fae41b12f6546591d49af.clipboard-2022-11-06.png)
+
 ## 导入 markdown
 
 你可以点击 `导入` 按钮导入 `markdown` 文件来创建文章，暂不支持其他类型的文件。
@@ -47,6 +48,7 @@ shortTitle: 文章管理
 ### 文章标题
 
 这个没啥好说的，没有特殊要求
+
 ### 作者
 
 默认为登录者本人，下拉框内的选择范围包括`所有的协作者的昵称`以及后台站点设置中的`作者名称`。

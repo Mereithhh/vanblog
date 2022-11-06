@@ -55,6 +55,7 @@ const PostPages = (props: PostPagesProps) => {
         openArticleLinksInNewWindow={
           props.layoutProps.openArticleLinksInNewWindow == "true"
         }
+        customCopyRight={props.article.copyright || null}
         top={props.article.top || 0}
         id={props.article.id}
         key={props.article.title}

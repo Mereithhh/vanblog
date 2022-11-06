@@ -40,6 +40,7 @@ const PagePages = (props: PagePagesProps) => {
             openArticleLinksInNewWindow={
               props.layoutProps.openArticleLinksInNewWindow == "true"
             }
+            customCopyRight={null}
             top={article.top || 0}
             id={article.id}
             key={article.id}

@@ -33,6 +33,7 @@ export default function (props: {
   hideCopyRight?: boolean;
   openArticleLinksInNewWindow: boolean;
   copyrightAggreement: string;
+  customCopyRight: string | null;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const [content, setContent] = useState(props.content || "");
@@ -141,6 +142,7 @@ export default function (props: {
         )}
         {props.type == "article" && !lock && !props?.hideCopyRight && (
           <CopyRight
+            customCopyRight={props.customCopyRight}
             author={props.author as any}
             id={props.id}
             showDonate={showDonate}
