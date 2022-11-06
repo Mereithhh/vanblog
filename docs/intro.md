@@ -140,6 +140,20 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 | Velen     | 50 元    | 2022-09-18 |
 | pcz       | 50 元    | 2022-10-19 |
 
+## 谁在使用
+
+现在可能用的人有一些了吧 - -
+
+如果您想把自己加进来，请提一个 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)，我会尽快添加的。
+
+- [Mereith's Blog](https://www.mereith.com)
+- [前端｜面试进阶之道](https://www.whyknown.com/)
+- [小柴の BLOG](https://blog.sepbf.com)
+- [handy 的小窝](https://www.handyzyg.cn)
+- [GT 的官方博客](https://gt-it.net)
+- [無糧不聚兵‘s Blog](https://www.wongcw.cn)
+- [oldmoon](https://oldmoon.top)
+
 ## 预览图
 
 ![前台-白色](./assets/前台-白色.png)
