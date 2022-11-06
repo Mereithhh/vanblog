@@ -2,6 +2,15 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcess, spawn } from 'node:child_process';
 import path from 'node:path';
 import { MetaProvider } from '../meta/meta.provider';
+
+const ignoreWebsiteWarnings = [
+  'Experimental features are not covered by semver',
+  'You have enabled experimental feature',
+  'Invalid next.config.js options',
+  'The value at .experimental has an',
+  '(node:62) ExperimentalWarning',
+];
+
 @Injectable()
 export class WebsiteProvider {
   // constructor() {}
@@ -97,7 +106,11 @@ export class WebsiteProvider {
       this.ctx.stderr.on('data', (data) => {
         const t: string = data.toString();
 
-        if (!t.includes('You have enabled experimental feature')) {
+        let showLog = true;
+        for (const each of ignoreWebsiteWarnings) {
+          if (t.includes(each)) showLog = false;
+        }
+        if (showLog) {
           this.logger.error(t.substring(0, t.length - 1));
         }
       });
