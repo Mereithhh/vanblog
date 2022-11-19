@@ -92,6 +92,8 @@ VOLUME /var/log
 VOLUME /root/.config/caddy
 VOLUME /root/.local/share/caddy
 
+RUN echo '10 4 * * * find /tmp/ -name "yarn*" -type d -mtime +1 -exec rm -rf {} \; > /dev/null' > /var/spool/cron/crontabs/root
+
 EXPOSE 80
 ENTRYPOINT [ "sh","entrypoint.sh" ]
 # CMD [ "entrypoint.sh" ]
