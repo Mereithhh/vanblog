@@ -153,6 +153,8 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 - [GT 的官方博客](https://gt-it.net)
 - [無糧不聚兵‘s Blog](https://www.wongcw.cn)
 - [oldmoon](https://oldmoon.top)
+- [手艺橙](https://blog.shouyicheng.com/)
+- [叶继伟 の blog](https://yejiwei.com)
 
 ## 预览图
 
