@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.43.1](https://github.com/Mereithhh/van-blog/compare/v0.43.0...v0.43.1) (2022-11-22)
+
+
+### ✏️ Documentation | 文档
+
+* 更新谁在使用 ([a16424d](https://github.com/Mereithhh/van-blog/commit/a16424db86faed7b0285466170648bc6140b8435))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 容器内 website 服务无限重启，导致 inode 缓慢增加占满硬盘空间 [#93](https://github.com/Mereithhh/van-blog/issues/93) [#85](https://github.com/Mereithhh/van-blog/issues/85) ([76c17cb](https://github.com/Mereithhh/van-blog/commit/76c17cb6c4be1ca05facbc3e9e27b11337c5f0d6))
+
 ## [0.43.0](https://github.com/Mereithhh/van-blog/compare/v0.42.0...v0.43.0) (2022-11-06)
 
 
