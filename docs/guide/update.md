@@ -40,7 +40,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ```bash
 # 切换到部署 vanblog 的目录下（docker-compose.yml)存放的路径下
 # 关闭原有服务
-docker-compose down
+docker-compose down -v
 # 删除原有镜像
 docker rmi mereith/van-blog:latest
 # 重新拉取最新镜像
@@ -107,7 +107,7 @@ PS：因为目前只有我一个人开发，所以很多情况测试覆盖不到
 `mereith/van-blog:latest` 为 `mereith/van-blog:v0.29.0` ，然后运行：
 
 ```bash
-docker-compose down && docker-compose up -d
+docker-compose down -v && docker-compose up -d
 ```
 
 ## 群晖升级

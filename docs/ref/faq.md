@@ -139,7 +139,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 ![](https://www.mereith.com/static/img/e2bc119c1408d50f73a2da526dec96c8.clipboard-2022-09-02.png)
 
-然后运行 `docker-compose down && docker-compose up -d` 重启容器，就可以通过 27017 端口访问 mongoDB 了。
+然后运行 `docker-compose down -v && docker-compose up -d` 重启容器，就可以通过 27017 端口访问 mongoDB 了。
 
 具体访问方式可以自行查阅资料，我一般都是用 [mongoDBCompass](https://www.mongodb.com/try/download/compass) 这个工具。
 
@@ -150,7 +150,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 `mereith/van-blog:latest` 为 `mereith/van-blog:v0.29.0` ，然后运行：
 
 ```bash
-docker-compose down && docker-compose up -d
+docker-compose down -v && docker-compose up -d
 ```
 
 ### https 反代前台点击按钮跳转后页面不更新

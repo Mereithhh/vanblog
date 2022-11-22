@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.1.3"
+VANBLOG_SCRIPT_VERSION="v0.1.4"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -245,7 +245,7 @@ restart() {
   echo -e "> 重启服务"
 
   cd $VANBLOG_BASE_PATH
-  docker-compose down
+  docker-compose down -v
   docker-compose up -d
   if [[ $? == 0 ]]; then
     echo -e "${green}VanBlog 重启成功${plain}"
@@ -263,7 +263,7 @@ update() {
 
   cd $VANBLOG_BASE_PATH
   docker-compose pull
-  docker-compose down
+  docker-compose down -v
   docker-compose up -d
   if [[ $? == 0 ]]; then
     echo -e "${green}VanBlog 更新并重启成功${plain}"
@@ -294,7 +294,7 @@ start_vanblog() {
 stop_vanblog() {
   echo -e "> 停止 VanBlog"
 
-  cd $VANBLOG_BASE_PATH && docker-compose down
+  cd $VANBLOG_BASE_PATH && docker-compose down -v
   if [[ $? == 0 ]]; then
     echo -e "${green}VanBlog 停止成功${plain}"
   else
@@ -334,7 +334,7 @@ uninstall_vanblog() {
   esac
 
   cd $VANBLOG_BASE_PATH &&
-    docker-compose down
+    docker-compose down -v
   rm -rf $VANBLOG_BASE_PATH
   docker rmi -f mereith/van-blog:latest >/dev/null 2>&1
   clean_all
