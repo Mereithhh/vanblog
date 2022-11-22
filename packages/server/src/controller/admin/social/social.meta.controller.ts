@@ -52,7 +52,6 @@ export class SocialMetaController {
     }
     const data = await this.metaProvider.addOrUpdateSocial(updateDto);
     this.isrProvider.activeAll('更新联系方式触发增量渲染！');
-    this.websiteProvider.restart('更新联系方式');
     return {
       statusCode: 200,
       data,
@@ -69,7 +68,6 @@ export class SocialMetaController {
     }
     const data = await this.metaProvider.addOrUpdateSocial(updateDto);
     this.isrProvider.activeAll('创建联系方式触发增量渲染！');
-    this.websiteProvider.restart('创建联系方式');
     return {
       statusCode: 200,
       data,
@@ -86,7 +84,6 @@ export class SocialMetaController {
     }
     const data = await this.metaProvider.deleteSocial(type);
     this.isrProvider.activeAll('删除联系方式触发增量渲染！');
-    this.websiteProvider.restart('删除联系方式');
     return {
       statusCode: 200,
       data,

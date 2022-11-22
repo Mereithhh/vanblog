@@ -9,6 +9,7 @@ const ignoreWebsiteWarnings = [
   'Invalid next.config.js options',
   'The value at .experimental has an',
   '(node:62) ExperimentalWarning',
+  'null',
 ];
 
 @Injectable()
@@ -62,6 +63,10 @@ export class WebsiteProvider {
     if (this.ctx) {
       await this.stop();
     }
+  }
+  async restore(reason: string) {
+    this.logger.log(`${reason}`);
+    if (this.ctx) this.ctx = null;
     await this.run();
   }
   async stop(noMessage?: boolean) {
@@ -94,10 +99,7 @@ export class WebsiteProvider {
         this.logger.log(message);
       });
       this.ctx.on('exit', async () => {
-        this.ctx = null;
-        this.logger.error('website 意外进程退出，自动重启');
-        await this.stop(true);
-        await this.run();
+        await this.restore('website 进程退出，自动重启');
       });
       this.ctx.stdout.on('data', (data) => {
         const t: string = data.toString();
