@@ -22,6 +22,15 @@ title: 图床
 
 ### 配置方法
 
+::: info 温馨提示
+
+感谢张鱼哥同学，他写了一份很详细的 `腾讯云 COS` 配置指南：
+
+- [vanblog 使用 picgo 图床的完整部署教程](https://www.handyzyg.cn/post/47)
+
+其他云存储的指南欢迎大家补充～
+:::
+
 首先阅读 [picgo 配置文档](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90)，推荐跟着文档自动生成配置。
 
 生成后，进入后台`站点管理/系统设置/图床设置`，选择 `OSS` 图床，并把生成的配置文件复制过去，比如我用的七牛云图床，就像下面这样：
