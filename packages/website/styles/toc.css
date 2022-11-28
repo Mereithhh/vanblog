@@ -17,7 +17,8 @@
   color: rgb(108, 108, 108);
 }
 .dark .markdown-navigation .title-anchor.active {
-  color: #4f79be;
+  color: #fff;
+  font-weight: 550;
 }
 .dark .markdown-navigation .title-anchor:hover,
 .dark .markdown-navigation .title-anchor.active {
@@ -30,6 +31,8 @@
   overflow-x: hidden;
   overflow-y: scroll;
   scrollbar-width: 0;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 }
 .markdown-navigation::-webkit-scrollbar{
   width:0;
@@ -53,16 +56,17 @@
 }
 
 .markdown-navigation .title-anchor.active {
-  color: #007fff;
+  color: #000;
+  font-weight: 550;
 }
 
 .markdown-navigation .title-anchor small {
-  margin: 0 0.8em;
+  margin: 0;
 }
 
 .markdown-navigation .title-level1 {
   color: #000;
-  font-size: 1.2em;
+  font-size: 1em;
   padding-left: 1em;
   font-weight: normal;
 }
@@ -76,26 +80,26 @@
 
 .markdown-navigation .title-level3 {
   color: #666;
-  font-size: 0.8em;
+  font-size: 1em;
   padding-left: 3em;
   font-weight: normal;
 }
 
 .markdown-navigation .title-level4 {
   color: #999;
-  font-size: 0.72em;
+  font-size: 1em;
   padding-left: 5em;
 }
 
 .markdown-navigation .title-level5 {
   color: #aaa;
-  font-size: 0.72em;
+  font-size: 1em;
   padding-left: 7em;
 }
 
 .markdown-navigation .title-level6 {
   color: #bbb;
-  font-size: 0.72em;
+  font-size: 1em;
   padding-left: 9em;
 }
 
@@ -106,6 +110,5 @@
 
 .toc-mobile .markdown-navigation .title-anchor  {
   color: #0969da;
-  background: inherit;
   margin: 0.4em 0 ;
 }
