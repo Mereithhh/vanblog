@@ -129,6 +129,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [oldmoon](https://oldmoon.top)
 - [手艺橙](https://blog.shouyicheng.com/)
 - [叶继伟 の blog](https://yejiwei.com)
+- [seek.wiki](https://seek.wiki)
 
 ## TODO
 
