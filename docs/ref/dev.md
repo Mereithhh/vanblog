@@ -45,6 +45,17 @@ CI： [docker](https://www.docker.com/)、[nginx](https://www.nginx.com/)、[git
 
 文档： [vue-press](https://vuepress.vuejs.org/)、[vue-press-hope](https://vuepress-theme-hope.github.io/)
 
+## 一键开发命令
+
+为了方便（懒），增加了一键开发命令：
+在配置好后端开发的 `yaml` 配置文件后，在项目根目录下运行：
+
+```bash
+yarn dev
+```
+
+就会启动 admin、server、website、waline.js 服务。 发送 `SIGINT` 就会自动优雅退出所有相关进程。
+
 ## 前台开发
 
 现在前台的启动改为嵌入到后端的 `child_process` 中了，所以默认无需单独启动前台！启动后端就会启动前台 `next.js 的 dev 模式`。
