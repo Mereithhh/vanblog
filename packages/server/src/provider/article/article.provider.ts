@@ -104,9 +104,10 @@ export class ArticleProvider {
   async create(
     createArticleDto: CreateArticleDto,
     skipUpdateWordCount?: boolean,
+    id?: number,
   ): Promise<Article> {
     const createdData = new this.articleModel(createArticleDto);
-    const newId = await this.getNewId();
+    const newId = id || (await this.getNewId());
     createdData.id = newId;
     if (!skipUpdateWordCount) {
       this.metaProvider.updateTotalWords('新建文章');
@@ -263,11 +264,10 @@ export class ArticleProvider {
     //   articles[i].id = newId;
     // }
 
-    // 题目相同就合并，以导入的优先
+    // id 相同就合并，以导入的优先
     for (const a of articles) {
       const { id, ...createDto } = a;
-      const title = a.title;
-      const oldArticle = await this.findOneByTitle(title);
+      const oldArticle = await this.getById(id, 'admin');
       if (oldArticle) {
         this.updateById(
           oldArticle.id,
@@ -285,6 +285,7 @@ export class ArticleProvider {
             updatedAt: createDto.updatedAt || createDto.createdAt || new Date(),
           },
           true,
+          id,
         );
       }
     }
