@@ -130,6 +130,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [手艺橙](https://blog.shouyicheng.com/)
 - [叶继伟 の blog](https://yejiwei.com)
 - [seek.wiki](https://seek.wiki)
+- [Kevin2li's Blog](https://blog.kevin2li.top/)
+- [joker's blog](https://jingjianqian.top)
 
 ## TODO
 

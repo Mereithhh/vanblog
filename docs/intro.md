@@ -156,6 +156,8 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 - [手艺橙](https://blog.shouyicheng.com/)
 - [叶继伟 の blog](https://yejiwei.com)
 - [seek.wiki](https://seek.wiki)
+- [Kevin2li's Blog](https://blog.kevin2li.top/)
+- [joker's blog](https://jingjianqian.top)
 
 ## 预览图
 
