@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import throttle from "lodash/throttle";
 import { NavItem } from "./tools";
 import { scrollTo } from "../../utils/scroll";
+import { mutiTry } from "../../utils/try";
 export default function (props: {
   items: NavItem[];
   headingOffset: number;
@@ -74,15 +75,26 @@ export default function (props: {
         key={each.index}
         className={cls}
         onClick={() => {
-          const el: any = document.querySelector(`[data-id="${each.text}"]`);
-
-          if (el) {
-            let to = el.offsetTop - props.headingOffset;
-            if (to <= 100) {
-              to = 0;
-            }
-            scrollTo(window, { top: to, easing: "ease-in-out", duration: 800 });
-          }
+          mutiTry(
+            3,
+            () => {
+              const el: any = document.querySelector(
+                `[data-id="${each.text}"]`
+              );
+              if (el) {
+                let to = el.offsetTop - props.headingOffset;
+                if (to <= 100) {
+                  to = 0;
+                }
+                scrollTo(window, {
+                  top: to,
+                  easing: "ease-in-out",
+                  duration: 800,
+                });
+              }
+            },
+            800
+          );
         }}
       >
         {each.text}
