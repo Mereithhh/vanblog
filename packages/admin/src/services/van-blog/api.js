@@ -2,6 +2,7 @@
 
 /* eslint-disable */
 import { request } from 'umi';
+import { encodeQuerystring } from './encode';
 
 export async function fetchAllMeta(options) {
   return request('/api/admin/meta', {
@@ -229,7 +230,7 @@ export async function deleteTag(name) {
   });
 }
 export async function deleteCategory(name) {
-  return request(`/api/admin/category/${name}`, {
+  return request(`/api/admin/category/${encodeQuerystring(name)}`, {
     method: 'DELETE',
   });
 }

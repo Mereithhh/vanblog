@@ -4,6 +4,7 @@ import {
   getAllCategories,
   updateCategory,
 } from '@/services/van-blog/api';
+import { encodeQuerystring } from '@/services/van-blog/encode';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, message, Modal } from 'antd';
@@ -22,7 +23,7 @@ const columns = [
       <a
         key="viewCategory"
         onClick={() => {
-          window.open(`/category/${record.name}`, '_blank');
+          window.open(`/category/${encodeQuerystring(record.name)}`, '_blank');
         }}
       >
         查看
