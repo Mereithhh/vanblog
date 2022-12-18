@@ -1,7 +1,8 @@
 import { getAllCategories, getTags, updateArticle, updateDraft } from '@/services/van-blog/api';
 import { ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText } from '@ant-design/pro-form';
-import { message, Modal } from 'antd';
+import { Form, message, Modal } from 'antd';
 import moment from 'moment';
+import { useEffect } from 'react';
 import AuthorField from '../AuthorField';
 export default function (props: {
   currObj: any;
@@ -10,8 +11,13 @@ export default function (props: {
   type: 'article' | 'draft' | 'about';
 }) {
   const { currObj, setLoading, type, onFinish } = props;
+  const [form] = Form.useForm();
+  useEffect(() => {
+    if (form && form.setFieldsValue) form.setFieldsValue(currObj);
+  }, [currObj]);
   return (
     <ModalForm
+      form={form}
       title="修改信息"
       trigger={
         <a key="button" type="link">
