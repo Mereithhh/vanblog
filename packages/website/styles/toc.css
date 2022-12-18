@@ -17,7 +17,7 @@
   color: rgb(108, 108, 108);
 }
 .dark .markdown-navigation .title-anchor.active {
-  color: #fff;
+  color: #d3d3d3;
   font-weight: 550;
 }
 .dark .markdown-navigation .title-anchor:hover,
@@ -61,46 +61,46 @@
 }
 
 .markdown-navigation .title-anchor small {
-  margin: 0;
+  margin: 0 0.8em;
 }
 
 .markdown-navigation .title-level1 {
   color: #000;
-  font-size: 1em;
-  padding-left: 1em;
+  font-size: 1.2em;
+  padding-left: 8px;
   font-weight: normal;
 }
 
 .markdown-navigation .title-level2 {
   color: #333;
   font-size: 1em;
-  padding-left: 1em;
+  padding-left: 1.5em;
   font-weight: normal;
 }
 
 .markdown-navigation .title-level3 {
   color: #666;
-  font-size: 1em;
-  padding-left: 3em;
+  font-size: 0.8em;
+  padding-left: 3.5em;
   font-weight: normal;
 }
 
 .markdown-navigation .title-level4 {
   color: #999;
-  font-size: 1em;
-  padding-left: 5em;
+  font-size: 0.72em;
+  padding-left: 5.5em;
 }
 
 .markdown-navigation .title-level5 {
   color: #aaa;
-  font-size: 1em;
-  padding-left: 7em;
+  font-size: 0.72em;
+  padding-left: 7.5em;
 }
 
 .markdown-navigation .title-level6 {
   color: #bbb;
-  font-size: 1em;
-  padding-left: 9em;
+  font-size: 0.72em;
+  padding-left: 9.5em;
 }
 
 
@@ -108,7 +108,18 @@
   font-size: 16px;
 }
 
+.dark .toc-mobile .markdown-navigation .title-anchor  {
+  color:#9e9e9e;
+}
 .toc-mobile .markdown-navigation .title-anchor  {
-  color: #0969da;
+  color: #374151;
   margin: 0.4em 0 ;
+}
+.dark .toc-mobile .markdown-navigation .title-anchor.active {
+  color:#9e9e9e;
+}
+.toc-mobile .markdown-navigation .title-anchor.active {
+  background-color: inherit;
+  color:#374151;
+  font-weight: normal;
 }

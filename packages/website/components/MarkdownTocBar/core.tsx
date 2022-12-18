@@ -94,7 +94,10 @@ export default function (props: {
     <>
       {props.mobile ? (
         <>
-          <h2 style={{ fontWeight: 600, fontSize: "1.5em", marginBottom: 4 }}>
+          <h2
+            style={{ fontWeight: 600, fontSize: "1.5em", marginBottom: 4 }}
+            className="text-gray-700 dark:text-dark "
+          >
             目录
           </h2>
         </>
