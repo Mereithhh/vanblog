@@ -4,6 +4,7 @@ export type SocialType =
   | "email"
   | "github"
   | "wechat"
+  | "gitee"
   | "wechat-dark";
 export const defaultMenu: MenuItem[] = [
   {
