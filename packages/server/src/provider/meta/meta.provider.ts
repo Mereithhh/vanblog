@@ -103,6 +103,10 @@ export class MetaProvider {
         value: 'github',
       },
       {
+        label: 'Gitee',
+        value: 'gitee',
+      },
+      {
         label: '微信',
         value: 'wechat',
       },

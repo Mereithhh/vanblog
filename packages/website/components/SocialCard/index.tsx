@@ -35,7 +35,7 @@ export default function (props: { socials: SocialItem[] }) {
     }
     return (
       <div
-        className="w-1/2  mx-1 flex items-center rounded-sm transition-all text-xs text-gray-500 dark:text-dark group  hover:bg-gray-200 dark:hover:bg-dark-light dark:hover:text-dark-r select-none cursor-pointer"
+        className="w-1/2 mb-1  mx-1 flex items-center rounded-sm transition-all text-xs text-gray-500 dark:text-dark group  hover:bg-gray-200 dark:hover:bg-dark-light dark:hover:text-dark-r select-none cursor-pointer"
         style={{ padding: "2px 0" }}
       >
         {<SocialIcon item={item}></SocialIcon>}
