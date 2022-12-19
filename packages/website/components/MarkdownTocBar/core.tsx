@@ -38,11 +38,18 @@ export default function (props: {
       }
     }
     setCurrIndex(top.index);
-
     // updateHash(top.text);
   }, 100);
+
   useEffect(() => {
-    const el = document.querySelector(".markdown-navigation div.active");
+    updateTocScrollbar();
+  }, [currIndex, props.headingOffset]);
+
+  const updateTocScrollbar = () => {
+    const el = document.querySelector(
+      "#toc-container > div > div.markdown-navigation > div.active"
+    ) as HTMLElement;
+
     const container = document.querySelector("#toc-container");
     if (el && container) {
       let to = (el as any)?.offsetTop;
@@ -56,14 +63,16 @@ export default function (props: {
         behavior: "smooth",
       });
     }
-  }, [currIndex, props.headingOffset]);
+    // console.log(el?.offsetTop);
+  };
+
   //TODO 逻辑完善的 hash 更新
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  });
+  }, []);
   const res = [];
   for (const each of items) {
     const cls = `title-anchor title-level${each.level} ${
@@ -92,28 +101,36 @@ export default function (props: {
 
   return (
     <>
-      {props.mobile ? (
-        <>
-          <h2
-            style={{ fontWeight: 600, fontSize: "1.5em", marginBottom: 4 }}
-            className="text-gray-700 dark:text-dark "
+      <div className="relative" style={{ position: "relative" }}>
+        {props.mobile ? (
+          <>
+            <h2
+              style={{ fontWeight: 600, fontSize: "1.5em", marginBottom: 4 }}
+              className="text-gray-700 dark:text-dark "
+            >
+              目录
+            </h2>
+          </>
+        ) : (
+          <div
+            className="text-center text-lg font-medium mt-4 text-gray-700 dark:text-dark cursor-pointer"
+            onClick={() => {
+              scrollTo(window, {
+                top: 0,
+                easing: "ease-in-out",
+                duration: 800,
+              });
+            }}
           >
             目录
-          </h2>
-        </>
-      ) : (
-        <div
-          className="text-center text-lg font-medium mt-4 text-gray-700 dark:text-dark cursor-pointer"
-          onClick={() => {
-            scrollTo(window, { top: 0, easing: "ease-in-out", duration: 800 });
-          }}
-        >
-          目录
-        </div>
-      )}
+          </div>
+        )}
 
-      <div className="markdown-navigation">{res}</div>
-      <hr style={{ marginBottom: 30, marginTop: -2 }} />
+        <div className="markdown-navigation" style={{ position: "relative" }}>
+          {res}
+        </div>
+        <div style={{ marginBottom: 10, marginTop: -2 }} />
+      </div>
     </>
   );
 }
