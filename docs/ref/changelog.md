@@ -4,6 +4,19 @@ icon: update
 ---
 
 
+### [0.44.1](https://github.com/Mereithhh/van-blog/compare/v0.44.0...v0.44.1) (2022-12-19)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([cb01dfe](https://github.com/Mereithhh/van-blog/commit/cb01dfe0cec2429a658096aba1b08ef5b8c23826))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* type error ([69db2a5](https://github.com/Mereithhh/van-blog/commit/69db2a5cc46b8f417b12f4e8973e9f5792b1fc8f))
+* 目录的滚动条自动跟随失效 [#87](https://github.com/Mereithhh/van-blog/issues/87) ([27db88b](https://github.com/Mereithhh/van-blog/commit/27db88bd5a9a5271ba000042fa045519f052bafc))
+
 ## [0.44.0](https://github.com/Mereithhh/van-blog/compare/v0.43.1...v0.44.0) (2022-12-18)
 
 
