@@ -14,7 +14,7 @@ const Settings = {
   splitMenus: false,
   // headerRender: false,
   pwa: true,
-  logo: 'https://pic.mereith.com/logo.svg',
+  logo: '/logo.svg',
   iconfontUrl: '',
 };
 export default Settings;

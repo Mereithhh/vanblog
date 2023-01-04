@@ -158,6 +158,7 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 - [seek.wiki](https://seek.wiki)
 - [Kevin2li's Blog](https://blog.kevin2li.top/)
 - [joker's blog](https://jingjianqian.top)
+- [SnailBlog](https://blog.mldd521.com)
 
 ## 预览图
 

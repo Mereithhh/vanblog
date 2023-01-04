@@ -132,6 +132,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [seek.wiki](https://seek.wiki)
 - [Kevin2li's Blog](https://blog.kevin2li.top/)
 - [joker's blog](https://jingjianqian.top)
+- [SnailBlog](https://blog.mldd521.com)
 
 ## TODO
 
