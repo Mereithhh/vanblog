@@ -159,6 +159,7 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 - [Kevin2li's Blog](https://blog.kevin2li.top/)
 - [joker's blog](https://jingjianqian.top)
 - [SnailBlog](https://blog.mldd521.com)
+- [Ray's Blog](https://blog.zai7lou.ml)
 
 ## 预览图
 
