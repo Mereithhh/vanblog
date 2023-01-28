@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
@@ -25,8 +26,10 @@ export class CategoryController {
   ) {}
 
   @Get('/all')
-  async getAllTags() {
-    const data = await this.categoryProvider.getAllCategories(true);
+  async getAllTags(@Query('detail') withDetail?: string) {
+    let withAllData = false;
+    if (withDetail && withDetail == 'true') withAllData = true;
+    const data = await this.categoryProvider.getAllCategories(withAllData);
     return {
       statusCode: 200,
       data,

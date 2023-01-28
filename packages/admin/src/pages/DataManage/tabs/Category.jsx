@@ -123,7 +123,7 @@ const columns = [
 ];
 export default function () {
   const fetchData = async () => {
-    const { data: res } = await getAllCategories();
+    const { data: res } = await getAllCategories(true);
     console.log(res);
     return res.map((item) => ({
       key: item.id,

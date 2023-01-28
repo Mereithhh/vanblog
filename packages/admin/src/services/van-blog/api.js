@@ -186,8 +186,8 @@ export async function getAllCollaborators() {
   });
 }
 
-export async function getAllCategories() {
-  return request(`/api/admin/category/all`, {
+export async function getAllCategories(withAllData = false) {
+  return request(`/api/admin/category/all?detail=${withAllData ? 'true' : 'false'}`, {
     method: 'GET',
   });
 }
