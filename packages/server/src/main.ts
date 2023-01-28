@@ -58,6 +58,8 @@ async function bootstrap() {
   initProvider.initVersion();
   initProvider.initRestoreKey();
   if (await initProvider.checkHasInited()) {
+    // 老版本的分类数据洗一下
+    await initProvider.washCategory();
     const userProvider = app.get(UserProvider);
     // 老版本没加盐的用户数据洗一下。
     userProvider.washUserWithSalt();

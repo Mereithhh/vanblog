@@ -3,14 +3,19 @@ import {
   NotAcceptableException,
   NotFoundException,
 } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { ArticleProvider } from '../article/article.provider';
-import { MetaProvider } from '../meta/meta.provider';
+import { CategoryDocument } from 'src/scheme/category.schema';
+import { sleep } from 'src/utils/sleep';
+import { UpdateCategoryDto } from 'src/types/category.dto';
 
 @Injectable()
 export class CategoryProvider {
+  idLock = false;
   constructor(
+    @InjectModel('Category') private categoryModal: Model<CategoryDocument>,
     private readonly articleProvider: ArticleProvider,
-    private readonly metaProvider: MetaProvider,
   ) {}
   async getCategoriesWithArticle(includeHidden: boolean) {
     const allArticles = await this.articleProvider.getAll(
@@ -43,12 +48,13 @@ export class CategoryProvider {
     return res;
   }
 
-  async getAllCategories() {
-    const d = await this.metaProvider.getAll();
-    if (!d) {
+  async getAllCategories(all?: boolean) {
+    const d = await this.categoryModal.find({});
+    if (!d || !d.length) {
       throw new NotFoundException();
     }
-    return d.categories;
+    if (all) return d;
+    else return d.map((item) => item.name);
   }
 
   async getArticlesByCategory(name: string, includeHidden: boolean) {
@@ -57,12 +63,33 @@ export class CategoryProvider {
   }
 
   async addOne(name: string) {
-    const allMeta = await this.metaProvider.getAll();
-    const newCategories = allMeta.categories;
-    if (!allMeta.categories.includes(name)) {
-      newCategories.push(name);
+    const existData = await this.categoryModal.findOne({
+      name,
+    });
+    if (existData) {
+      throw new NotAcceptableException('分类名重复，无法创建！');
+    } else {
+      await this.categoryModal.create({
+        id: await this.getNewId(),
+        name,
+        type: 'category',
+        private: false,
+      });
     }
-    this.metaProvider.update({ categories: newCategories });
+  }
+
+  async getNewId() {
+    while (this.idLock) {
+      await sleep(10);
+    }
+    this.idLock = true;
+    const maxObj = await this.categoryModal.find({}).sort({ id: -1 }).limit(1);
+    let res = 1;
+    if (maxObj.length) {
+      res = maxObj[0].id + 1;
+    }
+    this.idLock = false;
+    return res;
   }
 
   async deleteOne(name: string) {
@@ -71,37 +98,39 @@ export class CategoryProvider {
     if (d && d.length) {
       throw new NotAcceptableException('分类已有文章，无法删除！');
     }
-
-    const allMeta = await this.metaProvider.getAll();
-    const newCategories = [];
-    allMeta.categories.forEach((c) => {
-      if (c !== name) {
-        newCategories.push(c);
-      }
+    await this.categoryModal.deleteOne({
+      name,
     });
-    this.metaProvider.update({ categories: newCategories });
   }
 
-  async updateCategoryByName(name: string, newName: string) {
-    const allMeta = await this.metaProvider.getAll();
-    // 先修改文章分类
-    const articles = await this.getArticlesByCategory(name, true);
-    if (articles && articles.length) {
-      for (const article of articles) {
-        await this.articleProvider.updateById(article.id, {
-          category: newName,
-        });
+  async updateCategoryByName(name: string, dto: UpdateCategoryDto) {
+    if (Object.keys(dto).length == 0) {
+      throw new NotAcceptableException('无有效信息，无法修改！');
+    }
+    if (dto.name && name != dto.name) {
+      const existData = await this.categoryModal.findOne({
+        name: dto.name,
+      });
+      if (existData) {
+        throw new NotAcceptableException('分类名重复，无法修改！');
+      }
+      // 先修改文章分类
+      const articles = await this.getArticlesByCategory(name, true);
+      if (articles && articles.length) {
+        for (const article of articles) {
+          await this.articleProvider.updateById(article.id, {
+            category: dto.name,
+          });
+        }
       }
     }
-    // 修改分类
-    const newCategories = [];
-    allMeta.categories.forEach((r) => {
-      if (r === name) {
-        newCategories.push(newName);
-      } else {
-        newCategories.push(r);
-      }
-    });
-    this.metaProvider.update({ categories: newCategories });
+    await this.categoryModal.updateOne(
+      {
+        name: name,
+      },
+      {
+        ...dto,
+      },
+    );
   }
 }

@@ -6,7 +6,7 @@ import {
 } from '@/services/van-blog/api';
 import { encodeQuerystring } from '@/services/van-blog/encode';
 import { PlusOutlined } from '@ant-design/icons';
-import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
+import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, message, Modal } from 'antd';
 import { useRef } from 'react';
 const columns = [
@@ -14,6 +14,24 @@ const columns = [
     dataIndex: 'name',
     title: '题目',
     search: false,
+  },
+  {
+    title: '加密',
+    tooltip:
+      '分类加密后，此分类下的所有文章都会被加密。密码以分类的密码为准。加密后，访客仍可正常访问分类并获取文章列表。',
+    dataIndex: 'private',
+    search: false,
+    valueType: 'select',
+    valueEnum: {
+      [true]: {
+        text: '加密',
+        status: 'Error',
+      },
+      [false]: {
+        text: '未加密',
+        status: 'Success',
+      },
+    },
   },
   {
     title: '操作',
@@ -33,12 +51,25 @@ const columns = [
         title={`修改分类 "${record.name}"`}
         trigger={<a key={'editC' + record.name}>修改</a>}
         autoFocusFirstInput
+        initialValues={{
+          password: record.password,
+          private: record.private,
+        }}
         submitTimeout={3000}
         onFinish={async (values) => {
+          if (Object.keys(values).length == 0) {
+            message.error('无有效信息！请至少填写一个选项！');
+            return false;
+          }
+          if (values.private && !values.password) {
+            message.error('如若加密，请填写密码！');
+            return false;
+          }
+
           Modal.confirm({
-            content: `确定修改分类 "${record.name}" 为 "${values.newName}" 吗？所有该分类下的文章都将被更新!`,
+            content: `确定修改分类 "${record.name}" 吗？改动将立即生效!`,
             onOk: async () => {
-              await updateCategory(record.name, values.newName);
+              await updateCategory(record.name, values);
               message.success('提交成功');
               action?.reload();
               return true;
@@ -48,13 +79,24 @@ const columns = [
           return true;
         }}
       >
-        <ProFormText
+        <ProFormText width="md" name="name" label="分类名" placeholder="请输入新的分类名称" />
+        <ProFormSelect
           width="md"
-          name="newName"
-          label="新分类名"
-          placeholder="请输入新的分类名称"
-          required
-          rules={[{ required: true, message: '这是必填项' }]}
+          name="private"
+          label="是否加密"
+          placeholder="是否加密"
+          request={async () => {
+            return [
+              { label: '未加密', value: false },
+              { label: '加密', value: true },
+            ];
+          }}
+        />
+        <ProFormText.Password
+          width="md"
+          name="password"
+          label="密码"
+          placeholder="请输入加密密码"
         />
       </ModalForm>,
 
@@ -82,9 +124,10 @@ const columns = [
 export default function () {
   const fetchData = async () => {
     const { data: res } = await getAllCategories();
+    console.log(res);
     return res.map((item) => ({
-      key: item,
-      name: item,
+      key: item.id,
+      ...item,
     }));
   };
   const actionRef = useRef();

@@ -215,8 +215,9 @@ export async function createCategory(body) {
   });
 }
 export async function updateCategory(name, value) {
-  return request(`/api/admin/category/${name}?value=${value}`, {
+  return request(`/api/admin/category/${name}`, {
     method: 'PUT',
+    data: value,
   });
 }
 export async function updateTag(name, value) {

@@ -6,11 +6,10 @@ import {
   Param,
   Post,
   Put,
-  Query,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateCategoryDto } from 'src/types/category.dto';
+import { CreateCategoryDto, UpdateCategoryDto } from 'src/types/category.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
@@ -27,7 +26,7 @@ export class CategoryController {
 
   @Get('/all')
   async getAllTags() {
-    const data = await this.categoryProvider.getAllCategories();
+    const data = await this.categoryProvider.getAllCategories(true);
     return {
       statusCode: 200,
       data,
@@ -78,7 +77,7 @@ export class CategoryController {
   @Put('/:name')
   async updateCategoryByName(
     @Param('name') name: string,
-    @Query('value') newValue: string,
+    @Body() updateDto: UpdateCategoryDto,
   ) {
     if (config.demo && config.demo == 'true') {
       return {
@@ -88,9 +87,9 @@ export class CategoryController {
     }
     const data = await this.categoryProvider.updateCategoryByName(
       name,
-      newValue,
+      updateDto,
     );
-    this.isrProvider.activeAll('迁移分类触发增量渲染！');
+    this.isrProvider.activeAll('更新分类触发增量渲染！');
     return {
       statusCode: 200,
       data,

@@ -4,7 +4,7 @@ title: 分类管理
 
 `vanBlog` 支持管理 `分类`，具体在后台的 `站点管理/数据管理/分类管理`:
 
-![](https://pic.mereith.com/img/68684a40630f0cf89f51bcded633d9b9.clipboard-2022-08-31.png)
+![](https://pic.mereith.com/img/557dd4cdc00fa700179b34a8ed354291.clipboard-2023-01-28.png)
 
 ## 删除分类
 
@@ -12,7 +12,13 @@ title: 分类管理
 
 ## 修改分类
 
+![](https://pic.mereith.com/img/c9ae290254e9e0011137b8c988c6fd1a.clipboard-2023-01-28.png)
+
 你也可以修改某个分类，修改分类名会导致该分类下的所有文章都被移动到新的分类。
+
+## 加密分类
+
+分类加密后，此分类下的所有文章都会被加密。密码以分类的密码为准。加密后，访客仍可正常访问分类并获取文章列表。
 
 ## 新建分类
 

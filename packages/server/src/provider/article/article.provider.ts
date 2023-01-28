@@ -17,6 +17,7 @@ import { wordCount } from 'src/utils/wordCount';
 import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';
 import { sleep } from 'src/utils/sleep';
+import { CategoryDocument } from 'src/scheme/category.schema';
 
 export type ArticleView = 'admin' | 'public' | 'list';
 
@@ -26,6 +27,7 @@ export class ArticleProvider {
   constructor(
     @InjectModel('Article')
     private articleModel: Model<ArticleDocument>,
+    @InjectModel('Category') private categoryModal: Model<CategoryDocument>,
     @Inject(forwardRef(() => MetaProvider))
     private readonly metaProvider: MetaProvider,
     private readonly visitProvider: VisitProvider,
@@ -611,18 +613,32 @@ export class ArticleProvider {
     const total = await this.articleModel.count(query).exec();
     // 过滤私有文章
     if (isPublic) {
-      articles = articles.map((a: any) => {
-        const isPrivate = a?._doc?.private || a?.private;
+      const tmpArticles: any[] = [];
+      for (const a of articles) {
+        //@ts-ignore
+        const isPrivateInArticle = a?._doc?.private || a?.private;
+        const category = await this.categoryModal.findOne({
+          //@ts-ignore
+          name: a?._doc?.category || a?.category,
+        });
+        const isPrivateInCategory = category?.private || false;
+        const isPrivate = isPrivateInArticle || isPrivateInCategory;
         if (isPrivate) {
-          return {
+          tmpArticles.push({
+            //@ts-ignore
             ...(a?._doc || a),
             content: undefined,
             password: undefined,
-          };
+            private: true,
+          });
         } else {
-          return { ...(a?._doc || a) };
+          tmpArticles.push({
+            //@ts-ignore
+            ...(a?._doc || a),
+          });
         }
-      });
+      }
+      articles = tmpArticles;
     }
     const resData: any = {};
     if (option.withWordCount) {
@@ -679,10 +695,17 @@ export class ArticleProvider {
     if (!article) {
       return null;
     }
-    if (!article.password || article.password == '') {
+    const category = await this.categoryModal.findOne({
+      name: article.category,
+    });
+    const categoryPassword = category.private ? category.password : undefined;
+    const targetPassword = categoryPassword
+      ? categoryPassword
+      : article.password;
+    if (!targetPassword || targetPassword == '') {
       return { ...(article?._doc || article), password: undefined };
     } else {
-      if (article.password == password) {
+      if (targetPassword == password) {
         return { ...(article?._doc || article), password: undefined };
       } else {
         return null;
@@ -706,6 +729,15 @@ export class ArticleProvider {
     }
     if (curArticle.private) {
       curArticle.content = undefined;
+    } else {
+      // 检查分类是不是加密了
+      const category = await this.categoryModal.findOne({
+        name: curArticle.category,
+      });
+      if (category && category.private) {
+        curArticle.private = true;
+        curArticle.content = undefined;
+      }
     }
     const res: any = { article: curArticle };
     // 找它的前一个和后一个。

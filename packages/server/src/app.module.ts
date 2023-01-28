@@ -77,6 +77,7 @@ import { TokenProvider } from './provider/token/token.provider';
 import { Token, TokenSchema } from './scheme/token.schema';
 import { TokenGuard } from './provider/auth/token.guard';
 import { WebsiteProvider } from './provider/website/website.provider';
+import { Category, CategorySchema } from './scheme/category.schema';
 
 @Module({
   imports: [
@@ -92,6 +93,7 @@ import { WebsiteProvider } from './provider/website/website.provider';
       { name: Static.name, schema: StaticSchema },
       { name: CustomPage.name, schema: CustomPageSchema },
       { name: Token.name, schema: TokenSchema },
+      { name: Category.name, schema: CategorySchema },
     ]),
     JwtModule.register({
       secret: config.jwtSecret,
