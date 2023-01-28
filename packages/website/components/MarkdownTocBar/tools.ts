@@ -98,3 +98,23 @@ const trimArrZero = (arr: any) => {
   }
   return arr.slice(start, end + 1);
 };
+export const getEl = (item: NavItem, all: NavItem[]) => {
+  const tagName = `h${item.level}`;
+  const els = document.querySelectorAll(`${tagName}[data-id="${item.text}"]`);
+  if (els.length > 1) {
+    // 相同的规则找 index
+    const index = all
+      .filter((j) => {
+        return j.level == item.level && j.text == item.text;
+      })
+      .findIndex((val) => {
+        if (val.index == item.index) {
+          return true;
+        }
+        return false;
+      });
+    return els[index];
+  } else {
+    return els[0];
+  }
+};

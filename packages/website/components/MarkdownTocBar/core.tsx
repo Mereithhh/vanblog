@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import throttle from "lodash/throttle";
-import { NavItem } from "./tools";
+import { getEl, NavItem } from "./tools";
 import { scrollTo } from "../../utils/scroll";
 export default function (props: {
   items: NavItem[];
@@ -9,6 +9,7 @@ export default function (props: {
 }) {
   const { items } = props;
   const [currIndex, setCurrIndex] = useState(-1);
+
   const handleScroll = throttle((ev: Event) => {
     ev.stopPropagation();
     ev.preventDefault();
@@ -17,7 +18,7 @@ export default function (props: {
     let topEl: any = null;
     let lastMin = 9999999999;
     for (const each of items) {
-      const el: any = document.querySelector(`[data-id="${each.text}"]`);
+      const el: any = getEl(each, items);
 
       if (!topEl) {
         top = each;
@@ -83,7 +84,7 @@ export default function (props: {
         key={each.index}
         className={cls}
         onClick={() => {
-          const el: any = document.querySelector(`[data-id="${each.text}"]`);
+          const el: any = getEl(each, items);
 
           if (el) {
             let to = el.offsetTop - props.headingOffset;
