@@ -108,17 +108,21 @@ export default function (props: {
             )}
           </div>
           {props.headerLeftContent == "siteName" && (
-            <div className="text-gray-800 select-none text-lg dark:text-dark lg:text-xl font-medium  mr-4 hidden md:block">
-              {props.siteName}
-            </div>
+            <Link href="/">
+              <div className="text-gray-800 cursor-pointer select-none text-lg dark:text-dark lg:text-xl font-medium  mr-4 hidden md:block">
+                {props.siteName}
+              </div>
+            </Link>
           )}
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow ">
             <div
               style={{ transform: "translateX(30px)" }}
-              className=" md:hidden  flex-grow text-center  flex items-center justify-center select-none dark:text-dark"
+              className="cursor-pointer md:hidden  flex-grow text-center  flex items-center justify-center select-none dark:text-dark"
             >
-              <div>{props.siteName}</div>
+              <Link href="/">
+                <div>{props.siteName}</div>
+              </Link>
             </div>
             <ul className=" md:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
               {props.menus.map((m) => {
