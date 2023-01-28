@@ -6,16 +6,18 @@ export interface NavItem {
 }
 export const washMarkdownContent = (source: string) => {
   if (!source) return "";
-  return source
-    .replace(/```([\s\S]*?)```[\s]*/g, "")
-    .replace(/`#/g, "")
-    .replace(/^[^#]+\n/g, "")
-    .replace(/(?:[^\n#]+)#+\s([^#\n]+)\n*/g, "") // 匹配行内出现 # 号的情况
-    .replace(/```[^`\n]*\n+[^```]+```\n+/g, "")
-    .replace(/`([^`\n]+)`/g, "$1")
-    .replace(/\*\*?([^*\n]+)\*\*?/g, "$1")
-    .replace(/__?([^_\n]+)__?/g, "$1")
-    .trim();
+  return (
+    source
+      .replace(/```([\s\S]*?)```[\s]*/g, "")
+      .replace(/`#/g, "")
+      .replace(/^[^#]+\n/g, "")
+      .replace(/(?:[^\n#]+)#+\s([^#\n]+)\n*/g, "") // 匹配行内出现 # 号的情况
+      .replace(/```[^`\n]*\n+[^```]+```\n+/g, "")
+      .replace(/`([^`\n]+)`/g, "$1")
+      .replace(/\*\*?([^*\n]+)\*\*?/g, "$1")
+      .replace(/__?([^_\n]+)__?/g, "$1")
+      .trim() + "\n"
+  );
 };
 export const parseNavStructure = (source: string): NavItem[] => {
   const contentWithoutCode = washMarkdownContent(source);
