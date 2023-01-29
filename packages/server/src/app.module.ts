@@ -81,7 +81,9 @@ import { Category, CategorySchema } from './scheme/category.schema';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(config.mongoUrl),
+    MongooseModule.forRoot(config.mongoUrl, {
+      autoIndex: true,
+    }),
     MongooseModule.forFeature([
       { name: Article.name, schema: ArticleSchema },
       { name: Draft.name, schema: DraftSchema },

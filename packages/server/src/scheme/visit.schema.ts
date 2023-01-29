@@ -17,10 +17,11 @@ export class Visit extends Document {
   @Prop({ index: true })
   pathname: string;
 
-  @Prop()
+  @Prop({ index: true })
   lastVisitedTime: Date;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },

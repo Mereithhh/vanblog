@@ -15,6 +15,7 @@ export class Viewer extends Document {
   date: string;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },

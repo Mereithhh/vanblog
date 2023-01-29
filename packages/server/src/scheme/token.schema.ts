@@ -14,6 +14,7 @@ export class Token extends Document {
   expiresIn: number;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },

@@ -33,6 +33,7 @@ export class Static extends Document {
   sign: string;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },

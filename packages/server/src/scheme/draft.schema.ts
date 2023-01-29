@@ -8,7 +8,7 @@ export class Draft extends Document {
   @Prop({ index: true, unique: true })
   id: number;
 
-  @Prop()
+  @Prop({ index: true })
   title: string;
 
   @Prop({ default: '' })
@@ -17,7 +17,7 @@ export class Draft extends Document {
   @Prop({ default: [], index: true })
   tags: string[];
 
-  @Prop()
+  @Prop({ index: true })
   author: string;
 
   @Prop({ index: true })
@@ -27,6 +27,7 @@ export class Draft extends Document {
   deleted: boolean;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },
@@ -34,6 +35,7 @@ export class Draft extends Document {
   createdAt: Date;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },

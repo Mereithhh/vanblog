@@ -9,7 +9,7 @@ export class User extends Document {
   @Prop({ index: true, unique: true })
   id: number;
 
-  @Prop()
+  @Prop({ index: true })
   name: string;
 
   @Prop()

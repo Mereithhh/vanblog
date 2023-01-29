@@ -15,6 +15,7 @@ export class CustomPage extends Document {
   html: string;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },
@@ -22,6 +23,7 @@ export class CustomPage extends Document {
   createdAt: Date;
 
   @Prop({
+    index: true,
     default: () => {
       return new Date();
     },

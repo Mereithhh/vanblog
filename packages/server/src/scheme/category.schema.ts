@@ -9,13 +9,13 @@ export class Category extends Document {
   @Prop({ index: true, unique: true })
   id: number;
 
-  @Prop({ unique: true })
+  @Prop({ unique: true, index: true })
   name: string;
 
-  @Prop({ default: 'category' })
+  @Prop({ default: 'category', index: true })
   type: CategoryType;
 
-  @Prop({ default: false })
+  @Prop({ default: false, index: true })
   private: boolean;
 
   @Prop()
