@@ -53,6 +53,17 @@ export async function updateWalineConfig(body) {
     data: body,
   });
 }
+export async function getISRConfig() {
+  return request('/api/admin/isr', {
+    method: 'GET',
+  });
+}
+export async function updateISRConfig(body) {
+  return request('/api/admin/isr', {
+    method: 'PUT',
+    data: body,
+  });
+}
 export async function clearCaddyLog() {
   return request('/api/admin/caddy/log', {
     method: 'DELETE',

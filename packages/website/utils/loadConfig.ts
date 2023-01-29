@@ -10,7 +10,7 @@ function washUrl(url: string) {
 }
 
 // 改为服务端触发 isr
-export const revalidate = {};
-// export const revalidate = process.env.VAN_BLOG_REVALIDATE_TIME
-//   ? { revalidate: parseInt(process.env.VAN_BLOG_REVALIDATE_TIME) }
-//   : {};
+// export const revalidate = {};
+export const revalidate = process.env.VAN_BLOG_REVALIDATE == 'true'
+  ? { revalidate: parseInt(process.env.VAN_BLOG_REVALIDATE_TIME || "10") }
+  : {};

@@ -2,6 +2,7 @@ import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcess, spawn } from 'node:child_process';
 import path from 'node:path';
 import { MetaProvider } from '../meta/meta.provider';
+import { SettingProvider } from '../setting/setting.provider';
 
 const ignoreWebsiteWarnings = [
   'Experimental features are not covered by semver',
@@ -17,13 +18,26 @@ export class WebsiteProvider {
   // constructor() {}
   ctx: ChildProcess = null;
   logger = new Logger(WebsiteProvider.name);
-  constructor(private metaProvider: MetaProvider) {}
+  constructor(
+    private metaProvider: MetaProvider,
+    private settingProvider: SettingProvider,
+  ) {}
   async init() {
     this.run();
   }
   async loadEnv() {
     const meta = await this.metaProvider.getAll();
-    if (!meta?.siteInfo) return {};
+    const isrConfig = await this.settingProvider.getISRSetting();
+    const isrEnv =
+      isrConfig.mode == 'delay'
+        ? {
+            VAN_BLOG_REVALIDATE: 'true',
+            VAN_BLOG_REVALIDATE_TIME: isrConfig.delay,
+          }
+        : {
+            VAN_BLOG_REVALIDATE: 'false',
+          };
+    if (!meta?.siteInfo) return { ...isrEnv };
     const siteinfo = meta.siteInfo;
     const socials = meta.socials;
     const urls = [];
@@ -56,7 +70,7 @@ export class WebsiteProvider {
     if (wechatDarkItem) {
       addEach(wechatDarkItem?.value);
     }
-    return { VAN_BLOG_ALLOW_DOMAINS: urls.join(',') };
+    return { VAN_BLOG_ALLOW_DOMAINS: urls.join(','), ...isrEnv };
   }
   async restart(reason: string) {
     this.logger.log(`${reason}重启 website`);

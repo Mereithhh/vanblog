@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
   HttpsSetting,
+  ISRSetting,
   LayoutSetting,
   LoginSetting,
   MenuSetting,
@@ -37,6 +38,39 @@ export class SettingProvider {
       return res?.value;
     }
     return null;
+  }
+  async getISRSetting(): Promise<any> {
+    const res = await this.settingModel.findOne({ type: 'isr' }).exec();
+    if (res) {
+      return res?.value;
+    } else {
+      await this.settingModel.create({
+        type: 'isr',
+        value: {
+          mode: 'delay',
+          delay: 10,
+        },
+      });
+      return {
+        mode: 'delay',
+        delay: 10,
+      };
+    }
+  }
+  async updateISRSetting(dto: ISRSetting) {
+    const oldValue = await this.getISRSetting();
+    const newValue = { ...oldValue, ...dto };
+    if (!oldValue) {
+      return await this.settingModel.create({
+        type: 'isr',
+        value: newValue,
+      });
+    }
+    const res = await this.settingModel.updateOne(
+      { type: 'isr' },
+      { value: newValue },
+    );
+    return res;
   }
   async getMenuSetting(): Promise<any> {
     const res = await this.settingModel.findOne({ type: 'menu' }).exec();

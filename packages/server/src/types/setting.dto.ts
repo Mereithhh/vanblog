@@ -7,13 +7,21 @@ export type SettingType =
   | 'layout'
   | 'login'
   | 'menu'
-  | 'version';
+  | 'version'
+  | 'isr';
+
 export type SettingValue =
   | StaticSetting
   | HttpsSetting
   | WalineSetting
   | LayoutSetting
-  | VersionSetting;
+  | VersionSetting
+  | ISRSetting;
+
+export interface ISRSetting {
+  mode: 'delay' | 'onDemand';
+  delay: number;
+}
 
 export interface MenuSetting {
   data: MenuItem[];

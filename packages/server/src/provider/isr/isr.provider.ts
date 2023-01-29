@@ -4,6 +4,7 @@ import { Article } from 'src/scheme/article.schema';
 import { sleep } from 'src/utils/sleep';
 import { ArticleProvider } from '../article/article.provider';
 import { RssProvider } from '../rss/rss.provider';
+import { SettingProvider } from '../setting/setting.provider';
 import { SiteMapProvider } from '../sitemap/sitemap.provider';
 export interface ActiveConfig {
   postId?: number;
@@ -18,8 +19,14 @@ export class ISRProvider {
     private readonly articleProvider: ArticleProvider,
     private readonly rssProvider: RssProvider,
     private readonly sitemapProvider: SiteMapProvider,
+    private readonly settingProvider: SettingProvider,
   ) {}
   async activeAllFn(info?: string, activeConfig?: ActiveConfig) {
+    const isrConfig = await this.settingProvider.getISRSetting();
+    if (isrConfig?.mode == 'delay') {
+      this.logger.debug(`延时自动更新模式，阻止按需 ISR`);
+      return;
+    }
     if (info) {
       this.logger.log(info);
     } else {
@@ -34,18 +41,6 @@ export class ISRProvider {
     await this.activePath('tag');
     await this.activePath('custom');
     this.logger.log('触发全量渲染完成！');
-    // Promise.all([
-    //   this.activeUrls(this.urlList, false),
-    //   this.activePath('category'),
-    //   this.activePath('tag'),
-    //   this.activePath('page'),
-    //   this.activePath('post'),
-    //   this.activePath('custom'),
-    // ]).then(() => {
-    //   if (!info) {
-    //     this.logger.log('触发全量渲染完成！');
-    //   }
-    // });
   }
   async activeAll(info?: string, delay?: number, activeConfig?: ActiveConfig) {
     if (this.timer) {

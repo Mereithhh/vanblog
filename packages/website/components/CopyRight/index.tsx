@@ -15,7 +15,6 @@ export default function (props: {
   }, [setUrl]);
 
   const text = useMemo(() => {
-    console.log(props.customCopyRight);
     if (props.customCopyRight) return props.customCopyRight;
     return `本博客所有文章除特别声明外，均采用 ${props.copyrightAggreement}
     许可协议。转载请注明出处！`;
