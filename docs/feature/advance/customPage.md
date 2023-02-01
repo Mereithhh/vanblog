@@ -4,7 +4,7 @@ title: 自定义页面
 
 `VanBlog` 支持自定义页面，但首先请您明确自己的需求。
 
-## 自定义带有布局的页面
+## 自定义带有默认布局的页面
 
 如果要自定义带有布局的页面，通俗的理解就是替换掉文章页面中文章卡片的内容。您可以通过以下操作实现：
 
@@ -18,34 +18,59 @@ title: 自定义页面
 
 不带有已有布局，完全自定义的页面。
 
-在后台的 `站点管理/系统设置/自定义页面` 中可以找到功能入口：
+分为两种：单文件页面、多文件页面。
 
-![](https://www.mereith.com/static/img/8daba878b7a557dd79648a0683e6d66e.clipboard-2022-09-03.png)
+前者可直接通过后台内置编辑器编辑其 HTML
+内容，比较省事、后者需要上传相关的文件，适合复杂页面。
+
+在后台的 `站点管理/自定义页面` 中可以找到功能入口：
+
+![](https://pic.mereith.com/img/125f158afebb4fd85d5aa81b5d8c6bd7.clipboard-2023-02-01.png)
 
 ### 新建页面
 
 您可以新建自定义页面：
 
-![](https://www.mereith.com/static/img/0010276600a467c0ae810dfbdaac296f.clipboard-2022-09-03.png)
+![](https://pic.mereith.com/img/0540fdf061d9106f11470cf5ed65e9d2.clipboard-2023-02-01.png)
 
-PS： 路径必须以 `/` 开头，实际的访问路径会在前面加上 `/custom`。比如我定义了自定义页面路径为 `/door`，实际我可以通过 `/custom/door` 来访问此页面。
+PS： 路径必须以 `/` 开头，实际的访问路径会在前面加上 `/c`。比如我定义了自定义页面路径为 `/door`，实际我可以通过 `/c/door` 来访问此页面。
 
-### 编辑页面内容
+### 编辑页面
 
-创建完毕后，点击列表页的 `编辑内容` ，即可跳转到代码编辑器进行编辑：
+创建完毕后，点击列表页的 `编辑内容` 或 `文件管理` ，即可跳转到代码（文件）编辑器进行编辑。
 
-![](https://www.mereith.com/static/img/8099987ddeba8f9ef3e281eaeff6cae4.clipboard-2022-09-03.png)
+#### 多文件页面的编辑器
+![](https://pic.mereith.com/img/6d3daf7daf9a093d42e9ed34a77f0ed3.clipboard-2023-02-01.png)
 
-如图所示，虽然此自定义页面没有携带布局，但会随着前台主题改变背景颜色，想要阻止此行为，可以加上一个 `style` 标签：
+首次使用，需要先上传文件或文件夹。
 
-```html
-<style>
-  html.dark {
-    background-color: white !important;
-  }
-</style>
-```
+当前目录定义：左侧文件列表中，如果有选中的文件/文件夹，当前目录就是选中的文件所在目录，或者所选文件夹的目录。如果未选中，就是根目录。
+
+上传文件夹会上传文件夹内所有文件到当前目录，保留层级关系。
+
+上传文件会上传所选文件到当前目录。
+
+例如我上传了一整个番茄钟项目文件夹：
+
+![](https://pic.mereith.com/img/34a75bdd21513d1a234807efc979bef4.clipboard-2023-02-01.png)
+
+![](https://pic.mereith.com/img/42fea40c53a918deea6bac25d2b75ecf.clipboard-2023-02-01.png)
+
+上传完毕后，我可以点击左侧文件列表中的某些文件，在右面的编辑器修改他们，修改后点击操作/保存，就可以保存更改了。
+
+![](https://pic.mereith.com/img/b28a1b636bc952b0e90ef8f0963a4fee.clipboard-2023-02-01.png)
+
+效果如图：
+
+![](https://pic.mereith.com/img/bc999b2826d07e0e8e22183243c38c4c.clipboard-2023-02-01.png)
+
+#### 单文件页面的代码编辑器
+
+![](https://pic.mereith.com/img/25cc8ff491606f819cc50ecedbc7018c.clipboard-2023-02-01.png)
+
 
 效果如图:
 
-![](https://www.mereith.com/static/img/474d98141e1204979950997a673eeb4f.clipboard-2022-09-03.png)
+![](https://pic.mereith.com/img/3797fa90700decd37cab3983c8eac867.clipboard-2023-02-01.png)
+
+我可以在编辑器修改他们，修改完毕后点击操作/保存，就可以保存更改了。
