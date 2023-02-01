@@ -83,7 +83,9 @@ async function bootstrap() {
     });
     // 触发增量渲染生成静态页面，防止升级后内容为空
     const isrProvider = app.get(ISRProvider);
-    isrProvider.activeAll('首次启动触发全量渲染！', 1000);
+    isrProvider.activeAll('首次启动触发全量渲染！', 1000, {
+      forceActice: true,
+    });
   }
   setTimeout(() => {
     console.log('应用已启动，端口: 3000');

@@ -8,6 +8,7 @@ import { SettingProvider } from '../setting/setting.provider';
 import { SiteMapProvider } from '../sitemap/sitemap.provider';
 export interface ActiveConfig {
   postId?: number;
+  forceActice?: boolean;
 }
 @Injectable()
 export class ISRProvider {
@@ -23,7 +24,7 @@ export class ISRProvider {
   ) {}
   async activeAllFn(info?: string, activeConfig?: ActiveConfig) {
     const isrConfig = await this.settingProvider.getISRSetting();
-    if (isrConfig?.mode == 'delay') {
+    if (isrConfig?.mode == 'delay' && !activeConfig.forceActice) {
       this.logger.debug(`延时自动更新模式，阻止按需 ISR`);
       return;
     }

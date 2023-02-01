@@ -48,13 +48,11 @@ export class SettingProvider {
       await this.settingModel.create({
         type: 'isr',
         value: {
-          mode: 'delay',
-          delay: 10,
+          mode: 'onDemand',
         },
       });
       return {
-        mode: 'delay',
-        delay: 10,
+        mode: 'onDemand',
       };
     }
   }

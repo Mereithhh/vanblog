@@ -30,7 +30,9 @@ export class InitController {
       throw new HttpException('已初始化', 500);
     }
     await this.initProvider.init(initDto);
-    this.isrProvider.activeAll('初始化触发增量渲染！');
+    this.isrProvider.activeAll('初始化触发增量渲染！', undefined, {
+      forceActice: true,
+    });
     return {
       statusCode: 200,
       message: '初始化成功!',
