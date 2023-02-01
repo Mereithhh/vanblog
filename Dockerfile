@@ -1,6 +1,6 @@
 # 具体每个服务的去看 packages 里面的 Dockerfile
 # 这个是 all in one 的。
-FROM  circleci/node:latest-browsers as ADMIN_BUILDER
+FROM  node:18-alpine as ADMIN_BUILDER
 ENV NODE_OPTIONS='--max_old_space_size=4096 --openssl-legacy-provider'
 ENV EEE=production
 WORKDIR /app
