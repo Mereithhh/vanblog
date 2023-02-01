@@ -11,7 +11,7 @@
     "@types/lodash": "^4.14.184",
     "@types/markdown-navbar": "^1.4.0",
     "@types/mermaid": "^8.2.9",
-    "@waline/client": "^2.6.1",
+    "@waline/client": "^2.14.7",
     "dayjs": "^1.11.3",
     "headroom.js": "^0.12.0",
     "js-base64": "^3.7.4",

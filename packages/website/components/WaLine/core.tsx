@@ -16,6 +16,7 @@ export default function (props: {
           comment: true,
           pageview: false,
           dark: ".dark",
+          lang: "zh",
         });
       } else {
         current.wa = commentCount({
