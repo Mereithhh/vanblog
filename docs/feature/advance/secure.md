@@ -4,7 +4,7 @@ title: 登录安全策略
 
 您可以在后台的 `系统设置/高级设置` 中更改登录安全策略：
 
-![](https://pic.mereith.com/img/869d612dc1920a437245c4f569521c1f.clipboard-2022-09-20.png)
+![](https://pic.mereith.com/img/727e4d6323ecd3f247af13fc652161f8.clipboard-2023-02-01.png)
 
 ### 最大登录失败次数限制
 

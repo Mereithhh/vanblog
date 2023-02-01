@@ -53,6 +53,7 @@ export default sidebar([
           "advance/backup.md",
           "advance/log.md",
           "advance/secure.md",
+          "advance/isr.md",
           "advance/dark-mode.md",
           "advance/links.md",
           "advance/donate.md",
