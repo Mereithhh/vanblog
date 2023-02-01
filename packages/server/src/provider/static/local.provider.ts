@@ -9,9 +9,110 @@ import { ImgMeta } from 'src/types/img';
 import { isProd } from 'src/utils/isProd';
 import compressing from 'compressing';
 import dayjs from 'dayjs';
+import { checkOrCreate, checkOrCreateByFilePath } from 'src/utils/checkFolder';
+import { rmDir } from 'src/utils/deleteFolder';
+import { readDirs } from 'src/utils/readFileList';
+import { checkOrCreateFile } from 'src/utils/checkFile';
 @Injectable()
 export class LocalProvider {
   async saveFile(
+    fileName: string,
+    buffer: Buffer,
+    type: StaticType,
+    toRootPath?: boolean,
+  ) {
+    if (type == 'img') {
+      return await this.saveImg(fileName, buffer, type, toRootPath);
+    } else if (type == 'customPage') {
+      const storagePath = StoragePath[type];
+      const realName = fileName;
+      const srcPath = path.join(config.staticPath, storagePath, realName);
+      // 创建文件夹。
+      const byteLength = buffer.byteLength;
+      const realPath = `/static/${storagePath}/${realName}`;
+      checkOrCreateByFilePath(srcPath);
+      fs.writeFileSync(srcPath, buffer);
+      const meta = { size: formatBytes(byteLength) };
+      return {
+        meta,
+        realPath,
+      };
+    }
+  }
+
+  async getFolderFiles(p: string) {
+    const storagePath = StoragePath['customPage'];
+    const absPath = path.join(
+      config.staticPath,
+      storagePath,
+      p.replace('/', ''),
+    );
+    const res = readDirs(absPath, absPath);
+    return res;
+  }
+  async createFile(p: string, subPath: string) {
+    const storagePath = StoragePath['customPage'];
+    let absPath = '';
+    if (subPath && subPath != '') {
+      absPath = path.join(
+        config.staticPath,
+        storagePath,
+        p.replace('/', ''),
+        subPath,
+      );
+    } else {
+      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
+    }
+    checkOrCreateFile(absPath);
+  }
+  async createFolder(p: string, subPath: string) {
+    const storagePath = StoragePath['customPage'];
+    let absPath = '';
+    if (subPath && subPath != '') {
+      absPath = path.join(
+        config.staticPath,
+        storagePath,
+        p.replace('/', ''),
+        subPath,
+      );
+    } else {
+      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
+    }
+    checkOrCreate(absPath);
+  }
+  async getFileContent(p: string, subPath: string) {
+    const storagePath = StoragePath['customPage'];
+    let absPath = '';
+    if (subPath && subPath != '') {
+      absPath = path.join(
+        config.staticPath,
+        storagePath,
+        p.replace('/', ''),
+        subPath,
+      );
+    } else {
+      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
+    }
+
+    const r = fs.readFileSync(absPath, { encoding: 'utf-8' });
+    return r;
+  }
+  async updateCustomPageFileContent(
+    pathname: string,
+    filePath: string,
+    content: string,
+  ) {
+    const storagePath = StoragePath['customPage'];
+    const absPath = path.join(
+      config.staticPath,
+      storagePath,
+      pathname.replace('/', ''),
+      filePath,
+    );
+    fs.writeFileSync(absPath, content, { encoding: 'utf-8' });
+  }
+
+  async saveImg(
     fileName: string,
     buffer: Buffer,
     type: StaticType,
@@ -36,6 +137,17 @@ export class LocalProvider {
       realPath,
     };
   }
+
+  async deleteCustomPageFolder(name: string) {
+    const storagePath = StoragePath['customPage'];
+    const srcPath = path.join(config.staticPath, storagePath, name);
+    try {
+      rmDir(srcPath);
+    } catch (err) {
+      console.log('删除实际文件夹失败：', name);
+    }
+  }
+
   async deleteFile(fileName: string, type: StaticType) {
     try {
       const storagePath = StoragePath[type] || StoragePath['img'];

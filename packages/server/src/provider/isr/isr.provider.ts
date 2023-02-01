@@ -39,7 +39,6 @@ export class ISRProvider {
     await this.activePath('page');
     await this.activePath('category');
     await this.activePath('tag');
-    await this.activePath('custom');
     this.logger.log('触发全量渲染完成！');
   }
   async activeAll(info?: string, delay?: number, activeConfig?: ActiveConfig) {
@@ -95,7 +94,7 @@ export class ISRProvider {
     }
   }
   async activePath(
-    type: 'category' | 'tag' | 'page' | 'post' | 'custom',
+    type: 'category' | 'tag' | 'page' | 'post',
     postId?: number,
   ) {
     switch (type) {
@@ -124,10 +123,6 @@ export class ISRProvider {
         } else {
           await this.activeUrls(articleUrls, false);
         }
-        break;
-      case 'custom':
-        const customUrls = await this.sitemapProvider.getCustomUrls();
-        await this.activeUrls(customUrls, false);
         break;
     }
   }
@@ -188,14 +183,6 @@ export class ISRProvider {
     this.activeWithRetry(() => {
       this.logger.log(info);
       this.activeUrl(`/about`, false);
-    }, info);
-  }
-  async activeCustomPages(info: string) {
-    this.activeWithRetry(() => {
-      this.logger.log(info);
-      this.sitemapProvider.getCustomUrls().then((datas) => {
-        this.activeUrls(datas, false);
-      });
     }, info);
   }
   async activeLink(info: string) {

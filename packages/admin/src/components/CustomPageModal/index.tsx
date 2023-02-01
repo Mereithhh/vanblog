@@ -1,5 +1,5 @@
 import { createCustomPage, updateCustomPage } from '@/services/van-blog/api';
-import { ModalForm, ProFormText } from '@ant-design/pro-components';
+import { ModalForm, ProFormSelect, ProFormText } from '@ant-design/pro-components';
 import { Alert, Modal } from 'antd';
 
 export default function (props) {
@@ -19,6 +19,7 @@ export default function (props) {
           });
           return;
         }
+
         const path = values.path as string;
         if (path.substring(0, 1) != '/') {
           Modal.info({
@@ -40,11 +41,29 @@ export default function (props) {
       labelCol={{ span: 6 }}
     >
       {!initialValues && (
-        <Alert
-          style={{ marginBottom: 8 }}
-          type="info"
-          message="具体的页面内容请在创建后在表单中点击编辑内容修改"
-        ></Alert>
+        <>
+          <Alert
+            style={{ marginBottom: 8 }}
+            type="info"
+            message="具体内容请在创建后在列表中点击对应操作按钮进行修改"
+          ></Alert>
+          <ProFormSelect
+            width="md"
+            name="type"
+            required
+            tooltip="单文件页面可直接通过后台内置编辑器编辑内容，比较方便；多文件页面需要上传相关文件，适合复杂场景。"
+            label="类型"
+            placeholder="请选择类型"
+            rules={[{ required: true, message: '这是必填项' }]}
+            initialValue={'folder'}
+            request={async () => {
+              return [
+                { label: '单文件页面', value: 'file' },
+                { label: '多文件页面', value: 'folder' },
+              ];
+            }}
+          />
+        </>
       )}
       <ProFormText
         width="md"
@@ -57,13 +76,14 @@ export default function (props) {
         rules={[{ required: true, message: '这是必填项' }]}
       />
       <ProFormText
+        disabled={initialValues && initialValues.type == 'folder'}
         width="md"
         required
         id="path"
         name="path"
         label="路径"
         placeholder="自定义页面的路径"
-        tooltip="自定义页面的路径，需以反斜杠开头，会加载到 /custom 路径下。"
+        tooltip="自定义页面的路径，需以反斜杠开头，会加载到 /c 路径下。"
         rules={[{ required: true, message: '这是必填项' }]}
       />
     </ModalForm>

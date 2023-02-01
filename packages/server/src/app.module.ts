@@ -78,6 +78,10 @@ import { Token, TokenSchema } from './scheme/token.schema';
 import { TokenGuard } from './provider/auth/token.guard';
 import { WebsiteProvider } from './provider/website/website.provider';
 import { Category, CategorySchema } from './scheme/category.schema';
+import {
+  PublicCustomPageController,
+  PublicOldCustomPageRedirectController,
+} from './controller/customPage/customPage.controller';
 
 @Module({
   imports: [
@@ -130,6 +134,8 @@ import { Category, CategorySchema } from './scheme/category.schema';
     CollaboratorController,
     ISRController,
     CustomPageController,
+    PublicCustomPageController,
+    PublicOldCustomPageRedirectController,
   ],
   providers: [
     AppService,

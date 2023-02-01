@@ -159,10 +159,30 @@ export async function createCustomPage(body) {
     data: body,
   });
 }
+export async function createCustomFile(path, subPath) {
+  return request(`/api/admin/customPage/file?path=${path}&subPath=${subPath}`, {
+    method: 'POST',
+  });
+}
+export async function createCustomFolder(path, subPath) {
+  return request(`/api/admin/customPage/file?path=${path}&subPath=${subPath}`, {
+    method: 'POST',
+  });
+}
 export async function updateCustomPage(body) {
   return request('/api/admin/customPage', {
     method: 'PUT',
     data: body,
+  });
+}
+export async function updateCustomPageFileInFolder(pathname, filePath, content) {
+  return request('/api/admin/customPage/file', {
+    method: 'PUT',
+    data: {
+      pathname,
+      filePath,
+      content,
+    },
   });
 }
 export async function deleteCustomPageByPath(path) {
@@ -177,6 +197,16 @@ export async function getCustomPages() {
 }
 export async function getCustomPageByPath(path) {
   return request('/api/admin/customPage?path=' + path, {
+    method: 'GET',
+  });
+}
+export async function getCustomPageFolderTreeByPath(path) {
+  return request('/api/admin/customPage/folder?path=' + path, {
+    method: 'GET',
+  });
+}
+export async function getCustomPageFileDataByPath(path, key) {
+  return request('/api/admin/customPage/file?path=' + path + '&key=' + key, {
     method: 'GET',
   });
 }

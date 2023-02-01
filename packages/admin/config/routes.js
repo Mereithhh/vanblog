@@ -51,6 +51,7 @@ export default [
       { name: '数据管理', path: '/site/data', component: './DataManage' },
       { name: '评论管理', path: '/site/comment', component: './CommentManage' },
       { name: '系统设置', path: '/site/setting', component: './SystemConfig' },
+      { name: '自定义页面', path: '/site/customPage', component: './CustomPage' },
       { name: '日志管理', path: '/site/log', component: './LogManage' },
     ],
   },

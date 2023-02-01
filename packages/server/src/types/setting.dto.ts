@@ -28,7 +28,7 @@ export interface MenuSetting {
 }
 
 export type StorageType = 'picgo' | 'local';
-export type StaticType = 'img';
+export type StaticType = 'img' | 'customPage';
 export interface LoginSetting {
   enableMaxLoginRetry: boolean;
   maxRetryTimes: number;
@@ -75,6 +75,7 @@ export interface SearchStaticOption {
 }
 export const StoragePath: Record<StaticType, string> = {
   img: `img`,
+  customPage: `customPage`,
 };
 export class StaticSetting {
   storageType: StorageType;

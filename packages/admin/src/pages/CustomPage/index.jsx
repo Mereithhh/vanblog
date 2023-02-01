@@ -1,9 +1,5 @@
 import CustomPageModal from '@/components/CustomPageModal';
-import {
-  deleteCustomPageByPath,
-  getCustomPages,
-  updateLayoutConfig,
-} from '@/services/van-blog/api';
+import { deleteCustomPageByPath, getCustomPages } from '@/services/van-blog/api';
 import { ProTable } from '@ant-design/pro-components';
 import { Button, Card, message, Modal, Space } from 'antd';
 import { useRef } from 'react';
@@ -16,11 +12,36 @@ const columns = [
     },
   },
   { dataIndex: 'name', title: '名称' },
+  {
+    dataIndex: 'type',
+    title: '类型',
+    valueType: 'select',
+    valueEnum: {
+      file: {
+        text: '单文件页面',
+        status: 'Default',
+      },
+      folder: {
+        text: '多文件页面',
+        status: 'Success',
+      },
+    },
+  },
   { dataIndex: 'path', title: '路径' },
   {
-    title: '内容',
+    title: '操作',
     render: (text, record, _, action) => {
-      return <Link to={`/code?type=customPage&lang=html&path=${record.path}`}>编辑内容</Link>;
+      return (
+        <Link
+          to={
+            record.type == 'file'
+              ? `/code?type=file&lang=html&path=${record.path}`
+              : `/code?type=folder&path=${record.path}`
+          }
+        >
+          {record.type == 'file' ? '编辑内容' : '文件管理'}
+        </Link>
+      );
     },
   },
   {
@@ -28,7 +49,7 @@ const columns = [
     render: (text, record, _, action) => {
       return (
         <Space>
-          <a key="view" target="_blank" rel="noreferrer" href={`/custom${record.path}`}>
+          <a key="view" target="_blank" rel="noreferrer" href={`/c${record.path}`}>
             查看
           </a>
 
@@ -40,7 +61,6 @@ const columns = [
               action?.reload();
             }}
           ></CustomPageModal>
-
           <a
             key="delete"
             onClick={() => {
@@ -72,13 +92,18 @@ export default function () {
   // const [loading, setLoading] = useState(true);
   const actionRef = useRef();
 
-
   const handleHelp = () => {
     Modal.info({
       title: '帮助',
       content: (
         <div>
-          <p>自定义页面可以添加页面到 /custom 路径下。</p>
+          <p>自定义页面可以添加页面到 /c 路径下。</p>
+          <p>自定义页面分为两种：单文件页面、多文件页面。</p>
+          <p>
+            前者可直接通过后台内置编辑器编辑其 HTML
+            内容，比较省事、后者需要上传相关的文件，适合复杂页面。
+          </p>
+          <p>多文件页面后续会演进成“文件管理”功能～</p>
           <a
             target="_blank"
             href="https://vanblog.mereith.com/feature/advance/customPage.html"

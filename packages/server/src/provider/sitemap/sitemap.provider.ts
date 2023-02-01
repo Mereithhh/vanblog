@@ -74,7 +74,7 @@ export class SiteMapProvider {
   async getCustomUrls() {
     const data = await this.customPageProvider.getAll();
     return data.map((c) => {
-      return `/custom${c.path}`;
+      return `/c${c.path}`;
     });
   }
   async getTagUrls() {

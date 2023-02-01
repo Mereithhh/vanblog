@@ -61,6 +61,12 @@
 	handle /static/* {
 		reverse_proxy 127.0.0.1:3000
 	}
+  handle /c/* {
+		reverse_proxy 127.0.0.1:3000
+	}
+  handle /custom/* {
+		reverse_proxy 127.0.0.1:3000
+	}
   handle /feed.json {
     uri replace /feed.json /rss/feed.json
     reverse_proxy 127.0.0.1:3000

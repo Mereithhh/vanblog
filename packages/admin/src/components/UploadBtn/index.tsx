@@ -1,5 +1,6 @@
 import { Button, message, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
+import { RcFile } from 'antd/lib/upload';
 export default function (props: {
   setLoading: (loading: boolean) => void;
   text: string;
@@ -8,7 +9,40 @@ export default function (props: {
   accept: string;
   muti: boolean;
   crop?: boolean;
+  folder?: boolean;
+  customUpload?: boolean;
+  basePath?: string | undefined;
+  loading?: boolean;
+  plainText?: boolean;
 }) {
+  const upload = (file: RcFile, rPath: string) => {
+    const formData = new FormData();
+    let fileName = rPath || file.name;
+    if (!props.folder && props.basePath) {
+      fileName = `${props.basePath}/${file.name}`;
+    }
+    formData.append('file', file, fileName);
+    props.setLoading(true);
+    fetch(`${props.url}&name=${fileName}`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        token: (() => {
+          return window.localStorage.getItem('token') || 'null';
+        })(),
+      },
+    })
+      .then((res) => res.json())
+      .then(() => {
+        props?.onFinish(file, name);
+      })
+      .catch(() => {
+        message.error(`${name} 上传失败!`);
+      })
+      .finally(() => {
+        props.setLoading(false);
+      });
+  };
   const Core = (
     <Upload
       showUploadList={false}
@@ -16,6 +50,19 @@ export default function (props: {
       multiple={props.muti}
       accept={props.accept}
       action={props.url}
+      directory={props.folder}
+      beforeUpload={
+        props.customUpload
+          ? (file, fileList) => {
+              let rPath = file.webkitRelativePath;
+              if (rPath && rPath.split('/').length >= 2) {
+                rPath = rPath.split('/').slice(1).join('/');
+              }
+              upload(file, rPath);
+              return false;
+            }
+          : undefined
+      }
       headers={{
         token: (() => {
           return window.localStorage.getItem('token') || 'null';
@@ -35,7 +82,13 @@ export default function (props: {
         }
       }}
     >
-      <Button type="primary">{props.text}</Button>
+      {props.plainText ? (
+        props.text
+      ) : (
+        <Button type="primary" loading={props.loading}>
+          {props.text}
+        </Button>
+      )}
     </Upload>
   );
   if (props.crop) {

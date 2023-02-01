@@ -30,6 +30,9 @@ async function bootstrap() {
   checkOrCreate(path.join(globalConfig.staticPath, 'tmp'));
   checkOrCreate(path.join(globalConfig.staticPath, 'export'));
 
+  // 自定义页面
+  checkOrCreate(path.join(globalConfig.staticPath, 'customPage'));
+
   // rss
   checkOrCreate(path.join(globalConfig.staticPath, 'rss'));
   app.useStaticAssets(path.join(globalConfig.staticPath, 'rss'), {
@@ -58,6 +61,8 @@ async function bootstrap() {
   initProvider.initVersion();
   initProvider.initRestoreKey();
   if (await initProvider.checkHasInited()) {
+    // 老版本自定义数据洗一下
+    await initProvider.washCustomPage();
     // 老版本的分类数据洗一下
     await initProvider.washCategory();
     const userProvider = app.get(UserProvider);

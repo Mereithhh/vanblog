@@ -3,3 +3,4 @@ export interface CustomPage {
   path: string;
   html: string;
 }
+export type CustomType = 'file' | 'folder';

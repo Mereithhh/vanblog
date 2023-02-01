@@ -41,22 +41,30 @@ export class StaticProvider {
     }
     return this.publicView;
   }
-  async upload(file: any, type: StaticType, isFavicon?: boolean) {
+  async upload(
+    file: any,
+    type: StaticType,
+    isFavicon?: boolean,
+    customPathname?: string,
+  ) {
     const { buffer } = file;
-
     const currentSign = encryptFileMD5(buffer);
-    const hasPicture = await this.getOneBySign(currentSign);
+    if (type == 'img') {
+      const hasFile = await this.getOneBySign(currentSign);
 
-    if (hasPicture) {
-      return {
-        src: hasPicture.realPath,
-        isNew: false,
-      };
+      if (hasFile) {
+        return {
+          src: hasFile.realPath,
+          isNew: false,
+        };
+      }
     }
-
     const arr = file.originalname.split('.');
     const fileType = arr[arr.length - 1];
-    const fileName = currentSign + '.' + file.originalname;
+    let fileName = currentSign + '.' + file.originalname;
+    if (type == 'customPage') {
+      fileName = customPathname + '/' + file.originalname;
+    }
     const realPath = await this.saveFile(
       fileType,
       isFavicon ? `favicon.${fileType}` : fileName,
@@ -170,7 +178,10 @@ export class StaticProvider {
     toRootPath?: boolean,
   ) {
     const storageSetting = await this.settingProvider.getStaticSetting();
-    const storageType = storageSetting?.storageType || 'local';
+    let storageType = storageSetting?.storageType || 'local';
+    if (type == 'customPage') {
+      storageType = 'local';
+    }
     switch (storageType) {
       case 'local':
         const { realPath, meta } = await this.localProvider.saveFile(
@@ -179,15 +190,17 @@ export class StaticProvider {
           type,
           toRootPath,
         );
-        await this.createInDB({
-          fileType: meta?.type || fileType,
-          staticType: type,
-          storageType: storageType,
-          sign,
-          name: fileName,
-          realPath,
-          meta,
-        });
+        if (type != 'customPage') {
+          await this.createInDB({
+            fileType: (meta as any)?.type || fileType,
+            staticType: type,
+            storageType: storageType,
+            sign,
+            name: fileName,
+            realPath,
+            meta,
+          });
+        }
         return realPath;
       case 'picgo':
         const picgoRes = await this.picgoProvider.saveFile(
@@ -238,6 +251,36 @@ export class StaticProvider {
       data: items,
     };
   }
+  async deleteCustomPage(path: string) {
+    const folderName = path.replace('/', '');
+    // 直接删除文件夹
+    await this.localProvider.deleteCustomPageFolder(folderName);
+  }
+
+  async getFolderFiles(path: string) {
+    return this.localProvider.getFolderFiles(path);
+  }
+  async getFileContent(path: string, subPath: string) {
+    return this.localProvider.getFileContent(path, subPath);
+  }
+  async createFile(path: string, subPath: string) {
+    return this.localProvider.createFile(path, subPath);
+  }
+  async createFolder(path: string, subPath: string) {
+    return this.localProvider.createFolder(path, subPath);
+  }
+  async updateCustomPageFileContent(
+    pathname: string,
+    filePath: string,
+    content: string,
+  ) {
+    return this.localProvider.updateCustomPageFileContent(
+      pathname,
+      filePath,
+      content,
+    );
+  }
+
   async deleteOneBySign(sign: string) {
     // 先删除实际上的。
     const toDeleteData = await this.staticModel.findOne({ sign }).exec();
