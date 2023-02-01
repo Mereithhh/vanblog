@@ -13,7 +13,21 @@ export interface Config {
 export const config: Config = {
   mongoUrl: loadConfig(
     'database.url',
-    `mongodb://mongo:27017/vanBlog?authSource=admin`,
+      ()=>{
+        const db={
+            host: loadConfig('database.host', 'mongo'),
+            port: loadConfig('database.port', '27017'),
+            user: loadConfig('database.user', ''),
+            passwd: loadConfig('database.passwd', ''),
+            name: loadConfig('database.name', 'vanBlog'),
+        };
+
+        let authInfo='';
+        if(db.user!=='' && db.passwd==='') authInfo=`${db.user}@`;
+        if(db.user!=='' && db.passwd!=='') authInfo=`${db.user}:${db.passwd}@`;
+
+        return`mongodb://${authInfo}${db.host}:${db.port}/${db.name}?authSource=admin`
+      },
   ),
   jwtSecret: makeSalt(),
   staticPath: loadConfig('static.path', '/app/static'),
