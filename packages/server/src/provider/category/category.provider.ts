@@ -51,7 +51,7 @@ export class CategoryProvider {
   async getAllCategories(all?: boolean) {
     const d = await this.categoryModal.find({});
     if (!d || !d.length) {
-      throw new NotFoundException();
+      return [];
     }
     if (all) return d;
     else return d.map((item) => item.name);
