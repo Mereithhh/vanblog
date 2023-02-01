@@ -31,7 +31,13 @@ title: 图床
 其他云存储的指南欢迎大家补充～
 :::
 
-首先阅读 [picgo 配置文档](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90)，推荐跟着文档自动生成配置。
+首先阅读 [picgo core 配置文档](https://picgo.github.io/PicGo-Core-Doc/zh/guide/config.html#%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90)，推荐跟着文档自动生成配置。
+
+::: warning 注意
+
+`vanblog` 所用的配置文件是 `picgo-core` 的，和桌面版的 `picgo` 的配置文件不通用！有细微的差别。
+
+:::
 
 生成后，进入后台`站点管理/系统设置/图床设置`，选择 `OSS` 图床，并把生成的配置文件复制过去，比如我用的七牛云图床，就像下面这样：
 
@@ -76,6 +82,10 @@ title: 图床
 ![](https://www.mereith.com/static/img/dd5f0f0a1ff61a1a5d22c09fcaa8178c.clipboard-2022-09-01.png)
 
 ## 安装自定插件
+
+::: info 注意
+使用 `picgo` 内部支持的存储，不需要按照自定义插件，留空就行。
+:::
 
 您可以在后台配置安装自定义的 `picgo` 插件，请填入插件名，多个请用英文逗号分隔。
 
