@@ -5,6 +5,7 @@ echo "Github: https://github.com/mereithhh/vanblog"
 echo "Version(Env): ${VAN_BLOG_VERSION}"
 echo "============================================="
 
+
 sed "s/VAN_BLOG_EMAIL/${EMAIL}/g" /app/CaddyfileTemplate >/app/Caddyfile
 caddy start --config /app/Caddyfile
 
