@@ -6,7 +6,8 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 const helpMap = {
   css: '自定义 css 会把您写入的 css 代码作为 <style> 标签插入到前台页面中的 <head> 中。',
   script: '自定义 script 会把您写入的 script 代码作为 <script> 标签插入到前台页面的最下方。',
-  html: '自定义 html 会把您写入的 html 代码插入到前台页面的最下方。',
+  html: '自定义 html 会把您写入的 html 代码插入到前台页面 body 标签中的下方。是静态化的，首屏源代码即存在。',
+  head: '自定义 html 会把您写入的 html 代码插入到前台页面的 head 标签中的下方。是静态化的，首屏源代码即存在，可以用于网站所有权验证。',
 };
 export default function () {
   const [tab, setTab] = useTab('css', 'customTab');
@@ -15,6 +16,7 @@ export default function () {
     css: '',
     script: '',
     html: '',
+    head: '',
   });
   const cardRef = useRef();
   const fetchData = useCallback(async () => {
@@ -26,6 +28,7 @@ export default function () {
           css: data?.css || '',
           script: data?.script || '',
           html: data?.html || '',
+          head: data?.head || '',
         });
       }
     } catch (err) {
@@ -81,6 +84,7 @@ export default function () {
     css: 'css',
     script: 'javascript',
     html: 'html',
+    head: 'html',
   };
 
   const tabList = [
@@ -94,7 +98,11 @@ export default function () {
     },
     {
       key: 'html',
-      tab: '自定义 HTML',
+      tab: '自定义 HTML (body)',
+    },
+    {
+      key: 'head',
+      tab: '自定义 HTML (head)',
     },
   ];
   return (
@@ -140,6 +148,16 @@ export default function () {
             />
           )}
           {tab == 'html' && (
+            <CodeEditor
+              height={600}
+              language={languageMap[tab]}
+              onChange={(v) => {
+                setValues({ ...values, [tab]: v });
+              }}
+              value={values[tab] || ''}
+            />
+          )}
+          {tab == 'head' && (
             <CodeEditor
               height={600}
               language={languageMap[tab]}

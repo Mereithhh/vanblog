@@ -116,6 +116,7 @@ export default function (props: {
           customCss={props.option.customCss}
           customHtml={props.option.customHtml}
           customScript={props.option.customScript}
+          customHead={props.option.customHead}
         />
       )}
     </>

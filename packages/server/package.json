@@ -32,6 +32,7 @@
     "@types/line-reader": "^0.0.34",
     "@types/request-ip": "^0.0.37",
     "axios": "^0.27.2",
+    "cheerio": "^1.0.0-rc.12",
     "compressing": "^1.6.2",
     "crypto": "^1.0.1",
     "dayjs": "^1.11.4",

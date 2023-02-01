@@ -45,9 +45,16 @@ export interface VersionSetting {
 // }
 
 export interface LayoutSetting {
-  customScripts: string;
-  customHtml: string;
-  customCSS: string;
+  script: string;
+  html: string;
+  css: string;
+  head: string;
+}
+
+export interface HeadTag {
+  name: string;
+  props: Record<string, string>;
+  conent: string;
 }
 
 export interface WalineSetting {

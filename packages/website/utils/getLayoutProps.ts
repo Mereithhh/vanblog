@@ -37,6 +37,13 @@ export interface LayoutProps {
   customCss?: string;
   customScript?: string;
   customHtml?: string;
+  customHead?: HeadTag[];
+}
+
+export interface HeadTag {
+  name: string;
+  props: Record<string, string>;
+  content: string;
 }
 
 export function getLayoutProps(data: PublicMetaProp): LayoutProps {
@@ -64,6 +71,9 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   }
   if (data?.layout?.html) {
     customSetting.customHtml = data?.layout?.html;
+  }
+  if (data?.layout?.head) {
+    customSetting.customHead = data?.layout?.head;
   }
   if (data?.layout?.script) {
     customSetting.customScript = data?.layout?.script;

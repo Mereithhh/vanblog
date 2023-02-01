@@ -1,3 +1,4 @@
+import { HeadTag } from "../utils/getLayoutProps";
 import { config } from "../utils/loadConfig";
 export type SocialType =
   | "bilibili"
@@ -137,6 +138,7 @@ export interface PublicMetaProp {
     css?: string;
     script?: string;
     html?: string;
+    head?: HeadTag[];
   };
 }
 

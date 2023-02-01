@@ -16,6 +16,7 @@ import { PicgoProvider } from '../static/picgo.provider';
 import { encode } from 'js-base64';
 import { defaultMenu, MenuItem } from 'src/types/menu.dto';
 import { MetaProvider } from '../meta/meta.provider';
+import { parseHtmlToHeadTagArr } from 'src/utils/htmlParser';
 @Injectable()
 export class SettingProvider {
   logger = new Logger(SettingProvider.name);
@@ -138,7 +139,11 @@ export class SettingProvider {
     }
     const res: any = {};
     for (const key of Object.keys(dto)) {
-      res[key] = encode(dto[key]);
+      if (key == 'head') {
+        res[key] = parseHtmlToHeadTagArr(dto[key]);
+      } else {
+        res[key] = encode(dto[key]);
+      }
     }
     return res;
   }
