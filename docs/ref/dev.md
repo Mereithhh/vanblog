@@ -45,10 +45,23 @@ CI： [docker](https://www.docker.com/)、[nginx](https://www.nginx.com/)、[git
 
 文档： [vue-press](https://vuepress.vuejs.org/)、[vue-press-hope](https://vuepress-theme-hope.github.io/)
 
+## 数据库
+
+开发之前，要有一个 `mongodb` 数据库才行。推荐用 `docker` 起一个。
+
 ## 一键开发命令
 
 为了方便（懒），增加了一键开发命令：
-在配置好后端开发的 `yaml` 配置文件后，在项目根目录下运行：
+在配置好后端开发的 `yaml` 配置文件后，先安装依赖：
+
+```bash
+cd packages/server && yarn && cd ..
+cd packages/website && yarn && cd ..
+cd packages/admin && yarn && cd ..
+cd packages/waline && yarn && cd ..
+```
+
+然后在项目根目录下运行：
 
 ```bash
 yarn dev
@@ -110,6 +123,7 @@ static:
   path: /code/github/van-blog/staticFolder
 waline:
   db: walineDev
+log: /code/github/van-blog/log
 
 ```
 

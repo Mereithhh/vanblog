@@ -11,9 +11,9 @@ import { checkOrCreate } from 'src/utils/checkFolder';
 @Injectable()
 export class LogProvider {
   logger = null;
-  logPath= path.join(config.log,"vanblog-event.log");
+  logPath = path.join(config.log, 'vanblog-event.log');
   constructor() {
-    checkOrCreate(config.log)
+    checkOrCreate(config.log);
     const streams = [
       {
         stream: fs.createWriteStream(this.logPath, {
@@ -44,26 +44,23 @@ export class LogProvider {
       return new Promise((resolve) => {
         const res = [];
         let total = 0;
-        lineReader.eachLine(
-          this.logPath,
-          (line: string, last: boolean) => {
-            const data = JSON.parse(line);
-            // console.log(eventType, data, last);
-            if (data.event == eventType) {
-              total = total + 1;
-              if (res.length >= all) {
-                res.shift();
-              }
-              res.push(data);
+        lineReader.eachLine(this.logPath, (line: string, last: boolean) => {
+          const data = JSON.parse(line);
+          // console.log(eventType, data, last);
+          if (data.event == eventType) {
+            total = total + 1;
+            if (res.length >= all) {
+              res.shift();
             }
-            if (!line || line.trim() == '' || line == '\n') {
-              resolve({ data: res, total });
-            }
-            if (last) {
-              resolve({ data: res, total });
-            }
-          },
-        );
+            res.push(data);
+          }
+          if (!line || line.trim() == '' || line == '\n') {
+            resolve({ data: res, total });
+          }
+          if (last) {
+            resolve({ data: res, total });
+          }
+        });
       });
     };
     let { data, total } = (await readFunc(eventType)) as {

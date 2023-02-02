@@ -150,3 +150,4 @@ temp.json
 staticFolder
 localBuild.sh
 log
+log/**
