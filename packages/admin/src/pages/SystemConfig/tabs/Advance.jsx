@@ -69,7 +69,19 @@ export default function (props) {
       </Card>
 
       <Card title="静态页面更新策略" style={{ marginTop: 8 }}>
-        <Alert type="info" message="自动延时更新" style={{ marginBottom: 8 }} />
+        <Alert
+          type="info"
+          message={
+            <a
+              rel="noreferrer"
+              target="_blank"
+              href="https://vanblog.mereith.com/feature/advance/isr.html"
+            >
+              帮助文档
+            </a>
+          }
+          style={{ marginBottom: 8 }}
+        />
         <ProForm
           grid={true}
           layout={'horizontal'}
