@@ -87,7 +87,8 @@ export default function (props) {
           layout={'horizontal'}
           request={async (params) => {
             try {
-              const data = await getISRConfig();
+              const { data } = await getISRConfig();
+              console.log(data);
               return data;
             } catch (err) {
               console.log(err);
