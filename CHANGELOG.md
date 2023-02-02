@@ -1,4 +1,52 @@
 # Changelog
+## [0.45.0](https://github.com/Mereithhh/van-blog/compare/v0.44.0...v0.45.0) (2023-02-02)
+
+
+### ⚡ Performance Improvements | 性能优化
+
+* 增加索引 ([a4fcaca](https://github.com/Mereithhh/van-blog/commit/a4fcaca69bdb907f0d58b04bc246e4dc8c4791da))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* 固定 admin 构建镜像版本，防止构建报错 ([5c6111c](https://github.com/Mereithhh/van-blog/commit/5c6111c519e571006658af75f5eb41d26878ddbc))
+
+
+### ✨ Features | 新功能
+
+* isr 默认按需更新，非按需时特定情况强制渲染 ([0e8539c](https://github.com/Mereithhh/van-blog/commit/0e8539cf44cc7c1a37624d293063bfe2eed44ee3))
+* 分类加密 ([374e6ef](https://github.com/Mereithhh/van-blog/commit/374e6efac60786d5d2ec767277b15662e92658e4))
+* 基于文件管理的自定义页面功能 ([eae6a8b](https://github.com/Mereithhh/van-blog/commit/eae6a8b88e7dd6fd1fe0c2e42fff201b309a47d6))
+* 客制化可自定义 head 下标签，会跟随前台进行静态页面生成，可用于验证网站所有权 ([041eea4](https://github.com/Mereithhh/van-blog/commit/041eea47abb90405486f6f95014c88c867ec3c6e))
+* 新增静态资源更新策略配置，默认采用 nextjs 自动模式以节约资源 ([5fe6898](https://github.com/Mereithhh/van-blog/commit/5fe68982a102ee840dc2eb877adfb748e610d529))
+* 更新内置 picgo-core 到 1.5.0 ([e587a4e](https://github.com/Mereithhh/van-blog/commit/e587a4ef5643440c6402a024d376b49882820eac))
+* 更新内置 waline 到 1.26.0 ([c28ec1f](https://github.com/Mereithhh/van-blog/commit/c28ec1f2d03c738023f3e8b7fd9d7612e123370c))
+* 点击导航栏站点名称时返回首页 ([2a338c2](https://github.com/Mereithhh/van-blog/commit/2a338c2cd250e2e1107aa314ad00b723cddac828))
+
+
+### ✏️ Documentation | 文档
+
+* 增加静态页面更新策略文档 ([1366eb3](https://github.com/Mereithhh/van-blog/commit/1366eb35110821d4167b7929f6e2dd3e200b24af))
+* 新版自定义页面文档 ([2282634](https://github.com/Mereithhh/van-blog/commit/2282634c7035fec74e70edce2a889829a0c24c33))
+* 更新图床文档 ([df792e8](https://github.com/Mereithhh/van-blog/commit/df792e824288679a81d3f4c77d8d3a6cb711c39e))
+* 更新开发指南 ([8a95244](https://github.com/Mereithhh/van-blog/commit/8a95244c80b31b8843d1e2c29316ce246a7212a5))
+* 更新文档 ([385841e](https://github.com/Mereithhh/van-blog/commit/385841e7c6b4aacab1896c04eb271bfdf9513275))
+* 更新文档 ([0c3d5ef](https://github.com/Mereithhh/van-blog/commit/0c3d5ef761c884ffc54d89167c9760dfb84f4d65))
+* 更新谁在使用 ([939f560](https://github.com/Mereithhh/van-blog/commit/939f560e139e7db6fb0f4635ef2322b1470408df))
+* 更新谁在使用 ([c90a17e](https://github.com/Mereithhh/van-blog/commit/c90a17ef9074c6dea7e6c51de9acfc5be641fe7b))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* firefox 浏览器目录滚动条白条 [#132](https://github.com/Mereithhh/van-blog/issues/132) ([23d753c](https://github.com/Mereithhh/van-blog/commit/23d753cc78dc32b4467a4db81497240f55f703d6))
+* isr 配置表单初始值未带入 ([f56f828](https://github.com/Mereithhh/van-blog/commit/f56f828f56afe7b26a7f486d4b8c173cc3eb75c1))
+* isr 配置读取报错 ([2534cec](https://github.com/Mereithhh/van-blog/commit/2534cec1019ca68c0335dd0cf72675e70bc6062a))
+* 分类接口获取报错 ([772ed36](https://github.com/Mereithhh/van-blog/commit/772ed362ea3d768f8bd4c323d779b8a2ae195537))
+* 更新后台 isr 帮助文档指向' ([84bdcf3](https://github.com/Mereithhh/van-blog/commit/84bdcf3d6288da38bc05ba13eeeac3176e313989))
+* 目录丢失问题 [#117](https://github.com/Mereithhh/van-blog/issues/117) ([72659f6](https://github.com/Mereithhh/van-blog/commit/72659f65173a8f1309e2dfa39eafcb19dd33ba47))
+* 目录标题相同时，显示跳转异常 [#112](https://github.com/Mereithhh/van-blog/issues/112) ([5ac2f5f](https://github.com/Mereithhh/van-blog/commit/5ac2f5ff7cc80c5de0c4f700341fbee6a02fa5c5))
+* 获取分类接口报错 ([dcd9083](https://github.com/Mereithhh/van-blog/commit/dcd908355bd28f0ac16d81777534b59ac51eb147))
+
 ## [0.44.0](https://github.com/Mereithhh/van-blog/compare/v0.43.1...v0.44.0) (2022-12-19)
 
 
