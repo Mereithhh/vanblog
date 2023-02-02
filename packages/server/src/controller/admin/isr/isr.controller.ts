@@ -19,7 +19,9 @@ export class ISRController {
   ) {}
   @Post()
   async activeISR() {
-    await this.isrProvider.activeAll('手动触发 ISR');
+    await this.isrProvider.activeAll('手动触发 ISR', undefined, {
+      forceActice: true,
+    });
     return {
       statusCode: 200,
       data: '触发成功！',
@@ -30,7 +32,7 @@ export class ISRController {
     await this.settingProvider.updateISRSetting(dto);
     await this.websiteProvider.restart('更新 ISR 配置');
     return {
-      status: 200,
+      statusCode: 200,
       data: '更新成功！',
     };
   }
@@ -38,7 +40,7 @@ export class ISRController {
   async getISRSetting() {
     const data = await this.settingProvider.getISRSetting();
     return {
-      status: 200,
+      statusCode: 200,
       data,
     };
   }

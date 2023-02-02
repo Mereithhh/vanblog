@@ -22,8 +22,13 @@ export default function (props) {
           grid={true}
           layout={'horizontal'}
           request={async (params) => {
-            const { data } = await getLoginConfig();
-            return data || { enableMaxLoginRetry: false };
+            try {
+              const { data } = await getLoginConfig();
+              return data || { enableMaxLoginRetry: false };
+            } catch (err) {
+              console.log(err);
+              return { enableMaxLoginRetry: false };
+            }
           }}
           syncToInitialValues={true}
           onFinish={async (data) => {
@@ -70,8 +75,7 @@ export default function (props) {
           layout={'horizontal'}
           request={async (params) => {
             try {
-              const { data } = await getISRConfig();
-              console.log(data);
+              const data = await getISRConfig();
               return data;
             } catch (err) {
               console.log(err);
