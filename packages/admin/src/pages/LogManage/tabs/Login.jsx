@@ -76,7 +76,6 @@ export default function () {
           // console.log(params);
           // const data = await fetchData();
           const { data } = await getLog('login', params.current, params.pageSize);
-          console.log(data);
           return {
             data: data.data,
             // success 请返回 true，
