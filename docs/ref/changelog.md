@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.45.1](https://github.com/Mereithhh/van-blog/compare/v0.45.0...v0.45.1) (2023-02-03)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([3e8fcac](https://github.com/Mereithhh/van-blog/commit/3e8fcac72e5840493b78c408ff5be1af897acffa))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* isr 更新报错导致 server 不正常退出 ([9efe654](https://github.com/Mereithhh/van-blog/commit/9efe6540775a471d3fa40c69204c7e5fd903e227))
+
 ## [0.45.0](https://github.com/Mereithhh/van-blog/compare/v0.44.0...v0.45.0) (2023-02-02)
 
 
