@@ -19,6 +19,7 @@ import { insertMore } from './insertMore';
 import { cn } from './locales';
 
 import { customContainer } from './customContainer';
+import { historyIcon } from './history';
 import { rawHTML } from './raw';
 
 export default function EditorComponent(props: {
@@ -42,8 +43,11 @@ export default function EditorComponent(props: {
       emoji(),
       insertMore(),
       rawHTML(),
+      historyIcon(),
     ];
   }, []);
+
+
 
   return (
     <div style={{ height: '100%' }}>
