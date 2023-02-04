@@ -8,16 +8,17 @@ import mermaid from '@bytemd/plugin-mermaid';
 import { Editor } from '@bytemd/react';
 import { Spin } from 'antd';
 import 'bytemd/dist/index.css';
-import 'github-markdown-css/github-markdown.css';
 import 'highlight.js/styles/vs.css';
 import 'katex/dist/katex.css';
 import { useMemo } from 'react';
+import '../../style/github-markdown.css';
 import { emoji } from './emoji';
 import { imgUploadPlugin, uploadImg } from './imgUpload';
 import './index.less';
 import { insertMore } from './insertMore';
 import { cn } from './locales';
 
+import { useModel } from 'umi';
 import { customContainer } from './customContainer';
 import { historyIcon } from './history';
 import { rawHTML } from './raw';
@@ -29,6 +30,9 @@ export default function EditorComponent(props: {
   setLoading: (l: boolean) => void;
 }) {
   const { loading, setLoading } = props;
+  const { initialState } = useModel('@@initialState');
+  const navTheme = initialState.settings.navTheme;
+  const themeClass = navTheme.toLowerCase().includes('dark') ? 'dark' : 'light';
   const plugins = useMemo(() => {
     return [
       customContainer(),
@@ -47,10 +51,8 @@ export default function EditorComponent(props: {
     ];
   }, []);
 
-
-
   return (
-    <div style={{ height: '100%' }}>
+    <div style={{ height: '100%' }} className={themeClass}>
       <Spin spinning={loading} className="editor-wrapper">
         <Editor
           value={props.value}
