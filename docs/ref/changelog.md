@@ -4,6 +4,23 @@ icon: update
 ---
 
 
+### [0.45.2](https://github.com/Mereithhh/van-blog/compare/v0.45.1...v0.45.2) (2023-02-04)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([ac6fbc9](https://github.com/Mereithhh/van-blog/commit/ac6fbc900e9895c159a2c93f6d2357dab14f2ac1))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 域名带有端口号的情况下内置图床无法加载作者头像 ([4a9d507](https://github.com/Mereithhh/van-blog/commit/4a9d5076d2ea609e1385e0179f262a518e87733f))
+
+
+### ✨ Features | 新功能
+
+* 增加撤销重做按钮 ([1fa3829](https://github.com/Mereithhh/van-blog/commit/1fa382900534a0de845f3479de958da4f2b2542d))
+
 ### [0.45.1](https://github.com/Mereithhh/van-blog/compare/v0.45.0...v0.45.1) (2023-02-03)
 
 
