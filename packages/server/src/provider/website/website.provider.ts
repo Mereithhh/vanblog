@@ -45,9 +45,9 @@ export class WebsiteProvider {
       if (!u) return null;
       try {
         const url = new URL(u);
-        if (url?.hostname) {
-          if (!urls.includes(url?.hostname)) {
-            urls.push(url?.hostname);
+        if (url?.host) {
+          if (!urls.includes(url?.host)) {
+            urls.push(url?.host);
           }
         }
       } catch (err) {
