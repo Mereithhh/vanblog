@@ -184,6 +184,7 @@ export class PublicController {
   async getBuildMeta() {
     const tags = await this.tagProvider.getAllTags(false);
     const meta = await this.metaProvider.getAll();
+    const categories = await this.categoryProvider.getAllCategories(false);
     const { data: menus } = await this.settingProvider.getMenuSetting();
     const totalArticles = await this.articleProvider.getTotalNum(false);
     const totalWordCount = await this.metaProvider.getTotalWords();
@@ -192,7 +193,10 @@ export class PublicController {
     const data = {
       version: version,
       tags,
-      meta,
+      meta: {
+        ...meta,
+        categories,
+      },
       menus,
       totalArticles,
       totalWordCount,
