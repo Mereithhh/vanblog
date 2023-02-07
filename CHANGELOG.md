@@ -1,4 +1,21 @@
 # Changelog
+### [0.45.4](https://github.com/Mereithhh/van-blog/compare/v0.45.3...v0.45.4) (2023-02-07)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([bee0f58](https://github.com/Mereithhh/van-blog/commit/bee0f585b73c384e733bd801085c459fd5077983))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 分类数量显示不准确 [#146](https://github.com/Mereithhh/van-blog/issues/146) ([9a20c05](https://github.com/Mereithhh/van-blog/commit/9a20c051f804328f7a7720d25a1e5c14625a5664))
+
+
+### ✨ Features | 新功能
+
+* 后台编辑器换行与前台保持统一，两个回车才换行 [#148](https://github.com/Mereithhh/van-blog/issues/148) ([c4939b6](https://github.com/Mereithhh/van-blog/commit/c4939b6e867a9a691f1937be642b05ba4b0b3da3))
+
 ### [0.45.3](https://github.com/Mereithhh/van-blog/compare/v0.45.2...v0.45.3) (2023-02-04)
 
 
