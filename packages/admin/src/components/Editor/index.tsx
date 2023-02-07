@@ -1,4 +1,4 @@
-import breaks from '@bytemd/plugin-breaks';
+// import breaks from '@bytemd/plugin-breaks';
 import frontmatter from '@bytemd/plugin-frontmatter';
 import gfm from '@bytemd/plugin-gfm';
 import highlight from '@bytemd/plugin-highlight';
@@ -38,7 +38,6 @@ export default function EditorComponent(props: {
       customContainer(),
       gfm({ locale: cn }),
       highlight(),
-      breaks(),
       frontmatter(),
       math({ locale: cn }),
       mediumZoom(),
