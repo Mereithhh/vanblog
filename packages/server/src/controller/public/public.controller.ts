@@ -184,6 +184,7 @@ export class PublicController {
   async getBuildMeta() {
     const tags = await this.tagProvider.getAllTags(false);
     const meta = await this.metaProvider.getAll();
+    const metaDoc = (meta as any)?._doc || meta;
     const categories = await this.categoryProvider.getAllCategories(false);
     const { data: menus } = await this.settingProvider.getMenuSetting();
     const totalArticles = await this.articleProvider.getTotalNum(false);
@@ -194,7 +195,7 @@ export class PublicController {
       version: version,
       tags,
       meta: {
-        ...meta,
+        ...metaDoc,
         categories,
       },
       menus,
