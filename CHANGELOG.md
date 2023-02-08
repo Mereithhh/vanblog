@@ -1,4 +1,16 @@
 # Changelog
+### [0.45.5](https://github.com/Mereithhh/van-blog/compare/v0.45.4...v0.45.5) (2023-02-08)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([7f27784](https://github.com/Mereithhh/van-blog/commit/7f27784f0603167e7dd3e9d22de7eef6dab3388f))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 前台挂掉 [#149](https://github.com/Mereithhh/van-blog/issues/149) ([6a136aa](https://github.com/Mereithhh/van-blog/commit/6a136aaa45f3d73dd15deff8dba8699a5c1be2f3))
+
 ### [0.45.4](https://github.com/Mereithhh/van-blog/compare/v0.45.3...v0.45.4) (2023-02-07)
 
 
