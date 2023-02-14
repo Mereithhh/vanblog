@@ -20,6 +20,7 @@ export default function (props: {
   createdAt: Date;
   catelog: string;
   content: string;
+  setContent: (content: string) => void;
   type: "overview" | "article" | "about";
   pay?: string[];
   payDark?: string[];
@@ -39,7 +40,7 @@ export default function (props: {
   showExpirationReminder: boolean;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
-  const [content, setContent] = useState(props.content || "");
+  const { content, setContent } = props;
   const showDonate = useMemo(() => {
     if (lock) {
       return false;
@@ -79,7 +80,7 @@ export default function (props: {
     if (!hasToc(props.content)) return false;
     if (props.type == "article") return true;
     return false;
-  }, [props.type]);
+  }, [props.type, props.content]);
 
   return (
     <div>

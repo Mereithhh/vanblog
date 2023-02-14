@@ -9,7 +9,6 @@ export default function (props: {
 }) {
   const { items } = props;
   const [currIndex, setCurrIndex] = useState(-1);
-
   const handleScroll = throttle((ev: Event) => {
     ev.stopPropagation();
     ev.preventDefault();

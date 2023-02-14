@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useState } from "react";
 import { getArticlesByOption } from "../../api/getArticles";
 import Layout from "../../components/Layout";
 import PostCard from "../../components/PostCard";
@@ -28,6 +29,7 @@ export interface PostPagesProps {
   showSubMenu: "true" | "false";
 }
 const PostPages = (props: PostPagesProps) => {
+  const [content, setContent] = useState(props.article.content || "");
   if (!props.article) {
     return <Custom404 name="文章" />;
   }
@@ -36,11 +38,8 @@ const PostPages = (props: PostPagesProps) => {
       option={props.layoutProps}
       title={props.article.title}
       sideBar={
-        hasToc(props.article.content) ? (
-          <Toc
-            content={props.article.content}
-            showSubMenu={props.showSubMenu}
-          />
+        hasToc(content) ? (
+          <Toc content={content} showSubMenu={props.showSubMenu} />
         ) : null
       }
     >
@@ -51,7 +50,9 @@ const PostPages = (props: PostPagesProps) => {
         ></meta>
       </Head>
       <PostCard
-        showExpirationReminder={props.layoutProps.showExpirationReminder == "true"}
+        showExpirationReminder={
+          props.layoutProps.showExpirationReminder == "true"
+        }
         copyrightAggreement={props.layoutProps.copyrightAggreement}
         openArticleLinksInNewWindow={
           props.layoutProps.openArticleLinksInNewWindow == "true"
@@ -64,7 +65,8 @@ const PostPages = (props: PostPagesProps) => {
         updatedAt={new Date(props.article.updatedAt)}
         createdAt={new Date(props.article.createdAt)}
         catelog={props.article.category}
-        content={props.article.content || ""}
+        content={content}
+        setContent={setContent}
         type={"article"}
         pay={props.pay}
         payDark={props.payDark}
