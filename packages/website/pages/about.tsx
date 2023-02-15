@@ -53,6 +53,7 @@ const AboutPage = (props: AboutPageProps) => {
       sideBar={<AuthorCard option={props.authorCardProps} />}
     >
       <PostCard
+        setContent={() => {}}
         showExpirationReminder={
           props.layoutProps.showExpirationReminder == "true"
         }
