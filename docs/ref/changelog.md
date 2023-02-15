@@ -4,6 +4,18 @@ icon: update
 ---
 
 
+### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([7e5f9fd](https://github.com/Mereithhh/van-blog/commit/7e5f9fd992c14c33337fbbce9a2646aa53f2c20a))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 加密文章解密后目录未加载 ([cd6d43b](https://github.com/Mereithhh/van-blog/commit/cd6d43b9ad1fcc60eabfeb2a7de733468418a172))
+
 ### [0.45.5](https://github.com/Mereithhh/van-blog/compare/v0.45.4...v0.45.5) (2023-02-08)
 
 
