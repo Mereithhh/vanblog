@@ -1,5 +1,31 @@
 # Changelog
+### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
 
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 加密文章解密后目录未加载 ([cd6d43b](https://github.com/Mereithhh/van-blog/commit/cd6d43b9ad1fcc60eabfeb2a7de733468418a172))
+* 大文本数据报错 ([92714c9](https://github.com/Mereithhh/van-blog/commit/92714c92ea37ce882543b4240fb4829861071883))
+* 特殊情况报错 ([f4d3bd0](https://github.com/Mereithhh/van-blog/commit/f4d3bd0f23ae574599c12107f20a03fcae5baf99))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([6ffc8c2](https://github.com/Mereithhh/van-blog/commit/6ffc8c2f710b8fca1fcc95849053f1e3183a3fdc))
+* 更新文档 ([50729a5](https://github.com/Mereithhh/van-blog/commit/50729a5d9abbcc94ad0e8ed0249ded963b711135))
+* 更新文档 ([7e5f9fd](https://github.com/Mereithhh/van-blog/commit/7e5f9fd992c14c33337fbbce9a2646aa53f2c20a))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **release:** 0.45.6 ([8bd73d8](https://github.com/Mereithhh/van-blog/commit/8bd73d8247ed52f5ae1666c672209f95dd936f88))
+* **release:** 0.45.7 ([60fd157](https://github.com/Mereithhh/van-blog/commit/60fd1575382b49240eafe60860109de995612ac2))
+* 构建报错 ([72ff966](https://github.com/Mereithhh/van-blog/commit/72ff96691053f484019ec4fe9ace72b6655fcd4b))
+
+
+### ⏪ Revert | 回退
+
+* 构建错误重新发版 ([8cd4cca](https://github.com/Mereithhh/van-blog/commit/8cd4ccac36ec2d0b46cd07c21bf044f44674f100))
 
 ### [0.45.5](https://github.com/Mereithhh/van-blog/compare/v0.45.4...v0.45.5) (2023-02-08)
 
