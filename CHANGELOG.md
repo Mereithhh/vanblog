@@ -1,28 +1,5 @@
 # Changelog
-### [0.45.7](https://github.com/Mereithhh/van-blog/compare/v0.45.6...v0.45.7) (2023-02-15)
 
-
-### ✏️ Documentation | 文档
-
-* 更新文档 ([50729a5](https://github.com/Mereithhh/van-blog/commit/50729a5d9abbcc94ad0e8ed0249ded963b711135))
-
-
-### 🐛 Bug Fixes | Bug 修复
-
-* 大文本数据报错 ([92714c9](https://github.com/Mereithhh/van-blog/commit/92714c92ea37ce882543b4240fb4829861071883))
-* 特殊情况报错 ([f4d3bd0](https://github.com/Mereithhh/van-blog/commit/f4d3bd0f23ae574599c12107f20a03fcae5baf99))
-
-### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
-
-
-### ✏️ Documentation | 文档
-
-* 更新文档 ([7e5f9fd](https://github.com/Mereithhh/van-blog/commit/7e5f9fd992c14c33337fbbce9a2646aa53f2c20a))
-
-
-### 🐛 Bug Fixes | Bug 修复
-
-* 加密文章解密后目录未加载 ([cd6d43b](https://github.com/Mereithhh/van-blog/commit/cd6d43b9ad1fcc60eabfeb2a7de733468418a172))
 
 ### [0.45.5](https://github.com/Mereithhh/van-blog/compare/v0.45.4...v0.45.5) (2023-02-08)
 
