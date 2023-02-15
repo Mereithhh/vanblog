@@ -29,7 +29,7 @@ export interface PostPagesProps {
   showSubMenu: "true" | "false";
 }
 const PostPages = (props: PostPagesProps) => {
-  const [content, setContent] = useState(props.article.content || "");
+  const [content, setContent] = useState(props?.article?.content || "");
   if (!props.article) {
     return <Custom404 name="文章" />;
   }
