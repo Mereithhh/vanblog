@@ -49,6 +49,7 @@ module.exports = withBundleAnalyzer({
     images: {
       allowFutureImage: true,
     },
+    largePageDataBytes: 1024 * 1024 * 10,
   },
   images: {
     domains: getAllowDomains(),
