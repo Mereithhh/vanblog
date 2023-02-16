@@ -155,8 +155,9 @@ export default () => {
             </Button>,
             <NewArticleModal
               key="newArticle123"
-              onFinish={() => {
+              onFinish={(data) => {
                 actionRef?.current?.reload();
+                history.push(`/editor?type=article&id=${data.id}`);
               }}
             />,
             <ImportArticleModal

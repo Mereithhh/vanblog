@@ -5,8 +5,8 @@ import { useNum } from '@/services/van-blog/useNum';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
 import RcResizeObserver from 'rc-resize-observer';
 import { useMemo, useRef, useState } from 'react';
+import { history } from 'umi';
 import { columns, draftKeysObj, draftKeysObjSmall } from './columes';
-
 export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(draftKeysObj);
@@ -138,8 +138,9 @@ export default () => {
           toolBarRender={() => [
             <NewDraftModal
               key="newDraft123"
-              onFinish={() => {
+              onFinish={(data) => {
                 actionRef?.current?.reload();
+                history.push(`/editor?type=draft&id=${data.id}`);
               }}
             />,
             <ImportDraftModal

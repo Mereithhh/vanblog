@@ -35,9 +35,9 @@ export default function (props) {
           washedValues[k.replace('C', '')] = v;
         }
 
-        await createArticle(washedValues);
+        const { data } = await createArticle(washedValues);
         if (onFinish) {
-          onFinish();
+          onFinish(data);
         }
 
         return true;
