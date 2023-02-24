@@ -4,30 +4,6 @@ icon: update
 ---
 
 
-### [0.45.7](https://github.com/Mereithhh/vanblog/compare/v0.45.6...v0.45.7) (2023-02-24)
-
-
-### ✨ Features | 新功能
-
-* 新建文章或草稿自动跳转到编辑页面 ([baf4e3c](https://github.com/Mereithhh/vanblog/commit/baf4e3c0028067d97020386a0842ee3ac4d5bcf7))
-
-
-### 🐛 Bug Fixes | Bug 修复
-
-* 左右切换页面时，内容不更新[#161](https://github.com/Mereithhh/vanblog/issues/161) ([94acb32](https://github.com/Mereithhh/vanblog/commit/94acb322f967f04fd6ca7d0473ed5095b672c5cd))
-* 暗色模式刷新页面代码块重影问题（盲修，不一定完全修好）[#162](https://github.com/Mereithhh/vanblog/issues/162) ([8d888c6](https://github.com/Mereithhh/vanblog/commit/8d888c6cfe72bd45e759c43714f521ec597bf889))
-
-
-### ✏️ Documentation | 文档
-
-* 更新文档 ([0abebc0](https://github.com/Mereithhh/vanblog/commit/0abebc003aae97b828d18cc1bda7bee10670fc4e))
-* 更新文档 ([97444fa](https://github.com/Mereithhh/vanblog/commit/97444fa98f8c3f7699b5152ee4ef3051a8759a20))
-
-
-### 🚀 Chore | 构建/工程依赖/工具
-
-* **release:** 0.45.7 ([a5bca40](https://github.com/Mereithhh/vanblog/commit/a5bca408fbe9551184ee85002a12fa16095ae33e))
-* website 锁定 nextjs 版本 ([a93cb65](https://github.com/Mereithhh/vanblog/commit/a93cb65492e8178e5f66ddd1886bb9def5d72360))
 
 ### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
 
