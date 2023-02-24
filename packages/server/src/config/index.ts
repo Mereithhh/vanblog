@@ -19,5 +19,5 @@ export const config: Config = {
   staticPath: loadConfig('static.path', '/app/static'),
   demo: loadConfig('demo', false),
   walineDB: loadConfig('waline.db', 'waline'),
-  log: loadConfig('log', './logs'),
+  log: loadConfig('log', '/var/log'),
 };

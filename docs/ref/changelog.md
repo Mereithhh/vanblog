@@ -3,30 +3,6 @@ title: 更新日志
 icon: update
 ---
 
-
-### [0.45.7](https://github.com/Mereithhh/vanblog/compare/v0.45.6...v0.45.7) (2023-02-24)
-
-
-### ✏️ Documentation | 文档
-
-* 更新文档 ([97444fa](https://github.com/Mereithhh/vanblog/commit/97444fa98f8c3f7699b5152ee4ef3051a8759a20))
-
-
-### ✨ Features | 新功能
-
-* 新建文章或草稿自动跳转到编辑页面 ([baf4e3c](https://github.com/Mereithhh/vanblog/commit/baf4e3c0028067d97020386a0842ee3ac4d5bcf7))
-
-
-### 🚀 Chore | 构建/工程依赖/工具
-
-* server 开发时未制定配置 logs 为当前路径 ([57684a4](https://github.com/Mereithhh/vanblog/commit/57684a40d7c8a05e201fb5c21f8a1b88c090b59d))
-
-
-### 🐛 Bug Fixes | Bug 修复
-
-* 左右切换页面时，内容不更新[#161](https://github.com/Mereithhh/vanblog/issues/161) ([94acb32](https://github.com/Mereithhh/vanblog/commit/94acb322f967f04fd6ca7d0473ed5095b672c5cd))
-* 暗色模式刷新页面代码块重影问题（盲修，不一定完全修好）[#162](https://github.com/Mereithhh/vanblog/issues/162) ([8d888c6](https://github.com/Mereithhh/vanblog/commit/8d888c6cfe72bd45e759c43714f521ec597bf889))
-
 ### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
 
 
