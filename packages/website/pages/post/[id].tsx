@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getArticlesByOption } from "../../api/getArticles";
 import Layout from "../../components/Layout";
 import PostCard from "../../components/PostCard";
@@ -30,6 +30,10 @@ export interface PostPagesProps {
 }
 const PostPages = (props: PostPagesProps) => {
   const [content, setContent] = useState(props?.article?.content || "");
+  useEffect(() => {
+    // nextjs 切换页面时，不会重新设置 content ，需要手动更新
+    setContent(props?.article?.content || "")
+  }, [props.article])
   if (!props.article) {
     return <Custom404 name="文章" />;
   }
