@@ -19,15 +19,9 @@
 * 更新文档 ([97444fa](https://github.com/Mereithhh/vanblog/commit/97444fa98f8c3f7699b5152ee4ef3051a8759a20))
 
 
-### ⏪ Revert | 回退
-
-* 发版有 bug 回退重新发布 ([9f81c28](https://github.com/Mereithhh/vanblog/commit/9f81c284014a782c0f5a392008bf60f2f3afa3e9))
-
-
 ### 🚀 Chore | 构建/工程依赖/工具
 
 * **release:** 0.45.7 ([a5bca40](https://github.com/Mereithhh/vanblog/commit/a5bca408fbe9551184ee85002a12fa16095ae33e))
-* server 开发时未制定配置 logs 为当前路径 ([57684a4](https://github.com/Mereithhh/vanblog/commit/57684a40d7c8a05e201fb5c21f8a1b88c090b59d))
 * website 锁定 nextjs 版本 ([a93cb65](https://github.com/Mereithhh/vanblog/commit/a93cb65492e8178e5f66ddd1886bb9def5d72360))
 
 ### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
