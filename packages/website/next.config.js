@@ -46,9 +46,6 @@ module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   output: "standalone",
   experimental: {
-    images: {
-      allowFutureImage: true,
-    },
     largePageDataBytes: 1024 * 1024 * 10,
   },
   images: {

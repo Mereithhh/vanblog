@@ -93,6 +93,10 @@ export class WebsiteProvider {
     }
   }
   async run(): Promise<any> {
+    if (process.env["VANBLOG_DISABLE_WEBSITE"] !== 'true') {
+      this.logger.log('无 website 模式');
+      return;
+    }
     let cmd = 'dev';
     if (process.env.NODE_ENV == 'production') {
       cmd = 'start';

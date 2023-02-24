@@ -55,7 +55,9 @@ async function bootstrap() {
   await app.listen(3000);
 
   const websiteProvider = app.get(WebsiteProvider);
+
   websiteProvider.init();
+
 
   const initProvider = app.get(InitProvider);
   initProvider.initVersion();
