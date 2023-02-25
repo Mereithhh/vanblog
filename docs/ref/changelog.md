@@ -4,7 +4,7 @@ icon: update
 ---
 
 
-### [0.45.7](https://github.com/Mereithhh/vanblog/compare/v0.45.6...v0.45.7) (2023-02-25)
+## [0.46.0](https://github.com/Mereithhh/vanblog/compare/v0.45.6...v0.46.0) (2023-02-25)
 
 
 ### 🐛 Bug Fixes | Bug 修复
@@ -32,10 +32,15 @@ icon: update
 
 ### 🚀 Chore | 构建/工程依赖/工具
 
+
 * server 增加一个不启动 website 前台的模式 ([b2f0b15](https://github.com/Mereithhh/vanblog/commit/b2f0b150d47190c3089b7654afe3a1942f10eb92))
 * server 开发时未制定配置 logs 为当前路径 ([57684a4](https://github.com/Mereithhh/vanblog/commit/57684a40d7c8a05e201fb5c21f8a1b88c090b59d))
 * website 锁定 nextjs 版本 ([a93cb65](https://github.com/Mereithhh/vanblog/commit/a93cb65492e8178e5f66ddd1886bb9def5d72360))
 * 增加一个取消所有进程的命令 ([ee0f564](https://github.com/Mereithhh/vanblog/commit/ee0f5644f48a52eb246fd693177ff53d1d8448fa))
+
+
+
+
 
 ### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
 

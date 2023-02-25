@@ -27,33 +27,15 @@
 
 ### 🚀 Chore | 构建/工程依赖/工具
 
-* **release:** 0.45.7 ([d6241ae](https://github.com/Mereithhh/vanblog/commit/d6241aed542233df0ca7d9d55b6b0096d865f16b))
-* **release:** 0.45.7 ([7a1d770](https://github.com/Mereithhh/vanblog/commit/7a1d770f35ef18149effb49752b4c6cdb72a05f8))
-* **release:** 0.45.7 ([c54736d](https://github.com/Mereithhh/vanblog/commit/c54736d4f9f1419a93266e60be3f4f912fbbaf0f))
-* **release:** 0.45.7 ([b4a0eed](https://github.com/Mereithhh/vanblog/commit/b4a0eed808216e75e792bf1b125578b4b1acf363))
-* **release:** 0.45.7 ([a5bca40](https://github.com/Mereithhh/vanblog/commit/a5bca408fbe9551184ee85002a12fa16095ae33e))
+
 * server 增加一个不启动 website 前台的模式 ([b2f0b15](https://github.com/Mereithhh/vanblog/commit/b2f0b150d47190c3089b7654afe3a1942f10eb92))
 * server 开发时未制定配置 logs 为当前路径 ([57684a4](https://github.com/Mereithhh/vanblog/commit/57684a40d7c8a05e201fb5c21f8a1b88c090b59d))
 * website 锁定 nextjs 版本 ([a93cb65](https://github.com/Mereithhh/vanblog/commit/a93cb65492e8178e5f66ddd1886bb9def5d72360))
 * 增加一个取消所有进程的命令 ([ee0f564](https://github.com/Mereithhh/vanblog/commit/ee0f5644f48a52eb246fd693177ff53d1d8448fa))
 
 
-### ✏️ Documentation | 文档
-
-* 更新文档 ([c648f93](https://github.com/Mereithhh/vanblog/commit/c648f93b484dbb54ff9b12f46422a660c0bb3315))
-* 更新文档 ([21ca9dc](https://github.com/Mereithhh/vanblog/commit/21ca9dce401055a1f75300ee59b39476e39564df))
-* 更新文档 ([141a064](https://github.com/Mereithhh/vanblog/commit/141a0648f8a094508c0984a30e72d0051000654e))
-* 更新文档 ([9cd017d](https://github.com/Mereithhh/vanblog/commit/9cd017d60c4027dd5756cea8f8ead84b8a5269c0))
-* 更新文档 ([0abebc0](https://github.com/Mereithhh/vanblog/commit/0abebc003aae97b828d18cc1bda7bee10670fc4e))
-* 更新文档 ([97444fa](https://github.com/Mereithhh/vanblog/commit/97444fa98f8c3f7699b5152ee4ef3051a8759a20))
 
 
-### ⏪ Revert | 回退
-
-* github action 打包的镜像有问题，回退重新排查 ([fcc3565](https://github.com/Mereithhh/vanblog/commit/fcc3565126b6cc9d4b30734e2aec8b572433d141))
-* next 版本不匹配回退重新发布 ([6160085](https://github.com/Mereithhh/vanblog/commit/616008518adebc5f831717d4a522bcc7c4a15666))
-* 发版有 bug 回退重新发布 ([9f81c28](https://github.com/Mereithhh/vanblog/commit/9f81c284014a782c0f5a392008bf60f2f3afa3e9))
-* 因为 github 构建缓存，回退改为大版本发布 ([bae243b](https://github.com/Mereithhh/vanblog/commit/bae243bb2baea793a3ef285cd65e22e6aea19db8))
 
 ### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
 
