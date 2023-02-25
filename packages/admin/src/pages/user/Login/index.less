@@ -4,13 +4,16 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
+  min-height: 100vh;
   overflow: auto;
   background: @layout-body-background;
+  justify-content: center;
 }
 
 .content {
-  flex: 1;
+  flex: 0;
   padding: 32px 0;
+  transform: translateY(-10%);
 }
 
 @media (min-width: @screen-md-min) {

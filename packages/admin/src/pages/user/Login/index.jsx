@@ -45,13 +45,14 @@ const Login = () => {
         history.push(redirect || '/');
         return;
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.content}>
         <LoginForm
+          className={styles.loginForm}
           logo={<img alt="logo" src="/logo.svg" />}
           title="VanBlog"
           subTitle={'VanBlog 博客管理后台'}
@@ -67,6 +68,7 @@ const Login = () => {
             <>
               <ProFormText
                 name="username"
+                autoComplete='off'
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined className={styles.prefixIcon} />,
@@ -81,6 +83,7 @@ const Login = () => {
               />
               <ProFormText.Password
                 name="password"
+                autoComplete='off'
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined className={styles.prefixIcon} />,
