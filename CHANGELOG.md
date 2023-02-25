@@ -21,19 +21,11 @@
 * 新建文章或草稿自动跳转到编辑页面 ([baf4e3c](https://github.com/Mereithhh/vanblog/commit/baf4e3c0028067d97020386a0842ee3ac4d5bcf7))
 
 
-### ⏪ Revert | 回退
-
-* next 版本不匹配回退重新发布 ([6160085](https://github.com/Mereithhh/vanblog/commit/616008518adebc5f831717d4a522bcc7c4a15666))
-* 发版有 bug 回退重新发布 ([9f81c28](https://github.com/Mereithhh/vanblog/commit/9f81c284014a782c0f5a392008bf60f2f3afa3e9))
-
-
 ### 🚀 Chore | 构建/工程依赖/工具
 
-* **release:** 0.45.7 ([b4a0eed](https://github.com/Mereithhh/vanblog/commit/b4a0eed808216e75e792bf1b125578b4b1acf363))
-* **release:** 0.45.7 ([a5bca40](https://github.com/Mereithhh/vanblog/commit/a5bca408fbe9551184ee85002a12fa16095ae33e))
+
 * server 增加一个不启动 website 前台的模式 ([b2f0b15](https://github.com/Mereithhh/vanblog/commit/b2f0b150d47190c3089b7654afe3a1942f10eb92))
 * server 开发时未制定配置 logs 为当前路径 ([57684a4](https://github.com/Mereithhh/vanblog/commit/57684a40d7c8a05e201fb5c21f8a1b88c090b59d))
-* website 锁定 nextjs 版本 ([a93cb65](https://github.com/Mereithhh/vanblog/commit/a93cb65492e8178e5f66ddd1886bb9def5d72360))
 
 ### [0.45.6](https://github.com/Mereithhh/van-blog/compare/v0.45.5...v0.45.6) (2023-02-15)
 
