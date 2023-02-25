@@ -7,21 +7,6 @@
 * 左右切换页面时，内容不更新[#161](https://github.com/Mereithhh/vanblog/issues/161) ([94acb32](https://github.com/Mereithhh/vanblog/commit/94acb322f967f04fd6ca7d0473ed5095b672c5cd))
 * 暗色模式刷新页面代码块重影问题（盲修，不一定完全修好）[#162](https://github.com/Mereithhh/vanblog/issues/162) ([8d888c6](https://github.com/Mereithhh/vanblog/commit/8d888c6cfe72bd45e759c43714f521ec597bf889))
 
-
-### ⏪ Revert | 回退
-
-* next 版本不匹配回退重新发布 ([6160085](https://github.com/Mereithhh/vanblog/commit/616008518adebc5f831717d4a522bcc7c4a15666))
-* 发版有 bug 回退重新发布 ([9f81c28](https://github.com/Mereithhh/vanblog/commit/9f81c284014a782c0f5a392008bf60f2f3afa3e9))
-
-
-### ✏️ Documentation | 文档
-
-* 更新文档 ([141a064](https://github.com/Mereithhh/vanblog/commit/141a0648f8a094508c0984a30e72d0051000654e))
-* 更新文档 ([9cd017d](https://github.com/Mereithhh/vanblog/commit/9cd017d60c4027dd5756cea8f8ead84b8a5269c0))
-* 更新文档 ([0abebc0](https://github.com/Mereithhh/vanblog/commit/0abebc003aae97b828d18cc1bda7bee10670fc4e))
-* 更新文档 ([97444fa](https://github.com/Mereithhh/vanblog/commit/97444fa98f8c3f7699b5152ee4ef3051a8759a20))
-
-
 ### ♻️ Code Refactoring | 代码重构
 
 * 更新 nextjs 13 后按照新规范修改 Link 标签的使用" ([b453665](https://github.com/Mereithhh/vanblog/commit/b4536650174ed11ce82b7e519e4573e770f36291))
