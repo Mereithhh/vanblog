@@ -32,9 +32,9 @@ export default function (props: {
           key={item.id}
         >
           <Link href={item.value}>
-            <a className={`w-full inline-block  ${isSub ? "px-8" : "px-4"}`}>
+            <div className={`w-full inline-block  ${isSub ? "px-8" : "px-4"}`}>
               {item.name}
-            </a>
+            </div>
           </Link>
         </li>
       );

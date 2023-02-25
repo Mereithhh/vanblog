@@ -1,4 +1,4 @@
-import Link from "../components/Link";
+import Link from "next/link";
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/Layout";
 import { encodeQuerystring } from "../utils/encode";
@@ -28,15 +28,14 @@ const TagPage = (props: TagPageProps) => {
             <Link
               href={`/tag/${encodeQuerystring(tag)}`}
               key={`tag-${tag}`}
-              newTab={props.layoutProps.openArticleLinksInNewWindow == "true"}
+              target={getTarget(
+                props.layoutProps.openArticleLinksInNewWindow == "true"
+              )}
+
             >
-              <a
-                href={`/tag/${encodeQuerystring(tag)}`}
-                target={getTarget(
-                  props.layoutProps.openArticleLinksInNewWindow == "true"
-                )}
+              <div
                 className="my-2 text-gray-500 block hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 transition-all mr-5 dark:text-dark-400 "
-              >{`${tag}`}</a>
+              >{`${tag}`}</div>
             </Link>
           ))}
         </div>

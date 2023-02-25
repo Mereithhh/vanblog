@@ -17,16 +17,15 @@ const renderLink = (item: PageItem, isCur: boolean) => {
       href={item.href}
       key={`LinkItem-${item.page}-${item.type}-${item.href}`}
     >
-      <a
+      <div
         style={commonStyle}
-        className={`${commonCls} ${btnCls}  ${
-          isCur
-            ? "bg-gray-200 dark:bg-dark-hover dark:pg-text-dark-hover"
-            : "dark:bg-dark-1 dark:pg-text-dark "
-        }`}
+        className={`${commonCls} ${btnCls}  ${isCur
+          ? "bg-gray-200 dark:bg-dark-hover dark:pg-text-dark-hover"
+          : "dark:bg-dark-1 dark:pg-text-dark "
+          }`}
       >
         {item.page}
-      </a>
+      </div>
     </Link>
   );
 };
@@ -35,14 +34,14 @@ const renderBtn = (item: PageItem, disable: boolean, isNext: boolean) => {
     <Link
       href={item.href}
       key={`pagenav-btn-${item.page}-${item.href}-${isNext}`}
-      // className="justify-center items-center "
+    // className="justify-center items-center "
     >
-      <a
+      <div
         style={commonStyle}
         className={`${commonCls} dark:bg-dark-1 dark:pg-text-dark  ${btnCls}`}
       >
         {isNext ? "›" : "‹"}
-      </a>
+      </div>
     </Link>
   );
 };
@@ -52,9 +51,9 @@ const renderMore = (item: PageItem, isNext: boolean) => {
       href={item.href}
       key={`pagenav-more-${item.page}-${item.href}-${isNext}`}
     >
-      <a style={commonStyle} className={`dark:pg-text-dark ${commonCls}`}>
+      <div style={commonStyle} className={`dark:pg-text-dark ${commonCls}`}>
         •••
-      </a>
+      </div>
     </Link>
   );
 };

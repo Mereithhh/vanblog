@@ -1,4 +1,4 @@
-import Link from "../Link";
+import Link from "next/link";
 import { useMemo } from "react";
 import { encodeQuerystring } from "../../utils/encode";
 import { getTarget } from "../Link/tools";
@@ -25,13 +25,11 @@ export function PostBottom(props: {
             <div key={`article-tag-${tag}`}>
               <Link
                 href={`/tag/${encodeQuerystring(tag)}`}
-                newTab={props.openArticleLinksInNewWindow}
+                target={getTarget(props.openArticleLinksInNewWindow)}
               >
-                <a
-                  target={getTarget(props.openArticleLinksInNewWindow)}
-                  href={`/tag/${encodeQuerystring(tag)}`}
+                <div
                   className=" border-b border-white hover:border-gray-500 dark:border-dark dark:hover:border-gray-300 dark:hover:text-gray-300"
-                >{`${tag}`}</a>
+                >{`${tag}`}</div>
               </Link>
             </div>
           ))}
@@ -43,14 +41,12 @@ export function PostBottom(props: {
           {props.pre?.id && (
             <Link
               href={`/post/${props.pre?.id}`}
-              newTab={props.openArticleLinksInNewWindow}
+              target={getTarget(props.openArticleLinksInNewWindow)}
             >
-              <a
+              <div
                 style={{ whiteSpace: "break-spaces" }}
-                href={`/post/${props.pre?.id}`}
-                target={getTarget(props.openArticleLinksInNewWindow)}
                 className="dark:text-dark dark:border-dark dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"
-              >{`< ${props.pre?.title}`}</a>
+              >{`< ${props.pre?.title}`}</div>
             </Link>
           )}
         </div>
@@ -58,14 +54,12 @@ export function PostBottom(props: {
           {props.next?.id && (
             <Link
               href={`/post/${props.next?.id}`}
-              newTab={props.openArticleLinksInNewWindow}
+              target={getTarget(props.openArticleLinksInNewWindow)}
             >
-              <a
+              <div
                 style={{ whiteSpace: "break-spaces" }}
-                href={`/post/${props.next?.id}`}
-                target={getTarget(props.openArticleLinksInNewWindow)}
                 className="dark:text-dark dark:border-dark  dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"
-              >{`${props.next?.title} >`}</a>
+              >{`${props.next?.title} >`}</div>
             </Link>
           )}
         </div>

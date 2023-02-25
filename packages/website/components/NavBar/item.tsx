@@ -40,7 +40,7 @@ function LinkItemAtom(props: {
         className={props.cls ? props.cls : cls}
       >
         <Link href={item.value}>
-          <a className={props.clsA ? props.clsA : clsA}>{item.name}</a>
+          <div className={props.clsA ? props.clsA : clsA}>{item.name}</div>
         </Link>
       </li>
     );

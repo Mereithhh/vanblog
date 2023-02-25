@@ -183,7 +183,7 @@ export default function (props: {
                     className="flex items-center h-full md:px-2 hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 cursor-pointer transition-all"
                   >
                     <Link href={`/category/${encodeQuerystring(catelog)}`}>
-                      <a>{catelog}</a>
+                      <div>{catelog}</div>
                     </Link>
                   </li>
                 );

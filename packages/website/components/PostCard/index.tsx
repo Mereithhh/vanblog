@@ -1,4 +1,4 @@
-import Link from "../Link";
+import Link from "next/link";
 import { useMemo, useState } from "react";
 import AlertCard from "../AlertCard";
 import CopyRight from "../CopyRight";
@@ -132,15 +132,13 @@ export default function (props: {
           <div className="w-full flex justify-center mt-4 ">
             <Link
               href={`/post/${props.id}`}
-              newTab={props.openArticleLinksInNewWindow}
+              target={getTarget(props.openArticleLinksInNewWindow)}
             >
-              <a
-                href={`/post/${props.id}`}
-                target={getTarget(props.openArticleLinksInNewWindow)}
+              <div
                 className=" dark:bg-dark dark:hover:bg-dark-light dark:hover:text-dark-r dark:border-dark dark:text-dark hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded"
               >
                 阅读全文
-              </a>
+              </div>
             </Link>
           </div>
         )}
