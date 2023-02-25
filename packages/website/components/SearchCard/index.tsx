@@ -28,10 +28,12 @@ export default function (props: {
       event?.preventDefault();
       document.body.style.overflow = "auto";
     }
-    if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == "k") {
-      props.setVisible(true);
-      event?.preventDefault();
-      document.body.style.overflow = "hidden";
+    if (ev.ctrlKey == true || ev.metaKey == true) {
+      if (ev.key.toLocaleLowerCase() == "k") {
+        props.setVisible(true);
+        event?.preventDefault();
+        document.body.style.overflow = "hidden";
+      }
     }
     return false;
   };
