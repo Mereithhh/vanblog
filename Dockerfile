@@ -49,9 +49,9 @@ RUN yarn build
 FROM node:alpine AS RUNNER
 WORKDIR /app
 RUN  apk add --no-cache --update tzdata caddy nss-tools \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo "Asia/Shanghai" > /etc/timezone \
-    && apk del tzdata
+  && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+  && echo "Asia/Shanghai" > /etc/timezone \
+  && apk del tzdata
 RUN  yarn config set network-timeout 600000
 # 安装 waline
 WORKDIR /app/waline

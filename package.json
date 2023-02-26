@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.45.6",
+  "version": "0.46.0",
   "private": true,
   "devDependencies": {
     "@vuepress/client": "^2.0.0-beta.49",
@@ -13,6 +13,7 @@
   },
   "scripts": {
     "dev": "node scripts/dev.js",
+    "kill": "bash scripts/kill-all.sh",
     "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
     "build:test": "act -j test --secret-file=.env",
     "webhook": "node scripts/webhook.js",

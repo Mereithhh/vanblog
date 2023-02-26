@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import Link from "../Link";
+import Link from "next/link";
 import { useMemo } from "react";
 import { encodeQuerystring } from "../../utils/encode";
 import PostViewer from "../PostViewer";
@@ -20,16 +20,13 @@ export function Title(props: {
   return (
     <div className="flex justify-center">
       {props.type != "about" ? (
-        <Link href={`/post/${props.id}`} newTab={newTab}>
-          <a
-            target={getTarget(newTab)}
-            href={`/post/${props.id}`}
-            className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 md:text-${
-              props.type == "overview" ? "xl" : "2xl"
-            } ua ua-link`}
+        <Link href={`/post/${props.id}`} target={getTarget(newTab)}>
+          <div
+            className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 md:text-${props.type == "overview" ? "xl" : "2xl"
+              } ua ua-link`}
           >
             {props.title}
-          </a>
+          </div>
         </Link>
       ) : (
         <div
@@ -108,13 +105,11 @@ export function SubTitle(props: {
           </span>
           <Link
             href={`/category/${encodeQuerystring(props.catelog)}`}
-            newTab={props.openArticleLinksInNewWindow}
+            target={getTarget(props.openArticleLinksInNewWindow)}
           >
-            <a
-              href={`/category/${encodeQuerystring(props.catelog)}`}
-              target={getTarget(props.openArticleLinksInNewWindow)}
+            <div
               className="cursor-pointer group-hover:text-gray-900 dark:group-hover:text-dark-hover hover:font-medium "
-            >{`${props.catelog}`}</a>
+            >{`${props.catelog}`}</div>
           </Link>
         </span>
       )}

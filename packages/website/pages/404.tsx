@@ -1,4 +1,4 @@
-import Image from "next/future/image";
+import Image from "next/image";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -22,9 +22,9 @@ export default function (props: { name?: string }) {
             {`此${props?.name ? props.name : "页面"}不存在`}
           </div>
           <Link href="/">
-            <a className="mt-4 ua ua-link text-base text-gray-600 dark:text-dark">
+            <div className="mt-4 ua ua-link text-base text-gray-600 dark:text-dark">
               返回主页
-            </a>
+            </div>
           </Link>
         </div>
       </div>
