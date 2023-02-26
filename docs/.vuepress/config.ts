@@ -1,10 +1,14 @@
 import { defineUserConfig } from "vuepress";
-import theme from "./theme";
-import { searchPlugin } from "@vuepress/plugin-search";
+import { searchProPlugin } from "vuepress-plugin-search-pro
+import theme from "./theme.js";
+
 export default defineUserConfig({
+  base: "/",
+
   lang: "zh-CN",
   title: "VanBlog",
   description: "VanBlog 的官方网站",
+
   head: [
     ["link", { rel: "icon", href: "/logo.svg" }],
     [
@@ -21,15 +25,10 @@ s.parentNode.insertBefore(hm, s);
 `,
     ],
   ],
-  base: "/",
+
   plugins: [
-    searchPlugin({
-      locales: {
-        "/": {
-          placeholder: "搜索",
-        },
-      },
-    }),
+    searchProPlugin({ indexContent:true }),
   ],
+
   theme,
 });

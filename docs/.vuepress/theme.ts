@@ -1,6 +1,6 @@
 import { hopeTheme } from "vuepress-theme-hope";
-import navbar from "./navbar";
-import sidebar from "./sidebar";
+import navbar from "./navbar.js";
+import sidebar from "./sidebar.js";
 
 export default hopeTheme({
   hostname: "https://vanblog.mereith.com",
@@ -33,9 +33,6 @@ export default hopeTheme({
   pageInfo: ["Author", "Original", "Date", "Category", "Tag", "ReadingTime"],
 
   plugins: {
-    blog: false,
-    copyCode: {},
-
     comment: {
       provider: "Giscus",
       repo: "mereithhh/vanblog-comment",
