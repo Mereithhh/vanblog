@@ -161,6 +161,7 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 - [joker's blog](https://jingjianqian.top)
 - [SnailBlog](https://blog.mldd521.com)
 - [Ray's Blog](https://blog.zai7lou.ml)
+- [阿明的小博客](https://696988.xyz/)
 
 ## 预览图
 
