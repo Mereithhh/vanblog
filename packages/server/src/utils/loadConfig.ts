@@ -20,7 +20,7 @@ rawConfigs = rawConfigs
   .map((content) => yaml.parse(content));
 
 if (rawConfigs.length === 0) {
-  console.log('缺少配置文件,尝试从 env 中读取或采用默认配置');
+  console.log('未检测到 Vanblog 配置文件, 即将从环境变量中读取, 或采用默认配置');
   rawConfigs.push([]);
 }
 
@@ -43,6 +43,10 @@ export const loadConfig = (key: string, defaultValue?: any) => {
       .map((x) => x.toUpperCase())
       .join('_');
 
-  return process.env[envKey] || _.get(config, key, defaultValue);
+  if(typeof defaultValue!=='function') {
+      return process.env[envKey] || _.get(config, key, defaultValue);
+  } else {
+      return process.env[envKey] || _.get(config, key, false) || defaultValue();
+  }
 };
 export const version = process.env['VAN_BLOG_VERSION'] || 'dev';
