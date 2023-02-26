@@ -29,6 +29,9 @@ export class Article extends Document {
   @Prop({ index: true })
   author: string;
 
+  @Prop({ default: '', index: true })
+  pathname: string;
+
   @Prop({ default: false, index: true })
   private: boolean;
 

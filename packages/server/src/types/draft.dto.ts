@@ -19,6 +19,7 @@ export class UpdateDraftDto {
 }
 export class PublishDraftDto {
   hidden?: boolean;
+  pathname?: string;
   private?: boolean;
   password?: string;
   copyright?: string;

@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
 import { Article } from "../../types/article";
+import { getArticlePath } from "../../utils/getArticlePath";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPostPagesProps } from "../../utils/getPageProps";
 import { hasToc } from "../../utils/hasToc";
@@ -21,10 +22,12 @@ export interface PostPagesProps {
   pre: {
     id: number;
     title: string;
+    pathname?: string;
   };
   next: {
     id: number;
     title: string;
+    pathname?: string;
   };
   showSubMenu: "true" | "false";
 }
@@ -59,7 +62,7 @@ const PostPages = (props: PostPagesProps) => {
         }
         customCopyRight={props.article.copyright || null}
         top={props.article.top || 0}
-        id={props.article.id}
+        id={getArticlePath(props.article)}
         key={props.article.title}
         title={props.article.title}
         updatedAt={new Date(props.article.updatedAt)}
@@ -93,7 +96,7 @@ export async function getStaticPaths() {
   });
   const paths = data.articles.map((article) => ({
     params: {
-      id: String(article.id),
+      id: String(getArticlePath(article)),
     },
   }));
   return {

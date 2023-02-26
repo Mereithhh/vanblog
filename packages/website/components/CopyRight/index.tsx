@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 
 export default function (props: {
   author: string;
-  id: number;
+  id: number | string;
   showDonate: boolean;
   copyrightAggreement: string;
   customCopyRight: string | null;
@@ -33,7 +33,7 @@ export default function (props: {
       <p>
         <span className="mr-2">本文链接:</span>
         <CopyToClipboard
-          text={url}
+          text={decodeURIComponent(url)}
           onCopy={() => {
             toast.success("复制成功！", {
               className: "toast",
@@ -44,7 +44,7 @@ export default function (props: {
             className="cursor-pointer border-b border-gray-100 hover:border-gray-500 dark:text-dark dark-border-hover dark:border-nav-dark"
             style={{ wordBreak: "break-all" }}
           >
-            {url}
+            {decodeURIComponent(url)}
           </span>
         </CopyToClipboard>
       </p>

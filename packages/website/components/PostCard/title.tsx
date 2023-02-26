@@ -7,7 +7,7 @@ import { getTarget } from "../Link/tools";
 
 export function Title(props: {
   type: "article" | "about" | "overview";
-  id: number;
+  id: number | string;
   title: string;
   openArticleLinksInNewWindow: boolean;
 }) {
@@ -47,7 +47,7 @@ export function SubTitle(props: {
   createdAt: Date;
   catelog: string;
   enableComment: "true" | "false";
-  id: number;
+  id: number | string;
   openArticleLinksInNewWindow: boolean;
 }) {
   const iconSize = "16";

@@ -49,6 +49,7 @@ export class ArticleProvider {
     hidden: 1,
     author: 1,
     copyright: 1,
+    pathname: 1,
   };
 
   adminView = {
@@ -69,6 +70,7 @@ export class ArticleProvider {
     visited: 1,
     author: 1,
     copyright: 1,
+    pathname: 1,
   };
 
   listView = {
@@ -87,6 +89,7 @@ export class ArticleProvider {
     visited: 1,
     author: 1,
     copyright: 1,
+    pathname: 1,
   };
 
   toPublic(oldArticles: Article[]) {
@@ -155,6 +158,26 @@ export class ArticleProvider {
       });
     }
     return res;
+  }
+
+  async updateViewerByPathname(pathname: string, isNew: boolean) {
+    let article = await this.getByPathName(pathname, 'list');
+    if (!article) {
+      // 这是通过 id 的吧。
+      article = await this.getById(Number(pathname), 'list');
+      if (!article) {
+        return;
+      }
+    }
+    const oldViewer = article.viewer || 0;
+    const oldVIsited = article.visited || 0;
+    const newViewer = oldViewer + 1;
+    const newVisited = isNew ? oldVIsited + 1 : oldVIsited;
+    const nowTime = new Date();
+    await this.articleModel.updateOne(
+      { id: article.id },
+      { visited: newVisited, viewer: newViewer, lastVisitedTime: nowTime },
+    );
   }
 
   async updateViewer(id: number, isNew: boolean) {
@@ -663,6 +686,43 @@ export class ArticleProvider {
     return resData;
   }
 
+  async getByIdOrPathname(id: string | number, view: ArticleView) {
+    const articleByPathname = await this.getByPathName(
+      String(id),
+      this.getView(view),
+    );
+
+    if (articleByPathname) {
+      return articleByPathname;
+    }
+    return await this.getById(Number(id), this.getView(view));
+  }
+
+  async getByPathName(pathname: string, view: ArticleView): Promise<Article> {
+    const $and: any = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+    ];
+
+    return await this.articleModel
+      .findOne(
+        {
+          pathname: decodeURIComponent(pathname),
+          $and,
+        },
+        this.getView(view),
+      )
+      .exec();
+  }
+
   async getById(id: number, view: ArticleView): Promise<Article> {
     const $and: any = [
       {
@@ -687,17 +747,22 @@ export class ArticleProvider {
       )
       .exec();
   }
-  async getByIdWithPassword(id: number, password: string): Promise<any> {
-    const article: any = await this.getById(id, 'admin');
+  async getByIdWithPassword(
+    id: number | string,
+    password: string,
+  ): Promise<any> {
+    const article: any = await this.getByIdOrPathname(id, 'admin');
     if (!password) {
       return null;
     }
     if (!article) {
       return null;
     }
-    const category = await this.categoryModal.findOne({
-      name: article.category,
-    });
+    const category =
+      (await this.categoryModal.findOne({
+        name: article.category,
+      })) || ({} as any);
+
     const categoryPassword = category.private ? category.password : undefined;
     const targetPassword = categoryPassword
       ? categoryPassword
@@ -712,8 +777,8 @@ export class ArticleProvider {
       }
     }
   }
-  async getByIdWithPreNext(id: number, view: ArticleView) {
-    const curArticle = await this.getById(id, view);
+  async getByIdOrPathnameWithPreNext(id: string | number, view: ArticleView) {
+    const curArticle = await this.getByIdOrPathname(id, view);
     if (!curArticle) {
       throw new NotFoundException('找不到文章');
     }

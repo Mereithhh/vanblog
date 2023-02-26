@@ -65,8 +65,8 @@ export class MetaProvider {
     const r = /\/post\//;
     const isArticlePath = r.test(pathname);
     if (isArticlePath) {
-      await this.articleProvider.updateViewer(
-        parseInt(pathname.replace('/post/', '')),
+      await this.articleProvider.updateViewerByPathname(
+        pathname.replace('/post/', ''),
         isNewByPath,
       );
     }

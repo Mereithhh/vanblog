@@ -67,6 +67,14 @@ export default function (props) {
             autocomplete: 'new-password',
           }}
         />
+        <ProFormText
+          width="md"
+          id="pathname"
+          name="pathname"
+          label="自定义路径名"
+          tooltip="文章发布后的路径将为 /post/[自定义路径名]，如果未设置则使用文章 id 作为路径名"
+          placeholder="留空或为空则使用 id 作为路径名"
+        />
         <ProFormText.Password
           label="密码"
           width="md"

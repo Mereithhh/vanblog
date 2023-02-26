@@ -2,6 +2,7 @@ import { Article } from "../../types/article";
 import dayjs from "dayjs";
 import Link from "../Link";
 import { getTarget } from "../Link/tools";
+import { getArticlePath } from "../../utils/getArticlePath";
 export default function (props: {
   articles: Article[];
   showYear?: boolean;
@@ -13,7 +14,7 @@ export default function (props: {
       {props.articles.map((article, index) => {
         return (
           <Link
-            href={`/post/${article.id}`}
+            href={`/post/${getArticlePath(article)}`}
             key={article.id}
             newTab={props.openArticleLinksInNewWindow}
           >
@@ -21,7 +22,7 @@ export default function (props: {
               className="dark:border-dark-2  dark:hover:border-nav-dark-light flex items-center border-b pb-1 border-dashed cursor-pointer group border-gray-200 hover:border-gray-400 "
               key={article.id}
               target={getTarget(props.openArticleLinksInNewWindow)}
-              href={`/post/${article.id}`}
+              href={`/post/${getArticlePath(article)}`}
             >
               <div className="text-gray-400 flex-grow-0 flex-shrink-0 text-sm  group-hover:text-gray-600 dark:text-dark-400 dark:group-hover:text-dark-light">
                 {props.showYear

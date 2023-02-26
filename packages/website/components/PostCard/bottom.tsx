@@ -2,13 +2,14 @@ import Link from "../Link";
 import { useMemo } from "react";
 import { encodeQuerystring } from "../../utils/encode";
 import { getTarget } from "../Link/tools";
+import { getArticlePath } from "../../utils/getArticlePath";
 
 export function PostBottom(props: {
   type: "overview" | "article" | "about";
   lock: boolean;
   tags?: string[];
-  next?: { id: number; title: string };
-  pre?: { id: number; title: string };
+  next?: { id: number; title: string; pathname?: string };
+  pre?: { id: number; title: string; pathname?: string };
   openArticleLinksInNewWindow: boolean;
 }) {
   const show = useMemo(() => {
@@ -42,12 +43,12 @@ export function PostBottom(props: {
         <div className="" style={{ maxWidth: "50%" }}>
           {props.pre?.id && (
             <Link
-              href={`/post/${props.pre?.id}`}
+              href={`/post/${getArticlePath(props.pre)}`}
               newTab={props.openArticleLinksInNewWindow}
             >
               <a
                 style={{ whiteSpace: "break-spaces" }}
-                href={`/post/${props.pre?.id}`}
+                href={`/post/${getArticlePath(props.pre)}`}
                 target={getTarget(props.openArticleLinksInNewWindow)}
                 className="dark:text-dark dark:border-dark dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"
               >{`< ${props.pre?.title}`}</a>
@@ -57,12 +58,12 @@ export function PostBottom(props: {
         <div className="" style={{ maxWidth: "50%" }}>
           {props.next?.id && (
             <Link
-              href={`/post/${props.next?.id}`}
+              href={`/post/${getArticlePath(props.next)}`}
               newTab={props.openArticleLinksInNewWindow}
             >
               <a
                 style={{ whiteSpace: "break-spaces" }}
-                href={`/post/${props.next?.id}`}
+                href={`/post/${getArticlePath(props.next)}`}
                 target={getTarget(props.openArticleLinksInNewWindow)}
                 className="dark:text-dark dark:border-dark  dark-border-hover border-b pb border-dashed hover:border-gray-800 border-white hover:text-gray-800"
               >{`${props.next?.title} >`}</a>

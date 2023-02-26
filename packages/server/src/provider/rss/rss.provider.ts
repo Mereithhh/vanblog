@@ -87,7 +87,7 @@ export class RssProvider {
         author,
       });
       for (const article of articles) {
-        const url = `${siteUrl}post/${article.id}`;
+        const url = `${siteUrl}post/${article.pathname || article.id}`;
         const category = {
           name: article.category,
           domain: `${siteUrl}/category/${article.category}`,

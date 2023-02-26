@@ -14,7 +14,7 @@ import TocMobile from "../TocMobile";
 import { hasToc } from "../../utils/hasToc";
 
 export default function (props: {
-  id: number;
+  id: number | string;
   title: string;
   updatedAt: Date;
   createdAt: Date;
@@ -26,8 +26,8 @@ export default function (props: {
   payDark?: string[];
   author?: string;
   tags?: string[];
-  next?: { id: number; title: string };
-  pre?: { id: number; title: string };
+  next?: { id: number; title: string; pathname?: string };
+  pre?: { id: number; title: string; pathname?: string };
   enableComment: "true" | "false";
   top: number;
   private: boolean;

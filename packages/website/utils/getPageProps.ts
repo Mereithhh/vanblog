@@ -11,7 +11,7 @@ import { PostPagesProps } from "../pages/post/[id]";
 import { PagePagesProps } from "../pages/page/[p]";
 import { CategoryPagesProps } from "../pages/category/[category]";
 import {
-  getArticleById,
+  getArticleByIdOrPathname,
   getArticlesByCategory,
   getArticlesByOption,
   getArticlesByTimeLine,
@@ -167,7 +167,7 @@ export async function getPostPagesProps(
       data.meta.siteInfo?.payWechatDark || "",
     ],
   };
-  const currArticleProps = await getArticleById(parseInt(curId));
+  const currArticleProps = await getArticleByIdOrPathname(curId);
   const { article } = currArticleProps;
   const author = article?.author || data.meta.siteInfo.author;
   return {

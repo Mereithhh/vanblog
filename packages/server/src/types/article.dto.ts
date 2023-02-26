@@ -13,6 +13,7 @@ export class CreateArticleDto {
   createdAt?: Date;
   author?: string;
   copyright?: string;
+  pathname?: string;
 }
 export class UpdateArticleDto {
   title?: string;
@@ -29,6 +30,7 @@ export class UpdateArticleDto {
   updatedAt?: Date;
   author?: string;
   copyright?: string;
+  pathname?: string;
 }
 export class SearchArticleOption {
   page: number;

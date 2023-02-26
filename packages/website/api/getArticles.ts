@@ -20,7 +20,7 @@ export const getArticlesByOption = async (
     queryString += `${k}=${v}&`;
   }
   queryString = queryString.substring(0, queryString.length - 1);
-  queryString = encodeQuerystring(queryString)
+  queryString = encodeQuerystring(queryString);
   try {
     const url = `${config.baseUrl}api/public/article?${queryString}`;
     const res = await fetch(url);
@@ -86,7 +86,7 @@ export const getArticlesByTag = async (tagName: string) => {
     }
   }
 };
-export const getArticleById = async (id: number) => {
+export const getArticleByIdOrPathname = async (id: string) => {
   try {
     const url = `${config.baseUrl}api/public/article/${id}`;
     const res = await fetch(url);
@@ -94,10 +94,10 @@ export const getArticleById = async (id: number) => {
     const { article, pre, next } = data;
     const r: any = { article };
     if (pre) {
-      r.pre = { title: pre.title, id: pre.id };
+      r.pre = { title: pre.title, id: pre.id, pathname: pre.pathname };
     }
     if (next) {
-      r.next = { title: next.title, id: next.id };
+      r.next = { title: next.title, id: next.id, pathname: next.pathname };
     }
     return r;
   } catch (err) {
@@ -110,8 +110,8 @@ export const getArticleById = async (id: number) => {
     }
   }
 };
-export const getArticleByIdWithPassword = async (
-  id: number,
+export const getArticleByIdOrPathnameWithPassword = async (
+  id: number | string,
   password: string
 ) => {
   try {

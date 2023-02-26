@@ -8,7 +8,7 @@ export default function (props: {
   aliPayDark: string;
   weChatPayDark: string;
   author: string;
-  id: number;
+  id: number | string;
 }) {
   const [show, setShow] = useState(false);
   const { theme } = useContext(ThemeContext);

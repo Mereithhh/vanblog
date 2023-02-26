@@ -2,7 +2,7 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
-
+const isDev = process.env.NODE_ENV == "development";
 const rewites =
   process.env.NODE_ENV == "development"
     ? {
@@ -27,11 +27,13 @@ const getAllowDomains = () => {
     const arr = domainsInEnv.split(",");
     return arr;
   } else {
+    if (isDev) {
+      return ["pic.mereith.com"];
+    }
     return [];
   }
 };
 const getCdnUrl = () => {
-  const isDev = process.env.NODE_ENV == "development";
   if (isDev) {
     return {};
   }

@@ -36,7 +36,15 @@ export class ISRProvider {
     // ! 配置差的机器可能并发多了会卡，所以改成串行的。
 
     await this.activeUrls(this.urlList, false);
-    await this.activePath('post', activeConfig?.postId || undefined);
+    let postId: any = null;
+    const articleWithThisId = await this.articleProvider.getById(
+      postId,
+      'list',
+    );
+    if (articleWithThisId) {
+      postId = articleWithThisId.pathname || articleWithThisId.id;
+    }
+    await this.activePath('post', postId || undefined);
     await this.activePath('page');
     await this.activePath('category');
     await this.activePath('tag');
@@ -135,7 +143,7 @@ export class ISRProvider {
     beforeObj?: Article,
   ) {
     const { article, pre, next } =
-      await this.articleProvider.getByIdWithPreNext(id, 'list');
+      await this.articleProvider.getByIdOrPathnameWithPreNext(id, 'list');
     // 无论是什么事件都先触发文章本身、标签和分类。
     this.activeUrl(`/post/${id}`, true);
     if (pre) {
@@ -208,7 +216,7 @@ export class ISRProvider {
   async getArticleUrls() {
     const articles = await this.articleProvider.getAll('list', true, true);
     return articles.map((a) => {
-      return `/post/${a.id}`;
+      return `/post/${a.pathname || a.id}`;
     });
   }
 }

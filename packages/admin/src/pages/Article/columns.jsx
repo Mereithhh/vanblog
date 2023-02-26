@@ -1,6 +1,7 @@
 import ColumnsToolBar from '@/components/ColumnsToolBar';
 import UpdateModal from '@/components/UpdateModal';
 import { deleteArticle, getAllCategories, getArticleById, getTags } from '@/services/van-blog/api';
+import { getPathname } from '@/services/van-blog/getPathname';
 import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
 import { message, Modal, Space, Tag } from 'antd';
 import { history } from 'umi';
@@ -134,7 +135,7 @@ export const columns = [
                 编辑
               </a>,
               <a
-                href={`/post/${record.id}`}
+                href={`/post/${getPathname(record)}`}
                 onClick={(ev) => {
                   if (record?.hidden) {
                     Modal.confirm({
@@ -158,7 +159,7 @@ export const columns = [
                         </div>
                       ),
                       onOk: () => {
-                        window.open(`/post/${record.id}`, '_blank');
+                        window.open(`/post/${getPathname(record)}`, '_blank');
                         return true;
                       },
                       okText: '仍然访问',

@@ -10,4 +10,5 @@ export interface Article {
   private: boolean;
   author?: string;
   copyright?: string;
+  pathname?: string;
 }

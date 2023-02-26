@@ -13,6 +13,7 @@ import {
   updateArticle,
   updateDraft,
 } from '@/services/van-blog/api';
+import { getPathname } from '@/services/van-blog/getPathname';
 import { parseMarkdownFile, parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
 import { useCacheState } from '@/services/van-blog/useCacheState';
 import { DownOutlined } from '@ant-design/icons';
@@ -301,7 +302,7 @@ export default function () {
                         </div>
                       ),
                       onOk: () => {
-                        window.open(`/post/${currObj.id}`, '_blank');
+                        window.open(`/post/${getPathname(currObj)}`, '_blank');
                         return true;
                       },
                       okText: '仍然访问',
@@ -309,7 +310,7 @@ export default function () {
                     });
                     return;
                   }
-                  url = `/post/${currObj?.id}`;
+                  url = `/post/${getPathname(currObj)}`;
                 } else {
                   url = '/about';
                 }

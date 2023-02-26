@@ -1,7 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getArticleViewer } from "../../api/getArticleViewer";
 
-export default function (props: { shouldAddViewer: boolean; id: number }) {
+export default function (props: {
+  shouldAddViewer: boolean;
+  id: number | string;
+}) {
   const [viewer, setViewer] = useState(0);
   const { current } = useRef({ hasInit: false });
   const fetchViewer = useCallback(async () => {

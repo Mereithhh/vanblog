@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { getArticleByIdWithPassword } from "../../api/getArticles";
+import { getArticleByIdOrPathnameWithPassword } from "../../api/getArticles";
 import toast from "react-hot-toast";
 import Loading from "../Loading";
 
 export default function (props: {
-  id: number;
+  id: number | string;
   setLock: (l: boolean) => void;
   setContent: (s: string) => void;
 }) {
@@ -23,7 +23,7 @@ export default function (props: {
   };
   const fetchArticle = async () => {
     try {
-      const res = await getArticleByIdWithPassword(props.id, value);
+      const res = await getArticleByIdOrPathnameWithPassword(props.id, value);
       if (!res) {
         onError("密码错误！请重试！");
         return false;

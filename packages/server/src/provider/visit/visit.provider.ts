@@ -78,7 +78,7 @@ export class VisitProvider {
   async findByDateAndPath(date: string, pathname: string): Promise<Visit> {
     return this.visitModel.findOne({ date, pathname }).exec();
   }
-  async getByArticleId(id: number) {
+  async getByArticleId(id: number | string) {
     const pathname = id == 0 ? `/about` : `/post/${id}`;
     const result = await this.visitModel
       .find({

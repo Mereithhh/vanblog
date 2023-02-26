@@ -1,4 +1,4 @@
-export const getArticleViewer = async (id: number) => {
+export const getArticleViewer = async (id: number | string) => {
   try {
     const url = `/api/public/article/viewer/${id}`;
     const res = await fetch(url);

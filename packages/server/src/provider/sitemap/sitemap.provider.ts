@@ -53,7 +53,7 @@ export class SiteMapProvider {
   async getArticleUrls() {
     const articles = await this.articleProvider.getAll('list', false, false);
     return articles.map((a) => {
-      return `/post/${a.id}`;
+      return `/post/${a.pathname || a.id}`;
     });
   }
   async getCategoryUrls() {

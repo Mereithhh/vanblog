@@ -9,6 +9,7 @@ import { revalidate } from "../utils/loadConfig";
 import Waline from "../components/WaLine";
 import Head from "next/head";
 import { getArticlesKeyWord } from "../utils/keywords";
+import { getArticlePath } from "../utils/getArticlePath";
 export interface IndexPageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
@@ -41,7 +42,7 @@ const Home = (props: IndexPageProps) => {
             customCopyRight={null}
             private={article.private}
             top={article.top || 0}
-            id={article.id}
+            id={getArticlePath(article)}
             key={article.id}
             title={article.title}
             updatedAt={new Date(article.updatedAt)}

@@ -6,6 +6,7 @@ import PageNav from "../../components/PageNav";
 import PostCard from "../../components/PostCard";
 import Waline from "../../components/WaLine";
 import { Article } from "../../types/article";
+import { getArticlePath } from "../../utils/getArticlePath";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPagePagesProps } from "../../utils/getPageProps";
 import { getArticlesKeyWord } from "../../utils/keywords";
@@ -46,7 +47,7 @@ const PagePages = (props: PagePagesProps) => {
             }
             customCopyRight={null}
             top={article.top || 0}
-            id={article.id}
+            id={getArticlePath(article)}
             key={article.id}
             title={article.title}
             updatedAt={new Date(article.updatedAt)}
