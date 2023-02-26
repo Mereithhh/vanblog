@@ -1,5 +1,5 @@
 import { defineUserConfig } from "vuepress";
-import { searchProPlugin } from "vuepress-plugin-search-pro
+import { searchProPlugin } from "vuepress-plugin-search-pro";
 import theme from "./theme.js";
 
 export default defineUserConfig({
@@ -26,9 +26,7 @@ s.parentNode.insertBefore(hm, s);
     ],
   ],
 
-  plugins: [
-    searchProPlugin({ indexContent:true }),
-  ],
+  plugins: [searchProPlugin({ indexContent: true })],
 
   theme,
 });
