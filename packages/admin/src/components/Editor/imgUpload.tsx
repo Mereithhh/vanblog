@@ -6,7 +6,7 @@ export const uploadImg = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
   try {
-    const res = await fetch('/api/admin/img/upload', {
+    const res = await fetch('/api/admin/img/upload?withWaterMark=true', {
       method: 'POST',
       body: formData,
       headers: {

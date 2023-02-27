@@ -15,6 +15,7 @@ import { SearchStaticOption } from 'src/types/setting.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { StaticProvider } from 'src/provider/static/static.provider';
 import { config } from 'src/config';
+import { checkTrue } from 'src/utils/checkTrue';
 
 @ApiTags('img')
 @UseGuards(...AdminGuard)
@@ -23,12 +24,28 @@ export class ImgController {
   constructor(private readonly staticProvider: StaticProvider) {}
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
-  async upload(@UploadedFile() file: any, @Query('favicon') favicon: string) {
+  async upload(
+    @UploadedFile() file: any,
+    @Query('favicon') favicon?: string,
+    @Query('waterMarkText') waterMarkText?: string,
+    @Query('withWaterMark') withWaterMark?: string,
+  ) {
     let isFavicon = false;
     if (favicon && favicon == 'true') {
       isFavicon = true;
     }
-    const res = await this.staticProvider.upload(file, 'img', isFavicon);
+    // 只有这里开启水印，并且设置里也开启水印，才能触发水印，双保险。避免后台某些表单上传图片也触发了水印。
+    const updateConfig = {
+      withWaterMark: checkTrue(withWaterMark),
+      waterMarkText,
+    };
+    const res = await this.staticProvider.upload(
+      file,
+      'img',
+      isFavicon,
+      undefined,
+      updateConfig,
+    );
     return {
       statusCode: 200,
       data: res,

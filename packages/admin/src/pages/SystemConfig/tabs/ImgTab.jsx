@@ -1,4 +1,5 @@
 import StaticForm from '@/components/StaticForm';
+import WatchMarkForm from '@/components/WaterMarkForm';
 import { exportAllImgs, scanImgsOfArticles } from '@/services/van-blog/api';
 import { Alert, Button, Card, message, Modal, Table, Typography } from 'antd';
 import { useState } from 'react';
@@ -8,6 +9,9 @@ export default function () {
   const [exporting, setExporting] = useState(false);
   return (
     <>
+      <Card title="水印设置">
+        <WatchMarkForm />
+      </Card>
       <Card title="存储策略设置">
         <StaticForm />
       </Card>

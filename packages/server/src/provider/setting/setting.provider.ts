@@ -26,10 +26,18 @@ export class SettingProvider {
     private readonly picgoProvider: PicgoProvider,
     private readonly metaProvider: MetaProvider,
   ) {}
-  async getStaticSetting(): Promise<any> {
-    const res = await this.settingModel.findOne({ type: 'static' }).exec();
+  async getStaticSetting(): Promise<Partial<StaticSetting>> {
+    const res = (await this.settingModel
+      .findOne({ type: 'static' })
+      .exec()) as { value: StaticSetting };
     if (res) {
-      return res?.value || { storageType: 'local', picgoConfig: null };
+      return (
+        res?.value || {
+          storageType: 'local',
+          picgoConfig: null,
+          enableWaterMark: false,
+        }
+      );
     }
     return null;
   }

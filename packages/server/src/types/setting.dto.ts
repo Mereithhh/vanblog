@@ -88,4 +88,6 @@ export class StaticSetting {
   storageType: StorageType;
   picgoConfig: any;
   picgoPlugins: string;
+  enableWaterMark: boolean;
+  waterMarkText: string;
 }
