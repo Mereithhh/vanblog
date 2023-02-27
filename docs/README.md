@@ -32,7 +32,7 @@ features:
 
   - title: 内置图床
     icon: pic
-    details: 本地图床，OSS 图床，Github 图床都支持，可一键上传剪切板图片
+    details: 本地图床，OSS 图床，Github 图床都支持，可一键上传剪切板图片，自动添加水印
 
   - title: 高性能
     icon: light
