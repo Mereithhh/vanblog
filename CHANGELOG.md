@@ -1,4 +1,24 @@
 # Changelog
+## [0.48.0](https://github.com/Mereithhh/van-blog/compare/v0.47.0...v0.48.0) (2023-02-27)
+
+
+### ✨ Features | 新功能
+
+* 图片增加水印功能 [#163](https://github.com/Mereithhh/van-blog/issues/163) ([8d6e8f3](https://github.com/Mereithhh/van-blog/commit/8d6e8f3eedf4b0e7c1879361bf5192bb2ef384a9))
+
+
+### ✏️ Documentation | 文档
+
+* 增加关于水印功能的文档 ([2fb2da4](https://github.com/Mereithhh/van-blog/commit/2fb2da44fa1cdfae56cd2995153e41e8396d61bc))
+* 增加备份与迁移文档说明 ([37fcfb9](https://github.com/Mereithhh/van-blog/commit/37fcfb92d98649f1d3abe41e556d4b1c8e95239d))
+* 增加自定义路径相关的文档 ([788bf86](https://github.com/Mereithhh/van-blog/commit/788bf86bd63678b2d52010c1e0f91b184d03d016))
+* 更新文档 ([5bc5ebf](https://github.com/Mereithhh/van-blog/commit/5bc5ebf7ee6a85c38437f73dcbcf3d5d46194ae9))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 图片管理中剪切板上传图片失效&水印距离下面位置调高一点 ([646884d](https://github.com/Mereithhh/van-blog/commit/646884d624169077d1f431f932f08408ab98f11a))
+
 ## [0.47.0](https://github.com/Mereithhh/vanblog/compare/v0.46.0...v0.47.0) (2023-02-26)
 
 
