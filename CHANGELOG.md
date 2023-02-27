@@ -1,4 +1,28 @@
 # Changelog
+## [0.47.0](https://github.com/Mereithhh/vanblog/compare/v0.46.0...v0.47.0) (2023-02-26)
+
+
+### ✨ Features | 新功能
+
+* use search-pro plugin ([d5a2ab4](https://github.com/Mereithhh/vanblog/commit/d5a2ab455146d7592dfd6a7f0b4cd0f4d3984a26))
+* 自定义文章路径 [#159](https://github.com/Mereithhh/vanblog/issues/159) ([14394b5](https://github.com/Mereithhh/vanblog/commit/14394b596d1933069b02dced14d757b3ad1825d8))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* fix typos ([88a30b6](https://github.com/Mereithhh/vanblog/commit/88a30b6effbcbaf6f4f4dc774fc7bc0b4a092722))
+* update lockfile ([c74e339](https://github.com/Mereithhh/vanblog/commit/c74e3393b6490396bab3042b64a6dc91148727d2))
+
+
+### ✏️ Documentation | 文档
+
+* tweaks ([30c5758](https://github.com/Mereithhh/vanblog/commit/30c5758831663eb7d9f8ed81644e86204d46ac46))
+* update docs ([8bae067](https://github.com/Mereithhh/vanblog/commit/8bae0677981ceee6c620071f1ceb6e9be983cef2))
+* 增加关于接口鉴权的描述文字 ([8eda958](https://github.com/Mereithhh/vanblog/commit/8eda9587685c7ff7138311e909858c255c2589e8))
+* 更新文档 ([900890f](https://github.com/Mereithhh/vanblog/commit/900890f5c86a24cdefc7970b951fa1b8beb1ff7c))
+* 更新文档 ([b728912](https://github.com/Mereithhh/vanblog/commit/b728912a9255070a5d057275f5edb4c66f4c9bb2))
+* 更新谁在使用' ([900ca4c](https://github.com/Mereithhh/vanblog/commit/900ca4c481517dda9cd54bd27c22ef806391b3a2))
+
 ## [0.46.0](https://github.com/Mereithhh/vanblog/compare/v0.45.6...v0.46.0) (2023-02-25)
 
 
