@@ -6,7 +6,7 @@ export default sidebar([
     text: "快速上手",
     icon: "creative",
     prefix: "/guide/",
-    children: ["docker", "https", "init", "update", "nginx", "faq"],
+    children: ["docker", "https", "init", "update", "nginx", "faq", "backup"],
   },
   {
     text: "功能",

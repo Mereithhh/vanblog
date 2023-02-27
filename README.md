@@ -91,6 +91,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 >
 > [更新后后台报错||一直加载中](https://vanblog.mereith.com/guide/update.html#%E6%9B%B4%E6%96%B0%E5%90%8E%E5%90%8E%E5%8F%B0%E6%8A%A5%E9%94%99-%E4%B8%80%E7%9B%B4%E5%8A%A0%E8%BD%BD%E4%B8%AD)
 >
+> [备份与迁移](https://vanblog.mereith.com/guide/backup.html)
+>
 > [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
 
 ## 关于更新
