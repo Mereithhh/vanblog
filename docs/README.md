@@ -28,7 +28,7 @@ features:
 
   - title: 客制化
     icon: vscode
-    details: 可添加自定义 HTML、CSS、JS
+    details: 可添加自定义 HTML、CSS、JS，后续将支持主题与插件
 
   - title: 内置图床
     icon: pic
@@ -40,7 +40,7 @@ features:
 
   - title: SEO 友好
     icon: search
-    details: Lighthouse SEO 近满分，支持百度分析和 GA
+    details: Lighthouse SEO 近满分，支持百度分析和 GA，支持自定义文章路径
 
   - title: 可量化
     icon: table

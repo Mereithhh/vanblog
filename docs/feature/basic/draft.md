@@ -82,7 +82,7 @@ title: 草稿管理
 
 具体选项含义可以参考 [文章管理](/feature/basic/article.md)
 
-![](https://pic.mereith.com/img/d44850f1af0ab09269ae8a0d0506093e.clipboard-2022-11-06.png)
+![](https://pic.mereith.com/img/4aadf867768d04fb906085532664c0df.clipboard-2023-02-27.png)
 
 注意的是，草稿发布后会在草稿管理页面消失，而文章管理页面会出现已经发布的草稿。
 
