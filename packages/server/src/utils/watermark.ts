@@ -4,7 +4,7 @@ export const addWaterMarkToIMG = async (
   waterMarkText: string,
 ) => {
   // 水印距离右下角百分比
-  const LOGO_MARGIN_PERCENTAGE = 1 / 100;
+  const LOGO_MARGIN_PERCENTAGE = 5 / 100;
   const logo = await generateWaterMark(waterMarkText);
   const image = await Jimp.read(srcImage);
 

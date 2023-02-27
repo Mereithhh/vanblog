@@ -58,7 +58,9 @@ export default function (props: {}) {
             [true]: '开启',
             [false]: '关闭',
           }}
-          tooltip={'是否开启水印，开启之后上传图片将自动添加水印，无论哪种图床。'}
+          tooltip={
+            '是否开启水印，开启之后上传图片将自动添加水印，无论哪种图床。宽高小于 128px 的图片可能会加不上水印。'
+          }
           rules={[{ required: true, message: '这是必填项' }]}
         ></ProFormSelect>
         <ProFormText

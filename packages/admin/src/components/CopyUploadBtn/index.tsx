@@ -19,7 +19,7 @@ export default function (props: {
     }
     const formData = new FormData();
     formData.append('file', fileObj);
-    fetch('/api/admin/img/upload', {
+    fetch('/api/admin/img/upload?withWaterMark=true', {
       method: 'POST',
       body: formData,
       headers: {
