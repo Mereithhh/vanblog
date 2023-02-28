@@ -7,33 +7,39 @@ order: -3
 
 目前 `VanBlog` 处于快速迭代期，如果后台出现新版本提醒，推荐进行升级。
 
-![](https://pic.mereith.com/img/e314ee92dd1ad9b5b6c0b814b014c247.clipboard-2022-08-22.png)
+![升级提醒](https://pic.mereith.com/img/e314ee92dd1ad9b5b6c0b814b014c247.clipboard-2022-08-22.png)
 
 升级前建议在后台 `站点管理/系统设置/备份恢复` 点击导出全部数据进行备份。
 
-![](https://pic.mereith.com/img/4eba8540c5a7a5ae41885289abf98514.clipboard-2022-08-15.png)
+![备份数据](https://pic.mereith.com/img/4eba8540c5a7a5ae41885289abf98514.clipboard-2022-08-15.png)
 
 ## 一键脚本升级
 
 ::: info VanBlog
+
 使用一键脚本升级的前提是：**部署也是使用的一键脚本**
 
 如果您不是通过一键脚本部署的，可以先在后台手动备份后，改为通过脚本部署。
+
 :::
 
 ```bash
 curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
 ```
 
-![](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
+![使用脚本部署](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
 
 ## 原理
 
 目前暂不支持热升级（后面会有的），需要手动关闭容器，切换新版镜像后重启。
 
-> 原理： 删除原有老版本镜像 -> 下载新版镜像 -> 删除老容器 -> 用新镜像起一个新容器。
->
-> 在这个过程中因为数据已经映射到了本地文件系统，所以删除容器/镜像并不会丢失数据（容器或服务本身是无状态的）
+::: info 原理
+
+流程：删除原有老版本镜像 -> 下载新版镜像 -> 删除老容器 -> 用新镜像起一个新容器。
+
+在这个过程中因为数据已经映射到了本地文件系统，所以删除容器/镜像并不会丢失数据（容器或服务本身是无状态的）
+
+:::
 
 ## 步骤
 
@@ -51,21 +57,29 @@ docker-compose up -d
 
 升级完成~
 
-> 其他部署方式升级步骤类似，如果你实在看不懂，你可以在后台导出数据备份一下（记得单独备份图片），然后删除所有的容器/镜像，按照安装教程重新部署一遍，如果发现数据丢了（不乱改编排的话一般丢不了），再导入数据也行。。。
->
-> 后面有计划会做热升级（在后台点一下按钮自动就升级了），敬请期待。
+::: note
+
+其他部署方式升级步骤类似，如果你实在看不懂，你可以在后台导出数据备份一下（记得单独备份图片），然后删除所有的容器/镜像，按照安装教程重新部署一遍，如果发现数据丢了（不乱改编排的话一般丢不了），再导入数据也行。。。
+
+后面有计划会做热升级（在后台点一下按钮自动就升级了），敬请期待。
+
+:::
 
 ## 自动升级
 
 推荐使用 [watchtower](https://github.com/containrrr/watchtower) 自动监控升级。
 
-> 详情可以参考 [Watchtower - 自动更新 Docker 镜像与容器](https://www.jianshu.com/p/eefbc08d9dc8)
+::: info 详情
+
+可参考 [Watchtower - 自动更新 Docker 镜像与容器](https://www.jianshu.com/p/eefbc08d9dc8)
+
+:::
 
 这里提供一个简单命令，具体是否成功取决于你具体的运行环境，如果你看不懂下面的命令且自动升级无效的话，建议仔细阅读上面的参考文章。
 
 ```bash
-## 首先在家目录下创建 watchtower.list 文件，里面用空格隔开写入需要监控自动更新的容器名
-## 然后运行下面的命令，即可监控新版本并按需升级。
+# 首先在家目录下创建 watchtower.list 文件，里面用空格隔开写入需要监控自动更新的容器名
+# 然后运行下面的命令，即可监控新版本并按需升级。
 docker run -d \
     --name watchtower \
     --restart unless-stopped \
@@ -76,7 +90,7 @@ docker run -d \
 
 ## 更新日志
 
-请前往 [更新日志](/ref/changelog.md)
+请前往 [更新日志](../ref/changelog.md)
 
 ## 升级之后文章都没了
 
@@ -86,11 +100,17 @@ docker run -d \
 
 ## 更新后后台报错&一直加载中
 
-您清空浏览器缓存再重新加载就好了，如果是 `Chrome` 浏览器，您可以按 `F12` 打开开发者工具。在网络选项卡中勾选`停用缓存`，然后再刷新页面即可（刷新时开发者工具窗口不要关），正常后记得取消勾选`停用缓存`。
+您清空浏览器缓存再重新加载就好了。大部分浏览器可以使用 <kbd>Ctrl</kbd> + <kbd>F5</kbd> 强制刷新。
+
+::: details 其他方案
+
+如果是 `Chrome` 浏览器，您可以按 `F12` 打开开发者工具。在网络选项卡中勾选`停用缓存`，然后再刷新页面即可（刷新时开发者工具窗口不要关），正常后记得取消勾选`停用缓存`。
 
 其他浏览器可以自行百度。
 
-![](https://www.mereith.com/static/img/5efb32214a31c1003df5eeba217a5586.clipboard-2022-09-03.png)
+![Chrome 停用缓存](https://www.mereith.com/static/img/5efb32214a31c1003df5eeba217a5586.clipboard-2022-09-03.png)
+
+:::
 
 ## 容器无限重启
 

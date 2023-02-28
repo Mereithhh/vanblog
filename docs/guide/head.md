@@ -20,11 +20,11 @@ order: -1
 
 ## 1. 云服务器
 
-::: info VanBlog
+<!-- ::: info VanBlog
 
 如果不懂什么是云服务器，可以看这篇文章：
 
-:::
+::: -->
 
 ### 要求
 
@@ -44,12 +44,11 @@ order: -1
 
 我一般用腾讯云的（相对便宜 2333）直达链接：
 
-【腾讯云】多款云产品 1 折起，买云服务器送免费机器，最长免费续 3 个月
-https://cloud.tencent.com/act/cps/redirect?redirect=2446&cps_key=a3b2d0c73d758078529ef6f11c73ddde&from=console
+- [【腾讯云】多款云产品 1 折起，买云服务器送免费机器，最长免费续 3 个月](https://cloud.tencent.com/act/cps/redirect?redirect=2446&cps_key=a3b2d0c73d758078529ef6f11c73ddde&from=console)
 
 买最便宜的 72 一年的 2 核 4G4M 的就行。
 
-![](https://pic.mereith.com/img/a7cee9afd60618a5ddee72d1c0916dfa.clipboard-2022-08-26.png)
+![购买内容](https://pic.mereith.com/img/a7cee9afd60618a5ddee72d1c0916dfa.clipboard-2022-08-26.png)
 
 购买之后系统可以选择你熟悉的 `linux` 发行版，如果没有，可以选择 `Ubuntu Server 20.04 LTS 64bit`。
 
@@ -63,7 +62,7 @@ https://cloud.tencent.com/act/cps/redirect?redirect=2446&cps_key=a3b2d0c73d75807
 
 如果找不到，直接在云厂商搜索 `备案`。
 
-![](https://pic.mereith.com/img/7eb6914370aa7f2912ce565894c657d7.clipboard-2022-08-26.png)
+![网站备案](https://pic.mereith.com/img/7eb6914370aa7f2912ce565894c657d7.clipboard-2022-08-26.png)
 
 ## 2. 域名
 

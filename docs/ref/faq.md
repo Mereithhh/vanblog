@@ -7,7 +7,8 @@ icon: question
 
 VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行升级，可能会解决一些问题：
 
-[升级指南](/guide/update.md)
+- [升级指南](../guide/update.md)
+
 :::
 
 ### 部署后无法访问后台

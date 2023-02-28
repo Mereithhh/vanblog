@@ -119,7 +119,7 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持 HTTPS
 
 ## 交流群
 
-- [VanBlog  交流群](https://jq.qq.com/?_wv=1027&k=5NRyK2Sw)
+- [VanBlog 交流群](https://jq.qq.com/?_wv=1027&k=5NRyK2Sw)
 
 ## 打赏
 
