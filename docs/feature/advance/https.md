@@ -8,17 +8,17 @@ order: -3
 
 无论 `HTTPS 自动重定向` 是否开启，都暂不支持通过 `https + ip 地址` 来访问。
 
-需要 ip 访问请用 `http` 协议并关闭 `https 自动重定向`
+需要 IP 访问请用 `http` 协议并关闭 `https 自动重定向`
 
 :::
 
-`VanBlog` 镜像内采用了 `Caddy` 作为反向代理，并支持全自动按需 HTTPS 证书申请配置。
+VanBlog 镜像内采用了 `Caddy` 作为反向代理，并支持全自动按需 HTTPS 证书申请配置。
 
 [Caddy](https://caddyserver.com/) 是一款默认开启并支持自动 `https` 、证书申请续期的 web 服务器
 
 首次运行时默认关闭了 `https 自动重定向` ，请在初始化后进入后台的 `站点管理/系统设置/ HTTPS` 中设置确认 `https` 状态后再按需开启 `https 自动重定向`
 
-![](https://pic.mereith.com/img/d1e7b502279f0bd8225dfaedf89a5140.clipboard-2022-08-23.png)
+![HTTPS 重定向](https://pic.mereith.com/img/d1e7b502279f0bd8225dfaedf89a5140.clipboard-2022-08-23.png)
 
 ## 自动 HTTPS 要求
 
@@ -36,7 +36,7 @@ order: -3
 
 注意的是只有域名可以，通过 `ip` 访问是不会触发自动申请证书的。
 
-![](https://pic.mereith.com/img/8383fb4f32144be26cb134c2390d6d10.clipboard-2022-08-23.png)
+![证书申请](https://pic.mereith.com/img/8383fb4f32144be26cb134c2390d6d10.clipboard-2022-08-23.png)
 
 ## https 自动重定向
 
@@ -48,7 +48,7 @@ order: -3
 
 ## 原理
 
-`VanBlog` 通过 `Caddy` 的 `API` 在运行时动态修改配置来开关 `https` 自动重定向。
+VanBlog 通过 `Caddy` 的 `API` 在运行时动态修改配置来开关 `https` 自动重定向。
 
 全自动按需申请证书可以参考 [on-demand-tls](https://caddyserver.com/docs/automatic-https#on-demand-tls)
 
