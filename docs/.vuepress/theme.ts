@@ -43,6 +43,7 @@ export default hopeTheme({
 
     mdEnhance: {
       align: true,
+      codetabs: true,
       figure: true,
       imgLazyload: true,
       tasklist: true,

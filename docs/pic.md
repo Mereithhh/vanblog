@@ -12,21 +12,21 @@ icon: pic
 
 ### 分析
 
-![](https://pic.mereith.com/img/3614afa8057c2fb0c078c62cad4e89b1.clipboard-2022-09-23.png)
+![数据概览](https://pic.mereith.com/img/3614afa8057c2fb0c078c62cad4e89b1.clipboard-2022-09-23.png)
 
-![admin](./assets/admin-welcome-viewer.png)
+![访客统计](./assets/admin-welcome-viewer.png)
 
-![admin](./assets/admin-welcome-article.png)
+![文章分析](./assets/admin-welcome-article.png)
 
 ### 编辑器
 
-![](https://pic.mereith.com/img/58163d12af78386b710be04572282729.clipboard-2022-08-29.png)
+![编辑器](https://pic.mereith.com/img/58163d12af78386b710be04572282729.clipboard-2022-08-29.png)
 
 ### 设置
 
-![admin](./assets/admin-setting.png)
+![分类管理](./assets/admin-setting.png)
 
-![admin](./assets/admin-setting-site.png)
+![站点配置](./assets/admin-setting-site.png)
 
 ## PC 端
 

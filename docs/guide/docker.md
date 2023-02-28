@@ -12,6 +12,7 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 你也可以先查看 [Demo](https://blog-demo.mereith.com)，账号密码均为 `demo`
 
 目前 VanBlog 还在快速迭代中，如果后台出现升级提示，推荐进行升级。
+
 :::
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
@@ -22,11 +23,11 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 
 理论上 `VanBlog` 不需要很高的配置，实际上演示站不算数据库，资源的占用情况如图：
 
-![](https://www.mereith.com/static/img/bd2a2c983aa92288106652294a892494.clipboard-2022-09-03.png)
+![资源占用](https://www.mereith.com/static/img/bd2a2c983aa92288106652294a892494.clipboard-2022-09-03.png)
 
 不到 `400M` 的内存（有一部分还是静态页面缓存），启动时大概峰值占用处理器一个核心的 `30%`，其余时间基本不占用什么处理器资源。
 
-但比较小的带宽可能会让页面加载变慢（第一次慢，后面的话有缓存加速就会快一些），如果带宽比较小的话可以尝试设置一下 [CDN](/ref/faq.md#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E5%88%B0%20CDN)。
+但比较小的带宽可能会让页面加载变慢（第一次慢，后面的话有缓存加速就会快一些），如果带宽比较小的话可以尝试设置一下 [CDN](../ref/faq.md#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E5%88%B0%20CDN)。
 
 ## 部署方式
 
@@ -38,16 +39,18 @@ VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗
 
 ## 一键脚本部署
 
-::: info VanBlog
 现在可以使用一键脚本来部署 VanBlog 啦！刚开发完试运行中，有问题请及时反馈！
+
+::: tip
 
 只推荐在纯 linux 环境下使用此脚本，宝塔上也可以用，但我没有广泛测过，如有问题请反馈！
 
-群晖部署请参考： [群晖部署教程](/ref/dsm.md)
+群晖部署请参考： [群晖部署教程](../ref/dsm.md)
 
 各位反代的同学，不要管什么 Caddy ，就当他不存在！VanBlog 是一个整体，反代你映射的 http 端口就好了！
 
-需要反代请前往： [反代配置](/guide/nginx.md)
+需要反代请前往： [反代配置](./nginx.md)
+
 :::
 
 输入以下命令即可：
@@ -62,15 +65,15 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ./vanblog.sh
 ```
 
-![](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
+![脚本演示](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
 
-浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
+浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../feature/basic/setting.md)
 
 也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
 
-> 如果你想在外部访问数据库，请参考 [常见问题](/guide/faq.md) 中的 `如何从外部访问数据库`
+> 如果你想在外部访问数据库，请参考 [常见问题](./faq.md) 中的 `如何从外部访问数据库`
 >
-> 如果你想反代请参考 [反代](/guide/nginx.md)
+> 如果你想反代请参考 [反代](./nginx.md)
 
 ## docker-compose 部署
 
@@ -137,7 +140,7 @@ services:
 
 ### 3.启动项目
 
-按注释说明修改`docker-compose.yml`的配置后运行：
+按注释说明修改 `docker-compose.yml` 的配置后运行：
 
 ```bash
 docker-compose up -d
@@ -147,16 +150,18 @@ docker-compose up -d
 
 也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
 
-> 如果你想在外部访问数据库，请参考 [常见问题](/guide/faq.md) 中的 `如何从外部访问数据库`
+> 如果你想在外部访问数据库，请参考 [常见问题](./faq.md) 中的 `如何从外部访问数据库`
 >
-> 如果你想反代请参考 [反代](/guide/nginx.md)
+> 如果你想反代请参考 [反代](./nginx.md)
 
-::: info VanBlog
+::: info HTTPS
+
 首次运行默认是关闭 `https` 的，请通过 `http` 协议访问。初始化后，进入后台确认 https 证书已自动生成后可选择开启 https 自动重定向。
 
 无论 `HTTPS 自动重定向` 是否开启，都暂不支持通过 `https + ip 地址` 来访问。需要 ip 访问请用 `http` 协议并关闭 https 自动重定向。
 
-具体请参考： [HTTPS](/guide/https.md)
+具体请参考： [HTTPS](./https.md)
+
 :::
 
 ## kubernetes
@@ -228,11 +233,11 @@ spec:
 
 ## 宝塔面板部署
 
-请移步 [通过宝塔面板部署 VanBlog](/ref/baota.md)
+请移步 [通过宝塔面板部署 VanBlog](../ref/baota.md)
 
 ## 群晖部署
 
-请移步 [群晖部署 VanBlog](/ref/dsm.md)
+请移步 [群晖部署 VanBlog](../ref/dsm.md)
 
 ## 直接部署
 
@@ -300,7 +305,7 @@ yarn
 
 #### 运行后端
 
-```
+```bash
 # 切换目录
 cd packages/server
 # 安装依赖
@@ -322,7 +327,7 @@ waline:
 
 然后按照自己的方法把下面的命令运行到后台:
 
-```
+```bash
 # 必须在 packages/server 目录下运行
 yarn start
 ```
@@ -351,6 +356,6 @@ caddy start --config ./Caddyfile
 
 #### 完成
 
-浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
+浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../feature/basic/setting.md)
 
 也可以在前台点击右上角管理员按钮即可进入后台初始化页面。

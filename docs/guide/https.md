@@ -23,7 +23,7 @@ order: -3
 
 首次运行时默认关闭了 `https 自动重定向` ，请在初始化后进入后台的 `站点管理/系统设置/ HTTPS` 中设置确认 `https` 状态后再按需开启 `https 自动重定向`
 
-![](https://pic.mereith.com/img/d1e7b502279f0bd8225dfaedf89a5140.clipboard-2022-08-23.png)
+![开启 https 自动重定向](https://pic.mereith.com/img/d1e7b502279f0bd8225dfaedf89a5140.clipboard-2022-08-23.png)
 
 ## 自动 HTTPS 要求
 
@@ -41,13 +41,13 @@ order: -3
 
 注意的是只有域名可以，通过 `ip` 访问是不会触发自动申请证书的。
 
-![](https://pic.mereith.com/img/8383fb4f32144be26cb134c2390d6d10.clipboard-2022-08-23.png)
+![申请证书](https://pic.mereith.com/img/8383fb4f32144be26cb134c2390d6d10.clipboard-2022-08-23.png)
 
 ## https 自动重定向
 
 当你确保可以通过自动申请的证书正常访问的时候，可以选择开启 `https 自动重定向` 功能，开启后所有的 `http` 访问将自动重定向到 `https`。
 
-但是开启后，也不可以通过 `https+ip` 访问本站了，所以一定要确认后再开启。
+但是开启后，也不可以通过 `https + ip` 访问本站了，所以一定要确认后再开启。
 
 这个配置将会保存到数据库，每次容器启动的时候都会初始化到 `Caddy` 中。
 

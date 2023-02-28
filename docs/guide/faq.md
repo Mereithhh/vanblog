@@ -7,7 +7,8 @@ icon: question
 
 VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行升级，可能会解决一些问题：
 
-[升级指南](/guide/update.md)
+- [升级指南](../guide/update.md)
+
 :::
 
 ### 部署后无法访问后台
@@ -44,13 +45,11 @@ PS: 我怀疑宝塔 nginx 本身会在您自定义的配置文件外自动添加
 
 改一下编排里的端口映射到非常用端口就好了。
 
-![](https://pic.mereith.com/img/47a03229d46e9120ad1e7bf1abf4b504.clipboard-2022-09-14.png)
+![端口映射](https://pic.mereith.com/img/47a03229d46e9120ad1e7bf1abf4b504.clipboard-2022-09-14.png)
 
 ### docker 镜像拉取慢
 
-您可以设置一下 docker 镜像加速器：
-
-> [Docker 镜像加速](https://www.runoob.com/docker/docker-mirror-acceleration.html)
+您可以[设置一下 docker 镜像加速器](https://www.runoob.com/docker/docker-mirror-acceleration.html)：
 
 ### 部署后 http error
 
