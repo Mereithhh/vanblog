@@ -58,5 +58,5 @@ features:
     icon: linux
     details: Docker 一键部署，全自动 HTTPS 证书自动申请续期，支持 ARM
 copyright: false
-footer: GPL-2.0 协议 | Copyright © 2022-present Mereith
+footer: GPL-3.0 协议 | Copyright © 2022-present Mereith
 ---
