@@ -3,14 +3,17 @@ title: 开发指南
 icon: vscode
 ---
 
-:::info 提示
-本项目处于初始阶段，如有 bug 请多担待。
+::: info 提示
+
+本项目处于早期开发阶段 (Early WIP)，如有 bug 请多担待。
+
 :::
+
 本项目使用了 `JavaScript` 和 `TypeScript` 实现。
 
 如果你想参与 `VanBlog` 开发，可以进群哦：
 
-- [VanBlog  开发群](https://jq.qq.com/?_wv=1027&k=mf2CguM8)
+- [VanBlog 开发群](https://jq.qq.com/?_wv=1027&k=mf2CguM8)
 
 ## 路径结构
 
@@ -23,10 +26,10 @@ icon: vscode
 ├── LICENSE # 开源协议
 ├── package.json
 ├── packages # 代码主体
- |  ├── admin # 后台前端代码
- |  ├── server # 后端代码
- |  ├── waline # 内嵌 waline 评论系统
- |  └── website # 前台前端代码
+|  ├── admin # 后台前端代码
+|  ├── server # 后端代码
+|  ├── waline # 内嵌 waline 评论系统
+|  └── website # 前台前端代码
 ├── README.md
 └── yarn.lock
 ```
@@ -35,15 +38,11 @@ icon: vscode
 
 只列出大体上框架级别的，一些细节就直接看代码吧。
 
-前台： [next.js](https://nextjs.org/)、[react.js](https://reactjs.org/)、[tailwind-css](https://tailwindcss.com/)
-
-后台： [ant design pro](https://pro.ant.design/zh-CN/)、[ant design](https://ant.design/)
-
-后端： [nest.js](https://nestjs.com/)、[mongoDB](https://www.mongodb.com/)
-
-CI： [docker](https://www.docker.com/)、[nginx](https://www.nginx.com/)、[github-actions](https://docs.github.com/cn/actions)
-
-文档： [vue-press](https://vuepress.vuejs.org/)、[vue-press-hope](https://vuepress-theme-hope.github.io/)
+- 前台： [next.js](https://nextjs.org/)、[react.js](https://reactjs.org/)、[tailwind-css](https://tailwindcss.com/)
+- 后台： [ant design pro](https://pro.ant.design/zh-CN/)、[ant design](https://ant.design/)
+- 后端： [nest.js](https://nestjs.com/)、[mongoDB](https://www.mongodb.com/)
+- CI： [docker](https://www.docker.com/)、[nginx](https://www.nginx.com/)、[github-actions](https://docs.github.com/cn/actions)
+- 文档： [vuepress](https://vuejs.press/zh/)、[vuepress-theme-hope](https://theme-hope.vuejs.press/zh/)
 
 ## 数据库
 
@@ -51,8 +50,7 @@ CI： [docker](https://www.docker.com/)、[nginx](https://www.nginx.com/)、[git
 
 ## 一键开发命令
 
-为了方便（懒），增加了一键开发命令：
-在配置好后端开发的 `yaml` 配置文件后，先安装依赖：
+为了方便（懒），增加了一键开发命令。在配置好后端开发的 `yaml` 配置文件后，先安装依赖：
 
 ```bash
 cd packages/server && yarn && cd ..
@@ -87,7 +85,7 @@ yarn dev
 
 ## 后台开发
 
-采用 `ant deign pro`
+使用 `ant deign pro`
 
 ```bash
 cd packages/admin
@@ -101,7 +99,7 @@ yarn start
 
 ## 后端开发
 
-采用 `nestjs` 框架构建。
+使用 `nestjs` 框架构建。
 
 ```bash
 cd packages/server
@@ -115,7 +113,7 @@ yarn start:dev
 
 默认的数据库是本地的 `mongo`，如果你需要修改，可以在本目录（`packages/server`）下新建`config.yaml`：
 
-```
+```yml
 database:
   url: mongodb://somemongo:27017/vanBlog?authSource=admin
 # 配置静态图床的文件夹
@@ -124,7 +122,6 @@ static:
 waline:
   db: walineDev
 log: /code/github/van-blog/log
-
 ```
 
 ## 文档开发
@@ -137,7 +134,7 @@ yarn docs:dev
 
 ## 镜像构建
 
-根目录直接打包就行。
+直接打包根目录即可。
 
 ### act
 
@@ -163,7 +160,7 @@ docker build --build-arg VAN_BLOG_BUILD_SERVER=$VAN_BLOG_BUILD_SERVER -t mereith
 
 另外有一键脚本可以在发版之后自动拷贝 changelog 并发布：
 
-```
+```bash
 yarn release-doc
 ```
 
