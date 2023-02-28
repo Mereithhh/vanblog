@@ -1,6 +1,9 @@
+import { getDirname, path } from "@vuepress/utils";
 import { hopeTheme } from "vuepress-theme-hope";
 import navbar from "./navbar.js";
 import sidebar from "./sidebar.js";
+
+const __dirname = getDirname(import.meta.url);
 
 export default hopeTheme({
   hostname: "https://vanblog.mereith.com",
@@ -46,6 +49,15 @@ export default hopeTheme({
       codetabs: true,
       figure: true,
       imgLazyload: true,
+      imgSize: true,
+      include: {
+        resolvePath: (filePath, cwd) => {
+          if (filePath.startsWith("@"))
+            return filePath.replace("@", path.resolve(__dirname, "../"));
+
+          return path.resolve(cwd, filePath);
+        },
+      },
       tasklist: true,
     },
   },
