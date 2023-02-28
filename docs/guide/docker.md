@@ -1,8 +1,8 @@
 ---
 icon: linux
 title: 部署
-copyright: false
-order: -1
+
+order: 1
 ---
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
@@ -89,7 +89,7 @@ systemctl enable --now docker
 
 ### 2.新建编排文件
 
-在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件，内容如下：
+在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yaml`文件，内容如下：
 
 ```yml
 version: "3"
@@ -129,7 +129,7 @@ services:
 
 ### 3.启动项目
 
-按注释说明修改 `docker-compose.yml` 的配置后运行：
+按注释说明修改 `docker-compose.yaml` 的配置后运行：
 
 ```bash
 docker-compose up -d

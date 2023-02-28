@@ -1,7 +1,7 @@
 ---
 icon: nginx
 title: 反代
-copyright: false
+
 order: -3
 ---
 

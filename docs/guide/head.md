@@ -1,7 +1,7 @@
 ---
 icon: linux
 title: 从零开始
-copyright: false
+
 order: -1
 ---
 

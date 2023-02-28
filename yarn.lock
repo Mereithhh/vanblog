@@ -8631,6 +8631,18 @@ vuepress-plugin-reading-time2@2.0.0-beta.184:
   dependencies:
     vuepress-shared "2.0.0-beta.184"
 
+vuepress-plugin-redirect@2.0.0-beta.184:
+  version "2.0.0-beta.184"
+  resolved "https://registry.yarnpkg.com/vuepress-plugin-redirect/-/vuepress-plugin-redirect-2.0.0-beta.184.tgz#ee0ca6cb9a94711e9644ef0e7ae3453efe4cbf0b"
+  integrity sha512-E+2gZRcWAV1jsTO3W9tGIJGjSM5R36k8oWvTRuxBwrXi2Oxgem8bgqAkLrjyOlM04f1gxNxVJa1schWZoE6UCQ==
+  dependencies:
+    "@vuepress/cli" "2.0.0-beta.61"
+    "@vuepress/core" "2.0.0-beta.61"
+    "@vuepress/shared" "2.0.0-beta.61"
+    "@vuepress/utils" "2.0.0-beta.61"
+    cac "^6.7.14"
+    vuepress-shared "2.0.0-beta.184"
+
 vuepress-plugin-rtl@2.0.0-beta.184:
   version "2.0.0-beta.184"
   resolved "https://registry.yarnpkg.com/vuepress-plugin-rtl/-/vuepress-plugin-rtl-2.0.0-beta.184.tgz#a7a67a6e87e8509c8d2c36eef477edf71155c12f"

@@ -1,4 +1,4 @@
-脚本执行完毕后，请使用浏览器打开 `http://<你的域名>/admin/init`，并按照指引完成初始化。具体设置项可以参考 [站点配置](/feature/basic/setting.md)。
+部署 VanBlog 后，请使用浏览器打开 `http://<你的域名>/admin/init`，并按照指引完成初始化。具体设置项可以参考 [站点配置](/features/setting.md)。
 
 ::: note
 

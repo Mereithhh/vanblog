@@ -106,11 +106,11 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 ### 我觉得太丑了||可以自定义样式吗？
 
-可以！请参考 [客制化功能](/feature/advance/customizing.md)
+可以！请参考 [客制化功能](../advanced/customizing.md)
 
 ### 自定义页面
 
-现在已经可以自定义页面了！请参考 [自定义页面](/feature/advance/customPage.md)
+现在已经可以自定义页面了！请参考 [自定义页面](../advanced/custom-page.md)
 
 ### 如何安装 docker ?
 
@@ -130,7 +130,7 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 如果你看不懂下面的描述，我建议你先学一下相关的知识。如果不想学的话，建议还是放弃在外部访问数据库的打算，不然安全问题堪忧。
 
-为了安全考虑默认的 docker-compose.yml 编排中的 mongoDB 是仅容器内访问的（换句话说不会对外保留端口）。
+为了安全考虑默认的 docker-compose.yaml 编排中的 mongoDB 是仅容器内访问的（换句话说不会对外保留端口）。
 
 如果你想连接的话，首先需要修改编排中 mongoDB 的账密（对外暴漏端口有安全风险，一定要设置强密码！）
 

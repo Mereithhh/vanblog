@@ -30,5 +30,5 @@ s.parentNode.insertBefore(hm, s);
 
   theme,
 
-  pagePatterns: ["**/*.md", "!*.snippet.md", "!.vuepress", "!node_modules"],
+  pagePatterns: ["**/*.md", "!**/*.snippet.md", "!.vuepress", "!node_modules"],
 });

@@ -1,7 +1,6 @@
 ---
 icon: linux
 title: 备份与迁移
-copyright: false
 ---
 
 想要备份或迁移 VanBlog ，参考如下（方法还有很多，有效即可）。
@@ -29,7 +28,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ## 导入导出功能
 
-VanBlog 后台内置有 [导入导出](../feature/advance/backup.md)功能，可以通过此功能实现备份。但有一些局限：
+VanBlog 后台内置有 [导入导出](../advanced/backup.md)功能，可以通过此功能实现备份。但有一些局限：
 
 - 无法备份内置图床的数据。
 - 无法备份自定义文件夹页面点数据。
