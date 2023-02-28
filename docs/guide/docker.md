@@ -1,8 +1,8 @@
 ---
 icon: linux
 title: 部署
-copyright: false
-order: -1
+
+order: 1
 ---
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
@@ -27,7 +27,7 @@ order: -1
 
 不到 `400M` 的内存（有一部分还是静态页面缓存），启动时大概峰值占用处理器一个核心的 `30%`，其余时间基本不占用什么处理器资源。
 
-但比较小的带宽可能会让页面加载变慢（第一次慢，后面的话有缓存加速就会快一些），如果带宽比较小的话可以尝试设置一下 [CDN](../ref/faq.md#如何部署到-cdn)。
+但比较小的带宽可能会让页面加载变慢（第一次慢，后面的话有缓存加速就会快一些），如果带宽比较小的话可以尝试设置一下 [CDN](../faq/README.md#如何部署到-cdn)。
 
 ## 部署方式
 
@@ -59,8 +59,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 1. 只推荐在纯 Linux 环境下使用此脚本,宝塔面板也可以使用。脚本推出不久，未经过广泛测试，如有问题请反馈！
 1. 群晖部署请参考 [群晖部署教程](../ref/dsm.md)。
-1. 如果你想在外部访问数据库，请参考 [常见问题](./faq.md) 中的 `如何从外部访问数据库`
-1. 反代时只需要反代映射的 HTTP 端口，详见 [反代配置](./nginx.md)。由于 VanBlog 是一个整体，无需考虑内部的 Caddy。
+1. 如果你想在外部访问数据库，请参考 [常见问题](../faq/README.md) 中的 `如何从外部访问数据库`
+1. 反代时只需要反代映射的 HTTP 端口，详见 [反代配置](../ref/reverse-proxy.md)。由于 VanBlog 是一个整体，无需考虑内部的 Caddy。
 
 :::
 
@@ -89,7 +89,7 @@ systemctl enable --now docker
 
 ### 2.新建编排文件
 
-在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件，内容如下：
+在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yaml`文件，内容如下：
 
 ```yml
 version: "3"
@@ -129,7 +129,7 @@ services:
 
 ### 3.启动项目
 
-按注释说明修改 `docker-compose.yml` 的配置后运行：
+按注释说明修改 `docker-compose.yaml` 的配置后运行：
 
 ```bash
 docker-compose up -d

@@ -1,4 +1,5 @@
 import { defineUserConfig } from "vuepress";
+import { redirectPlugin } from "vuepress-plugin-redirect";
 import { searchProPlugin } from "vuepress-plugin-search-pro";
 import theme from "./theme.js";
 
@@ -26,9 +27,9 @@ s.parentNode.insertBefore(hm, s);
     ],
   ],
 
-  plugins: [searchProPlugin({ indexContent: true })],
+  plugins: [searchProPlugin({ indexContent: true }), redirectPlugin()],
 
   theme,
 
-  pagePatterns: ["**/*.md", "!*.snippet.md", "!.vuepress", "!node_modules"],
+  pagePatterns: ["**/*.md", "!**/*.snippet.md", "!.vuepress", "!node_modules"],
 });

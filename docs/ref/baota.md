@@ -17,7 +17,7 @@ VanBlog 现在支持一键脚本部署了。经过测试，宝塔也可以通过
 
 :::
 
-你也可以通过宝塔面板图形化操作部署 `VanBlog`，具体步骤如下：
+你也可以通过宝塔面板图形化操作部署 VanBlog，具体步骤如下：
 
 ## 安装依赖
 
@@ -73,7 +73,7 @@ services:
       - /var/vanblog/data/mongo:/data/db
 ```
 
-所有可用的环境变量请参考 [启动配置](/ref/env.md)
+所有可用的环境变量请参考 [启动配置](./env.md)
 
 ## 启动
 
@@ -87,7 +87,7 @@ services:
 
 等启动完毕后即可！
 
-和普通部署一样，浏览器打开 `http://<你的域名>:8880/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../feature/basic/setting.md)。
+和普通部署一样，浏览器打开 `http://<你的域名>:8880/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../features/setting.md)。
 
 有问题的话可以查看一下容器的日志进行排查。
 
@@ -97,7 +97,7 @@ services:
 
 ![](https://pic.mereith.com/img/47a03229d46e9120ad1e7bf1abf4b504.clipboard-2022-09-14.png)
 
-如果你只部署 `VanBlog` ，并想关闭 Ngnix ，请输入以下命令关闭 Ngnix:
+如果你只部署 VanBlog ，并想关闭 Ngnix ，请输入以下命令关闭 Ngnix:
 
 ```bash
 nginx -s stop
@@ -105,4 +105,4 @@ nginx -s stop
 
 ## 反代
 
-请移步 [反代](../guide/nginx.md)。
+请移步 [反代](./reverse-proxy.md)。

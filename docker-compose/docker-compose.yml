@@ -29,4 +29,3 @@ services:
       TZ: "Asia/Shanghai"
     volumes:
       - ${PWD}/data/mongo:/data/db
-

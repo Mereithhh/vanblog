@@ -1,13 +1,14 @@
 ---
 icon: linux
 title: 从零开始
-copyright: false
-order: -1
+index: false
 ---
+
+<!-- TODO:  -->
 
 ::: info VanBlog
 
-如果你是小白，可以参考本篇文章从头开始部署 `VanBlog`。
+如果你是小白，可以参考本篇文章从头开始部署 VanBlog。
 
 :::
 

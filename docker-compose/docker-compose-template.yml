@@ -29,4 +29,3 @@ services:
       TZ: "Asia/Shanghai"
     volumes:
       - vanblog_data_path/data/mongo:/data/db
-
