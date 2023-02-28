@@ -2,7 +2,7 @@
 	<img src="/img/logo.svg" style="width: 200px"></img>
 </p>
 <p align="center">
-	<strong>VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持 HTTPS 证书全自动按需申请、黑暗模式、移动端自适应和评论，内置流量统计与图床，内嵌评论系统，配有完备的、支持黑暗模式、支持移动端、支持一键上传剪切板图片到图床、带有强大的编辑器的后台管理面板。</strong>
+	<strong>VanBlog 是一款简洁实用优雅的个人博客系统。支持 HTTPS 证书全自动按需申请、黑暗模式、移动端自适应和评论，内置流量统计与图床，内嵌评论系统，配有完备的、支持黑暗模式、支持移动端、支持一键上传剪切板图片到图床、带有强大的编辑器的后台管理面板。</strong>
 </p>
 <p align="center">
   <img src="https://img.shields.io/github/v/release/mereithhh/van-blog?display_name=tag" />
