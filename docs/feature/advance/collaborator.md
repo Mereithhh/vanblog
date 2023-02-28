@@ -4,7 +4,7 @@ title: 协作者
 
 `vanBlog` 支持添加自定义权限的协作者用户。具体在 `站点管理/系统设置/用户设置` 中：
 
-![](https://www.mereith.com/static/img/726f7b197b240a923b8473106d3d1200.clipboard-2022-09-03.png)
+![用户设置](https://www.mereith.com/static/img/726f7b197b240a923b8473106d3d1200.clipboard-2022-09-03.png)
 
 协作者账户默认**只具有以下权限**：
 
@@ -23,11 +23,11 @@ title: 协作者
 - 删除-图片
 - 所有权限
 
-![](https://www.mereith.com/static/img/73ef0844436b7eee71d41b4b0c2033d2.clipboard-2022-09-03.png)
+![权限授予](https://www.mereith.com/static/img/73ef0844436b7eee71d41b4b0c2033d2.clipboard-2022-09-03.png)
 
 除了拥有 `所有权限` 的协作者外，登录后都将看到精简的 UI：
 
-![](https://www.mereith.com/static/img/bbb3252731394960a7b307248a28a107.clipboard-2022-09-03.png)
+![协作模式](https://www.mereith.com/static/img/bbb3252731394960a7b307248a28a107.clipboard-2022-09-03.png)
 
 ### 作者问题
 
