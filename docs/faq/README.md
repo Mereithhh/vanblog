@@ -1,6 +1,9 @@
 ---
 title: FAQ
 icon: question
+redirectFrom:
+  - /guide/faq.html
+  - /ref/faq.html
 ---
 
 ::: info VanBlog
@@ -15,11 +18,11 @@ VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行
 
 可以按照下面的步骤简单排查一下：
 
-0. 检查编排端口映射、配置是否正确。
+1. 检查编排端口映射、配置是否正确。
 1. 浏览容器日志，确认是否成功启动。
-2. 检查访问网址、端口是否正确。
-3. 检查服务器防火墙、云服务厂商防火墙是否放行。
-4. 检查本地服务器能不能访问。用 curl 简单测一下。
+1. 检查访问网址、端口是否正确。
+1. 检查服务器防火墙、云服务厂商防火墙是否放行。
+1. 检查本地服务器能不能访问。用 curl 简单测一下。
 
 ### 后台编辑器主题颜色错乱
 
@@ -39,7 +42,7 @@ VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行
 
 ::: note
 
-我怀疑宝塔 nginx 本身会在您自定义的配置文件外自动添加一些配置，或者是有一些专门为了宝塔面板做的客制化改造，导致了这个问题。
+塔 nginx 本身会在配置文件外自动添加一些配置，或者是有一些专门为了宝塔面板做的客制化改造，导致了这个问题。
 
 :::
 
@@ -87,7 +90,7 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 比如用了 `xyx.com` 这个域名访问访问，那需要设置 `VAN_BLOG_ALLOW_DOMAINS` 为 `xyz.com`，比如用了 `localhost` 访问，那需要设置为 `localhost`，如果多个域名用英文逗号分隔，不支持通配符。
 
-请参考 [启动配置](./env.md#环境变量)
+请参考 [启动配置](../ref/env.md#环境变量)
 
 ### 在编辑器复制后格式错乱
 
@@ -103,7 +106,9 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 ### 如何部署到 CDN
 
-设置 `vanblog` 容器的 `VAN_BLOG_CDN_URL` 这个环境变量后，按部就班增加 CDN 即可。
+在编排文件 `docker-compose.yaml` 中设置 `vanblog` 容器的 `VAN_BLOG_CDN_URL` 这个环境变量后，按部就班增加 CDN 即可。
+
+![image](https://user-images.githubusercontent.com/95157017/204312649-8d02dfd6-bb2a-4646-921c-d59f07221854.png)
 
 原则上 CDN 只缓存 `/_next/static` 这个目录就够了。
 
