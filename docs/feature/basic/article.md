@@ -11,8 +11,6 @@ shortTitle: 文章管理
 
 ![](https://pic.mereith.com/img/acc7dd7093ac0110cdffdb5d11e226df.clipboard-2022-08-15.png)
 
-
-
 ## 创建新文章
 
 你可以点击 `新建文章` 按钮创建新文章，但一般情况下我建议你先创建一个`草稿`，然后再发布这个草稿。**因为由于内置的增量渲染新建的文章会马上展示在前台页面**
@@ -20,7 +18,6 @@ shortTitle: 文章管理
 具体有以下选项：
 
 ![](https://pic.mereith.com/img/c10e25ee028e3a7cd5306940ca146e80.clipboard-2023-02-27.png)
-
 
 点击确定后，则以该表单为数据进行文章创建。
 
@@ -37,7 +34,6 @@ shortTitle: 文章管理
 文章发布后的路径将为 `/post/[自定义路径名]`，如果未设置则使用文章 id 作为路径名。
 
 比如，自定义的路径名设置成 `如何部署vanblog`，发布后可以通过 `/post/如何部署vanblog` 来访问。
-
 
 ### 顶置优先级
 
@@ -65,13 +61,13 @@ shortTitle: 文章管理
 
 选择隐藏后，前台将不会该显示文章的所有信息，该文章也不会计入总字数、标签、分类数量统计或者出现在时间线界面。但后台将正常显示该文章，并可以取消隐藏状态。
 
-## 导入 markdown
+## 导入 Markdown
 
-你可以点击 `导入` 按钮导入 `markdown` 文件来创建文章，暂不支持其他类型的文件。
+你可以点击 `导入` 按钮导入 `Markdown` 文件来创建文章，暂不支持其他类型的文件。
 
 ![](https://pic.mereith.com/img/537490f086ff26ab0b339bd68f7f9016.clipboard-2022-08-29.png)
 
-其中，`markdown` 文件的 [front-matter](https://hexo.bootcss.com/docs/front-matter.html) 将会被自动解析成 `vanblog` 的字段并展示在 弹出的确认表单中，具体而言：
+其中，`Markdown` 文件的 [front-matter](https://hexo.bootcss.com/docs/front-matter.html) 将会被自动解析成 `vanblog` 的字段并展示在 弹出的确认表单中，具体而言：
 
 | 字段名称   | 映射到 vanblog 中的字段 | 说明                                                            |
 | ---------- | ----------------------- | --------------------------------------------------------------- |
@@ -88,7 +84,6 @@ shortTitle: 文章管理
 选择文件后，会弹出确认窗口，您可以在这里继续编辑或修改信息：
 
 ![](https://pic.mereith.com/img/1f0d74ef0ac87dd8f4b6e3e65b84bf84.clipboard-2022-08-29.png)
-
 
 ## 编辑文章
 
@@ -116,7 +111,7 @@ shortTitle: 文章管理
 
 你可以在文章管理页面操作栏下拉菜单中点击`导出`来导出文章，或者通过在编辑器中的导出按钮来导出文章。
 
-导出时会自动映射信息到 `markdown 文件` 的 `front-matter` 中。
+导出时会自动映射信息到 `Markdown 文件` 的 `front-matter` 中。
 
 ## 删除文章
 

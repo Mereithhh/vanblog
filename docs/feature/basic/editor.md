@@ -3,11 +3,11 @@ title: 编辑器
 ---
 
 ::: info 公告
-自 `v0.22.1` 起，`VanBlog` 切换为 [bytemd](https://github.com/bytedance/bytemd)（掘金同款编） 作为 markdown 编辑器。因为老的编辑器有些臃肿，还有些小毛病。
+自 `v0.22.1` 起，`VanBlog` 切换为 [bytemd](https://github.com/bytedance/bytemd)（掘金同款编） 作为 Markdown 编辑器。因为老的编辑器有些臃肿，还有些小毛病。
 
 虽然新的编辑器不支持即时预览模式，但比较稳定简洁，易于拓展。
 :::
-`vanBlog` 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金同款） 作为 `markdown` 编辑器：
+`vanBlog` 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金同款） 作为 `Markdown` 编辑器：
 
 ![](https://www.mereith.com/static/img/e0ce4ddda865c9b7827983a219468599.clipboard-2022-09-06.png)
 
@@ -57,13 +57,13 @@ title: 编辑器
 
 ## 导入内容
 
-点击右上角操作按钮，选择 `导入内容`，选中需要导入的 `markdown` 文件即可。
+点击右上角操作按钮，选择 `导入内容`，选中需要导入的 `Markdown` 文件即可。
 
 ![](https://pic.mereith.com/img/4218768fe6d1c8d69433bde3fd98c01b.clipboard-2022-08-30.png)
 
 ## 导出
 
-点击右上角操作按钮，选择 `导出`，即可导出为 `markdown` 文件，相关数据会自动放置到 `front-matter` 中。
+点击右上角操作按钮，选择 `导出`，即可导出为 `Markdown` 文件，相关数据会自动放置到 `front-matter` 中。
 
 ![](https://www.mereith.com/static/img/52495adf0928d2034159a398cbc7e050.clipboard-2022-09-06.png)
 
@@ -75,7 +75,7 @@ title: 编辑器
 
 ## 语法速查、快捷键与帮助
 
-点击编辑器帮助按钮会显示 markdown 语法与快捷键信息：
+点击编辑器帮助按钮会显示 Markdown 语法与快捷键信息：
 
 ![](https://pic.mereith.com/img/cabe5cdfddeedbd6e592f7aaea2f4afc.clipboard-2022-08-29.png)
 

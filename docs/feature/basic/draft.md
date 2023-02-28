@@ -24,13 +24,13 @@ title: 草稿管理
 
 默认为登录者本人，下拉框内的选择范围包括`所有的协作者的昵称`以及后台站点设置中的`作者名称`。
 
-## 导入 markdown
+## 导入 Markdown
 
-你可以点击 `导入` 按钮导入 `markdown` 文件来创建草稿，暂不支持其他类型的文件。
+你可以点击 `导入` 按钮导入 `Markdown` 文件来创建草稿，暂不支持其他类型的文件。
 
 ![](https://pic.mereith.com/img/513d3fa66a42e3832682d623a0f0f664.clipboard-2022-08-29.png)
 
-其中，`markdown` 文件的 [front-matter](https://hexo.bootcss.com/docs/front-matter.html) 将会被自动解析成 `vanblog` 的字段并展示在 弹出的确认表单中，具体而言：
+其中，`Markdown` 文件的 [front-matter](https://hexo.bootcss.com/docs/front-matter.html) 将会被自动解析成 `vanblog` 的字段并展示在 弹出的确认表单中，具体而言：
 
 | 字段名称   | 映射到 vanblog 中的字段 | 说明                                                            |
 | ---------- | ----------------------- | --------------------------------------------------------------- |
@@ -94,7 +94,7 @@ title: 草稿管理
 
 你可以在草稿管理页面操作栏下拉菜单中点击`导出`来导出草稿，或者通过在编辑器中的导出按钮来导出草稿。
 
-导出时会自动映射信息到 `markdown 文件` 的 `front-matter` 中。
+导出时会自动映射信息到 `Markdown 文件` 的 `front-matter` 中。
 
 ## 自动保存
 
