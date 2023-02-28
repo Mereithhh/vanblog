@@ -11,23 +11,23 @@ icon: router
 
 在 `Docker` 套件中点击 `映像/新增/从 URL 添加`:
 
-![](https://pic.mereith.com/img/37e817403c5f6b3877780b41f99ea2e0.clipboard-2022-08-29.png)
+![添加](https://pic.mereith.com/img/37e817403c5f6b3877780b41f99ea2e0.clipboard-2022-08-29.png)
 
 填入地址为 `mereith/van-blog`：
 
-![](https://pic.mereith.com/img/428cef523d23e2a5d2b19fcb59fb2bf0.clipboard-2022-08-29.png)
+![填写地址](https://pic.mereith.com/img/428cef523d23e2a5d2b19fcb59fb2bf0.clipboard-2022-08-29.png)
 
 标签选择默认的 `latest` 即可：
 
-![](https://pic.mereith.com/img/409c41cbe5ebf9d3be1630965b5a6e46.clipboard-2022-08-29.png)
+![选择标签](https://pic.mereith.com/img/409c41cbe5ebf9d3be1630965b5a6e46.clipboard-2022-08-29.png)
 
 仿照上面的增加 `mongo` 镜像，版本选择 `4.4.9` 的，如图所示（有些机器不支持 AVX，用最新的会报错）：
 
-![](https://pic.mereith.com/img/acd15a0e47c3a28d78a78c9102a7593e.clipboard-2022-09-15.png)
+![添加 mongo 镜像](https://pic.mereith.com/img/acd15a0e47c3a28d78a78c9102a7593e.clipboard-2022-09-15.png)
 
 完成后如图：
 
-![](https://pic.mereith.com/img/94080b16a8305acbd1552ca3b31596bb.clipboard-2022-09-15.png)
+![添加结果](https://pic.mereith.com/img/94080b16a8305acbd1552ca3b31596bb.clipboard-2022-09-15.png)
 
 ### 创建容器
 
@@ -48,7 +48,7 @@ icon: router
 
 完成后启动即可。
 
-### 创建 vanblog 容器
+### 创建 VanBlog 容器
 
 和上面一样，点击 `容器/新建` ，选中刚刚下载的 `mereith/van-blog:latest` 镜像，容器名称为 `vanblog`。
 
@@ -56,13 +56,17 @@ icon: router
 
 ### 环境变量
 
-点击`高级设置/环境`，其他的都可忽略，但下表的环境变量需要设置/新加：
+点击 `高级设置/环境`，其他的都可忽略，但下表的环境变量需要设置/新加：
 
 | 名称  | 值           |
 | ----- | ------------ |
 | EMAIL | 你自己的邮箱 |
 
-> 参考: [vanblog 文档/环境变量配置](/ref/env.md) 中所示设置好环境变量。
+::: info 参考
+
+- 在 [VanBlog 文档/环境变量配置](./env.md) 中所示设置好环境变量。
+
+:::
 
 ### 链接
 
@@ -72,22 +76,22 @@ icon: router
 
 ### 端口映射
 
-然后点击下一步，进行端口映射，群晖不能用默认的 80 端口，所以可以映射成其他端口，比如 8880
+然后点击下一步，进行端口映射，群晖不能用默认的 `80` 端口，所以可以映射成其他端口，比如 `8880`。
 
 ![image.png](https://pic.mereith.com/img/5e6a5d6f07af5455b8fd4f06763cf858.image.png)
 
 ### 存储空间映射
 
-可以参考 [vanblog 文档/环境变量配置](/ref/env.md) 中的目录映射部分进行映射。
+可以参考 [VanBlog 文档/环境变量配置](./env.md) 中的目录映射部分进行映射。
 
 其中图床数据的目录映射推荐做一下，不然重置后可能会让你的博客本地图床图片都失效。
 
-| 容器内目录               | 说明                                                        |
-| ------------------------ | ----------------------------------------------------------- |
-| /app/static              | 图床中数据的存放路径，使用内置图床请务必映射好！            |
-| /var/log                 | 日志的存放路径，包括 access 日志、 Caddy 日志和前台服务日志 |
-| /root/.config/caddy      | caddy 配置存储路径                                          |
-| /root/.local/share/caddy | caddy 证书存储路径                                          |
+| 容器内目录                 | 说明                                                        |
+| -------------------------- | ----------------------------------------------------------- |
+| `/app/static`              | 图床中数据的存放路径，使用内置图床请务必映射好！            |
+| `/var/log`                 | 日志的存放路径，包括 access 日志、 Caddy 日志和前台服务日志 |
+| `/root/.config/caddy`      | caddy 配置存储路径                                          |
+| `/root/.local/share/caddy` | caddy 证书存储路径                                          |
 
 ### 完成
 
@@ -95,7 +99,7 @@ icon: router
 
 ![image.png](https://pic.mereith.com/img/1e75d553be53f7cea173177035f23cd9.image.png)
 
-### 排错
+### 错误排查
 
 如果发生错误，可以在容器日志中查看报错原因。
 
@@ -105,4 +109,8 @@ icon: router
 
 但如果你想在公网访问，我的建议是配置好反代后用最终使用的 URL 来访问进行初始化，否则内置图床上传的图片链接可能会有问题。
 
-> [FAQ](/ref/faq.md)
+::: info FAQ
+
+- [FAQ](./faq.md)
+
+:::
