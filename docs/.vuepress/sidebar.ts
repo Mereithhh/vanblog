@@ -17,14 +17,15 @@ export default sidebar([
   {
     text: "高级",
     icon: "strong",
+    collapsible: true,
     prefix: "/advanced/",
     children: "structure",
   },
   {
     text: "参考",
     icon: "list",
-    prefix: "/ref/",
     collapsible: true,
+    prefix: "/ref/",
     children: "structure",
   },
 ]);
