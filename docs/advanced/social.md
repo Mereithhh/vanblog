@@ -3,7 +3,7 @@ title: 联系方式配置
 redirectFrom: /feature/advance/social.html
 ---
 
-`vanBlog` 支持配置作者卡片中的 `联系方式`。
+VanBlog 支持配置作者卡片中的 `联系方式`。
 
 ![](https://pic.mereith.com/img/55d193df8bc0448f1d8f8e2dcb5624a9.clipboard-2022-08-15.png)
 

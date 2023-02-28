@@ -1,26 +1,25 @@
 ---
 icon: nginx
 title: 反代
-
-order: -3
+redirectFrom: /guide/nginx.html
 ---
 
-:::info 注意
+::: info 注意
 
-VanBlog 内置了 caddy，可以全自动申请 https 证书，如没有其他服务需要共存，是不建议再加一层反代的。
+VanBlog 内置了 caddy，可以全自动申请 https 证书，如没有其他服务需要共存，是不建议再加一层反代的。反代时只需要反代映射的 HTTP 端口，由于 VanBlog 是一个整体，无需考虑内部的 Caddy。你需要：
 
-使用反向代理之前记得要按需修改默认的 80 端口号哦。如果你要反代，请不要开启 `https 自动重定向` (默认是关闭的)
+1. 按需修改默认的 80 端口号
+1. 关闭 `https 自动重定向` (默认是关闭的)
 
-另外很多人会被内置的 Caddy 搞蒙，你完全不用考虑什么 Caddy，你就当它不存在，把整个 VanBlog 当作一个整体，去反代映射出去的 http 端口就好了。
-
-各位反代的同学，不要管什么 Caddy ，就当他不存在！VanBlog 是一个整体，反代你映射的 http 端口就好了！
 :::
+
+## 反代方式
 
 ### nginx-proxy-manager
 
 强烈推荐 [nginx-proxy-manager](https://nginxproxymanager.com/)这个项目！它可以帮你自动管理反代配置，并申请相应的 `https` 证书。
 
-### caddy
+### Caddy
 
 第二推荐的是 [caddy](https://caddyserver.com/)，一个现代的高性能 web 服务器，它也可以自动帮你配置好 `https`
 
@@ -53,13 +52,13 @@ example.com {
 
 :::
 
-### nginx
+### Ngnix
 
-如果你还是想想用 nginx 的话，那好吧。安利一个 nginx 配置在线生成工具： [https://nginxconfig.io/](https://nginxconfig.io/)
+如果你还是想想用 Ngnix 的话，那好吧。安利一个 Ngnix 配置在线生成工具： [https://nginxconfig.io/](https://nginxconfig.io/)
 
 ::: warning 注意
 
-- 宝塔面板用 nginx 反代，如果出现问题，可以去升级一下 nginx 版本，有可能会解决问题。
+- 宝塔面板用 Ngnix 反代，如果出现问题，可以去升级一下 Ngnix 版本，有可能会解决问题。
 - location 下面的配置块只保留下面提供配置的那几行就可以了，不要加奇奇怪怪的语句和请求头（看不懂请忽略）
 
 :::

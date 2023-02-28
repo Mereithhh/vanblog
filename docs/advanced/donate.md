@@ -3,7 +3,7 @@ title: 捐赠管理
 redirectFrom: /feature/advance/donate.html
 ---
 
-`vanBlog` 支持 `捐赠信息` 展示，会展示在关于页面的最下方（前提是至少有一个捐赠条目并在`站点管理/系统设置/站点配置/布局设置`中开启了`显示捐赠信息`的选项）
+VanBlog 支持 `捐赠信息` 展示，会展示在关于页面的最下方（前提是至少有一个捐赠条目并在`站点管理/系统设置/站点配置/布局设置`中开启了`显示捐赠信息`的选项）
 
 ![显示捐赠](https://pic.mereith.com/img/664c4ed0eb81788bae4500a962b88a87.clipboard-2022-08-15.png)
 

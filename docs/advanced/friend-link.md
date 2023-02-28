@@ -3,7 +3,13 @@ title: 友情链接
 redirectFrom: /feature/advance/links.html
 ---
 
-VanBlog 支持 `友情链接` 展示，（前提是在 `站点管理/系统设置/站点配置/布局设置` 中开启了 `显示友情链接` 的选项）
+VanBlog 支持 `友情链接` 展示，
+
+::: tip
+
+你需要在 `站点管理/系统设置/站点配置/布局设置` 中开启 `显示友情链接` 选项。
+
+:::
 
 ![友情链接展示](https://pic.mereith.com/img/8daaa28eeac7e3a3de0e4717026f54ab.clipboard-2022-08-15.png)
 

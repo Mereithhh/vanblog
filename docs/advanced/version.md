@@ -3,7 +3,7 @@ title: 版本提示
 redirectFrom: /feature/advance/version.html
 ---
 
-`vanBlog` 会在前台和后台的最下方展示版本信息。
+VanBlog 会在前台和后台的最下方展示版本信息。
 
 ![](https://pic.mereith.com/img/720d4503f7ca23cfb035061d0927b088.clipboard-2022-08-16.png)
 

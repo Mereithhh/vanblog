@@ -3,7 +3,7 @@ title: 搜索引擎优化
 redirectFrom: /feature/advance/seo.html
 ---
 
-`VanBlog` 内置一些搜索引擎优化策略，开箱即用，无需任何配置。具体有：
+VanBlog 内置一些搜索引擎优化策略，开箱即用，无需任何配置。具体有：
 
 ## 前台均为静态页面
 

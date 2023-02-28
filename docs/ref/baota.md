@@ -105,4 +105,4 @@ nginx -s stop
 
 ## 反代
 
-请移步 [反代](../guide/nginx.md)。
+请移步 [反代](./reverse-proxy.md)。

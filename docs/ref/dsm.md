@@ -50,7 +50,7 @@ icon: router
 
 ### 创建 VanBlog 容器
 
-和上面一样，点击 `容器/新建` ，选中刚刚下载的 `mereith/van-blog:latest` 镜像，容器名称为 `vanblog`。
+和上面一样，点击 `容器/新建` ，选中刚刚下载的 `mereith/van-blog:latest` 镜像，容器名称为 VanBlog。
 
 ![image.png](https://pic.mereith.com/img/6b237de9e368fbcda040c5eaa5aec363.image.png)
 
@@ -70,7 +70,7 @@ icon: router
 
 ### 链接
 
-为了让 `vanblog` 容器内可以访问之前创建的 `mongo` 容器，在 `高级设置/链接` 中添加链接到之前创建的 `mongo` 容器。
+为了让 VanBlog 容器内可以访问之前创建的 `mongo` 容器，在 `高级设置/链接` 中添加链接到之前创建的 `mongo` 容器。
 
 ![image.png](https://pic.mereith.com/img/72794966c5ef678f61273967a2530940.image.png)
 
@@ -111,6 +111,6 @@ icon: router
 
 ::: info FAQ
 
-- [FAQ](./faq.md)
+- [FAQ](../faq/README.md)
 
 :::

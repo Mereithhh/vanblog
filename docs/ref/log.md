@@ -1,9 +1,10 @@
 ---
 title: 日志
 icon: blog
+redirectFrom: /feature/advance/log.html
 ---
 
-`VanBlog` 现在已上线登录日志，可以在后台日志管理中查看。
+VanBlog 现在已上线登录日志，可以在后台日志管理中查看。
 
 ![日志管理](https://pic.mereith.com/img/aeeba490d260f60e57d584837c31ba3b.clipboard-2022-08-23.png)
 

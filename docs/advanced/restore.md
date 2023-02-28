@@ -3,7 +3,7 @@ title: 忘记密码
 redirectFrom: /feature/advance/restore.html
 ---
 
-`VanBlog` 支持忘记密码恢复，在登录页面点击`忘记密码`，输入正确的恢复密钥即可重置超级管理员用户。
+VanBlog 支持忘记密码恢复，在登录页面点击`忘记密码`，输入正确的恢复密钥即可重置超级管理员用户。
 
 ![](https://pic.mereith.com/img/471a81dc548ad543814a6bbf7315ccf1.clipboard-2022-09-20.png)
 
@@ -11,7 +11,7 @@ redirectFrom: /feature/advance/restore.html
 
 ### 1.容器运行日志
 
-您可以在容器运行日志中看到恢复密钥，每次 `VanBlog` 启动或老密钥被使用都会重新生成恢复密钥并打印在运行日志中：
+您可以在容器运行日志中看到恢复密钥，每次 VanBlog 启动或老密钥被使用都会重新生成恢复密钥并打印在运行日志中：
 
 ![](https://pic.mereith.com/img/471a81dc548ad543814a6bbf7315ccf1.clipboard-2022-09-20.png)
 

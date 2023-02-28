@@ -3,42 +3,41 @@ title: 评论
 redirectFrom: /feature/basic/comment.html
 ---
 
-`vanBlog` 内嵌了 [waline 评论系统](https://waline.js.org/)，你不需要任何额外的配置或额外部署，开箱即用。
+VanBlog 内嵌了 [Waline 评论系统](https://waline.js.org/)，你不需要任何额外的配置或额外部署，开箱即用。
 
 评论系统默认开启，在后台 `站点管理/系统设置/站点配置/高级设置` 中可以控制评论系统的开关。
 
-![](https://pic.mereith.com/img/4ab797b4096a953d9d27ebf6a4a2b0dc.clipboard-2022-08-25.png)
+![评论系统开关](https://pic.mereith.com/img/4ab797b4096a953d9d27ebf6a4a2b0dc.clipboard-2022-08-25.png)
 
 ## 配置
 
 您可以在后台 `站点管理/系统设置/评论设置` 中对评论的一些功能进行配置：
 
-![](https://www.mereith.com/static/img/4b0725013bd8cd940995e383ba83e527.clipboard-2022-09-01.png)
+![评论设置](https://www.mereith.com/static/img/4b0725013bd8cd940995e383ba83e527.clipboard-2022-09-01.png)
 
 ## 消息通知
 
 内嵌的评论系统可以通过邮件或者 `webhook` 进行消息通知，具体来说：
 
-- 当有新评论时会根据表单中的`博主邮箱`，对博主进行通知。
+- 当有新评论时会根据表单中的 `博主邮箱`，对博主进行通知。
 - 当某人的评论被回复时，会通过这个人在评论时所写的邮箱进行通知。
 - 通知时的站点名称和站点地址取自 `站点管理/系统设置/站点配置` 。
 
 ### 配置邮件消息通知
 
-::: info 提示
-如果配置好邮件通知不生效的话，请检查一下密码是否正确，很多服务商需要申请独立授权码才行。
-
-如果还是不生效，可以尝试一下重启 vanblog，可能会解决问题。
-
-:::
-
 选择 `启用邮件通知` 后，会出现一些表单，必填项就是开启邮件消息通知所必需的。
 
-和 `SMTP` 有关的四项需要您在自己的邮件服务商处获取，拿 `qq邮箱` 举例，进入后台的设置页面，可以找到下面的内容：
+和 `SMTP` 有关的四项需要您在自己的邮件服务商处获取。
 
-![](https://www.mereith.com/static/img/3a0157c13c7ed53b5f3a7c360f23c61c.clipboard-2022-09-01.png)
+::: details 例子
 
-注意：很多邮件服务商默认是关闭 SMTP 的，比如上图中是默认关闭的，你需要先开启才行！
+以 QQ 邮箱为例，进入后台的设置页面，可以找到下面的内容：
+
+![QQ 邮箱](https://www.mereith.com/static/img/3a0157c13c7ed53b5f3a7c360f23c61c.clipboard-2022-09-01.png)
+
+很多邮件服务商会**默认关闭 SMTP**，你需要先开启才行！
+
+:::
 
 点击官方的帮助文档，可以获取到相应的内容，填入即可。拿我来说，我就这样写的：
 
@@ -52,11 +51,19 @@ redirectFrom: /feature/basic/comment.html
 
 ![](https://www.mereith.com/static/img/ac9a19cc271e76b0b09159884cb54e63.clipboard-2022-09-01.png)
 
+::: tip 提示
+
+如果配置好但邮件通知不生效的话，请检查一下密码是否正确，很多服务商需要申请独立授权码以用作 SMTP 密码。
+
+如果还是不生效，可以尝试一下重启 VanBlog，可能会解决问题。
+
+:::
+
 ### 配置 webhook 消息通知
 
-`VanBlog` 内嵌的评论系统支持在有新评论时发送 `webhook`，配置好 `webhook` 接收地址后，会发送一条 `POST` 请求，具体包含以下请求体（JSON 格式）：
+VanBlog 内嵌的评论系统支持在有新评论时发送 `webhook`，配置好 `webhook` 接收地址后，会发送一条 `POST` 请求，具体包含以下请求体（JSON 格式）：
 
-```
+```json
 {
   "type": "new_comment",
   "data": {
@@ -79,15 +86,13 @@ redirectFrom: /feature/basic/comment.html
 
 ## 自定义环境变量
 
-你也可以传递 JSON 格式的自定义环境变量键值对，具体可配置的选项请参考 waline 文档：
-
-> [服务端配置](https://waline.js.org/reference/server.html)
+你也可以传递 JSON 格式的自定义环境变量键值对，具体可配置的选项请参考 [Waline 文档](https://waline.js.org/reference/server.html)
 
 ## 原理
 
-在后端的 server 中内嵌了控制 `waline.js` 启动停止的服务，后台页面中暂时使用 `iframe` 内嵌 waline 管理页面，后续会考虑陆续替换成自己的评论实现。
+在后端的 server 中内嵌了控制 `waline.js` 启动停止的服务，后台页面中暂时使用 `iframe` 内嵌 Waline 管理页面，后续会考虑陆续替换成自己的评论实现。
 
-![](https://pic.mereith.com/img/dd7792a91f5a3b945ee2b261b06f666a.clipboard-2022-08-25.png)
+![评论管理](https://pic.mereith.com/img/dd7792a91f5a3b945ee2b261b06f666a.clipboard-2022-08-25.png)
 
 配置信息也会由后端的服务生成，传递给 `waline.js` 中，具体采用了 `node` 的 `child_process` 模块。
 
