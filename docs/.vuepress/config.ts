@@ -29,4 +29,6 @@ s.parentNode.insertBefore(hm, s);
   plugins: [searchProPlugin({ indexContent: true })],
 
   theme,
+
+  pagePatterns: ["**/*.md", "!*.snippet.md", "!.vuepress", "!node_modules"],
 });

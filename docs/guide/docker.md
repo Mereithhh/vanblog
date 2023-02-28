@@ -5,61 +5,47 @@ copyright: false
 order: -1
 ---
 
-::: info VanBlog
+欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
 
-VanBlog 是一款简洁实用优雅的高性能个人博客系统。支持黑暗模式、支持移动端自适应和评论、内置流量统计与图床，配有完备的、支持黑暗模式、支持移动端、支持一键上传剪切板图片到图床、带有强大的编辑器的后台管理面板。
+<!-- more -->
 
-你也可以先查看 [Demo](https://blog-demo.mereith.com)，账号密码均为 `demo`
+::: tip
 
 目前 VanBlog 还在快速迭代中，如果后台出现升级提示，推荐进行升级。
 
 :::
 
-欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
+## 介绍
 
-你也可以先查看 [Demo](https://blog-demo.mereith.com)，账号密码均为 `demo`
+@include(@/info.snippet.md)
 
 ## 配置要求
 
-理论上 `VanBlog` 不需要很高的配置，实际上演示站不算数据库，资源的占用情况如图：
+理论上 VanBlog 不需要很高的配置，实际上演示站不算数据库，资源的占用情况如图：
 
 ![资源占用](https://www.mereith.com/static/img/bd2a2c983aa92288106652294a892494.clipboard-2022-09-03.png)
 
 不到 `400M` 的内存（有一部分还是静态页面缓存），启动时大概峰值占用处理器一个核心的 `30%`，其余时间基本不占用什么处理器资源。
 
-但比较小的带宽可能会让页面加载变慢（第一次慢，后面的话有缓存加速就会快一些），如果带宽比较小的话可以尝试设置一下 [CDN](../ref/faq.md#%E5%A6%82%E4%BD%95%E9%83%A8%E7%BD%B2%E5%88%B0%20CDN)。
+但比较小的带宽可能会让页面加载变慢（第一次慢，后面的话有缓存加速就会快一些），如果带宽比较小的话可以尝试设置一下 [CDN](../ref/faq.md#如何部署到-cdn)。
 
 ## 部署方式
 
 - [脚本部署](#一键脚本部署)
 - [docker-compose 部署](#docker-compose-部署)
 - [直接部署](#直接部署)
-- [宝塔面板部署](/ref/baota.md)
-- [群晖部署](/ref/dsm.md)
+- [宝塔面板部署](../ref/baota.md)
+- [群晖部署](../ref/dsm.md)
 
 ## 一键脚本部署
-
-现在可以使用一键脚本来部署 VanBlog 啦！刚开发完试运行中，有问题请及时反馈！
-
-::: tip
-
-只推荐在纯 linux 环境下使用此脚本，宝塔上也可以用，但我没有广泛测过，如有问题请反馈！
-
-群晖部署请参考： [群晖部署教程](../ref/dsm.md)
-
-各位反代的同学，不要管什么 Caddy ，就当他不存在！VanBlog 是一个整体，反代你映射的 http 端口就好了！
-
-需要反代请前往： [反代配置](./nginx.md)
-
-:::
-
-输入以下命令即可：
 
 ```bash
 curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
 ```
 
-将来如果需要再次运行脚本，可以运行：
+你可以使用上方命令通过脚本一键部署 VanBlog。
+
+如果未来需要再次运行脚本，可直接运行：
 
 ```bash
 ./vanblog.sh
@@ -67,13 +53,16 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ![脚本演示](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
 
-浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../feature/basic/setting.md)
+@include(./init.snippet.md)
 
-也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
+::: tip
 
-> 如果你想在外部访问数据库，请参考 [常见问题](./faq.md) 中的 `如何从外部访问数据库`
->
-> 如果你想反代请参考 [反代](./nginx.md)
+1. 只推荐在纯 Linux 环境下使用此脚本,宝塔面板也可以使用。脚本推出不久，未经过广泛测试，如有问题请反馈！
+1. 群晖部署请参考 [群晖部署教程](../ref/dsm.md)。
+1. 如果你想在外部访问数据库，请参考 [常见问题](./faq.md) 中的 `如何从外部访问数据库`
+1. 反代时只需要反代映射的 HTTP 端口，详见 [反代配置](./nginx.md)。由于 VanBlog 是一个整体，无需考虑内部的 Caddy。
+
+:::
 
 ## docker-compose 部署
 
@@ -86,23 +75,23 @@ curl -sSL https://get.daocloud.io/docker | sh
 systemctl enable --now docker
 ```
 
-如果你没有接触过 `docker`，但是想了解一下，可以看下面的教程：
+::: tip
 
-> [Docker 入门教程](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)
+如果你没有接触过 `docker`，可以查看 [Docker 入门教程](https://www.ruanyifeng.com/blog/2018/02/docker-tutorial.html)。
 
-**只需要安装 `docker` 和 `docker-compose` 就可以了，不需要手动安装 `mongoDB`**，因为编排中已经包含了数据库（数据库是通过 docker 容器化运行的，不需要手动安装）。
+:::
+
+::: warning 环境要求
+
+只需安装 **`docker` 和 `docker-compose`** 即可，**不需要手动安装 `mongoDB`**，因为编排中已经包含了数据库（数据库是通过 docker 容器化运行的，不需要手动安装）。
+
+:::
 
 ### 2.新建编排文件
 
-:::info 温馨提示
-各位需要反代的同学，不要管什么 Caddy ，就当他不存在！VanBlog 是一个整体，反代你映射的 80 端口就好了！
-
-部署后如需要反代请前往： [反代配置](/guide/nginx.md)
-:::
-
 在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yml`文件，内容如下：
 
-```yaml
+```yml
 version: "3"
 
 services:
@@ -146,29 +135,13 @@ services:
 docker-compose up -d
 ```
 
-浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](/feature/basic/setting.md)
-
-也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
-
-> 如果你想在外部访问数据库，请参考 [常见问题](./faq.md) 中的 `如何从外部访问数据库`
->
-> 如果你想反代请参考 [反代](./nginx.md)
-
-::: info HTTPS
-
-首次运行默认是关闭 `https` 的，请通过 `http` 协议访问。初始化后，进入后台确认 https 证书已自动生成后可选择开启 https 自动重定向。
-
-无论 `HTTPS 自动重定向` 是否开启，都暂不支持通过 `https + ip 地址` 来访问。需要 ip 访问请用 `http` 协议并关闭 https 自动重定向。
-
-具体请参考： [HTTPS](./https.md)
-
-:::
+@include(./init.snippet.md)
 
 ## kubernetes
 
-什么？你想用 `kubernetes`，当然没问题。
+以下是一个 `deployment` 的参考：
 
-给你一个 `deployment`的参考：
+::: details
 
 ```yaml
 kind: Deployment
@@ -231,33 +204,33 @@ spec:
           imagePullPolicy: Always
 ```
 
+:::
+
 ## 宝塔面板部署
 
-请移步 [通过宝塔面板部署 VanBlog](../ref/baota.md)
+详见 [通过宝塔面板部署 VanBlog](../ref/baota.md)
 
 ## 群晖部署
 
-请移步 [群晖部署 VanBlog](../ref/dsm.md)
+详见 [群晖部署 VanBlog](../ref/dsm.md)
 
 ## 直接部署
 
-::: warning 须知
+::: tip 容器化的优点
 
-`VanBlog` 内部由很多微服务组成，直接部署到裸机环境可能会由于硬件、系统版本不同、软件不同而出现很多意料之外的问题，容器化可以提供很好的隔离环境，避免因这些差异导致的问题。
+VanBlog 的定位是简洁实用的，尽可能的减少复杂的配置。
 
-容器的话，基本上没什么学习成本，和一键部署也没区别了，迁移和升级都非常方便。
+VanBlog 内部由很多微服务组成，直接部署到裸机环境可能会由于硬件、系统版本不同、软件不同而出现很多意料之外的问题，容器化可以提供很好的隔离环境，避免因这些差异导致的问题。
 
-实际上，第一版方案是至少由 3 个微服务组成的分体式部署。后来才打包成了一个镜像。
+使用容器部署 VanBlog 学习成本小，迁移和升级都非常方便，与一键部署近乎没区别。（容器化真的是很好的技术，我很推荐大家都去学习一下）
 
-`VanBlog` 的定位是简洁实用的，尽可能的减少复杂的配置。
+:::
 
-裸机部署需要的`知识储备`的`可能遇到的坑`（不同的 node 版本、端口被占用、不同的系统、部署路径的影响等等）可能远大于简单的学习 `docker-compose up -d` 这一个指令。
+::: warning 自行部署须知
 
-（容器化真的是很好的技术，我很推荐大家都去学习一下）
+裸机部署需要的知识储备以及常见问题（不同的 node 版本、端口被占用、不同的系统、部署路径的影响等等）可能远大于简单的学习 `docker-compose up -d` 这一个指令。
 
-裸机部署需要的时间远远大于您起一个容器的时间，如果您执意要裸机部署，请继续往下看。
-
-裸机部署遇到的问题，请自行百度。
+裸机部署需要的时间远远大于你起一个容器的时间，如果你执意要裸机部署，请继续往下看。裸机部署遇到的问题，请自行百度。
 
 :::
 
@@ -274,18 +247,19 @@ spec:
 
 ### 步骤
 
-#### 下载代码
+#### 克隆项目
 
 ```bash
-# 假设你满足上面所有的条件
-# 下载源码
+# 克隆项目
 git clone https://github.com/Mereithhh/van-blog
+# 切换到项目目录
+cd van-blog
 ```
 
 #### 构建并运行前台
 
 ```bash
-# 切换目录
+# 切换到网站项目
 cd packages/website
 # 安装依赖
 yarn
@@ -296,7 +270,7 @@ yarn start -p 3001
 
 ```
 
-#### 安装内嵌 waline 依赖
+#### 安装内嵌 Waline 依赖
 
 ```bash
 cd packages/waline
@@ -354,8 +328,6 @@ sed "s/VAN_BLOG_EMAIL/<YOUR_EMAIL>/g" CaddyfileTemplateLocal > Caddyfile
 caddy start --config ./Caddyfile
 ```
 
-#### 完成
+#### 初始化
 
-浏览器打开 `http://<你的域名>/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../feature/basic/setting.md)
-
-也可以在前台点击右上角管理员按钮即可进入后台初始化页面。
+@include(./init.snippet.md)
