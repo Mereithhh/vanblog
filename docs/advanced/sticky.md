@@ -1,5 +1,6 @@
 ---
 title: 置顶
+icon: circle-arrow-up
 redirectFrom: /feature/advance/top.html
 ---
 

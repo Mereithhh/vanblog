@@ -1,5 +1,6 @@
 ---
 title: 搜索引擎优化
+icon: dumbbell
 redirectFrom: /feature/advance/seo.html
 ---
 

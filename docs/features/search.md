@@ -1,20 +1,29 @@
 ---
 title: 文章搜索
+icon: search
+order: 10
 redirectFrom: /feature/advance/search.html
 ---
 
-VanBlog 支持对文章进行搜索
+VanBlog 支持对文章进行搜索。
 
-## 前台搜索
+<!-- more -->
 
-可以点击页面导航栏右面的搜索图标或者使用快捷键 `ctrl(commend)+k`，打开搜索卡片。
+## 博客搜索
 
-按快捷键 `esc` 即可关闭搜索卡片。
+VanBlog 会在导航栏右侧显示搜索图标，你可以点击图标或使用快捷键 <kbd>Ctrl</kbd> + <kbd>K</kbd> 打开搜索框。
+
+VanBlog 会通过你输入的关键词模糊匹配文章的内容、题目、标签、分类。
 
 ![搜索](https://pic.mereith.com/img/a6ea194aef7720593443227dc1acf347.clipboard-2022-08-16.png)
 
-搜索会通过输入的关键词模糊匹配文章的内容、题目、标签、分类。目前不支持拼音搜索。
+::: tip
 
-## 后台搜索
+- 按下 <kbd>Esc</kbd> 可关闭搜索卡片
+- 不支持拼音搜索
 
-直接进入 `文章管理` 页面即可。具体可参考 [文章管理](./article.md)
+:::
+
+## 管理后台搜索
+
+你可以在 `文章管理` 页面从多个维度搜索文章，详见 [文章管理](./article.md)。

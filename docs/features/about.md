@@ -1,5 +1,6 @@
 ---
 title: 关于页面
+icon: circle-info
 order: -2
 redirectFrom: /feature/basic/about.html
 ---

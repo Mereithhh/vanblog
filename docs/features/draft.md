@@ -1,10 +1,11 @@
 ---
 title: 草稿管理
+icon: feather
 order: 2
 redirectFrom: /feature/basic/draft.html
 ---
 
-与 [文章管理](./article.md) 类似，你可以在在草稿管理页面下对草稿进行管理
+与 [文章管理](./article.md) 类似，你可以在在草稿管理页面下对草稿进行管理。
 
 ![草稿管理](https://pic.mereith.com/img/0f7f16346a52a69190fa11d08e92beb2.clipboard-2022-08-30.png)
 
@@ -42,9 +43,9 @@ redirectFrom: /feature/basic/draft.html
 
 - 分类
 
-  选择分类前需要创建分类，具体请参考[分类管理](./category.md)
+  选择分类前需要创建分类，具体请参考[分类管理](./tag.md#分类管理)
 
-## 导入 Markdown
+## 导入草稿
 
 你可以点击 `导入` 按钮导入 Markdown 文件来创建草稿，暂不支持其他类型的文件。
 

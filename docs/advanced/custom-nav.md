@@ -1,5 +1,6 @@
 ---
 title: 自定义导航栏
+icon: window-maximize
 redirectFrom: /feature/advance/customNav.html
 ---
 

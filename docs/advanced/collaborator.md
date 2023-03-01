@@ -1,5 +1,6 @@
 ---
 title: 协作者
+icon: users
 redirectFrom: /feature/advance/collaborator.html
 ---
 

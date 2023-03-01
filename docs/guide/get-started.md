@@ -1,8 +1,8 @@
 ---
-icon: linux
-title: 部署
-
+title: 快速上手
+icon: lightbulb
 order: 1
+redirectFrom: /guide/docker.html
 ---
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
@@ -34,8 +34,8 @@ order: 1
 - [脚本部署](#一键脚本部署)
 - [docker-compose 部署](#docker-compose-部署)
 - [直接部署](#直接部署)
-- [宝塔面板部署](../ref/baota.md)
-- [群晖部署](../ref/dsm.md)
+- [宝塔面板部署](../reference/bt-panel.md)
+- [群晖部署](../reference/dsm.md)
 
 ## 一键脚本部署
 
@@ -58,9 +58,9 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ::: tip
 
 1. 只推荐在纯 Linux 环境下使用此脚本,宝塔面板也可以使用。脚本推出不久，未经过广泛测试，如有问题请反馈！
-1. 群晖部署请参考 [群晖部署教程](../ref/dsm.md)。
+1. 群晖部署请参考 [群晖部署教程](../reference/dsm.md)。
 1. 如果你想在外部访问数据库，请参考 [常见问题](../faq/README.md) 中的 `如何从外部访问数据库`
-1. 反代时只需要反代映射的 HTTP 端口，详见 [反代配置](../ref/reverse-proxy.md)。由于 VanBlog 是一个整体，无需考虑内部的 Caddy。
+1. 反代时只需要反代映射的 HTTP 端口，详见 [反代配置](../reference/reverse-proxy.md)。由于 VanBlog 是一个整体，无需考虑内部的 Caddy。
 
 :::
 
@@ -107,9 +107,9 @@ services:
       - ${PWD}/data/static:/app/static
       # 日志文件
       - ${PWD}/log:/var/log
-      # caddy 配置存储
+      # Caddy 配置存储
       - ${PWD}/caddy/config:/root/.config/caddy
-      # caddy 证书存储
+      # Caddy 证书存储
       - ${PWD}/caddy/data:/root/.local/share/caddy
     ports:
       # 前面的是映射到宿主机的端口号，改端口的话改前面的。
@@ -125,7 +125,7 @@ services:
       - ${PWD}/data/mongo:/data/db
 ```
 
-> 所有可用的环境变量请参考 [启动配置](/ref/env.md)
+> 所有可用的环境变量请参考 [启动配置](/reference/env.md)
 
 ### 3.启动项目
 
@@ -208,11 +208,11 @@ spec:
 
 ## 宝塔面板部署
 
-详见 [通过宝塔面板部署 VanBlog](../ref/baota.md)
+详见 [通过宝塔面板部署 VanBlog](../reference/bt-panel.md)
 
 ## 群晖部署
 
-详见 [群晖部署 VanBlog](../ref/dsm.md)
+详见 [群晖部署 VanBlog](../reference/dsm.md)
 
 ## 直接部署
 

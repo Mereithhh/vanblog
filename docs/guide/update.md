@@ -1,8 +1,8 @@
 ---
-icon: update
 title: 升级
-
+icon: cloud-arrow-up
 order: -3
+redirectFrom: /feature/advance/version.html
 ---
 
 ## 升级提示
@@ -29,7 +29,7 @@ order: -3
 
 使用一键脚本升级的前提是：**部署也是使用的一键脚本**
 
-如果您不是通过一键脚本部署的，可以先在后台手动备份后，改为通过 [脚本部署](./docker.md#一键脚本部署)。
+如果您不是通过一键脚本部署的，可以先在后台手动备份后，改为通过 [脚本部署](./get-started.md#一键脚本部署)。
 
 目前暂不支持热升级（后面会有的），需要手动关闭容器，切换新版镜像后重启。
 
@@ -96,6 +96,16 @@ Watchtower 使用可参考 [Watchtower - 自动更新 Docker 镜像与容器](ht
 
 ## 更多
 
+::: info 当前版本查看
+
+VanBlog 会在前台和后台的最下方展示版本信息。
+
+![前台版本信息](https://pic.mereith.com/img/720d4503f7ca23cfb035061d0927b088.clipboard-2022-08-16.png)
+
+![后台版本信息](https://pic.mereith.com/img/0f97b214de4965f69db68b935d993f07.clipboard-2022-08-16.png)
+
+:::
+
 ::: tip 如何回滚
 
 您可以通过指定镜像的版本号来实现，比如您想回滚到 `v0.29.0`，那您可以修改编排中的：
@@ -113,12 +123,6 @@ docker-compose down -v && docker-compose up -d
 流程：删除原有老版本镜像 -> 下载新版镜像 -> 删除老容器 -> 用新镜像起一个新容器。
 
 在这个过程中因为数据已经映射到了本地文件系统，所以删除容器/镜像并不会丢失数据（容器或服务本身是无状态的）。
-
-:::
-
-::: info 更新日志
-
-请前往 [更新日志](../ref/changelog.md)
 
 :::
 

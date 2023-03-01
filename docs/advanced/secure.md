@@ -1,5 +1,6 @@
 ---
 title: 登录安全策略
+icon: key
 redirectFrom: /feature/advance/secure.html
 ---
 

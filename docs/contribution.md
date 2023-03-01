@@ -1,6 +1,8 @@
 ---
 title: 开发指南
-icon: vscode
+icon: signs-post
+order: 7
+redirectFrom: /ref/dev.html
 ---
 
 ::: info 提示

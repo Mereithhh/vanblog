@@ -1,6 +1,6 @@
 ---
 title: 日志
-icon: blog
+icon: file-lines
 redirectFrom: /feature/advance/log.html
 ---
 

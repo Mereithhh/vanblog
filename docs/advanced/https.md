@@ -1,6 +1,6 @@
 ---
-icon: selection
 title: HTTPS
+icon: certificate
 order: -3
 redirectFrom:
   - /guide/https.html

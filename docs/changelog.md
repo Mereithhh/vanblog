@@ -1,6 +1,8 @@
 ---
 title: 更新日志
-icon: update
+icon: clock
+order: 8
+redirectFrom: /ref/changelog.html
 ---
 
 ## [0.48.0](https://github.com/Mereithhh/van-blog/compare/v0.47.0...v0.48.0) (2023-02-27)
@@ -166,7 +168,7 @@ icon: update
 - isr 默认按需更新，非按需时特定情况强制渲染 ([0e8539c](https://github.com/Mereithhh/van-blog/commit/0e8539cf44cc7c1a37624d293063bfe2eed44ee3))
 - 分类加密 ([374e6ef](https://github.com/Mereithhh/van-blog/commit/374e6efac60786d5d2ec767277b15662e92658e4))
 - 基于文件管理的自定义页面功能 ([eae6a8b](https://github.com/Mereithhh/van-blog/commit/eae6a8b88e7dd6fd1fe0c2e42fff201b309a47d6))
-- 客制化可自定义 head 下标签，会跟随前台进行静态页面生成，可用于验证网站所有权 ([041eea4](https://github.com/Mereithhh/van-blog/commit/041eea47abb90405486f6f95014c88c867ec3c6e))
+- 定制化可自定义 head 下标签，会跟随前台进行静态页面生成，可用于验证网站所有权 ([041eea4](https://github.com/Mereithhh/van-blog/commit/041eea47abb90405486f6f95014c88c867ec3c6e))
 - 新增静态资源更新策略配置，默认采用 nextjs 自动模式以节约资源 ([5fe6898](https://github.com/Mereithhh/van-blog/commit/5fe68982a102ee840dc2eb877adfb748e610d529))
 - 更新内置 picgo-core 到 1.5.0 ([e587a4e](https://github.com/Mereithhh/van-blog/commit/e587a4ef5643440c6402a024d376b49882820eac))
 - 更新内置 waline 到 1.26.0 ([c28ec1f](https://github.com/Mereithhh/van-blog/commit/c28ec1f2d03c738023f3e8b7fd9d7612e123370c))
@@ -410,7 +412,7 @@ icon: update
 - 更新文档 ([7297bbc](https://github.com/Mereithhh/van-blog/commit/7297bbce2d2b0e40a1370396e20461ee9c6ada3c))
 - 更新文档 ([35199c9](https://github.com/Mereithhh/van-blog/commit/35199c9562b59ab246c78ee719bed668c6fe4625))
 - 更新文档 ([edc519f](https://github.com/Mereithhh/van-blog/commit/edc519f4ef454194548d6302dbff28055f405b30))
-- 补充文档关于 caddy 的描述 ([9cc7e70](https://github.com/Mereithhh/van-blog/commit/9cc7e70fbafa3770b974db4d63c58d6d5adc4f9d))
+- 补充文档关于 Caddy 的描述 ([9cc7e70](https://github.com/Mereithhh/van-blog/commit/9cc7e70fbafa3770b974db4d63c58d6d5adc4f9d))
 
 ### 🐛 Bug Fixes | Bug 修复
 
@@ -845,7 +847,7 @@ icon: update
 
 ### 🐛 Bug Fixes | Bug 修复
 
-- 后台客制化页面帮助文档指向错误 ([b3ce96e](https://github.com/Mereithhh/van-blog/commit/b3ce96e0819f80ff37f604ace1cb2c0ab736b80b))
+- 后台定制化页面帮助文档指向错误 ([b3ce96e](https://github.com/Mereithhh/van-blog/commit/b3ce96e0819f80ff37f604ace1cb2c0ab736b80b))
 
 ### [0.29.1](https://github.com/Mereithhh/van-blog/compare/v0.29.0...v0.29.1) (2022-09-02)
 
@@ -862,7 +864,7 @@ icon: update
 ### ✨ Features | 新功能
 
 - 后台和 server 的自定义 CSS、HTML、Script 框架搭建 ([279f018](https://github.com/Mereithhh/van-blog/commit/279f0182251c1ecb7209cafc9f0f5251dfd99b9a))
-- 完善客制化功能（可自定义 HTML、CSS、Script） ([889533f](https://github.com/Mereithhh/van-blog/commit/889533f0876cd38633969a8a9f0dd9b9f0a6a61b))
+- 完善定制化功能（可自定义 HTML、CSS、Script） ([889533f](https://github.com/Mereithhh/van-blog/commit/889533f0876cd38633969a8a9f0dd9b9f0a6a61b))
 
 ### ✏️ Documentation | 文档
 

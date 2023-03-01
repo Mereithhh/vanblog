@@ -1,7 +1,6 @@
 ---
-icon: module
 title: 初始化
-
+icon: rotate
 order: 2
 ---
 

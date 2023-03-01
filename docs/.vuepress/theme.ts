@@ -1,7 +1,5 @@
 import { getDirname, path } from "@vuepress/utils";
 import { hopeTheme } from "vuepress-theme-hope";
-import navbar from "./navbar.js";
-import sidebar from "./sidebar.js";
 
 const __dirname = getDirname(import.meta.url);
 
@@ -17,17 +15,31 @@ export default hopeTheme({
   },
 
   darkmode: "switch",
-  iconAssets: "iconfont",
+  iconAssets: "fontawesome-with-brands",
 
   logo: "/logo.svg",
 
   repo: "mereithhh/van-blog",
 
   // navbar
-  navbar: navbar,
+  navbar: [
+    { text: "介绍", icon: "circle-info", link: "/intro" },
+    { text: "快速上手", icon: "lightbulb", link: "/guide/get-started" },
+    { text: "功能", icon: "star", link: "/features/" },
+    { text: "常见问题", icon: "circle-question", link: "/faq/" },
+    {
+      text: "Demo",
+      icon: "laptop-code",
+      link: "https://blog-demo.mereith.com",
+    },
+    {
+      text: "交流群",
+      icon: "fab fa-qq",
+      link: "https://jq.qq.com/?_wv=1027&k=5NRyK2Sw",
+    },
+  ],
 
-  // sidebar
-  sidebar: sidebar,
+  sidebar: "structure",
 
   footer: "GPL-3.0 协议",
 

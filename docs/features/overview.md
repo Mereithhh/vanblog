@@ -1,5 +1,7 @@
 ---
 title: 分析看板
+icon: chart-simple
+order: 9
 redirectFrom: /feature/basic/overview.html
 ---
 

@@ -1,5 +1,7 @@
 ---
 title: 评论
+icon: comments
+order: 4
 redirectFrom: /feature/basic/comment.html
 ---
 

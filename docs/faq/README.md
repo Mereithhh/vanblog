@@ -1,6 +1,8 @@
 ---
 title: FAQ
-icon: question
+icon: circle-question
+dir:
+  order: 6
 redirectFrom:
   - /guide/faq.html
   - /ref/faq.html
@@ -42,7 +44,7 @@ VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行
 
 ::: note
 
-塔 nginx 本身会在配置文件外自动添加一些配置，或者是有一些专门为了宝塔面板做的客制化改造，导致了这个问题。
+塔 nginx 本身会在配置文件外自动添加一些配置，或者是有一些专门为了宝塔面板做的定制化改造，导致了这个问题。
 
 :::
 
@@ -90,7 +92,7 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 比如用了 `xyx.com` 这个域名访问访问，那需要设置 `VAN_BLOG_ALLOW_DOMAINS` 为 `xyz.com`，比如用了 `localhost` 访问，那需要设置为 `localhost`，如果多个域名用英文逗号分隔，不支持通配符。
 
-请参考 [启动配置](../ref/env.md#环境变量)
+请参考 [启动配置](../reference/env.md#环境变量)
 
 ### 在编辑器复制后格式错乱
 
@@ -114,7 +116,7 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 ### 我觉得太丑了||可以自定义样式吗？
 
-可以！请参考 [客制化功能](../advanced/customizing.md)
+可以！请参考 [定制化功能](../advanced/customizing.md)
 
 ### 自定义页面
 

@@ -1,6 +1,6 @@
 ---
-icon: linux
 title: 备份与迁移
+icon: retweet
 ---
 
 以下是备份或迁移 VanBlog 的方法。
