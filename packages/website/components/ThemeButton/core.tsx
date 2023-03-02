@@ -43,7 +43,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
   useLayoutEffect(() => {
     if (!current.hasInit) {
       current.hasInit = true;
-      if (!!!localStorage.getItem("theme")) {
+      if (!localStorage.getItem("theme")) {
         // 第一次用默认的
         setTheme(props.defaultTheme);
         clearTimer();
