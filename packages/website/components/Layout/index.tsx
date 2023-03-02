@@ -7,7 +7,7 @@ import GaAnalysis from "../gaAnalysis";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import ImageProvider from "../ImageProvider";
 import { RealThemeType, ThemeContext } from "../../utils/themeContext";
-import { decodeTheme } from "../../utils/theme";
+import { getTheme } from "../../utils/theme";
 import CustomLayout from "../CustomLayout";
 import { Toaster } from "react-hot-toast";
 import Footer from "../Footer";
@@ -24,7 +24,7 @@ export default function (props: {
   // console.log("script", decode(props.option.customScript as string));
   const [isOpen, setIsOpen] = useState(false);
   const { current } = useRef({ hasInit: false });
-  const [theme, setTheme] = useState<RealThemeType>(decodeTheme("auto"));
+  const [theme, setTheme] = useState<RealThemeType>(getTheme("auto"));
   const handleClose = () => {
     console.log("关闭或刷新页面");
     localStorage.removeItem("saidHello");

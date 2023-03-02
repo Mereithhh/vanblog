@@ -2,7 +2,7 @@ import { useContext, useMemo, useState } from "react";
 import { SocialItem } from "../../api/getAllData";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
-import { topUpper } from "../../utils/TopUpper";
+import { capitalize } from "../../utils/capitalize";
 import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
 
@@ -99,7 +99,7 @@ export default function (props: { item: SocialItem }) {
             {getIcon(props.item.type, iconSize)}
           </span>
           <span className="inline-flex items-center ml-1">
-            {topUpper(props.item.type)}
+            {capitalize(props.item.type)}
           </span>
         </a>
       </Popover>
@@ -119,7 +119,7 @@ export default function (props: { item: SocialItem }) {
           {getIcon(props.item.type, iconSize)}
         </span>
         <span className="inline-flex items-center ml-1">
-          {topUpper(props.item.type)}
+          {capitalize(props.item.type)}
         </span>
       </a>
     );
