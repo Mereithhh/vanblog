@@ -1,15 +1,16 @@
 ---
-title: 客制化（嵌入自定义 HTML、CSS、JS）
+title: 定制化（嵌入自定义 HTML、CSS、JS）
+icon: wand-magic-sparkles
 redirectFrom: /feature/advance/customizing.html
 ---
 
-VanBlog 客制化，也就是可以在页面嵌入自己的 HTML、CSS、JS 片段。
+VanBlog 定制化，也就是可以在页面嵌入自己的 HTML、CSS、JS 片段。
 
-具体在 `站点管理/系统设置/客制化` 选项卡：
+具体在 `站点管理/系统设置/定制化` 选项卡：
 
-![客制化](https://www.mereith.com/static/img/9489039722c6c97a5232fad790356d9c.clipboard-2022-09-02.png)
+![定制化](https://www.mereith.com/static/img/9489039722c6c97a5232fad790356d9c.clipboard-2022-09-02.png)
 
-默认客制化功能是开启的，你也可以在布局设置中关闭它。这样即便设置了客制化相关的代码，也不会生效。
+默认定制化功能是开启的，你也可以在布局设置中关闭它。这样即便设置了定制化相关的代码，也不会生效。
 
 PS: 我很自豪地用了 vscode 同款的代码编辑器，带有代码自动补全哦。
 
@@ -48,7 +49,7 @@ window.onload = () => {
 
 可以实现很多好玩的功能，比如最近我发现了一个项目： [Sakana! Widget](https://github.com/dsrkafuu/sakana-widget)
 
-就完全可以通过客制化来自己加个小挂件。
+就完全可以通过定制化来自己加个小挂件。
 
 ![配置展示](https://www.mereith.com/static/img/d2964344217c8db07f80e3e9350495c3.clipboard-2022-09-02.png)
 

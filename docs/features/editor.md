@@ -1,5 +1,6 @@
 ---
 title: 编辑器
+icon: keyboard
 order: 3
 redirectFrom: /feature/basic/editor.html
 ---
@@ -43,7 +44,7 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
   点击编辑器工具栏按钮后，后在当前焦点处插入上传后的图片并复制图片链接到剪切板，如果没有焦点就会上传到最上面。
 
-  另外图床支持添加水印，可以在上传的时候自动添加文字水印。请参考：[分类管理](./category.md)
+  另外图床支持添加水印，可以在上传的时候自动添加文字水印。请参考：[分类管理](./tag.md#分类管理)
 
   ![上传图片](https://pic.mereith.com/img/0a54a1e4fe8ac47cea8fa7aea89964ca.clipboard-2022-08-29.png)
 

@@ -1,5 +1,6 @@
 ---
 title: 捐赠管理
+icon: circle-dollar-to-slot
 redirectFrom: /feature/advance/donate.html
 ---
 

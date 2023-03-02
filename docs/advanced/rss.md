@@ -1,5 +1,6 @@
 ---
 title: RSS
+icon: rss
 redirectFrom: /feature/advance/rss.html
 ---
 

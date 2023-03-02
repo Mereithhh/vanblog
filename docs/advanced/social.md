@@ -1,5 +1,6 @@
 ---
 title: 联系方式配置
+icon: phone
 redirectFrom: /feature/advance/social.html
 ---
 

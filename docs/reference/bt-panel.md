@@ -1,13 +1,14 @@
 ---
 title: 通过宝塔面板部署
-icon: linux
+icon: fab fa-linux
+redirectFrom: /ref/baota.html
 ---
 
 ::: tip 温馨提示
 
 VanBlog 现在支持一键脚本部署了。经过测试，宝塔也可以通过一键脚本进行部署。
 
-建议您通过[一键脚本部署](../guide/docker.md#一键脚本部署)，这样后期可以通过脚本一键升级会方便一些。
+建议您通过[一键脚本部署](../guide/get-started.md#一键脚本部署)，这样后期可以通过脚本一键升级会方便一些。
 
 如果您想通过图形化部署，请看下文。
 
@@ -55,9 +56,9 @@ services:
       - /var/vanblog/data/static:/app/static
       # 日志文件
       - /var/vanblog/log:/var/log
-      # caddy 配置存储
+      # Caddy 配置存储
       - /var/vanblog/caddy/config:/root/.config/caddy
-      # caddy 证书存储
+      # Caddy 证书存储
       - /var/vanblog/caddy/data:/root/.local/share/caddy
     ports:
       # 前面的是映射到宿主机的端口号，该端口的话改前面的。
@@ -87,7 +88,7 @@ services:
 
 等启动完毕后即可！
 
-和普通部署一样，浏览器打开 `http://<你的域名>:8880/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../features/setting.md)。
+和普通部署一样，浏览器打开 `http://<你的域名>:8880/admin/init` ，并按照提示初始化即可。具体设置项可以参考 [站点配置](../features/config.md)。
 
 有问题的话可以查看一下容器的日志进行排查。
 

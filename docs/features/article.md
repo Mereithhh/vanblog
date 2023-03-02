@@ -1,5 +1,6 @@
 ---
 title: 文章管理
+icon: pen-to-square
 order: 1
 redirectFrom: /feature/basic/article.html
 ---
@@ -62,7 +63,7 @@ redirectFrom: /feature/basic/article.html
 
 - 分类
 
-  选择分类前需要创建分类，具体请参考[分类管理](./category.md)
+  选择分类前需要创建分类，具体请参考[分类管理](./tag.md#分类管理)
 
 - 是否加密 & 密码
 
@@ -76,7 +77,7 @@ redirectFrom: /feature/basic/article.html
 
   选择隐藏后，前台将不会该显示文章的所有信息，该文章也不会计入总字数、标签、分类数量统计或者出现在时间线界面。但后台将正常显示该文章，并可以取消隐藏状态。
 
-## 导入 Markdown
+## 导入文章
 
 你可以点击 `导入` 按钮导入 Markdown 文件来创建文章，暂不支持其他类型的文件。
 

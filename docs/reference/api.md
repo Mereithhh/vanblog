@@ -1,6 +1,7 @@
 ---
 title: API 参考
-icon: http
+icon: plug
+redirectFrom: /ref/api.html
 ---
 
 目前还没写专门的 API 参考，但是可以用生成的 `swagger` 做为参考。其中 `public` 标签下的都是不需要鉴权的。

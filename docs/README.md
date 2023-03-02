@@ -1,4 +1,5 @@
 ---
+index: false
 home: true
 icon: home
 heroImage: /合并.png
@@ -26,16 +27,16 @@ features:
     icon: contrast
     details: 草稿、分类、标签、搜索、TOC、内嵌评论系统、图标和数学公式支持
 
-  - title: 客制化
-    icon: vscode
+  - title: 定制化
+    icon: wand-magic-sparkles
     details: 可添加自定义 HTML、CSS、JS，后续将支持主题与插件
 
   - title: 内置图床
-    icon: pic
+    icon: image
     details: 本地图床，OSS 图床，Github 图床都支持，可一键上传剪切板图片，自动添加水印
 
   - title: 高性能
-    icon: light
+    icon: bolt
     details: 快到极致的静态页面，秒响应的增量渲染，Lighthouse 近满分
 
   - title: SEO 友好
@@ -51,12 +52,13 @@ features:
     details: 功能齐全的后台，精心优化的编辑器，极致的写作体验
 
   - title: 安全第一
-    icon: token
+    icon: key
     details: 内置了可以自定义权限的协作者模式，未来将支持更多登录安全策略
 
   - title: 易于部署
     icon: linux
     details: Docker 一键部署，全自动 HTTPS 证书自动申请续期，支持 ARM
+
 copyright: false
 footer: GPL-3.0 协议 | Copyright © 2022-present Mereith
 ---

@@ -1,5 +1,6 @@
 ---
 title: 加密文章
+icon: lock
 redirectFrom: /feature/advance/private.html
 ---
 

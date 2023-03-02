@@ -1,5 +1,6 @@
 ---
 title: 迁移助手
+icon: code-compare
 order: -1
 redirectFrom: /feature/basic/migrate.html
 ---

@@ -1,5 +1,6 @@
 ---
 title: 黑暗模式与响应式
+icon: circle-half-stroke
 redirectFrom: /feature/advance/dark-mode.html
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: 群晖 NAS 部署
-icon: router
+icon: fab fa-linux
+redirectFrom: /ref/dsm.html
 ---
 
 ## 群晖 NAS 部署
@@ -90,8 +91,8 @@ icon: router
 | -------------------------- | ----------------------------------------------------------- |
 | `/app/static`              | 图床中数据的存放路径，使用内置图床请务必映射好！            |
 | `/var/log`                 | 日志的存放路径，包括 access 日志、 Caddy 日志和前台服务日志 |
-| `/root/.config/caddy`      | caddy 配置存储路径                                          |
-| `/root/.local/share/caddy` | caddy 证书存储路径                                          |
+| `/root/.config/caddy`      | Caddy 配置存储路径                                          |
+| `/root/.local/share/caddy` | Caddy 证书存储路径                                          |
 
 ### 完成
 

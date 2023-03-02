@@ -1,5 +1,6 @@
 ---
 title: 忘记密码
+icon: question
 redirectFrom: /feature/advance/restore.html
 ---
 

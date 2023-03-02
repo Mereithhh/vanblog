@@ -1,5 +1,6 @@
 ---
 title: 静态页面更新策略
+icon: circle-up
 redirectFrom: /feature/advance/isr.html
 ---
 

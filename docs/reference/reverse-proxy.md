@@ -1,6 +1,6 @@
 ---
-icon: nginx
 title: 反代
+icon: refresh
 redirectFrom: /guide/nginx.html
 ---
 

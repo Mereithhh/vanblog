@@ -1,6 +1,7 @@
 ---
 title: 介绍
-icon: advance
+icon: circle-info
+order: 1
 ---
 
 @include(@/info.snippet.md)
@@ -24,7 +25,7 @@ icon: advance
 - [x] 强大的 Markdown 编辑器，支持图表和数学公式，一键插入 more 标记，一键剪切板及本地图片上传，支持自定义高亮块语法，支持 Emoji 表情选取。
 - [x] TOC、草稿、代码复制、访客数、评论数、分类、标签、搜索、加密、友链、打赏、自定义导航栏。
 - [x] 多个布局设置，可自定义页面细节。
-- [x] 高度客制化，可添加自定义 CSS、HTML 和 JS 代码。
+- [x] 高度定制化，可添加自定义 CSS、HTML 和 JS 代码。
 - [x] 支持自定义页面。
 - [x] 可添加具有指定权限的协作者。
 - [x] 内置图床，并支持各种 OSS 图床、github 图床（外部图床基于 picgo）等。
