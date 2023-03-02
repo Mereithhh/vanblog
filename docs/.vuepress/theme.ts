@@ -23,10 +23,10 @@ export default hopeTheme({
 
   // navbar
   navbar: [
-    { text: "介绍", icon: "circle-info", link: "/intro" },
-    { text: "快速上手", icon: "lightbulb", link: "/guide/get-started" },
-    { text: "功能", icon: "star", link: "/features/" },
-    { text: "常见问题", icon: "circle-question", link: "/faq/" },
+    "/intro",
+    "/guide/get-started",
+    "/features/",
+    "/faq/",
     {
       text: "Demo",
       icon: "laptop-code",
