@@ -1,13 +1,10 @@
 {
-  "name": "root",
+  "name": "vanblog-root",
   "version": "0.48.0",
   "private": true,
   "scripts": {
     "build:test": "act -j test --secret-file=.env",
     "dev": "node scripts/dev.js",
-    "docs:build": "vuepress build docs",
-    "docs:clean-dev": "vuepress dev docs --clean-cache",
-    "docs:dev": "vuepress dev docs",
     "kill": "bash scripts/kill-all.sh",
     "release:local": "act -j local-build --secret-file=.env",
     "release": "standard-version",
@@ -20,14 +17,7 @@
     "webhook": "node scripts/webhook.js"
   },
   "devDependencies": {
-    "@vuepress/client": "2.0.0-beta.61",
-    "@vuepress/utils": "2.0.0-beta.61",
-    "lerna": "^4.0.0",
-    "standard-version": "^9.5.0",
-    "vue": "^3.2.47",
-    "vuepress": "2.0.0-beta.61",
-    "vuepress-plugin-redirect": "2.0.0-beta.185",
-    "vuepress-plugin-search-pro": "2.0.0-beta.185",
-    "vuepress-theme-hope": "2.0.0-beta.185"
-  }
+    "standard-version": "^9.5.0"
+  },
+  "packageManager": "pnpm@7.28.0"
 }
