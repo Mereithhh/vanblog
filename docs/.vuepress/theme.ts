@@ -63,6 +63,7 @@ export default hopeTheme({
       imgLazyload: true,
       imgSize: true,
       include: {
+        deep: true,
         resolvePath: (filePath, cwd) => {
           if (filePath.startsWith("@"))
             return filePath.replace("@", path.resolve(__dirname, "../"));
@@ -70,6 +71,7 @@ export default hopeTheme({
           return path.resolve(cwd, filePath);
         },
       },
+      tabs: true,
       tasklist: true,
     },
   },

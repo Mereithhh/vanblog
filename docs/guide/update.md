@@ -15,7 +15,9 @@ redirectFrom: /feature/advance/version.html
 
 ![备份数据](https://pic.mereith.com/img/4eba8540c5a7a5ae41885289abf98514.clipboard-2022-08-15.png)
 
-## 脚本一键升级
+:::: tabs#deploy
+
+@tab 脚本
 
 你可以直接运行安装脚本来升级 VanBlog，启动后请输入 6 并回车。
 
@@ -35,7 +37,7 @@ redirectFrom: /feature/advance/version.html
 
 :::
 
-## Docker 升级
+@tab docker
 
 请切换到部署 VanBlog 的目录下（docker-compose.yaml 存放的路径下），然后运行下面的命令。
 
@@ -82,17 +84,19 @@ Watchtower 使用可参考 [Watchtower - 自动更新 Docker 镜像与容器](ht
 
 :::
 
-## 其他方式
+@tab 宝塔面板
 
-### 群晖升级
-
-群晖按照上面说的原理，如果想用图形化升级的话，备份后，先删除原有镜像和容器，再重新创建即可。
-
-### 宝塔升级
-
-宝塔的话，现在推荐用一键脚本部署，直接用脚本升级就行了。
+宝塔面板推荐用一键脚本部署，直接用脚本升级就行了。
 
 如果想用图形化升级的话，备份后，先删除原有镜像和容器，再重新创建即可。
+
+@tab 群晖 NAS
+
+群晖 NAS 请参照 Dockers 升级。
+
+如果想用图形化升级的话，备份后，先删除原有镜像和容器，再重新创建即可。
+
+::::
 
 ## 更多
 
