@@ -167,6 +167,7 @@ order: 1
 - [SnailBlog](https://blog.mldd521.com)
 - [Ray's Blog](https://blog.zai7lou.ml)
 - [阿明的小博客](https://696988.xyz/)
+- [老咸鱼的池塘](https://nixieka.top)
 
 ## 预览图
 
