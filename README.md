@@ -97,7 +97,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ## 关于更新
 
-此项目会持续更新的，如果没有恶行 bug（有的话看到了会紧急修复），一般每周发一次新版本。
+此项目会持续更新的，如果没有恶性 bug（有的话看到了会紧急修复），一般每周发一次新版本。
 
 如果遇到了问题，可以先更新试试看。
 
