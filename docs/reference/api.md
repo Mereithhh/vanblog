@@ -1,6 +1,7 @@
 ---
 title: API 参考
 icon: plug
+order: 6
 redirectFrom: /ref/api.html
 ---
 

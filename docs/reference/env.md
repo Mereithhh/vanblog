@@ -1,6 +1,7 @@
 ---
 title: 环境变量
 icon: leaf
+order: 2
 redirectFrom: /ref/env.html
 ---
 

@@ -7,7 +7,7 @@ heroImage: /merge.png
 tagline: 一款简洁实用优雅的高性能个人博客系统。
 actions:
   - text: 💡 快速上手
-    link: /guide/docker.html
+    link: /guide/get-started.html
     type: primary
 
   - text: ℹ️ 介绍

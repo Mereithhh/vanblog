@@ -1,6 +1,7 @@
 ---
 title: 日志
 icon: file-lines
+order: 5
 redirectFrom: /feature/advance/log.html
 ---
 

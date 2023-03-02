@@ -17,7 +17,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ::: tip
 
 1. 只推荐在纯 Linux 环境下使用此脚本,宝塔面板也可以使用。脚本推出不久，未经过广泛测试，如有问题请反馈！
-1. 如果你想在外部访问数据库，请参考 [常见问题](../faq/README.md) 中的 `如何从外部访问数据库`
+1. 如果你想在外部访问数据库，请参考 [部署常见问题 → 如何从外部访问数据库](../faq/deploy.md#如何在外部访问数据库)。
 1. 反代时只需要反代映射的 HTTP 端口，详见 [反代配置](../reference/reverse-proxy.md)。由于 VanBlog 是一个整体，无需考虑内部的 Caddy。
 
 :::
