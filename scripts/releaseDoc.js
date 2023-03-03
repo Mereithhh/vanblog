@@ -5,7 +5,7 @@ const insertLog = () => {
     "---\ntitle: 更新日志\nicon: update\n---\n\n" +
     log.replace("# Changelog", "");
 
-  fs.writeFileSync("docs/ref/changelog.md", newLog, { encoding: "utf-8" });
+  fs.writeFileSync("docs/changelog.md", newLog, { encoding: "utf-8" });
 
   let version = fs.readFileSync("doc-version", { encoding: "utf-8" });
   version = version.split("\n")[0].trim();
