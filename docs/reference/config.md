@@ -1,7 +1,7 @@
 ---
 title: 站点配置
 icon: gear
-order: 8
+order: 1
 redirectFrom: /feature/basic/setting.html
 ---
 

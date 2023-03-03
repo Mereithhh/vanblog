@@ -1,11 +1,3 @@
----
-title: 群晖 NAS 部署
-icon: fab fa-linux
-redirectFrom: /ref/dsm.html
----
-
-## 群晖 NAS 部署
-
 首先安装 `Docker` 套件。
 
 ### 下载镜像
@@ -41,7 +33,7 @@ redirectFrom: /ref/dsm.html
 如果不嫌麻烦，最后把数据存储映射一下：
 | 容器内目录 | 说明 |
 | ------------------------ | ----------------------------------------------------------- |
-| /data/db | 数据库的存储 |
+| `/data/db` | 数据库的存储 |
 
 ![](https://pic.mereith.com/img/09ae5a657283b2485e72bde073bbc8d1.clipboard-2022-09-14.png)
 
@@ -65,7 +57,7 @@ redirectFrom: /ref/dsm.html
 
 ::: info 参考
 
-- 在 [VanBlog 文档/环境变量配置](./env.md) 中所示设置好环境变量。
+- 在 [参考 → 环境变量](../reference/env.md) 中所示设置好环境变量。
 
 :::
 
@@ -83,7 +75,7 @@ redirectFrom: /ref/dsm.html
 
 ### 存储空间映射
 
-可以参考 [VanBlog 文档/环境变量配置](./env.md) 中的目录映射部分进行映射。
+可以参考 [VanBlog 文档/环境变量配置](../reference//env.md) 中的目录映射部分进行映射。
 
 其中图床数据的目录映射推荐做一下，不然重置后可能会让你的博客本地图床图片都失效。
 
@@ -98,7 +90,7 @@ redirectFrom: /ref/dsm.html
 
 然后点击完成即可：
 
-![image.png](https://pic.mereith.com/img/1e75d553be53f7cea173177035f23cd9.image.png)
+![创建确认](https://pic.mereith.com/img/1e75d553be53f7cea173177035f23cd9.image.png)
 
 ### 错误排查
 
@@ -106,12 +98,10 @@ redirectFrom: /ref/dsm.html
 
 ### 后续
 
-容器启动后，你可以通过 `http://<ip>:<端口>/admin/init` 访问进行初始化。
+启动完毕后，请 [完成初始化](./init.md)。
 
-但如果你想在公网访问，我的建议是配置好反代后用最终使用的 URL 来访问进行初始化，否则内置图床上传的图片链接可能会有问题。
+::: warning
 
-::: info FAQ
-
-- [FAQ](../faq/README.md)
+如果你想在公网访问，最好现在 [配置好反代](../reference/reverse-proxy.md)，用最终使用的 URL 来访问进行初始化，否则内置图床上传的图片链接可能会有问题。
 
 :::

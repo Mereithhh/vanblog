@@ -69,31 +69,31 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ### 其他部署方式
 
-具体请移步项目文档：[快速上手](https://vanblog.mereith.com/guide/docker.html)
+具体请移步项目文档：[快速上手](https://vanblog.mereith.com/guide/get-started.html)
 
 ## 反代
 
-请参考： [反代](https://vanblog.mereith.com/guide/nginx.html)
+请参考： [反代](https://vanblog.mereith.com/reference/reverse-proxy.html)
 
 ## 常见问题
 
-> [作者 logo 无法加载](https://vanblog.mereith.com/ref/faq.html#%E5%9B%BE%E7%89%87-%E4%BD%9C%E8%80%85-logo-%E5%8A%A0%E8%BD%BD%E4%B8%8D%E5%87%BA%E6%9D%A5)
+> [备份与迁移](https://vanblog.mereith.com/guide/backup.html)
 >
-> [http error](https://vanblog.mereith.com/ref/faq.html#%E9%83%A8%E7%BD%B2%E5%90%8E-http-error)
+> [作者 logo 无法加载](https://vanblog.mereith.com/faq/usage.html#图片-作者-logo-加载不出来)
 >
-> [docker 镜像拉取慢](https://vanblog.mereith.com/ref/faq.html#docker-%E9%95%9C%E5%83%8F%E6%8B%89%E5%8F%96%E6%85%A2)
+> [http error](https://vanblog.mereith.com/faq/deploy.html#部署后-http-error)
 >
-> [如何外部访问数据库](https://vanblog.mereith.com/ref/faq.html#%E5%A6%82%E4%BD%95%E5%9C%A8%E5%A4%96%E9%83%A8%E8%AE%BF%E9%97%AE%E6%95%B0%E6%8D%AE%E5%BA%93)
+> [docker 镜像拉取慢](https://vanblog.mereith.com/faq/deploy.html#docker-镜像拉取慢)
 >
-> [如何回滚](https://vanblog.mereith.com/ref/faq.html#%E5%A6%82%E4%BD%95%E5%9B%9E%E6%BB%9A)
+> [如何外部访问数据库](https://vanblog.mereith.com/faq/deploy.html#如何在外部访问数据库)
+>
+> [如何回滚](https://vanblog.mereith.com/faq/update.html#如何回滚)
 >
 > [如何升级](https://vanblog.mereith.com/guide/update.html)
 >
-> [更新后后台报错||一直加载中](https://vanblog.mereith.com/guide/update.html#%E6%9B%B4%E6%96%B0%E5%90%8E%E5%90%8E%E5%8F%B0%E6%8A%A5%E9%94%99-%E4%B8%80%E7%9B%B4%E5%8A%A0%E8%BD%BD%E4%B8%AD)
+> [更新后后台报错||一直加载中](https://vanblog.mereith.com/faq/update.html#升级后后台报错或持续加载)
 >
-> [备份与迁移](https://vanblog.mereith.com/guide/backup.html)
->
-> [更多常见问题](https://vanblog.mereith.com/ref/faq.html)
+> [更多常见问题](https://vanblog.mereith.com/faq/)
 
 ## 关于更新
 
@@ -115,7 +115,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ## 开发指南
 
-- [开发指南](https://vanblog.mereith.com/ref/dev.html)
+- [开发指南](https://vanblog.mereith.com/contribution.html)
 
 ## 谁在使用
 
@@ -193,8 +193,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 打赏时您可以备注名称，我会将您添加至打赏列表中。
 
 <p align="center">
-  <img  alt="打赏-微信" src="/img/wechat.jpg"  style="width: 200px;margin-right: 4px;" />
-  <img  alt="打赏-支付宝" src="/img/ali-pay.jpg"  style="width: 200px" />
+  <img alt="打赏-微信" src="/img/wechat.jpg" style="width: 200px;margin-right: 4px;" />
+  <img alt="打赏-支付宝" src="/img/ali-pay.jpg" style="width: 200px" />
 </p>
 
 ## 捐赠信息
