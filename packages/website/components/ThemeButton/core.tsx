@@ -1,5 +1,5 @@
 import { useContext, useLayoutEffect, useRef } from "react";
-import { applyTheme, decodeTheme, initTheme } from "../../utils/theme";
+import { applyTheme, getTheme, initTheme } from "../../utils/theme";
 import { ThemeContext } from "../../utils/themeContext";
 
 export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
@@ -11,7 +11,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
     clearTimer();
     localStorage.setItem("theme", newTheme);
     // 设置真实的主题，然后把真实的主题搞到 state 里。
-    const realTheme = decodeTheme(newTheme);
+    const realTheme = getTheme(newTheme);
     applyTheme(realTheme, "setTheme", true);
     setState(realTheme);
     if (realTheme.includes("auto")) {
@@ -25,7 +25,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
   const setTimer = () => {
     clearTimer();
     currentTimer.timer = setInterval(() => {
-      const realTheme = decodeTheme("auto");
+      const realTheme = getTheme("auto");
       applyTheme(realTheme, "autoThemeTimer", true);
     }, 10000);
   };

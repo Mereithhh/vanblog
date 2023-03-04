@@ -1,4 +1,3 @@
-export const isIp = (str: string) => {
-  const re = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/;
-  return re.test(str);
-};
+const IP_REGEXP = /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/;
+
+export const isIP = (maybeIP: string): boolean => IP_REGEXP.test(maybeIP);

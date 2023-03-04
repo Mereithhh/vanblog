@@ -1,7 +1,3 @@
-export const isMac = () => {
-  try {
-    return navigator.userAgent.toUpperCase().indexOf('MAC') >= 0;
-  } catch(err) {
-    return false;
-  }
-}
+export const isMac = (): boolean =>
+  typeof navigator !== "undefined" &&
+  Boolean(navigator.userAgent?.toLowerCase().includes("mac"));

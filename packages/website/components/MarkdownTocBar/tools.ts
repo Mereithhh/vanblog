@@ -4,6 +4,7 @@ export interface NavItem {
   listNo: string;
   text: string;
 }
+
 export const washMarkdownContent = (source: string) => {
   if (!source) return "";
   return (
@@ -19,6 +20,7 @@ export const washMarkdownContent = (source: string) => {
       .trim() + "\n"
   );
 };
+
 export const parseNavStructure = (source: string): NavItem[] => {
   const contentWithoutCode = washMarkdownContent(source);
   const pattOfTitle = /#+\s(.+)\n/g;

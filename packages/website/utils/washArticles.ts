@@ -1,37 +1,37 @@
-export function washArticlesByKey(
+export const washArticlesByKey = (
   rawArticles: any[],
   getValueFn: (val: any) => any,
   isKeyArray: boolean
-) {
+) => {
   const articles = {} as any;
-  let dates = [];
-  if (isKeyArray) {
-    dates = Array.from(new Set(rawArticles.flatMap((a) => getValueFn(a))));
-  } else {
-    dates = Array.from(new Set(rawArticles.map((a) => getValueFn(a))));
-  }
+
+  const dates = Array.from(
+    new Set(
+      isKeyArray
+        ? rawArticles.flatMap((a) => getValueFn(a))
+        : rawArticles.map((a) => getValueFn(a))
+    )
+  );
+
   for (const date of dates) {
-    let curArticles = rawArticles
-      .filter((each) => {
-        if (isKeyArray) {
-          return getValueFn(each).includes(date);
-        } else {
-          return getValueFn(each) == date;
-        }
-      })
-      .map((each) => {
-        return {
-          title: each.title,
-          id: each.id,
-          createdAt: each.createdAt,
-          updatedAt: each.updatedAt,
-        };
-      });
-    curArticles = curArticles.sort(
-      (a, b) =>
-        new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf()
-    );
+    const curArticles = rawArticles
+      .filter((each) =>
+        isKeyArray ? getValueFn(each).includes(date) : getValueFn(each) == date
+      )
+      .map((each) => ({
+        title: each.title,
+        id: each.id,
+        createdAt: each.createdAt,
+        updatedAt: each.updatedAt,
+      }))
+      .sort(
+        (prev, next) =>
+          new Date(next.createdAt).getTime() -
+          new Date(prev.createdAt).getTime()
+      );
+
     articles[String(date)] = curArticles;
   }
+
   return articles;
-}
+};
