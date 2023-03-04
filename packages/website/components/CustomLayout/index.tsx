@@ -1,8 +1,10 @@
-import Head from "next/head";
 import { decode } from "js-base64";
+import Head from "next/head";
 import Script from "next/script";
-import { HeadTag } from "../../utils/getLayoutProps";
 import { createElement } from "react";
+
+import { type HeadTag } from "../../utils/getLayoutProps";
+
 export default function (props: {
   customCss?: string;
   customHtml?: string;
@@ -10,40 +12,35 @@ export default function (props: {
   customHead?: HeadTag[];
 }) {
   const renderHeadTags = () => {
-    if (!props.customHead || !props.customHead.length) return <></>;
-    return (
-      <>
-        {props.customHead.map((item, index) => {
-          const { content, props, name } = item;
-          return createElement(
-            name,
-            { ...props, key: `head-tag-${index}` },
-            content
-          );
-        })}
-      </>
-    );
+    if (props.customHead?.length) {
+      return (
+        <>
+          {props.customHead.map(({ content, props, name }, index) =>
+            createElement(name, { ...props, key: `head-tag-${index}` }, content)
+          )}
+        </>
+      );
+    }
+
+    return <></>;
   };
+
   return (
     <>
       <Head>
-        {Boolean(props?.customCss) && (
-          <style>{decode(props.customCss as string)}</style>
-        )}
+        {props.customCss ? <style>{decode(props.customCss)}</style> : null}
         {renderHeadTags()}
       </Head>
-      {Boolean(props?.customHtml) && (
+      {props.customHtml ? (
         <div
-          dangerouslySetInnerHTML={{
-            __html: decode(props.customHtml as string),
-          }}
+          dangerouslySetInnerHTML={{ __html: decode(props.customHtml) }}
         ></div>
-      )}
-      {Boolean(props?.customScript) && (
+      ) : null}
+      {props.customScript ? (
         <Script strategy="beforeInteractive">{`${decode(
-          props.customScript as string
+          props.customScript
         )}`}</Script>
-      )}
+      ) : null}
     </>
   );
 }
