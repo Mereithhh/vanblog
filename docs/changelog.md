@@ -4,6 +4,48 @@ icon: update
 ---
 
 
+### [0.48.1](https://github.com/Mereithhh/van-blog/compare/v0.48.0...v0.48.1) (2023-03-06)
+
+
+### ✏️ Documentation | 文档
+
+* bump deps ([c242819](https://github.com/Mereithhh/van-blog/commit/c242819ed18a8577995cd3f047e6a6fc505f7082))
+* capitalize Markdown ([90b5457](https://github.com/Mereithhh/van-blog/commit/90b545775263b227146a1368d828959d817a3d53))
+* fix footer copyright on homepage ([f5f2658](https://github.com/Mereithhh/van-blog/commit/f5f2658f92288c6fb753cb8569306f6165d6ed72))
+* fix intro typos and docs improvement ([9b9578d](https://github.com/Mereithhh/van-blog/commit/9b9578df06223917c15de65a17eca60b3a5b1909))
+* fix typo ([#195](https://github.com/Mereithhh/van-blog/issues/195)) ([008e4e5](https://github.com/Mereithhh/van-blog/commit/008e4e50f3975666947d9ca6de4a90018b16d074))
+* rebuild ([#191](https://github.com/Mereithhh/van-blog/issues/191)) ([896253a](https://github.com/Mereithhh/van-blog/commit/896253a7f8fcb33032dc10e6ef0305ed1994799f))
+* rebuild ([#196](https://github.com/Mereithhh/van-blog/issues/196)) ([6fcc40b](https://github.com/Mereithhh/van-blog/commit/6fcc40b2e68020c5277d584f675cecd54940947e))
+* rebuild docker and http ([cf3c667](https://github.com/Mereithhh/van-blog/commit/cf3c66778643115c44bfa35095ffd6337603beb5))
+* update docs ([#192](https://github.com/Mereithhh/van-blog/issues/192)) ([a4446be](https://github.com/Mereithhh/van-blog/commit/a4446be0da0e28437c851793e8eefb0307eb9a44))
+* update guide and fix typos ([3f34bbe](https://github.com/Mereithhh/van-blog/commit/3f34bbeb03a6d52fd2ea9f3c97f27e963e98e70d))
+* update readme, close [#213](https://github.com/Mereithhh/van-blog/issues/213) ([87ffcb7](https://github.com/Mereithhh/van-blog/commit/87ffcb75db2fc40cb68299c478aef72f96ab754e))
+* update reference ([c24503b](https://github.com/Mereithhh/van-blog/commit/c24503ba9262bb4b8ab6e59413d0f73b76d27885))
+* update some of the advance files ([75e585f](https://github.com/Mereithhh/van-blog/commit/75e585f6be97ec0a7b0d77246cdab6148b284db5))
+* update who use ([c8d677b](https://github.com/Mereithhh/van-blog/commit/c8d677b5cb031e93f27f7f8d035315f073c35675))
+* 更新文档 ([b1b9cb4](https://github.com/Mereithhh/van-blog/commit/b1b9cb46699dc20627d4d074f26aae1050ce8a55))
+* 更新文档 ([1e0ac79](https://github.com/Mereithhh/van-blog/commit/1e0ac796482695f1429d3cd73c27c6055ed87e3d))
+* 更新文档 ([8922137](https://github.com/Mereithhh/van-blog/commit/89221379de7464913c4298a919e33d9307db556c))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **server:** remove unused import ([#205](https://github.com/Mereithhh/van-blog/issues/205)) ([18ee51e](https://github.com/Mereithhh/van-blog/commit/18ee51e17e20facb047a3110a51d5a7018450dc3))
+* **website:** refine AlertCard ([#216](https://github.com/Mereithhh/van-blog/issues/216)) ([65f99ae](https://github.com/Mereithhh/van-blog/commit/65f99ae648dc613ffbb263a78165ea92ac3158d3))
+* **website:** refine ArticleList ([#217](https://github.com/Mereithhh/van-blog/issues/217)) ([cfc8a3f](https://github.com/Mereithhh/van-blog/commit/cfc8a3ffb52e458c2d09df29c8f1cf0f3fe73a53))
+* **website:** refine BackToTop ([#219](https://github.com/Mereithhh/van-blog/issues/219)) ([bf171b7](https://github.com/Mereithhh/van-blog/commit/bf171b7042e8c52e8919c7227a664333e3728f15))
+* **website:** refine CustomLayout ([#221](https://github.com/Mereithhh/van-blog/issues/221)) ([8d0ea62](https://github.com/Mereithhh/van-blog/commit/8d0ea62fe67a15186ebacc5c3c409fa72b307504))
+* **website:** refine Footer ([#222](https://github.com/Mereithhh/van-blog/issues/222)) ([7f9ba2b](https://github.com/Mereithhh/van-blog/commit/7f9ba2bafa4e999a39da12b5b055e8ada1982613))
+* **website:** refine unused apiroute [#210](https://github.com/Mereithhh/van-blog/issues/210) ([1a250cc](https://github.com/Mereithhh/van-blog/commit/1a250cc167ec63b7198631a2c578f6e3b8315093))
+* **website:** tweaks ([#201](https://github.com/Mereithhh/van-blog/issues/201)) ([c6ba12e](https://github.com/Mereithhh/van-blog/commit/c6ba12e718846e009d4e94cd0558ba619782c7d8))
+* **website:** tweaks ([#206](https://github.com/Mereithhh/van-blog/issues/206)) ([79ce1f9](https://github.com/Mereithhh/van-blog/commit/79ce1f9d4586d15bc8bd145749703425ef5a6d03))
+* **website:** tweaks pageview ([#212](https://github.com/Mereithhh/van-blog/issues/212)) ([22efeb8](https://github.com/Mereithhh/van-blog/commit/22efeb8115a380b4b9aaa0a0c67506e73d3d9e1f))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* type error ([2bd7f86](https://github.com/Mereithhh/van-blog/commit/2bd7f86eee6697b3046a5c57352c6f86eb56796b))
+* 修复dark模式刷新页面后，Code代码阴影问题 ([#226](https://github.com/Mereithhh/van-blog/issues/226)) ([b4774e5](https://github.com/Mereithhh/van-blog/commit/b4774e51af61a4920851bf60ba67bbb5278903f2))
 
 ## [0.48.0](https://github.com/Mereithhh/van-blog/compare/v0.47.0...v0.48.0) (2023-02-27)
 
