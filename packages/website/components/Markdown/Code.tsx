@@ -12,12 +12,12 @@ export function CodeBlock(props: { children: any; match: any }) {
   const { theme } = useContext(ThemeContext);
 
   const curModeInfo = useMemo(() => {
-    const mode = theme.includes('dark') ? dark : light
+    const mode = theme.includes("dark") ? dark : (light as any);
     return {
       mode,
-      key: Date.now()
-    }
-  }, [theme])
+      key: Date.now(),
+    };
+  }, [theme]);
 
   return (
     <>
