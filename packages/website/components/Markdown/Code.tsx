@@ -10,9 +10,13 @@ import { ThemeContext } from "../../utils/themeContext";
 export function CodeBlock(props: { children: any; match: any }) {
   const code = props.children.replace(/\n$/, "");
   const { theme } = useContext(ThemeContext);
-  const codeStyle = useMemo(() => {
-    if (theme.includes("dark")) { return dark }
-    return light as any
+
+  const curModeInfo = useMemo(() => {
+    const mode = theme.includes('dark') ? dark : light
+    return {
+      mode,
+      key: Date.now()
+    }
   }, [theme])
 
   return (
@@ -54,7 +58,8 @@ export function CodeBlock(props: { children: any; match: any }) {
         </div>
 
         <SyntaxHighlighter
-          style={codeStyle}
+          key={curModeInfo.key}
+          style={curModeInfo.mode}
           language={props.match?.length ? props.match[1] : undefined}
           wrapLines={true}
           lineProps={() => {
