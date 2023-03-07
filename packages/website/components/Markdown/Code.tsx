@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import { useContext, useMemo } from "react";
+import { useContext, useState, useEffect } from "react";
 import CopyToClipboard from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
 import { CodeComponent, CodeProps } from "react-markdown/lib/ast-to-react";
@@ -10,13 +10,10 @@ import { ThemeContext } from "../../utils/themeContext";
 export function CodeBlock(props: { children: any; match: any }) {
   const code = props.children.replace(/\n$/, "");
   const { theme } = useContext(ThemeContext);
+  const [curMode, setCurMode] = useState(undefined);
 
-  const curModeInfo = useMemo(() => {
-    const mode = theme.includes("dark") ? dark : (light as any);
-    return {
-      mode,
-      key: Date.now(),
-    };
+  useEffect(() => {
+    setCurMode(theme.includes("dark") ? dark : (light as any));
   }, [theme]);
 
   return (
@@ -58,8 +55,7 @@ export function CodeBlock(props: { children: any; match: any }) {
         </div>
 
         <SyntaxHighlighter
-          key={curModeInfo.key}
-          style={curModeInfo.mode}
+          style={curMode}
           language={props.match?.length ? props.match[1] : undefined}
           wrapLines={true}
           lineProps={() => {
