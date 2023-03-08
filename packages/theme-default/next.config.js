@@ -2,8 +2,10 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
+
 const isDev = process.env.NODE_ENV == "development";
-const rewites =
+
+const rewrites =
   process.env.NODE_ENV == "development"
     ? {
         async rewrites() {
@@ -54,5 +56,5 @@ module.exports = withBundleAnalyzer({
     domains: getAllowDomains(),
   },
   ...getCdnUrl(),
-  ...rewites,
+  ...rewrites,
 });

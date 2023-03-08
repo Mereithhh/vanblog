@@ -1,0 +1,19 @@
+{
+  "name": "vanblog-docs",
+  "version": "0.48.0",
+  "private": true,
+  "scripts": {
+    "docs:build": "vuepress build docs",
+    "docs:clean-dev": "vuepress dev docs --clean-cache",
+    "docs:dev": "vuepress dev docs"
+  },
+  "devDependencies": {
+    "@vuepress/client": "2.0.0-beta.61",
+    "@vuepress/utils": "2.0.0-beta.61",
+    "vue": "^3.2.47",
+    "vuepress": "2.0.0-beta.61",
+    "vuepress-plugin-redirect": "2.0.0-beta.190",
+    "vuepress-plugin-search-pro": "2.0.0-beta.190",
+    "vuepress-theme-hope": "2.0.0-beta.190"
+  }
+}

@@ -13,11 +13,11 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-          # 如果你文档需要 Git 子模块，取消注释下一行
-          # submodules: true
+
       - name: Get version
         id: get_version
         run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
       - name: 展示版本
         run: echo ${{ steps.get_version.outputs.VERSION }}
       - name: Set up QEMU
@@ -33,22 +33,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: 安装 pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 7
+          run_install: true
+
       - name: 设置 Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: yarn
-
-      - name: 安装依赖
-        run: yarn install --frozen-lockfile
+          node-version: 18
+          cache: pnpm
 
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=4096
-        run: |-
-          yarn run docs:build
-          > docs/.vuepress/dist/.nojekyll
         id: image-name
+        run: |-
+          pnpm --filter=vanblog-docs docs:build
+
       - name: 打包镜像并推送
         uses: docker/build-push-action@v2
         with:
@@ -60,9 +63,7 @@ jobs:
             "docker.io/mereith/van-blog-website:${{ steps.get_version.outputs.VERSION }}"
       - name: 部署到集群
         uses: steebchen/kubectl@v2.0.0
-        with: # defaults to latest kubectl binary version
+        with:
+          # defaults to latest kubectl binary version
           config: ${{ secrets.K8S_CONFIG_DATA }}
           command: set image  deployment/vanblog-doc vanblog-doc=docker.io/mereith/van-blog-website:${{ steps.get_version.outputs.VERSION }}
-      # - name: send Message To me
-      #   run: |
-      #     curl -X POST -H "Content-Type: application/json" -d '{"source":"github-ci:van-blog-doc","message":"流水线运行完毕，${{ steps.get_version.outputs.VERSION }} 已部署"}'  ${{ secrets.WEBHOOK_URL }}

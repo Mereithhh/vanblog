@@ -3,16 +3,13 @@
   "version": "0.48.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf node_modules packages/*/node_modules",
+    "clean": "rm -rf node_modules packages/vanblog/*/node_modules",
     "build:test": "act -j test --secret-file=.env",
     "dev": "lerna run dev --parallel --scope=@vanblog/server --scope=@vanblog/admin",
     "dev:website": "lerna run dev --scope=@vanblog/theme-default",
     "dev:admin": "lerna run dev --scope=@vanblog/admin",
     "dev:server": "lerna run dev --scope=@vanblog/server",
     "dev:server:noweb": "lerna run dev:noweb --scope=@vanblog/server",
-    "docs:build": "vuepress build docs",
-    "docs:clean-dev": "vuepress dev docs --clean-cache",
-    "docs:dev": "vuepress dev docs",
     "kill": "bash scripts/kill-all.sh",
     "release:local": "act -j local-build --secret-file=.env",
     "release": "standard-version",
@@ -24,15 +21,17 @@
     "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
     "webhook": "node scripts/webhook.js"
   },
+  "packageManager": "pnpm@7.29.1",
   "devDependencies": {
-    "@vuepress/client": "2.0.0-beta.61",
-    "@vuepress/utils": "2.0.0-beta.61",
-    "lerna": "^6.5.1",
-    "standard-version": "^9.5.0",
-    "vue": "^3.2.47",
-    "vuepress": "2.0.0-beta.61",
-    "vuepress-plugin-redirect": "2.0.0-beta.185",
-    "vuepress-plugin-search-pro": "2.0.0-beta.185",
-    "vuepress-theme-hope": "2.0.0-beta.185"
+    "cross-env": "7.0.3",
+    "eslint": "8.35.0",
+    "eslint-config-prettier": "8.7.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "lerna": "6.5.1",
+    "lint-staged": "13.1.2",
+    "prettier": "2.8.4",
+    "rimraf": "4.3.1",
+    "stylelint": "15.2.0",
+    "standard-version": "9.5.0"
   }
 }
