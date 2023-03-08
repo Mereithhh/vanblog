@@ -110,11 +110,11 @@ export default () => {
           }}
           editable={false}
           columnsState={{
-            persistenceKey: 'van-blog-draft-table',
-            persistenceType: 'localStorage',
+            // persistenceKey: 'van-blog-draft-table',
+            // persistenceType: 'localStorage',
             value: colKeys,
             onChange(value) {
-              setColKeys(value);
+              setColKeys(value)
             },
           }}
           rowKey="id"

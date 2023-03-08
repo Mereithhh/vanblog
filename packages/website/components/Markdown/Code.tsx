@@ -7,6 +7,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import light from "./style/prism";
 import dark from "./style/vsc-dark-plus";
 import { ThemeContext } from "../../utils/themeContext";
+
 export function CodeBlock(props: { children: any; match: any }) {
   const code = props.children.replace(/\n$/, "");
   const { theme } = useContext(ThemeContext);
@@ -77,9 +78,10 @@ export const Code: CodeComponent = (props: CodeProps) => {
   const match = /language-(\w+)/.exec(className || "");
   const lang = match?.length ? match[1] : undefined;
   const id = node.position?.end?.offset;
+
   if (lang == "mermaid") {
-    const DynamicMermaid = dynamic(() => import("./mermaid"));
-    return <DynamicMermaid id={id} children={children} className={className} />;
+    const Mermaid = dynamic(() => import("./mermaid"));
+    return <Mermaid id={id} children={children} className={className} />;
   }
   return !inline ? (
     <CodeBlock children={String(children)} match={match} />

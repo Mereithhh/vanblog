@@ -34,7 +34,6 @@ export default () => {
         key="resize-observer"
         onResize={(offset) => {
           const r = offset.width < 1000;
-
           setSimpleSearch(offset.width < 750);
           setSimplePage(offset.width < 600);
           if (r) {
@@ -119,10 +118,10 @@ export default () => {
           }}
           editable={false}
           columnsState={{
-            persistenceKey: 'van-blog-article-table',
-            persistenceType: 'localStorage',
+            // persistenceKey: 'van-blog-article-table',
+            // persistenceType: 'localStorage',
             value: colKeys,
-            onChange(value) {
+            onChange: (value) => {
               setColKeys(value);
             },
           }}
@@ -138,6 +137,7 @@ export default () => {
             onChange: (p, ps) => {
               if (ps != pageSize) {
                 setPageSize(ps);
+
               }
             },
           }}
