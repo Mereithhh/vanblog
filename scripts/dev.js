@@ -1,4 +1,5 @@
 // 本地开发
+// 已废弃，使用 pnpm dev 代替
 
 const { spawn } = require("child_process");
 const path = require("path");

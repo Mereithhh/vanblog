@@ -109,7 +109,7 @@ export class WebsiteProvider {
           ...process.env,
           ...loadEnvs,
         },
-        cwd: path.join(path.resolve(process.cwd(), '..'), 'website'),
+        cwd: path.join(path.resolve(process.cwd(), '..'), 'theme-default'),
         detached: true,
         shell: process.platform === 'win32',
       });

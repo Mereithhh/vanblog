@@ -3,7 +3,7 @@
   "version": "0.48.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf node_modules packages/*/node_modules",
+    "clean": "rm -rf node_modules packages/vanblog/*/node_modules",
     "build:test": "act -j test --secret-file=.env",
     "dev": "lerna run dev --parallel --scope=@vanblog/server --scope=@vanblog/admin",
     "dev:website": "lerna run dev --scope=@vanblog/theme-default",
