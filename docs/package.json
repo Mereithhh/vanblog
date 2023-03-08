@@ -12,8 +12,8 @@
     "@vuepress/utils": "2.0.0-beta.61",
     "vue": "^3.2.47",
     "vuepress": "2.0.0-beta.61",
-    "vuepress-plugin-redirect": "2.0.0-beta.185",
-    "vuepress-plugin-search-pro": "2.0.0-beta.185",
-    "vuepress-theme-hope": "2.0.0-beta.185"
+    "vuepress-plugin-redirect": "2.0.0-beta.190",
+    "vuepress-plugin-search-pro": "2.0.0-beta.190",
+    "vuepress-theme-hope": "2.0.0-beta.190"
   }
 }
