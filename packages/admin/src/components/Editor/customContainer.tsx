@@ -1,18 +1,82 @@
-import { BytemdPlugin } from 'bytemd';
+import { BytemdPlugin } from "bytemd";
+import remarkDirective from "remark-directive";
+import { visit } from "unist-util-visit";
 
-import remarkDirective from 'remark-directive';
-import { visit } from 'unist-util-visit';
-import { icons } from './icons';
+import { icons } from "./icons";
+
+const CUSTOM_CONTAINER_ACTIONS = [
+  {
+    title: "info",
+    code: `:::info{title="相关信息"}\n相关信息\n:::`,
+  },
+  {
+    title: "note",
+    code: `:::note{title="注"}\n注\n:::`,
+  },
+  {
+    title: "warning",
+    code: `:::warning{title="注意"}\n注意\n:::`,
+  },
+  {
+    title: "danger",
+    code: `:::danger{title="警告"}\n警告\n:::`,
+  },
+  {
+    title: "tip",
+    code: `:::tip{title="提示"}\n提示\n:::`,
+  },
+];
+
+const CUSTOM_CONTAINER_TITLE: Record<string, string> = {
+  note: "注",
+  info: "相关信息",
+  warning: "注意",
+  danger: "警告",
+  tip: "提示",
+};
+
+// FIXME: Addd Types
+const customContainerPlugin = () => (tree) => {
+  visit(tree, (node) => {
+    if (
+      node.type === "textDirective" ||
+      node.type === "leafDirective" ||
+      node.type === "containerDirective"
+    ) {
+      if (node.type == "containerDirective") {
+        const { attributes, data = {}, name: tagName } = node;
+
+        const title = attributes?.title || CUSTOM_CONTAINER_TITLE[tagName];
+        const cls = `custom-container ${tagName}`;
+
+        data.hName = "div";
+        data.hProperties = {
+          class: cls,
+          ["type"]: title,
+        };
+
+        return {
+          ...node,
+          data,
+        };
+      }
+    }
+  });
+};
+
 export function customContainer(): BytemdPlugin {
   return {
-    remark: (processer) => processer.use(remarkDirective).use(customContainerPlugin),
+    remark: (processor) =>
+      processor.use(remarkDirective).use(customContainerPlugin),
 
     viewerEffect: ({ markdownBody }) => {
-      const els = markdownBody.querySelectorAll('.custom-container');
-      els.forEach((el) => {
-        const type = el.className.replace('custom-container', '').trim();
-        const title = el.getAttribute('type');
-        const titleEl = document.createElement('p');
+      const elements = markdownBody.querySelectorAll(".custom-container");
+
+      elements.forEach((element) => {
+        const type = element.className.replace("custom-container", "").trim();
+        const title = element.getAttribute("type");
+        const titleEl = document.createElement("p");
+
         titleEl.className = `custom-container-title ${title}`;
 
         const icon = icons[type];
@@ -20,24 +84,28 @@ export function customContainer(): BytemdPlugin {
 
         titleEl.innerHTML = html;
 
-        el.insertBefore(titleEl, el.firstChild);
+        element.insertBefore(titleEl, element.firstChild);
       });
     },
+
     actions: [
       {
-        title: '自定义高亮块',
-        icon: '<svg  viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3441" width="16" height="16" fill="currentColor"><path d="M157.399245 966.003965a99.435203 99.435203 0 0 1-99.33321-99.287213V668.09133a99.4682 99.4682 0 0 1 99.33321-99.287213h709.322511a99.425203 99.425203 0 0 1 99.282213 99.287213v198.625422a99.393206 99.393206 0 0 1-99.282213 99.287213z m-14.199029-297.912635v198.625422a14.234027 14.234027 0 0 0 14.199029 14.199029h709.322511a14.233027 14.233027 0 0 0 14.19903-14.199029V668.09133a14.266025 14.266025 0 0 0-14.19903-14.19903H157.399245a14.266025 14.266025 0 0 0-14.198029 14.19903z m14.199029-212.824452a99.436203 99.436203 0 0 1-99.33321-99.288212V157.353243a99.4682 99.4682 0 0 1 99.33321-99.287212h709.322511a99.424203 99.424203 0 0 1 99.282213 99.287212v198.625423a99.393206 99.393206 0 0 1-99.282213 99.287212z m-14.198029-297.913635v198.625423a14.233027 14.233027 0 0 0 14.199029 14.199029h709.321511a14.233027 14.233027 0 0 0 14.19903-14.199029V157.353243a14.266025 14.266025 0 0 0-14.19903-14.199029H157.399245a14.267025 14.267025 0 0 0-14.198029 14.199029z" p-id="3442"></path></svg>',
+        title: "自定义高亮块",
+        icon: '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 1024 1024"><path d="M157.4 966.004a99.435 99.435 0 0 1-99.334-99.287V668.09a99.468 99.468 0 0 1 99.333-99.287h709.323a99.425 99.425 0 0 1 99.282 99.287v198.626a99.393 99.393 0 0 1-99.282 99.287zm-14.2-297.913v198.626a14.234 14.234 0 0 0 14.2 14.199h709.322a14.233 14.233 0 0 0 14.199-14.2V668.092a14.266 14.266 0 0 0-14.2-14.199H157.4a14.266 14.266 0 0 0-14.198 14.2zm14.2-212.824a99.436 99.436 0 0 1-99.334-99.288V157.353a99.468 99.468 0 0 1 99.333-99.287h709.323a99.424 99.424 0 0 1 99.282 99.287V355.98a99.393 99.393 0 0 1-99.282 99.287zM143.2 157.353V355.98a14.233 14.233 0 0 0 14.2 14.199h709.32a14.233 14.233 0 0 0 14.2-14.2V157.354a14.266 14.266 0 0 0-14.2-14.199H157.4a14.267 14.267 0 0 0-14.198 14.2z"/></svg>',
         cheatsheet: `:::info{title="标题"}`,
         handler: {
-          type: 'dropdown',
-          actions: customContainerActionItems.map(({ title, code }) => {
+          type: "dropdown",
+          actions: CUSTOM_CONTAINER_ACTIONS.map(({ title, code }) => {
             return {
               title,
               handler: {
-                type: 'action',
+                type: "action",
                 click({ editor, appendBlock, codemirror }) {
                   const { line } = appendBlock(code);
-                  editor.setSelection(codemirror.Pos(line + 1, 0), codemirror.Pos(line + 1));
+                  editor.setSelection(
+                    codemirror.Pos(line + 1, 0),
+                    codemirror.Pos(line + 1)
+                  );
                   editor.focus();
                 },
               },
@@ -46,64 +114,5 @@ export function customContainer(): BytemdPlugin {
         },
       },
     ],
-  };
-}
-
-const customContainerActionItems = [
-  {
-    title: 'info',
-    code: `:::info{title="相关信息"}\n相关信息\n:::`,
-  },
-  {
-    title: 'note',
-    code: `:::note{title="注"}\n注\n:::`,
-  },
-  {
-    title: 'warning',
-    code: `:::warning{title="注意"}\n注意\n:::`,
-  },
-  {
-    title: 'danger',
-    code: `:::danger{title="警告"}\n警告\n:::`,
-  },
-  {
-    title: 'tip',
-    code: `:::tip{title="提示"}\n提示\n:::`,
-  },
-];
-
-const customContainerTitleMap: Record<string, string> = {
-  note: '注',
-  info: '相关信息',
-  warning: '注意',
-  danger: '警告',
-  tip: '提示',
-};
-function customContainerPlugin() {
-  return (tree) => {
-    visit(tree, (node) => {
-      if (
-        node.type === 'textDirective' ||
-        node.type === 'leafDirective' ||
-        node.type === 'containerDirective'
-      ) {
-        if (node.type == 'containerDirective') {
-          const data = node.data || (node.data = {});
-          const tagName = node.name;
-          data.hName = 'div';
-          const { attributes } = node || {};
-          const title = attributes?.title || customContainerTitleMap[tagName];
-          const cls = `custom-container ${tagName}`;
-          data.hProperties = {
-            class: cls,
-            ['type']: title,
-          };
-          return {
-            ...node,
-            data,
-          };
-        }
-      }
-    });
   };
 }
