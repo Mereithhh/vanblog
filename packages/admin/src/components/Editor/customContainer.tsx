@@ -95,22 +95,21 @@ export function customContainer(): BytemdPlugin {
         cheatsheet: `:::info{title="标题"}`,
         handler: {
           type: "dropdown",
-          actions: CUSTOM_CONTAINER_ACTIONS.map(({ title, code }) => {
-            return {
-              title,
-              handler: {
-                type: "action",
-                click({ editor, appendBlock, codemirror }) {
-                  const { line } = appendBlock(code);
-                  editor.setSelection(
-                    codemirror.Pos(line + 1, 0),
-                    codemirror.Pos(line + 1)
-                  );
-                  editor.focus();
-                },
+          actions: CUSTOM_CONTAINER_ACTIONS.map(({ title, code }) => ({
+            title,
+            handler: {
+              type: "action",
+              click: ({ editor, appendBlock, codemirror }) => {
+                const { line } = appendBlock(code);
+
+                editor.setSelection(
+                  codemirror.Pos(line + 1, 0),
+                  codemirror.Pos(line + 1)
+                );
+                editor.focus();
               },
-            };
-          }),
+            },
+          })),
         },
       },
     ],
