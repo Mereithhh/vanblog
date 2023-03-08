@@ -13,7 +13,6 @@
     "@next/bundle-analyzer": "^12.2.5",
     "@types/lodash": "^4.14.184",
     "@types/markdown-navbar": "^1.4.0",
-    "@types/mermaid": "^8.2.9",
     "@waline/client": "^2.14.7",
     "dayjs": "^1.11.3",
     "eslint-config-next": "^13.2.1",
