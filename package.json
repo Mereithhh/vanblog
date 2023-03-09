@@ -3,6 +3,7 @@
   "version": "0.48.1",
   "private": true,
   "scripts": {
+    "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf packages/*/dist",
     "build:test": "act -j test --secret-file=.env",
     "dev": "node scripts/dev.js",
     "docs:build": "vuepress build docs",
