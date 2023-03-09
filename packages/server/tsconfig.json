@@ -1,9 +1,9 @@
 {
   "compilerOptions": {
+    "composite": true,
     "module": "CommonJS",
-    "esModuleInterop": true,
-    "declaration": true,
     "removeComments": true,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
@@ -12,11 +12,6 @@
     "outDir": "./dist",
     "baseUrl": "./",
     "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": false
+    "skipLibCheck": true
   }
 }

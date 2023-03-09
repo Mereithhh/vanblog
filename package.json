@@ -5,6 +5,9 @@
   "scripts": {
     "clean": "rm -rf node_modules packages/vanblog/*/node_modules",
     "build:test": "act -j test --secret-file=.env",
+    "build:server": "lerna run build --scope=@vanblog/server",
+    "build:website": "lerna run build --scope=@vanblog/theme-default",
+    "build:admin": "lerna run build --scope=@vanblog/admin",
     "dev": "lerna run dev --parallel --scope=@vanblog/server --scope=@vanblog/admin",
     "dev:website": "lerna run dev --scope=@vanblog/theme-default",
     "dev:admin": "lerna run dev --scope=@vanblog/admin",

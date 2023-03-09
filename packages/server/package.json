@@ -7,6 +7,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "prebuild": "rimraf dist",
+    "pwd": "node pwd.js",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "dev": "nest start --watch",
