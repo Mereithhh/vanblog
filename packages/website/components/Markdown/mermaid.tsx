@@ -27,17 +27,13 @@ export default function (props: {
   const render = useCallback(() => {
     try {
       mermaid.initialize({
+        securityLevel: "loose",
         startOnLoad: false,
         theme: theme.includes("dark") ? "dark" : ("default" as any),
       });
-      mermaid.render(
-        domIdRef.current,
-        String(props.children),
-        (s) => {
-          domRef.current.innerHTML = s;
-        },
-        domRef.current
-      );
+      mermaid.run({
+        querySelector: ".mermaid"
+      });
     } catch (err) {
       // console.log(err);
       // console.log("mermaid 渲染失败，可能是没正确插入 more 标记导致的。");

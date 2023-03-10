@@ -5,7 +5,13 @@
   "scripts": {
     "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf packages/*/dist",
     "build:test": "act -j test --secret-file=.env",
-    "dev": "node scripts/dev.js",
+    "build:server": "lerna run build --scope=@vanblog/server",
+    "build:website": "lerna run build --scope=@vanblog/theme-default",
+    "build:admin": "lerna run build --scope=@vanblog/admin",
+    "dev": "lerna run dev --scope @vanblog/server --scope @vanblog/admin --parallel",
+    "dev:server": "lerna run dev:noweb --scope @vanblog/server",
+    "dev:website": "lerna run dev --scope @vanblog/theme-default",
+    "dev:admin": "lerna run dev --scope @vanblog/admin",
     "docs:build": "vuepress build docs",
     "docs:clean-dev": "vuepress dev docs --clean-cache",
     "docs:dev": "vuepress dev docs",
@@ -23,12 +29,15 @@
   "devDependencies": {
     "@vuepress/client": "2.0.0-beta.61",
     "@vuepress/utils": "2.0.0-beta.61",
-    "lerna": "^4.0.0",
+    "lerna": "^6.5.1",
     "standard-version": "^9.5.0",
     "vue": "^3.2.47",
     "vuepress": "2.0.0-beta.61",
     "vuepress-plugin-redirect": "2.0.0-beta.185",
     "vuepress-plugin-search-pro": "2.0.0-beta.185",
     "vuepress-theme-hope": "2.0.0-beta.185"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3"
   }
 }

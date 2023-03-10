@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "@vanblog/server",
   "version": "0.0.1",
   "description": "",
   "author": "",
@@ -11,6 +11,8 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:noweb": "VANBLOG_DISABLE_WEBSITE=true nest start",
+    "dev": "nest start --watch",
+    "dev:noweb": "VANBLOG_DISABLE_WEBSITE=true nest start --watch",
     "start:dev": "nest start --watch",
     "start:dev:noweb": "VANBLOG_DISABLE_WEBSITE=true nest start --watch",
     "start:debug": "nest start --debug --watch",
@@ -59,7 +61,8 @@
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
     "sitemap": "^7.1.1",
-    "swagger-ui-express": "^4.4.0"
+    "swagger-ui-express": "^4.4.0",
+    "yaml": "^2.2.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",

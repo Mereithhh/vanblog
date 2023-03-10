@@ -4,6 +4,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "baseUrl": ".",
+    "composite": true,
     "paths": {
       "@/*": ["./src/*"]
     }

@@ -29,7 +29,7 @@ export const addWaterMarkToIMG = async (
   return await newImage.getBufferAsync(newImage.getMIME());
 };
 
-export const generateWaterMark = async (waterMark: string) => {
+export const generateWaterMark: any = async (waterMark: string) => {
   const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
   const logo = await Jimp.read(500, 150, 0x00000000);
   logo.print(font, 0, 0, waterMark, 500);
