@@ -5,8 +5,6 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
-
-
 ### [0.48.1](https://github.com/Mereithhh/van-blog/compare/v0.48.0...v0.48.1) (2023-03-06)
 
 
@@ -49,7 +47,6 @@ redirectFrom: /ref/changelog.html
 
 * type error ([2bd7f86](https://github.com/Mereithhh/van-blog/commit/2bd7f86eee6697b3046a5c57352c6f86eb56796b))
 * 修复dark模式刷新页面后，Code代码阴影问题 ([#226](https://github.com/Mereithhh/van-blog/issues/226)) ([b4774e5](https://github.com/Mereithhh/van-blog/commit/b4774e51af61a4920851bf60ba67bbb5278903f2))
-
 
 ## [0.48.0](https://github.com/Mereithhh/van-blog/compare/v0.47.0...v0.48.0) (2023-02-27)
 
