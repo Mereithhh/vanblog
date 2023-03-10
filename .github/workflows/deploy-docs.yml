@@ -36,17 +36,17 @@ jobs:
       - name: 设置 Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 16
-          cache: yarn
+          node-version: 18
+          cache: pnpm
 
       - name: 安装依赖
-        run: yarn install
+        run: pnpm install
 
       - name: 构建文档
         env:
           NODE_OPTIONS: --max_old_space_size=4096
         run: |-
-          yarn run docs:build
+          pnpm docs:build
           > docs/.vuepress/dist/.nojekyll
         id: image-name
       - name: 打包镜像并推送
