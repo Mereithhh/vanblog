@@ -173,6 +173,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [ ] 快捷分享按钮
 - [x] 完善可自定义上传文件的自定义页面功能（现在的自定义页面有潜在的 css 污染问题）
 - [x] 图片上传自动添加水印
+- [x] 迁移到 pnpm，使用 workspace
 - [ ] 增加在特定事件后触发执行自定义代码或 webhook 的扩展能力
 - [ ] 插件系统
 - [ ] 自定义主题（前端渲染器）系统

@@ -97,14 +97,16 @@ export class WebsiteProvider {
       this.logger.log('无 website 模式');
       return;
     }
-    let cmd = 'dev';
+    let cmd = 'pnpm';
+    let args = ['dev'];
     if (process.env.NODE_ENV == 'production') {
-      cmd = 'start';
+      cmd = 'node';
+      args = ["server.js"];
     }
     const loadEnvs = await this.loadEnv();
     this.logger.log(JSON.stringify(loadEnvs, null, 2));
     if (this.ctx == null) {
-      this.ctx = spawn('yarn', [cmd], {
+      this.ctx = spawn(cmd, args, {
         env: {
           ...process.env,
           ...loadEnvs,
