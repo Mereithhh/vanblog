@@ -17,6 +17,12 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": true,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "composite": true,
+    "paths": {
+      "mongoose": [
+        "node_modules/mongoose"
+      ],
+    }
   }
 }
