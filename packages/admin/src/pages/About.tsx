@@ -49,7 +49,7 @@ export default function (props) {
               <a
                 target={'_blank'}
                 rel="noreferrer"
-                href="https://vanblog.mereith.com/ref/changelog.html"
+                href="https://vanblog.mereith.com/changelog.html"
               >
                 更新日志
               </a>
