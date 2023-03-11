@@ -168,6 +168,8 @@ order: 1
 - [Ray's Blog](https://blog.zai7lou.ml)
 - [阿明的小博客](https://696988.xyz/)
 - [老咸鱼的池塘](https://nixieka.top)
+- [谷粒 corn.li](https://corn.li)
+- [BARM Blog](https://blog.ccz.life)
 
 ## 预览图
 
