@@ -47,8 +47,8 @@ const customContainerPlugin = () => (tree) => {
       node.type === "containerDirective"
     ) {
       if (node.type == "containerDirective") {
-        const { attributes, data = {}, name: tagName } = node;
-
+        const { attributes, name: tagName } = node;
+        const data = node.data ??= {};
         const title = attributes?.title || CUSTOM_CONTAINER_TITLE[tagName];
         const cls = `custom-container ${tagName}`;
 
@@ -58,10 +58,6 @@ const customContainerPlugin = () => (tree) => {
           ["type"]: title,
         };
 
-        return {
-          ...node,
-          data,
-        };
       }
     }
   });
