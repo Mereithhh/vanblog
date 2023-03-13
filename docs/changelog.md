@@ -5,6 +5,19 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
+### [0.48.3](https://github.com/Mereithhh/vanblog/compare/v0.48.2...v0.48.3) (2023-03-13)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([b49f040](https://github.com/Mereithhh/vanblog/commit/b49f0408def53c1afdcda42c99ce22f03432cc62))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **website:** 作者头像无法显示 ([29eb22e](https://github.com/Mereithhh/vanblog/commit/29eb22e13677ed418d56e34bae25bb9ab704065c))
+* 自定义高亮块不展示 ([82c1ceb](https://github.com/Mereithhh/vanblog/commit/82c1ceb38a8fdbc47a49f2dbe9e6fcaa8dfa02e0))
+
 ### [0.48.2](https://github.com/Mereithhh/vanblog/compare/v0.48.1...v0.48.2) (2023-03-11)
 
 
