@@ -5,30 +5,57 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
-### [0.48.3](https://github.com/Mereithhh/vanblog/compare/v0.48.2...v0.48.3) (2023-03-13)
+### [0.48.3](https://github.com/Mereithhh/vanblog/compare/v0.48.1...v0.48.3) (2023-03-13)
+
+
+### ♻️ Code Refactoring | 代码重构
+
+* **admin:** refine CustomPageModal ([#243](https://github.com/Mereithhh/vanblog/issues/243)) ([ed2689f](https://github.com/Mereithhh/vanblog/commit/ed2689f0712c2c343e6ff52e1835b5f63d4efb8c))
 
 
 ### 🐛 Bug Fixes | Bug 修复
 
+* **admin:** style error ([679d50d](https://github.com/Mereithhh/vanblog/commit/679d50d248687e03682bd58093dcca6fa69b1ab9))
 * **website:** 作者头像无法显示 ([29eb22e](https://github.com/Mereithhh/vanblog/commit/29eb22e13677ed418d56e34bae25bb9ab704065c))
+* 修复auto、dark模式下在刷新后，code模块未同步的情况 ([#227](https://github.com/Mereithhh/vanblog/issues/227)) ([c615d81](https://github.com/Mereithhh/vanblog/commit/c615d819bbbda2147683fc990612673775a43a6a))
 * 自定义高亮块不展示 ([82c1ceb](https://github.com/Mereithhh/vanblog/commit/82c1ceb38a8fdbc47a49f2dbe9e6fcaa8dfa02e0))
 
 
 ### ✏️ Documentation | 文档
 
+* **docs:** update workflow ([2aa9c81](https://github.com/Mereithhh/vanblog/commit/2aa9c81a7096a8fae2ca303eb0730a3ae7e988a3))
+* fix changelog ([#224](https://github.com/Mereithhh/vanblog/issues/224)) ([afa684d](https://github.com/Mereithhh/vanblog/commit/afa684dd4f95c2140346a97684627d253d81ce3d))
+* 更新文档 ([cad2fc6](https://github.com/Mereithhh/vanblog/commit/cad2fc6bf13cca66eda2a549eab1bd8488570dd2))
 * 更新文档 ([b12d3c6](https://github.com/Mereithhh/vanblog/commit/b12d3c666f950cfc0cdd77a55d1b7a994854b5d9))
 * 更新文档 ([b49f040](https://github.com/Mereithhh/vanblog/commit/b49f0408def53c1afdcda42c99ce22f03432cc62))
+* 更新文档 ([79cee57](https://github.com/Mereithhh/vanblog/commit/79cee57a93699afee0b508aed622b12a315975e8))
+* 更新谁在使用 [#246](https://github.com/Mereithhh/vanblog/issues/246) ([b413dfe](https://github.com/Mereithhh/vanblog/commit/b413dfe4e37b520af37be32100ab7bafeefd420a))
 
 
 ### 🚀 Chore | 构建/工程依赖/工具
 
+* add clean script and pnpm workspace yaml ([7ce9293](https://github.com/Mereithhh/vanblog/commit/7ce929379239474cdf30099649db9a2433ab4d3e))
+* **admin:** refine ArticleList ([#235](https://github.com/Mereithhh/vanblog/issues/235)) ([f26ed55](https://github.com/Mereithhh/vanblog/commit/f26ed55b280a4731ae568fb0d73d3c35da28ef39))
+* **admin:** refine AuthorField ([#239](https://github.com/Mereithhh/vanblog/issues/239)) ([6c480d8](https://github.com/Mereithhh/vanblog/commit/6c480d8dcf7111f0bd592a84695bc378a42a14fe))
+* **admin:** refine CodeEditor ([#240](https://github.com/Mereithhh/vanblog/issues/240)) ([eac9a8d](https://github.com/Mereithhh/vanblog/commit/eac9a8d29a63a513da89be59fd04a69dfb6f2fa5))
+* **admin:** refine collaborator-modal ([#237](https://github.com/Mereithhh/vanblog/issues/237)) ([ecb5259](https://github.com/Mereithhh/vanblog/commit/ecb5259bf21644dfd92093b4c659235f4753236a))
+* **admin:** refine ColumnsToolBar ([#241](https://github.com/Mereithhh/vanblog/issues/241)) ([e97768c](https://github.com/Mereithhh/vanblog/commit/e97768c638c1c338e871b19ceee2e43a0345cbb3))
+* **admin:** refine CopyUploadBtn ([#242](https://github.com/Mereithhh/vanblog/issues/242)) ([72e4ef3](https://github.com/Mereithhh/vanblog/commit/72e4ef37c79874190da22dfc16764f249568b8cf))
+* **admin:** refine custom-container plugin ([#244](https://github.com/Mereithhh/vanblog/issues/244)) ([982a41b](https://github.com/Mereithhh/vanblog/commit/982a41b230d5f4b6bba24ab89d7131797a8dabfc))
+* **admin:** update emoji plugin ([#245](https://github.com/Mereithhh/vanblog/issues/245)) ([ec38f5b](https://github.com/Mereithhh/vanblog/commit/ec38f5b3f5a18846b72ee51b2ddc293472a57599))
+* **release:** 0.48.2 ([dfafd04](https://github.com/Mereithhh/vanblog/commit/dfafd04e9089f6fc22a88b8208a584a2a5e06115))
+* **release:** 0.48.3 ([06a8c2c](https://github.com/Mereithhh/vanblog/commit/06a8c2c174f4a99aa8e3526dc14b4aafcdc923d2))
 * **release:** 0.48.3 ([dbf501e](https://github.com/Mereithhh/vanblog/commit/dbf501e8b7397abb3168a0fa07efe68e43ce5c4e))
+* transform to pnpm workspace, refine tsconfig, update dev docs [#179](https://github.com/Mereithhh/vanblog/issues/179) [#199](https://github.com/Mereithhh/vanblog/issues/199) ([8cf6cba](https://github.com/Mereithhh/vanblog/commit/8cf6cba33517bf1b089a493539795db2ef53fd61))
 * update workflow ([4740457](https://github.com/Mereithhh/vanblog/commit/474045792d0acfa42d043d054b3dba64d4c2cf67))
+* update workflow , increase timeout ([f809852](https://github.com/Mereithhh/vanblog/commit/f809852e64ec498d32c9c81131b1b3beada7b80b))
+* 迁移到 pnpm + monorepo, tsconfig 结构优化 ([3be68d0](https://github.com/Mereithhh/vanblog/commit/3be68d0b66ad34a0e49033a175a32e8092341da8))
 
 
 ### ⏪ Revert | 回退
 
 * workflow error ([70ab21b](https://github.com/Mereithhh/vanblog/commit/70ab21b67489fbc0d327d06ff644f13c958d374d))
+* workflow timeout error ([6cf6aa6](https://github.com/Mereithhh/vanblog/commit/6cf6aa6b051dfc1d802b1f87e9c49ad19318b22c))
 
 ### [0.48.2](https://github.com/Mereithhh/vanblog/compare/v0.48.1...v0.48.2) (2023-03-11)
 
