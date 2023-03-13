@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.48.2",
+  "version": "0.48.3",
   "private": true,
   "scripts": {
     "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf packages/*/dist",
