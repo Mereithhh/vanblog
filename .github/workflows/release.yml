@@ -60,9 +60,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
-          cache: yarn
+      - run: npm install --global pnpm
       - name: generateReleaseNote
-        run: yarn release-note
+        run: pnpm run release-note
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
