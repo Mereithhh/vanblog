@@ -14,6 +14,7 @@ import { Code } from "./Code";
 import Img from "./Img";
 import a from "./a";
 export default function (props: { content: string }) {
+  const remarkDirectiveRehypeAny = remarkDirectiveRehype as any;
   return (
     <>
       <ReactMarkdown
@@ -26,7 +27,7 @@ export default function (props: { content: string }) {
           remarkMath,
           remarkGfm,
           remarkDirective,
-          remarkDirectiveRehype,
+          remarkDirectiveRehypeAny,
         ]}
         components={{
           code: Code,

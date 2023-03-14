@@ -5,3 +5,16 @@ npm-debug.log
 README.md
 .next
 .git
+dist
+staticFolder
+logs
+**/*/node_modules
+**/node_modules
+**/*/dist
+**/*/.umi
+**/*/.next
+**/*/.git
+**/*/.gitignore
+**/*/.DS_Store
+**/*/.env
+**/*/.umi-production
