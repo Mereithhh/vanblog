@@ -57,7 +57,6 @@ const customContainerPlugin = () => (tree) => {
           class: cls,
           ["type"]: title,
         };
-
       }
     }
   });

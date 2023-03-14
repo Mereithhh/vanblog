@@ -6,7 +6,7 @@ import rehypeKatex from "rehype-katex";
 import remarkBreaks from "remark-breaks";
 import "katex/dist/katex.min.css";
 import remarkDirective from "remark-directive";
-import remarkRehype from "remark-rehype";
+import remarkDirectiveRehype from "remark-directive-rehype";
 
 import { HeadingRender } from "./heading";
 import { Els } from "./directiveEls";
@@ -26,7 +26,7 @@ export default function (props: { content: string }) {
           remarkMath,
           remarkGfm,
           remarkDirective,
-          remarkRehype
+          remarkDirectiveRehype,
         ]}
         components={{
           code: Code,
