@@ -170,6 +170,7 @@ order: 1
 - [老咸鱼的池塘](https://nixieka.top)
 - [谷粒 corn.li](https://corn.li)
 - [BARM Blog](https://blog.ccz.life)
+- [凌览社](http://www.linglan01.cn)
 
 ## 预览图
 
