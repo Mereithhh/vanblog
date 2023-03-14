@@ -5,6 +5,26 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
+### [0.48.4](https://github.com/Mereithhh/vanblog/compare/v0.48.3...v0.48.4) (2023-03-14)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([3623f68](https://github.com/Mereithhh/vanblog/commit/3623f683014b605a3ac4acbb56bdbcbcbd61316b))
+* 更新文档 ([6911c48](https://github.com/Mereithhh/vanblog/commit/6911c484c5391aa2a55e17550feea7e8b17c63d5))
+* 更新案例 [#232](https://github.com/Mereithhh/vanblog/issues/232) ([cf01aa7](https://github.com/Mereithhh/vanblog/commit/cf01aa7e013c0e0893c2998699b5b5cafb4105b5))
+* 补充访客统计文档 ([fa29dd9](https://github.com/Mereithhh/vanblog/commit/fa29dd9ad7e28cf1ce1818390316b9bc05657808))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 前台不展示自定义高亮块 ([dae79f9](https://github.com/Mereithhh/vanblog/commit/dae79f95d7cfdd05049708c34b73af14006eb17e))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* 更新依赖 ([76a5c45](https://github.com/Mereithhh/vanblog/commit/76a5c45babe30666d6d153c4d057bb5c11390f7e))
+
 ### [0.48.3](https://github.com/Mereithhh/vanblog/compare/v0.48.1...v0.48.3) (2023-03-13)
 
 
