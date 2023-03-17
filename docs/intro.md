@@ -171,6 +171,7 @@ order: 1
 - [谷粒 corn.li](https://corn.li)
 - [BARM Blog](https://blog.ccz.life)
 - [凌览社](http://www.linglan01.cn)
+- [Peter's blog](https://niuery.com)
 
 ## 预览图
 
