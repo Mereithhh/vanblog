@@ -86,6 +86,7 @@ import { Pipeline, PipelineSchema } from './scheme/pipeline.schema';
 import { PipelineProvider } from './provider/pipeline/pipeline.provider';
 import { PipelineController } from './controller/admin/pipeline/pipeline.controller';
 import { TokenController } from './controller/admin/token/token.controller';
+import { initJwt } from './utils/initJwt';
 
 @Module({
   imports: [
@@ -106,11 +107,15 @@ import { TokenController } from './controller/admin/token/token.controller';
       { name: Category.name, schema: CategorySchema },
       { name: Pipeline.name, schema: PipelineSchema },
     ]),
-    JwtModule.register({
-      secret: config.jwtSecret,
-      signOptions: {
-        expiresIn: 3600 * 24 * 7,
-      },
+    JwtModule.registerAsync({
+      useFactory: async () => {
+        return {
+          secret: await initJwt(),
+          signOptions: {
+            expiresIn: 3600 * 24 * 7,
+          },
+        };
+      }
     }),
     ScheduleModule.forRoot(),
   ],

@@ -271,6 +271,7 @@ importers:
       markdown-it: ^13.0.1
       markdown-it-katex: ^2.0.3
       markdown-it-task-lists: ^2.1.1
+      mongodb: ^5.1.0
       mongoose: ^7.0.1
       passport: ^0.6.0
       passport-jwt: ^4.0.1
@@ -319,6 +320,7 @@ importers:
       markdown-it: 13.0.1
       markdown-it-katex: 2.0.3
       markdown-it-task-lists: 2.1.1
+      mongodb: 5.1.0
       mongoose: 7.0.1
       passport: 0.6.0
       passport-jwt: 4.0.1
@@ -5054,7 +5056,7 @@ packages:
     engines: {node: ^14.15.0 || >=16.0.0}
     dependencies:
       chalk: 4.1.0
-      execa: 5.0.0
+      execa: 5.1.1
       strong-log-transformer: 2.1.0
     dev: true
 
@@ -8797,11 +8799,9 @@ packages:
       lodash.kebabcase: 4.1.1
       svg-tags: 1.0.0
 
-  /@vue/babel-preset-app/4.5.19_jkiot65yrgc57vckyn6vfhgytq:
+  /@vue/babel-preset-app/4.5.19_vue@2.7.14:
     resolution: {integrity: sha512-VCNRiAt2P/bLo09rYt3DLe6xXUMlhJwrvU18Ddd/lYJgC7s8+wvhgYs+MTx4OiAXdu58drGwSBO9SPx7C6J82Q==}
     peerDependencies:
-      '@babel/core': '*'
-      core-js: ^3
       vue: ^2 || ^3.0.0-0
     peerDependenciesMeta:
       core-js:
@@ -9100,7 +9100,7 @@ packages:
     engines: {node: '>=8.6'}
     dependencies:
       '@babel/core': 7.21.0
-      '@vue/babel-preset-app': 4.5.19_jkiot65yrgc57vckyn6vfhgytq
+      '@vue/babel-preset-app': 4.5.19_vue@2.7.14
       '@vuepress/markdown': 1.9.9
       '@vuepress/markdown-loader': 1.9.9
       '@vuepress/plugin-last-updated': 1.9.9
@@ -34777,14 +34777,6 @@ packages:
     engines: {node: ^14.18.0 || >=16.0.0, npm: '>=8', pnpm: '>=7'}
     peerDependencies:
       '@vuepress/client': 2.0.0-beta.61
-      '@vuepress/plugin-active-header-links': 2.0.0-beta.61
-      '@vuepress/plugin-container': 2.0.0-beta.61
-      '@vuepress/plugin-external-link-icon': 2.0.0-beta.61
-      '@vuepress/plugin-git': 2.0.0-beta.61
-      '@vuepress/plugin-nprogress': 2.0.0-beta.61
-      '@vuepress/plugin-palette': 2.0.0-beta.61
-      '@vuepress/plugin-prismjs': 2.0.0-beta.61
-      '@vuepress/plugin-theme-data': 2.0.0-beta.61
       sass-loader: ^13.2.0
       vuepress: 2.0.0-beta.61
       vuepress-plugin-auto-catalog: 2.0.0-beta.193

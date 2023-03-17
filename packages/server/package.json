@@ -52,6 +52,7 @@
     "markdown-it": "^13.0.1",
     "markdown-it-katex": "^2.0.3",
     "markdown-it-task-lists": "^2.1.1",
+    "mongodb": "^5.1.0",
     "mongoose": "^7.0.1",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.1",

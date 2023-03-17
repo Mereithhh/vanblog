@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { config } from 'src/config/index';
 import { MetaProvider } from '../meta/meta.provider';
 import { UserProvider } from '../user/user.provider';
 
@@ -14,7 +13,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     super({
       // 获取请求header token值
       jwtFromRequest: ExtractJwt.fromHeader('token'),
-      secretOrKey: config.jwtSecret,
+      // 从 initJwtSecret 获取 jwt 密钥
+      secretOrKey      : global.jwtSecret,
     });
   }
 
