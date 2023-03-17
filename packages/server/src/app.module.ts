@@ -85,6 +85,7 @@ import {
 import { Pipeline, PipelineSchema } from './scheme/pipeline.schema';
 import { PipelineProvider } from './provider/pipeline/pipeline.provider';
 import { PipelineController } from './controller/admin/pipeline/pipeline.controller';
+import { TokenController } from './controller/admin/token/token.controller';
 
 @Module({
   imports: [
@@ -140,7 +141,8 @@ import { PipelineController } from './controller/admin/pipeline/pipeline.control
     CustomPageController,
     PublicCustomPageController,
     PublicOldCustomPageRedirectController,
-    PipelineController
+    PipelineController,
+    TokenController
   ],
   providers: [
     AppService,

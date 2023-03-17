@@ -16,6 +16,38 @@ export class TokenProvider {
     private readonly settingProvider: SettingProvider,
   ) {}
 
+
+  async getAllAPIToken() {
+    this.logger.log(`获取所有 API Token`);
+    return await this.tokenModel.find({ userId: 666666 ,disabled:false}).exec();
+  }
+
+  async disableAPIToken(token: string) {
+    return await this.tokenModel.updateOne({ token }, { disabled: true });
+  }
+  async disableAPITokenByName(name: string) {
+    return await this.tokenModel.updateOne({ name }, { disabled: true });
+  }
+  async disableAPITokenById(id: string) {
+    return await this.tokenModel.updateOne({ _id: id }, { disabled: true });
+  }
+
+  async createAPIToken(name: string) {
+    this.logger.log(`创建 API Token`);
+    // 100年过期
+    const expiresIn = 3600*24*365*100;
+    const token = this.jwtService.sign({
+      sub: 0,
+      username: name,
+      role: 'admin',
+    }, {
+      expiresIn,
+    });
+    // 默认666666是 api token
+    this.tokenModel.create({ userId: 666666,name, token, expiresIn });
+    return token;
+  }
+
   async createToken(payload: any) {
     this.logger.debug(`用户 ${payload.username} 登录，创建 Token。`);
     const loginSetting = await this.settingProvider.getLoginSetting();

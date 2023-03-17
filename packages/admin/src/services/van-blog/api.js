@@ -551,3 +551,28 @@ export async function triggerPipelineById(id,input) {
     }
   )
 }
+export async function createApiToken(data) {
+  return request(
+    `/api/admin/token`,
+    {
+      method: 'POST',
+      data,
+    }
+  )
+}
+export async function deleteApiToken(id) {
+  return request(
+    `/api/admin/token/${id}`,
+    {
+      method: 'DELETE',
+    }
+  )
+}
+export async function getAllApiTokens() {
+  return request(
+    `/api/admin/token`,
+    {
+      method: 'GET',
+    }
+  )
+}
