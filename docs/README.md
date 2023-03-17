@@ -29,7 +29,7 @@ features:
 
   - title: 定制化
     icon: wand-magic-sparkles
-    details: 可添加自定义 HTML、CSS、JS，后续将支持主题与插件
+    details: 可添加自定义 HTML、CSS、JS，强大的流水线功能，后续将支持主题与插件
 
   - title: 内置图床
     icon: image
