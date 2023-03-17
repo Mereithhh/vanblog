@@ -82,6 +82,9 @@ import {
   PublicCustomPageController,
   PublicOldCustomPageRedirectController,
 } from './controller/customPage/customPage.controller';
+import { Pipeline, PipelineSchema } from './scheme/pipeline.schema';
+import { PipelineProvider } from './provider/pipeline/pipeline.provider';
+import { PipelineController } from './controller/admin/pipeline/pipeline.controller';
 
 @Module({
   imports: [
@@ -100,6 +103,7 @@ import {
       { name: CustomPage.name, schema: CustomPageSchema },
       { name: Token.name, schema: TokenSchema },
       { name: Category.name, schema: CategorySchema },
+      { name: Pipeline.name, schema: PipelineSchema },
     ]),
     JwtModule.register({
       secret: config.jwtSecret,
@@ -136,6 +140,7 @@ import {
     CustomPageController,
     PublicCustomPageController,
     PublicOldCustomPageRedirectController,
+    PipelineController
   ],
   providers: [
     AppService,
@@ -172,6 +177,7 @@ import {
     TokenProvider,
     TokenGuard,
     WebsiteProvider,
+    PipelineProvider
   ],
 })
 export class AppModule implements NestModule {

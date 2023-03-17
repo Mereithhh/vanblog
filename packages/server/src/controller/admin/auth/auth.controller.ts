@@ -19,6 +19,7 @@ import { LoginGuard } from 'src/provider/auth/login.guard';
 import { TokenProvider } from 'src/provider/token/token.provider';
 import { CacheProvider } from 'src/provider/cache/cache.provider';
 import { InitProvider } from 'src/provider/init/init.provider';
+import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
 
 @ApiTags('tag')
 @Controller('/api/admin/auth/')
@@ -30,6 +31,7 @@ export class AuthController {
     private readonly tokenProvider: TokenProvider,
     private readonly cacheProvider: CacheProvider,
     private readonly initProvider: InitProvider,
+    private readonly pipelineProvider: PipelineProvider,
   ) {}
 
   @UseGuards(LoginGuard, AuthGuard('local'))
@@ -44,14 +46,16 @@ export class AuthController {
     }
     // 能到这里登陆就成功了
     this.logProvider.login(request, true);
+    const data = await this.authProvider.login(request.user);
+    this.pipelineProvider.dispatchEvent('login', data)
     return {
       statusCode: 200,
-      data: await this.authProvider.login(request.user),
+      data ,
     };
   }
 
   @Post('/logout')
-  async logout(@Request() request: Request) {
+  async logout(@Request() request: any) {
     const token = request.headers['token'];
     if (!token) {
       throw new UnauthorizedException({
@@ -59,6 +63,9 @@ export class AuthController {
         message: '无登录凭证！',
       });
     }
+    this.pipelineProvider.dispatchEvent('logout', {
+      token,
+    })
     await this.tokenProvider.disableToken(token);
     return {
       statusCode: 200,

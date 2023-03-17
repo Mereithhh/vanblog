@@ -8,6 +8,8 @@ import lineReader from 'line-reader';
 import { config } from 'src/config';
 import path from 'path';
 import { checkOrCreate } from 'src/utils/checkFolder';
+import { Pipeline } from 'src/scheme/pipeline.schema';
+import { CodeResult } from '../pipeline/pipeline.provider';
 @Injectable()
 export class LogProvider {
   logger = null;
@@ -24,6 +26,19 @@ export class LogProvider {
     ];
     this.logger = pino({ level: 'debug' }, pino.multistream(streams));
     this.logger.info({ event: 'start' });
+  }
+  async runPipeline(pipeline: Pipeline, input: any,result?:CodeResult, error?: Error) {
+    this.logger.info({
+      event: EventType.RUN_PIPELINE,
+      pipelineId: pipeline.id,
+      pipelineName: pipeline.name,
+      eventName: pipeline.eventName,
+      success: result?.status == 'success' ? true : false,
+      logs: result?.logs || [],
+      output: result?.output || [],
+      serverError: error?.message || '',
+      input,
+    })
   }
   async login(req: Request, success: boolean) {
     const logger = this.logger;

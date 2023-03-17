@@ -492,3 +492,62 @@ export async function getWelcomeData(tab, overviewNum = 5, viewNum = 5, articleT
     },
   );
 }
+export async function getPiplelines() {
+  return request(
+    `/api/admin/pipeline`,
+    {
+      method: 'GET',
+    }
+  )
+}
+export async function getPipelineConfig() {
+  return request(
+    `/api/admin/pipeline/config`,
+    {
+      method: 'GET',
+    }
+  )
+}
+export async function getPipelineById(id) {
+  return request(
+    `/api/admin/pipeline/${id}`,
+    {
+      method: 'GET',
+    }
+  )
+}
+export async function updatePipelineById(id,data) {
+  return request(
+    `/api/admin/pipeline/${id}`,
+    {
+      method: 'PUT',
+      data,
+    }
+  )
+}
+export async function deletePipelineById(id) {
+  return request(
+    `/api/admin/pipeline/${id}`,
+    {
+      method: 'DELETE',
+    }
+  )
+}
+export async function createPipeline(data) {
+  return request(
+    `/api/admin/pipeline`,
+    {
+      method: 'POST',
+      data,
+    }
+  )
+}
+export async function triggerPipelineById(id,input) {
+  return request(
+    `/api/admin/pipeline/trigger/${id}`,
+    {
+      method: 'POST',
+      data: input,
+    }
+  )
+}

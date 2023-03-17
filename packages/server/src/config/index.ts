@@ -5,6 +5,8 @@ export interface Config {
   mongoUrl: string;
   jwtSecret: string;
   staticPath: string;
+  codeRunnerPath: string;
+  pluginRunnerPath: string;
   walineDB: string;
   demo: boolean | string;
   log: string;
@@ -32,4 +34,6 @@ export const config: Config = {
   demo: loadConfig('demo', false),
   walineDB: loadConfig('waline.db', 'waline'),
   log: loadConfig('log', '/var/log'),
+  codeRunnerPath: loadConfig('codeRunner.path', '/app/codeRunner'),
+  pluginRunnerPath: loadConfig('pluginRunner.path', '/app/pluginRunner'),
 };

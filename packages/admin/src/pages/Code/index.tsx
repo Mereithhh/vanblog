@@ -6,12 +6,17 @@ import {
   getCustomPageFolderTreeByPath,
   updateCustomPage,
   updateCustomPageFileInFolder,
+  getPipelineById,
+  updatePipelineById,
+  getPipelineConfig
 } from '@/services/van-blog/api';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Menu, message, Modal, Space, Spin, Tag, Tree } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { history } from 'umi';
+import PipelineModal from '../Pipeline/components/PipelineModal';
+import RunCodeModal from '../Pipeline/components/RunCodeModal';
 import './index.less';
 const { DirectoryTree } = Tree;
 
@@ -20,6 +25,7 @@ export default function () {
   const [currObj, setCurrObj] = useState<any>({});
   const [node, setNode] = useState();
   const [selectedKeys, setSelectedKeys] = useState([]);
+  const [pipelineConfig, setPipelineConfig] = useState<any[]>([]);
   const [pathPrefix, setPathPrefix] = useState('');
   const [treeData, setTreeData] = useState([{ title: 'door', key: '123' }]);
   const [uploadLoading, setUploadLoading] = useState(false);
@@ -29,13 +35,23 @@ export default function () {
   const [editorHeight, setEditorHeight] = useState('calc(100vh - 82px)');
   const type = history.location.query?.type;
   const path = history.location.query?.path;
+  const id = history.location.query?.id;
   const isFolder = type == 'folder';
   const typeMap = {
     file: '单文件页面',
     folder: '多文件页面',
+    pipeline: '流水线',
   };
 
+  useEffect(() => {
+    getPipelineConfig().then(({ data }) => {
+      setPipelineConfig(data);
+    });
+  }, [])
   const language = useMemo(() => {
+    if (type == 'pipeline') {
+      return 'javascript';
+    }
     if (!node) {
       return 'html';
     }
@@ -100,6 +116,30 @@ export default function () {
     setEditorHeight(`calc(100vh - ${HeaderHeight + 12}px)`);
   };
 
+  const onKeyDown = (ev) => {
+    let save = false;
+    if (ev.metaKey == true && ev.key.toLocaleLowerCase() == 's') {
+      save = true;
+    }
+    if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == 's') {
+      save = true;
+    }
+    if (save) {
+      event?.preventDefault();
+      ev?.preventDefault();
+      handleSave();
+    }
+    return false;
+  };
+
+  useEffect(() => {
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [currObj, value, type]);
+
+
   useEffect(() => {
     setTimeout(() => {
       updateEditorSize();
@@ -114,7 +154,7 @@ export default function () {
     setEditorLoading(false);
   };
   const fetchData = useCallback(async () => {
-    if (!path) {
+    if (!path && !id) {
       message.error('无有效信息，无法获取数据！');
       return;
     } else {
@@ -124,7 +164,20 @@ export default function () {
         const { data } = await getCustomPageFolderTreeByPath(path);
         if (data) setTreeData(data);
         setTreeLoading(false);
-      } else {
+      } else if (type == "pipeline") {
+        if (!id) {
+          message.error('无有效信息，无法获取数据！');
+          return;
+        }
+        setEditorLoading(true);
+        const { data } = await getPipelineById(id);
+        if (data) {
+          setCurrObj(data);
+          setValue(data?.script || '');
+        }
+        setEditorLoading(false);
+      }
+      else {
         setEditorLoading(true);
         const { data } = await getCustomPageByPath(path);
         if (data) {
@@ -147,7 +200,14 @@ export default function () {
       await updateCustomPage({ ...currObj, html: value });
       setEditorLoading(false);
       message.success('当前编辑器内文件保存成功！');
-    } else {
+    } else if (type == "pipeline") {
+      setEditorLoading(true);
+      await updatePipelineById(currObj.id, { script: value });
+      setEditorLoading(false);
+      message.success('当前编辑器内脚本保存成功！');
+    }
+
+    else {
       setEditorLoading(true);
       await updateCustomPageFileInFolder(path, node?.key, value);
       setEditorLoading(false);
@@ -164,6 +224,16 @@ export default function () {
           label: '保存',
           onClick: handleSave,
         },
+        ...(type == "pipeline" ? [
+          {
+            key: "runPipeline",
+            label: <RunCodeModal pipeline={currObj} trigger={<a>调试脚本</a>} />
+          },
+          {
+            key: 'editPipelineInfo',
+            label: <PipelineModal mode="edit" trigger={<a>编辑信息</a>} onFinish={(vals) => { console.log(vals) }} initialValues={currObj} />
+          }
+        ] : []),
         ...(isFolder
           ? [
               {
@@ -207,14 +277,13 @@ export default function () {
               },
             ]
           : []),
-
-        {
+        ...(type == 'file' ? [{
           key: 'view',
           label: '查看',
           onClick: () => {
             window.open(`/c${path}`);
           },
-        },
+        }] : [])
       ]}
     ></Menu>
   );
@@ -230,6 +299,10 @@ export default function () {
             <span title={currObj?.name}>{currObj?.name}</span>
             <>
               <Tag color="green">{typeMap[type] || '未知类型'}</Tag>
+              {type == "pipeline" && <>
+                <Tag color="blue">{pipelineConfig?.find(p => p.eventName == currObj.eventName)?.eventNameChinese}</Tag>
+                {pipelineConfig?.find(p => p.eventName == currObj.eventName)?.passive ? <Tag color="yellow">非阻塞</Tag> : <Tag color="red">阻塞</Tag>}
+              </>}
             </>
           </Space>
         ),
