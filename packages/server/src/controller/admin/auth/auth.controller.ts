@@ -20,6 +20,7 @@ import { TokenProvider } from 'src/provider/token/token.provider';
 import { CacheProvider } from 'src/provider/cache/cache.provider';
 import { InitProvider } from 'src/provider/init/init.provider';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('tag')
 @Controller('/api/admin/auth/')
@@ -103,6 +104,7 @@ export class AuthController {
   }
 
   @UseGuards(...AdminGuard)
+  @ApiToken
   @Put()
   async updateUser(@Body() updateUserDto: UpdateUserDto) {
     if (config?.demo == true || config?.demo == 'true') {

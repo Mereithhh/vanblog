@@ -6,8 +6,10 @@ import {
   AnalysisProvider,
   WelcomeTab,
 } from 'src/provider/analysis/analysis.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('analysis')
+@ApiToken
 @UseGuards(...AdminGuard)
 @Controller('/api/admin/analysis')
 export class AnalysisController {

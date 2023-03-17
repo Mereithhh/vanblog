@@ -10,7 +10,7 @@ import {
   Req,
   UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiHeader, ApiSecurity, ApiTags } from '@nestjs/swagger';
 import { config } from 'src/config';
 import { CreateArticleDto, UpdateArticleDto } from 'src/types/article.dto';
 import { SortOrder } from 'src/types/sort';
@@ -18,7 +18,9 @@ import { ArticleProvider } from 'src/provider/article/article.provider';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 @ApiTags('article')
+@ApiToken
 @UseGuards(...AdminGuard)
 @Controller('/api/admin/article')
 export class ArticleController {

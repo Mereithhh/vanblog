@@ -5,11 +5,13 @@ import { ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 import { WebsiteProvider } from 'src/provider/website/website.provider';
 import { ISRSetting } from 'src/types/setting.dto';
 
 @ApiTags('isr')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/isr')
 export class ISRController {
   constructor(

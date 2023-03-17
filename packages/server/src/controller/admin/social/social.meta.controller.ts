@@ -15,8 +15,10 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { config } from 'src/config';
 import { WebsiteProvider } from 'src/provider/website/website.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 @ApiTags('social')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/meta/social')
 export class SocialMetaController {
   constructor(

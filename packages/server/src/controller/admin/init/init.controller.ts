@@ -13,8 +13,10 @@ import { InitDto } from 'src/types/init.dto';
 import { InitProvider } from 'src/provider/init/init.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { StaticProvider } from 'src/provider/static/static.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('init')
+@ApiToken
 @Controller('/api/admin')
 export class InitController {
   constructor(

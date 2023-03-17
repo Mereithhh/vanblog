@@ -17,10 +17,12 @@ import { config } from 'src/config';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
 import { StaticProvider } from 'src/provider/static/static.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 import { CustomPage } from 'src/scheme/customPage.schema';
 
 @ApiTags('customPage')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/customPage')
 export class CustomPageController {
   private readonly logger = new Logger(CustomPageController.name);

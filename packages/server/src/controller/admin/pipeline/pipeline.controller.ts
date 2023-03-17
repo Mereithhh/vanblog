@@ -5,9 +5,11 @@ import { Request } from 'express';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
 import { CreatePipelineDto } from 'src/types/pipeline.dto';
 import { VanblogSystemEvents } from 'src/types/event';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('pipeline')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/pipeline')
 export class PipelineController {
   constructor(private readonly pipelineProvider: PipelineProvider) {}

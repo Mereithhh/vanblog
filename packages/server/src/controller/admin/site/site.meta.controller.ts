@@ -8,8 +8,10 @@ import { WalineProvider } from 'src/provider/waline/waline.provider';
 import { config } from 'src/config';
 import { WebsiteProvider } from 'src/provider/website/website.provider';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 @ApiTags('site')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/meta/site')
 export class SiteMetaController {
   constructor(

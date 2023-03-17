@@ -14,8 +14,10 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { config } from 'src/config';
+import { ApiToken } from 'src/provider/swagger/token';
 @ApiTags('link')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/meta/link')
 export class LinkMetaController {
   constructor(

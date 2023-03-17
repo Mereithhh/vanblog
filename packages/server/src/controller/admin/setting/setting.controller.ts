@@ -12,9 +12,11 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { WalineProvider } from 'src/provider/waline/waline.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('setting')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/setting')
 export class SettingController {
   constructor(

@@ -5,9 +5,11 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { Request } from 'express';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { getVersionFromServer } from 'src/utils/getVersion';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('meta')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/meta')
 export class MetaController {
   constructor(private readonly metaProvider: MetaProvider) {}

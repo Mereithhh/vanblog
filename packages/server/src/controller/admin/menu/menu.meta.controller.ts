@@ -7,7 +7,9 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { config } from 'src/config';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { MenuSetting } from 'src/types/setting.dto';
+import { ApiToken } from 'src/provider/swagger/token';
 @ApiTags('menu')
+@ApiToken
 @UseGuards(...AdminGuard)
 @Controller('/api/admin/meta/menu')
 export class MenuMetaController {

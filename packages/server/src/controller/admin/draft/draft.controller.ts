@@ -22,9 +22,11 @@ import { DraftProvider } from 'src/provider/draft/draft.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { config } from 'src/config';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('draft')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/draft')
 export class DraftController {
   constructor(

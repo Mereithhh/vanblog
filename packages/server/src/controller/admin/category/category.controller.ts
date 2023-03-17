@@ -15,9 +15,11 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { config } from 'src/config';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('category')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/category/')
 export class CategoryController {
   constructor(

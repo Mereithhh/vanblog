@@ -11,9 +11,11 @@ import { ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { config } from 'src/config';
 import { TokenProvider } from 'src/provider/token/token.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('token')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/token/')
 export class TokenController {
   constructor(

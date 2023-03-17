@@ -16,8 +16,10 @@ import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { HttpsSetting } from 'src/types/setting.dto';
 import { CaddyProvider } from 'src/provider/caddy/caddy.provider';
 import { isIpv4 } from 'src/utils/ip';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('caddy')
+@ApiToken
 @Controller('/api/admin/caddy')
 export class CaddyController {
   private readonly logger = new Logger(CaddyController.name);

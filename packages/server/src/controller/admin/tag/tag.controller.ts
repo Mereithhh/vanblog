@@ -11,8 +11,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { config } from 'src/config';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 import { TagProvider } from 'src/provider/tag/tag.provider';
 @ApiTags('tag')
+@ApiToken
 @UseGuards(...AdminGuard)
 @Controller('/api/admin/tag/')
 export class TagController {

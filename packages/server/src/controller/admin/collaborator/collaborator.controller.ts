@@ -14,6 +14,7 @@ import { config } from 'src/config';
 
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
+import { ApiToken } from 'src/provider/swagger/token';
 import { TokenProvider } from 'src/provider/token/token.provider';
 
 import { UserProvider } from 'src/provider/user/user.provider';
@@ -21,6 +22,7 @@ import { Collaborator } from 'src/types/collaborator';
 
 @ApiTags('collaborator')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/collaborator/')
 export class CollaboratorController {
   constructor(

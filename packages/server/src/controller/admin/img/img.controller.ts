@@ -16,9 +16,11 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { StaticProvider } from 'src/provider/static/static.provider';
 import { config } from 'src/config';
 import { checkTrue } from 'src/utils/checkTrue';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('img')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/img')
 export class ImgController {
   constructor(private readonly staticProvider: StaticProvider) {}

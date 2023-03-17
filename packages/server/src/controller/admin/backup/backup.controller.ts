@@ -28,9 +28,11 @@ import { VisitProvider } from 'src/provider/visit/visit.provider';
 import { StaticProvider } from 'src/provider/static/static.provider';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { config } from 'src/config';
+import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('backup')
 @UseGuards(...AdminGuard)
+@ApiToken
 @Controller('/api/admin/backup')
 export class BackupController {
   private readonly logger = new Logger(BackupController.name);
