@@ -1,4 +1,29 @@
 # Changelog
+## [0.49.0](https://github.com/Mereithhh/vanblog/compare/v0.48.4...v0.49.0) (2023-03-17)
+
+
+### ✨ Features | 新功能
+
+* API Token 管理功能 ([e1adcf1](https://github.com/Mereithhh/vanblog/commit/e1adcf1c2fcb90dbd24ccff50a671123fed40d98))
+* jwt 密钥持久化存数据库 ([6440732](https://github.com/Mereithhh/vanblog/commit/644073205445821879ccbcefdddd7cdf50606917))
+* 更新 API 文档 ([4444d54](https://github.com/Mereithhh/vanblog/commit/4444d541cd52403d787501ca0f2481139760c738))
+* 流水线功能,可在特定事件发生后执行自定义的任意js代码 ([63263fa](https://github.com/Mereithhh/vanblog/commit/63263fa24fbe4e03e251d883051a72d320cba886))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **server:** 单独开发模式时，不触发 isr ([757abba](https://github.com/Mereithhh/vanblog/commit/757abbafb6c794ac08ef1642c0d04f27b582510e))
+* 构建报错 ([27434d1](https://github.com/Mereithhh/vanblog/commit/27434d1cc6ddfc7647c5ddf5c98fa2945126913d))
+
+
+### ✏️ Documentation | 文档
+
+* 更新API token相关文档 ([0d8d04d](https://github.com/Mereithhh/vanblog/commit/0d8d04d9a875b5fd5f8acac153b235dc087043a5))
+* 更新文档 ([5ebf893](https://github.com/Mereithhh/vanblog/commit/5ebf8931a9acde32716b94a87b6e855b40020f53))
+* 更新文档todo ([810bfac](https://github.com/Mereithhh/vanblog/commit/810bfac6e784ff5b4ec58943291308c32279277d))
+* 更新流水线相关文档 ([287e9b1](https://github.com/Mereithhh/vanblog/commit/287e9b1be0e655cb3fedd7fa36195bb2c9de888d))
+* 更新谁在使用 [#255](https://github.com/Mereithhh/vanblog/issues/255) ([ff2fa61](https://github.com/Mereithhh/vanblog/commit/ff2fa619b74707c741567a6003e0ae0c7def0338))
+
 ### [0.48.4](https://github.com/Mereithhh/vanblog/compare/v0.48.3...v0.48.4) (2023-03-14)
 
 
