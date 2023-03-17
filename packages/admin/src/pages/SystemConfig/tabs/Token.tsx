@@ -70,7 +70,7 @@ export default function () {
                         <a
                           target="_blank"
                           rel="noreferrer"
-                          href="https://vanblog.mereith.com/reference/api.html"
+                          href="https://vanblog.mereith.com/advanced/token.html"
                         >
                           相关文档
                         </a>
