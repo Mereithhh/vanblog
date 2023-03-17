@@ -92,6 +92,9 @@ export default function () {
         />
       )
     }}
+    extra={<Button onClick={() => {
+      window.open("https://vanblog.mereith.com/features/pipeline.html", "_blank")
+    }}>帮助文档</Button>}
   >
     <ProTable
       actionRef={actionRef}
@@ -100,7 +103,11 @@ export default function () {
       }}
       toolBarRender={(action) => {
         return [
-          <PipelineModal mode="create" key="createPipelineBtn1" trigger={<Button type="primary">新建</Button>} onFinish={() => {
+          <PipelineModal
+            mode="create"
+            key="createPipelineBtn1"
+            trigger={<Button type="primary">新建</Button>}
+            onFinish={() => {
             action.reload();
           }} />,
           <Button key="viewLog" onClick={() => { history.push("/site/log?tab=pipeline") }}>运行日志</Button>

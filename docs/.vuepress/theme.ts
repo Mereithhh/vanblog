@@ -28,6 +28,11 @@ export default hopeTheme({
     "/features/",
     "/faq/",
     {
+      text: "API",
+      icon: "fas fa-book",
+      link: "https://blog-demo.mereith.com/swagger",
+    },
+    {
       text: "Demo",
       icon: "laptop-code",
       link: "https://blog-demo.mereith.com",
