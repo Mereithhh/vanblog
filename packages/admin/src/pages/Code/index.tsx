@@ -232,13 +232,6 @@ export default function () {
           {
             key: 'editPipelineInfo',
             label: <PipelineModal mode="edit" trigger={<a>编辑信息</a>} onFinish={(vals) => { console.log(vals) }} initialValues={currObj} />
-          },
-          {
-            key: "helpPipeline",
-            label: "帮助文档",
-            onClick: () => {
-              window.open("https://vanblog.mereith.com/features/pipeline.html", "_blank")
-            }
           }
         ] : []),
         ...(isFolder
@@ -331,7 +324,11 @@ export default function () {
           <Button
             key="docBtn"
             onClick={() => {
-              window.open('https://vanblog.mereith.com/feature/advance/customPage.html');
+              if (type == "pipeline") {
+                window.open("https://vanblog.mereith.com/features/pipeline.html", "_blank")
+              } else {
+                window.open('https://vanblog.mereith.com/feature/advance/customPage.html', "_blank");
+              }
             }}
           >
             文档
