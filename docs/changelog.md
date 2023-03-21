@@ -5,6 +5,29 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
+## [0.50.0](https://github.com/Mereithhh/vanblog/compare/v0.49.0...v0.50.0) (2023-03-21)
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([8392dc3](https://github.com/Mereithhh/vanblog/commit/8392dc3cc5cababd7e5ac8c70a850d23551229b8))
+
+
+### ✨ Features | 新功能
+
+* 前后台统一Markdown组件，展示效果完全一致；解决了主题重影问题 [#136](https://github.com/Mereithhh/vanblog/issues/136) ([4c09630](https://github.com/Mereithhh/vanblog/commit/4c09630461939503ba00ef204b2632304825e9bf))
+
+
+### 💄 Styles | 风格
+
+* 前台目录增加最大高度 ([e6e05ea](https://github.com/Mereithhh/vanblog/commit/e6e05ea06c513c409fafad87532cca4f73bbf587))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **admin:** 代码编辑器中流水线帮助文档打不开 ([5d0a7fb](https://github.com/Mereithhh/vanblog/commit/5d0a7fb866230f2d03be5ff2c082e585a33647c6))
+* 开始加载时导航栏右上角样式闪动 [#188](https://github.com/Mereithhh/vanblog/issues/188) ([7d5a82c](https://github.com/Mereithhh/vanblog/commit/7d5a82cb463e26ff49badded9ec444b187ece236))
+
 ## [0.49.0](https://github.com/Mereithhh/vanblog/compare/v0.48.4...v0.49.0) (2023-03-17)
 
 

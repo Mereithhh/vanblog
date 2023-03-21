@@ -65,6 +65,7 @@ export default function EditorComponent(props: {
           plugins={plugins}
           onChange={props.onChange}
           locale={cn}
+          
           uploadImages={async (files: File[]) => {
             setLoading(true);
             const res = [];
