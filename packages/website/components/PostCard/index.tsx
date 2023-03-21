@@ -2,7 +2,6 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import AlertCard from "../AlertCard";
 import CopyRight from "../CopyRight";
-import Markdown from "../Markdown";
 import Reward from "../Reward";
 import TopPinIcon from "../TopPinIcon";
 import UnLockCard from "../UnLockCard";
@@ -12,6 +11,7 @@ import { SubTitle, Title } from "./title";
 import { getTarget } from "../Link/tools";
 import TocMobile from "../TocMobile";
 import { hasToc } from "../../utils/hasToc";
+import Markdown from "../Markdown";
 
 export default function (props: {
   id: number | string;
@@ -123,7 +123,7 @@ export default function (props: {
           ) : (
             <>
               {showToc && <TocMobile content={calContent} />}
-              <Markdown content={calContent}></Markdown>
+                <Markdown content={calContent}></Markdown>
             </>
           )}
         </div>

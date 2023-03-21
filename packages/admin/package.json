@@ -59,8 +59,8 @@
     "@bytemd/plugin-breaks": "^1.17.2",
     "@bytemd/plugin-frontmatter": "^1.17.2",
     "@bytemd/plugin-gfm": "^1.17.2",
-    "@bytemd/plugin-highlight": "^1.17.2",
-    "@bytemd/plugin-math": "^1.17.2",
+    "@bytemd/plugin-highlight-ssr": "^1.20.2",
+    "@bytemd/plugin-math-ssr": "^1.20.2",
     "@bytemd/plugin-medium-zoom": "^1.17.2",
     "@bytemd/plugin-mermaid": "^1.17.2",
     "@bytemd/react": "^1.17.2",
@@ -93,6 +93,7 @@
     "react-dom": "^17.0.0",
     "react-helmet-async": "^1.2.0",
     "react-monaco-editor": "^0.50.1",
+    "rehype-raw": "^6.1.1",
     "remark-directive": "^2.0.1",
     "umi": "^3.5.0",
     "unist-util-visit": "^4.1.1"

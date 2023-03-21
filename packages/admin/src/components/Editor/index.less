@@ -1,104 +1,3 @@
-.custom-container {
-  --info-title-color: #193c47;
-  --info-bg-color: #eef9fd;
-  --info-border-color: #4cb3d4;
-
-  --note-title-color: #474748;
-  --note-bg-color: #fdfdfe;
-  --note-border-color: #d4d5d8;
-
-  --tip-title-color: #003100;
-  --tip-bg-color: #e6f6e6;
-  --tip-border-color: #009400;
-
-  --warning-title-color: #4d3800;
-  --warning-bg-color: #fff8e6;
-  --warning-border-color: #e6a700;
-
-  --danger-title-color: #4b1113;
-  --danger-bg-color: #ffebec;
-  --danger-border-color: #e13238;
-}
-.dark .custom-container {
-
-  --info-title-color: #eef9fd;
-  --info-bg-color: #193c47;
-
-  --note-title-color: #fdfdfe;
-  --note-bg-color: #474748;
-
-  --tip-title-color: #e6f6e6;
-  --tip-bg-color: #003100;
-
-  --warning-title-color: #fff8e6;
-  --warning-bg-color: #4d3800;
-
-
-  --danger-title-color: #ffebec;
-  --danger-bg-color: #4b1113;
-
-  --detail-bg-color: #333;
-  --detail-text-color: #a8a8a8;
-}
-
-.custom-container.info {
-  background-color: var(--info-bg-color);
-  border-color:  var(--info-border-color);
-}
-.custom-container.note {
-  background-color: var(--note-bg-color);
-  border-color:  var(--note-border-color);
-}
-.custom-container.tip {
-  background-color: var(--tip-bg-color);
-  border-color:  var(--tip-border-color);
-}
-.custom-container.warning {
-  background-color: var(--warning-bg-color);
-  border-color:  var(--warning-border-color);
-}
-.custom-container.danger {
-  background-color: var(--danger-bg-color);
-  border-color:  var(--danger-border-color);
-}
-.custom-container-title.info {
-  color: var(--info-title-color);
-}
-.custom-container-title.note {
-  color: var(--note-title-color);
-}
-.custom-container-title.warning {
-  color: var(--warning-title-color);
-}
-.custom-container-title.tip {
-  color: var(--tip-title-color);
-}
-.custom-container-title.danger {
-  color: var(--danger-title-color);
-}
-
-.custom-container {
-  margin: 1rem 0;
-  padding: 0.25rem 1rem;
-  border-left-width: 0.3rem;
-  border-left-style: solid;
-  border-radius: 0.5rem;
-  color: inherit;
-}
-
-.markdown-body .custom-container-title {
-  font-weight: 600;
-  margin: 16px 0;
-  display: flex;
-  align-items: center;
-}
-.markdown-body .custom-container-title svg {
-  margin-right: 4px;
-}
-body .markdown-body .custom-container .relative > pre {
-  margin: 0 !important;
-}
-
 .emoji-container {
   position: absolute;
   top: 32px;
@@ -110,4 +9,19 @@ display: none;
 }
 body .emoji-categories {
   background-color: gray;
+}
+.relative {
+  position: relative;
+}
+
+.flex {
+  display: flex;
+}
+
+.mr-1 {
+  margin-right: 4px;
+}
+
+body .dark .bytemd-preview {
+  background: rgb(41, 43, 43);
 }

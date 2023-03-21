@@ -5,7 +5,7 @@
   "type": "module",
   "license": "MIT",
   "dependencies": {
-    "@waline/vercel": "^1.26.4"
+    "@waline/vercel": "1.26.4"
   },
   "scripts": {
     "start": "node node_modules/@waline/vercel/vanilla.js"
