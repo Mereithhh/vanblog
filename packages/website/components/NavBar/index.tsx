@@ -97,13 +97,7 @@ export default function (props: {
             </div>
             {props.headerLeftContent == "siteLogo" && (
               <div className="hidden md:block transform translate-x-2">
-                <ImageBoxFuture
-                  alt="site logo"
-                  src={picUrl}
-                  width={52}
-                  height={52}
-                  className={""}
-                ></ImageBoxFuture>
+                <img alt="site logo" src={picUrl} width={52} height={52} className="" />
               </div>
             )}
           </div>

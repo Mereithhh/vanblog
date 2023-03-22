@@ -51,21 +51,9 @@ export default function (props: {
             }}
           >
             <div className="flex justify-center">
-              <ImageBoxFuture
-                alt="logo ali pay"
-                src={payUrl[0]}
-                width={180}
-                height={250}
-                className={undefined}
-              ></ImageBoxFuture>
+              <img alt="ali pay" src={payUrl[0]} width={180} height={250} />
               <div className="w-4 inline-block"></div>
-              <ImageBoxFuture
-                alt="logo wechat pay"
-                className={undefined}
-                src={payUrl[1]}
-                width={180}
-                height={250}
-              ></ImageBoxFuture>
+              <img alt="wechat pay" src={payUrl[1]} width={180} height={250} />
             </div>
           </div>
         </>
