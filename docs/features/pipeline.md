@@ -45,25 +45,25 @@ order: 9
 - 脚本从上到下执行走一遍视为结束，异步操作请在顶层使用 `await` 关键字，不然将被不恰当终止
 - 脚本的输入请直接使用 `input` 变量，修改里面的值后，将会在脚本结束传递给事件处理器
 
-![](https://pic.mereith.com/img/5602208c34a63db34987e36da654a297.clipboard-2023-03-17.png)
+![](https://pic.mereith.com/img/1d851d0dbbcf3a394fc1208f5b9e3199.clipboard-2023-03-22.png)
 
 ## 依赖管理
 
 创建流水线时，可以选择依赖，依赖是一些 `nodejs` 包，会分别通过 `pnpm install <依赖名>` 安装。
 
-![](https://pic.mereith.com/img/5a8cd37c7b8bdc047ca5538c14f071fb.clipboard-2023-03-17.png)
+![](https://pic.mereith.com/img/25e5e6b6828856232851c2adf575674e.clipboard-2023-03-22.png)
 
 ## 调试代码
 
 在代码编辑器可以调试代码，调试时，可以指定 JSON 输入给脚本的 `input` 变量中。
 
-![](https://pic.mereith.com/img/b6f73ea552bbdf831552fe4351f036bb.clipboard-2023-03-17.png)
+![](https://pic.mereith.com/img/2e920393bf748bef318bd13b6ac5c760.clipboard-2023-03-22.png)
 
-![](https://pic.mereith.com/img/61bdb725c3503f8c62432a54f61ab50c.clipboard-2023-03-17.png)
+![](https://pic.mereith.com/img/6a3f61ff043a5dbb1957cc8d86ee93d6.clipboard-2023-03-22.png)
 
 ## 运行日志
 流水线的运行日志可以在 `站点管理/日志管理` 中找到，点击每一条的详情可以看到每一条流水线的输入、输出和脚本的 `console.log`。
 
-![](https://pic.mereith.com/img/f8bc0b3b23ca1b35b732db9a32be82bb.clipboard-2023-03-17.png)
+![](https://pic.mereith.com/img/2bcb0ef613c63ca0ddcf01d184e8afc9.clipboard-2023-03-22.png)
 
-![](https://pic.mereith.com/img/1ff2c5fcce5380e25479326ce00577c7.clipboard-2023-03-17.png)
+![](https://pic.mereith.com/img/4401674ee1d74aea1f6df22401b1cf82.clipboard-2023-03-22.png)
