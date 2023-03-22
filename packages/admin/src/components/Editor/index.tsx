@@ -29,6 +29,8 @@ import { LinkTarget } from './plugins/linkTarget';
 
 const sanitize = (schema) => {
   schema.protocols.src.push('data')
+  schema.tagNames.push("center")
+  schema.attributes["*"].push("style")
   return schema
 }
 

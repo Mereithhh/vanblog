@@ -24,6 +24,8 @@ const plugins = [
 ]
 const sanitize = (schema) => {
   schema.protocols.src.push('data')
+  schema.tagNames.push("center")
+  schema.attributes["*"].push("style")
   return schema
 }
 export default function ({ content }: { content: string }) {
