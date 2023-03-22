@@ -3,6 +3,7 @@ import EditorProfileModal from '@/components/EditorProfileModal';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
 import UpdateModal from '@/components/UpdateModal';
+import { SaveTip } from "@/components/SaveTip";
 import {
   deleteArticle,
   deleteDraft,
@@ -405,7 +406,7 @@ export default function () {
         ),
         extra: [
           <Button key="extraSaveBtn" type="primary" onClick={handleSave}>
-            保存
+            {<SaveTip />}
           </Button>,
           <Button
             key="backBtn"
