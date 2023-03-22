@@ -7,6 +7,6 @@ echo "============================================="
 
 
 sed "s/VAN_BLOG_EMAIL/${EMAIL}/g" /app/CaddyfileTemplate >/app/Caddyfile
-caddy start --config /app/Caddyfile
+caddy run --config /app/Caddyfile
 
 cd /app/server && node main.js

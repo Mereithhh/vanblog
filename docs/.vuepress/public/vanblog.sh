@@ -309,7 +309,7 @@ stop_vanblog() {
 show_log() {
   echo -e "> 获取日志"
 
-  cd $VANBLOG_BASE_PATH && docker-compose logs -f
+  cd $VANBLOG_BASE_PATH && docker compose logs -f
 
   if [[ $# == 0 ]]; then
     before_show_menu
