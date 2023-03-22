@@ -78,7 +78,7 @@ RUN pnpm i
 # 复制 server
 WORKDIR /app/server
 COPY --from=SERVER_BUILDER /app/node_modules ./node_modules
-COPY --from=SERVER_BUILDER /app/dist/ ./
+COPY --from=SERVER_BUILDER /app/dist/src/ ./
 # 复制 website
 WORKDIR /app/website
 COPY --from=WEBSITE_BUILDER /app/next.config.js ./

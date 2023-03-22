@@ -123,7 +123,7 @@ export class ArticleProvider {
   async searchArticlesByLink(link: string) {
     const artciles = await this.articleModel.find(
       {
-        content: { $regex: link, $options: '$i' },
+        content: { $regex: link, $options: 'i' },
         $or: [
           {
             deleted: false,
@@ -544,7 +544,7 @@ export class ArticleProvider {
       tags.forEach((t) => {
         if (option.regMatch) {
           or.push({
-            tags: { $regex: `${t}`, $options: '$i' },
+            tags: { $regex: `${t}`, $options: 'i' },
           });
         } else {
           or.push({
@@ -557,7 +557,7 @@ export class ArticleProvider {
     if (option.category) {
       if (option.regMatch) {
         and.push({
-          category: { $regex: `${option.category}`, $options: '$i' },
+          category: { $regex: `${option.category}`, $options: 'i' },
         });
       } else {
         and.push({
@@ -567,7 +567,7 @@ export class ArticleProvider {
     }
     if (option.title) {
       and.push({
-        title: { $regex: `${option.title}`, $options: '$i' },
+        title: { $regex: `${option.title}`, $options: 'i' },
       });
     }
     if (option.startTime || option.endTime) {
@@ -927,10 +927,10 @@ export class ArticleProvider {
     const $and: any = [
       {
         $or: [
-          { content: { $regex: `${str}`, $options: '$i' } },
-          { title: { $regex: `${str}`, $options: '$i' } },
-          { category: { $regex: `${str}`, $options: '$i' } },
-          { tags: { $regex: `${str}`, $options: '$i' } },
+          { content: { $regex: `${str}`, $options: 'i' } },
+          { title: { $regex: `${str}`, $options: 'i' } },
+          { category: { $regex: `${str}`, $options: 'i' } },
+          { tags: { $regex: `${str}`, $options: 'i' } },
         ],
       },
       {
