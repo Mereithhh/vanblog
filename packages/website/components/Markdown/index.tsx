@@ -22,9 +22,12 @@ const plugins = [
   LinkTarget(),
   Heading(),
 ]
-
+const sanitize = (schema) => {
+  schema.protocols.src.push('data')
+  return schema
+}
 export default function ({ content }: { content: string }) {
   return <div className="markdown-body">
-    <Viewer value={content} plugins={plugins} remarkRehype={{ allowDangerousHtml: true }} />
+    <Viewer value={content} plugins={plugins} remarkRehype={{ allowDangerousHtml: true }} sanitize={sanitize} />
   </div>
 }

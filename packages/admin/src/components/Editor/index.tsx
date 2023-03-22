@@ -27,6 +27,11 @@ import { Heading } from './plugins/heading';
 import { customCodeBlock } from './plugins/codeBlock';
 import { LinkTarget } from './plugins/linkTarget';
 
+const sanitize = (schema) => {
+  schema.protocols.src.push('data')
+  return schema
+}
+
 export default function EditorComponent(props: {
   value: string;
   onChange: (string: string) => void;
@@ -65,7 +70,7 @@ export default function EditorComponent(props: {
           plugins={plugins}
           onChange={props.onChange}
           locale={cn}
-          
+          sanitize={sanitize}
           uploadImages={async (files: File[]) => {
             setLoading(true);
             const res = [];
