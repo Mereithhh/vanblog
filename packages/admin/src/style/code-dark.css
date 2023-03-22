@@ -4,9 +4,11 @@
   padding: 22px 16px 16px;
 }
 
-.dark code.hljs {
+/* .dark code.hljs {
   padding: 3px 5px
 }
+
+*/
 
 .dark .hljs {
   background: inherit;

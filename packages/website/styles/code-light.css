@@ -4,9 +4,10 @@
   padding: 22px 16px 16px;
 }
 
-.light code.hljs {
+/* .light code.hljs {
   padding: 3px 5px
 }
+*/
 
 .light .hljs {
   background: inherit;
