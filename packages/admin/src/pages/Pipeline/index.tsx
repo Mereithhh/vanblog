@@ -35,8 +35,8 @@ export default function () {
       title: '是否异步',
       width: 60,
       render: (_, record) => {
-        const passive = pipelineConfig.find(item => item.eventName === record.eventName)?.passive || true;
-        return (<Tag children={passive ? "异步" : "非异步"} color={passive ? "green" : "gray"} />)
+        const passive = pipelineConfig.find(item => item.eventName === record.eventName)?.passive;
+        return (<Tag children={passive ? "异步" : "阻塞"} color={passive ? "green" : "red"} />)
       }
     },
     {
