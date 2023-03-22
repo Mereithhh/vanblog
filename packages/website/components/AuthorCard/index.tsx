@@ -1,16 +1,19 @@
+import Headroom from "headroom.js";
 import Link from "next/link";
 import { useContext, useEffect, useMemo } from "react";
-import Headroom from "headroom.js";
-import { SocialItem } from "../../api/getAllData";
+
 import SocialCard from "../SocialCard";
 import ImageBoxFuture from "../ImageBoxFuture";
+import { type SocialItem } from "../../api/getAllData";
 import { ThemeContext } from "../../utils/themeContext";
+
 export interface AuthorCardProps {
   author: string;
   desc: string;
   logo: string;
   logoDark: string;
   postNum: number;
+  // FIXME: This is a typo, should be corrected to `catalogNum`
   catelogNum: number;
   tagNum: number;
   enableComment?: "true" | "false";
@@ -23,22 +26,22 @@ export default function (props: { option: AuthorCardProps }) {
   const { theme } = useContext(ThemeContext);
 
   const logoUrl = useMemo(() => {
-    if (
-      theme.includes("dark") &&
-      props.option.logoDark &&
-      props.option.logoDark != ""
-    ) {
+    if (theme.includes("dark") && props.option.logoDark) {
       return props.option.logoDark;
     }
+
     return props.option.logo;
   }, [theme, props]);
+
   useEffect(() => {
     const el = document.querySelector("#author-card");
+
     if (el) {
       const headroom = new Headroom(el, {
         classes: {
-          initial: `side-bar${props.option.showSubMenu == "true" ? "" : " no-submenu"
-            }`,
+          initial: `side-bar${
+            props.option.showSubMenu == "true" ? "" : " no-submenu"
+          }`,
           pinned: "side-bar-pinned",
           unpinned: "side-bar-unpinned",
           top: "side-bar-top",
@@ -48,6 +51,7 @@ export default function (props: { option: AuthorCardProps }) {
       headroom.init();
     }
   });
+
   return (
     <div id="author-card" className="sticky ">
       <div className="w-52 flex flex-col justify-center items-center bg-white pt-6  pb-4 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
@@ -92,7 +96,7 @@ export default function (props: { option: AuthorCardProps }) {
                 <div className="group-hover:text-gray-900 font-bold group-hover:font-black dark:group-hover:text-dark-hover">
                   {props.option.tagNum}
                 </div>
-                <div className=" group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
+                <div className="group-hover:text-gray-900 group-hover:font-normal text-gray-500 dark:text-dark-light dark:group-hover:text-dark-hover">
                   标签
                 </div>
               </div>
