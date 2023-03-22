@@ -5,6 +5,38 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
+## [0.51.0](https://github.com/Mereithhh/vanblog/compare/v0.50.0...v0.51.0) (2023-03-22)
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* update pnpm lock ([3a15f32](https://github.com/Mereithhh/vanblog/commit/3a15f3247a23527aaad899116789492e8504111a))
+
+
+### ✏️ Documentation | 文档
+
+* 更新文档 ([7b31b0f](https://github.com/Mereithhh/vanblog/commit/7b31b0f983a8698f3504030da4c305a8953d3839))
+* 更新文档 ([cb163d4](https://github.com/Mereithhh/vanblog/commit/cb163d47467c0995a913a6feeced0a72864f7149))
+
+
+### 💄 Styles | 风格
+
+* markdown 代码块单行代码时会跑偏 ([f583898](https://github.com/Mereithhh/vanblog/commit/f583898ad992f48a4c7b23ddfc3a28e8ddbf07a5))
+
+
+### ✨ Features | 新功能
+
+* markdown 内写html标签时，允许使用 style 属性（之前不行），允许 center 标签 ([688172b](https://github.com/Mereithhh/vanblog/commit/688172b6e70aaae5e233315290a5ed5c3badbda0))
+* markdown 图片语法中支持 dataURL 格式 ([971de9a](https://github.com/Mereithhh/vanblog/commit/971de9a50fcda344529671ffc6e487eb9a3d46d3))
+* 后台编辑器增加保存快捷键提示 ([70a6895](https://github.com/Mereithhh/vanblog/commit/70a6895bb436a65e662e09c9b0faaa86df551664))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 搜索 API 报错 [#174](https://github.com/Mereithhh/vanblog/issues/174) ([d58aeb8](https://github.com/Mereithhh/vanblog/commit/d58aeb88a8bea92047699ee2229026a6b92bc8c0))
+* 流水线页面是否异步标签展示不准确 ([dec024b](https://github.com/Mereithhh/vanblog/commit/dec024b26ff82367bca1fa9403567f5960677e20))
+* 点击站点logo或打赏图片不会触发全屏预览 [#172](https://github.com/Mereithhh/vanblog/issues/172) ([ce90009](https://github.com/Mereithhh/vanblog/commit/ce90009c62b61774acd90006ae505be6a3a56d3b))
+
 ## [0.50.0](https://github.com/Mereithhh/vanblog/compare/v0.49.0...v0.50.0) (2023-03-21)
 
 
