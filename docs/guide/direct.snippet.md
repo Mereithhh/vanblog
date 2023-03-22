@@ -21,95 +21,13 @@ VanBlog 内部由很多微服务组成，直接部署到裸机环境可能会由
 | 项目         | 要求  | 备注                                                              |
 | ------------ | ----- | ----------------------------------------------------------------- |
 | Nodejs       | >=16  | 长期支持版即可，可用 nvm 管理 node 版本                           |
-| yarn         | v1    | yarn 包管理器，其他管理器不能识别 yarn.lock 可能导致问题          |
+| pnpm         | v7    | pnpm 包管理器，其他管理器不能识别 pnpm-lock.yaml 可能导致问题          |
 | 操作系统     | Linux | 主流 linux 发行版即可                                             |
 | MongoDB      | -     | 主流 mongodb 版本                                                 |
 | Caddy        | v2    | Caddy v2 反代各个微服务，其他的反代理论上可以，但是需要自己写配置 |
 | 后台运行程序 | -     | 可以让服务后台运行,比如 systemd、tmux 等                          |
 
-### 步骤
 
-#### 克隆项目
 
-```bash
-# 克隆项目
-git clone https://github.com/Mereithhh/van-blog
-# 切换到项目目录
-cd van-blog
-```
-
-#### 构建并运行前台
-
-```bash
-# 切换到网站项目
-cd packages/website
-# 安装依赖
-yarn
-# 构建
-isBuild=t yarn build
-# 用你自己的方式把下面的服务后台运行
-yarn start -p 3001
-
-```
-
-#### 安装内嵌 Waline 依赖
-
-```bash
-cd packages/waline
-yarn
-```
-
-#### 运行后端
-
-```bash
-# 切换目录
-cd packages/server
-# 安装依赖
-yarn
-# 创建一个 config.yml 文件
-touch config.yml
-```
-
-在创建的 `config.yml` 文件中写入
-
-```yml
-database:
-  url: mongodb://someMongo:27017/vanBlog
-static:
-  path: 你想要保存图床图片的路径，要绝对路径
-waline:
-  db: walineDev
-```
-
-然后按照自己的方法把下面的命令运行到后台:
-
-```bash
-# 必须在 packages/server 目录下运行
-yarn start
-```
-
-#### 构建后台页面并运行
-
-```bash
-# 切换目录
-cd packages/admin
-# 安装依赖
-yarn
-# 构建
-yarn build
-# 运行后台页面，按照你自己的方式把下面的页面运行在后台
-PORT=3002 yarn serve
-```
-
-#### 启动反代 Caddy
-
-```bash
-# 在项目根目录
-# 把 <YOUR_EMAIL> 替换成你自己的邮箱，然后执行下面的命令
-sed "s/VAN_BLOG_EMAIL/<YOUR_EMAIL>/g" CaddyfileTemplateLocal > Caddyfile
-caddy start --config ./Caddyfile
-```
-
-#### 初始化
-
-启动完毕后，请 [完成初始化](./init.md)。
+### 部署
+因为最近更新比较快，单独部署的老板文档已经不在合适，对于有能力的同学，直接参考 `Dockerfile` 即可。
