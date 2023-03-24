@@ -39,8 +39,14 @@ jobs:
           file: ./Dockerfile
           build-args: |
             VAN_BLOG_BUILD_SERVER=http://localhost:3000
-            VAN_BLOG_VERSIONS=test
+            VAN_BLOG_VERSIONS=test-${{ steps.get_version.outputs.VERSION }}
           platforms: linux/amd64
           push: true
           tags: |
             "docker.io/mereith/van-blog:test-${{ steps.get_version.outputs.VERSION }}"
+      - name: 部署到测试环境
+        uses: steebchen/kubectl@v2.0.0
+        with:
+          config: ${{ secrets.K8S_CONFIG_DATA }}
+          command: set image  deployment/blog-test van-blog=docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
+
