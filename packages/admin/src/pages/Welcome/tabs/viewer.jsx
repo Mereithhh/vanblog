@@ -77,7 +77,7 @@ const Viewer = () => {
                 if (data?.enableBaidu) {
                   return <span>已开启</span>;
                 } else {
-                  return <Link to={`/site?tab=siteInfo&subTab=more`}>未配置</Link>;
+                  return <Link to={`/admin/site/setting?siteInfoTab=more`}>未配置</Link>;
                 }
               },
               status: data?.enableBaidu ? 'success' : 'error',
@@ -101,7 +101,7 @@ const Viewer = () => {
                 if (data?.enableGA) {
                   return <span>已开启</span>;
                 } else {
-                  return <Link to={`/site?tab=siteInfo&subTab=more`}>未配置</Link>;
+                  return <Link to={`/admin/site/setting?siteInfoTab=more`}>未配置</Link>;
                 }
               },
               status: data?.enableGA ? 'success' : 'error',
