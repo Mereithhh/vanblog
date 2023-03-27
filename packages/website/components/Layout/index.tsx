@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import BaiduAnalysis from "../BaiduAnalysis";
 import GaAnalysis from "../gaAnalysis";
 import { LayoutProps } from "../../utils/getLayoutProps";
-import ImageProvider from "../ImageProvider";
+// import ImageProvider from "../ImageProvider";
 import { RealThemeType, ThemeContext } from "../../utils/themeContext";
 import { getTheme } from "../../utils/theme";
 import CustomLayout from "../CustomLayout";
@@ -69,7 +69,7 @@ export default function (props: {
         }}
       >
         <Toaster />
-        <ImageProvider>
+        {/* <ImageProvider> */}
           <NavBar
             openArticleLinksInNewWindow={
               props.option.openArticleLinksInNewWindow == "true"
@@ -109,7 +109,7 @@ export default function (props: {
               gaBeianUrl={props.option.gaBeianUrl}
             />
           </div>
-        </ImageProvider>
+        {/* </ImageProvider> */}
       </ThemeContext.Provider>
       {props.option.enableCustomizing == "true" && (
         <CustomLayout

@@ -9,6 +9,7 @@ import "../styles/scrollbar.css";
 import "../styles/custom-container.css";
 import "../styles/code-light.css";
 import "../styles/code-dark.css";
+import "../styles/zoom.css";
 import type { AppProps } from "next/app";
 import { GlobalContext, GlobalState } from "../utils/globalContext";
 import { useCallback, useEffect, useRef, useState } from "react";

@@ -3,8 +3,8 @@ import { SocialItem } from "../../api/getAllData";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
 import { capitalize } from "../../utils/capitalize";
-import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
+import ImageBox from "../ImageBox";
 
 export default function (props: { item: SocialItem }) {
   const { theme } = useContext(ThemeContext);
@@ -72,12 +72,13 @@ export default function (props: { item: SocialItem }) {
                 className="card-shadow bg-white dark:bg-dark-2 dark:card-shadow-dark"
                 style={{ height: 280 }}
               >
-                <ImageBoxFuture
+                <ImageBox
                   alt="logo wechat qrcode"
                   src={weChatUrl}
                   width={200}
                   height={280}
                   className={""}
+                  lazyLoad={true}
                 />
               </div>
             </ArrowContainer>

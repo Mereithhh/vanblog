@@ -3,8 +3,8 @@ import { useContext, useEffect, useMemo } from "react";
 import Headroom from "headroom.js";
 import { SocialItem } from "../../api/getAllData";
 import SocialCard from "../SocialCard";
-import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
+import ImageBox from "../ImageBox";
 export interface AuthorCardProps {
   author: string;
   desc: string;
@@ -52,12 +52,13 @@ export default function (props: { option: AuthorCardProps }) {
     <div id="author-card" className="sticky ">
       <div className="w-52 flex flex-col justify-center items-center bg-white pt-6  pb-4 card-shadow ml-2 dark:bg-dark dark:card-shadow-dark">
         <div className="px-10 flex flex-col justify-center items-center">
-          <ImageBoxFuture
+          <ImageBox
             alt="author logo"
-            className="rounded-full hover:rotate-180 duration-500 transition-all dark:filter-dark"
+            className="rounded-full  dark:filter-dark"
             src={logoUrl}
             width={120}
             height={120}
+            lazyLoad={false}
           />
 
           <div className="mt-2 font-semibold text-gray-600 mb-2 dark:text-dark">

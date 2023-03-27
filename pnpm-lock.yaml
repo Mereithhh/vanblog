@@ -372,7 +372,6 @@ importers:
       '@bytemd/plugin-gfm': ^1.17.2
       '@bytemd/plugin-highlight-ssr': ^1.20.2
       '@bytemd/plugin-math-ssr': ^1.20.2
-      '@bytemd/plugin-medium-zoom': ^1.17.2
       '@bytemd/plugin-mermaid': ^1.17.2
       '@bytemd/react': ^1.17.2
       '@next/bundle-analyzer': ^13.2.4
@@ -401,6 +400,7 @@ importers:
       js-base64: ^3.7.5
       katex: ^0.16.4
       lodash: ^4.17.21
+      medium-zoom: ^1.0.8
       mermaid: ^10.0.2
       next: ^13.2.4
       postcss: ^8.4.21
@@ -426,7 +426,6 @@ importers:
       '@bytemd/plugin-gfm': 1.20.2_bytemd@1.20.2
       '@bytemd/plugin-highlight-ssr': 1.20.2_bytemd@1.20.2
       '@bytemd/plugin-math-ssr': 1.20.2_bytemd@1.20.2
-      '@bytemd/plugin-medium-zoom': 1.20.2_bytemd@1.20.2
       '@bytemd/plugin-mermaid': 1.20.2_bytemd@1.20.2
       '@bytemd/react': 1.20.2_react@18.2.0
       '@next/bundle-analyzer': 13.2.4
@@ -441,6 +440,7 @@ importers:
       js-base64: 3.7.5
       katex: 0.16.4
       lodash: 4.17.21
+      medium-zoom: 1.0.8
       mermaid: 10.0.2
       next: 13.2.4_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
@@ -11752,7 +11752,7 @@ packages:
       mississippi: 3.0.0
       mkdirp: 0.5.6
       move-concurrently: 1.0.1
-      promise-inflight: 1.0.1
+      promise-inflight: 1.0.1_bluebird@3.7.2
       rimraf: 2.7.1
       ssri: 6.0.2
       unique-filename: 1.1.1
@@ -17159,6 +17159,18 @@ packages:
       debug:
         optional: true
 
+  /follow-redirects/1.15.2_debug@4.3.4:
+    resolution: {integrity: sha512-VQLG33o04KaQ8uYi2tVNbdrWp1QWxNNea+nmIB4EVM28v0hmP17z7aG1+wAkNzVq4KeXTq3221ye5qTJP91JwA==}
+    engines: {node: '>=4.0'}
+    peerDependencies:
+      debug: '*'
+    peerDependenciesMeta:
+      debug:
+        optional: true
+    dependencies:
+      debug: 4.3.4_supports-color@6.1.0
+    dev: false
+
   /follow-redirects/1.5.10:
     resolution: {integrity: sha512-0V5l4Cizzvqt5D44aTXbFZz+FtyXV1vrDN6qrelxtfYQKW0KO0W2T/hkE8xvGa/540LkZlkaUjO4ailYTFtHVQ==}
     engines: {node: '>=4.0'}
@@ -18874,7 +18886,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.2
+      follow-redirects: 1.15.2_debug@4.3.4
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -27002,6 +27014,17 @@ packages:
     peerDependenciesMeta:
       bluebird:
         optional: true
+
+  /promise-inflight/1.0.1_bluebird@3.7.2:
+    resolution: {integrity: sha512-6zWPyEOFaQBJYcGMHBKTKJ3u6TBsnMFOIZSa6ce1e/ZrrsOlnHRHbabMjLiBYKp+n44X9eUI6VUPaukCXHuG4g==}
+    peerDependencies:
+      bluebird: '*'
+    peerDependenciesMeta:
+      bluebird:
+        optional: true
+    dependencies:
+      bluebird: 3.7.2
+    dev: false
 
   /promise-retry/1.1.1:
     resolution: {integrity: sha512-StEy2osPr28o17bIW776GtwO6+Q+M9zPiZkYfosciUUMYqjhU/ffwRAH0zN2+uvGyUsn8/YICIHRzLbPacpZGw==}
