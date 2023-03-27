@@ -6,7 +6,6 @@ import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
 import { MenuItem } from "../../api/getAllData";
 import AdminButton from "../AdminButton";
-import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
 import RssButton from "../RssButton";
 import Item from "./item";

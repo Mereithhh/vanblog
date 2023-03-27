@@ -1,5 +1,4 @@
 import { useContext, useMemo, useState } from "react";
-import ImageBoxFuture from "../ImageBoxFuture";
 import { ThemeContext } from "../../utils/themeContext";
 
 export default function (props: {
