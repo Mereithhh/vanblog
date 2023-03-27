@@ -5,6 +5,32 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
+### [0.51.1](https://github.com/Mereithhh/vanblog/compare/v0.51.0...v0.51.1) (2023-03-27)
+
+
+### ✏️ Documentation | 文档
+
+* 更新宝塔部署文档，增加缓存配置提醒 ([ed2bc8b](https://github.com/Mereithhh/vanblog/commit/ed2bc8b0750e6475e5ea4f4af1db5af4e0d5e66c))
+* 更新文档 ([3fa4c7e](https://github.com/Mereithhh/vanblog/commit/3fa4c7efebbd990312109a77ce22f1346ce3297a))
+* 更新文档 ([b30454b](https://github.com/Mereithhh/vanblog/commit/b30454baa9a40588337b5e386540481e0c8d0f66))
+* 更新直接部署文档 ([fff1f34](https://github.com/Mereithhh/vanblog/commit/fff1f3413a98c9c215251208512b09961c921094))
+* 替换文档内有水印的图片 ([9beb31c](https://github.com/Mereithhh/vanblog/commit/9beb31c460fe09aa42e2705ce64a2d226c204e55))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* **admin:** 后台为配置百度和谷歌统计跳转到对应配置项的地址错误 ([51211a8](https://github.com/Mereithhh/vanblog/commit/51211a8ca72a48adfab47aba36d15e965f848dc5))
+* 图片放大失效、作者头像取消旋转效果、图片加载失败时增加一个原有src属性的展示属性 ([b6aad90](https://github.com/Mereithhh/vanblog/commit/b6aad901233e3f7c152e86e7411e43095ff2037d))
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* **docs:** 部署成功后自动刷新 CDN ([74f56dc](https://github.com/Mereithhh/vanblog/commit/74f56dc9b1acdd3e7a231c43d686a768954b45b3))
+* **website:** 前台构建类型错误 ([3dfa57a](https://github.com/Mereithhh/vanblog/commit/3dfa57affb027082a21c3941de74c0f7b615ea54))
+* 一键脚本更新前自动删除老镜像 ([402d451](https://github.com/Mereithhh/vanblog/commit/402d451748fdaf3066f684edc622b82a37480223))
+* 测试tag自动打包部署到测试环境 ([ebe1c14](https://github.com/Mereithhh/vanblog/commit/ebe1c14f73b5a1ead609895f934a299a00aa35f6))
+* 测试流水线部署失败 ([3847fd5](https://github.com/Mereithhh/vanblog/commit/3847fd5d997224025cb958f4348d1f87dd5bea8f))
+
 ## [0.51.0](https://github.com/Mereithhh/vanblog/compare/v0.50.0...v0.51.0) (2023-03-22)
 
 
