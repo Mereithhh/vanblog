@@ -48,5 +48,5 @@ jobs:
         uses: steebchen/kubectl@v2.0.0
         with:
           config: ${{ secrets.K8S_CONFIG_DATA }}
-          command: set image  deployment/blog-test van-blog=docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
+          command: set image  deployment/blog-test van-blog=mereith/van-blog:${{ steps.get_version.outputs.VERSION }}
 
