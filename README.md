@@ -143,6 +143,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [BARM Blog](https://blog.ccz.life)
 - [凌览社](http://www.linglan01.cn)
 - [Peter's blog](https://niuery.com)
+- [不可视之线](https://fukashinosen.club)
 
 ## TODO
 
