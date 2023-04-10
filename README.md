@@ -2,7 +2,7 @@
 	<img src="/img/logo.svg" style="width: 200px"></img>
 </p>
 <p align="center">
-	<strong>VanBlog 是一款简洁实用优雅的个人博客系统。支持 HTTPS 证书全自动按需申请、黑暗模式、移动端自适应和评论，内置流量统计与图床，内嵌评论系统，具有无限可能的流水线功能，配有完备的、支持黑暗模式、支持移动端、支持一键上传剪切板图片到图床、带有强大的编辑器的后台管理面板。</strong>
+	<strong>VanBlog是一款简洁、实用、优雅的个人博客系统，支持全自动按需申请HTTPS证书、黑暗模式、移动端自适应和评论功能。它内置了流量统计和图床，并集成了评论系统。此外，VanBlog还具有无限的可扩展性，提供完备的后台管理面板，支持黑暗模式、移动端、一键上传剪贴板图片到图床，并带有强大的编辑器。</strong>
 </p>
 <p align="center">
   <img src="https://img.shields.io/github/v/release/mereithhh/van-blog?display_name=tag" />
@@ -147,6 +147,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [我本无罪的博客](https://blog.rnaan.com/)
 - [还是夸张一点](https://blog.ynsites.com/)
 - [XiaFan's Vision](https://blog.motofans.club/)
+- [青菜的杂货铺](https://211222.xyz)
 
 ## TODO
 
