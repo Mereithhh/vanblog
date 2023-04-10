@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-      - run: npm install --global pnpm
+      - run: npm install --global pnpm@7.27.1
       - name: 安装依赖
         run: pnpm install
 
