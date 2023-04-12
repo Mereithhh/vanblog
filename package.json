@@ -16,6 +16,7 @@
     "docs:build": "vuepress build ./docs",
     "docs:clean-dev": "vuepress dev ./docs --clean-cache",
     "docs:dev": "vuepress dev ./docs",
+    "docs:dev-https": "vuepress dev ./docs --help", 
     "kill": "bash scripts/kill-all.sh",
     "release:local": "act -j local-build --secret-file=.env",
     "release": "standard-version",
