@@ -45,6 +45,16 @@ VanBlog 内嵌了 [Waline 评论系统](https://waline.js.org/)，你不需要�
 
 ![](https://www.mereith.com/static/img/c55b4837910d893d4431543304ac0585.clipboard-2022-09-01.png)
 
+> 参数说明（以QQ邮箱为例）：
+> - **SMTP 地址(host)**：个人邮箱可使用 `smtp.qq.com` ，企业邮箱可使用 `smtp.exmail.qq.com`
+> - **SMTP 端口号**：`465` 或 `587`
+> - **SMTP 用户名**：发送邮件的邮箱地址，即你的QQ邮箱地址
+> - **SMTP 密码**：生成的授权码（需要在QQ邮箱设置中生成）
+> - **自定义发送邮件的发件人**：不重要，自定义即可
+> - **自定义发送邮件的发件地址**：需要与 **SMTP 用户名** 一致，否则发送邮件时可能报错`501 Mail from address must be same as authorization user`。
+> 
+> 附上QQ邮箱官方说明：[QQ邮箱 SMTP/IMAP服务](https://wx.mail.qq.com/list/readtemplate?name=app_intro.html#/agreement/authorizationCode)、[腾讯企业邮 常用邮件客户端软件设置](https://service.exmail.qq.com/cgi-bin/help?subtype=1&id=28&no=1000564)
+
 当我（博主）收到评论时邮箱中会显示：
 
 ![](https://www.mereith.com/static/img/d57d80bd5c8a3459142066c039fc386c.clipboard-2022-09-01.png)
@@ -99,3 +109,5 @@ VanBlog 内嵌的评论系统支持在有新评论时发送 `webhook`，配置�
 配置信息也会由后端的服务生成，传递给 `waline.js` 中，具体采用了 `node` 的 `child_process` 模块。
 
 具体可以看 `packages/server/src/provider/waline/waline.provider.ts` 的代码。
+
+
