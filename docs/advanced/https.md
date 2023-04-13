@@ -1,7 +1,7 @@
 ---
 title: HTTPS
 icon: certificate
-order: -3
+order: 1
 redirectFrom:
   - /guide/https.html
   - /feature/advance/https.html

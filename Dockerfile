@@ -96,7 +96,7 @@ ENV VAN_BLOG_WALINE_DB "waline"
 # 复制静态文件
 WORKDIR /app/admin
 COPY --from=ADMIN_BUILDER /app/dist/ ./
-COPY CaddyfileTemplate /app/CaddyfileTemplate
+COPY caddyTemplate.json /app/caddyTemplate.json
 # 复制入口文件
 WORKDIR /app
 COPY ./entrypoint.sh ./
