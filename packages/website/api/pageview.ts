@@ -5,6 +5,20 @@ export interface PageViewData {
   visited: number;
 }
 
+export const getPageview = async (pathname: string): Promise<PageViewData> => {
+  try {
+    const { statusCode, data } = await fetch(
+      `/api/public/viewer`,
+      {method: "GET"}
+    ).then((res) => res.json());
+
+    return statusCode === 233 ? DEFAULT_PAGEVIEW_RESPONSE : data;
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
+}
+
 export const updatePageview = async (
   pathname: string
 ): Promise<PageViewData> => {

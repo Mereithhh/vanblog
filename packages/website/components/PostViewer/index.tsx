@@ -10,6 +10,10 @@ export default function (props: {
   const fetchViewer = useCallback(async () => {
     const res = await getArticleViewer(props.id);
     if (!res) {
+      if (localStorage?.getItem("noViewer") === "true") {
+        setViewer(0)
+        return;
+      }
       if (props.shouldAddViewer) {
         setViewer(1);
       } else {
@@ -17,6 +21,10 @@ export default function (props: {
       }
     }
     if (res && res.viewer) {
+      if (localStorage?.getItem("noViewer") === "true") {
+        setViewer(res.viewer);
+        return;
+      }
       if (props.shouldAddViewer) {
         setViewer(res.viewer + 1);
       } else {
