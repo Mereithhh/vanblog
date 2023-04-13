@@ -15,6 +15,7 @@ import path from 'path';
 import { WebsiteProvider } from '../website/website.provider';
 import { CategoryDocument } from 'src/scheme/category.schema';
 import { CustomPageDocument } from 'src/scheme/customPage.schema';
+import e from 'express';
 @Injectable()
 export class InitProvider {
   logger = new Logger(InitProvider.name);
@@ -87,6 +88,18 @@ export class InitProvider {
     this.logger.warn(
       `忘记密码恢复密钥为： ${key}\n 注意此密钥也会同时写入到日志目录中的 restore.key 文件中，每次重启 vanblog 或老密钥被使用时都会重新生成此密钥`,
     );
+  }
+
+  async washStaticSetting() {
+    // 新版加入了图床自动压缩功能，默认开启，需要洗一下。
+    const staticSetting = await this.settingProvider.getStaticSetting();
+    console.log(staticSetting);
+    if (staticSetting && staticSetting.enableWebp === undefined) {
+      this.logger.log('新版本自动开启图床压缩功能');
+        await this.settingProvider.updateStaticSetting({
+          enableWebp: true,
+        });
+    } 
   }
 
   async washCustomPage() {

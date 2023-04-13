@@ -17,6 +17,7 @@ export default function (props: {}) {
           if (!data) {
             return {
               enableWaterMark: false,
+              enableWebp: true,
             };
           }
           return data;
@@ -26,6 +27,15 @@ export default function (props: {}) {
           if (location.hostname == 'blog-demo.mereith.com') {
             Modal.info({ title: '演示站禁止修改此配置！' });
             return;
+          }
+          for (const [k, v] of Object.entries(data)) {
+            if (v == "false") {
+              data[k] = false;
+            } else if (v == "true") {
+              data[k] = true;
+            } else {
+              data[k] = v;
+            }
           }
           setEnableWaterMark(data?.enableWaterMark || false);
           if (data.enableWaterMark && !data.waterMarkText) {
@@ -44,6 +54,21 @@ export default function (props: {}) {
           message.success('更新成功！');
         }}
       >
+        <ProFormSelect name="enableWebp" label="是否开启图片自动压缩（webp）"
+          request={async () => {
+            return [
+              {
+                label: '开启',
+                value: true,
+              },
+              {
+                label: '关闭',
+                value: false,
+              }
+            ]
+          }}
+          rules={[{ required: true, message: '这是必填项' }]}
+          required placeholder={"是否开启图片自动压缩"} tooltip="开启之后上传图片将压缩至 webp 格式以提高加载速度，无论哪种存储策略都生效。" />
         <ProFormSelect
           fieldProps={{
             onChange: (target) => {
@@ -54,9 +79,17 @@ export default function (props: {}) {
           required
           label="水印"
           placeholder={'是否开启水印'}
-          valueEnum={{
-            [true]: '开启',
-            [false]: '关闭',
+          request={async () => {
+            return [
+              {
+                label: '开启',
+                value: true,
+              },
+              {
+                label: '关闭',
+                value: false,
+              }
+            ]
           }}
           tooltip={
             '是否开启水印，开启之后上传图片将自动添加水印，无论哪种图床。宽高小于 128px 的图片可能会加不上水印。'

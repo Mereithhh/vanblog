@@ -62,7 +62,7 @@ RUN pnpm build
 #运行容器
 FROM node:18-alpine AS RUNNER
 WORKDIR /app
-RUN  apk add --no-cache --update tzdata caddy nss-tools \
+RUN  apk add --no-cache --update tzdata caddy nss-tools libwebp-tools \
   && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
   && echo "Asia/Shanghai" > /etc/timezone \
   && apk del tzdata

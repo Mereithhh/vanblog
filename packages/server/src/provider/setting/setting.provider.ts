@@ -10,6 +10,7 @@ import {
   StaticSetting,
   VersionSetting,
   WalineSetting,
+  defaultStaticSetting,
 } from 'src/types/setting.dto';
 import { SettingDocument } from 'src/scheme/setting.schema';
 import { PicgoProvider } from '../static/picgo.provider';
@@ -32,14 +33,15 @@ export class SettingProvider {
       .exec()) as { value: StaticSetting };
     if (res) {
       return (
-        res?.value || {
-          storageType: 'local',
-          picgoConfig: null,
-          enableWaterMark: false,
-        }
+        res?.value || defaultStaticSetting
       );
+    } else {
+      await this.settingModel.create({
+        type: 'static',
+        value: defaultStaticSetting,
+      });
+      return defaultStaticSetting;
     }
-    return null;
   }
   async getVersionSetting(): Promise<any> {
     const res = await this.settingModel.findOne({ type: 'version' }).exec();
@@ -242,7 +244,7 @@ export class SettingProvider {
     );
     return res;
   }
-  async updateStaticSetting(dto: StaticSetting) {
+  async updateStaticSetting(dto: Partial<StaticSetting>) {
     const oldValue = await this.getStaticSetting();
     const newValue = { ...oldValue, ...dto };
     if (!oldValue) {

@@ -69,6 +69,8 @@ async function bootstrap() {
   initProvider.initVersion();
   initProvider.initRestoreKey();
   if (await initProvider.checkHasInited()) {
+    // 新版本自动启动图床压缩功能
+    await initProvider.washStaticSetting();
     // 老版本自定义数据洗一下
     await initProvider.washCustomPage();
     // 老版本的分类数据洗一下

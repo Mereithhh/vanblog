@@ -35,7 +35,7 @@ export class SettingController {
   }
 
   @Put('static')
-  async updateStaticSetting(@Body() body: StaticSetting) {
+  async updateStaticSetting(@Body() body: Partial<StaticSetting>) {
     if (config.demo && config.demo == 'true') {
       return {
         statusCode: 401,

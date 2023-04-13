@@ -1,5 +1,14 @@
 import { MenuItem } from './menu.dto';
 
+export const defaultStaticSetting: StaticSetting = {
+    storageType: 'local',
+    picgoConfig: null,
+    enableWaterMark: false,
+    enableWebp: true,
+    waterMarkText: null,
+    picgoPlugins: null,
+}
+
 export type SettingType =
   | 'static'
   | 'https'
@@ -90,4 +99,5 @@ export class StaticSetting {
   picgoPlugins: string;
   enableWaterMark: boolean;
   waterMarkText: string;
+  enableWebp: boolean;
 }

@@ -24,6 +24,7 @@ import axios from 'axios';
 import { UploadConfig } from 'src/types/upload';
 import { addWaterMarkToIMG } from 'src/utils/watermark';
 import { checkTrue } from 'src/utils/checkTrue';
+import { compressImgToWebp } from 'src/utils/webp';
 @Injectable()
 export class StaticProvider {
   constructor(
@@ -54,16 +55,19 @@ export class StaticProvider {
     const { buffer } = file;
     let buf = buffer;
     let currentSign = encryptFileMD5(buf);
+    const staticConfigInDB = await this.settingProvider.getStaticSetting();
     if (type == 'img') {
+
       // 用加过水印的 buf 做计算，看看是不是有文件的。
       if (updateConfig && updateConfig.withWaterMark) {
         // 双保险，只有这里开启水印并且设置中也开启了才有效。
         const waterMarkConfigInDB =
-          await this.settingProvider.getStaticSetting();
+          staticConfigInDB;
         if (
           waterMarkConfigInDB &&
           checkTrue(waterMarkConfigInDB?.enableWaterMark)
         ) {
+
           const waterMarkText =
             updateConfig.waterMarkText || waterMarkConfigInDB.waterMarkText;
           if (waterMarkText && waterMarkText.trim() !== '') {
@@ -71,7 +75,13 @@ export class StaticProvider {
             currentSign = encryptFileMD5(buf);
           }
         }
+
       }
+      if (checkTrue(staticConfigInDB.enableWebp)) {
+        buf = await compressImgToWebp(buf);
+        currentSign = encryptFileMD5(buf);
+      }
+      
       const hasFile = await this.getOneBySign(currentSign);
 
       if (hasFile) {
@@ -80,12 +90,17 @@ export class StaticProvider {
           isNew: false,
         };
       }
+
     }
     const arr = file.originalname.split('.');
     const fileType = arr[arr.length - 1];
+    const pureFileName = arr.slice(0, arr.length - 1).join('.');
     let fileName = currentSign + '.' + file.originalname;
     if (type == 'customPage') {
       fileName = customPathname + '/' + file.originalname;
+    }
+    if (type == "img" &&  checkTrue(staticConfigInDB.enableWebp)) {
+      fileName = currentSign + "." + pureFileName + '.webp';
     }
     const realPath = await this.saveFile(
       fileType,

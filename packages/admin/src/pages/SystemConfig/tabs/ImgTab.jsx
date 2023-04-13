@@ -9,7 +9,7 @@ export default function () {
   const [exporting, setExporting] = useState(false);
   return (
     <>
-      <Card title="水印设置">
+      <Card title="图床功能设置">
         <WatchMarkForm />
       </Card>
       <Card title="存储策略设置">
