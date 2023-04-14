@@ -5,6 +5,48 @@ order: 8
 redirectFrom: /ref/changelog.html
 ---
 
+## [0.52.0](https://github.com/Mereithhh/vanblog/compare/v0.51.1...v0.52.0) (2023-04-14)
+
+
+### 🚀 Chore | 构建/工程依赖/工具
+
+* pnpm lock version ([85c5412](https://github.com/Mereithhh/vanblog/commit/85c54125931a139127c4e251dff83e4445ef1374))
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* https 自动跳转失效 [#273](https://github.com/Mereithhh/vanblog/issues/273) ([8b6f416](https://github.com/Mereithhh/vanblog/commit/8b6f41615fba22e45a0954c770296b489734c2e7))
+* 当前浏览器不计入统计的 bug [#261](https://github.com/Mereithhh/vanblog/issues/261) ([d153465](https://github.com/Mereithhh/vanblog/commit/d153465d4a96c65d4ec6408dced69b7d88c82b2e))
+
+
+### ✨ Features | 新功能
+
+* 上传图片时自动压缩（webp） [#276](https://github.com/Mereithhh/vanblog/issues/276) ([cd88c08](https://github.com/Mereithhh/vanblog/commit/cd88c0871eb28a402d08d8f66b1faebad6f8ff27))
+
+
+### 💄 Styles | 风格
+
+* 微调 UI ([98de0f7](https://github.com/Mereithhh/vanblog/commit/98de0f7b6844ee1ddf4e87ccbb00c458d6cdf5d8))
+
+
+### ✏️ Documentation | 文档
+
+* site verify ([4dcf8b0](https://github.com/Mereithhh/vanblog/commit/4dcf8b0ce7bc7f5aaec27ee1905f181ed1a189bc))
+* update ([2dd8b6b](https://github.com/Mereithhh/vanblog/commit/2dd8b6ba52a396d3cc04a8d4a6c7cfef80bf9c6e))
+* 图片自动压缩文档和文案 ([82fad8c](https://github.com/Mereithhh/vanblog/commit/82fad8c690067af2eebcb739863e16c2fc9cfb37))
+* 增加QQ邮件消息配置参数说明 ([#278](https://github.com/Mereithhh/vanblog/issues/278)) ([4896a50](https://github.com/Mereithhh/vanblog/commit/4896a5048bf7ea3dbc9ffd85d53624a5f6189b57))
+* 增加案例 ([a55b8f5](https://github.com/Mereithhh/vanblog/commit/a55b8f5e7fe946bafa031b9a14e4215c02c9167e))
+* 文档样式修改 ([1ad0946](https://github.com/Mereithhh/vanblog/commit/1ad0946f12ba941803f8e3a0613435de94273351))
+* 更新使用样例 ([caab272](https://github.com/Mereithhh/vanblog/commit/caab2729c2a27130ff8a2d63bf44e293281c209f))
+* 更新描述 [#227](https://github.com/Mereithhh/vanblog/issues/227) ([354676b](https://github.com/Mereithhh/vanblog/commit/354676b8ffd94b93a02ce496106d2d36b2603e4f))
+* 更新文档 ([fab6e5a](https://github.com/Mereithhh/vanblog/commit/fab6e5a7d772bfd25820b6ceba30690604e5eab9))
+* 更新文档 ([3550a06](https://github.com/Mereithhh/vanblog/commit/3550a06724b6f8830fd1bf5f22bed56d06fa5924))
+* 更新文档 ([d9432a1](https://github.com/Mereithhh/vanblog/commit/d9432a1afbac05f6187e5d1f8d5311bc25c49fff))
+* 更新文档 ([e0baffb](https://github.com/Mereithhh/vanblog/commit/e0baffbaca1686b7720d650dee3a2b386c8ce520))
+* 更新文档 ([86b8e90](https://github.com/Mereithhh/vanblog/commit/86b8e90ec549d8413d6aa87d6800aa9de45f2204))
+* 更新谁在使用 [#267](https://github.com/Mereithhh/vanblog/issues/267) ([79d48b7](https://github.com/Mereithhh/vanblog/commit/79d48b74014ec3a00ced698f0d87d8303e88191f))
+* 添加样例 [#279](https://github.com/Mereithhh/vanblog/issues/279) ([46787bd](https://github.com/Mereithhh/vanblog/commit/46787bd8869e7717e162b2709c5ff0db7c82d11d))
+
 ### [0.51.1](https://github.com/Mereithhh/vanblog/compare/v0.51.0...v0.51.1) (2023-03-27)
 
 
