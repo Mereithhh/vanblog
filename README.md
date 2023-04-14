@@ -148,6 +148,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [还是夸张一点](https://blog.ynsites.com/)
 - [XiaFan's Vision](https://blog.motofans.club/)
 - [青菜的杂货铺](https://211222.xyz)
+- [笑一个吧](http://vanblog.ztunan.top)
 
 ## TODO
 
