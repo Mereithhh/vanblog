@@ -12,7 +12,7 @@ export default function () {
       <Card title="图床功能设置">
         <WatchMarkForm />
       </Card>
-      <Card title="存储策略设置">
+      <Card title="存储策略设置" style={{ marginTop: 8 }}>
         <StaticForm />
       </Card>
       <Card title="高级操作" style={{ marginTop: 8 }}>
