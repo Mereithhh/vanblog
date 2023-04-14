@@ -33,7 +33,7 @@ features:
 
   - title: 内置图床
     icon: image
-    details: 本地图床，OSS 图床，Github 图床都支持，可一键上传剪切板图片，自动添加水印
+    details: 本地图床，OSS 图床，Github 图床都支持，可一键上传剪切板图片，自动添加水印，自动压缩图片
 
   - title: 高性能
     icon: bolt

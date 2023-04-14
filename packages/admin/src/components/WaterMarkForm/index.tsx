@@ -54,7 +54,7 @@ export default function (props: {}) {
           message.success('更新成功！');
         }}
       >
-        <ProFormSelect name="enableWebp" label="是否开启图片自动压缩（webp）"
+        <ProFormSelect name="enableWebp" label="图片自动压缩"
           request={async () => {
             return [
               {

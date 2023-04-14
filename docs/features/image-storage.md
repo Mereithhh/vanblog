@@ -75,13 +75,20 @@ VanBlog 使用 `picgo-core` 配置文件，和桌面版的 `picgo` 的配置文�
 
 ## 其他功能
 
+### 自动压缩
+无论使用何种图床，VanBlog 都支持上传图片自动压缩为 webp 格式。在编辑器或图片管理中上传图片时，VanBlog 会在收到图片信息的时候，先进行压缩，再保存到对应图床。
+
+这个功能默认是开启的，想手动关闭请在后台 `站点管理/系统设置/图床设置` 中，关闭 `自动压缩` 即可。
+
+![自动压缩设置](https://pic.mereith.com/img/6f00ddb9f4051d05aa030cdf6ce3404f.clipboard-2023-04-14.png)
+
 ### 自动水印
 
 无论使用何种图床，VanBlog 都支持上传图片自动添加水印。在编辑器或图片管理中上传图片时，VanBlog 会在收到图片信息的时候，先进行水印转换，再保存到对应图床。
 
 在后台 `站点管理/系统设置/图床设置` 中，开启水印并输入水印文字即可。
 
-![水印设置](https://pic.mereith.com/img/9a49bf9afa30c136994330014ca9d2d9.clipboard-2023-02-27.png)
+![水印设置](https://pic.mereith.com/img/6f00ddb9f4051d05aa030cdf6ce3404f.clipboard-2023-04-14.png)
 
 ::: warning 当前限制
 
