@@ -1,9 +1,9 @@
-name: test
+name: test-arm
 
 on:
   push:
     tags:
-      - "test*"
+      - "test-arm*"
 permissions:
   contents: write
 
@@ -38,7 +38,7 @@ jobs:
           context: .
           file: ./Dockerfile
           build-args: |
-            VAN_BLOG_BUILD_SERVER=http://localhost:3000
+            VAN_BLOG_BUILD_SERVER=https://blog-demo.mereith.com/
             VAN_BLOG_VERSIONS=test-${{ steps.get_version.outputs.VERSION }}
           platforms: linux/arm64
           push: true

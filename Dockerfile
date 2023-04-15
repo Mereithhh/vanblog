@@ -45,7 +45,7 @@ FROM node:16-alpine AS WEBSITE_BUILDER
 WORKDIR /app
 COPY --from=WEBSITE_DEPS /app/node_modules ./node_modules
 COPY ./packages/website/ .
-ENV isBuild=t
+ENV isBuild t
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
 ARG VAN_BLOG_BUILD_SERVER
 ENV VAN_BLOG_SERVER_URL ${VAN_BLOG_BUILD_SERVER}
