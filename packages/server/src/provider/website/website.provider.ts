@@ -101,13 +101,13 @@ export class WebsiteProvider {
     let args = ['dev'];
     if (process.env.NODE_ENV == 'production') {
       cmd = 'node';
-      args = ["server.js"];
+      args = ["./packages/website/server.js"];
     }
     const loadEnvs = await this.loadEnv();
     this.logger.log(JSON.stringify(loadEnvs, null, 2));
     if (this.ctx == null) {
       this.ctx = spawn(cmd, args, {
-        env: {
+        env: { 
           ...process.env,
           ...loadEnvs,
         },

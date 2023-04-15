@@ -1,0 +1,46 @@
+name: arm
+
+on:
+  push:
+    tags:
+      - "arm*"
+permissions:
+  contents: write
+
+jobs:
+  arm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Get version
+        id: get_version
+        run: |
+          TIMEVERSION=$(date "+%Y%m%d-%H%M%S")
+          echo ::set-output name=VERSION::${TIMEVERSION}
+      - name: 展示版本
+        run: echo ${{ steps.get_version.outputs.VERSION }}
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: 打包镜像并推送
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./Dockerfile
+          build-args: |
+            VAN_BLOG_BUILD_SERVER=https://blog-demo.mereith.com/
+            VAN_BLOG_VERSIONS=test-${{ steps.get_version.outputs.VERSION }}
+          platforms: linux/arm64
+          push: true
+          tags: |
+            "docker.io/mereith/van-blog:test-${{ steps.get_version.outputs.VERSION }}"

@@ -28,24 +28,16 @@ RUN pnpm config set fetch-timeout 600000 -g
 RUN pnpm i
 RUN pnpm build
 
-FROM node:16-alpine AS WEBSITE_DEPS
-# Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
-# RUN apk add --no-cache libc6-compat
+FROM node:18-alpine AS WEBSITE_BUILDER
 WORKDIR /app
-COPY ./packages/website/package.json ./packages/website/pnpm-lock.yaml* ./
-RUN npm install --global pnpm@7.27.1
-RUN pnpm config set network-timeout 600000 -g
-RUN pnpm config set registry https://registry.npmmirror.com -g
-RUN pnpm config set fetch-retries 20 -g
-RUN pnpm config set fetch-timeout 600000 -g
-# RUN yarn config set registry https://registry.npmmirror.com -g
-RUN pnpm i
-
-FROM node:16-alpine AS WEBSITE_BUILDER
-WORKDIR /app
-COPY --from=WEBSITE_DEPS /app/node_modules ./node_modules
-COPY ./packages/website/ .
-ENV isBuild=t
+RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
+COPY ./package.json ./
+COPY ./pnpm-lock.yaml ./
+COPY ./pnpm-workspace.yaml ./
+COPY ./tsconfig.base.json ./
+COPY ./lerna.json ./
+COPY ./packages/website ./packages/website
+ENV isBuild t
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
 ARG VAN_BLOG_BUILD_SERVER
 ENV VAN_BLOG_SERVER_URL ${VAN_BLOG_BUILD_SERVER}
@@ -56,7 +48,8 @@ RUN pnpm config set network-timeout 600000 -g
 RUN pnpm config set registry https://registry.npmmirror.com -g
 RUN pnpm config set fetch-retries 20 -g
 RUN pnpm config set fetch-timeout 600000 -g
-RUN pnpm build
+RUN pnpm install --frozen-lockfile
+RUN pnpm build:website
 
 
 #运行容器
@@ -81,12 +74,12 @@ COPY --from=SERVER_BUILDER /app/node_modules ./node_modules
 COPY --from=SERVER_BUILDER /app/dist/src/ ./
 # 复制 website
 WORKDIR /app/website
-COPY --from=WEBSITE_BUILDER /app/next.config.js ./
-COPY --from=WEBSITE_BUILDER /app/public ./public
-COPY --from=WEBSITE_BUILDER /app/package.json ./package.json
-COPY --from=WEBSITE_BUILDER  /app/.next/standalone ./
-COPY --from=WEBSITE_BUILDER  /app/.next/static ./.next/static
-RUN cd  /app/website  && cd ..
+COPY --from=WEBSITE_BUILDER  /app/packages/website/.next/standalone/ ./
+COPY --from=WEBSITE_BUILDER /app/packages/website/next.config.js ./packages/website/next.config.js
+COPY --from=WEBSITE_BUILDER /app/packages/website/public ./packages/website/public
+COPY --from=WEBSITE_BUILDER /app/packages/website/package.json ./packages/website/package.json
+COPY --from=WEBSITE_BUILDER  /app/packages/website/.next/static ./packages/website/.next/static
+RUN  cd  /app/website  && cd ..
 ENV NODE_ENV production
 ENV VAN_BLOG_SERVER_URL "http://127.0.0.1:3000"
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"
