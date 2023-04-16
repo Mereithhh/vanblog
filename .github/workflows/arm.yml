@@ -1,9 +1,9 @@
-name: test-arm
+name: arm
 
 on:
   push:
     tags:
-      - "test-arm*"
+      - "arm*"
 permissions:
   contents: write
 
