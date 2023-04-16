@@ -1,14 +1,14 @@
-name: test-arm
+name: arm
 
 on:
   push:
     tags:
-      - "test-arm*"
+      - "arm*"
 permissions:
   contents: write
 
 jobs:
-  test:
+  arm:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
