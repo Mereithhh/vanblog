@@ -4,6 +4,7 @@ import { useMemo } from "react";
 import { encodeQuerystring } from "../../utils/encode";
 import PostViewer from "../PostViewer";
 import { getTarget } from "../Link/tools";
+import { checkLogin } from "../../utils/auth";
 
 export function Title(props: {
   type: "article" | "about" | "overview";
@@ -12,6 +13,7 @@ export function Title(props: {
   openArticleLinksInNewWindow: boolean;
   showEditButton: boolean;
 }) {
+  const showEditButton = props.showEditButton && checkLogin();
   const newTab = useMemo(() => {
     if (props.type == "overview" && props.openArticleLinksInNewWindow) {
       return true;
@@ -24,7 +26,7 @@ export function Title(props: {
         <Link href={`/post/${props.id}`} target={getTarget(newTab)}>
           <div
             className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 ${
-              props.showEditButton ? "ml-8" : ""
+              showEditButton ? "ml-8" : ""
             } md:text-${props.type == "overview" ? "xl" : "2xl"} ua ua-link`}
           >
             {props.title}
@@ -33,13 +35,13 @@ export function Title(props: {
       ) : (
         <div
           className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-2xl ua ua-link  select-none ${
-            props.showEditButton ? "ml-12 mr-4" : ""
+            showEditButton ? "ml-12 mr-4" : ""
           }`}
         >
           {props.title}
         </div>
       )}
-      {props.showEditButton && (
+      {showEditButton && (
         <a
           className="flex items-center"
           href={

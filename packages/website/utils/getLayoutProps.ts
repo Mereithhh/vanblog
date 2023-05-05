@@ -106,7 +106,6 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   ) {
     showEditButton = "false";
   }
-  if (!checkLogin()) showEditButton = "false";
   let openArticleLinksInNewWindow: "true" | "false" = "false";
   if (
     data.meta.siteInfo?.openArticleLinksInNewWindow &&
