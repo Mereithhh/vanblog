@@ -353,7 +353,7 @@ export default function (props: {
           />
           <ProFormSelect
             name={'showEditButton'}
-            label="是否在登录后台时，在前台展示编辑按钮"
+            label="是否在前台展示编辑按钮"
             placeholder={'显示'}
             valueEnum={{
               true: '显示',

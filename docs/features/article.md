@@ -17,6 +17,13 @@ redirectFrom: /feature/basic/article.html
 
 <!-- more -->
 
+## 快速编辑文章
+默认情况下，如果你登录了后台，那么前台的文章标题旁边会出现编辑按钮，你可以点击这个按钮快速跳转到后台编辑此文章。
+
+![](https://pic.mereith.com/img/a6438e873dcbd601d23bdbf1a7fad74f.clipboard-2023-05-06.webp)
+
+如想关闭此功能，可在后台的 `系统设置/站点配置/布局设置` 中关闭。
+
 ## 创建新文章
 
 你可以点击 `新建文章` 按钮创建新文章。
