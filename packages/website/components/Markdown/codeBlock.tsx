@@ -8,7 +8,9 @@ const codeBlockPlugin = () => (tree) => {
   visit(tree, (node) => {
     if (node.type === "element" && node.tagName === "pre") {
       const oldChildren = JSON.parse(JSON.stringify(node.children));
-      const codeProperties = oldChildren.find((child: any) => child.tagName === "code").properties;
+      const codeProperties = oldChildren.find(
+        (child: any) => child.tagName === "code"
+      ).properties;
       let language = "";
       if (codeProperties.className) {
         for (const each of codeProperties.className) {
@@ -26,22 +28,22 @@ const codeBlockPlugin = () => (tree) => {
         properties: {
           class: "code-copy-btn",
         },
-        children: []
-      }
+        children: [],
+      };
       const languageTag = {
         type: "element",
         tagName: "span",
         properties: {
           class: "language-tag mr-1",
-          style: "line-height: 21px"
+          style: "line-height: 21px",
         },
         children: [
           {
             type: "text",
-            value: language
-          }
-        ]
-      }
+            value: language,
+          },
+        ],
+      };
       // 上方右侧 header
       const headerRight = {
         type: "element",
@@ -49,24 +51,27 @@ const codeBlockPlugin = () => (tree) => {
         properties: {
           class: "header-right flex",
           style: "color: #6f7177",
-
         },
-        children: [
-          languageTag, codeCopyBtn
-        ]
-      }
+        children: [languageTag, codeCopyBtn],
+      };
       // 包裹的 div
       const wrapperDiv = {
         type: "element",
         tagName: "div",
         properties: {
-          class: "code-block-wrapper relative"
+          class: "code-block-wrapper relative",
         },
-        children: [
-          headerRight, ...oldChildren
-        ]
+        children: [headerRight, ...oldChildren],
+      };
+      node.children = [wrapperDiv];
+    }
+    if (node.type === "element" && node.tagName === "code") {
+      if (!node?.properties?.className?.includes("hljs")) {
+        node.properties.className = [
+          "code-inline",
+          ...(node?.properties?.className || []),
+        ];
       }
-      node.children = [wrapperDiv]
     }
   });
 };

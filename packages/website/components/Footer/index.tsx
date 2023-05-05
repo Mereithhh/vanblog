@@ -23,7 +23,7 @@ export default function ({
 }) {
   return (
     <>
-      <footer className="text-center text-sm space-y-1 mt-8 md:mt-12 dark:text-dark">
+      <footer className="text-center text-sm space-y-1 mt-8 md:mt-12 dark:text-dark footer-icp-number">
         {Boolean(ipcNumber) && (
           <p className="">
             ICP 编号:&nbsp;
@@ -37,7 +37,7 @@ export default function ({
           </p>
         )}
         {Boolean(gaBeianNumber) && (
-          <p className="flex justify-center items-center">
+          <p className="flex justify-center items-center footer-gongan-beian">
             公安备案:&nbsp;
             {Boolean(gaBeianLogoUrl) && (
               <ImageBox
@@ -57,7 +57,7 @@ export default function ({
           </p>
         )}
         <RunningTime since={since}></RunningTime>
-        <p className="">
+        <p className="footer-powered-by-vanblog">
           Powered By&nbsp;
           <a
             href="https://vanblog.mereith.com"
@@ -68,10 +68,10 @@ export default function ({
           </a>
         </p>
 
-        <p className="select-none">
+        <p className="select-none footer-copy-right">
           © {new Date(since).getFullYear()} - {new Date().getFullYear()}
         </p>
-        <p className="select-none">
+        <p className="select-none footer-viewer">
           <Viewer></Viewer>
         </p>
       </footer>

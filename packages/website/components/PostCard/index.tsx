@@ -83,11 +83,11 @@ export default function (props: {
   }, [props.type, props.content]);
 
   return (
-    <div>
+    <div className="post-card-wrapper">
       <div
         style={{ position: "relative" }}
         id="post-card"
-        className="overflow-hidden  bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
+        className="overflow-hidden post-card bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
       >
         {props.top != 0 && <TopPinIcon></TopPinIcon>}
         <Title
@@ -123,7 +123,7 @@ export default function (props: {
           ) : (
             <>
               {showToc && <TocMobile content={calContent} />}
-                <Markdown content={calContent}></Markdown>
+              <Markdown content={calContent}></Markdown>
             </>
           )}
         </div>
@@ -134,9 +134,7 @@ export default function (props: {
               href={`/post/${props.id}`}
               target={getTarget(props.openArticleLinksInNewWindow)}
             >
-              <div
-                className=" dark:bg-dark dark:hover:bg-dark-light dark:hover:text-dark-r dark:border-dark dark:text-dark hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded"
-              >
+              <div className=" dark:bg-dark dark:hover:bg-dark-light dark:hover:text-dark-r dark:border-dark dark:text-dark hover:bg-gray-800 hover:text-gray-50 border-2 border-gray-800 text-sm md:text-base text-gray-700 px-2 py-1 transition-all rounded">
                 阅读全文
               </div>
             </Link>

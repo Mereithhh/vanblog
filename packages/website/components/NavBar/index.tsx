@@ -96,7 +96,13 @@ export default function (props: {
             </div>
             {props.headerLeftContent == "siteLogo" && (
               <div className="hidden md:block transform translate-x-2">
-                <img alt="site logo" src={picUrl} width={52} height={52} className="" />
+                <img
+                  alt="site logo"
+                  src={picUrl}
+                  width={52}
+                  height={52}
+                  className=""
+                />
               </div>
             )}
           </div>
@@ -108,7 +114,7 @@ export default function (props: {
             </Link>
           )}
           {/* 第二个flex */}
-          <div className="flex justify-between h-full flex-grow ">
+          <div className="flex justify-between h-full flex-grow nav-content">
             <div
               style={{ transform: "translateX(30px)" }}
               className="cursor-pointer md:hidden  flex-grow text-center  flex items-center justify-center select-none dark:text-dark"
@@ -122,7 +128,7 @@ export default function (props: {
                 return <Item key={m.id} item={m} />;
               })}
             </ul>
-            <div className="flex">
+            <div className="flex nav-action">
               <div
                 onClick={() => {
                   setShowSearch(true);
