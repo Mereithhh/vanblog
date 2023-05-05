@@ -179,6 +179,7 @@ order: 1
 - [XiaFan's Vision](https://blog.motofans.club/)
 - [青菜的杂货铺](https://211222.xyz)
 - [笑一个吧](http://vanblog.ztunan.top)
+- [花菜的博客](https://blog.huacai.one)
 
 
 ## 预览图

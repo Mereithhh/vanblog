@@ -150,7 +150,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [XiaFan's Vision](https://blog.motofans.club/)
 - [青菜的杂货铺](https://211222.xyz)
 - [笑一个吧](http://vanblog.ztunan.top)
-
+- [花菜的博客](https://blog.huacai.one)
 ## TODO
 
 - [x] 精简前台 js 体积，优化性能
