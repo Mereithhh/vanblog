@@ -77,13 +77,13 @@ export default function (props: {
                   }
                 }}
                 url={dest}
-                accept=".png,.jpg,.jpeg,.webp,.jiff"
+                accept=".png,.jpg,.jpeg,.webp,.jiff,.gif"
               />
             </div>
           </div>
         }
         rules={props.required ? [{ required: true, message: '这是必填项' }] : undefined}
-      ></ProFormText>
+      />
     </>
   );
 }

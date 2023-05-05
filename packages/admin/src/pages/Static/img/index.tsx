@@ -18,7 +18,7 @@ import { createPortal } from 'react-dom';
 import { history, useModel } from 'umi';
 import TipTitle from '../../../components/TipTitle';
 import { useTab } from '../../../services/van-blog/useTab';
-import { StaticItem } from '../type';
+import type { StaticItem } from '../type';
 import { copyImgLink, downloadImg, getImgLink, mergeMetaInfo } from './tools';
 const MENU_ID = 'static-img';
 export const errorImg =
@@ -221,7 +221,7 @@ const ImgPage = () => {
               fetchData();
             }}
             url="/api/admin/img/upload?withWaterMark=true"
-            accept=".png,.jpg,.jpeg,.webp,.jiff"
+            accept=".png,.jpg,.jpeg,.webp,.jiff,.gif"
           />
           <UploadBtn
             setLoading={setLoading}
@@ -237,7 +237,7 @@ const ImgPage = () => {
               fetchData();
             }}
             url="/api/admin/img/upload?withWaterMark=true"
-            accept=".png,.jpg,.jpeg,.webp,.jiff"
+            accept=".png,.jpg,.jpeg,.webp,.jiff,.gif"
           />
         </Space>
       }

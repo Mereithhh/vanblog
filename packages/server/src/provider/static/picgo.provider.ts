@@ -32,7 +32,6 @@ export class PicgoProvider {
     const staticSetting = await this.getSetting();
     const picgoConfig = staticSetting?.picgoConfig;
     const plugins = staticSetting?.picgoPlugins;
-
     if (picgoConfig) {
       this.picgo.setConfig(picgoConfig);
     }
@@ -68,7 +67,11 @@ export class PicgoProvider {
     } catch (err) {
       throw err;
     } finally {
-      fs.rmSync(srcPath);
+      try {
+        fs.rmSync(srcPath);
+      } catch (err) {
+        // console.log(err);
+      }
     }
     return {
       meta,
