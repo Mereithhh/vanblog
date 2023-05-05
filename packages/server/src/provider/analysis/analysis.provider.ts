@@ -82,7 +82,7 @@ export class AnalysisProvider {
     const wordNum = await this.metaProvider.getTotalWords();
     const tagNum = (await this.tagProvider.getAllTags(true))?.length || 0;
     const categoryNum =
-      (await this.metaProvider.getAll())?.categories?.length || 0;
+      (await this.categoryProvider.getAllCategories())?.length || 0;
     const categoryPieData = await this.categoryProvider.getPieData();
     const columnData = await this.tagProvider.getColumnData(num, true);
     return {
