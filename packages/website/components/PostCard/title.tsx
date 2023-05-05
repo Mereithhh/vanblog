@@ -21,7 +21,7 @@ export function Title(props: {
     return false;
   }, [props]);
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center post-card-title ">
       {props.type != "about" ? (
         <Link href={`/post/${props.id}`} target={getTarget(newTab)}>
           <div
@@ -80,7 +80,7 @@ export function SubTitle(props: {
     }
   }, [props]);
   return (
-    <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400 dark:text-dark">
+    <div className="text-center text-xs md:text-sm divide-x divide-gray-400 text-gray-400 dark:text-dark post-card-sub-title">
       <span className="inline-flex px-2 items-center">
         <span className={iconClass}>
           <svg
@@ -128,9 +128,7 @@ export function SubTitle(props: {
             href={`/category/${encodeQuerystring(props.catelog)}`}
             target={getTarget(props.openArticleLinksInNewWindow)}
           >
-            <div
-              className="cursor-pointer group-hover:text-gray-900 dark:group-hover:text-dark-hover hover:font-medium "
-            >{`${props.catelog}`}</div>
+            <div className="cursor-pointer group-hover:text-gray-900 dark:group-hover:text-dark-hover hover:font-medium ">{`${props.catelog}`}</div>
           </Link>
         </span>
       )}
