@@ -105,7 +105,7 @@ export default function (props: {
     <div
       className="fixed w-full h-full top-0 left-0 right-0 bottom-0  justify-center items-center flex"
       style={{
-        zIndex: 1300,
+        zIndex: 100,
         backgroundColor: "rgba(0,0,0,0.4)",
         visibility: props.visible ? "visible" : "hidden",
       }}

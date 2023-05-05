@@ -44,7 +44,7 @@ Note: Beware of modifying this element as it can break the animations - you shou
   font-size: 1.15em;
   width: 250px;
   box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
-  z-index: 1002;
+  z-index: 110;
 }
 .dark .bm-menu {
   background: #26282c;

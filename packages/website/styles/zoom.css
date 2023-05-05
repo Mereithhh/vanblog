@@ -1,5 +1,5 @@
 .medium-zoom-overlay {
-  z-index: 1300;
+  z-index: 200;
   background: white !important;
 }
 
@@ -8,5 +8,5 @@
 }
 
 .medium-zoom-image--opened {
-  z-index: 1400;
+  z-index: 210;
 }

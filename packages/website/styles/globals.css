@@ -115,7 +115,7 @@
 .headroom {
   will-change: transform;
   transition: transform 200ms linear;
-  z-index: 999;
+  z-index: 100;
 }
 .headroom--pinned {
   transform: translateY(0%);

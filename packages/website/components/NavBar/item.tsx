@@ -76,7 +76,7 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
             top: 50,
             left: "-4px",
             transform: show ? "scale(100%)" : "scale(0)",
-            zIndex: 999,
+            zIndex: 80,
           }}
           onMouseEnter={() => {
             setHoverSub(true);

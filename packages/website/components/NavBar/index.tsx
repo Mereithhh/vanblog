@@ -59,7 +59,7 @@ export default function (props: {
       <div
         id="nav"
         className=" bg-white sticky top-0 dark:bg-dark nav-shadow dark:nav-shadow-dark"
-        style={{ zIndex: 1200 }}
+        style={{ zIndex: 90 }}
       >
         {/* 上面的导航栏 */}
         <div

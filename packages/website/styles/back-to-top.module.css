@@ -9,7 +9,7 @@
   height: 42px;
   background-color: #fff;
   font-size: 40px;
-  z-index: 999;
+  z-index: 90;
   cursor: pointer;
   text-align: center;
   box-shadow: 2px 2px 10px 0 rgba(0, 0, 0, 0.15);
