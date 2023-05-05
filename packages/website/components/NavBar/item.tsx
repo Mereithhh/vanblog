@@ -39,7 +39,7 @@ function LinkItemAtom(props: {
         key={item.id}
         className={props.cls ? props.cls : cls}
       >
-        <Link href={item.value}>
+        <Link href={item.value} style={{ height: "100%" }}>
           <div className={props.clsA ? props.clsA : clsA}>{item.name}</div>
         </Link>
       </li>
