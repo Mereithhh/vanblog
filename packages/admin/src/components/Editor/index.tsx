@@ -30,7 +30,16 @@ import { LinkTarget } from './plugins/linkTarget';
 const sanitize = (schema) => {
   schema.protocols.src.push('data')
   schema.tagNames.push("center")
-  schema.attributes["*"].push("style")
+  schema.tagNames.push('iframe');
+  schema.tagNames.push('script');
+  schema.attributes['*'].push('style');
+  schema.attributes['*'].push('src');
+  schema.attributes['*'].push('scrolling');
+  schema.attributes['*'].push('border');
+  schema.attributes['*'].push('frameborder');
+  schema.attributes['*'].push('framespacing');
+  schema.attributes['*'].push('allowfullscreen');
+  schema.strip = [];
   return schema
 }
 
