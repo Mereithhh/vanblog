@@ -1,4 +1,34 @@
 # Changelog
+## [0.53.0](https://github.com/Mereithhh/vanblog/compare/v0.52.0...v0.53.0) (2023-05-05)
+
+
+### 🐛 Bug Fixes | Bug 修复
+
+* 分析面板中分类数量不准确 ([d8ebe73](https://github.com/Mereithhh/vanblog/commit/d8ebe73d32e0a849d559f0929cebf2c7f2be9a3b))
+
+
+### 💄 Styles | 风格
+
+* z-index 使用保守的数值 ([80fe17c](https://github.com/Mereithhh/vanblog/commit/80fe17c879b9f839ba54fcba06a7580e835ec865))
+* 扩大pc导航栏可点击范围，优化体验 ([50ac020](https://github.com/Mereithhh/vanblog/commit/50ac0206cea8f65d7bfb0ac1f3e059406b2f2109))
+
+
+### ✨ Features | 新功能
+
+* **admin:** 管理后台文章和草稿列表页的导入按钮可以多选导入了 ([4690cbf](https://github.com/Mereithhh/vanblog/commit/4690cbfd97a488d7edab409c89bd9d017527be2b))
+* gif 格式图片上传 & 修复某些情况下上传图片报错 [#285](https://github.com/Mereithhh/vanblog/issues/285) ([43f84e6](https://github.com/Mereithhh/vanblog/commit/43f84e63a48ab3b483bc58ea5c5ab75bc4cffcc8))
+* markdown 内允许 script（虽然后台预览无效但前台生效） 和 iframe ([24b7e5f](https://github.com/Mereithhh/vanblog/commit/24b7e5fda5955a107183f6e9d27699881805f73c))
+* 前台编辑按钮登录态判断优化 ([de45b90](https://github.com/Mereithhh/vanblog/commit/de45b9069285d91f0539a2b6bac1d55f87de9b41))
+* 增加一些类名，便于进行自定义 CSS ([20d7075](https://github.com/Mereithhh/vanblog/commit/20d7075174fe4e17010e92cc1f5b4458bc996706))
+* 文章卡片标题和子标题增加类名 ([b97289b](https://github.com/Mereithhh/vanblog/commit/b97289bdfd15ee574901bbae69a78252f1b148eb))
+* 登录时，前台展示编辑按钮 [#234](https://github.com/Mereithhh/vanblog/issues/234) ([6af8a1b](https://github.com/Mereithhh/vanblog/commit/6af8a1be9586f2cbd3d509ee5d31a96e1553e4af))
+
+
+### ✏️ Documentation | 文档
+
+* 更新前台编辑按钮相关文档 ([bff5ded](https://github.com/Mereithhh/vanblog/commit/bff5ded1df1302c6858e9576b7a9b2115d861d60))
+* 更新谁在使用 [#286](https://github.com/Mereithhh/vanblog/issues/286) ([ee58831](https://github.com/Mereithhh/vanblog/commit/ee58831f65ef311fceb5df94ca154472e4fb9cdf))
+
 ## [0.52.0](https://github.com/Mereithhh/vanblog/compare/v0.51.1...v0.52.0) (2023-04-14)
 
 
