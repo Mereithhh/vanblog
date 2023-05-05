@@ -3,7 +3,7 @@ import NewArticleModal from '@/components/NewArticleModal';
 import { getArticlesByOption } from '@/services/van-blog/api';
 import { useNum } from '@/services/van-blog/useNum';
 import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import RcResizeObserver from 'rc-resize-observer';
 import { useMemo, useRef, useState } from 'react';
 import { history } from 'umi';
@@ -164,6 +164,7 @@ export default () => {
               key="importArticleBtn"
               onFinish={() => {
                 actionRef?.current?.reload();
+                message.success('导入成功！');
               }}
             />,
           ]}

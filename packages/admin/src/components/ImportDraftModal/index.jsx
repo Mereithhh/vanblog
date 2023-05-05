@@ -14,15 +14,30 @@ export default function (props) {
   const { onFinish } = props;
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
-  const handleImport = async (file) => {
+  const handleUpload = async (file) => {
     const vals = await parseMarkdownFile(file);
-    form.setFieldsValue(vals);
-    setVisible(true);
+    if (vals) {
+      await createDraft(vals);
+    }
+  };
+  const beforeUpload = async (file, files) => {
+    if (files.length > 1) {
+      await handleUpload(file);
+      if (files[files.length - 1] == file) {
+        if (onFinish) {
+          onFinish();
+        }
+      }
+    } else {
+      const vals = await parseMarkdownFile(file);
+      form.setFieldsValue(vals);
+      setVisible(true);
+    }
   };
   return (
     <>
-      <Upload showUploadList={false} multiple={false} accept={'.md'} beforeUpload={handleImport}>
-        <Button key="button" type="primary" title="从 markdown 文件导入">
+      <Upload showUploadList={false} multiple={true} accept={'.md'} beforeUpload={beforeUpload}>
+        <Button key="button" type="primary" title="从 markdown 文件导入，可多选">
           导入
         </Button>
       </Upload>

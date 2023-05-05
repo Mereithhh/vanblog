@@ -7,6 +7,7 @@ import RcResizeObserver from 'rc-resize-observer';
 import { useMemo, useRef, useState } from 'react';
 import { history } from 'umi';
 import { columns, draftKeysObj, draftKeysObjSmall } from './columes';
+import { message } from 'antd';
 export default () => {
   const actionRef = useRef();
   const [colKeys, setColKeys] = useState(draftKeysObj);
@@ -147,6 +148,7 @@ export default () => {
               key="importDraftMarkdown"
               onFinish={() => {
                 actionRef?.current?.reload();
+                message.success('导入成功！');
               }}
             />,
           ]}
