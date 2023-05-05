@@ -57,6 +57,7 @@ const PostPages = (props: PostPagesProps) => {
         ></meta>
       </Head>
       <PostCard
+        showEditButton={props.layoutProps.showEditButton === "true"}
         showExpirationReminder={
           props.layoutProps.showExpirationReminder == "true"
         }

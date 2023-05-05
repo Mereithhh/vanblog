@@ -1,6 +1,7 @@
 import { defaultMenu, MenuItem, PublicMetaProp } from "../api/getAllData";
 import dayjs from "dayjs";
 import { AuthorCardProps } from "../components/AuthorCard";
+import { checkLogin } from "./auth";
 export interface LayoutProps {
   description: string;
   ipcNumber: string;
@@ -33,6 +34,7 @@ export interface LayoutProps {
   showRSS: "true" | "false";
   showExpirationReminder: "true" | "false";
   openArticleLinksInNewWindow: "true" | "false";
+  showEditButton: "true" | "false";
   subMenuOffset: number;
   customCss?: string;
   customScript?: string;
@@ -97,6 +99,14 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   ) {
     showExpirationReminder = "false";
   }
+  let showEditButton: "true" | "false" = "true";
+  if (
+    data.meta.siteInfo?.showEditButton &&
+    data.meta.siteInfo?.showEditButton == "false"
+  ) {
+    showEditButton = "false";
+  }
+  if (!checkLogin()) showEditButton = "false";
   let openArticleLinksInNewWindow: "true" | "false" = "false";
   if (
     data.meta.siteInfo?.openArticleLinksInNewWindow &&
@@ -136,6 +146,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showCopyRight,
     showDonateButton,
     showRSS,
+    showEditButton,
     ...customSetting,
   };
 }

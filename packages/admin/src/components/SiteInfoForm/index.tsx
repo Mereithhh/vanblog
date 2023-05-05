@@ -23,14 +23,14 @@ export default function (props: {
             label="作者名字"
             placeholder={'请输入作者名字'}
             rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+          />
           <ProFormText
             name="authorDesc"
             required
             label="作者描述"
             placeholder={'请输入作者描述'}
             rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+          />
           <UrlFormItem
             isInit={props.isInit}
             formRef={props.form}
@@ -88,14 +88,14 @@ export default function (props: {
             label="网站名"
             placeholder={'请输入网站名'}
             rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+          />
           <ProFormText
             name="siteDesc"
             required
             label="网站描述"
             placeholder={'请输入网站描述'}
             rules={[{ required: true, message: '这是必填项' }]}
-          ></ProFormText>
+          />
         </>
       )}
       {props.showOption && (
@@ -146,31 +146,27 @@ export default function (props: {
       )}
       {props.showOption && (
         <>
-          <ProFormText
-            name="copyrightAggreement"
-            label="版权协议"
-            placeholder={'版权协议'}
-          ></ProFormText>
+          <ProFormText name="copyrightAggreement" label="版权协议" placeholder={'版权协议'} />
           <ProFormText
             name="beianNumber"
             label="IPC 备案号"
             placeholder={'请输入备案号，留空不显示备案信息'}
-          ></ProFormText>
+          />
           <ProFormText
             name="beianUrl"
             label="IPC 备案网址"
             placeholder={'请输入备案网址，留空不显示备案信息'}
-          ></ProFormText>
+          />
           <ProFormText
             name="gaBeianNumber"
             label="公安备案号"
             placeholder={'请输入公安备案号，留空不显示公安备案信息'}
-          ></ProFormText>
+          />
           <ProFormText
             name="gaBeianUrl"
             label="公安备案网址"
             placeholder={'请输入公安备案号点击后跳转的网址，留空则不跳转'}
-          ></ProFormText>
+          />
           <UrlFormItem
             formRef={props.form}
             isInit={props.isInit}
@@ -183,12 +179,12 @@ export default function (props: {
             name="gaAnalysisId"
             label="Google Analysis ID"
             placeholder={'请输入 Google Analysis ID，留空表示不启用'}
-          ></ProFormText>
+          />
           <ProFormText
             name="baiduAnalysisId"
             label="Baidu 分析 ID"
             placeholder={'请输入 Baidu 分析 ID，留空表示不启用'}
-          ></ProFormText>
+          />
           <ProFormSelect
             name={'enableComment'}
             label="是否开启评论系统"
@@ -198,7 +194,7 @@ export default function (props: {
               false: '关闭',
             }}
             tooltip={'默认开启'}
-          ></ProFormSelect>
+          />
           <ProFormDateTimePicker
             name="since"
             width={'lg'}
@@ -219,7 +215,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认隐藏，开启后将在主导航栏下方显示分类子导航栏（其实就是双层导航栏）。'}
-          ></ProFormSelect>
+          />
 
           <ProFormDigit
             name={'subMenuOffset'}
@@ -230,7 +226,7 @@ export default function (props: {
             min={0}
             max={200}
             tooltip={'导航栏显示的是网站名的时候，设置正确偏移以对其分类第一个字。'}
-          ></ProFormDigit>
+          />
           <ProFormSelect
             name={'headerLeftContent'}
             label="导航栏左侧显示内容"
@@ -240,7 +236,7 @@ export default function (props: {
             }}
             placeholder="网站名"
             tooltip={'显示网站 logo 的前提是已设置正确的网站 logo 哦。默认显示网站名'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'showAdminButton'}
             label="后台按钮是否显示"
@@ -250,7 +246,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后前台会隐藏后台按钮'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'showDonateInfo'}
             label="是否显示捐赠信息"
@@ -260,7 +256,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后关于页面会隐藏捐赠信息'}
-          ></ProFormSelect>
+          />
 
           <ProFormSelect
             name={'showCopyRight'}
@@ -271,7 +267,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后文章页面将不显示版权声明'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'showDonateButton'}
             label="是否显示打赏按钮"
@@ -281,7 +277,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示（前提是设置了支付宝和微信支付图片），关闭后所有位置将不显示打赏按钮'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'showDonateInAbout'}
             label="关于页面是否显示打赏按钮"
@@ -291,7 +287,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认隐藏，开启后关于页面会显示打赏按钮'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'defaultTheme'}
             label="前台默认主题模式"
@@ -302,7 +298,7 @@ export default function (props: {
               light: '亮色模式',
             }}
             tooltip={'设置后第一次进入前台的用户将以此作为默认主题模式'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'allowOpenHiddenPostByUrl'}
             label="是否允许通过 URL 打开隐藏的文章"
@@ -312,7 +308,7 @@ export default function (props: {
               false: '不允许',
             }}
             tooltip={'默认不允许，开启后可通过 URL 打开隐藏文章。'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'enableCustomizing'}
             label="是否开启客制化功能"
@@ -322,7 +318,7 @@ export default function (props: {
               false: '关闭',
             }}
             tooltip={'默认开启，关闭后即使通过客制化面板，自定义了 CSS、Script、HTML 也不会生效。'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'showRSS'}
             label="是否显示 RSS 按钮"
@@ -332,7 +328,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后所有位置会隐藏 RSS 按钮。'}
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'openArticleLinksInNewWindow'}
             label="前台点击链接时的默认行为"
@@ -344,7 +340,7 @@ export default function (props: {
             tooltip={
               '默认在当前页面跳转，会影响除了导航栏之外的大部分链接。注意如果打开新标签的话，就不会那么丝滑了哦（当前页面跳转的话是无感切换的）'
             }
-          ></ProFormSelect>
+          />
           <ProFormSelect
             name={'showExpirationReminder'}
             label="是否显示文章内容过时提醒"
@@ -354,7 +350,17 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后文章页面不会显示内容过期提醒。'}
-          ></ProFormSelect>
+          />
+          <ProFormSelect
+            name={'showEditButton'}
+            label="是否在登录后台时，在前台展示编辑按钮"
+            placeholder={'显示'}
+            valueEnum={{
+              true: '显示',
+              false: '隐藏',
+            }}
+            tooltip={'默认开启，关闭后登录后台时，前台将不再显示编辑按钮。'}
+          />
         </>
       )}
     </>

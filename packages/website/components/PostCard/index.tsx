@@ -38,6 +38,7 @@ export default function (props: {
   copyrightAggreement: string;
   customCopyRight: string | null;
   showExpirationReminder: boolean;
+  showEditButton: boolean;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const { content, setContent } = props;
@@ -95,6 +96,7 @@ export default function (props: {
           id={props.id}
           title={props.title}
           openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
+          showEditButton={props.showEditButton}
         />
 
         <SubTitle

@@ -74,6 +74,7 @@ const AboutPage = (props: AboutPageProps) => {
         customCopyRight={null}
         showDonateInAbout={props.showDonateInAbout == "true"}
         copyrightAggreement={props.layoutProps.copyrightAggreement}
+        showEditButton={props.layoutProps.showEditButton === "true"}
       ></PostCard>
     </Layout>
   );

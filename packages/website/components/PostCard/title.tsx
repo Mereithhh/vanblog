@@ -10,6 +10,7 @@ export function Title(props: {
   id: number | string;
   title: string;
   openArticleLinksInNewWindow: boolean;
+  showEditButton: boolean;
 }) {
   const newTab = useMemo(() => {
     if (props.type == "overview" && props.openArticleLinksInNewWindow) {
@@ -22,18 +23,36 @@ export function Title(props: {
       {props.type != "about" ? (
         <Link href={`/post/${props.id}`} target={getTarget(newTab)}>
           <div
-            className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 md:text-${props.type == "overview" ? "xl" : "2xl"
-              } ua ua-link`}
+            className={`text-lg block font-medium px-5  text-center mb-2 mt-2 dark:text-dark text-gray-700 ${
+              props.showEditButton ? "ml-8" : ""
+            } md:text-${props.type == "overview" ? "xl" : "2xl"} ua ua-link`}
           >
             {props.title}
           </div>
         </Link>
       ) : (
         <div
-          className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-2xl ua ua-link  select-none`}
+          className={`text-lg block font-medium mb-2 mt-2 dark:text-dark text-gray-700 md:text-2xl ua ua-link  select-none ${
+            props.showEditButton ? "ml-12 mr-4" : ""
+          }`}
         >
           {props.title}
         </div>
+      )}
+      {props.showEditButton && (
+        <a
+          className="flex items-center"
+          href={
+            props.type === "about"
+              ? "/admin/editor?type=about"
+              : `/admin/editor?type=article&id=${props.id}`
+          }
+          target="_blank"
+        >
+          <div className=" text-dark dark:text-gray-700">
+            <div>编辑</div>
+          </div>
+        </a>
       )}
     </div>
   );
