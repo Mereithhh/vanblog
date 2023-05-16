@@ -146,7 +146,7 @@ export default function (props: {
       )}
       {props.showOption && (
         <>
-          <ProFormText name="copyrightAggreement" label="版权协议" placeholder={'版权协议'} />
+          <ProFormText name="copyrightAgreement" label="版权协议" placeholder={'版权协议'} />
           <ProFormText
             name="beianNumber"
             label="IPC 备案号"
