@@ -1,26 +1,29 @@
+import { getDirname, path } from "@vuepress/utils";
 import { defineUserConfig } from "vuepress";
 import { redirectPlugin } from "vuepress-plugin-redirect";
 import { searchProPlugin } from "vuepress-plugin-search-pro";
-import { getDirname, path } from "@vuepress/utils";
 import theme from "./theme.js";
+
 const __dirname = getDirname(import.meta.url);
+
 export default defineUserConfig({
-  
   base: "/",
 
   lang: "zh-CN",
   title: "VanBlog",
   description: "VanBlog 的官方网站",
 
-
   head: [
     ["link", { rel: "icon", href: "/logo.svg" }],
-    ['script',{
-      type: "text/javascript",
-      charset: "utf-8",
-      src:"https://cdn.wwads.cn/js/makemoney.js",
-      async: true
-    }],
+    [
+      "script",
+      {
+        type: "text/javascript",
+        charset: "utf-8",
+        src: "https://cdn.wwads.cn/js/makemoney.js",
+        async: true,
+      },
+    ],
     [
       "script",
       {},
@@ -46,9 +49,5 @@ s.parentNode.insertBefore(hm, s);
       __dirname,
       "./component/TOC.vue"
     ),
-    // "@theme-hope/modules/sidebar/components/Sidebar": path.resolve(
-    //   __dirname,
-    //   "./component/Sidebar.vue"
-    // ),
-  }
+  },
 });
