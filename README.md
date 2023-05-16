@@ -151,6 +151,10 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [青菜的杂货铺](https://211222.xyz)
 - [笑一个吧](http://vanblog.ztunan.top)
 - [花菜的博客](https://blog.huacai.one)
+- [MrBun's Blog](https://blog.mrbun.cn)
+<!-- - [耿老师](https://transfer.teachergeng.space) -->
+
+
 ## TODO
 
 - [x] 精简前台 js 体积，优化性能
