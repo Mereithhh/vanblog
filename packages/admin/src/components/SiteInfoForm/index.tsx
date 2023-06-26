@@ -149,12 +149,12 @@ export default function (props: {
           <ProFormText name="copyrightAggreement" label="版权协议" placeholder={'版权协议'} />
           <ProFormText
             name="beianNumber"
-            label="IPC 备案号"
+            label="ICP 备案号"
             placeholder={'请输入备案号，留空不显示备案信息'}
           />
           <ProFormText
             name="beianUrl"
-            label="IPC 备案网址"
+            label="ICP 备案网址"
             placeholder={'请输入备案网址，留空不显示备案信息'}
           />
           <ProFormText
