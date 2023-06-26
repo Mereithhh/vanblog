@@ -1,17 +1,21 @@
 import { writeClipBoardText } from '@/services/van-blog/clipboard';
 import { message } from 'antd';
 import { StaticItem } from '../type';
-export const getImgLink = (realPath) => {
-  let url = `${window.location.protocol}//${window.location.host}${realPath}`;
+export const getImgLink = (realPath, autoCompleteHost = true) => {
+  let url = realPath;
   if (realPath.includes('http://') || realPath.includes('https://')) {
     url = realPath;
+  } else {
+    if (autoCompleteHost) {
+      url = `${window.location.protocol}//${window.location.host}${realPath}`;
+    }
   }
   url = url.replace(/\)/g, '%29');
   url = url.replace(/\(/g, '%28');
   return url;
 };
-export const copyImgLink = (realPath, isMarkdown = false, info = undefined) => {
-  let url = getImgLink(realPath);
+export const copyImgLink = (realPath, isMarkdown = false, info = undefined, autoCompleteHost= true) => {
+  let url = getImgLink(realPath, autoCompleteHost);
   if (isMarkdown) {
     url = `![](${url})`;
   }

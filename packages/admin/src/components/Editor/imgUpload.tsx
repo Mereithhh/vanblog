@@ -17,7 +17,7 @@ export const uploadImg = async (file: File) => {
     });
     const data = await res.json();
     if (data && data.statusCode == 200) {
-      const url = getImgLink(data.data.src);
+      const url = getImgLink(data.data.src, false);
       copyImgLink(data.data.src, true, '上传成功！ ');
       return url;
     } else {
