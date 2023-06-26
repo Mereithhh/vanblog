@@ -184,6 +184,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [x] 忘记密码
 - [x] 分类加密
 - [x] 自定义文字路径
+- [x] 系统日志查看
 - [ ] 快捷分享按钮
 - [x] 完善可自定义上传文件的自定义页面功能（现在的自定义页面有潜在的 css 污染问题）
 - [x] 图片上传自动添加水印
