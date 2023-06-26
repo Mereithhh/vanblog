@@ -92,6 +92,7 @@ COPY --from=ADMIN_BUILDER /app/dist/ ./
 COPY caddyTemplate.json /app/caddyTemplate.json
 # 复制入口文件
 WORKDIR /app
+COPY ./scripts/start.js ./
 COPY ./entrypoint.sh ./
 ENV PORT 3001
 # 增加版本

@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
       // 获取请求header token值
       jwtFromRequest: ExtractJwt.fromHeader('token'),
       // 从 initJwtSecret 获取 jwt 密钥
-      secretOrKey      : global.jwtSecret,
+      secretOrKey: global.jwtSecret,
     });
   }
 

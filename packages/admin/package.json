@@ -67,6 +67,7 @@
     "@emoji-mart/data": "^1.0.5",
     "@emoji-mart/react": "^1.0.1",
     "@umijs/route-utils": "^2.0.0",
+    "ansi-to-html": "^0.7.2",
     "antd": "^4.19.0",
     "antd-img-crop": "^4.2.4",
     "btoa": "^1.2.1",

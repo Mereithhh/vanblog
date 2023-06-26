@@ -4,7 +4,7 @@
     "**/node_modules": true,
     "dist": true
   },
-  "editor.formatOnSave": true,
+  "editor.formatOnSave": false,
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

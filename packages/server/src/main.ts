@@ -19,8 +19,6 @@ import { initJwt } from './utils/initJwt';
 async function bootstrap() {
   const jwtSecret = await initJwt();
   global.jwtSecret = jwtSecret;
-
-
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
   app.use(json({ limit: '50mb' }));
