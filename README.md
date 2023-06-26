@@ -195,6 +195,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [x] 迁移到 pnpm，使用 workspace
 - [x] 增加在特定事件后触发执行自定义代码或 webhook 的扩展能力
 - [x] 上传图片自动压缩功能
+- [x] 批量操作文章草稿
 - [ ] 插件系统
 - [ ] 自定义主题（前端渲染器）系统
 - [ ] 浏览器消息通知
@@ -203,6 +204,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [ ] 增加 ORM 层，适配更多数据库
 - [ ] 增加一些 e2e 测试，集成到 CI
 - [ ] 国际化
+
 
 ## 问题反馈
 
