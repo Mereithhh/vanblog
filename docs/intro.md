@@ -183,6 +183,7 @@ order: 1
 - [花菜的博客](https://blog.huacai.one)
 - [MrBun's Blog](https://blog.mrbun.cn)
 - [智芯物联的空间](https://www.tingshuo.online)
+- [敲代码的小盆友](https://code-child.cn)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
 
