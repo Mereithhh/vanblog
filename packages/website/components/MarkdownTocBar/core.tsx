@@ -9,6 +9,12 @@ export default function (props: {
 }) {
   const { items } = props;
   const [currIndex, setCurrIndex] = useState(-1);
+
+  const updateHash = (hash: string) => {
+    if (hash) {
+      window.history.replaceState(null, "", `#${hash}`);
+    }
+  }
   const handleScroll = throttle((ev: Event) => {
     ev.stopPropagation();
     ev.preventDefault();
@@ -38,9 +44,10 @@ export default function (props: {
       }
     }
     setCurrIndex(top.index);
-    // updateHash(top.text);
+    updateHash(top.text);
   }, 100);
 
+  
   useEffect(() => {
     updateTocScrollbar();
   }, [currIndex, props.headingOffset]);
@@ -91,6 +98,7 @@ export default function (props: {
               to = 0;
             }
             scrollTo(window, { top: to, easing: "ease-in-out", duration: 800 });
+
           }
         }}
       >
