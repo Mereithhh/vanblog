@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.1.6"
+VANBLOG_SCRIPT_VERSION="v0.2.0"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -363,6 +363,30 @@ clean_all() {
   fi
 }
 
+backup() {
+  echo -e "> 备份 vanblog"
+  name="vanblog-backup-$(date +"%Y%m%d%H%M%S").tar.gz"
+  cd $VANBLOG_BASE_PATH && tar czvf $name ./data
+  echo -e "${green}备份成功，文件名：${name}${plain} 所在路径：${VANBLOG_BASE_PATH}"
+}
+
+restore() {
+  echo -e "> 恢复 vanblog"
+  read -e -r -p "请输入备份文件名（含路径）: " path
+  # 检测空
+  if [ -z "$path" ]; then
+    echo -e "${red}输入为空${plain}"
+    exit 1
+  fi
+  # 停止 vanblog
+  echo -e "> 停止 vanblog 中..."
+  stop_vanblog
+  # 覆盖解压到目标路径
+  echo -e "> 覆盖解压到目标路径中..."
+  tar xzvf $path -C $VANBLOG_BASE_PATH
+  echo -e "${green}恢复成功${plain}，请手动启动 vanblog"
+}
+
 show_usage() {
   echo "VanBlog 管理脚本使用方法: "
   echo "--------------------------------------------------------"
@@ -376,6 +400,8 @@ show_usage() {
   echo "./vanblog.sh log                        - 查看 VanBlog 日志"
   echo "./vanblog.sh uninstall                  - 卸载 VanBlog"
   echo "./vanblog.sh reset_https                - 重置 https 设置"
+  echo "./vanblog.sh backup                     - 备份 VanBlog"
+  echo "./vanblog.sh restore                    - 恢复 VanBlog"
   echo "--------------------------------------------------------"
   echo "./vanblog.sh update_script              - 更新此脚本"
   echo "--------------------------------------------------------"
@@ -394,6 +420,8 @@ show_menu() {
     ${green}7.${plain}  查看日志
     ${green}8.${plain}  卸载
     ${green}9.${plain}  重置 https 设置
+    ${green}10.${plain} 备份 VanBlog
+    ${green}11.${plain} 恢复 VanBlog
     ————————————————-
     ${green}20.${plain} 更新此脚本
     ${green}30.${plain} 查看脚本使用说明
@@ -431,6 +459,12 @@ show_menu() {
     ;;
   9)
     reset_https
+    ;;
+  10)
+    backup
+    ;;
+  11)
+    restore
     ;;
   20)
     update_script
@@ -477,6 +511,12 @@ if [[ $# > 0 ]]; then
     ;;
   "reset_https")
     reset_https 0
+    ;;
+  "backup")
+    backup 0
+    ;;
+  "restore")
+    restore 0
     ;;
   *) show_usage ;;
   esac
