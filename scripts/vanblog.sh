@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.1.5"
+VANBLOG_SCRIPT_VERSION="v0.1.6"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -283,6 +283,12 @@ update() {
 
 }
 
+reset_https() {
+    echo -e "> 重置 https 设置（需要先启动 vanblog）"
+    cd $VANBLOG_BASE_PATH && docker-compose exec vanblog node /app/cli/resetHttps.js
+    before_show_menu
+}
+
 start_vanblog() {
   echo -e "> 启动 VanBlog"
 
@@ -369,6 +375,7 @@ show_usage() {
   echo "./vanblog.sh update                     - 更新 VanBlog"
   echo "./vanblog.sh log                        - 查看 VanBlog 日志"
   echo "./vanblog.sh uninstall                  - 卸载 VanBlog"
+  echo "./vanblog.sh reset_https                - 重置 https 设置"
   echo "--------------------------------------------------------"
   echo "./vanblog.sh update_script              - 更新此脚本"
   echo "--------------------------------------------------------"
@@ -386,10 +393,13 @@ show_menu() {
     ${green}6.${plain}  更新
     ${green}7.${plain}  查看日志
     ${green}8.${plain}  卸载
+    ${green}9.${plain}  重置 https 设置
     ————————————————-
+    ${green}20.${plain} 更新此脚本
+    ${green}30.${plain} 查看脚本使用说明
     ${green}0.${plain}  退出脚本
     "
-  echo && read -ep "请输入选择 [0-8]: " num
+  echo && read -ep "请输入选择 [0-30]: " num
 
   case "${num}" in
   0)
@@ -418,6 +428,15 @@ show_menu() {
     ;;
   8)
     uninstall_vanblog
+    ;;
+  9)
+    reset_https
+    ;;
+  20)
+    update_script
+    ;;
+  30)
+    show_usage
     ;;
   *)
     echo -e "${red}请输入正确的数字 [0-8]${plain}"
@@ -455,6 +474,9 @@ if [[ $# > 0 ]]; then
     ;;
   "uninstall")
     uninstall_vanblog 0
+    ;;
+  "reset_https")
+    reset_https 0
     ;;
   *) show_usage ;;
   esac

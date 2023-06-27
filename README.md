@@ -94,6 +94,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 >
 > [更新后后台报错||一直加载中](https://vanblog.mereith.com/faq/update.html#升级后后台报错或持续加载)
 >
+> [开启了 https 重定向后关不掉](https://vanblog.mereith.com/faq/usage.html#开启了-https-重定向后关不掉)
+>
 > [更多常见问题](https://vanblog.mereith.com/faq/)
 
 ## 关于更新
@@ -156,6 +158,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [敲代码的小盆友](https://code-child.cn)
 - [Tim's Life](https://zouchanglin.cn)
 - [吾・子风](https://5z5f.com/tag)
+- [LinKinHan'Blog](https://www.linkinhan.top)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
 

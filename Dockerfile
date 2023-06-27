@@ -64,6 +64,10 @@ RUN pnpm config set network-timeout 600000 -g
 RUN pnpm config set registry https://registry.npmmirror.com -g
 RUN pnpm config set fetch-retries 20 -g
 RUN pnpm config set fetch-timeout 600000 -g
+# 复制 cli 工具
+WORKDIR /app/cli
+COPY ./packages/cli/ ./
+RUN pnpm i
 # 安装 waline
 WORKDIR /app/waline
 COPY ./packages/waline/ ./
