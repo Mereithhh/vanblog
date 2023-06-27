@@ -12,7 +12,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.2.0"
+VANBLOG_SCRIPT_VERSION="v0.2.1"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -187,12 +187,13 @@ install_vanblog() {
   if [[ $? != 0 ]]; then
     echo -e "正在安装 Docker"
     bash <(curl -sL https://${Get_Docker_URL}) ${Get_Docker_Argu} >/dev/null 2>&1
-    if [[ $? != 0 ]]; then
-      echo -e "${red}下载脚本失败，请检查本机能否连接 ${Get_Docker_URL}${plain}"
-      return 0
-    fi
     systemctl enable docker.service
     systemctl start docker.service
+    command -v docker >/dev/null 2>&1
+    if [[ $? != 0 ]]; then
+      echo -e "${red}Docker 安装失败"
+      exit 0
+    fi
     echo -e "${green}Docker${plain} 安装成功"
   fi
 
@@ -200,11 +201,12 @@ install_vanblog() {
   if [[ $? != 0 ]]; then
     echo -e "正在安装 Docker Compose"
     wget -t 2 --no-check-certificate -T 10 -O /usr/local/bin/docker-compose "https://${GITHUB_URL}/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" >/dev/null 2>&1
-    if [[ $? != 0 ]]; then
-      echo -e "${red}下载脚本失败，请检查本机能否连接 ${GITHUB_URL}${plain}"
-      return 0
-    fi
     chmod +x /usr/local/bin/docker-compose
+    command -v docker-compose >/dev/null 2>&1
+    if [[ $? != 0 ]]; then
+      echo -e "${red}Docker Compose 安装失败"
+      exit 0
+    fi
     echo -e "${green}Docker Compose${plain} 安装成功"
   fi
 
