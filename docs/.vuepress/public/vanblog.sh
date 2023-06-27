@@ -7,17 +7,15 @@
 #   Github: https://github.com/mereithhh/van-blog
 #========================================================
 
-## PS: 偷个懒，这个脚本是从 nezha 这个项目拷贝过来改的，如有问题欢迎 pr - -
-
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.2.1"
+VANBLOG_SCRIPT_VERSION="v0.3.0"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
 GITHUB_URL="dn-dao-github-mirror.daocloud.io"
-Get_Docker_URL="get.daocloud.io/docker"
+Get_Docker_URL="vanblog.mereith.com/docker.sh"
 Get_Docker_Argu=" -s docker --mirror Aliyun"
 
 red='\033[0;31m'
@@ -94,7 +92,8 @@ pre_check() {
         Get_Docker_Argu=" "
         Docker_IMG="mereith\/van-blog:latest"
     else
-        Get_Docker_URL="get.daocloud.io/docker"
+        echo "使用中国镜像"
+        Get_Docker_URL="vanblog.mereith.com/docker.sh"
         GITHUB_URL="github.com"
         Get_Docker_Argu=" -s docker --mirror Aliyun"
         Docker_IMG="registry.cn-beijing.aliyuncs.com\/mereith\/van-blog:latest"
@@ -191,23 +190,23 @@ install_vanblog() {
     systemctl start docker.service
     command -v docker >/dev/null 2>&1
     if [[ $? != 0 ]]; then
-      echo -e "${red}Docker 安装失败"
+      echo -e "${red}Docker 安装失败${plain}"
       exit 0
     fi
     echo -e "${green}Docker${plain} 安装成功"
   fi
 
-  command -v docker-compose >/dev/null 2>&1
-  if [[ $? != 0 ]]; then
-    echo -e "正在安装 Docker Compose"
-    wget -t 2 --no-check-certificate -T 10 -O /usr/local/bin/docker-compose "https://${GITHUB_URL}/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" >/dev/null 2>&1
+  
+  if [[ $(docker compose | grep 'Usage') != "" ]]; then
+    echo -e "未找到 docker-compose ，尝试使用 docker compose 创建别名"
+    echo 'docker compose $@' > /usr/local/bin/docker-compose
     chmod +x /usr/local/bin/docker-compose
     command -v docker-compose >/dev/null 2>&1
     if [[ $? != 0 ]]; then
-      echo -e "${red}Docker Compose 安装失败"
+      echo -e "${red}Docker Compose 别名创建失败${plain}，请手动安装 Docker Compose"
       exit 0
     fi
-    echo -e "${green}Docker Compose${plain} 安装成功"
+    echo -e "${green}Docker Compose${plain} 别名创建成功"
   fi
 
   config 0
