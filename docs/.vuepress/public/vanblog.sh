@@ -66,6 +66,40 @@ pre_check() {
     exit 1
   fi
 
+      ## China_IP
+    if [[ -z "${CN}" ]]; then
+        if [[ $(curl -m 10 -s https://ipapi.co/json | grep 'China') != "" ]]; then
+            echo "根据ipapi.co提供的信息，当前IP可能在中国"
+            read -e -r -p "是否选用中国镜像完成安装? [Y/n] " input
+            case $input in
+                [yY][eE][sS] | [yY])
+                    echo "使用中国镜像"
+                    CN=true
+                ;;
+                
+                [nN][oO] | [nN])
+                    echo "不使用中国镜像"
+                ;;
+                *)
+                    echo "使用中国镜像"
+                    CN=true
+                ;;
+            esac
+        fi
+    fi
+
+    if [[ -z "${CN}" ]]; then
+        Get_Docker_URL="get.docker.com"
+        GITHUB_URL="dn-dao-github-mirror.daocloud.io"
+        Get_Docker_Argu=" "
+        Docker_IMG="mereith\/van-blog:latest"
+    else
+        Get_Docker_URL="get.daocloud.io/docker"
+        GITHUB_URL="github.com"
+        Get_Docker_Argu=" -s docker --mirror Aliyun"
+        Docker_IMG="registry.cn-beijing.aliyuncs.com\/mereith\/van-blog:latest"
+    fi
+
 }
 
 confirm() {
@@ -223,9 +257,9 @@ config() {
   if [[ -z "${vanblog_https_port}" ]]; then
     vanblog_https_port=443
   fi
-  if [[ -z "${vanblog_version}" ]]; then
-    vanblog_version="latest"
-  fi
+  # if [[ -z "${vanblog_version}" ]]; then
+  #   vanblog_version="latest"
+  # fi
 
   rm ${VANBLOG_BASE_PATH}/docker-compose.yaml >/dev/null 2>&1
   cp ${VANBLOG_BASE_PATH}/docker-compose-template.yaml ${VANBLOG_BASE_PATH}/docker-compose.yaml >/dev/null 2>&1
@@ -234,7 +268,8 @@ config() {
   sed -i "s/vanblog_http_port/${vanblog_http_port}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
   sed -i "s/vanblog_https_port/${vanblog_https_port}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
   # sed -i "s/vanblog_domains/${vanblog_domains}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
-  sed -i "s/vanblog_version/${vanblog_version}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
+  # sed -i "s/vanblog_version/${vanblog_version}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
+  sed -i "s/vanblog_image/${Docker_IMG}/g" ${VANBLOG_BASE_PATH}/docker-compose.yaml
 
   mkdir -p $VANBLOG_DATA_PATH
 
