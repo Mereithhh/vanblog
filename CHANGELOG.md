@@ -10,9 +10,9 @@
 
 ### ✨ Features | 新功能
 
-* 增加一件脚本来关闭 https 重定向 ([ea41ea8](https://github.com/Mereithhh/vanblog/commit/ea41ea8535ddaaaebc5052951d34e45f6dc31d83))
+* 增加一键脚本来关闭 https 重定向 ([ea41ea8](https://github.com/Mereithhh/vanblog/commit/ea41ea8535ddaaaebc5052951d34e45f6dc31d83))
 * 文章或草稿支持批量导出markdown或批量删除操作 [#296](https://github.com/Mereithhh/vanblog/issues/296) ([7dec2f8](https://github.com/Mereithhh/vanblog/commit/7dec2f8f98a8c67f34ba5b8755b9e8fde08e9c21))
-* 文章支持锚点定为 [#309](https://github.com/Mereithhh/vanblog/issues/309) ([0ab9fdb](https://github.com/Mereithhh/vanblog/commit/0ab9fdbf31246712a6fad07066d975eb7711de4f))
+* 文章支持锚点定位 [#309](https://github.com/Mereithhh/vanblog/issues/309) ([0ab9fdb](https://github.com/Mereithhh/vanblog/commit/0ab9fdbf31246712a6fad07066d975eb7711de4f))
 * 文章标题过长自动截断 [#291](https://github.com/Mereithhh/vanblog/issues/291) ([32df7cd](https://github.com/Mereithhh/vanblog/commit/32df7cd1153278cd8ee99fc1992310300a856dc5))
 * 本地图床复制和插入markdown链接改为相对url [#303](https://github.com/Mereithhh/vanblog/issues/303) ([3290dec](https://github.com/Mereithhh/vanblog/commit/3290dece37a3f331d44ac7ec62e9bfd416c6ab59))
 * 本地编辑器缓存增加时间戳校验，只有比服务器更新时才会采用本地缓存。另外默认关闭本地缓存，可在编辑器右上角偏好设置中开启 ([7010d32](https://github.com/Mereithhh/vanblog/commit/7010d3217d8aaa5288169995fadfc9801df644b3))
