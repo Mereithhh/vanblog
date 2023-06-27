@@ -68,11 +68,13 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
 - 自动保存
 
-  编辑文章时会自动实时保存内容到本地缓存。
+  编辑文章时会自动实时保存内容到本地缓存，此功能默认关闭，可在编辑器右上角下拉菜单中的 `偏好设置` 中开启。  
 
   即使没有点击保存按钮就退出了编辑器，下次进入后也会自动恢复上次的状态。
 
   ![自动保存](https://pic.mereith.com/img/85fa1dc72226c92b7b176cc40690999d.clipboard-2022-08-31.png)
+
+![开启自动保存](https://pic.mereith.com/img/83e5a9815d0538447ef2fa97fe9c875d.clipboard-2023-06-27.webp)
 
 - 快捷键
 
@@ -110,7 +112,7 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
 ![偏好设置](https://www.mereith.com/static/img/52495adf0928d2034159a398cbc7e050.clipboard-2022-09-06.png)
 
-![偏好设置](https://www.mereith.com/static/img/031c5d647a21e1f57efbceb615661486.clipboard-2022-09-06.png)
+![偏好设置](https://pic.mereith.com/img/83e5a9815d0538447ef2fa97fe9c875d.clipboard-2023-06-27.webp)
 
 ::: note
 

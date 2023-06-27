@@ -45,6 +45,28 @@ export default function (props: { setValue: any; value: any; trigger: any }) {
           ];
         }}
       />
+
+      <ProFormSelect
+        width="md"
+        required
+        id="useLocalCache"
+        name="useLocalCache"
+        label="本地缓存"
+        tooltip="默认关闭，开启后将在本地缓存编辑器内容，当本地内容比服务器内容更新时间更近时，将使用本地内容展示在编辑器中。"
+        placeholder="是否开启本地缓存"
+        request={async () => {
+          return [
+            {
+              label: '开启',
+              value: "open",
+            },
+            {
+              label: '关闭',
+              value: "close",
+            },
+          ];
+        }}
+      />
     </ModalForm>
   );
 }
