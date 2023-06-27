@@ -2,6 +2,8 @@ version: "3"
 
 services:
   vanblog:
+    # 阿里云镜像源
+    # image: registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest
     image: mereith/van-blog:latest
     restart: always
     environment:
