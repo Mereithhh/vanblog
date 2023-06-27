@@ -17,7 +17,7 @@ VANBLOG_SCRIPT_VERSION="v0.2.1"
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
 GITHUB_URL="dn-dao-github-mirror.daocloud.io"
-Get_Docker_URL="get.daocloud.io/docker"
+Get_Docker_URL="vanblog.mereith.com/docker.sh"
 Get_Docker_Argu=" -s docker --mirror Aliyun"
 
 red='\033[0;31m'
@@ -94,7 +94,7 @@ pre_check() {
         Get_Docker_Argu=" "
         Docker_IMG="mereith\/van-blog:latest"
     else
-        Get_Docker_URL="get.daocloud.io/docker"
+        Get_Docker_URL="vanblog.mereith.com/docker.sh"
         GITHUB_URL="github.com"
         Get_Docker_Argu=" -s docker --mirror Aliyun"
         Docker_IMG="registry.cn-beijing.aliyuncs.com\/mereith\/van-blog:latest"
@@ -191,7 +191,7 @@ install_vanblog() {
     systemctl start docker.service
     command -v docker >/dev/null 2>&1
     if [[ $? != 0 ]]; then
-      echo -e "${red}Docker 安装失败"
+      echo -e "${red}Docker 安装失败${plain}"
       exit 0
     fi
     echo -e "${green}Docker${plain} 安装成功"
@@ -204,7 +204,7 @@ install_vanblog() {
     chmod +x /usr/local/bin/docker-compose
     command -v docker-compose >/dev/null 2>&1
     if [[ $? != 0 ]]; then
-      echo -e "${red}Docker Compose 安装失败"
+      echo -e "${red}Docker Compose 安装失败${plain}"
       exit 0
     fi
     echo -e "${green}Docker Compose${plain} 安装成功"
