@@ -689,13 +689,13 @@ export class ArticleProvider {
   async getByIdOrPathname(id: string | number, view: ArticleView) {
     const articleByPathname = await this.getByPathName(
       String(id),
-      this.getView(view),
+      view,
     );
 
     if (articleByPathname) {
       return articleByPathname;
     }
-    return await this.getById(Number(id), this.getView(view));
+    return await this.getById(Number(id), view);
   }
 
   async getByPathName(pathname: string, view: ArticleView): Promise<Article> {
