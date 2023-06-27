@@ -10,7 +10,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ./vanblog.sh
 ```
 
-![脚本演示](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)
+![脚本演示](https://pic.mereith.com/img/74047a8387a2d2ba4e3e7cefca67815f.clipboard-2023-06-27.webp)
 
 启动完毕后，请 [完成初始化](./init.md)。
 

@@ -9,18 +9,18 @@ icon: retweet
 
 :::: tabs#deploy
 
-@tab 脚本
+@tab 脚本部署时
 
 迁移 `/var/vanblog` 目录到新机器，然后运行脚本重启服务即可。
 
 ```bash
-# 打包老机器的文件夹
-tar czvf vanblog-backup.tgz /var/vanblog
-# 复制到新机器即可，解压到 /var/vanblog 中后，运行脚本后，选择重启服务。
-curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
+# 执行一键脚本自动打包备份文件
+curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh backup
+# 复制备份文件到新机器后，再次执行一键脚本恢复备份即可
+curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh restore
 ```
 
-@tab docker
+@tab docker 手动部署时
 
 `docker` 部署的 VanBlog 所有的状态都存储在持久化目录中，所以只需要备份/迁移持久化目录。
 
