@@ -188,6 +188,8 @@ order: 1
 - [Tim's Life](https://zouchanglin.cn)
 - [吾・子风](https://5z5f.com/tag)
 - [LinKinHan'Blog](https://www.linkinhan.top)
+- [郭郭的博客](https://blog.warmplace.cn)
+- [小橘子](https://www.xiaojuziya.com)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
 
