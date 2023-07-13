@@ -25,7 +25,7 @@ export class TagProvider {
   //TODO tag 改为缓存模式
   async getAllTags(includeHidden: boolean) {
     const d = await this.getTagsWithArticle(includeHidden);
-    return Object.keys(d);
+    return Object.keys(d).sort((a, b) => a.localeCompare(b));
   }
 
   async getColumnData(topNum: number, includeHidden: boolean) {
