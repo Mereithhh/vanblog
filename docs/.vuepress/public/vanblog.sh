@@ -29,7 +29,9 @@ os_arch=""
 
 delete_old_images() {
   echo -e "> 删除旧镜像"
+  docker rmi -f $(docker images | grep van-blog | awk '{print $3}')
   docker rmi -f $(docker images | grep vanblog | awk '{print $3}')
+
 }
 
 pre_check() {
@@ -74,7 +76,7 @@ pre_check() {
                     echo "使用中国镜像"
                     CN=true
                 ;;
-                
+
                 [nN][oO] | [nN])
                     echo "不使用中国镜像"
                 ;;
@@ -196,7 +198,7 @@ install_vanblog() {
     echo -e "${green}Docker${plain} 安装成功"
   fi
 
-  
+
   if [[ $(docker compose | grep 'Usage') != "" ]]; then
     echo -e "未找到 docker-compose ，尝试使用 docker compose 创建别名"
     echo 'docker compose $@' > /usr/local/bin/docker-compose
