@@ -4,7 +4,7 @@ icon: circle-info
 order: 1
 ---
 
-@include(@/info.snippet.md)
+<!-- @include: @/info.snippet.md -->
 
 <!-- more -->
 
