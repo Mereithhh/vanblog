@@ -1,7 +1,6 @@
 ---
 title: 导入导出
 icon: right-to-bracket
-redirectFrom: /feature/advance/backup.html
 ---
 
 ::: warning 备份与迁移

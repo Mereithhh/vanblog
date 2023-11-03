@@ -6,6 +6,7 @@ on:
       NAME:
         description: "A random input name for the workflow"
         type: string
+
 permissions:
   contents: write
 
@@ -14,26 +15,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Get version
         id: get_version
         run: |
           PACKAGE_VERSION=$(cat package.json | grep version | head -1 | awk -F: '{ print $2 }'| sed 's/[",]//g' | sed 's/ //g')
           echo ::set-output name=VERSION::${PACKAGE_VERSION}
+
       - name: 展示版本
         run: echo ${{ steps.get_version.outputs.VERSION }}
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
+
       - name: Login to DockerHub
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: 打包镜像并推送
         uses: docker/build-push-action@v2
         with:
@@ -47,11 +54,13 @@ jobs:
           tags: |
             "docker.io/mereith/van-blog:latest"
             "docker.io/mereith/van-blog:${{ steps.get_version.outputs.VERSION }}"
+
       - name: 设置 Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
-          cache: yarn
+          node-version: 18
+          cache: pnpm
+
       - name: generateReleaseNote
         run: node scripts/releaseNote.js
       - name: Release

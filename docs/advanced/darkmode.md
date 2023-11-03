@@ -1,7 +1,6 @@
 ---
 title: 黑暗模式与响应式
 icon: circle-half-stroke
-redirectFrom: /feature/advance/dark-mode.html
 ---
 
 VanBlog 的前后台都支持黑暗模式和自动切换。并且都适配了从移动端到 PC 端的各种尺寸布局。

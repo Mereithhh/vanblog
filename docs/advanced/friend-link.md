@@ -1,7 +1,6 @@
 ---
 title: 友情链接
 icon: heart
-redirectFrom: /feature/advance/links.html
 ---
 
 VanBlog 支持 `友情链接` 展示，

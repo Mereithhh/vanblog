@@ -3,9 +3,6 @@ title: 常见问题
 icon: circle-question
 dir:
   order: 6
-redirectFrom:
-  - /guide/faq.html
-  - /ref/faq.html
 ---
 
 ::: info VanBlog

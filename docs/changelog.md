@@ -2,7 +2,6 @@
 title: 更新日志
 icon: clock
 order: 8
-redirectFrom: /ref/changelog.html
 ---
 
 ## [0.54.0](https://github.com/Mereithhh/vanblog/compare/v0.53.0...v0.54.0) (2023-06-27)

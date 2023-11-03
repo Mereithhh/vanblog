@@ -2,7 +2,6 @@
 title: 评论
 icon: comments
 order: 4
-redirectFrom: /feature/basic/comment.html
 ---
 
 VanBlog 内嵌了 [Waline 评论系统](https://waline.js.org/)，你不需要任何额外的配置或额外部署，开箱即用。

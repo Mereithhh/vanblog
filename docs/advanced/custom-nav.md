@@ -1,7 +1,6 @@
 ---
 title: 自定义导航栏
 icon: window-maximize
-redirectFrom: /feature/advance/customNav.html
 ---
 
 VanBlog 允许你在原有导航栏菜单之外，添加新的自定义菜单。

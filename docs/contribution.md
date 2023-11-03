@@ -2,7 +2,6 @@
 title: 开发指南
 icon: signs-post
 order: 7
-redirectFrom: /ref/dev.html
 ---
 
 ::: info 提示
@@ -38,7 +37,7 @@ Vanblog 分为以下几个部分，构建后将整合到一个 `docker` 容器�
 ![架构图](./assets/vanblog.svg)
 
 ### 路径结构
-本项目采用了 `pnpm` 作为包管理器，项目使用 `monorepo(pnpm workspace) + lerna` 组织和管理。
+本项目采用了 `pnpm` 作为包管理器，项目使用 `monorepo(pnpm workspace)` 组织和管理。
 
 精简版目录结构：
 ```bash
@@ -46,7 +45,6 @@ Vanblog 分为以下几个部分，构建后将整合到一个 `docker` 容器�
 ├── Dockerfile  # Dockerfile
 ├── docs # 项目文档的代码
 ├── entrypoint.sh # 容器入口文件
-├── lerna.json # lerna 配置
 ├── LICENSE # 开源协议
 ├── package.json
 ├── packages # 代码主体

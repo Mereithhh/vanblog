@@ -1,7 +1,6 @@
 ---
 title: 自定义页面
 icon: file
-redirectFrom: /feature/advance/custom-page.html
 ---
 
 VanBlog 支持自定义页面，但首先请您明确自己的需求。

@@ -2,7 +2,6 @@
 title: 反代
 icon: refresh
 order: 4
-redirectFrom: /guide/nginx.html
 ---
 
 ::: info 注意

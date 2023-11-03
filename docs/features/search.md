@@ -2,7 +2,6 @@
 title: 文章搜索
 icon: search
 order: 10
-redirectFrom: /feature/advance/search.html
 ---
 
 VanBlog 支持对文章进行搜索。

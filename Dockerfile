@@ -35,7 +35,6 @@ COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./pnpm-workspace.yaml ./
 COPY ./tsconfig.base.json ./
-COPY ./lerna.json ./
 COPY ./packages/website ./packages/website
 ENV isBuild t
 ENV VAN_BLOG_ALLOW_DOMAINS "pic.mereith.com"

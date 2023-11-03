@@ -1,7 +1,6 @@
 ---
 title: 静态页面更新策略
 icon: circle-up
-redirectFrom: /feature/advance/isr.html
 ---
 
 您可以在后台的 `系统设置/高级设置` 中更改静态页面更新策略或者强制触发静态页面更新：

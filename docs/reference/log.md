@@ -2,7 +2,6 @@
 title: 日志
 icon: file-lines
 order: 5
-redirectFrom: /feature/advance/log.html
 ---
 
 VanBlog 现在已上线登录日志、系统日志和流水线日志，可以在后台日志管理中查看。

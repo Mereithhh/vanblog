@@ -2,7 +2,6 @@
 title: 分类/标签管理
 icon: tags
 order: 7
-redirectFrom: /feature/basic/tag.html
 ---
 
 你可以在 VanBlog 的管理后台中轻松对分类和标签进行管理。

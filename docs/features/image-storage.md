@@ -2,7 +2,6 @@
 title: 图床
 icon: photo-film
 order: 5
-redirectFrom: /feature/basic/pic.html
 ---
 
 ## 设置图床

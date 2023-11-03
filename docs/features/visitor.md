@@ -1,7 +1,6 @@
 ---
 title: 访客统计
 icon: eye
-redirectFrom: /feature/advance/visitor.html
 ---
 
 VanBlog 内置了访客统计，开箱即用。
