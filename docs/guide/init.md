@@ -4,7 +4,7 @@ icon: rotate
 order: 2
 ---
 
-@include(./init.snippet.md)
+<!-- @include: ./init.snippet.md -->
 
 ![初始化指引](https://pic.mereith.com/img/c088fa93f4e7aeab33dac821d1dc7dc5.clipboard-2022-08-16.png)
 

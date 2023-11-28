@@ -13,10 +13,8 @@
     "dev:server": "lerna run dev:noweb --scope @vanblog/server",
     "dev:website": "lerna run dev --scope @vanblog/theme-default",
     "dev:admin": "lerna run dev --scope @vanblog/admin",
-    "docs:build": "vuepress build ./docs",
-    "docs:clean-dev": "vuepress dev ./docs --clean-cache",
-    "docs:dev": "vuepress dev ./docs",
-    "docs:dev-https": "vuepress dev ./docs --help",
+    "docs:build": "pnpm run -r docs:build",
+    "docs:dev": "pnpm run -r docs:dev",
     "kill": "sudo bash scripts/kill-all.sh",
     "release:local": "act -j local-build --secret-file=.env",
     "release": "standard-version",
@@ -28,37 +26,11 @@
     "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
     "webhook": "node scripts/webhook.js"
   },
+  "packageManager": "pnpm@8.11.0",
   "devDependencies": {
-    "@vuepress/client": "2.0.0-beta.61",
-    "@vuepress/utils": "2.0.0-beta.61",
+    "cross-env": "^7.0.3",
     "lerna": "^6.5.1",
     "nan": "^2.17.0",
-    "standard-version": "^9.5.0",
-    "vue": "^3.2.47",
-    "vuepress": "2.0.0-beta.61",
-    "vuepress-plugin-auto-catalog": "2.0.0-beta.191",
-    "vuepress-plugin-blog2": "2.0.0-beta.191",
-    "vuepress-plugin-comment2": "2.0.0-beta.191",
-    "vuepress-plugin-components": "2.0.0-beta.191",
-    "vuepress-plugin-copy-code2": "2.0.0-beta.191",
-    "vuepress-plugin-copyright2": "2.0.0-beta.191",
-    "vuepress-plugin-feed2": "2.0.0-beta.191",
-    "vuepress-plugin-md-enhance": "2.0.0-beta.191",
-    "vuepress-plugin-photo-swipe": "2.0.0-beta.191",
-    "vuepress-plugin-pwa2": "2.0.0-beta.191",
-    "vuepress-plugin-reading-time2": "2.0.0-beta.191",
-    "vuepress-plugin-redirect": "2.0.0-beta.185",
-    "vuepress-plugin-rtl": "2.0.0-beta.191",
-    "vuepress-plugin-search-pro": "2.0.0-beta.185",
-    "vuepress-plugin-seo2": "2.0.0-beta.191",
-    "vuepress-plugin-sitemap2": "2.0.0-beta.191",
-    "vuepress-theme-hope": "2.0.0-beta.185"
-  },
-  "dependencies": {
-    "@vuepress/core": "^1.9.9",
-    "@vuepress/shared-utils": "^1.9.9",
-    "cross-env": "^7.0.3",
-    "vuepress-plugin-sass-palette": "2.0.0-beta.191",
-    "vuepress-shared": "2.0.0-beta.191"
+    "standard-version": "^9.5.0"
   }
 }

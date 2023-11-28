@@ -19,7 +19,7 @@ export default hopeTheme({
 
   logo: "/logo.svg",
 
-  repo: "mereithhh/van-blog",
+  repo: "Mereithhh/van-blog",
 
   // navbar
   navbar: [

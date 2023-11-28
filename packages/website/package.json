@@ -3,7 +3,7 @@
   "name": "@vanblog/theme-default",
   "scripts": {
     "anlysis": "cross-env ANALYZE=true next build",
-    "build": "next build",
+    "build": "cross-env isBuild=t next build",
     "dev": "cross-env NODE_ENV=development next dev -p 3001 --hostname 0.0.0.0",
     "test": "vitest",
     "start": "next start"
