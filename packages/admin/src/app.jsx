@@ -47,7 +47,7 @@ export async function getInitialState() {
   }
   const initData = await fetchInitData(option);
 
-  const { latestVersion, updatedAt, baseUrl, allowDomains, version } = initData;
+  const { updatedAt, baseUrl, allowDomains, version } = initData;
 
   if (baseUrl && !checkUrl(baseUrl)) {
     Modal.warn({
@@ -72,64 +72,72 @@ export async function getInitialState() {
       ),
     });
   }
-  // 来一个横幅提示
-  if (version && latestVersion && version != 'dev') {
-    if (version >= latestVersion) {
-    } else {
-      const skipVersion = localStorage.getItem('skipVersion');
-      if (skipVersion != latestVersion) {
-        // 老的
-        notification.info({
-          duration: 3000,
-          message: (
-            <div>
-              <p style={{ marginBottom: 4 }}>有新版本！</p>
-              <p style={{ marginBottom: 4 }}>{`当前版本:\t${version}`}</p>
-              <p style={{ marginBottom: 4 }}>{`最新版本:\t${latestVersion}`}</p>
-              <p style={{ marginBottom: 4 }}>{`更新时间:\t${moment(updatedAt).format(
-                'YYYY-MM-DD HH:mm:ss',
-              )}`}</p>
-              <p style={{ marginBottom: 4 }}>
-                {`更新日志:\t`}
+
+  const updateAlert=async ()=>{
+    const initDataUpstream = await fetchAllMetaUpstream(option);
+    const { latestVersion, updatedAt } = initDataUpstream;
+
+    // 来一个横幅提示
+    if (version && latestVersion && version != 'dev') {
+      if (version >= latestVersion) {
+      } else {
+        const skipVersion = localStorage.getItem('skipVersion');
+        if (skipVersion != latestVersion) {
+          // 老的
+          notification.info({
+            duration: 3000,
+            message: (
+              <div>
+                <p style={{ marginBottom: 4 }}>有新版本！</p>
+                <p style={{ marginBottom: 4 }}>{`当前版本:\t${version}`}</p>
+                <p style={{ marginBottom: 4 }}>{`最新版本:\t${latestVersion}`}</p>
+                <p style={{ marginBottom: 4 }}>{`更新时间:\t${moment(updatedAt).format(
+                  'YYYY-MM-DD HH:mm:ss',
+                )}`}</p>
+                <p style={{ marginBottom: 4 }}>
+                  {`更新日志:\t`}
+                  <a
+                    target={'_blank'}
+                    href="https://vanblog.mereith.com/ref/changelog.html"
+                    rel="noreferrer"
+                  >
+                    点击查看
+                  </a>
+                </p>
+                <p style={{ marginBottom: 4 }}>
+                  {`更新方法:\t`}
+                  <a
+                    target={'_blank'}
+                    href="https://vanblog.mereith.com/guide/update.html#%E5%8D%87%E7%BA%A7%E6%96%B9%E6%B3%95"
+                    rel="noreferrer"
+                  >
+                    点击查看
+                  </a>
+                </p>
+                <p style={{ marginBottom: 4 }}>
+                  PS： 更新后如后台一直 loading 或出现 Fetch error 请手动清理一下浏览器缓存
+                </p>
                 <a
-                  target={'_blank'}
-                  href="https://vanblog.mereith.com/ref/changelog.html"
-                  rel="noreferrer"
+                  onClick={() => {
+                    window.localStorage.setItem('skipVersion', latestVersion);
+                    message.success('跳过此版本成功！下次进入后台将不会触发此版本的升级提示');
+                    const el = document.querySelector('.ant-notification-notice-close-x');
+                    if (el) {
+                      el.click();
+                    }
+                  }}
                 >
-                  点击查看
+                  跳过此版本
                 </a>
-              </p>
-              <p style={{ marginBottom: 4 }}>
-                {`更新方法:\t`}
-                <a
-                  target={'_blank'}
-                  href="https://vanblog.mereith.com/guide/update.html#%E5%8D%87%E7%BA%A7%E6%96%B9%E6%B3%95"
-                  rel="noreferrer"
-                >
-                  点击查看
-                </a>
-              </p>
-              <p style={{ marginBottom: 4 }}>
-                PS： 更新后如后台一直 loading 或出现 Fetch error 请手动清理一下浏览器缓存
-              </p>
-              <a
-                onClick={() => {
-                  window.localStorage.setItem('skipVersion', latestVersion);
-                  message.success('跳过此版本成功！下次进入后台将不会触发此版本的升级提示');
-                  const el = document.querySelector('.ant-notification-notice-close-x');
-                  if (el) {
-                    el.click();
-                  }
-                }}
-              >
-                跳过此版本
-              </a>
-            </div>
-          ),
-        });
+              </div>
+            ),
+          });
+        }
       }
     }
-  }
+  };
+  updateAlert();
+
   // 暗色模式
   const theme = getInitTheme();
   const sysTheme = mapTheme(theme);
