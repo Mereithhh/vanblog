@@ -4,15 +4,15 @@
   "private": true,
   "scripts": {
     "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf packages/*/dist",
+    "build": "pnpm --filter @vanblog/server --filter @vanblog/theme-default --filter @vanblog/admin --parallel build",
+    "build:admin": "pnpm --filter @vanblog/admin build",
+    "build:server": "pnpm --filter @vanblog/server build",
     "build:test": "act -j test --secret-file=.env",
-    "build": "lerna run build --scope=@vanblog/server --scope=@vanblog/theme-default --scope=@vanblog/admin --parallel",
-    "build:server": "lerna run build --scope=@vanblog/server",
-    "build:website": "lerna run build --scope=@vanblog/theme-default",
-    "build:admin": "lerna run build --scope=@vanblog/admin",
-    "dev": "lerna run dev --scope @vanblog/server --scope @vanblog/admin --parallel",
-    "dev:server": "lerna run dev:noweb --scope @vanblog/server",
-    "dev:website": "lerna run dev --scope @vanblog/theme-default",
-    "dev:admin": "lerna run dev --scope @vanblog/admin",
+    "build:website": "pnpm --filter @vanblog/theme-default build",
+    "dev": "pnpm --filter @vanblog/server --filter @vanblog/admin --parallel dev",
+    "dev:server": "pnpm --filter @vanblog/server dev:noweb ",
+    "dev:website": "pnpm --filter @vanblog/theme-default dev",
+    "dev:admin": "pnpm --filter @vanblog/admin dev",
     "docs:build": "pnpm run -r docs:build",
     "docs:dev": "pnpm run -r docs:dev",
     "kill": "sudo bash scripts/kill-all.sh",
@@ -29,8 +29,7 @@
   "packageManager": "pnpm@8.11.0",
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "lerna": "^6.5.1",
-    "nan": "^2.17.0",
+    "nan": "^2.18.0",
     "standard-version": "^9.5.0"
   }
 }
