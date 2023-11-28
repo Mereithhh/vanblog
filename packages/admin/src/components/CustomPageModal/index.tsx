@@ -38,7 +38,7 @@ export default ({
 
       if (path.substring(0, 1) != "/") {
         Modal.info({
-          title: "路径必须以反斜杠为开头！",
+          title: "路径必须以斜杠为开头！",
         });
         return false;
       }
@@ -101,7 +101,7 @@ export default ({
       name="path"
       label="路径"
       placeholder="自定义页面的路径"
-      tooltip="自定义页面的路径，需以反斜杠开头，会加载到 /c 路径下。"
+      tooltip="自定义页面的路径，必须以斜杠开头，会加载到 /c 路径下。"
       rules={[{ required: true, message: "这是必填项" }]}
     />
   </ModalForm>
