@@ -37,14 +37,11 @@ export class AnalysisProvider {
 
   async getViewerTabData(num: number): Promise<ViewerTabData> {
     const siteInfo = await this.metaProvider.getSiteInfo();
-    const enableGA =
-      Boolean(siteInfo.gaAnalysisId) && siteInfo.gaAnalysisId != '';
-    const enableBaidu =
-      Boolean(siteInfo.baiduAnalysisId) && siteInfo.baiduAnalysisId != '';
+    const enableGA = Boolean(siteInfo.gaAnalysisId) && siteInfo.gaAnalysisId != '';
+    const enableBaidu = Boolean(siteInfo.baiduAnalysisId) && siteInfo.baiduAnalysisId != '';
     const topViewer = await this.articleProvider.getTopViewer('list', num);
     const topVisited = await this.articleProvider.getTopVisited('list', num);
-    const recentVisitArticles =
-      await this.articleProvider.getRecentVisitedArticles(num, 'list');
+    const recentVisitArticles = await this.articleProvider.getRecentVisitedArticles(num, 'list');
     let siteLastVisitedTime = null;
     let siteLastVisitedPathname = '';
     const lastVisitItem = await this.visitProvider.getLastVisitItem();
@@ -52,8 +49,7 @@ export class AnalysisProvider {
       siteLastVisitedTime = lastVisitItem.lastVisitedTime;
       siteLastVisitedPathname = lastVisitItem.pathname;
     }
-    const { viewer: totalViewer, visited: totalVisited } =
-      await this.metaProvider.getViewer();
+    const { viewer: totalViewer, visited: totalVisited } = await this.metaProvider.getViewer();
     let maxArticleVisited = 0;
     let maxArticleViewer = 0;
     if (topViewer && topViewer.length > 0) {
@@ -81,8 +77,7 @@ export class AnalysisProvider {
     const articleNum = await this.articleProvider.getTotalNum(true);
     const wordNum = await this.metaProvider.getTotalWords();
     const tagNum = (await this.tagProvider.getAllTags(true))?.length || 0;
-    const categoryNum =
-      (await this.categoryProvider.getAllCategories())?.length || 0;
+    const categoryNum = (await this.categoryProvider.getAllCategories())?.length || 0;
     const categoryPieData = await this.categoryProvider.getPieData();
     const columnData = await this.tagProvider.getColumnData(num, true);
     return {

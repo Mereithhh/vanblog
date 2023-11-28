@@ -40,7 +40,7 @@ export default function () {
           } catch (err) {
             ok = false;
           }
-          if(!data.baseUrl) {
+          if (!data.baseUrl) {
             ok = true;
           }
           if (!ok) {

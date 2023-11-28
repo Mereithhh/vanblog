@@ -16,17 +16,11 @@ export function makeSalt(): string {
  * @param password 密码
  * @param salt 密码盐
  */
-export function encryptPassword(
-  username: string,
-  password: string,
-  salt: string,
-): string {
+export function encryptPassword(username: string, password: string, salt: string): string {
   if (!username || !password || !salt) {
     return '';
   }
-  return sha256(
-    sha256(username + sha256(password + salt)) + salt + sha256(username + salt),
-  );
+  return sha256(sha256(username + sha256(password + salt)) + salt + sha256(username + salt));
 }
 /**
  * 把没加过盐的密码洗成加盐的

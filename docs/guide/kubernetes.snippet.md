@@ -17,18 +17,18 @@ spec:
         - name: host-time
           hostPath:
             path: /etc/localtime
-            type: ""
+            type: ''
         - name: static
           hostPath:
             path: /var/k8s/van-blog/static
-            type: ""
+            type: ''
         - name: log
           hostPath:
             path: /var/k8s/van-blog/log
-            type: ""
+            type: ''
       containers:
         - name: van-blog
-          image: "mereith/van-blog:latest"
+          image: 'mereith/van-blog:latest'
           ports:
             - name: http-80
               containerPort: 80
@@ -40,16 +40,20 @@ spec:
             - name: VAN_BLOG_DATABASE_URL
               value: >-
                 mongodb://some@some@van.example.com:27017/vanBlog?authSource=admin
+
+
             - name: EMAIL
               value: >-
                 vanblog@mereith.com
+
+
           resources:
             requests:
-              memory: "300Mi"
-              cpu: "250m"
+              memory: '300Mi'
+              cpu: '250m'
           limits:
-            memory: "500Mi"
-            cpu: "500m"
+            memory: '500Mi'
+            cpu: '500m'
           volumeMounts:
             - name: host-time
               readOnly: true

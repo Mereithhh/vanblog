@@ -91,7 +91,15 @@ export default function (props) {
             </p>
             <p>稳定后可打开 https 自动重定向功能，开启通过 http 访问将自动跳转至 https </p>
             <p>如果你用了 80 端口反代，请不要开启 https 自动重定向！否则你的反代可能会失效。</p>
-            <p>如果不小心开启了此选项后关不掉，可以参考：<a href="https://vanblog.mereith.com/faq/usage.html#开启了-https-重定向后关不掉" target='_blank'>开启了 https 重定向后关不掉</a></p>
+            <p>
+              如果不小心开启了此选项后关不掉，可以参考：
+              <a
+                href="https://vanblog.mereith.com/faq/usage.html#开启了-https-重定向后关不掉"
+                target="_blank"
+              >
+                开启了 https 重定向后关不掉
+              </a>
+            </p>
           </div>
         }
         style={{ marginBottom: 20 }}
@@ -123,7 +131,9 @@ export default function (props) {
           layout="horizontal"
           onFinish={async (data) => {
             if (location.hostname == 'blog-demo.mereith.com') {
-              Modal.warning({ title: '演示站不可修改此选项，不然怕 k8s ingress 失效' });
+              Modal.warning({
+                title: '演示站不可修改此选项，不然怕 k8s ingress 失效',
+              });
               setLoading(false);
               return;
             }

@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       NAME:
-        description: "A random input name for the workflow"
+        description: 'A random input name for the workflow'
         type: string
 
 permissions:

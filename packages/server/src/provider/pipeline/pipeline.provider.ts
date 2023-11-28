@@ -1,22 +1,26 @@
-import {  Injectable, NotFoundException } from "@nestjs/common";
-import { Logger } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
-import { PipelineDocument } from "src/scheme/pipeline.schema";
-import { VanblogSystemEvent, VanblogSystemEventNames } from "src/types/event";
-import { CreatePipelineDto, UpdatePipelineDto } from "src/types/pipeline.dto";
-import { sleep } from "src/utils/sleep";
-import { spawnSync } from "child_process";
-import {config} from "src/config/index";
-import { writeFileSync,rmSync } from "fs";
-import { fork } from "child_process";
-import { LogProvider } from "../log/log.provider";
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { Logger } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { PipelineDocument } from 'src/scheme/pipeline.schema';
+import { VanblogSystemEvent, VanblogSystemEventNames } from 'src/types/event';
+import { CreatePipelineDto, UpdatePipelineDto } from 'src/types/pipeline.dto';
+import { sleep } from 'src/utils/sleep';
+import { spawnSync } from 'child_process';
+import { config } from 'src/config/index';
+import { writeFileSync, rmSync } from 'fs';
+import { fork } from 'child_process';
+import { LogProvider } from '../log/log.provider';
 
-export interface CodeResult {logs: string[], output: any, status: "success" | "error"}
+export interface CodeResult {
+  logs: string[];
+  output: any;
+  status: 'success' | 'error';
+}
 
 @Injectable()
 export class PipelineProvider {
-  logger = new Logger(PipelineProvider.name)
+  logger = new Logger(PipelineProvider.name);
   idLock = false;
   runnerPath = config.codeRunnerPath;
   constructor(
@@ -27,7 +31,6 @@ export class PipelineProvider {
     this.init();
   }
 
-
   checkEvent(eventName: string) {
     if (VanblogSystemEventNames.includes(eventName)) {
       return true;
@@ -36,7 +39,7 @@ export class PipelineProvider {
   }
 
   async checkAllDeps() {
-    this.logger.log("初始化流水线代码库，这可能需要一段时间")
+    this.logger.log('初始化流水线代码库，这可能需要一段时间');
     const pipelines = await this.getAll();
     const deps = [];
     for (const pipeline of pipelines) {
@@ -89,12 +92,12 @@ export class PipelineProvider {
 // 直接修改 input 里的内容即可
 // 脚本结束后 input 将被返回
 
-`
+`;
     }
     const newPipeline = await this.pipelineModel.create({
       id,
       ...pipeline,
-      script
+      script,
     });
     await newPipeline.save();
     await this.saveOrUpdateScriptToRunnerPath(id, newPipeline.script);
@@ -102,7 +105,7 @@ export class PipelineProvider {
   }
 
   async updatePipelineById(id: number, updateDto: UpdatePipelineDto) {
-    await this.pipelineModel.updateOne({id: id}, updateDto);
+    await this.pipelineModel.updateOne({ id: id }, updateDto);
     if (updateDto.script) {
       await this.saveOrUpdateScriptToRunnerPath(id, updateDto.script);
     }
@@ -112,9 +115,12 @@ export class PipelineProvider {
   }
 
   async deletePipelineById(id: number) {
-    await this.pipelineModel.updateOne({id: id},{
-      deleted: true,
-    });
+    await this.pipelineModel.updateOne(
+      { id: id },
+      {
+        deleted: true,
+      },
+    );
     await this.deleteScriptById(id);
   }
   async getAll() {
@@ -124,14 +130,14 @@ export class PipelineProvider {
   }
 
   async getPipelineById(id: number) {
-    return await this.pipelineModel.findOne({id: id});
+    return await this.pipelineModel.findOne({ id: id });
   }
 
   async getPipelinesByEvent(eventName: string) {
     return await this.pipelineModel.find({
       eventName,
       deleted: false,
-    })
+    });
   }
 
   async triggerById(id: number, data: any) {
@@ -141,7 +147,7 @@ export class PipelineProvider {
 
   async dispatchEvent(eventName: VanblogSystemEvent, data?: any) {
     const pipelines = await this.getPipelinesByEvent(eventName);
-    const results:CodeResult[] = [];
+    const results: CodeResult[] = [];
     for (const pipeline of pipelines) {
       if (pipeline.enabled) {
         try {
@@ -159,15 +165,13 @@ export class PipelineProvider {
     return `${this.runnerPath}/${id}.js`;
   }
 
-  async runCodeByPipelineId (id: number, data: any): Promise<CodeResult> {
-
-
+  async runCodeByPipelineId(id: number, data: any): Promise<CodeResult> {
     const pipeline = await this.getPipelineById(id);
     if (!pipeline) {
       throw new NotFoundException('Pipeline not found');
     }
     const traceId = new Date().getTime();
-    this.logger.log(`[${traceId}]开始运行流水线: ${id} ${JSON.stringify(data,null,2)}`)
+    this.logger.log(`[${traceId}]开始运行流水线: ${id} ${JSON.stringify(data, null, 2)}`);
     const run = new Promise((resolve, reject) => {
       const subProcess = fork(this.getPathById(id));
       subProcess.send(data || {});
@@ -181,33 +185,31 @@ export class PipelineProvider {
       });
     });
     try {
-      const result = await run as CodeResult;
-      this.logger.log(`[${traceId}]运行流水线成功: ${id} ${JSON.stringify(result,null,2)}`)
-      this.logProvider.runPipeline(pipeline,data,result);
+      const result = (await run) as CodeResult;
+      this.logger.log(`[${traceId}]运行流水线成功: ${id} ${JSON.stringify(result, null, 2)}`);
+      this.logProvider.runPipeline(pipeline, data, result);
       return result;
-    } catch(err) {
-      this.logger.error(`[${traceId}]运行流水线失败: ${id} ${JSON.stringify(err,null,2)}`)
-      this.logProvider.runPipeline(pipeline,data,undefined, err);
+    } catch (err) {
+      this.logger.error(`[${traceId}]运行流水线失败: ${id} ${JSON.stringify(err, null, 2)}`);
+      this.logProvider.runPipeline(pipeline, data, undefined, err);
       throw err;
     }
   }
 
-
   async addDeps(deps: string[]) {
-
     for (const dep of deps) {
       try {
-      const r =  spawnSync(`pnpm`,["add",dep],{
-        cwd: this.runnerPath,
-        shell: process.platform === 'win32',
-        env: {
-          ...process.env,
-        }
-      });
-        console.log(r.output.toString())
+        const r = spawnSync(`pnpm`, ['add', dep], {
+          cwd: this.runnerPath,
+          shell: process.platform === 'win32',
+          env: {
+            ...process.env,
+          },
+        });
+        console.log(r.output.toString());
       } catch (e) {
         // console.log(e.output.map(a => a.toString()).join(''));
-        console.log(e)
+        console.log(e);
         // this.logger.error(e);
       }
     }
@@ -217,7 +219,7 @@ export class PipelineProvider {
     const filePath = this.getPathById(id);
     try {
       rmSync(filePath);
-    }catch(err) {
+    } catch (err) {
       this.logger.error(err);
     }
   }
@@ -258,6 +260,6 @@ export class PipelineProvider {
         }
       });
     `;
-    writeFileSync(filePath, scriptToSave,{encoding: 'utf-8'});
+    writeFileSync(filePath, scriptToSave, { encoding: 'utf-8' });
   }
 }

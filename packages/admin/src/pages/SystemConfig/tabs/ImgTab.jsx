@@ -37,7 +37,11 @@ export default function () {
                       dataSource={errorLinks}
                       size="small"
                       columns={[
-                        { title: '文章 ID', dataIndex: 'artcileId', key: 'artcileId' },
+                        {
+                          title: '文章 ID',
+                          dataIndex: 'artcileId',
+                          key: 'artcileId',
+                        },
                         { title: '标题', dataIndex: 'title', key: 'title' },
                         {
                           title: '链接',
@@ -47,7 +51,10 @@ export default function () {
                             return (
                               <Typography.Text
                                 copyable={val.length > 20}
-                                style={{ wordBreak: 'break-all', wordWrap: 'break-word' }}
+                                style={{
+                                  wordBreak: 'break-all',
+                                  wordWrap: 'break-word',
+                                }}
                               >
                                 {val}
                               </Typography.Text>

@@ -92,9 +92,7 @@ export class DraftProvider {
     }
   }
 
-  async getByOption(
-    option: SearchDraftOption,
-  ): Promise<{ drafts: Draft[]; total: number }> {
+  async getByOption(option: SearchDraftOption): Promise<{ drafts: Draft[]; total: number }> {
     const query: any = {};
     const $and: any = [
       {
@@ -219,10 +217,7 @@ export class DraftProvider {
   }
 
   async updateById(id: number, updateDraftDto: UpdateDraftDto) {
-    return this.draftModel.updateOne(
-      { id },
-      { ...updateDraftDto, updatedAt: new Date() },
-    );
+    return this.draftModel.updateOne({ id }, { ...updateDraftDto, updatedAt: new Date() });
   }
 
   async getNewId() {

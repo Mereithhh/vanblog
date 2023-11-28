@@ -3,7 +3,7 @@ name: test
 on:
   push:
     tags:
-      - "test*"
+      - 'test*'
 permissions:
   contents: write
 

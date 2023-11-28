@@ -15,12 +15,7 @@ import { readDirs } from 'src/utils/readFileList';
 import { checkOrCreateFile } from 'src/utils/checkFile';
 @Injectable()
 export class LocalProvider {
-  async saveFile(
-    fileName: string,
-    buffer: Buffer,
-    type: StaticType,
-    toRootPath?: boolean,
-  ) {
+  async saveFile(fileName: string, buffer: Buffer, type: StaticType, toRootPath?: boolean) {
     if (type == 'img') {
       return await this.saveImg(fileName, buffer, type, toRootPath);
     } else if (type == 'customPage') {
@@ -42,11 +37,7 @@ export class LocalProvider {
 
   async getFolderFiles(p: string) {
     const storagePath = StoragePath['customPage'];
-    const absPath = path.join(
-      config.staticPath,
-      storagePath,
-      p.replace('/', ''),
-    );
+    const absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
     const res = readDirs(absPath, absPath);
     return res;
   }
@@ -54,12 +45,7 @@ export class LocalProvider {
     const storagePath = StoragePath['customPage'];
     let absPath = '';
     if (subPath && subPath != '') {
-      absPath = path.join(
-        config.staticPath,
-        storagePath,
-        p.replace('/', ''),
-        subPath,
-      );
+      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''), subPath);
     } else {
       absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
     }
@@ -69,12 +55,7 @@ export class LocalProvider {
     const storagePath = StoragePath['customPage'];
     let absPath = '';
     if (subPath && subPath != '') {
-      absPath = path.join(
-        config.staticPath,
-        storagePath,
-        p.replace('/', ''),
-        subPath,
-      );
+      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''), subPath);
     } else {
       absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
     }
@@ -84,12 +65,7 @@ export class LocalProvider {
     const storagePath = StoragePath['customPage'];
     let absPath = '';
     if (subPath && subPath != '') {
-      absPath = path.join(
-        config.staticPath,
-        storagePath,
-        p.replace('/', ''),
-        subPath,
-      );
+      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''), subPath);
     } else {
       absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
     }
@@ -97,27 +73,13 @@ export class LocalProvider {
     const r = fs.readFileSync(absPath, { encoding: 'utf-8' });
     return r;
   }
-  async updateCustomPageFileContent(
-    pathname: string,
-    filePath: string,
-    content: string,
-  ) {
+  async updateCustomPageFileContent(pathname: string, filePath: string, content: string) {
     const storagePath = StoragePath['customPage'];
-    const absPath = path.join(
-      config.staticPath,
-      storagePath,
-      pathname.replace('/', ''),
-      filePath,
-    );
+    const absPath = path.join(config.staticPath, storagePath, pathname.replace('/', ''), filePath);
     fs.writeFileSync(absPath, content, { encoding: 'utf-8' });
   }
 
-  async saveImg(
-    fileName: string,
-    buffer: Buffer,
-    type: StaticType,
-    toRootPath?: boolean,
-  ) {
+  async saveImg(fileName: string, buffer: Buffer, type: StaticType, toRootPath?: boolean) {
     const storagePath = StoragePath[type] || StoragePath['img'];
     const srcPath = path.join(config.staticPath, storagePath, fileName);
     let realPath = `/static/${type}/${fileName}`;
@@ -154,11 +116,7 @@ export class LocalProvider {
       const srcPath = path.join(config.staticPath, storagePath, fileName);
       fs.rmSync(srcPath);
     } catch (err) {
-      console.log(
-        '删除实际文件失败：',
-        fileName,
-        '可能是更新版本后没映射静态文件目录导致的',
-      );
+      console.log('删除实际文件失败：', fileName, '可能是更新版本后没映射静态文件目录导致的');
     }
   }
   async exportAllImg() {
@@ -168,9 +126,7 @@ export class LocalProvider {
       'export',
       `export-img-${dayjs().format('YYYY-MM-DD')}.zip`,
     );
-    const dstSrc = `/static/export/export-img-${dayjs().format(
-      'YYYY-MM-DD',
-    )}.zip`;
+    const dstSrc = `/static/export/export-img-${dayjs().format('YYYY-MM-DD')}.zip`;
 
     const compressPromise = new Promise((resolve, reject) => {
       compressing.zip

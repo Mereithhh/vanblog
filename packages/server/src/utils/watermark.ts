@@ -1,8 +1,5 @@
 import Jimp from 'jimp';
-export const addWaterMarkToIMG = async (
-  srcImage: Buffer,
-  waterMarkText: string,
-) => {
+export const addWaterMarkToIMG = async (srcImage: Buffer, waterMarkText: string) => {
   // 水印距离右下角百分比
   const LOGO_MARGIN_PERCENTAGE = 5 / 100;
   const logo = await generateWaterMark(waterMarkText);

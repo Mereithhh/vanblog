@@ -6,9 +6,7 @@
     "baseUrl": ".",
     "composite": true,
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
   }
 }

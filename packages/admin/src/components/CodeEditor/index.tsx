@@ -1,5 +1,5 @@
-import MonacoEditor from "react-monaco-editor";
-import { useModel } from "umi";
+import MonacoEditor from 'react-monaco-editor';
+import { useModel } from 'umi';
 
 export interface CodeEditorProps {
   value: string;
@@ -10,15 +10,8 @@ export interface CodeEditorProps {
   style?: React.CSSProperties;
 }
 
-export default function ({
-  style,
-  width,
-  height,
-  language,
-  onChange,
-  value,
-}: CodeEditorProps) {
-  const { initialState } = useModel("@@initialState");
+export default function ({ style, width, height, language, onChange, value }: CodeEditorProps) {
+  const { initialState } = useModel('@@initialState');
 
   return (
     <div style={style}>
@@ -26,9 +19,7 @@ export default function ({
         width={width}
         height={height}
         language={language}
-        theme={
-          initialState?.settings?.navTheme == "light" ? "vs-light" : "vs-dark"
-        }
+        theme={initialState?.settings?.navTheme == 'light' ? 'vs-light' : 'vs-dark'}
         value={value}
         onChange={(v) => {
           onChange(v);

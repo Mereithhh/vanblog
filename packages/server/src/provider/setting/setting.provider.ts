@@ -28,13 +28,11 @@ export class SettingProvider {
     private readonly metaProvider: MetaProvider,
   ) {}
   async getStaticSetting(): Promise<Partial<StaticSetting>> {
-    const res = (await this.settingModel
-      .findOne({ type: 'static' })
-      .exec()) as { value: StaticSetting };
+    const res = (await this.settingModel.findOne({ type: 'static' }).exec()) as {
+      value: StaticSetting;
+    };
     if (res) {
-      return (
-        res?.value || defaultStaticSetting
-      );
+      return res?.value || defaultStaticSetting;
     } else {
       await this.settingModel.create({
         type: 'static',
@@ -75,10 +73,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'isr' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'isr' }, { value: newValue });
     return res;
   }
   async getMenuSetting(): Promise<any> {
@@ -97,10 +92,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'menu' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'menu' }, { value: newValue });
     return res;
   }
   async importSetting(setting: any) {
@@ -177,10 +169,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'login' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'login' }, { value: newValue });
     return res;
   }
   async updateVersionSetting(dto: VersionSetting) {
@@ -192,10 +181,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'version' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'version' }, { value: newValue });
     return res;
   }
 
@@ -208,10 +194,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'waline' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'waline' }, { value: newValue });
     return res;
   }
   async updateLayoutSetting(dto: LayoutSetting) {
@@ -223,10 +206,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'layout' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'layout' }, { value: newValue });
     return res;
   }
   async updateHttpsSetting(dto: HttpsSetting) {
@@ -238,10 +218,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'https' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'https' }, { value: newValue });
     return res;
   }
   async updateStaticSetting(dto: Partial<StaticSetting>) {
@@ -253,10 +230,7 @@ export class SettingProvider {
         value: newValue,
       });
     }
-    const res = await this.settingModel.updateOne(
-      { type: 'static' },
-      { value: newValue },
-    );
+    const res = await this.settingModel.updateOne({ type: 'static' }, { value: newValue });
 
     await this.picgoProvider.initDriver();
     return res;

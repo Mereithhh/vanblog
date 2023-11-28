@@ -125,8 +125,7 @@ order: 1
 
 ::: center
 
-![打赏-微信](./assets/wechat.jpg =200x)
-![打赏-支付宝](./assets/alipay.jpg =200x)
+![打赏-微信](./assets/wechat.jpg =200x) ![打赏-支付宝](./assets/alipay.jpg =200x)
 
 :::
 
@@ -191,7 +190,6 @@ order: 1
 - [郭郭的博客](https://blog.warmplace.cn)
 - [小橘子](https://www.xiaojuziya.com)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
-
 
 ## 预览图
 

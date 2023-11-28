@@ -96,10 +96,10 @@ export class InitProvider {
     console.log(staticSetting);
     if (staticSetting && staticSetting.enableWebp === undefined) {
       this.logger.log('新版本自动开启图床压缩功能');
-        await this.settingProvider.updateStaticSetting({
-          enableWebp: true,
-        });
-    } 
+      await this.settingProvider.updateStaticSetting({
+        enableWebp: true,
+      });
+    }
   }
 
   async washCustomPage() {

@@ -1,6 +1,6 @@
-import { Button, message } from "antd";
+import { Button, message } from 'antd';
 
-import { getClipboardContents } from "@/services/van-blog/clipboard";
+import { getClipboardContents } from '@/services/van-blog/clipboard';
 
 export interface CopyUploadBtnProps {
   url: string;
@@ -24,12 +24,12 @@ export default function (props: CopyUploadBtnProps) {
     }
     const formData = new FormData();
 
-    formData.append("file", fileObj);
+    formData.append('file', fileObj);
 
-    return fetch("/api/admin/img/upload?withWaterMark=true", {
-      method: "POST",
+    return fetch('/api/admin/img/upload?withWaterMark=true', {
+      method: 'POST',
       headers: {
-        token: localStorage.getItem("token") || "null",
+        token: localStorage.getItem('token') || 'null',
       },
       body: formData,
     })
@@ -38,11 +38,11 @@ export default function (props: CopyUploadBtnProps) {
         if (statusCode === 200) {
           props?.onFinish(data);
         } else {
-          message.error("上传失败！");
+          message.error('上传失败！');
         }
       })
       .catch(() => {
-        message.error("上传失败！");
+        message.error('上传失败！');
       })
       .finally(() => {
         props.setLoading(false);

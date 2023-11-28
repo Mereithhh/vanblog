@@ -58,11 +58,11 @@ export default function (props: { setValue: any; value: any; trigger: any }) {
           return [
             {
               label: '开启',
-              value: "open",
+              value: 'open',
             },
             {
               label: '关闭',
-              value: "close",
+              value: 'close',
             },
           ];
         }}

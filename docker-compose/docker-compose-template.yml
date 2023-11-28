@@ -1,11 +1,11 @@
-version: "3"
+version: '3'
 
 services:
   vanblog:
     image: vanblog_image
     restart: always
     environment:
-      TZ: "Asia/Shanghai"
+      TZ: 'Asia/Shanghai'
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: vanblog_email
     volumes:
@@ -26,6 +26,6 @@ services:
     image: mongo:4.4.16
     restart: always
     environment:
-      TZ: "Asia/Shanghai"
+      TZ: 'Asia/Shanghai'
     volumes:
       - vanblog_data_path/data/mongo:/data/db

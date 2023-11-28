@@ -10,7 +10,7 @@ import Migrate from './tabs/migrate';
 import SiteInfo from './tabs/SiteInfo';
 import User from './tabs/User';
 import WalineTab from './tabs/WalineTab';
-import Token from "./tabs/Token"
+import Token from './tabs/Token';
 export default function () {
   const tabMap = {
     siteInfo: <SiteInfo />,
@@ -22,7 +22,7 @@ export default function () {
     caddy: <Caddy />,
     advance: <Advance />,
     migrate: <Migrate />,
-    token: <Token />
+    token: <Token />,
   };
   const [tab, setTab] = useTab('siteInfo', 'tab');
 
@@ -59,8 +59,8 @@ export default function () {
           key: 'backup',
         },
         {
-          tab: "Token 管理",
-          key: "token"
+          tab: 'Token 管理',
+          key: 'token',
         },
         {
           tab: 'HTTPS',

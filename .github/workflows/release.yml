@@ -3,7 +3,7 @@ name: release
 on:
   push:
     tags:
-      - "v*"
+      - 'v*'
 permissions:
   contents: write
 
@@ -76,7 +76,6 @@ jobs:
           node-version: 20
           cache: pnpm
 
-      
       - name: generateReleaseNote
         run: pnpm release-note
 

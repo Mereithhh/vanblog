@@ -29,9 +29,9 @@ export default function (props: {}) {
             return;
           }
           for (const [k, v] of Object.entries(data)) {
-            if (v == "false") {
+            if (v == 'false') {
               data[k] = false;
-            } else if (v == "true") {
+            } else if (v == 'true') {
               data[k] = true;
             } else {
               data[k] = v;
@@ -54,7 +54,9 @@ export default function (props: {}) {
           message.success('更新成功！');
         }}
       >
-        <ProFormSelect name="enableWebp" label="图片自动压缩"
+        <ProFormSelect
+          name="enableWebp"
+          label="图片自动压缩"
           request={async () => {
             return [
               {
@@ -64,11 +66,14 @@ export default function (props: {}) {
               {
                 label: '关闭',
                 value: false,
-              }
-            ]
+              },
+            ];
           }}
           rules={[{ required: true, message: '这是必填项' }]}
-          required placeholder={"是否开启图片自动压缩"} tooltip="开启之后上传图片将压缩至 webp 格式以提高加载速度，无论哪种存储策略都生效。" />
+          required
+          placeholder={'是否开启图片自动压缩'}
+          tooltip="开启之后上传图片将压缩至 webp 格式以提高加载速度，无论哪种存储策略都生效。"
+        />
         <ProFormSelect
           fieldProps={{
             onChange: (target) => {
@@ -88,8 +93,8 @@ export default function (props: {}) {
               {
                 label: '关闭',
                 value: false,
-              }
-            ]
+              },
+            ];
           }}
           tooltip={
             '是否开启水印，开启之后上传图片将自动添加水印，无论哪种图床。宽高小于 128px 的图片可能会加不上水印。'

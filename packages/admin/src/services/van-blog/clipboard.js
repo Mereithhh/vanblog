@@ -21,7 +21,7 @@ export async function getClipboardContents() {
 }
 export async function writeClipBoardText(str) {
   try {
-    copy(str)
+    copy(str);
     return true;
   } catch (err) {
     console.error('Failed to copy: ', err);

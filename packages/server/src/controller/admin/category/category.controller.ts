@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  Query,
-  UseGuards,
-} from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateCategoryDto, UpdateCategoryDto } from 'src/types/category.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
@@ -80,20 +70,14 @@ export class CategoryController {
   }
 
   @Put('/:name')
-  async updateCategoryByName(
-    @Param('name') name: string,
-    @Body() updateDto: UpdateCategoryDto,
-  ) {
+  async updateCategoryByName(@Param('name') name: string, @Body() updateDto: UpdateCategoryDto) {
     if (config.demo && config.demo == 'true') {
       return {
         statusCode: 401,
         message: '演示站禁止修改此项！',
       };
     }
-    const data = await this.categoryProvider.updateCategoryByName(
-      name,
-      updateDto,
-    );
+    const data = await this.categoryProvider.updateCategoryByName(name, updateDto);
     this.isrProvider.activeAll('更新分类触发增量渲染！');
     return {
       statusCode: 200,

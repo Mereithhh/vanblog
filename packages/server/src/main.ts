@@ -62,7 +62,6 @@ async function bootstrap() {
 
   websiteProvider.init();
 
-
   const initProvider = app.get(InitProvider);
   initProvider.initVersion();
   initProvider.initRestoreKey();

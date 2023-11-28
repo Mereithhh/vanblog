@@ -26,9 +26,12 @@ export class SiteMapProvider {
     if (this.timer) {
       clearTimeout(this.timer);
     }
-    this.timer = setTimeout(() => {
-      this.generateSiteMapFn(info);
-    }, delay || 60 * 1000);
+    this.timer = setTimeout(
+      () => {
+        this.generateSiteMapFn(info);
+      },
+      delay || 60 * 1000,
+    );
   }
 
   async generateSiteMapFn(info?: string) {

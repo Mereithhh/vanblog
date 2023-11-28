@@ -1,11 +1,11 @@
 $theme-color: #1772b4;
 
-html[data-theme="dark"] .wwads-vertical {
-    background-color: #3a3a3a;
+html[data-theme='dark'] .wwads-vertical {
+  background-color: #3a3a3a;
 }
-html[data-theme="dark"] .wwads-vertical .wwads-text {
+html[data-theme='dark'] .wwads-vertical .wwads-text {
   color: #848484;
 }
-html[data-theme="dark"] .wwads-vertical .wwads-img {
-  filter: grayscale(0.5)
+html[data-theme='dark'] .wwads-vertical .wwads-img {
+  filter: grayscale(0.5);
 }

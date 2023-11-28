@@ -11,8 +11,15 @@ export default function (props: { showText: boolean }) {
     if (newTheme == 'auto') {
       setTimer();
     }
-    const newSettings = { ...initialState?.settings, navTheme: beforeSwitchTheme(newTheme) };
-    setInitialState({ ...initialState, theme: newTheme, settings: newSettings });
+    const newSettings = {
+      ...initialState?.settings,
+      navTheme: beforeSwitchTheme(newTheme),
+    };
+    setInitialState({
+      ...initialState,
+      theme: newTheme,
+      settings: newSettings,
+    });
   };
   const theme = useMemo(() => {
     return initialState?.theme || 'auto';

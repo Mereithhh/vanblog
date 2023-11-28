@@ -3,7 +3,7 @@ name: 部署文档
 on:
   push:
     tags:
-      - "doc*"
+      - 'doc*'
 
 jobs:
   deploy-pages:

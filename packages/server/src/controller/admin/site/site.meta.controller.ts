@@ -19,7 +19,7 @@ export class SiteMetaController {
     private readonly isrProvider: ISRProvider,
     private readonly walineProvider: WalineProvider,
     private readonly websiteProvider: WebsiteProvider,
-    private readonly pipelineProvider: PipelineProvider
+    private readonly pipelineProvider: PipelineProvider,
   ) {}
 
   @Get()
@@ -40,7 +40,7 @@ export class SiteMetaController {
       };
     }
     const data = await this.metaProvider.updateSiteInfo(updateDto);
-    this.pipelineProvider.dispatchEvent('updateSiteInfo',updateDto)
+    this.pipelineProvider.dispatchEvent('updateSiteInfo', updateDto);
     this.isrProvider.activeAll('更新站点配置触发增量渲染！');
     this.walineProvider.restart('更新站点，');
     this.websiteProvider.restart('更新站点信息');

@@ -37,10 +37,7 @@ export class ISRProvider {
 
     await this.activeUrls(this.urlList, false);
     let postId: any = null;
-    const articleWithThisId = await this.articleProvider.getById(
-      postId,
-      'list',
-    );
+    const articleWithThisId = await this.articleProvider.getById(postId, 'list');
     if (articleWithThisId) {
       postId = articleWithThisId.pathname || articleWithThisId.id;
     }
@@ -51,8 +48,8 @@ export class ISRProvider {
     this.logger.log('触发全量渲染完成！');
   }
   async activeAll(info?: string, delay?: number, activeConfig?: ActiveConfig) {
-    if (process.env["VANBLOG_DISABLE_WEBSITE"] === 'true') {
-      return ;
+    if (process.env['VANBLOG_DISABLE_WEBSITE'] === 'true') {
+      return;
     }
     if (this.timer) {
       clearTimeout(this.timer);
@@ -81,9 +78,7 @@ export class ISRProvider {
     for (let t = 0; t < max; t++) {
       const r = await this.testConn();
       if (t > 0) {
-        this.logger.warn(
-          `第${t}次重试触发增量渲染！来源：${info || '首次启动触发全量渲染！'}`,
-        );
+        this.logger.warn(`第${t}次重试触发增量渲染！来源：${info || '首次启动触发全量渲染！'}`);
       }
       if (r) {
         fn(info);
@@ -95,9 +90,7 @@ export class ISRProvider {
       }
     }
     if (!succ) {
-      this.logger.error(
-        `达到最大增量渲染重试次数！来源：${info || '首次启动触发全量渲染！'}`,
-      );
+      this.logger.error(`达到最大增量渲染重试次数！来源：${info || '首次启动触发全量渲染！'}`);
     }
   }
   async activeUrls(urls: string[], log: boolean) {
@@ -105,10 +98,7 @@ export class ISRProvider {
       await this.activeUrl(each, log);
     }
   }
-  async activePath(
-    type: 'category' | 'tag' | 'page' | 'post',
-    postId?: number,
-  ) {
+  async activePath(type: 'category' | 'tag' | 'page' | 'post', postId?: number) {
     switch (type) {
       case 'category':
         const categoryUrls = await this.sitemapProvider.getCategoryUrls();
@@ -125,13 +115,8 @@ export class ISRProvider {
       case 'post':
         const articleUrls = await this.getArticleUrls();
         if (postId) {
-          const urlsWithoutThisId = articleUrls.filter(
-            (u) => u !== `/post/${postId}`,
-          );
-          await this.activeUrls(
-            [`/post/${postId}`, ...urlsWithoutThisId],
-            false,
-          );
+          const urlsWithoutThisId = articleUrls.filter((u) => u !== `/post/${postId}`);
+          await this.activeUrls([`/post/${postId}`, ...urlsWithoutThisId], false);
         } else {
           await this.activeUrls(articleUrls, false);
         }
@@ -140,13 +125,11 @@ export class ISRProvider {
   }
 
   // 修改文章牵扯太多，暂时不用这个方法。
-  async activeArticleById(
-    id: number,
-    event: 'create' | 'delete' | 'update',
-    beforeObj?: Article,
-  ) {
-    const { article, pre, next } =
-      await this.articleProvider.getByIdOrPathnameWithPreNext(id, 'list');
+  async activeArticleById(id: number, event: 'create' | 'delete' | 'update', beforeObj?: Article) {
+    const { article, pre, next } = await this.articleProvider.getByIdOrPathnameWithPreNext(
+      id,
+      'list',
+    );
     // 无论是什么事件都先触发文章本身、标签和分类。
     this.activeUrl(`/post/${id}`, true);
     if (pre) {

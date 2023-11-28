@@ -30,6 +30,13 @@
   "devDependencies": {
     "cross-env": "^7.0.3",
     "nan": "^2.18.0",
+    "@typescript-eslint/eslint-plugin": "^6.13.1",
+    "@umijs/fabric": "^4.0.1",
+    "@typescript-eslint/parser": "^6.13.1",
+    "eslint": "^8.54.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "prettier": "^3.1.0",
     "standard-version": "^9.5.0"
   }
 }

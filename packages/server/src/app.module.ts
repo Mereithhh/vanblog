@@ -1,9 +1,4 @@
-import {
-  MiddlewareConsumer,
-  Module,
-  NestModule,
-  RequestMethod,
-} from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -115,7 +110,7 @@ import { initJwt } from './utils/initJwt';
             expiresIn: 3600 * 24 * 7,
           },
         };
-      }
+      },
     }),
     ScheduleModule.forRoot(),
   ],
@@ -147,7 +142,7 @@ import { initJwt } from './utils/initJwt';
     PublicCustomPageController,
     PublicOldCustomPageRedirectController,
     PipelineController,
-    TokenController
+    TokenController,
   ],
   providers: [
     AppService,
@@ -184,7 +179,7 @@ import { initJwt } from './utils/initJwt';
     TokenProvider,
     TokenGuard,
     WebsiteProvider,
-    PipelineProvider
+    PipelineProvider,
   ],
 })
 export class AppModule implements NestModule {

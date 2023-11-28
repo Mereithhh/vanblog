@@ -26,9 +26,12 @@ export class RssProvider {
     if (this.timer) {
       clearTimeout(this.timer);
     }
-    this.timer = setTimeout(() => {
-      this.generateRssFeedFn(info);
-    }, delay || 3 * 60 * 1000);
+    this.timer = setTimeout(
+      () => {
+        this.generateRssFeedFn(info);
+      },
+      delay || 3 * 60 * 1000,
+    );
   }
 
   async generateRssFeedFn(info?: string) {
@@ -75,9 +78,7 @@ export class RssProvider {
         language: '	zh-cn',
         image: siteLogo,
         favicon: favicon,
-        copyright: `All rights reserved ${date.getFullYear()}, ${
-          meta.siteInfo.author
-        }`,
+        copyright: `All rights reserved ${date.getFullYear()}, ${meta.siteInfo.author}`,
         updated: date,
         generator: 'Feed for VanBlog',
         feedLinks: {

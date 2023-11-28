@@ -1,8 +1,4 @@
-export const sortArticle = (
-  data: any[],
-  sortKey: string,
-  sortDesc: 'asc' | 'desc',
-) => {
+export const sortArticle = (data: any[], sortKey: string, sortDesc: 'asc' | 'desc') => {
   const t: any[] = [];
 
   for (const each of data) {

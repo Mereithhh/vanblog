@@ -11,16 +11,16 @@ export class Pipeline extends Document {
   @Prop({ index: true })
   name: string;
 
-  @Prop({index: true})
-  eventType: VanblogEventType
+  @Prop({ index: true })
+  eventType: VanblogEventType;
 
   @Prop({ index: true })
   description: string;
 
-  @Prop({default: false})
+  @Prop({ default: false })
   enabled: boolean;
 
-  @Prop({default: []})
+  @Prop({ default: [] })
   deps: string[];
 
   @Prop({
@@ -39,13 +39,13 @@ export class Pipeline extends Document {
   })
   updatedAt: Date;
 
-  @Prop({index:true})
+  @Prop({ index: true })
   eventName: string;
 
   @Prop()
   script: string;
 
-  @Prop({default:false, index: true})
+  @Prop({ default: false, index: true })
   deleted: boolean;
 }
 

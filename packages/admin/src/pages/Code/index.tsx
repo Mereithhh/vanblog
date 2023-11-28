@@ -8,7 +8,7 @@ import {
   updateCustomPageFileInFolder,
   getPipelineById,
   updatePipelineById,
-  getPipelineConfig
+  getPipelineConfig,
 } from '@/services/van-blog/api';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
@@ -47,7 +47,7 @@ export default function () {
     getPipelineConfig().then(({ data }) => {
       setPipelineConfig(data);
     });
-  }, [])
+  }, []);
   const language = useMemo(() => {
     if (type == 'pipeline') {
       return 'javascript';
@@ -139,7 +139,6 @@ export default function () {
     };
   }, [currObj, value, type]);
 
-
   useEffect(() => {
     setTimeout(() => {
       updateEditorSize();
@@ -164,7 +163,7 @@ export default function () {
         const { data } = await getCustomPageFolderTreeByPath(path);
         if (data) setTreeData(data);
         setTreeLoading(false);
-      } else if (type == "pipeline") {
+      } else if (type == 'pipeline') {
         if (!id) {
           message.error('无有效信息，无法获取数据！');
           return;
@@ -176,8 +175,7 @@ export default function () {
           setValue(data?.script || '');
         }
         setEditorLoading(false);
-      }
-      else {
+      } else {
         setEditorLoading(true);
         const { data } = await getCustomPageByPath(path);
         if (data) {
@@ -200,14 +198,12 @@ export default function () {
       await updateCustomPage({ ...currObj, html: value });
       setEditorLoading(false);
       message.success('当前编辑器内文件保存成功！');
-    } else if (type == "pipeline") {
+    } else if (type == 'pipeline') {
       setEditorLoading(true);
       await updatePipelineById(currObj.id, { script: value });
       setEditorLoading(false);
       message.success('当前编辑器内脚本保存成功！');
-    }
-
-    else {
+    } else {
       setEditorLoading(true);
       await updateCustomPageFileInFolder(path, node?.key, value);
       setEditorLoading(false);
@@ -224,16 +220,27 @@ export default function () {
           label: '保存',
           onClick: handleSave,
         },
-        ...(type == "pipeline" ? [
-          {
-            key: "runPipeline",
-            label: <RunCodeModal pipeline={currObj} trigger={<a>调试脚本</a>} />
-          },
-          {
-            key: 'editPipelineInfo',
-            label: <PipelineModal mode="edit" trigger={<a>编辑信息</a>} onFinish={(vals) => { console.log(vals) }} initialValues={currObj} />
-          }
-        ] : []),
+        ...(type == 'pipeline'
+          ? [
+              {
+                key: 'runPipeline',
+                label: <RunCodeModal pipeline={currObj} trigger={<a>调试脚本</a>} />,
+              },
+              {
+                key: 'editPipelineInfo',
+                label: (
+                  <PipelineModal
+                    mode="edit"
+                    trigger={<a>编辑信息</a>}
+                    onFinish={(vals) => {
+                      console.log(vals);
+                    }}
+                    initialValues={currObj}
+                  />
+                ),
+              },
+            ]
+          : []),
         ...(isFolder
           ? [
               {
@@ -277,13 +284,17 @@ export default function () {
               },
             ]
           : []),
-        ...(type == 'file' ? [{
-          key: 'view',
-          label: '查看',
-          onClick: () => {
-            window.open(`/c${path}`);
-          },
-        }] : [])
+        ...(type == 'file'
+          ? [
+              {
+                key: 'view',
+                label: '查看',
+                onClick: () => {
+                  window.open(`/c${path}`);
+                },
+              },
+            ]
+          : []),
       ]}
     ></Menu>
   );
@@ -299,10 +310,21 @@ export default function () {
             <span title={currObj?.name}>{currObj?.name}</span>
             <>
               <Tag color="green">{typeMap[type] || '未知类型'}</Tag>
-              {type == "pipeline" && <>
-                <Tag color="blue">{pipelineConfig?.find(p => p.eventName == currObj.eventName)?.eventNameChinese}</Tag>
-                {pipelineConfig?.find(p => p.eventName == currObj.eventName)?.passive ? <Tag color="yellow">非阻塞</Tag> : <Tag color="red">阻塞</Tag>}
-              </>}
+              {type == 'pipeline' && (
+                <>
+                  <Tag color="blue">
+                    {
+                      pipelineConfig?.find((p) => p.eventName == currObj.eventName)
+                        ?.eventNameChinese
+                    }
+                  </Tag>
+                  {pipelineConfig?.find((p) => p.eventName == currObj.eventName)?.passive ? (
+                    <Tag color="yellow">非阻塞</Tag>
+                  ) : (
+                    <Tag color="red">阻塞</Tag>
+                  )}
+                </>
+              )}
             </>
           </Space>
         ),
@@ -324,10 +346,13 @@ export default function () {
           <Button
             key="docBtn"
             onClick={() => {
-              if (type == "pipeline") {
-                window.open("https://vanblog.mereith.com/features/pipeline.html", "_blank")
+              if (type == 'pipeline') {
+                window.open('https://vanblog.mereith.com/features/pipeline.html', '_blank');
               } else {
-                window.open('https://vanblog.mereith.com/feature/advance/customPage.html', "_blank");
+                window.open(
+                  'https://vanblog.mereith.com/feature/advance/customPage.html',
+                  '_blank',
+                );
               }
             }}
           >

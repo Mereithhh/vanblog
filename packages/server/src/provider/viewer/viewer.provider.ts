@@ -6,9 +6,7 @@ import { Viewer, ViewerDocument } from 'src/scheme/viewer.schema';
 import dayjs from 'dayjs';
 @Injectable()
 export class ViewerProvider {
-  constructor(
-    @InjectModel('Viewer') private viewerModel: Model<ViewerDocument>,
-  ) {}
+  constructor(@InjectModel('Viewer') private viewerModel: Model<ViewerDocument>) {}
 
   async create(createViewerDto: createViewerDto): Promise<Viewer> {
     const createdData = new this.viewerModel(createViewerDto);

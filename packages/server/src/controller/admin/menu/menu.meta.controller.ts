@@ -36,9 +36,7 @@ export class MenuMetaController {
       };
     }
     await this.settingProvider.updateMenuSetting(dto);
-    const data = await this.isrProvider.activeAll(
-      '更新导航栏配置触发增量渲染！',
-    );
+    const data = await this.isrProvider.activeAll('更新导航栏配置触发增量渲染！');
     return {
       statusCode: 200,
       data,

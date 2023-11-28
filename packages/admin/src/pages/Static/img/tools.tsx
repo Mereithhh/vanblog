@@ -14,7 +14,12 @@ export const getImgLink = (realPath, autoCompleteHost = true) => {
   url = url.replace(/\(/g, '%28');
   return url;
 };
-export const copyImgLink = (realPath, isMarkdown = false, info = undefined, autoCompleteHost= true) => {
+export const copyImgLink = (
+  realPath,
+  isMarkdown = false,
+  info = undefined,
+  autoCompleteHost = true,
+) => {
   let url = getImgLink(realPath, autoCompleteHost);
   if (isMarkdown) {
     url = `![](${url})`;

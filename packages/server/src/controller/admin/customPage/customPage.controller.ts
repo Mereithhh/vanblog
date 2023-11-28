@@ -39,12 +39,7 @@ export class CustomPageController {
   ) {
     this.logger.log(`上传自定义页面文件：${path}\t ${name}`);
     file.originalname = name;
-    const res = await this.staticProvider.upload(
-      file,
-      'customPage',
-      false,
-      path,
-    );
+    const res = await this.staticProvider.upload(file, 'customPage', false, path);
     return {
       statusCode: 200,
       data: res,
@@ -66,10 +61,7 @@ export class CustomPageController {
     };
   }
   @Get('/file')
-  async getFileData(
-    @Query('path') path: string,
-    @Query('key') subPath: string,
-  ) {
+  async getFileData(@Query('path') path: string, @Query('key') subPath: string) {
     return {
       statusCode: 200,
       data: await this.staticProvider.getFileContent(path, subPath),
@@ -97,10 +89,7 @@ export class CustomPageController {
     };
   }
   @Post('file')
-  async createFile(
-    @Query('path') pathname: string,
-    @Query('subPath') subPath: string,
-  ) {
+  async createFile(@Query('path') pathname: string, @Query('subPath') subPath: string) {
     if (config.demo && config.demo == 'true') {
       return {
         statusCode: 401,
@@ -114,10 +103,7 @@ export class CustomPageController {
     };
   }
   @Post('folder')
-  async createFolder(
-    @Query('path') pathname: string,
-    @Query('subPath') subPath: string,
-  ) {
+  async createFolder(@Query('path') pathname: string, @Query('subPath') subPath: string) {
     if (config.demo && config.demo == 'true') {
       return {
         statusCode: 401,
@@ -132,9 +118,7 @@ export class CustomPageController {
   }
 
   @Put('file')
-  async updateFileInFolder(
-    @Body() dto: { filePath: string; pathname: string; content: string },
-  ) {
+  async updateFileInFolder(@Body() dto: { filePath: string; pathname: string; content: string }) {
     if (config.demo && config.demo == 'true') {
       return {
         statusCode: 401,

@@ -16,10 +16,9 @@ export class TokenProvider {
     private readonly settingProvider: SettingProvider,
   ) {}
 
-
   async getAllAPIToken() {
     this.logger.log(`获取所有 API Token`);
-    return await this.tokenModel.find({ userId: 666666 ,disabled:false}).exec();
+    return await this.tokenModel.find({ userId: 666666, disabled: false }).exec();
   }
 
   async disableAPIToken(token: string) {
@@ -35,16 +34,19 @@ export class TokenProvider {
   async createAPIToken(name: string) {
     this.logger.log(`创建 API Token`);
     // 100年过期
-    const expiresIn = 3600*24*365*100;
-    const token = this.jwtService.sign({
-      sub: 0,
-      username: name,
-      role: 'admin',
-    }, {
-      expiresIn,
-    });
+    const expiresIn = 3600 * 24 * 365 * 100;
+    const token = this.jwtService.sign(
+      {
+        sub: 0,
+        username: name,
+        role: 'admin',
+      },
+      {
+        expiresIn,
+      },
+    );
     // 默认666666是 api token
-    this.tokenModel.create({ userId: 666666,name, token, expiresIn });
+    this.tokenModel.create({ userId: 666666, name, token, expiresIn });
     return token;
   }
 
@@ -62,16 +64,10 @@ export class TokenProvider {
     return await this.tokenModel.updateOne({ token }, { disabled: true });
   }
   async disableAll() {
-    return await this.tokenModel.updateMany(
-      { disabled: false },
-      { disabled: true },
-    );
+    return await this.tokenModel.updateMany({ disabled: false }, { disabled: true });
   }
   async disableAllAdmin() {
-    return await this.tokenModel.updateMany(
-      { disabled: false, userId: 0 },
-      { disabled: true },
-    );
+    return await this.tokenModel.updateMany({ disabled: false, userId: 0 }, { disabled: true });
   }
   async disableAllCollaborator() {
     return await this.tokenModel.updateMany(
@@ -80,10 +76,7 @@ export class TokenProvider {
     );
   }
   async disableByUserId(id: number) {
-    return await this.tokenModel.updateMany(
-      { disabled: false, userId: id },
-      { disabled: true },
-    );
+    return await this.tokenModel.updateMany({ disabled: false, userId: id }, { disabled: true });
   }
   async checkToken(token: string) {
     const result = await this.tokenModel.findOne({ token, disabled: false });

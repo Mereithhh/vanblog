@@ -1,7 +1,4 @@
-import {
-  Injectable,
-  NotAcceptableException,
-} from '@nestjs/common';
+import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ArticleProvider } from '../article/article.provider';
@@ -17,10 +14,7 @@ export class CategoryProvider {
     private readonly articleProvider: ArticleProvider,
   ) {}
   async getCategoriesWithArticle(includeHidden: boolean) {
-    const allArticles = await this.articleProvider.getAll(
-      'list',
-      includeHidden,
-    );
+    const allArticles = await this.articleProvider.getAll('list', includeHidden);
     const categories = await this.getAllCategories();
     const data = {};
     categories.forEach((c) => {

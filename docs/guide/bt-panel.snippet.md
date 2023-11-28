@@ -35,7 +35,7 @@ VanBlog 现在支持一键脚本部署了。经过测试，宝塔也可以通过
 模板内容请复制下面的代码，注意需要按注释修改 `EMAIL` 为你的邮箱：
 
 ```yaml
-version: "3"
+version: '3'
 
 services:
   vanblog:
@@ -44,9 +44,9 @@ services:
     image: mereith/van-blog:latest
     restart: always
     environment:
-      TZ: "Asia/Shanghai"
+      TZ: 'Asia/Shanghai'
       # 邮箱地址，用于自动申请 https 证书
-      EMAIL: "someone@mereith.com"
+      EMAIL: 'someone@mereith.com'
     volumes:
       # 图床文件的存放地址，按需修改。
       - /var/vanblog/data/static:/app/static
@@ -65,7 +65,7 @@ services:
     image: mongo:4.4.16
     restart: always
     environment:
-      TZ: "Asia/Shanghai"
+      TZ: 'Asia/Shanghai'
     volumes:
       - /var/vanblog/data/mongo:/data/db
 ```
@@ -85,6 +85,7 @@ services:
 启动完毕后，请 [完成初始化](./init.md)。
 
 ### 调整 nginx 缓存
+
 根据群友反应，宝塔的 nginx 配置反代后经常会出现缓存问题，具体表现为在后台修改后，内容不能及时反映到前台页面上。
 
 这时需要设置手动在宝塔 nginx 设置一个较短的缓存时间即可（比如1分钟），不然默认的缓存时间会很长。

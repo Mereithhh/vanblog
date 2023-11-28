@@ -41,13 +41,7 @@ export class ImgController {
       withWaterMark: checkTrue(withWaterMark),
       waterMarkText,
     };
-    const res = await this.staticProvider.upload(
-      file,
-      'img',
-      isFavicon,
-      undefined,
-      updateConfig,
-    );
+    const res = await this.staticProvider.upload(file, 'img', isFavicon, undefined, updateConfig);
     return {
       statusCode: 200,
       data: res,
@@ -114,10 +108,7 @@ export class ImgController {
     };
   }
   @Get('')
-  async getByOption(
-    @Query('page') page: number,
-    @Query('pageSize') pageSize = 5,
-  ) {
+  async getByOption(@Query('page') page: number, @Query('pageSize') pageSize = 5) {
     const option: SearchStaticOption = {
       page,
       pageSize,

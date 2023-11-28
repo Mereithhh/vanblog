@@ -1,16 +1,7 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotImplementedException,
-} from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, NotImplementedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  SearchStaticOption,
-  StaticType,
-  StorageType,
-} from 'src/types/setting.dto';
+import { SearchStaticOption, StaticType, StorageType } from 'src/types/setting.dto';
 import { Static, StaticDocument } from 'src/scheme/static.schema';
 import { encryptFileMD5 } from 'src/utils/crypto';
 import { ArticleProvider } from '../article/article.provider';
@@ -65,12 +56,8 @@ export class StaticProvider {
         if (updateConfig && updateConfig.withWaterMark && fileType != 'gif') {
           // 双保险，只有这里开启水印并且设置中也开启了才有效。
           const waterMarkConfigInDB = staticConfigInDB;
-          if (
-            waterMarkConfigInDB &&
-            checkTrue(waterMarkConfigInDB?.enableWaterMark)
-          ) {
-            const waterMarkText =
-              updateConfig.waterMarkText || waterMarkConfigInDB.waterMarkText;
+          if (waterMarkConfigInDB && checkTrue(waterMarkConfigInDB?.enableWaterMark)) {
+            const waterMarkText = updateConfig.waterMarkText || waterMarkConfigInDB.waterMarkText;
             if (waterMarkText && waterMarkText.trim() !== '') {
               buf = await addWaterMarkToIMG(buffer, waterMarkText);
               currentSign = encryptFileMD5(buf);
@@ -106,11 +93,7 @@ export class StaticProvider {
     if (type == 'customPage') {
       fileName = customPathname + '/' + file.originalname;
     }
-    if (
-      type == 'img' &&
-      checkTrue(staticConfigInDB.enableWebp) &&
-      compressSuccess
-    ) {
+    if (type == 'img' && checkTrue(staticConfigInDB.enableWebp) && compressSuccess) {
       fileName = currentSign + '.' + pureFileName + '.webp';
     }
     const realPath = await this.saveFile(
@@ -208,10 +191,7 @@ export class StaticProvider {
       if (success && path) {
         return path;
       } else {
-        throw new HttpException(
-          { statusCode: 500, message: '打包错误！' },
-          500,
-        );
+        throw new HttpException({ statusCode: 500, message: '打包错误！' }, 500);
       }
     } else {
       throw new NotImplementedException('其他图床暂不支持打包导出！');
@@ -251,11 +231,7 @@ export class StaticProvider {
         }
         return realPath;
       case 'picgo':
-        const picgoRes = await this.picgoProvider.saveFile(
-          fileName,
-          buffer,
-          type,
-        );
+        const picgoRes = await this.picgoProvider.saveFile(fileName, buffer, type);
         await this.createInDB({
           fileType: picgoRes.meta?.type || fileType,
           staticType: type,
@@ -276,9 +252,7 @@ export class StaticProvider {
     return await this.staticModel.findOne({ sign }).exec();
   }
   async getAll(type: StaticType, view: 'admin' | 'public') {
-    return await this.staticModel
-      .find({ staticType: type }, this.getView(view))
-      .exec();
+    return await this.staticModel.find({ staticType: type }, this.getView(view)).exec();
   }
   async exportAll() {
     return await this.staticModel.find({}, this.getView('public')).exec();
@@ -317,16 +291,8 @@ export class StaticProvider {
   async createFolder(path: string, subPath: string) {
     return this.localProvider.createFolder(path, subPath);
   }
-  async updateCustomPageFileContent(
-    pathname: string,
-    filePath: string,
-    content: string,
-  ) {
-    return this.localProvider.updateCustomPageFileContent(
-      pathname,
-      filePath,
-      content,
-    );
+  async updateCustomPageFileContent(pathname: string, filePath: string, content: string) {
+    return this.localProvider.updateCustomPageFileContent(pathname, filePath, content);
   }
 
   async deleteOneBySign(sign: string) {
@@ -335,10 +301,7 @@ export class StaticProvider {
     const storageType = toDeleteData.storageType;
     switch (storageType) {
       case 'local':
-        await this.localProvider.deleteFile(
-          toDeleteData.name,
-          toDeleteData.staticType,
-        );
+        await this.localProvider.deleteFile(toDeleteData.name, toDeleteData.staticType);
         break;
       case 'picgo':
         console.log('实际上只删了数据库，网盘上还有的。');

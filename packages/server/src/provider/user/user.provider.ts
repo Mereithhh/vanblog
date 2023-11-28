@@ -1,9 +1,4 @@
-import {
-  ForbiddenException,
-  Injectable,
-  Logger,
-  NotFoundException,
-} from '@nestjs/common';
+import { ForbiddenException, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { UpdateUserDto } from 'src/types/user.dto';
@@ -17,10 +12,7 @@ export class UserProvider {
   constructor(@InjectModel('User') private userModel: Model<UserDocument>) {}
   async getUser(isList?: boolean) {
     if (isList) {
-      return await this.userModel.findOne(
-        { id: 0 },
-        { id: 1, name: 1, nickname: 1 },
-      );
+      return await this.userModel.findOne({ id: 0 }, { id: 1, name: 1, nickname: 1 });
     }
     return await this.userModel.findOne({ id: 0 }).exec();
   }
@@ -41,10 +33,7 @@ export class UserProvider {
       for (const user of users) {
         const salt = makeSalt();
         const newPassword = washPassword(user.name, user.password, salt);
-        await this.userModel.updateOne(
-          { id: user.id },
-          { password: newPassword, salt },
-        );
+        await this.userModel.updateOne({ id: user.id }, { password: newPassword, salt });
       }
     }
   }
@@ -86,11 +75,7 @@ export class UserProvider {
           { id: currUser.id },
           {
             ...updateUserDto,
-            password: encryptPassword(
-              updateUserDto.name,
-              updateUserDto.password,
-              currUser.salt,
-            ),
+            password: encryptPassword(updateUserDto.name, updateUserDto.password, currUser.salt),
           },
         )
         .exec();
@@ -117,10 +102,7 @@ export class UserProvider {
         { id: 1, name: 1, nickname: 1, _id: 0 },
       );
     }
-    return await this.userModel.find(
-      { type: 'collaborator' },
-      { salt: 0, password: 0, _id: 0 },
-    );
+    return await this.userModel.find({ type: 'collaborator' }, { salt: 0, password: 0, _id: 0 });
   }
 
   async createCollaborator(collaboratorDto: Collaborator) {
@@ -134,11 +116,7 @@ export class UserProvider {
       id: await this.getNewId(),
       type: 'collaborator',
       ...collaboratorDto,
-      password: encryptPassword(
-        collaboratorDto.name,
-        collaboratorDto.password,
-        salt,
-      ),
+      password: encryptPassword(collaboratorDto.name, collaboratorDto.password, salt),
       salt,
     });
   }
@@ -156,11 +134,7 @@ export class UserProvider {
       },
       {
         ...collaboratorDto,
-        password: encryptPassword(
-          collaboratorDto.name,
-          collaboratorDto.password,
-          salt,
-        ),
+        password: encryptPassword(collaboratorDto.name, collaboratorDto.password, salt),
         salt,
       },
     );

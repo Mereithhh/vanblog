@@ -83,8 +83,8 @@ export class ArticleController {
         message: '演示站禁止修改文章！',
       };
     }
-    const result = await this.pipelineProvider.dispatchEvent('beforeUpdateArticle',updateDto);
-    if(result.length > 0){
+    const result = await this.pipelineProvider.dispatchEvent('beforeUpdateArticle', updateDto);
+    if (result.length > 0) {
       const lastResult = result[result.length - 1];
       const lastOuput = lastResult.output;
       if (lastOuput) {
@@ -95,8 +95,8 @@ export class ArticleController {
     this.isrProvider.activeAll('更新文章触发增量渲染！', undefined, {
       postId: id,
     });
-    const updatedArticle = await this.articleProvider.getById(id,'admin');
-    this.pipelineProvider.dispatchEvent('afterUpdateArticle',updatedArticle)
+    const updatedArticle = await this.articleProvider.getById(id, 'admin');
+    this.pipelineProvider.dispatchEvent('afterUpdateArticle', updatedArticle);
     return {
       statusCode: 200,
       data,
@@ -115,8 +115,8 @@ export class ArticleController {
     if (!createDto.author) {
       createDto.author = author;
     }
-    const result = await this.pipelineProvider.dispatchEvent("beforeUpdateArticle",createDto)
-    if(result.length > 0){
+    const result = await this.pipelineProvider.dispatchEvent('beforeUpdateArticle', createDto);
+    if (result.length > 0) {
       const lastResult = result[result.length - 1];
       const lastOuput = lastResult.output;
       if (lastOuput) {
@@ -127,7 +127,7 @@ export class ArticleController {
     this.isrProvider.activeAll('创建文章触发增量渲染！', undefined, {
       postId: data.id,
     });
-    this.pipelineProvider.dispatchEvent("afterUpdateArticle",data)
+    this.pipelineProvider.dispatchEvent('afterUpdateArticle', data);
     return {
       statusCode: 200,
       data,
@@ -135,9 +135,7 @@ export class ArticleController {
   }
   @Post('searchByLink')
   async searchArtcilesByLink(@Body() searchDto: { link: string }) {
-    const data = await this.articleProvider.searchArticlesByLink(
-      searchDto?.link || '',
-    );
+    const data = await this.articleProvider.searchArticlesByLink(searchDto?.link || '');
     return {
       statusCode: 200,
       data,
@@ -148,8 +146,8 @@ export class ArticleController {
     if (config.demo && config.demo == 'true') {
       return { statusCode: 401, message: '演示站禁止删除文章！' };
     }
-    const toDeleteArticle = await this.articleProvider.getById(id,'admin');
-    this.pipelineProvider.dispatchEvent("deleteArticle",toDeleteArticle)
+    const toDeleteArticle = await this.articleProvider.getById(id, 'admin');
+    this.pipelineProvider.dispatchEvent('deleteArticle', toDeleteArticle);
 
     const data = await this.articleProvider.deleteById(id);
     this.isrProvider.activeAll('删除文章触发增量渲染！', undefined, {
