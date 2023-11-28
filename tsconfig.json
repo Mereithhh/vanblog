@@ -1,15 +1,8 @@
 {
   "extends": "./tsconfig.base.json",
-
   "references": [
-    {
-      "path": "./packages/admin"
-    },
-    {
-      "path": "./packages/website"
-    },
-    {
-      "path": "./packages/server"
-    }
+    { "path": "./packages/admin" },
+    { "path": "./packages/website" },
+    { "path": "./packages/server" }
   ]
 }
