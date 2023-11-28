@@ -2,7 +2,6 @@
 title: 草稿管理
 icon: feather
 order: 2
-redirectFrom: /feature/basic/draft.html
 ---
 
 与 [文章管理](./article.md) 类似，你可以在在草稿管理页面下对草稿进行管理。

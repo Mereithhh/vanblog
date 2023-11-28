@@ -1,7 +1,6 @@
 ---
 title: RSS
 icon: rss
-redirectFrom: /feature/advance/rss.html
 ---
 
 VanBlog 内置了 `RSS feed 生成器` ，开箱即用。

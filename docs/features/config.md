@@ -2,7 +2,6 @@
 title: 站点设置
 icon: gear
 order: 8
-redirectFrom: /feature/basic/setting.html
 ---
 
 VanBlog 可以配置一系列的站点配置项，可在 `站点管理/系统设置` 中查看。

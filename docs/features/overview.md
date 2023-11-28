@@ -2,7 +2,6 @@
 title: 分析看板
 icon: chart-simple
 order: 9
-redirectFrom: /feature/basic/overview.html
 ---
 
 VanBlog 具有三个数据看板。

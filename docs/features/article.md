@@ -2,7 +2,6 @@
 title: 文章管理
 icon: pen-to-square
 order: 1
-redirectFrom: /feature/basic/article.html
 ---
 
 ## 文章管理

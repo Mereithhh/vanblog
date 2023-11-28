@@ -1,7 +1,6 @@
 ---
 title: 加密文章
 icon: lock
-redirectFrom: /feature/advance/private.html
 ---
 
 VanBlog 支持对文章进行加密。加密后，前台的文章将被隐藏，需要输入密码之后才能看到内容。密码会在后端验证，并只有匹配时才会把文章数据返回前端。

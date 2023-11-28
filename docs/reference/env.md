@@ -2,7 +2,6 @@
 title: 环境变量
 icon: leaf
 order: 2
-redirectFrom: /ref/env.html
 ---
 
 VanBlog 启动时，会读取一些环境变量以配置自身。

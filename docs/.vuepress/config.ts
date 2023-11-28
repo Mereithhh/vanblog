@@ -1,5 +1,4 @@
 import { defineUserConfig } from "vuepress";
-import { redirectPlugin } from "vuepress-plugin-redirect";
 import { searchProPlugin } from "vuepress-plugin-search-pro";
 import { getDirname, path } from "@vuepress/utils";
 
@@ -37,16 +36,17 @@ s.parentNode.insertBefore(hm, s);
     ],
   ],
 
-  plugins: [searchProPlugin({ indexContent: true }), redirectPlugin()],
+  plugins: [
+    searchProPlugin({ indexContent: true }),
+  ],
 
   theme,
 
   pagePatterns: ["**/*.md", "!**/*.snippet.md", "!.vuepress", "!node_modules"],
-
   alias: {
     "@theme-hope/modules/info/components/TOC": path.resolve(
       __dirname,
-      "./component/TOC.vue"
+      "./components/TOC.vue"
     ),
   }
 });

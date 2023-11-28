@@ -2,7 +2,6 @@
 title: 迁移助手
 icon: code-compare
 order: -1
-redirectFrom: /feature/basic/migrate.html
 ---
 
 VanBlog 内置了迁移助手，支持文章/草稿的批量导入导出，未来将支持更多迁移方式。

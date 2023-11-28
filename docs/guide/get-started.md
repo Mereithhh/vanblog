@@ -2,10 +2,6 @@
 title: 快速上手
 icon: lightbulb
 order: 1
-redirectFrom:
-  - /guide/docker.html
-  - /ref/baota.html
-  - /ref/dsm.html
 ---
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。

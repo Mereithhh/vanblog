@@ -2,7 +2,6 @@
 title: 编辑器
 icon: keyboard
 order: 3
-redirectFrom: /feature/basic/editor.html
 ---
 
 VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金同款） 作为 `Markdown` 编辑器：

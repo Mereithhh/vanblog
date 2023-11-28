@@ -1,7 +1,6 @@
 ---
 title: 协作者
 icon: users
-redirectFrom: /feature/advance/collaborator.html
 ---
 
 VanBlog 支持添加自定义权限的协作者用户。

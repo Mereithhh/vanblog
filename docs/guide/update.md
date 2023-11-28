@@ -2,7 +2,6 @@
 title: 升级
 icon: cloud-arrow-up
 order: -3
-redirectFrom: /feature/advance/version.html
 ---
 
 ## 升级提示

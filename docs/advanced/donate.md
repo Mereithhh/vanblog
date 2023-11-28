@@ -1,7 +1,6 @@
 ---
 title: 捐赠管理
 icon: circle-dollar-to-slot
-redirectFrom: /feature/advance/donate.html
 ---
 
 VanBlog 支持 `捐赠信息` 展示，会展示在关于页面的最下方（前提是至少有一个捐赠条目并在`站点管理/系统设置/站点配置/布局设置`中开启了`显示捐赠信息`的选项）
