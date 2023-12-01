@@ -6,6 +6,7 @@ export default function (props: {
   author: string;
   id: number | string;
   showDonate: boolean;
+  // FIXME: Should be corrected to copyrightAgreement
   copyrightAggreement: string;
   customCopyRight: string | null;
 }) {
@@ -14,16 +15,18 @@ export default function (props: {
     setUrl(`${location.protocol}//${location.host}${location.pathname}`);
   }, [setUrl]);
 
-  const text = useMemo(() => {
-    if (props.customCopyRight) return props.customCopyRight;
-    return `本博客所有文章除特别声明外，均采用 ${props.copyrightAggreement}
-    许可协议。转载请注明出处！`;
-  }, [props.customCopyRight, props.copyrightAggreement]);
+  const text = useMemo(
+    () =>
+      props.customCopyRight ??
+      `本博客所有文章除特别声明外，均采用 ${props.copyrightAggreement}
+    许可协议。转载请注明出处！`,
+    [props.customCopyRight, props.copyrightAggreement]
+  );
 
   return (
     <div
       className={`bg-gray-100 px-5 border-l-4 border-red-500  py-2 text-sm space-y-1 dark:text-dark  dark:bg-dark ${
-        !props.showDonate ? "mt-8" : ""
+        props.showDonate ? "" : "mt-8"
       }`}
     >
       <p>
