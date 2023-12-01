@@ -21,7 +21,11 @@ export class SiteInfo {
   baseUrl: string;
   gaAnalysisId: string;
   baiduAnalysisId: string;
+  /**
+   * @deprecated Use `copyrightAgreement` instead
+   */
   copyrightAggreement: string;
+  copyrightAgreement: string;
   enableComment?: 'true' | 'false';
   showSubMenu?: 'true' | 'false';
   headerLeftContent?: 'siteLogo' | 'siteName';
