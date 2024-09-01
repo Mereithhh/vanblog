@@ -10,7 +10,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.3.1"
+VANBLOG_SCRIPT_VERSION="v0.3.2"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -29,9 +29,13 @@ os_arch=""
 
 delete_old_images() {
   echo -e "> 删除旧镜像"
-  docker rmi -f $(docker images | grep van-blog | awk '{print $3}')
-  docker rmi -f $(docker images | grep vanblog | awk '{print $3}')
+  docker rmi -f mereith/van-blog-old
+}
 
+retag_old_images() {
+  echo -e "> 重命名旧镜像"
+  docker tag $(docker images | grep van-blog | awk '{print $3}') mereith/van-blog-old
+  # docker tag $(docker images | grep vanblog | awk '{print $3}') mereith/van-blog-old
 }
 
 pre_check() {
@@ -304,7 +308,7 @@ restart() {
 }
 update() {
   echo -e "> 更新服务"
-  delete_old_images
+  retag_old_images
 
   cd $VANBLOG_BASE_PATH
   docker-compose pull
@@ -316,6 +320,8 @@ update() {
   else
     echo -e "${red}重启失败，可能是因为启动时间超过了两秒，请稍后查看日志信息${plain}"
   fi
+
+  delete_old_images
 
   before_show_menu
 
