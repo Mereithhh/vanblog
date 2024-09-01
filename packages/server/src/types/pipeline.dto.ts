@@ -14,5 +14,4 @@ export class UpdatePipelineDto {
   eventName?: string;
   script?: string;
   deps?: string[];
-
 }

@@ -6,10 +6,7 @@ import { ArticleProvider } from '../article/article.provider';
 export class TagProvider {
   constructor(private readonly articleProvider: ArticleProvider) {}
   async getTagsWithArticle(includeHidden: boolean) {
-    const allArticles = await this.articleProvider.getAll(
-      'list',
-      includeHidden,
-    );
+    const allArticles = await this.articleProvider.getAll('list', includeHidden);
     const data = {};
     allArticles.forEach((a) => {
       a.tags.forEach((t) => {

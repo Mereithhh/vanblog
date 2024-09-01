@@ -2,7 +2,6 @@
 title: 关于页面
 icon: circle-info
 order: -2
-redirectFrom: /feature/basic/about.html
 ---
 
 你可以在文章管理页面点击 `编辑关于` 按钮，编辑关于页面的展示信息：

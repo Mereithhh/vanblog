@@ -163,7 +163,6 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [小橘子](https://www.xiaojuziya.com)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
-
 ## TODO
 
 - [x] 精简前台 js 体积，优化性能
@@ -209,7 +208,6 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [ ] 增加 ORM 层，适配更多数据库
 - [ ] 增加一些 e2e 测试，集成到 CI
 - [ ] 国际化
-
 
 ## 问题反馈
 

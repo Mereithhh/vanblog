@@ -1,16 +1,7 @@
-import {
-  Inject,
-  Injectable,
-  forwardRef,
-  NotFoundException,
-} from '@nestjs/common';
+import { Inject, Injectable, forwardRef, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import {
-  CreateArticleDto,
-  SearchArticleOption,
-  UpdateArticleDto,
-} from 'src/types/article.dto';
+import { CreateArticleDto, SearchArticleOption, UpdateArticleDto } from 'src/types/article.dto';
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
 import { parseImgLinksOfMarkdown } from 'src/utils/parseImgOfMarkdown';
 import { wordCount } from 'src/utils/wordCount';
@@ -274,11 +265,7 @@ export class ArticleProvider {
     // 用 visitProvider 里面的数据洗一下 article 的。
     const articles = await this.getAll('list', true);
     for (const a of articles) {
-      await this.visitProvider.rewriteToday(
-        `/post/${a.id}`,
-        a.viewer,
-        a.visited,
-      );
+      await this.visitProvider.rewriteToday(`/post/${a.id}`, a.viewer, a.visited);
     }
   }
 
@@ -478,9 +465,7 @@ export class ArticleProvider {
       .sort({ createdAt: -1 })
       .exec();
     // 清洗一下数据。
-    const dates = Array.from(
-      new Set(articles.map((a) => a.createdAt.getFullYear())),
-    );
+    const dates = Array.from(new Set(articles.map((a) => a.createdAt.getFullYear())));
     const res: Record<string, Article[]> = {};
     dates.forEach((date) => {
       res[date] = articles.filter((a) => a.createdAt.getFullYear() == date);
@@ -687,10 +672,7 @@ export class ArticleProvider {
   }
 
   async getByIdOrPathname(id: string | number, view: ArticleView) {
-    const articleByPathname = await this.getByPathName(
-      String(id),
-      view,
-    );
+    const articleByPathname = await this.getByPathName(String(id), view);
 
     if (articleByPathname) {
       return articleByPathname;
@@ -747,10 +729,7 @@ export class ArticleProvider {
       )
       .exec();
   }
-  async getByIdWithPassword(
-    id: number | string,
-    password: string,
-  ): Promise<any> {
+  async getByIdWithPassword(id: number | string, password: string): Promise<any> {
     const article: any = await this.getByIdOrPathname(id, 'admin');
     if (!password) {
       return null;
@@ -764,9 +743,7 @@ export class ArticleProvider {
       })) || ({} as any);
 
     const categoryPassword = category.private ? category.password : undefined;
-    const targetPassword = categoryPassword
-      ? categoryPassword
-      : article.password;
+    const targetPassword = categoryPassword ? categoryPassword : article.password;
     if (!targetPassword || targetPassword == '') {
       return { ...(article?._doc || article), password: undefined };
     } else {
@@ -785,10 +762,7 @@ export class ArticleProvider {
 
     if (curArticle.hidden) {
       const siteInfo = await this.metaProvider.getSiteInfo();
-      if (
-        !siteInfo?.allowOpenHiddenPostByUrl ||
-        siteInfo?.allowOpenHiddenPostByUrl == 'false'
-      ) {
+      if (!siteInfo?.allowOpenHiddenPostByUrl || siteInfo?.allowOpenHiddenPostByUrl == 'false') {
         throw new NotFoundException('该文章是隐藏文章！');
       }
     }
@@ -816,11 +790,7 @@ export class ArticleProvider {
     }
     return res;
   }
-  async getPreArticleByArticle(
-    article: Article,
-    view: ArticleView,
-    includeHidden?: boolean,
-  ) {
+  async getPreArticleByArticle(article: Article, view: ArticleView, includeHidden?: boolean) {
     const $and: any = [
       {
         $or: [
@@ -860,11 +830,7 @@ export class ArticleProvider {
     }
     return null;
   }
-  async getNextArticleByArticle(
-    article: Article,
-    view: ArticleView,
-    includeHidden?: boolean,
-  ) {
+  async getNextArticleByArticle(article: Article, view: ArticleView, includeHidden?: boolean) {
     const $and: any = [
       {
         $or: [
@@ -920,10 +886,7 @@ export class ArticleProvider {
     }));
   }
 
-  async searchByString(
-    str: string,
-    includeHidden: boolean,
-  ): Promise<Article[]> {
+  async searchByString(str: string, includeHidden: boolean): Promise<Article[]> {
     const $and: any = [
       {
         $or: [
@@ -962,24 +925,13 @@ export class ArticleProvider {
       })
       .exec();
     const s = str.toLocaleLowerCase();
-    const titleData = rawData.filter((each) =>
-      each.title.toLocaleLowerCase().includes(s),
-    );
-    const contentData = rawData.filter((each) =>
-      each.content.toLocaleLowerCase().includes(s),
-    );
-    const categoryData = rawData.filter((each) =>
-      each.category.toLocaleLowerCase().includes(s),
-    );
+    const titleData = rawData.filter((each) => each.title.toLocaleLowerCase().includes(s));
+    const contentData = rawData.filter((each) => each.content.toLocaleLowerCase().includes(s));
+    const categoryData = rawData.filter((each) => each.category.toLocaleLowerCase().includes(s));
     const tagData = rawData.filter((each) =>
       each.tags.map((t) => t.toLocaleLowerCase()).includes(s),
     );
-    const sortedData = [
-      ...titleData,
-      ...contentData,
-      ...tagData,
-      ...categoryData,
-    ];
+    const sortedData = [...titleData, ...contentData, ...tagData, ...categoryData];
     const resData = [];
     for (const e of sortedData) {
       if (!resData.includes(e)) {
@@ -993,18 +945,12 @@ export class ArticleProvider {
     return this.articleModel.find({}).exec();
   }
   async deleteById(id: number) {
-    const res = await this.articleModel
-      .updateOne({ id }, { deleted: true })
-      .exec();
+    const res = await this.articleModel.updateOne({ id }, { deleted: true }).exec();
     this.metaProvider.updateTotalWords('删除文章');
     return res;
   }
 
-  async updateById(
-    id: number,
-    updateArticleDto: UpdateArticleDto,
-    skipUpdateWordCount?: boolean,
-  ) {
+  async updateById(id: number, updateArticleDto: UpdateArticleDto, skipUpdateWordCount?: boolean) {
     const res = await this.articleModel.updateOne(
       { id },
       {

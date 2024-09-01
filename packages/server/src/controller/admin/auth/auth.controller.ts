@@ -48,10 +48,10 @@ export class AuthController {
     // 能到这里登陆就成功了
     this.logProvider.login(request, true);
     const data = await this.authProvider.login(request.user);
-    this.pipelineProvider.dispatchEvent('login', data)
+    this.pipelineProvider.dispatchEvent('login', data);
     return {
       statusCode: 200,
-      data ,
+      data,
     };
   }
 
@@ -66,7 +66,7 @@ export class AuthController {
     }
     this.pipelineProvider.dispatchEvent('logout', {
       token,
-    })
+    });
     await this.tokenProvider.disableToken(token);
     return {
       statusCode: 200,

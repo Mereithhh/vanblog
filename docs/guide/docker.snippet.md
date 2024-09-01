@@ -24,7 +24,7 @@ systemctl enable --now docker
 在安装好了 `docker` 和 `docker-compose` 后，新建一个 `vanblog` 的目录，在这个目录下新建 `docker-compose.yaml`文件，内容如下：
 
 ```yml
-version: "3"
+version: '3'
 
 services:
   vanblog:
@@ -33,9 +33,9 @@ services:
     image: mereith/van-blog:latest
     restart: always
     environment:
-      TZ: "Asia/Shanghai"
+      TZ: 'Asia/Shanghai'
       # 邮箱地址，用于自动申请 https 证书
-      EMAIL: "someone@mereith.com"
+      EMAIL: 'someone@mereith.com'
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static
@@ -54,7 +54,7 @@ services:
     image: mongo:4.4.16
     restart: always
     environment:
-      TZ: "Asia/Shanghai"
+      TZ: 'Asia/Shanghai'
     volumes:
       - ${PWD}/data/mongo:/data/db
 ```

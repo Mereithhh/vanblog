@@ -69,11 +69,17 @@ export default function (props: {
                   setUrl(src);
                   if (props?.formRef?.setFieldsValue) {
                     const oldVal = props.formRef.getFieldsValue();
-                    props?.formRef?.setFieldsValue({ ...oldVal, [props.name]: src });
+                    props?.formRef?.setFieldsValue({
+                      ...oldVal,
+                      [props.name]: src,
+                    });
                   }
                   if (props.formRef?.current?.setFieldsValue) {
                     const oldVal = props.formRef.current.getFieldsValue();
-                    props?.formRef?.current.setFieldsValue({ ...oldVal, [props.name]: src });
+                    props?.formRef?.current.setFieldsValue({
+                      ...oldVal,
+                      [props.name]: src,
+                    });
                   }
                 }}
                 url={dest}

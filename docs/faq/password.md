@@ -1,7 +1,6 @@
 ---
 title: 忘记密码
 icon: question
-redirectFrom: /feature/advance/restore.html
 ---
 
 VanBlog 支持忘记密码恢复，在登录页面点击`忘记密码`，输入正确的恢复密钥即可重置超级管理员用户。

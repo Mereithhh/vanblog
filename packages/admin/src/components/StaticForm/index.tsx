@@ -18,7 +18,10 @@ export default function (props: {}) {
               storageType: 'local',
             };
           }
-          return { ...data, picgoConfig: JSON.stringify(data?.picgoConfig || '', null, 2) };
+          return {
+            ...data,
+            picgoConfig: JSON.stringify(data?.picgoConfig || '', null, 2),
+          };
         }}
         syncToInitialValues={true}
         onFinish={async (data) => {

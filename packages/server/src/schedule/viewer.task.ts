@@ -16,9 +16,7 @@ export class ViewerTask {
     const curTime = dayjs();
     const { visited, viewer } = await this.metaProvider.getViewer();
     this.logger.debug(
-      `[${curTime.format(
-        'YYYY-MM-DD HH:mm:ss',
-      )}] visitor: ${visited} \t viewer: ${viewer}`,
+      `[${curTime.format('YYYY-MM-DD HH:mm:ss')}] visitor: ${visited} \t viewer: ${viewer}`,
     );
     this.viewerProvider.createOrUpdate({
       viewer: viewer,

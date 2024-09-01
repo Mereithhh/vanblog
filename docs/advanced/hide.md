@@ -1,7 +1,6 @@
 ---
 title: 隐藏文章
 icon: eye-slash
-redirectFrom: /feature/advance/hidden.html
 ---
 
 VanBlog 支持对文章进行**隐藏**。

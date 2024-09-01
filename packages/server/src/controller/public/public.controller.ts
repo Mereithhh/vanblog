@@ -45,10 +45,7 @@ export class PublicController {
   }
   @Get('/article/:id')
   async getArticleByIdOrPathname(@Param('id') id: string) {
-    const data = await this.articleProvider.getByIdOrPathnameWithPreNext(
-      id,
-      'public',
-    );
+    const data = await this.articleProvider.getByIdOrPathnameWithPreNext(id, 'public');
     return {
       statusCode: 200,
       data: data,
@@ -59,10 +56,7 @@ export class PublicController {
     @Param('id') id: number | string,
     @Body() body: { password: string },
   ) {
-    const data = await this.articleProvider.getByIdWithPassword(
-      id,
-      body?.password,
-    );
+    const data = await this.articleProvider.getByIdWithPassword(id, body?.password);
     return {
       statusCode: 200,
       data: data,

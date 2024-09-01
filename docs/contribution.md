@@ -2,7 +2,6 @@
 title: 开发指南
 icon: signs-post
 order: 7
-redirectFrom: /ref/dev.html
 ---
 
 ::: info 提示
@@ -20,7 +19,9 @@ redirectFrom: /ref/dev.html
 ## 准备知识
 
 ### 整体架构
+
 Vanblog 分为以下几个部分，构建后将整合到一个 `docker` 容器内：
+
 > website: Vanblog 默认的主题，使用了 `nextjs` 框架，有运行时。
 >
 > server: Vanblog 的后端服务，有运行时。
@@ -38,15 +39,16 @@ Vanblog 分为以下几个部分，构建后将整合到一个 `docker` 容器�
 ![架构图](./assets/vanblog.svg)
 
 ### 路径结构
-本项目采用了 `pnpm` 作为包管理器，项目使用 `monorepo(pnpm workspace) + lerna` 组织和管理。
+
+本项目采用了 `pnpm` 作为包管理器，项目使用 `monorepo(pnpm workspace)` 组织和管理。
 
 精简版目录结构：
+
 ```bash
 ├── docker-compose  # docker-compose 编排
 ├── Dockerfile  # Dockerfile
 ├── docs # 项目文档的代码
 ├── entrypoint.sh # 容器入口文件
-├── lerna.json # lerna 配置
 ├── LICENSE # 开源协议
 ├── package.json
 ├── packages # 代码主体
@@ -82,10 +84,12 @@ docker run --name mongodb-vanblog -d --restart unless-stopped \
 ```
 
 #### node 要求
+
 - nodejs 18
 - pnpm v7+
 
 #### 克隆项目并安装依赖
+
 ```bash
 git clone https://github.com/Mereithhh/vanblog.git
 cd vanblog
@@ -93,7 +97,9 @@ pnpm i
 ```
 
 ### 添加 server 配置文件
+
 在 `packages/server` 下，创建 `config.yaml` 文件，内容如下：
+
 ```yaml
 database:
   # 数据库连接
@@ -102,18 +108,20 @@ static:
   # 图床等静态文件保存的位置
   path: /var/vanblog-dev/static
 # 是否开启演示站模式，会限制很多权限
-demo: "false"
+demo: 'false'
 # waline 用的表名，会自动创建
 waline:
   db: waline
 # 日志位置
 log: /var/vanblog-dev/logs
-
 ```
+
 ### 开发相关命令
+
 #### 开发全部
 
 在根目录下：
+
 ```bash
 # 开发全部（前台、后台、server）
 pnpm dev
@@ -122,29 +130,36 @@ pnpm dev
 # 后台为 3002 端口
 ```
 
-::: info VanBlog
-开发后台如果用到复制到剪切板相关的功能，可能需要开启 `https`，请在 `packages/admin/config/config.js` 中的 `https` 改成 `true`，再重启开发进程。
+::: info VanBlog开发后台如果用到复制到剪切板相关的功能，可能需要开启 `https`，请在 `packages/admin/config/config.js` 中的 `https` 改成 `true`，再重启开发进程。
+
 ```js
  devServer: { https: true, port: 3002 },
 ```
+
 :::
+
 #### 单独开发前后台（前端）
+
 必须要先启动 server：
+
 ```bash
 # 端口 3000
 pnpm dev:server
 ```
 
 然后在启动前台后者后台
+
 ```bash
 # 启动前台 端口 3001
-pnpm dev:website  
+pnpm dev:website
 # 启动后台 端口 3002
 pnpm dev:admin
 ```
 
 ### 文档开发
+
 根目录下：
+
 ```bash
 pnpm docs:dev
 ```
@@ -166,7 +181,6 @@ pnpm build:test
 ```
 
 ### 手动打包
-
 
 ```bash
 # 这个build server 是第一次打包镜像拿数据的，不写也行，那就得等启动容器后增量渲染生效了。

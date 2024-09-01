@@ -2,7 +2,7 @@ import { getLog, getPipelineConfig } from '@/services/van-blog/api';
 import { ProTable } from '@ant-design/pro-components';
 import { Modal, Tag } from 'antd';
 import { useEffect, useRef, useState } from 'react';
-import { history } from "umi"
+import { history } from 'umi';
 
 export default function () {
   const actionRef = useRef();
@@ -10,7 +10,7 @@ export default function () {
   useEffect(() => {
     getPipelineConfig().then(({ data }) => {
       setPipelineConfig(data);
-    })
+    });
   }, []);
   const columns = [
     {
@@ -32,7 +32,15 @@ export default function () {
       dataIndex: 'pipelineName',
       key: 'pipelineName',
       align: 'center',
-      render: (name,record) => <a onClick={() => { history.push('/code?type=pipeline&id=' +record.pipelineId) }}>{name}</a>
+      render: (name, record) => (
+        <a
+          onClick={() => {
+            history.push('/code?type=pipeline&id=' + record.pipelineId);
+          }}
+        >
+          {name}
+        </a>
+      ),
     },
     {
       title: '触发事件',
@@ -40,8 +48,12 @@ export default function () {
       key: 'eventName',
       align: 'center',
       render: (eventName) => {
-        return <Tag color="blue">{pipelineConfig?.find((item) => item.eventName == eventName)?.eventNameChinese}</Tag>
-      }
+        return (
+          <Tag color="blue">
+            {pipelineConfig?.find((item) => item.eventName == eventName)?.eventNameChinese}
+          </Tag>
+        );
+      },
     },
     {
       title: '结果',
@@ -49,33 +61,47 @@ export default function () {
       key: 'success',
       align: 'center',
       render: (success) => {
-        return success ? <Tag color="green">成功</Tag> : <Tag color="red">失败</Tag>
-      }
+        return success ? <Tag color="green">成功</Tag> : <Tag color="red">失败</Tag>;
+      },
     },
     {
-      title: "详情",
-      dataIndex: "detail",
-      key: "detail",
+      title: '详情',
+      dataIndex: 'detail',
+      key: 'detail',
       render: (_, record) => {
-        return <a onClick={() => {
-          Modal.info({
-            title: '详情',
-            width: 800,
-            content: <div style={{
-              maxHeight: "60vh",
-              overflow: "auto",
-            }}>
-              <p>脚本日志：</p>
-              <pre >{record.logs.map(l => <p>{l}</p>)}</pre>
-              <p>输入：</p>
-              <pre >{JSON.stringify(record.input, null, 2)}</pre>
-              <p>输出：</p>
-              <pre >{JSON.stringify(record.output, null, 2)}</pre>
-            </div>
-          })
-        }}>详情</a>
-      }
-    }
+        return (
+          <a
+            onClick={() => {
+              Modal.info({
+                title: '详情',
+                width: 800,
+                content: (
+                  <div
+                    style={{
+                      maxHeight: '60vh',
+                      overflow: 'auto',
+                    }}
+                  >
+                    <p>脚本日志：</p>
+                    <pre>
+                      {record.logs.map((l) => (
+                        <p>{l}</p>
+                      ))}
+                    </pre>
+                    <p>输入：</p>
+                    <pre>{JSON.stringify(record.input, null, 2)}</pre>
+                    <p>输出：</p>
+                    <pre>{JSON.stringify(record.output, null, 2)}</pre>
+                  </div>
+                ),
+              });
+            }}
+          >
+            详情
+          </a>
+        );
+      },
+    },
   ];
   return (
     <>

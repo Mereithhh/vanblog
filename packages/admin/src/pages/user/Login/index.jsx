@@ -45,7 +45,7 @@ const Login = () => {
         history.push(redirect || '/');
         return;
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   return (
@@ -61,14 +61,17 @@ const Login = () => {
           }}
           onFinish={async (values) => {
             const { username, password } = values;
-            await handleSubmit({ username, password: encryptPwd(username, password) });
+            await handleSubmit({
+              username,
+              password: encryptPwd(username, password),
+            });
           }}
         >
           {type === 'account' && (
             <>
               <ProFormText
                 name="username"
-                autoComplete='off'
+                autoComplete="off"
                 fieldProps={{
                   size: 'large',
                   prefix: <UserOutlined className={styles.prefixIcon} />,
@@ -83,7 +86,7 @@ const Login = () => {
               />
               <ProFormText.Password
                 name="password"
-                autoComplete='off'
+                autoComplete="off"
                 fieldProps={{
                   size: 'large',
                   prefix: <LockOutlined className={styles.prefixIcon} />,

@@ -2,7 +2,6 @@
 title: VanBlog 展示
 index: false
 icon: image
-redirectFrom: /pic.html
 ---
 
 ## Lighthouse

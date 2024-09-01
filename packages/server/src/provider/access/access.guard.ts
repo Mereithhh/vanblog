@@ -1,15 +1,6 @@
-import {
-  Injectable,
-  CanActivate,
-  ExecutionContext,
-  Logger,
-} from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, Logger } from '@nestjs/common';
 
-import {
-  pathPermissionMap,
-  permissionRoutes,
-  publicRoutes,
-} from 'src/types/access/access';
+import { pathPermissionMap, permissionRoutes, publicRoutes } from 'src/types/access/access';
 
 @Injectable()
 export class AccessGuard implements CanActivate {

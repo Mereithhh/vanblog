@@ -1,7 +1,6 @@
 ---
 title: 社交媒体配置
 icon: share-nodes
-redirectFrom: /feature/advance/social.html
 ---
 
 VanBlog 允许你在首页右侧的博主信息中，添加社交媒体。

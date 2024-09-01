@@ -28,8 +28,8 @@ import { customCodeBlock } from './plugins/codeBlock';
 import { LinkTarget } from './plugins/linkTarget';
 
 const sanitize = (schema) => {
-  schema.protocols.src.push('data')
-  schema.tagNames.push("center")
+  schema.protocols.src.push('data');
+  schema.tagNames.push('center');
   schema.tagNames.push('iframe');
   schema.tagNames.push('script');
   schema.attributes['*'].push('style');
@@ -40,8 +40,8 @@ const sanitize = (schema) => {
   schema.attributes['*'].push('framespacing');
   schema.attributes['*'].push('allowfullscreen');
   schema.strip = [];
-  return schema
-}
+  return schema;
+};
 
 export default function EditorComponent(props: {
   value: string;

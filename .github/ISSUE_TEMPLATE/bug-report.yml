@@ -33,7 +33,6 @@ body:
     validations:
       required: true
 
-
   - type: dropdown
     id: deployMethod
     validations:
@@ -45,5 +44,3 @@ body:
         - Docker 部署(文档默认)
         - 手动部署
         - 其他方式
-
-

@@ -20,8 +20,7 @@ export class MarkdownProvider {
           try {
             return (
               '<pre class="hljs" style="background: #f3f3f3; padding: 8px;><code>' +
-              hljs.highlight(str, { language: lang, ignoreIllegals: true })
-                .value +
+              hljs.highlight(str, { language: lang, ignoreIllegals: true }).value +
               '</code></pre>'
             );
           } catch (e) {

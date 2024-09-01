@@ -1,0 +1,11 @@
+node_modules/
+
+# Dist files
+packages/admin/dist/
+
+# TODO: Introduce prettier v3
+packages/waline/
+packages/website/
+
+caddyTemplate.json
+pnpm-lock.yaml

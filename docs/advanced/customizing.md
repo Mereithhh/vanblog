@@ -1,7 +1,6 @@
 ---
 title: 定制化（嵌入自定义 HTML、CSS、JS）
 icon: wand-magic-sparkles
-redirectFrom: /feature/advance/customizing.html
 ---
 
 VanBlog 通过定制化功能允许你在页面中嵌入自己的 HTML、CSS、JS 片段。
@@ -49,7 +48,7 @@ VanBlog 通过定制化功能允许你在页面中嵌入自己的 HTML、CSS、J
 
 ```js
 window.onload = () => {
-  const el = document.querySelector("#nav");
+  const el = document.querySelector('#nav');
 };
 ```
 
@@ -63,9 +62,7 @@ window.onload = () => {
 <div id="sakana-widget" style="position: fixed;bottom: 20px;right:40px;"></div>
 <script>
   function initSakanaWidget() {
-    new SakanaWidget({ autoFit: true })
-      .setState({ i: 0.001, d: 1 })
-      .mount("#sakana-widget");
+    new SakanaWidget({ autoFit: true }).setState({ i: 0.001, d: 1 }).mount('#sakana-widget');
   }
 </script>
 <script

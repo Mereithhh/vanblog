@@ -9,7 +9,13 @@ export default [
     ],
   },
   { path: '/init', layout: false, component: './InitPage' },
-  { path: '/welcome', name: '分析概览', icon: 'smile', component: './Welcome', access: 'isAdmin' },
+  {
+    path: '/welcome',
+    name: '分析概览',
+    icon: 'smile',
+    component: './Welcome',
+    access: 'isAdmin',
+  },
   { name: '文章管理', icon: 'form', path: '/article', component: './Article' },
   {
     name: '图形编辑器',
@@ -50,9 +56,13 @@ export default [
     routes: [
       { name: '数据管理', path: '/site/data', component: './DataManage' },
       { name: '评论管理', path: '/site/comment', component: './CommentManage' },
-      { name: '流水线', path: '/site/pipeline', component: './Pipeline'},
+      { name: '流水线', path: '/site/pipeline', component: './Pipeline' },
       { name: '系统设置', path: '/site/setting', component: './SystemConfig' },
-      { name: '自定义页面', path: '/site/customPage', component: './CustomPage' },
+      {
+        name: '自定义页面',
+        path: '/site/customPage',
+        component: './CustomPage',
+      },
       { name: '日志管理', path: '/site/log', component: './LogManage' },
     ],
   },

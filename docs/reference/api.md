@@ -2,7 +2,6 @@
 title: API 参考
 icon: plug
 order: 6
-redirectFrom: /ref/api.html
 ---
 
 目前还没写专门的 API 参考，但是可以用生成的 `swagger` 做为参考。其中 `public` 标签下的都是不需要鉴权的。
@@ -27,4 +26,3 @@ redirectFrom: /ref/api.html
 ## 鉴权
 
 所有需要鉴权的接口是通过 `请求头` 中 `token` 字段鉴权的，你可以在后台的 `系统设置/Token 管理` 中进行管理。
-

@@ -2,10 +2,6 @@
 title: 快速上手
 icon: lightbulb
 order: 1
-redirectFrom:
-  - /guide/docker.html
-  - /ref/baota.html
-  - /ref/dsm.html
 ---
 
 欢迎使用 VanBlog ，只需几个步骤，你就可以在你的服务器搭建自己的博客服务了。
@@ -20,7 +16,7 @@ redirectFrom:
 
 ## 介绍
 
-@include(@/info.snippet.md)
+<!-- @include: @/info.snippet.md -->
 
 ## 配置要求
 
@@ -38,26 +34,26 @@ redirectFrom:
 
 @tab 脚本
 
-@include(./script.snippet.md)
+<!-- @include: ./script.snippet.md -->
 
 @tab docker
 
-@include(./docker.snippet.md)
+<!-- @include: ./docker.snippet.md -->
 
 @tab kubernetes
 
-@include(./kubernetes.snippet.md)
+<!-- @include: ./kubernetes.snippet.md -->
 
 @tab 宝塔面板
 
-@include(./bt-panel.snippet.md)
+<!-- @include: ./bt-panel.snippet.md -->
 
 @tab 群晖 NAS
 
-@include(./dsm.snippet.md)
+<!-- @include: ./dsm.snippet.md -->
 
 @tab 直接部署
 
-@include(./direct.snippet.md)
+<!-- @include: ./direct.snippet.md -->
 
 ::::

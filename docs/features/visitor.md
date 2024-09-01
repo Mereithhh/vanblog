@@ -1,7 +1,6 @@
 ---
 title: 访客统计
 icon: eye
-redirectFrom: /feature/advance/visitor.html
 ---
 
 VanBlog 内置了访客统计，开箱即用。
@@ -66,7 +65,7 @@ VanBlog 记录的信息远不止访客数和访问量，它还会记录最近访
 请访问博客页面之后打开浏览器的控制台输入：
 
 ```js
-window.localStorage.setItem("noViewer", true);
+window.localStorage.setItem('noViewer', true);
 ```
 
 这样这台设备就不会加入任何的访问统计，同时页面底部的站点访问量将不可用。

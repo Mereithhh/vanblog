@@ -43,10 +43,7 @@ export class InitController {
 
   @Post('/init/upload')
   @UseInterceptors(FileInterceptor('file'))
-  async uploadImg(
-    @UploadedFile() file: any,
-    @Query('favicon') favicon: string,
-  ) {
+  async uploadImg(@UploadedFile() file: any, @Query('favicon') favicon: string) {
     const hasInit = await this.initProvider.checkHasInited();
     if (hasInit) {
       throw new HttpException('已初始化', 500);

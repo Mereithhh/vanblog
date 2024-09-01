@@ -35,7 +35,10 @@ export default function () {
         ></Alert>
         <ProForm
           onFinish={async (values) => {
-            await restore({ ...values, password: encryptPwd(values.name, values.password) });
+            await restore({
+              ...values,
+              password: encryptPwd(values.name, values.password),
+            });
             message.success('重置成功！恢复密钥将重新生成！');
             history.push('/user/login');
           }}

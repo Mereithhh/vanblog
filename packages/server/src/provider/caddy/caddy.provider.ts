@@ -40,9 +40,7 @@ export class CaddyProvider {
   async setRedirect(redirect: boolean) {
     if (!redirect) {
       try {
-        await axios.delete(
-          'http://127.0.0.1:2019/config/apps/http/servers/srv1/listener_wrappers',
-        );
+        await axios.delete('http://127.0.0.1:2019/config/apps/http/servers/srv1/listener_wrappers');
         this.logger.log('https 自动重定向已关闭');
         return '关闭成功！';
       } catch (err) {
@@ -52,13 +50,11 @@ export class CaddyProvider {
       }
     } else {
       try {
-        await axios.post(
-          'http://127.0.0.1:2019/config/apps/http/servers/srv1/listener_wrappers',[
-            {
-              "wrapper": "http_redirect"
-            }
-          ]
-        );
+        await axios.post('http://127.0.0.1:2019/config/apps/http/servers/srv1/listener_wrappers', [
+          {
+            wrapper: 'http_redirect',
+          },
+        ]);
         this.logger.log('https 自动重定向已关闭');
         return '开启成功！';
       } catch (err) {
@@ -82,9 +78,7 @@ export class CaddyProvider {
   }
   async getAutomaticDomains() {
     try {
-      const res = await axios.get(
-        'http://127.0.0.1:2019/config/apps/tls/certificates/automate',
-      );
+      const res = await axios.get('http://127.0.0.1:2019/config/apps/tls/certificates/automate');
       return res?.data;
     } catch (err) {
       console.log(err);

@@ -3,7 +3,7 @@ import EditorProfileModal from '@/components/EditorProfileModal';
 import PublishDraftModal from '@/components/PublishDraftModal';
 import Tags from '@/components/Tags';
 import UpdateModal from '@/components/UpdateModal';
-import { SaveTip } from "@/components/SaveTip";
+import { SaveTip } from '@/components/SaveTip';
 import {
   deleteArticle,
   deleteDraft,
@@ -28,9 +28,12 @@ export default function () {
   const [value, setValue] = useState('');
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
-  const [editorConfig, setEditorConfig] = useCacheState({ afterSave: 'stay', useLocalCache: "close" }, 'editorConfig');
+  const [editorConfig, setEditorConfig] = useCacheState(
+    { afterSave: 'stay', useLocalCache: 'close' },
+    'editorConfig',
+  );
   const type = history.location.query?.type || 'article';
-  const getCacheKey = () => `${type}-${history.location.query?.id || '0'}`
+  const getCacheKey = () => `${type}-${history.location.query?.id || '0'}`;
 
   useEffect(() => {
     window.addEventListener('keydown', onKeyDown);
@@ -67,12 +70,16 @@ export default function () {
       const id = history.location.query?.id;
       const cacheString = window.localStorage.getItem(getCacheKey());
       let cacheObj = {};
-      try {cacheObj = JSON.parse(cacheString || '{}');}catch(err) {window.localStorage.removeItem(getCacheKey());};
+      try {
+        cacheObj = JSON.parse(cacheString || '{}');
+      } catch (err) {
+        window.localStorage.removeItem(getCacheKey());
+      }
       const checkCache = (data) => {
         const clear = () => {
           window.localStorage.removeItem(getCacheKey());
-        }
-        if (editorConfig?.useLocalCache == "close") {
+        };
+        if (editorConfig?.useLocalCache == 'close') {
           clear();
           return false;
         }
@@ -84,7 +91,7 @@ export default function () {
           clear();
           return false;
         }
-        const updatedAt = data?.updatedAt ;
+        const updatedAt = data?.updatedAt;
         if (!updatedAt) {
           clear();
           return false;
@@ -94,10 +101,10 @@ export default function () {
           clear();
           return false;
         } else {
-          console.log("[缓存检查] 本地缓存时间晚于服务器更新时间，使用缓存")
+          console.log('[缓存检查] 本地缓存时间晚于服务器更新时间，使用缓存');
           return cacheObj?.content;
         }
-      }
+      };
 
       if (type == 'about') {
         const { data } = await getAbout();
@@ -143,7 +150,7 @@ export default function () {
       }
       setLoading(false);
     },
-    [history, setLoading, setValue,type],
+    [history, setLoading, setValue, type],
   );
 
   useEffect(() => {
@@ -482,11 +489,14 @@ export default function () {
           value={value}
           onChange={(val) => {
             setValue(val);
-            if (editorConfig?.useLocalCache && editorConfig?.useLocalCache == "open" ) {
-              window.localStorage.setItem(getCacheKey(), JSON.stringify({
-                content: val,
-                time: new Date().valueOf(),
-              }));
+            if (editorConfig?.useLocalCache && editorConfig?.useLocalCache == 'open') {
+              window.localStorage.setItem(
+                getCacheKey(),
+                JSON.stringify({
+                  content: val,
+                  time: new Date().valueOf(),
+                }),
+              );
             }
           }}
         />

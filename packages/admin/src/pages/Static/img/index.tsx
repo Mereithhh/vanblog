@@ -219,7 +219,7 @@ const ImgPage = () => {
                 data.src,
                 true,
                 data.isNew ? '剪切板图片上传成功! ' : '剪切板图片已存在! ',
-                false
+                false,
               );
 
               fetchData();
@@ -236,7 +236,7 @@ const ImgPage = () => {
                 info?.response?.data?.src,
                 true,
                 info?.response?.data?.isNew ? `${info.name} 上传成功! ` : `${info.name} 已存在! `,
-                false
+                false,
               );
 
               fetchData();

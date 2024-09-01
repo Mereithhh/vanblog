@@ -1,7 +1,6 @@
 ---
 title: 置顶
 icon: circle-arrow-up
-redirectFrom: /feature/advance/top.html
 ---
 
 VanBlog 支持对文章进行 `置顶`，是通过设置文章的优先级来实现的。优先级必须为数字，留空或者为 0 表示不顶置，否则会把数字大的拍到最前面。（默认的话是时间倒序的，新建的文章放到最前面。

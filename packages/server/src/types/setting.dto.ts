@@ -1,13 +1,13 @@
 import { MenuItem } from './menu.dto';
 
 export const defaultStaticSetting: StaticSetting = {
-    storageType: 'local',
-    picgoConfig: null,
-    enableWaterMark: false,
-    enableWebp: true,
-    waterMarkText: null,
-    picgoPlugins: null,
-}
+  storageType: 'local',
+  picgoConfig: null,
+  enableWaterMark: false,
+  enableWebp: true,
+  waterMarkText: null,
+  picgoPlugins: null,
+};
 
 export type SettingType =
   | 'static'

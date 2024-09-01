@@ -9,6 +9,6 @@
     "noUnusedLocals": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "incremental": true,
+    "incremental": true
   }
 }

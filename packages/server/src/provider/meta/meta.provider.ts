@@ -155,10 +155,7 @@ export class MetaProvider {
     // @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment
     const { name, password, ...updateDto } = updateSiteInfoDto;
     const oldSiteInfo = await this.getSiteInfo();
-    return this.metaModel.updateOne(
-      {},
-      { siteInfo: { ...oldSiteInfo, ...updateDto } },
-    );
+    return this.metaModel.updateOne({}, { siteInfo: { ...oldSiteInfo, ...updateDto } });
   }
 
   async addOrUpdateReward(addReward: Partial<RewardItem>) {

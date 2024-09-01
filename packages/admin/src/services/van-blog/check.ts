@@ -1,4 +1,4 @@
-import { message } from "antd";
+import { message } from 'antd';
 
 export const checkDemo = () => {
   if (location.hostname == 'blog-demo.mereith.com') {
@@ -6,4 +6,4 @@ export const checkDemo = () => {
     return false;
   }
   return true;
-}
+};

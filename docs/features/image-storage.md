@@ -2,7 +2,6 @@
 title: 图床
 icon: photo-film
 order: 5
-redirectFrom: /feature/basic/pic.html
 ---
 
 ## 设置图床
@@ -76,6 +75,7 @@ VanBlog 使用 `picgo-core` 配置文件，和桌面版的 `picgo` 的配置文�
 ## 其他功能
 
 ### 自动压缩
+
 无论使用何种图床，VanBlog 都支持上传图片自动压缩为 webp 格式。在编辑器或图片管理中上传图片时，VanBlog 会在收到图片信息的时候，先进行压缩，再保存到对应图床。
 
 这个功能默认是开启的，想手动关闭请在后台 `站点管理/系统设置/图床设置` 中，关闭 `自动压缩` 即可。

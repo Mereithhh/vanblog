@@ -55,7 +55,10 @@ export class PipelineController {
     };
   }
   @Put('/:id')
-  async updatePipelineById(@Param('id') idString: string, @Body() updatePipelineDto: CreatePipelineDto) {
+  async updatePipelineById(
+    @Param('id') idString: string,
+    @Body() updatePipelineDto: CreatePipelineDto,
+  ) {
     const id = parseInt(idString);
     const pipeline = await this.pipelineProvider.updatePipelineById(id, updatePipelineDto);
     return {
@@ -64,9 +67,9 @@ export class PipelineController {
     };
   }
   @Post('/trigger/:id')
-  async triggerPipelineById(@Param('id') idString: string, @Body() triggerDto: {input?: any}) {
+  async triggerPipelineById(@Param('id') idString: string, @Body() triggerDto: { input?: any }) {
     const id = parseInt(idString);
-    const result = await this.pipelineProvider.triggerById(id,triggerDto.input);
+    const result = await this.pipelineProvider.triggerById(id, triggerDto.input);
     return {
       statusCode: 200,
       data: result,

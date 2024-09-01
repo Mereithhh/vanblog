@@ -2,9 +2,6 @@
 title: HTTPS
 icon: certificate
 order: 1
-redirectFrom:
-  - /guide/https.html
-  - /feature/advance/https.html
 ---
 
 VanBlog 镜像内采用了 Caddy 作为反向代理，并支持全自动按需 HTTPS 证书申请配置。

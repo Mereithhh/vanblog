@@ -7,10 +7,7 @@ let rawConfigs = [];
 if (process.env.VAN_BLOG_CONFIG_FILE) {
   rawConfigs = [path.resolve(process.env.VAN_BLOG_CONFIG_FILE)];
 } else {
-  rawConfigs = [
-    path.resolve('/etc/van-blog/config.yaml'),
-    path.resolve('./config.yaml'),
-  ];
+  rawConfigs = [path.resolve('/etc/van-blog/config.yaml'), path.resolve('./config.yaml')];
 }
 
 rawConfigs = rawConfigs
@@ -43,10 +40,10 @@ export const loadConfig = (key: string, defaultValue?: any) => {
       .map((x) => x.toUpperCase())
       .join('_');
 
-  if(typeof defaultValue!=='function') {
-      return process.env[envKey] || _.get(config, key, defaultValue);
+  if (typeof defaultValue !== 'function') {
+    return process.env[envKey] || _.get(config, key, defaultValue);
   } else {
-      return process.env[envKey] || _.get(config, key, false) || defaultValue();
+    return process.env[envKey] || _.get(config, key, false) || defaultValue();
   }
 };
 export const version = process.env['VAN_BLOG_VERSION'] || 'dev';

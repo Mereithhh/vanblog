@@ -2,7 +2,6 @@
 title: 草稿管理
 icon: feather
 order: 2
-redirectFrom: /feature/basic/draft.html
 ---
 
 与 [文章管理](./article.md) 类似，你可以在在草稿管理页面下对草稿进行管理。
@@ -81,14 +80,13 @@ redirectFrom: /feature/basic/draft.html
 
 ::: tip 自动实时保存
 
-编辑草稿时会自动实时保存内容到本地缓存，此功能默认关闭，可在编辑器右上角下拉菜单中的 `偏好设置` 中开启。  
+编辑草稿时会自动实时保存内容到本地缓存，此功能默认关闭，可在编辑器右上角下拉菜单中的 `偏好设置` 中开启。
 
 即使没有点击保存按钮就退出了编辑器，下次进入后也会自动恢复上次的状态。
 
 ![自动保存](https://pic.mereith.com/img/85fa1dc72226c92b7b176cc40690999d.clipboard-2022-08-31.png)
 
-![开启自动保存](https://pic.mereith.com/img/83e5a9815d0538447ef2fa97fe9c875d.clipboard-2023-06-27.webp)
-:::
+![开启自动保存](https://pic.mereith.com/img/83e5a9815d0538447ef2fa97fe9c875d.clipboard-2023-06-27.webp) :::
 
 ## 修改草稿信息
 
@@ -112,16 +110,13 @@ redirectFrom: /feature/basic/draft.html
 
 现在也可以进行批量导出了，多选后点击批量导出即可。
 
-
 ## 删除草稿
 
 你可以选择删除某篇草稿，删除后原则上不可恢复。
 
 现在也可以进行批量删除了，多选后点击批量删除即可。
 
-::: note 实际上只是软删除，但没有误删恢复的功能，如果真有恢复需求请联系作者或自行去数据库搜查
-:::
-
+::: note 实际上只是软删除，但没有误删恢复的功能，如果真有恢复需求请联系作者或自行去数据库搜查 :::
 
 ## 批量操作
 

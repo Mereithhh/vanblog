@@ -2,10 +2,7 @@ import { Controller, Get, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 
-import {
-  AnalysisProvider,
-  WelcomeTab,
-} from 'src/provider/analysis/analysis.provider';
+import { AnalysisProvider, WelcomeTab } from 'src/provider/analysis/analysis.provider';
 import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('analysis')

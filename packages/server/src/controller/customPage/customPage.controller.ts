@@ -1,11 +1,4 @@
-import {
-  Controller,
-  Get,
-  HttpException,
-  Param,
-  Req,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, HttpException, Param, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Response, Request } from 'express';
 import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
@@ -28,9 +21,7 @@ export class PublicCustomPageController {
       res.status(404);
       throw new HttpException('未找到该页面！', 404);
     }
-    const cur = await this.customPageProvider.getCustomPageByPath(
-      `/${foldername}`,
-    );
+    const cur = await this.customPageProvider.getCustomPageByPath(`/${foldername}`);
     if (!cur) {
       res.status(404);
       throw new HttpException('未找到该页面！', 404);

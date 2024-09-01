@@ -93,7 +93,7 @@ export class WebsiteProvider {
     }
   }
   async run(): Promise<any> {
-    if (process.env["VANBLOG_DISABLE_WEBSITE"] === 'true') {
+    if (process.env['VANBLOG_DISABLE_WEBSITE'] === 'true') {
       this.logger.log('无 website 模式');
       return;
     }
@@ -101,13 +101,13 @@ export class WebsiteProvider {
     let args = ['dev'];
     if (process.env.NODE_ENV == 'production') {
       cmd = 'node';
-      args = ["./packages/website/server.js"];
+      args = ['./packages/website/server.js'];
     }
     const loadEnvs = await this.loadEnv();
     this.logger.log(JSON.stringify(loadEnvs, null, 2));
     if (this.ctx == null) {
       this.ctx = spawn(cmd, args, {
-        env: { 
+        env: {
           ...process.env,
           ...loadEnvs,
         },

@@ -1,7 +1,6 @@
 ---
 title: 登录安全策略
 icon: key
-redirectFrom: /feature/advance/secure.html
 ---
 
 您可以在后台的 `系统设置/高级设置` 中更改登录安全策略：

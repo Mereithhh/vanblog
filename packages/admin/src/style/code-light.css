@@ -12,13 +12,13 @@
 
 .light .hljs {
   background: inherit;
-  color: #000
+  color: #000;
 }
 
 .light .hljs-comment,
 .light .hljs-quote,
 .light .hljs-variable {
-  color: green
+  color: green;
 }
 
 .light .hljs-built_in,
@@ -26,7 +26,7 @@
 .light .hljs-name,
 .light .hljs-selector-tag,
 .light .hljs-tag {
-  color: #00f
+  color: #00f;
 }
 
 .light .hljs-addition,
@@ -38,34 +38,34 @@
 .light .hljs-template-variable,
 .light .hljs-title,
 .light .hljs-type {
-  color: #a31515
+  color: #a31515;
 }
 
 .light .hljs-deletion,
 .light .hljs-meta,
 .light .hljs-selector-attr,
 .light .hljs-selector-pseudo {
-  color: #2b91af
+  color: #2b91af;
 }
 
 .light .hljs-doctag {
-  color: grey
+  color: grey;
 }
 
 .light .hljs-attr {
-  color: red
+  color: red;
 }
 
 .light .hljs-bullet,
 .light .hljs-link,
 .light .hljs-symbol {
-  color: #00b0e8
+  color: #00b0e8;
 }
 
 .light .hljs-emphasis {
-  font-style: italic
+  font-style: italic;
 }
 
 .light .hljs-strong {
-  font-weight: 700
+  font-weight: 700;
 }
