@@ -127,40 +127,23 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 如果您想把自己加进来，请提一个 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)，我会尽快添加的。
 
 - [Mereith's Blog](https://www.mereith.com)
-- [前端｜面试进阶之道](https://www.whyknown.com/)
-- [小柴の BLOG](https://blog.sepbf.com)
 - [handy 的小窝](https://www.handyzyg.cn)
 - [GT 的官方博客](https://gt-it.net)
 - [無糧不聚兵‘s Blog](https://www.wongcw.cn)
 - [oldmoon](https://oldmoon.top)
-- [手艺橙](https://blog.shouyicheng.com/)
-- [叶继伟 の blog](https://yejiwei.com)
 - [seek.wiki](https://seek.wiki)
-- [Kevin2li's Blog](https://blog.kevin2li.top/)
 - [joker's blog](https://jingjianqian.top)
 - [SnailBlog](https://blog.mldd521.com)
-- [Ray's Blog](https://blog.zai7lou.ml)
-- [阿明的小博客](https://696988.xyz/)
-- [老咸鱼的池塘](https://nixieka.top)
 - [谷粒 corn.li](https://corn.li)
 - [BARM Blog](https://blog.ccz.life)
 - [凌览社](http://www.linglan01.cn)
 - [Peter's blog](https://niuery.com)
-- [不可视之线](https://fukashinosen.club)
 - [我本无罪的博客](https://blog.rnaan.com/)
 - [还是夸张一点](https://blog.ynsites.com/)
-- [XiaFan's Vision](https://blog.motofans.club/)
 - [青菜的杂货铺](https://211222.xyz)
-- [笑一个吧](http://vanblog.ztunan.top)
 - [花菜的博客](https://blog.huacai.one)
-- [MrBun's Blog](https://blog.mrbun.cn)
 - [智芯物联的空间](https://www.tingshuo.online)
-- [敲代码的小盆友](https://code-child.cn)
-- [Tim's Life](https://zouchanglin.cn)
-- [吾・子风](https://5z5f.com/tag)
-- [LinKinHan'Blog](https://www.linkinhan.top)
 - [郭郭的博客](https://blog.warmplace.cn)
-- [小橘子](https://www.xiaojuziya.com)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
 ## TODO
@@ -248,3 +231,6 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 <p align="center"> 
   <img src="/img/lighthouse.png" style="width: 400px"></img>
 </p>
+
+## 多说一句
+> 很抱歉有段时间断更了，陆陆续续会慢慢继续更新的。  2024-09-01
