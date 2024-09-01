@@ -144,6 +144,9 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [花菜的博客](https://blog.huacai.one)
 - [智芯物联的空间](https://www.tingshuo.online)
 - [郭郭的博客](https://blog.warmplace.cn)
+- [Done](https://www.dong-blog.fun/)
+- [SpaceX](https://tech.twjblog.top/)
+- [没想好的个人博客](https://blog.shizhuoran.top/)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
 ## TODO
