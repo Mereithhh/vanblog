@@ -175,6 +175,10 @@ order: 1
 - [Done](https://www.dong-blog.fun/)
 - [SpaceX](https://tech.twjblog.top/)
 - [没想好的个人博客](https://blog.shizhuoran.top/)
+- [春天运维之旅](https://blog.tenchuntian.cn/)
+- [编程小客栈](http://mystyouth.com/)
+- [Newhand](https://newhand.top/)
+- [Jerome's Blog](https://www.blog-jerome.top/)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
 ## 预览图
