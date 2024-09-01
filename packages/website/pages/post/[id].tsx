@@ -35,8 +35,8 @@ const PostPages = (props: PostPagesProps) => {
   const [content, setContent] = useState(props?.article?.content || "");
   useEffect(() => {
     // nextjs 切换页面时，不会重新设置 content ，需要手动更新
-    setContent(props?.article?.content || "")
-  }, [props.article])
+    setContent(props?.article?.content || "");
+  }, [props.article]);
   if (!props.article) {
     return <Custom404 name="文章" />;
   }
@@ -61,7 +61,7 @@ const PostPages = (props: PostPagesProps) => {
         showExpirationReminder={
           props.layoutProps.showExpirationReminder == "true"
         }
-        copyrightAggreement={props.layoutProps.copyrightAggreement}
+        copyrightAgreement={props.layoutProps.copyrightAgreement}
         openArticleLinksInNewWindow={
           props.layoutProps.openArticleLinksInNewWindow == "true"
         }
