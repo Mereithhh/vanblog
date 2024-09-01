@@ -179,6 +179,7 @@ order: 1
 - [编程小客栈](http://mystyouth.com/)
 - [Newhand](https://newhand.top/)
 - [Jerome's Blog](https://www.blog-jerome.top/)
+- [宁骑播客](https://blog.xintianyuehui.cn/)
 <!-- - [耿老师](https://transfer.teachergeng.space) -->
 
 ## 预览图
