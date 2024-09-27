@@ -10,6 +10,12 @@ export async function fetchAllMeta(options) {
     ...(options || {}),
   });
 }
+export async function fetchAllMetaUpstream(options) {
+  return request('/api/admin/meta_upstream', {
+    method: 'GET',
+    ...(options || {}),
+  });
+}
 export async function activeISR() {
   return request('/api/admin/isr', {
     method: 'POST',
