@@ -19,10 +19,6 @@
 	<strong>Demo(后台账号密码均为 demo): </strong>  <a target="_blank" href='https://blog-demo.mereith.com'>blog-demo.mereith.com</a>
 </p>
 
-## 🤡看小丑
-
-https://github.com/Mereithhh/vanblog/issues/472
-
 ## 预览图
 
 ![前台-白色](/img/合并.png)
