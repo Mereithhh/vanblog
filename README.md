@@ -19,6 +19,9 @@
 	<strong>Demo(后台账号密码均为 demo): </strong>  <a target="_blank" href='https://blog-demo.mereith.com'>blog-demo.mereith.com</a>
 </p>
 
+## 吃瓜🤡
+[https://joker-01.mereith.dev](https://joker-01.mereith.dev/)
+
 ## 预览图
 
 ![前台-白色](/img/合并.png)
