@@ -20,8 +20,7 @@
 </p>
 
 ## 吃瓜🤡
-[https://joker-01.mereith.dev](https://joker-01.mereith.dev/)
-
+[https://github.com/Mereithhh/vanblog/issues/473](https://github.com/Mereithhh/vanblog/issues/473)
 ## 预览图
 
 ![前台-白色](/img/合并.png)
