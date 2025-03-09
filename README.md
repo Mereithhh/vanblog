@@ -11,7 +11,12 @@
   <img src="https://img.shields.io/bitbucket/issues/mereithhh/van-blog" />
   <img src="https://github.com/mereithhh/van-blog/workflows/release/badge.svg" />
   <img src="https://img.shields.io/badge/license-GPL%20v3-yellow.svg" />
+  <a href="https://github.com/CornWorld/vanblog"><img src="https://img.shields.io/badge/Derivative_Fork-CornWorld-critical?logo=git" /></a>
 </p>
+
+<h3 align="center">
+  <strong>📌此分支是由 <a href="https://github.com/CornWorld">CornWorld</a> 维护的分支版本📌</strong>  
+</h3>
 <p align="center">
 	<strong>项目主页: </strong>  <a target="_blank" href='https://vanblog.mereith.com'>vanblog.mereith.com</a>
 </p>
@@ -119,6 +124,11 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ## 开发指南
 
 - [开发指南](https://vanblog.mereith.com/contribution.html)
+
+## Fork 说明
+
+- 这是由 [CornWorld](https://github.com/CornWorld) 维护的 VanBlog 分支版本
+- 与上游的差异报告: [查看实时对比](https://github.com/CornWorld/vanblog/compare/upstream-baseline..main)
 
 ## 谁在使用
 
