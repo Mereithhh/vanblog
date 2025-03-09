@@ -9,7 +9,7 @@ export default defineConfig({
   hash: true,
   base: '/admin/',
   devServer: { https: false, port: 3002 },
-  publicPath: process.env.EEE === 'production' ? '/admin/' : '/',
+  publicPath: '/admin/',
   antd: {},
   dva: {
     hmr: true,
@@ -21,7 +21,7 @@ export default defineConfig({
     ...defaultSettings,
   },
   dynamicImport: {
-    loading: '@ant-design/pro-layout/es/PageLoading',
+    loading: '@/components/PageLoading',
   },
   targets: {
     ie: 11,
@@ -36,9 +36,8 @@ export default defineConfig({
     // https://ant.design/docs/react/customize-theme-variable-cn
     'root-entry-name': 'variable',
   },
-  // esbuild is father build tools
-  // https://umijs.org/plugins/plugin-esbuild
-  esbuild: {},
+  // 禁用 esbuild
+  esbuild: false,
   title: false,
   ignoreMomentLocale: true,
   proxy: proxy[REACT_APP_ENV || 'dev'],
@@ -50,14 +49,25 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  mfsu: {},
+  // 关闭 mfsu 以避免问题
+  mfsu: false,
   webpack5: {},
   exportStatic: {},
+  // 修改 webpack 配置
   chainWebpack(memo, { env, webpack, createCSSRule }) {
     memo
       .plugin('monaco-editor-webpack-plugin')
       .use(MonacoWebpackPlugin, [
         { languages: ['css', 'json', 'html', 'javascript', 'typescript'] },
       ]);
+    
+    // 禁用任何 esbuild 相关的 loader 或插件
+    memo.plugins.delete('esbuild-loader');
+    memo.plugins.delete('esbuild-plugin');
+    
+    // 解决 noEmitOnErrors 和 emitOnErrors 冲突
+    if (memo.optimization.get('noEmitOnErrors')) {
+      memo.optimization.delete('noEmitOnErrors');
+    }
   },
 });

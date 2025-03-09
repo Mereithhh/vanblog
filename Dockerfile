@@ -1,103 +1,191 @@
 # 基础构建镜像
-FROM node:20-alpine AS base
-RUN apk add --no-cache python3 make g++ git
-RUN corepack enable && corepack prepare pnpm@8.11.0 --activate
-RUN pnpm config set registry=https://registry.npmjs.org
-RUN pnpm config set network-timeout=600000
-RUN pnpm config set fetch-retries=5
-RUN pnpm config set fetch-timeout=600000
+FROM node:22-slim AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV NODE_OPTIONS="--openssl-legacy-provider"
+
+# 在中国大陆地区构建时取消注释
+# node:20-slim 内没有 ca-cert 包，在安装前无法使用 HTTPS
+# RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list
+
+RUN apt-get update && apt-get install -y \
+    python3 make g++ git libvips-dev curl jq && \
+    npm config set ignore-scripts false && \
+    npm install -g corepack@latest && \
+    corepack enable && \
+    corepack prepare pnpm@latest --activate && \
+    apt-get remove -y curl jq && \
+    apt-get autoremove -y && \
+    rm -rf /var/lib/apt/lists/*
+
+# 设置镜像源和 sharp 预下载配置
+ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+# 在中国大陆地区构建时取消注释
+# ENV npm_config_sharp_binary_host="https://npmmirror.com/mirrors/sharp"
+# ENV npm_config_sharp_libvips_binary_host="https://npmmirror.com/mirrors/sharp-libvips"
+# ENV PNPM_REGISTRY="https://registry.npmmirror.com"
+
+
+
+# 依赖构建阶段
+FROM base AS deps
+WORKDIR /app
+
+# Ensure pnpm is available
+RUN pnpm --version
+
+COPY pnpm-lock.yaml ./
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm store prune && pnpm fetch --registry=${PNPM_REGISTRY}
+
+COPY package.json pnpm-workspace.yaml ./
+COPY packages/admin/package.json ./packages/admin/
+COPY packages/server/package.json ./packages/server/
+COPY packages/website/package.json ./packages/website/
+COPY packages/cli/package.json ./packages/cli/
+COPY packages/waline/package.json ./packages/waline/
+
+# Install dependencies and directly install latest caniuse-lite
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
+    pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
+    pnpm add -g caniuse-lite@latest --registry=${PNPM_REGISTRY}
+
 
 # Admin 构建
-FROM base AS admin-builder
+FROM deps AS admin-builder
 WORKDIR /app
-ENV NODE_OPTIONS="--max_old_space_size=4096"
+ENV NODE_OPTIONS="--max_old_space_size=4096 --openssl-legacy-provider"
 ENV NODE_ENV="production"
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/admin/package.json ./packages/admin/
-RUN pnpm install --frozen-lockfile --filter @vanblog/admin
+# 禁用 husky
+ENV HUSKY="0"
+ENV HUSKY_SKIP_INSTALL="1"
+ENV npm_config_husky_skip_install="1"
+# 禁用 esbuild 服务
+ENV ESBUILD_SKIP_DOWNLOAD="1"
+
+# 复制 admin 包源码
 COPY packages/admin ./packages/admin
-RUN cd packages/admin && pnpm build
+
+# 在 admin 目录中执行构建
+RUN cd packages/admin && \
+    # 安装依赖并跳过 husky 安装
+    npm config set ignore-scripts true && \
+    pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
+    # 在上层目录安装所有依赖，确保 PageLoading 可用
+    cd .. && pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
+    # 返回 admin 目录进行构建
+    cd admin && \
+    echo "====== 查看配置文件 ======" && \
+    ls -la config/ && \
+    echo "====== 开始构建 ======" && \
+    # 使用默认命令进行构建
+    (pnpm build && ls -la dist || (echo "===== 构建失败，错误信息 =====" && \
+    ls -la node_modules/.cache/umi/ 2>/dev/null || echo "UMI 缓存目录不存在" && \
+    cat npm-debug.log 2>/dev/null || echo "没有找到 npm-debug.log" && \
+    echo "===== 尝试输出 UMI 日志 =====" && \
+    find node_modules/.cache -name "*.log" -exec cat {} \; 2>/dev/null || echo "找不到任何日志文件" && \
+    exit 1))
+
+# 确保 dist 目录存在
+RUN test -d /app/packages/admin/dist || (echo "Admin 构建失败：dist 目录不存在" && exit 1)
 
 # Server 构建
-FROM base AS server-builder
+FROM deps AS server-builder
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 ENV NODE_ENV="production"
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/server/package.json ./packages/server/
-RUN pnpm install --frozen-lockfile --filter @vanblog/server
 COPY packages/server ./packages/server
-RUN cd packages/server && pnpm build
+RUN cd packages/server && \
+    # 确保安装所有依赖，包括 @nestjs/core
+    pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
+    pnpm build && \
+    # 创建生产环境依赖目录
+    mkdir -p /prod/server && \
+    cp -r dist package.json /prod/server/ && \
+    cd /prod/server && \
+    # 在生产目录中安装依赖，确保包含 @nestjs/core
+    pnpm install --prod --registry=${PNPM_REGISTRY}
 
 # Website 构建
-FROM base AS website-builder
+FROM deps AS website-builder
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 ENV NODE_ENV="production"
 ENV VAN_BLOG_ALLOW_DOMAINS="pic.mereith.com"
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/website/package.json ./packages/website/
-RUN pnpm install --frozen-lockfile --filter @vanblog/theme-default
 COPY packages/website ./packages/website
 RUN cd packages/website && pnpm build
 
 # CLI 构建
-FROM base AS cli-builder
+FROM deps AS cli-builder
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 ENV NODE_ENV="production"
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/cli/package.json ./packages/cli/
-RUN pnpm install --frozen-lockfile
 COPY packages/cli ./packages/cli
-RUN cd packages/cli && pnpm install --frozen-lockfile
+RUN cd packages/cli && \
+    mkdir -p /prod/cli && \
+    cp -r . /prod/cli/ && \
+    cd /prod/cli && \
+    pnpm install --prod --registry=${PNPM_REGISTRY}
 
 # Waline 构建
-FROM base AS waline-builder
+FROM deps AS waline-builder
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 ENV NODE_ENV="production"
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY packages/waline/package.json ./packages/waline/
-RUN pnpm install --frozen-lockfile
 COPY packages/waline ./packages/waline
-RUN cd packages/waline && pnpm install --frozen-lockfile
+RUN cd packages/waline && \
+    mkdir -p /prod/waline && \
+    cp -r . /prod/waline/ && \
+    cd /prod/waline && \
+    pnpm install --prod --registry=${PNPM_REGISTRY}
 
 # 最终运行镜像
-FROM node:20-alpine AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
 
+# 在中国大陆地区构建时取消注释
+# node:20-slim 内没有 ca-cert 包，在安装前无法使用 HTTPS
+# RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list
+
 # 安装必要的系统工具
-RUN apk add --no-cache --update \
+RUN apt-get update && apt-get install -y \
     tzdata \
     caddy \
-    nss-tools \
-    libwebp-tools \
-    && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && echo "Asia/Shanghai" > /etc/timezone \
-    && apk del tzdata
+    libnss3-tools \
+    webp \
+    curl \
+    libvips \
+    ca-certificates\
+    && ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && dpkg-reconfigure -f noninteractive tzdata \
+    && rm -rf /var/lib/apt/lists/*
 
 # 设置 pnpm
-RUN corepack enable && corepack prepare pnpm@8.11.0 --activate
-RUN pnpm config set registry=https://registry.npmjs.org
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+# 在中国大陆地区构建时取消注释
+ENV npm_config_sharp_binary_host="https://npmmirror.com/mirrors/sharp"
+ENV npm_config_sharp_libvips_binary_host="https://npmmirror.com/mirrors/sharp-libvips"
+RUN corepack enable
 
 # 复制 CLI
 WORKDIR /app/cli
-COPY --from=cli-builder /app/packages/cli/package.json ./
-COPY --from=cli-builder /app/packages/cli/node_modules ./node_modules
-COPY --from=cli-builder /app/packages/cli/resetHttps.js ./
-COPY --from=cli-builder /app/packages/cli/README.md ./
+COPY --from=cli-builder /prod/cli ./
 
 # 复制 Waline
 WORKDIR /app/waline
-COPY --from=waline-builder /app/packages/waline/package.json ./
-COPY --from=waline-builder /app/packages/waline/node_modules ./node_modules
-COPY --from=waline-builder /app/packages/waline/.npmrc ./
+COPY --from=waline-builder /prod/waline ./
 
-# 复制 Server
+# 复制 Server（修改复制路径以使用 prod 目录）
 WORKDIR /app/server
-COPY --from=server-builder /app/packages/server/dist/src ./
-COPY --from=server-builder /app/packages/server/node_modules ./node_modules
+COPY --from=server-builder /prod/server/dist/src ./
+COPY --from=server-builder /prod/server/node_modules ./node_modules
 
 # 复制 Website
 WORKDIR /app/website
@@ -110,17 +198,27 @@ COPY --from=website-builder /app/packages/website/.next/static ./packages/websit
 # 复制 Admin
 WORKDIR /app/admin
 COPY --from=admin-builder /app/packages/admin/dist ./
+# 创建软链接确保资源可以通过 /admin 路径访问
+RUN mkdir -p /app/admin/admin && \
+    cd /app/admin/admin && \
+    for item in $(ls -A /app/admin/ | grep -v admin); do \
+        ln -s /app/admin/$item ./$item; \
+    done
 
 # 复制配置文件
 WORKDIR /app
 COPY caddyTemplate.json ./
+COPY Caddyfile ./
 COPY scripts/start.js ./
 COPY entrypoint.sh ./
 
 # 环境变量设置
 ENV NODE_ENV="production"
 ENV PORT="3001"
+# 确保服务器 URL 使用正确的本地地址
 ENV VAN_BLOG_SERVER_URL="http://127.0.0.1:3000"
+# 设置 CORS 配置，允许来自所有源的请求
+ENV VAN_BLOG_CORS="true"
 ENV VAN_BLOG_ALLOW_DOMAINS="pic.mereith.com"
 ENV VAN_BLOG_DATABASE_URL="mongodb://mongo:27017/vanBlog?authSource=admin"
 ENV EMAIL="vanblog@mereith.com"

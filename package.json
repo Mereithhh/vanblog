@@ -27,7 +27,7 @@
     "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
     "webhook": "node scripts/webhook.js"
   },
-  "packageManager": "pnpm@8.11.0",
+  "packageManager": "pnpm@10.6.1",
   "devDependencies": {
     "cross-env": "^7.0.3",
     "nan": "^2.18.0",

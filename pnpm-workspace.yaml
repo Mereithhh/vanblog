@@ -1,3 +1,20 @@
 packages:
-  - 'docs'
-  - 'packages/*'
+  - docs
+  - packages/*
+onlyBuiltDependencies:
+  - '@nestjs/core'
+  - '@parcel/watcher'
+  - '@scarf/scarf'
+  - '@swc/core'
+  - '@tree-sitter-grammars/tree-sitter-yaml'
+  - core-js
+  - core-js-pure
+  - ejs
+  - es5-ext
+  - esbuild
+  - puppeteer-core
+  - sharp
+  - sqlite3
+  - tree-sitter
+  - tree-sitter-json
+  - vue-demi

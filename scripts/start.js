@@ -19,6 +19,12 @@ const printLog = (string, isError = false) => {
   writeFileSync(join(logPath, logNameNormal), string, { flag: 'a' });
 };
 
+printLog(`[vanblog] 启动服务...`, false);
+printLog(`[vanblog] 环境变量:`, false);
+printLog(`[vanblog] MongoDB URL: ${process.env.VAN_BLOG_DATABASE_URL || 'mongodb://mongo:27017/vanBlog?authSource=admin'}`, false);
+printLog(`[vanblog] Website Host: ${process.env.WEBSITE_HOST || 'not set'}`, false);
+printLog(`[vanblog] Port: ${process.env.PORT || '3001'}`, false);
+
 const ctx = spawn('node', ['main.js'], {
   cwd: '/app/server',
   shell: process.platform === 'win32',

@@ -110,6 +110,11 @@ export class WebsiteProvider {
         env: {
           ...process.env,
           ...loadEnvs,
+          HOST: '0.0.0.0',
+          HOSTNAME: '0.0.0.0',
+          NEXTAUTH_URL: process.env.NEXTAUTH_URL || 'http://localhost',
+          NEXT_PUBLIC_HOST: '0.0.0.0',
+          WEBSITE_HOST: process.env.WEBSITE_HOST || '127.0.0.1',
         },
         cwd: path.join(path.resolve(process.cwd(), '..'), 'website'),
         detached: true,

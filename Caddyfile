@@ -1,0 +1,30 @@
+:80 {
+	@admin path /admin*
+	handle @admin {
+		uri strip_prefix /admin
+		root * /app/admin
+		try_files {path} {path}/ /index.html
+		file_server
+	}
+
+	@adminStatic path /admin/*.js /admin/*.css /admin/*.png /admin/*.jpg /admin/*.svg /admin/*.json
+	handle @adminStatic {
+		uri strip_prefix /admin
+		root * /app/admin
+		file_server
+	}
+
+	@api path /api/*
+	handle @api {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	handle {
+		reverse_proxy 127.0.0.1:3001
+	}
+
+	encode gzip zstd
+	log {
+		output file /var/log/caddy.log
+	}
+} 

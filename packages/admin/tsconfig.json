@@ -5,6 +5,7 @@
     "experimentalDecorators": true,
     "baseUrl": ".",
     "composite": true,
+    "esModuleInterop": true,
     "paths": {
       "@/*": ["./src/*"]
     }
