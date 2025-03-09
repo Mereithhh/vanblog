@@ -57,7 +57,6 @@ jobs:
             cornworld/vanblog:latest
             cornworld/vanblog:${{ github.ref_name }}
           build-args: |
-            BUILD_MODE=production
             CORN_VERSION=${{ github.ref_name }}
 
       - name: Create Release
