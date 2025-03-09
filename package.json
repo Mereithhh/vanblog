@@ -23,6 +23,7 @@
     "release-major": "standard-version --release-as major",
     "release-minor": "standard-version --release-as minor",
     "release-patch": "standard-version --release-as patch",
+    "prepare-release": "node scripts/prepare-release.js",
     "sync-aliyun": "bash scripts/sync-aliyuncs.sh",
     "webhook": "node scripts/webhook.js"
   },
