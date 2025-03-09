@@ -1,5 +1,5 @@
 # 基础构建镜像
-FROM node:20-alpine as base
+FROM node:20-alpine AS base
 RUN apk add --no-cache python3 make g++ git
 RUN corepack enable && corepack prepare pnpm@8.11.0 --activate
 RUN pnpm config set registry=https://registry.npmjs.org
@@ -8,7 +8,7 @@ RUN pnpm config set fetch-retries=5
 RUN pnpm config set fetch-timeout=600000
 
 # Admin 构建
-FROM base as admin-builder
+FROM base AS admin-builder
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 ENV NODE_ENV="production"
@@ -19,7 +19,7 @@ COPY packages/admin ./packages/admin
 RUN cd packages/admin && pnpm build
 
 # Server 构建
-FROM base as server-builder
+FROM base AS server-builder
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 ENV NODE_ENV="production"
@@ -30,7 +30,7 @@ COPY packages/server ./packages/server
 RUN cd packages/server && pnpm build
 
 # Website 构建
-FROM base as website-builder
+FROM base AS website-builder
 WORKDIR /app
 ENV NODE_OPTIONS="--max_old_space_size=4096"
 ENV NODE_ENV="production"
@@ -41,8 +41,30 @@ RUN pnpm install --frozen-lockfile --filter @vanblog/theme-default
 COPY packages/website ./packages/website
 RUN cd packages/website && pnpm build
 
+# CLI 构建
+FROM base AS cli-builder
+WORKDIR /app
+ENV NODE_OPTIONS="--max_old_space_size=4096"
+ENV NODE_ENV="production"
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/cli/package.json ./packages/cli/
+RUN pnpm install --frozen-lockfile
+COPY packages/cli ./packages/cli
+RUN cd packages/cli && pnpm install --frozen-lockfile
+
+# Waline 构建
+FROM base AS waline-builder
+WORKDIR /app
+ENV NODE_OPTIONS="--max_old_space_size=4096"
+ENV NODE_ENV="production"
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+COPY packages/waline/package.json ./packages/waline/
+RUN pnpm install --frozen-lockfile
+COPY packages/waline ./packages/waline
+RUN cd packages/waline && pnpm install --frozen-lockfile
+
 # 最终运行镜像
-FROM node:20-alpine as runner
+FROM node:20-alpine AS runner
 WORKDIR /app
 
 # 安装必要的系统工具
@@ -59,17 +81,18 @@ RUN apk add --no-cache --update \
 RUN corepack enable && corepack prepare pnpm@8.11.0 --activate
 RUN pnpm config set registry=https://registry.npmjs.org
 
-# 复制 CLI 工具
+# 复制 CLI
 WORKDIR /app/cli
-COPY packages/cli/package.json ./
-RUN pnpm install --frozen-lockfile
-COPY packages/cli ./
+COPY --from=cli-builder /app/packages/cli/package.json ./
+COPY --from=cli-builder /app/packages/cli/node_modules ./node_modules
+COPY --from=cli-builder /app/packages/cli/resetHttps.js ./
+COPY --from=cli-builder /app/packages/cli/README.md ./
 
-# 安装 Waline
+# 复制 Waline
 WORKDIR /app/waline
-COPY packages/waline/package.json ./
-RUN pnpm install --frozen-lockfile
-COPY packages/waline ./
+COPY --from=waline-builder /app/packages/waline/package.json ./
+COPY --from=waline-builder /app/packages/waline/node_modules ./node_modules
+COPY --from=waline-builder /app/packages/waline/.npmrc ./
 
 # 复制 Server
 WORKDIR /app/server
