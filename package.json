@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "version": "0.54.0",
+  "version": "0.54.0-corn.0",
   "private": true,
   "scripts": {
     "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf packages/*/dist",

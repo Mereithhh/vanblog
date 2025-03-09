@@ -1,0 +1,68 @@
+name: Sync with Upstream
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily
+  workflow_dispatch:      # Manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          
+      - name: Sync Upstream Changes
+        run: |
+          # Ensure upstream remote exists
+          git remote add upstream https://github.com/mereithhh/van-blog.git || true
+          git fetch upstream
+
+          # Update upstream-baseline branch
+          git checkout upstream-baseline || git checkout -b upstream-baseline
+          git reset --hard upstream/main
+          git push -f origin upstream-baseline
+
+          # Switch back to main
+          git checkout main
+          
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          title: '[Sync] Merge Upstream Updates'
+          body: |
+            ## Upstream Sync Update
+
+            This PR syncs the latest changes from the upstream repository mereithhh/van-blog.
+
+            ### 📝 Updates
+            - Synced from mereithhh/van-blog main branch
+            - Update time: ${{ github.event.repository.updated_at }}
+
+            ### ⚠️ Important Notes
+            - Please review changes carefully
+            - Resolve conflicts if any
+            - Ensure all tests pass before merging
+
+            ### 📋 Checklist
+            - [ ] Review code changes
+            - [ ] Test functionality
+            - [ ] Update documentation
+            - [ ] Version number compliance
+
+            > Automatically created by GitHub Actions
+          branch: sync/upstream-updates
+          base: main
+          labels: |
+            sync
+            upstream
+            automated pr
+          delete-branch: true
+          commit-message: "chore(sync): merge upstream updates [skip ci]" 
