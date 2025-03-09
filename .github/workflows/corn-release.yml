@@ -3,7 +3,7 @@ name: CornWorld Release
 on:
   push:
     tags:
-      - 'corn-v*'
+      - 'v*-corn.*'
 
 permissions:
   contents: write
