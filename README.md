@@ -17,12 +17,12 @@
 <h3 align="center">
   <strong>📌此分支是由 <a href="https://github.com/CornWorld">CornWorld</a> 维护的分支版本📌</strong>  
 </h3>
-<p align="center">
+<!-- <p align="center">
 	<strong>项目主页: </strong>  <a target="_blank" href='https://vanblog.mereith.com'>vanblog.mereith.com</a>
-</p>
-<p align="center">
+</p> -->
+<!-- <p align="center">
 	<strong>Demo(后台账号密码均为 demo): </strong>  <a target="_blank" href='https://blog-demo.mereith.com'>blog-demo.mereith.com</a>
-</p>
+</p> -->
 
 ## 预览图
 
@@ -59,7 +59,7 @@
 - [x] 完善的 API，完全利用本项目后台和服务端，自己写前端或适配其他页面生成器
 - [x] 有较完善的日志记录，后台可直接查看登录日志和 Caddy 日志。
 
-## 快速上手/部署教程
+<!-- ## 快速上手/部署教程
 
 ### 一键脚本部署
 
@@ -123,14 +123,14 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ## 开发指南
 
-- [开发指南](https://vanblog.mereith.com/contribution.html)
+- [开发指南](https://vanblog.mereith.com/contribution.html) -->
 
 ## Fork 说明
 
 - 这是由 [CornWorld](https://github.com/CornWorld) 维护的 VanBlog 分支版本
 - 与上游的差异报告: [查看实时对比](https://github.com/CornWorld/vanblog/compare/upstream-baseline..main)
 
-## 谁在使用
+<!-- ## 谁在使用
 
 现在可能用的人有一些了吧 - -
 
@@ -162,7 +162,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [Newhand](https://newhand.top/)
 - [Jerome's Blog](https://www.blog-jerome.top/)
 - [宁骑播客](https://blog.xintianyuehui.cn/)
-<!-- - [耿老师](https://transfer.teachergeng.space) -->
+-->
 
 ## TODO
 
@@ -211,10 +211,9 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 - [ ] 国际化
 
 ## 问题反馈
+请提 [Issue](https://github.com/CornWorld/vanblog/issues/new/choose) ，如无特殊情况会在一天内解决。
 
-请提 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose) ，如无特殊情况会在一天内解决。
-
-## 打赏
+<!-- ## 打赏
 
 如果觉得项目不错的话可以打赏哦。您的支持就是我最大的动力！
 
@@ -251,4 +250,4 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 </p>
 
 ## 多说一句
-> 很抱歉有段时间断更了，陆陆续续会慢慢继续更新的。  2024-09-01
+> 很抱歉有段时间断更了，陆陆续续会慢慢继续更新的。  2024-09-01 -->
