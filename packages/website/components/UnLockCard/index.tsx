@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { getArticleByIdOrPathnameWithPassword } from "../../api/getArticles";
+import { getEncryptedArticleByIdOrPathname } from "../../api/getArticles";
 import toast from "react-hot-toast";
 import Loading from "../Loading";
 
@@ -23,15 +23,15 @@ export default function (props: {
   };
   const fetchArticle = async () => {
     try {
-      const res = await getArticleByIdOrPathnameWithPassword(props.id, value);
-      if (!res) {
+      const res = await getEncryptedArticleByIdOrPathname(props.id, value);
+      if (!res || !res.article || !res.article.content) {
         onError("密码错误！请重试！");
-        return false;
+        return null;
       }
-      return res;
+      return res.article;
     } catch (err) {
       onError("密码错误！请重试！");
-      return false;
+      return null;
     }
   };
   const handleClick = async () => {

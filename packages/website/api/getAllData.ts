@@ -1,5 +1,5 @@
 import { HeadTag } from "../utils/getLayoutProps";
-import { config, logDefaultValueUsage } from "../utils/loadConfig";
+import { config, logDefaultValueUsage, isBuildTime } from "../utils/loadConfig";
 export type SocialType =
   | "bilibili"
   | "email"
@@ -241,9 +241,18 @@ export const defaultPublicMetaProp: PublicMetaProp = {
   },
 };
 
+// 缓存数据，避免重复请求
+let cachedPublicMeta: PublicMetaProp | null = null;
+let cachedCustomPages: CustomPageList[] | null = null;
+
 export async function getPublicMeta(): Promise<PublicMetaProp> {
-  // 如果是Docker构建环境，直接返回默认值
-  if (process.env.DOCKER_BUILD === "true") {
+  // 如果已经有缓存数据，直接返回
+  if (cachedPublicMeta) {
+    return cachedPublicMeta;
+  }
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
     logDefaultValueUsage("元数据");
     return defaultPublicMetaProp;
   }
@@ -255,9 +264,11 @@ export async function getPublicMeta(): Promise<PublicMetaProp> {
     if (statusCode == 233) {
       return defaultPublicMetaProp;
     }
+    // 缓存结果
+    cachedPublicMeta = data;
     return data;
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("元数据");
       return defaultPublicMetaProp;
     } else {
@@ -267,17 +278,30 @@ export async function getPublicMeta(): Promise<PublicMetaProp> {
 }
 
 export async function getAllCustomPages(): Promise<CustomPageList[]> {
+  // 如果已经有缓存数据，直接返回
+  if (cachedCustomPages) {
+    return cachedCustomPages;
+  }
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
+    logDefaultValueUsage("自定义页面");
+    return [];
+  }
+  
   try {
     const url = `${config.baseUrl}api/public/customPage/all`;
     const res = await fetch(url);
     const { statusCode, data } = await res.json();
     if (statusCode == 200) {
+      // 缓存结果
+      cachedCustomPages = data;
       return data;
     } else {
       return [];
     }
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("自定义页面");
       return [];
     } else {

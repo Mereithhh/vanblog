@@ -7,10 +7,14 @@ export const config = {
   ),
 };
 
+// 标记是否在构建环境中运行
+export const isDockerBuild = process.env.DOCKER_BUILD === "true";
+export const isBuildTime = process.env.isBuild === "t" || isDockerBuild;
+
 // 用于Docker构建和API连接失败时打印日志的函数
 export const logDefaultValueUsage = (source: string = "API") => {
   // 根据环境变量决定日志消息
-  if (process.env.DOCKER_BUILD === "true") {
+  if (isDockerBuild) {
     console.log(`Docker构建环境，直接使用${source}默认值`);
   } else {
     console.log(`无法连接${source}，采用默认值`);

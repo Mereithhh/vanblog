@@ -1,6 +1,7 @@
 import { Article } from "../types/article";
+import { config, logDefaultValueUsage, isBuildTime } from "../utils/loadConfig";
 import { encodeQuerystring } from "../utils/encode";
-import { config, logDefaultValueUsage } from "../utils/loadConfig";
+
 export type SortOrder = "asc" | "desc";
 export interface GetArticleOption {
   page: number;
@@ -13,44 +14,62 @@ export interface GetArticleOption {
   withWordCount?: boolean;
 }
 
+// 缓存数据，避免重复请求
+const articleCache = new Map<string, any>();
+
+// 生成缓存键
+const getCacheKey = (endpoint: string, queryString: string = "") => {
+  return `${endpoint}:${queryString}`;
+};
+
 // 创建默认的文章列表返回值
-export const defaultArticleListResult = {
+const defaultArticleListResult = {
   articles: [],
   total: 0,
   totalWordCount: 0
 };
 
 // 创建默认的单篇文章返回值
-export const defaultSingleArticleResult = {
+const defaultSingleArticleResult = {
   article: {
-    id: 0,
     title: "示例文章",
-    content: "这是一个示例文章，在构建过程中生成。",
+    content: "这是一篇示例文章，由于无法连接到服务器，显示此默认内容。",
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
+    tags: [],
     category: "默认分类",
-    tags: ["示例标签"],
-  }
+    id: 0,
+    pathname: "default",
+    private: false,
+  },
 };
 
 // 创建默认的分类或时间线返回值
-export const defaultCategoryOrTimelineResult = {};
+const defaultCategoryOrTimelineResult = {};
 
 export const getArticlesByOption = async (
   option: GetArticleOption
 ): Promise<{ articles: Article[]; total: number; totalWordCount?: number }> => {
-  // 如果是Docker构建环境，直接返回默认值
-  if (process.env.DOCKER_BUILD === "true") {
-    logDefaultValueUsage("文章列表");
-    return defaultArticleListResult;
-  }
-
+  // 构建查询字符串
   let queryString = "";
   for (const [k, v] of Object.entries(option)) {
     queryString += `${k}=${v}&`;
   }
   queryString = queryString.substring(0, queryString.length - 1);
   queryString = encodeQuerystring(queryString);
+  
+  // 检查缓存
+  const cacheKey = getCacheKey("article", queryString);
+  if (articleCache.has(cacheKey)) {
+    return articleCache.get(cacheKey);
+  }
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
+    logDefaultValueUsage("文章列表");
+    return defaultArticleListResult;
+  }
+
   try {
     const url = `${config.baseUrl}api/public/article?${queryString}`;
     const res = await fetch(url);
@@ -58,9 +77,11 @@ export const getArticlesByOption = async (
     if (statusCode == 233) {
       return defaultArticleListResult;
     }
+    // 缓存结果
+    articleCache.set(cacheKey, data);
     return data;
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("文章列表");
       return defaultArticleListResult;
     } else {
@@ -70,19 +91,30 @@ export const getArticlesByOption = async (
 };
 
 export const getArticlesByTimeLine = async () => {
-  // 如果是Docker构建环境，直接返回默认值
-  if (process.env.DOCKER_BUILD === "true") {
+  // 检查缓存
+  const cacheKey = getCacheKey("timeline");
+  if (articleCache.has(cacheKey)) {
+    return articleCache.get(cacheKey);
+  }
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
     logDefaultValueUsage("时间线");
     return defaultCategoryOrTimelineResult;
   }
-
+  
   try {
-    const url = `${config.baseUrl}api/public/timeline`;
+    const url = `${config.baseUrl}api/public/article/timeline`;
     const res = await fetch(url);
-    const { data } = await res.json();
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return defaultCategoryOrTimelineResult;
+    }
+    // 缓存结果
+    articleCache.set(cacheKey, data);
     return data;
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("时间线");
       return defaultCategoryOrTimelineResult;
     } else {
@@ -92,19 +124,30 @@ export const getArticlesByTimeLine = async () => {
 };
 
 export const getArticlesByCategory = async () => {
-  // 如果是Docker构建环境，直接返回默认值
-  if (process.env.DOCKER_BUILD === "true") {
+  // 检查缓存
+  const cacheKey = getCacheKey("category");
+  if (articleCache.has(cacheKey)) {
+    return articleCache.get(cacheKey);
+  }
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
     logDefaultValueUsage("分类");
     return defaultCategoryOrTimelineResult;
   }
   
   try {
-    const url = `${config.baseUrl}api/public/category`;
+    const url = `${config.baseUrl}api/public/article/category`;
     const res = await fetch(url);
-    const { data } = await res.json();
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return defaultCategoryOrTimelineResult;
+    }
+    // 缓存结果
+    articleCache.set(cacheKey, data);
     return data;
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("分类");
       return defaultCategoryOrTimelineResult;
     } else {
@@ -114,19 +157,30 @@ export const getArticlesByCategory = async () => {
 };
 
 export const getArticlesByTag = async (tagName: string) => {
-  // 如果是Docker构建环境，直接返回默认值
-  if (process.env.DOCKER_BUILD === "true") {
+  // 检查缓存
+  const cacheKey = getCacheKey("tag", tagName);
+  if (articleCache.has(cacheKey)) {
+    return articleCache.get(cacheKey);
+  }
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
     logDefaultValueUsage("标签");
     return defaultCategoryOrTimelineResult;
   }
   
   try {
-    const url = `${config.baseUrl}api/public/tag`;
+    const url = `${config.baseUrl}api/public/article/tag?tag=${tagName}`;
     const res = await fetch(url);
-    const { data } = await res.json();
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return defaultCategoryOrTimelineResult;
+    }
+    // 缓存结果
+    articleCache.set(cacheKey, data);
     return data;
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("标签");
       return defaultCategoryOrTimelineResult;
     } else {
@@ -135,60 +189,103 @@ export const getArticlesByTag = async (tagName: string) => {
   }
 };
 
-export const getArticleByIdOrPathname = async (id: string) => {
-  // 如果是Docker构建环境，直接返回默认值
-  if (process.env.DOCKER_BUILD === "true") {
-    logDefaultValueUsage("文章详情");
-    return defaultSingleArticleResult;
+export const getArticleByIdOrPathname = async (
+  idOrPathname: string | number
+): Promise<{ 
+  article: Article; 
+  pre?: { id: number; title: string; pathname?: string };
+  next?: { id: number; title: string; pathname?: string };
+}> => {
+  // 检查缓存
+  const cacheKey = getCacheKey("article-detail", idOrPathname.toString());
+  if (articleCache.has(cacheKey)) {
+    return articleCache.get(cacheKey);
   }
-
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
+    logDefaultValueUsage("文章详情");
+    return {
+      article: defaultSingleArticleResult.article,
+      pre: { id: 0, title: "", pathname: "" },
+      next: { id: 0, title: "", pathname: "" }
+    };
+  }
+  
   try {
-    const url = `${config.baseUrl}api/public/article/${id}`;
+    const url = `${config.baseUrl}api/public/article/${idOrPathname}`;
     const res = await fetch(url);
-    const { data } = await res.json();
-    const { article, pre, next } = data;
-    const r: any = { article };
-    if (pre) {
-      r.pre = { title: pre.title, id: pre.id, pathname: pre.pathname };
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return {
+        article: defaultSingleArticleResult.article,
+        pre: { id: 0, title: "", pathname: "" },
+        next: { id: 0, title: "", pathname: "" }
+      };
     }
-    if (next) {
-      r.next = { title: next.title, id: next.id, pathname: next.pathname };
-    }
-    return r;
+    
+    // 处理返回数据，确保包含pre和next
+    const result = {
+      article: data.article,
+      pre: data.pre ? { 
+        id: data.pre.id, 
+        title: data.pre.title, 
+        pathname: data.pre.pathname 
+      } : undefined,
+      next: data.next ? { 
+        id: data.next.id, 
+        title: data.next.title, 
+        pathname: data.next.pathname 
+      } : undefined
+    };
+    
+    // 缓存结果
+    articleCache.set(cacheKey, result);
+    return result;
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("文章详情");
-      return defaultSingleArticleResult;
+      return {
+        article: defaultSingleArticleResult.article,
+        pre: { id: 0, title: "", pathname: "" },
+        next: { id: 0, title: "", pathname: "" }
+      };
     } else {
-      // console.log(err);
-      return defaultSingleArticleResult;
+      throw err;
     }
   }
 };
 
-export const getArticleByIdOrPathnameWithPassword = async (
-  id: number | string,
+export const getEncryptedArticleByIdOrPathname = async (
+  idOrPathname: string | number,
   password: string
-) => {
-  // 如果是Docker构建环境，直接返回默认值
-  if (process.env.DOCKER_BUILD === "true") {
+): Promise<{ article: Article }> => {
+  // 检查缓存 - 对于加密文章，不使用缓存
+  
+  // 如果是构建环境，直接返回默认值
+  if (isBuildTime) {
     logDefaultValueUsage("加密文章");
     return defaultSingleArticleResult;
   }
   
   try {
-    const url = `/api/public/article/${id}`;
+    const url = `${config.baseUrl}api/public/article/${idOrPathname}`;
     const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ password }),
+      body: JSON.stringify({
+        password,
+      }),
     });
-    const { data } = await res.json();
+    const { statusCode, data } = await res.json();
+    if (statusCode == 233) {
+      return defaultSingleArticleResult;
+    }
     return data;
   } catch (err) {
-    if (process.env.isBuild == "t") {
+    if (isBuildTime) {
       logDefaultValueUsage("加密文章");
       return defaultSingleArticleResult;
     } else {

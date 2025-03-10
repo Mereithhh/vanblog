@@ -170,12 +170,19 @@ export async function getPostPagesProps(
   const currArticleProps = await getArticleByIdOrPathname(curId);
   const { article } = currArticleProps;
   const author = article?.author || data.meta.siteInfo.author;
+  
+  // Add default pre and next properties if they don't exist
+  const pre = currArticleProps.pre || { id: 0, title: "", pathname: "" };
+  const next = currArticleProps.next || { id: 0, title: "", pathname: "" };
+  
   return {
     layoutProps,
-    ...currArticleProps,
+    article,
     ...payProps,
     author,
     showSubMenu: layoutProps.showSubMenu,
+    pre,
+    next,
   };
 }
 export async function getPagePagesProps(
