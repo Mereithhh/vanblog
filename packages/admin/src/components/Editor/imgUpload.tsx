@@ -6,6 +6,33 @@ export const uploadImg = async (file: File) => {
   const formData = new FormData();
   formData.append('file', file);
   try {
+    // Check if the file is an SVG
+    const isSvg = file.type === 'image/svg+xml';
+    
+    // For SVGs, read the file directly and return as a data URI to avoid server upload issues
+    if (isSvg) {
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (event) => {
+          const result = event.target?.result as string;
+          // If the result is already a data URI, return it directly
+          if (result.startsWith('data:image/svg+xml;base64,')) {
+            resolve(result);
+          } else {
+            // Otherwise, create a valid data URI
+            const svgContent = result;
+            const base64Content = btoa(svgContent);
+            resolve(`data:image/svg+xml;base64,${base64Content}`);
+          }
+        };
+        reader.onerror = () => {
+          reject(new Error('Failed to read SVG file'));
+        };
+        reader.readAsText(file);
+      });
+    }
+    
+    // For non-SVG files, proceed with normal upload
     const res = await fetch('/api/admin/img/upload?withWaterMark=true', {
       method: 'POST',
       body: formData,

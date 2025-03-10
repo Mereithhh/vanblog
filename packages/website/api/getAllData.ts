@@ -1,5 +1,5 @@
 import { HeadTag } from "../utils/getLayoutProps";
-import { config } from "../utils/loadConfig";
+import { config, logDefaultValueUsage } from "../utils/loadConfig";
 export type SocialType =
   | "bilibili"
   | "email"
@@ -190,39 +190,82 @@ const defaultMeta: MetaProps = {
   },
 };
 
+export const defaultPublicMetaProp: PublicMetaProp = {
+  version: "0.0.0",
+  tags: [],
+  totalArticles: 0,
+  totalWordCount: 0,
+  menus: [],
+  meta: {
+    links: [],
+    socials: [],
+    rewards: [],
+    categories: [],
+    about: {
+      updatedAt: "",
+      content: "",
+    },
+    siteInfo: {
+      author: "",
+      authorDesc: "",
+      authorLogo: "",
+      siteLogo: "",
+      favicon: "",
+      siteName: "",
+      siteDesc: "",
+      beianNumber: "",
+      beianUrl: "",
+      gaBeianNumber: "",
+      gaBeianUrl: "",
+      gaBeianLogoUrl: "",
+      payAliPay: "",
+      payWechat: "",
+      since: "",
+      baseUrl: "",
+      copyrightAggreement: "",
+      showSubMenu: "false",
+      showAdminButton: "false",
+      headerLeftContent: "siteName",
+      showDonateInfo: "false",
+      showFriends: "false",
+      enableComment: "false",
+      defaultTheme: "auto",
+      enableCustomizing: "false",
+      showDonateButton: "false",
+      showCopyRight: "false",
+      showRSS: "false",
+      openArticleLinksInNewWindow: "false",
+      showExpirationReminder: "false",
+      showEditButton: "false",
+    },
+  },
+};
+
 export async function getPublicMeta(): Promise<PublicMetaProp> {
+  // 如果是Docker构建环境，直接返回默认值
+  if (process.env.DOCKER_BUILD === "true") {
+    logDefaultValueUsage("元数据");
+    return defaultPublicMetaProp;
+  }
+  
   try {
     const url = `${config.baseUrl}api/public/meta`;
     const res = await fetch(url);
     const { statusCode, data } = await res.json();
     if (statusCode == 233) {
-      return {
-        version: version,
-        totalWordCount: 0,
-        menus: defaultMenu,
-        tags: [],
-        totalArticles: 0,
-        meta: defaultMeta,
-      };
+      return defaultPublicMetaProp;
     }
     return data;
   } catch (err) {
     if (process.env.isBuild == "t") {
-      console.log("无法连接，采用默认值");
-      // 给一个默认的吧。
-      return {
-        version: version,
-        totalWordCount: 0,
-        tags: [],
-        menus: defaultMenu,
-        totalArticles: 0,
-        meta: defaultMeta,
-      };
+      logDefaultValueUsage("元数据");
+      return defaultPublicMetaProp;
     } else {
       throw err;
     }
   }
 }
+
 export async function getAllCustomPages(): Promise<CustomPageList[]> {
   try {
     const url = `${config.baseUrl}api/public/customPage/all`;
@@ -235,14 +278,14 @@ export async function getAllCustomPages(): Promise<CustomPageList[]> {
     }
   } catch (err) {
     if (process.env.isBuild == "t") {
-      console.log("无法连接，采用默认值");
-      // 给一个默认的吧。
+      logDefaultValueUsage("自定义页面");
       return [];
     } else {
       throw err;
     }
   }
 }
+
 export async function getCustomPageByPath(
   path: string
 ): Promise<CustomPage | null> {
@@ -257,8 +300,7 @@ export async function getCustomPageByPath(
     }
   } catch (err) {
     if (process.env.isBuild == "t") {
-      console.log("无法连接，采用默认值");
-      // 给一个默认的吧。
+      logDefaultValueUsage("自定义页面");
       return null;
     } else {
       throw err;

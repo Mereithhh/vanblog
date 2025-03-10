@@ -7,6 +7,16 @@ export const config = {
   ),
 };
 
+// 用于Docker构建和API连接失败时打印日志的函数
+export const logDefaultValueUsage = (source: string = "API") => {
+  // 根据环境变量决定日志消息
+  if (process.env.DOCKER_BUILD === "true") {
+    console.log(`Docker构建环境，直接使用${source}默认值`);
+  } else {
+    console.log(`无法连接${source}，采用默认值`);
+  }
+};
+
 // 改为服务端触发 isr
 // export const revalidate = {};
 export const revalidate =

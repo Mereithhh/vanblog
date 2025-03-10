@@ -1,4 +1,14 @@
 :80 {
+	# Handle admin static files first
+	@adminStatic path /admin/*.js /admin/*.css /admin/*.png /admin/*.jpg /admin/*.svg /admin/*.json /admin/*chunk*.js /admin/*.async.js /admin/p__*.js
+	handle @adminStatic {
+		uri strip_prefix /admin
+		root * /app/admin
+		header Content-Type {header.content-type}
+		file_server
+	}
+
+	# Then handle general admin routes
 	@admin path /admin*
 	handle @admin {
 		uri strip_prefix /admin
@@ -7,18 +17,47 @@
 		file_server
 	}
 
-	@adminStatic path /admin/*.js /admin/*.css /admin/*.png /admin/*.jpg /admin/*.svg /admin/*.json
-	handle @adminStatic {
-		uri strip_prefix /admin
-		root * /app/admin
-		file_server
+	# Handle direct Waline endpoints
+	@comment path /comment* /token* /oauth* /user* /ui* /db*
+	handle @comment {
+		reverse_proxy 127.0.0.1:8360
 	}
 
+	# Handle Waline endpoints with /api/ prefix
+	@apiWaline path /api/comment* /api/user* /api/token* /api/oauth* /api/ui* /api/db*
+	handle @apiWaline {
+		uri strip_prefix /api
+		reverse_proxy 127.0.0.1:8360
+	}
+
+	# Handle regular API endpoints
 	@api path /api/*
 	handle @api {
 		reverse_proxy 127.0.0.1:3000
 	}
 
+	# Static assets, RSS feeds, etc.
+	@favicon path /favicon*
+	handle @favicon {
+		uri replace /favicon /static/img/favicon
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	@feeds path /feed.json /feed.xml /atom.xml /sitemap.xml
+	handle @feeds {
+		uri replace /feed.json /rss/feed.json
+		uri replace /feed.xml /rss/feed.xml
+		uri replace /atom.xml /rss/atom.xml
+		uri replace /sitemap.xml /sitemap/sitemap.xml
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	@static path /static/* /custom/* /c/* /rss/* /swagger*
+	handle @static {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	# Default handler for website
 	handle {
 		reverse_proxy 127.0.0.1:3001
 	}
@@ -27,4 +66,4 @@
 	log {
 		output file /var/log/caddy.log
 	}
-} 
+}

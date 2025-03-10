@@ -1,0 +1,79 @@
+.editorContainer {
+  :global {
+    .ant-pro-page-container {
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .ant-pro-page-container-children-container {
+      height: calc(100vh - 152px);
+      padding: 24px;
+    }
+
+    .ant-spin-nested-loading {
+      height: 100%;
+    }
+
+    .ant-spin-container {
+      height: 100%;
+    }
+
+    .bytemd {
+      height: 100%;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bytemd-toolbar {
+      flex: none;
+      border-bottom: 1px solid #d9d9d9;
+      position: relative;
+    }
+
+    .bytemd-body {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+    }
+
+    .bytemd-split {
+      display: flex;
+      height: 100%;
+    }
+
+    .bytemd-editor {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .CodeMirror {
+      flex: 1;
+      height: auto !important;
+    }
+
+    .bytemd-preview {
+      flex: 1;
+      overflow: auto;
+      padding: 0 8px;
+    }
+
+    // Fix for the emoji panel
+    .emoji-container {
+      display: none;
+      position: absolute;
+      z-index: 1000;
+      background: var(--background-color, #fff);
+      border: 1px solid var(--border-color, #d9d9d9);
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      
+      &.active {
+        display: block;
+      }
+    }
+  }
+} 
