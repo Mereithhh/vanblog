@@ -1,14 +1,14 @@
-# VanBlog 0.54.0-corn.0
+# VanBlog 0.54.0-corn.1
 
 ## 📝 Changelog
 # Changelog
 
 ## 🔍 Upstream Information
-- Based on: mereithhh/van-blog
+- Based on: mereithhh/vanblog
 - Maintainer: CornWorld
 - Repository: https://github.com/CornWorld/vanblog
 
 ## 📦 Installation
 ```bash
-docker pull cornworld/vanblog:0.54.0-corn.0
+docker pull cornworld/vanblog:0.54.0-corn.1
 ```

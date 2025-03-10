@@ -18,11 +18,12 @@ const Footer = () => {
       if (history.location.pathname == '/user/login') {
         v = '登录后显示';
       }
-      console.log('🚀欢迎使用 VanBlog 博客系统');
-      console.log('当前版本：', v);
-      console.log('项目主页：', 'https://vanblog.mereith.com');
-      console.log('开源地址：', 'https://github.com/mereithhh/van-blog');
-      console.log('喜欢的话可以给个 star 哦🙏');
+      console.log('✨ Welcome to VanBlog Website ✨');
+      console.log('Version:', props?.option?.version || "unknown");
+      // console.log('Website:', 'https://vanblog.mereith.com');
+      console.log('GitHub:', 'https://github.com/CornWorld/vanblog');
+      console.log('!!!', 'This is a fork of VanBlog, and is not the official website.', '!!!');
+      console.log('If you like this project, please give it a star! 🌟');
     }
   }, [initialState, history]);
   return null;
