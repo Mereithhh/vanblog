@@ -27,7 +27,7 @@ jobs:
 
           # Update upstream-baseline branch
           git checkout upstream-baseline || git checkout -b upstream-baseline
-          git reset --hard upstream/main
+          git reset --hard upstream/master
           git push -f origin upstream-baseline
 
           # Switch back to main
