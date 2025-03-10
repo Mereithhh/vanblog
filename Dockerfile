@@ -1,34 +1,56 @@
+ARG USE_CHINA_MIRROR=false
+
 # 基础构建镜像
 FROM node:22-slim AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 ENV NODE_OPTIONS="--openssl-legacy-provider"
 
-# 在中国大陆地区构建时取消注释
-# node:20-slim 内没有 ca-cert 包，在安装前无法使用 HTTPS
-# RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list && \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list
-
-RUN apt-get update && apt-get install -y \
-    python3 make g++ git libvips-dev curl jq && \
+# 配置 APT 源并安装必要的软件包
+# 注意：必须先配置源，才能安装软件包
+RUN set -ex && \
+    # 配置软件源
+    if [ "$USE_CHINA_MIRROR" = "true" ]; then \
+      echo "Using China mirror for apt" && \
+      echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list && \
+      echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+      echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
+      echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list; \
+    else \
+      # 对于非中国用户，确保 apt 配置正确
+      echo "deb http://deb.debian.org/debian bookworm main" > /etc/apt/sources.list && \
+      echo "deb http://deb.debian.org/debian bookworm-updates main" >> /etc/apt/sources.list && \
+      echo "deb http://security.debian.org/debian-security bookworm-security main" >> /etc/apt/sources.list; \
+    fi && \
+    # 更新包列表并安装最基础的软件包
+    apt-get update && \
+    apt-get install -y --no-install-recommends ca-certificates && \
+    # 安装其他必要软件包
+    apt-get install -y --no-install-recommends \
+      python3 make g++ git libvips-dev curl jq \
+      tzdata caddy libnss3-tools webp libvips && \
+    # 设置时区
+    ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    # 配置 npm
+    if [ "$USE_CHINA_MIRROR" = "true" ]; then \
+      npm config set registry https://registry.npmmirror.com; \
+    fi && \
     npm config set ignore-scripts false && \
     npm install -g corepack@latest && \
     corepack enable && \
     corepack prepare pnpm@latest --activate && \
+    # 配置 pnpm
+    if [ "$USE_CHINA_MIRROR" = "true" ]; then \
+      pnpm config set registry https://registry.npmmirror.com; \
+    fi && \
+    # 清理
     apt-get remove -y curl jq && \
     apt-get autoremove -y && \
+    apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# 设置镜像源和 sharp 预下载配置
 ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
-# 在中国大陆地区构建时取消注释
-# ENV npm_config_sharp_binary_host="https://npmmirror.com/mirrors/sharp"
-# ENV npm_config_sharp_libvips_binary_host="https://npmmirror.com/mirrors/sharp-libvips"
-# ENV PNPM_REGISTRY="https://registry.npmmirror.com"
-
-
 
 # 依赖构建阶段
 FROM base AS deps
@@ -38,7 +60,7 @@ WORKDIR /app
 RUN pnpm --version
 
 COPY pnpm-lock.yaml ./
-RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm store prune && pnpm fetch --registry=${PNPM_REGISTRY}
+RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm store prune && pnpm fetch
 
 COPY package.json pnpm-workspace.yaml ./
 COPY packages/admin/package.json ./packages/admin/
@@ -49,9 +71,8 @@ COPY packages/waline/package.json ./packages/waline/
 
 # Install dependencies and directly install latest caniuse-lite
 RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
-    pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
-    pnpm add -g caniuse-lite@latest --registry=${PNPM_REGISTRY}
-
+    pnpm install --frozen-lockfile && \
+    pnpm add -g caniuse-lite@latest
 
 # Admin 构建
 FROM deps AS admin-builder
@@ -72,9 +93,9 @@ COPY packages/admin ./packages/admin
 RUN cd packages/admin && \
     # 安装依赖并跳过 husky 安装
     npm config set ignore-scripts true && \
-    pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
+    pnpm install --frozen-lockfile && \
     # 在上层目录安装所有依赖，确保 PageLoading 可用
-    cd .. && pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
+    cd .. && pnpm install --frozen-lockfile && \
     # 返回 admin 目录进行构建
     cd admin && \
     echo "====== 查看配置文件 ======" && \
@@ -99,14 +120,14 @@ ENV NODE_ENV="production"
 COPY packages/server ./packages/server
 RUN cd packages/server && \
     # 确保安装所有依赖，包括 @nestjs/core
-    pnpm install --frozen-lockfile --registry=${PNPM_REGISTRY} && \
+    pnpm install --frozen-lockfile && \
     pnpm build && \
     # 创建生产环境依赖目录
     mkdir -p /prod/server && \
     cp -r dist package.json /prod/server/ && \
     cd /prod/server && \
     # 在生产目录中安装依赖，确保包含 @nestjs/core
-    pnpm install --prod --registry=${PNPM_REGISTRY}
+    pnpm install --prod
 
 # Website 构建
 FROM deps AS website-builder
@@ -127,7 +148,7 @@ RUN cd packages/cli && \
     mkdir -p /prod/cli && \
     cp -r . /prod/cli/ && \
     cd /prod/cli && \
-    pnpm install --prod --registry=${PNPM_REGISTRY}
+    pnpm install --prod
 
 # Waline 构建
 FROM deps AS waline-builder
@@ -139,40 +160,10 @@ RUN cd packages/waline && \
     mkdir -p /prod/waline && \
     cp -r . /prod/waline/ && \
     cd /prod/waline && \
-    pnpm install --prod --registry=${PNPM_REGISTRY}
+    pnpm install --prod
 
-# 最终运行镜像
-FROM node:22-slim AS runner
+FROM base AS runner
 WORKDIR /app
-
-# 在中国大陆地区构建时取消注释
-# node:20-slim 内没有 ca-cert 包，在安装前无法使用 HTTPS
-# RUN echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm main contrib non-free non-free-firmware" > /etc/apt/sources.list && \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-backports main contrib non-free non-free-firmware" >> /etc/apt/sources.list && \
-#     echo "deb http://mirrors.tuna.tsinghua.edu.cn/debian-security bookworm-security main contrib non-free non-free-firmware" >> /etc/apt/sources.list
-
-# 安装必要的系统工具
-RUN apt-get update && apt-get install -y \
-    tzdata \
-    caddy \
-    libnss3-tools \
-    webp \
-    curl \
-    libvips \
-    ca-certificates\
-    && ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && dpkg-reconfigure -f noninteractive tzdata \
-    && rm -rf /var/lib/apt/lists/*
-
-# 设置 pnpm
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
-# 在中国大陆地区构建时取消注释
-ENV npm_config_sharp_binary_host="https://npmmirror.com/mirrors/sharp"
-ENV npm_config_sharp_libvips_binary_host="https://npmmirror.com/mirrors/sharp-libvips"
-RUN corepack enable
 
 # 复制 CLI
 WORKDIR /app/cli
