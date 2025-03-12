@@ -40,10 +40,17 @@ export class ApiClient {
 
   constructor(baseUrl?: string, cacheDuration = 5 * 60 * 1000) { // 5 minutes default cache
     // If a specific baseUrl is provided, use it (useful for testing) 
-    if (baseUrl) {
-      this.baseUrl = baseUrl;
+    this.baseUrl = baseUrl || config.baseUrl;
+    
+    // Validate that baseUrl is properly set
+    if (!this.baseUrl) {
+      console.warn('[ApiClient] No baseUrl provided. Setting default fallback URL.');
+      this.baseUrl = 'http://127.0.0.1:3000';
+    } else if (this.baseUrl !== 'window.location.origin' && !this.isValidUrlString(this.baseUrl)) {
+      console.warn(`[ApiClient] Invalid baseUrl format: "${this.baseUrl}". Setting default fallback URL.`);
+      this.baseUrl = 'http://127.0.0.1:3000';
     }
-    this.baseUrl ??= config.baseUrl;
+    
     this.cache = new Map();
     this.cacheDuration = cacheDuration;
     
@@ -101,8 +108,24 @@ export class ApiClient {
     if (isBuildTime) {
       return {} as T;
     }
-
-    const url = new URL(endpoint, this.baseUrl === "window.location.origin" ? window.location.origin : this.baseUrl).toString();
+    
+    let url: URL;
+    if (this.baseUrl === "window.location.origin") {
+      if (isBrowser) {
+        // Browser: Use actual window.location.origin
+        url = new URL(endpoint, window.location.origin);
+      } else {
+        // Server: We need a valid base URL - use an absolute URL or default
+        const serverUrl = typeof process !== 'undefined' ? 
+          (process.env.VAN_BLOG_SERVER_URL || 'http://127.0.0.1:3000') : 
+          'http://127.0.0.1:3000';
+        url = new URL(endpoint, serverUrl);
+      }
+    } else {
+      // Normal case: baseUrl is a valid URL string
+      url = new URL(endpoint, this.baseUrl);
+    }
+    
     console.log(`[ApiClient] Fetching ${url} (${context})`);
 
     let lastError: Error | null = null;
@@ -268,6 +291,16 @@ export class ApiClient {
   invalidateCache(endpoint: string, params?: Record<string, any>): void {
     const cacheKey = this.getCacheKey(endpoint, params);
     this.cache.delete(cacheKey);
+  }
+
+  // Helper method to check if a string is a valid URL
+  private isValidUrlString(url: string): boolean {
+    try {
+      new URL(url);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }
 

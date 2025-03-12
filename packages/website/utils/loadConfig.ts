@@ -55,20 +55,34 @@ if (!isBuildTime) {
 
 // Base configuration
 export const config = {
-  baseUrl: (() => {
+  get baseUrl() {
     const defaultUrl = "http://127.0.0.1:3000";
     if (isBuildTime) {
       return defaultUrl;
     }
     
-    let url = isBrowser ? process.env.NEXT_PUBLIC_VANBLOG_SERVER_URL : process.env.VAN_BLOG_SERVER_URL;
-    // In browser environments: prefer NEXT_PUBLIC_VANBLOG_SERVER_URL
+    // Get the appropriate environment variable based on context
+    let url = isBrowser 
+      ? process.env.NEXT_PUBLIC_VANBLOG_SERVER_URL 
+      : process.env.VAN_BLOG_SERVER_URL;
+    
+    // If url is not set, use the special string for browser-side rendering
+    // or default URL for server-side rendering
+    if (!url) {
+      if (isBrowser) {
+        url = "window.location.origin";
+      } else {
+        url = defaultUrl;
+      }
+    }
+    
+    // Log in development mode
     if (isDevelopment) {
-      console.log(`[Config] Using ${isBrowser ? 'NEXT_PUBLIC_' : ''}VANBLOG_SERVER_URL: ${url}`);
+      console.log(`[Config] Using ${isBrowser ? 'browser' : 'server'} baseUrl: ${url}`);
     }
     
     return url;
-  })(),
+  },
   timeout: API_TIMEOUT,
   maxRetries: API_MAX_RETRIES,
 };
