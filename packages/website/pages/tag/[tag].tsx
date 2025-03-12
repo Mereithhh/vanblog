@@ -57,7 +57,8 @@ const TagPages = (props: TagPagesProps) => {
 export default TagPages;
 export async function getStaticPaths() {
   const data = await getPublicMeta();
-  const paths = data.tags.map((tag) => ({
+  const tags = data?.tags || [];
+  const paths = tags.map((tag) => ({
     params: {
       tag: tag,
     },

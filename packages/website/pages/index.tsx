@@ -11,7 +11,7 @@ import Head from "next/head";
 import { getArticlesKeyWord } from "../utils/keywords";
 import { getArticlePath } from "../utils/getArticlePath";
 import { useState } from "react";
-import { PageViewData } from "../api/pageview";
+import { PageViewData } from "../api/pageView";
 
 export interface IndexPageProps {
   layoutProps: LayoutProps;

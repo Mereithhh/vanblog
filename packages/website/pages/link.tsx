@@ -8,7 +8,7 @@ import WaLine from "../components/WaLine";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getLinkPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
-import { PageViewData } from "../api/pageview";
+import { PageViewData } from "../api/pageView";
 
 export interface LinkPageProps {
   layoutProps: LayoutProps;

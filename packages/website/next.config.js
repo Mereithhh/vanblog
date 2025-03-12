@@ -3,36 +3,42 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE === "true",
 });
 const isDev = process.env.NODE_ENV == "development";
-const rewites =
-  process.env.NODE_ENV == "development"
-    ? {
-        async rewrites() {
-          console.log('Configuring Next.js rewrites with:');
-          console.log('- VAN_BLOG_WALINE_URL:', process.env.VAN_BLOG_WALINE_URL || 'http://172.18.0.2:8360/comment (default)');
-          console.log('- VAN_BLOG_SERVER_URL:', process.env.VAN_BLOG_SERVER_URL || 'http://172.18.0.2:3000 (default)');
-          console.log('- NEXT_PUBLIC_VANBLOG_SERVER_URL:', process.env.NEXT_PUBLIC_VANBLOG_SERVER_URL || '(not set, will use VAN_BLOG_SERVER_URL)');
-          
-          // Use client URL for API proxy if available, otherwise fall back to server URL
-          const apiBaseUrl = process.env.NEXT_PUBLIC_VANBLOG_SERVER_URL || process.env.VAN_BLOG_SERVER_URL || "http://172.18.0.2:3000";
-          
-          return [
-            {
-              source: "/api/comment",
-              destination: process.env.VAN_BLOG_WALINE_URL || "http://172.18.0.2:8360/comment", // Proxy to Waline
-            },
-            {
-              source: "/api/article",
-              destination: process.env.VAN_BLOG_WALINE_URL?.replace('/comment', '/article') || "http://172.18.0.2:8360/article", // Proxy to Waline
-            },
-            {
-              // Make sure all API requests are properly proxied
-              source: "/api/:path*",
-              destination: `${apiBaseUrl}/api/:path*`, // Proxy to Backend
-            },
-          ];
-        },
-      }
-    : {};
+const isBrowser = typeof window !== 'undefined';
+
+// Extract rewrite rules into a function that can be used in both dev and production
+const getRewriteRules = () => {
+  console.log('Configuring Next.js rewrites with:');
+  console.log('- VAN_BLOG_WALINE_URL:', process.env.VAN_BLOG_WALINE_URL || 'http://127.0.0.1:8360/comment (default)');
+  console.log('- VAN_BLOG_SERVER_URL:', process.env.VAN_BLOG_SERVER_URL || 'http://127.0.0.1:3000 (default)');
+  console.log('- NEXT_PUBLIC_VANBLOG_SERVER_URL:', process.env.NEXT_PUBLIC_VANBLOG_SERVER_URL || '(not set, will use VAN_BLOG_SERVER_URL)');
+  
+  // Use client URL for API proxy if available, otherwise fall back to server URL
+  const apiBaseUrl = (isBrowser ? process.env.NEXT_PUBLIC_VANBLOG_SERVER_URL : process.env.VAN_BLOG_SERVER_URL) || "http://127.0.0.1:3000";
+  const walineBaseUrl = process.env.VAN_BLOG_WALINE_URL || "http://127.0.0.1:8360";
+
+  return [
+    {
+      source: "/api/comment",
+      destination: `${walineBaseUrl}/comment`, // Proxy to Waline
+    },
+    {
+      source: "/api/article",
+      destination: `${walineBaseUrl}/article`, // Proxy to Waline for article statistics
+    },
+    {
+      // Make sure all API requests are properly proxied
+      source: "/api/:path*",
+      destination: `${apiBaseUrl}/api/:path*`, // Proxy to Backend
+    },
+  ];
+};
+
+// Configure rewrites for all environments
+const rewrites = {
+  async rewrites() {
+    return getRewriteRules();
+  }
+};
 
 const getAllowDomains = () => {
   const domainsInEnv = process.env.VAN_BLOG_ALLOW_DOMAINS || "";
@@ -81,7 +87,7 @@ module.exports = withBundleAnalyzer({
     domains: getAllowDomains(),
   },
   ...getCdnUrl(),
-  ...rewites,
+  ...rewrites,
   // Make environment variables available to client-side code
   // https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration
   publicRuntimeConfig: clientEnvVars,

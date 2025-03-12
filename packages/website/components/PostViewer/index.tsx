@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { getArticleViewer } from "../../api/getArticleViewer";
+import { getArticleViewer } from "../../api/getAllData";
 import { GetStaticProps } from "next";
 
 interface PostViewerProps {

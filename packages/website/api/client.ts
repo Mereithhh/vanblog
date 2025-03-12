@@ -39,7 +39,6 @@ export class ApiClient {
   private readonly cacheDuration: number;
 
   constructor(baseUrl?: string, cacheDuration = 5 * 60 * 1000) { // 5 minutes default cache
-    // If a specific baseUrl is provided, use it (useful for testing) 
     this.baseUrl = baseUrl || config.baseUrl;
     
     // Validate that baseUrl is properly set
@@ -57,9 +56,6 @@ export class ApiClient {
     // Log configuration in development mode
     if (isDevelopment) {
       console.log(`[ApiClient] Initialized with baseUrl: ${this.baseUrl}`);
-      console.log(`[ApiClient] isBrowser: ${isBrowser}`);
-      
-      // Check and validate environment variables
       this.validateEnvironmentVariables();
     }
   }
@@ -68,15 +64,16 @@ export class ApiClient {
     const serverUrl = typeof process !== 'undefined' ? process.env.VAN_BLOG_SERVER_URL : undefined;
     const clientUrl = typeof process !== 'undefined' ? process.env.NEXT_PUBLIC_VANBLOG_SERVER_URL : undefined;
     
-    console.log('[ApiClient] Environment check:');
-    console.log(`- VAN_BLOG_SERVER_URL: ${serverUrl || 'not set'}`);
-    console.log(`- NEXT_PUBLIC_VANBLOG_SERVER_URL: ${clientUrl || 'not set'}`);
+    if (isDevelopment) {
+      console.log('[ApiClient] Environment check:');
+      console.log(`- VAN_BLOG_SERVER_URL: ${serverUrl || 'not set'}`);
+      console.log(`- NEXT_PUBLIC_VANBLOG_SERVER_URL: ${clientUrl || 'not set'}`);
+    }
     
     // Check if we're in the browser and using the right URL
     if (isBrowser) {
       if (serverUrl && !clientUrl) {
         console.warn(`[ApiClient] Warning: Running in browser but only VAN_BLOG_SERVER_URL is set. This might cause issues as browser code cannot directly access non-NEXT_PUBLIC_ variables.`);
-        console.warn(`[ApiClient] Consider setting NEXT_PUBLIC_VANBLOG_SERVER_URL for proper browser access.`);
       }
       
       if (clientUrl && this.baseUrl !== clientUrl) {
@@ -126,7 +123,9 @@ export class ApiClient {
       url = new URL(endpoint, this.baseUrl);
     }
     
-    console.log(`[ApiClient] Fetching ${url} (${context})`);
+    if (isDevelopment) {
+      console.log(`[ApiClient] Fetching ${url} (${context})`);
+    }
 
     let lastError: Error | null = null;
 
@@ -193,18 +192,21 @@ export class ApiClient {
         return data as T;
       } catch (error: any) {
         lastError = error;
-        console.error(`[ApiClient] Fetch attempt ${i + 1}/${retries} failed:`, error);
+        if (isDevelopment) {
+          console.error(`[ApiClient] Fetch attempt ${i + 1}/${retries} failed:`, error);
+        }
         
         if (i < retries - 1) {
           const delay = 1000 * (i + 1);
-          console.log(`[ApiClient] Retrying in ${delay}ms...`);
+          if (isDevelopment) {
+            console.log(`[ApiClient] Retrying in ${delay}ms...`);
+          }
           await new Promise(resolve => setTimeout(resolve, delay));
         }
       }
     }
 
-    // If we're in development mode and the error is a connection error,
-    // provide a more helpful error message
+    // Provide helpful error message for connection issues
     if (isDevelopment && 
         lastError && 
         (lastError.message === 'Failed to fetch' || lastError.name === 'AbortError')) {
@@ -223,17 +225,6 @@ export class ApiClient {
         - VAN_BLOG_SERVER_URL: ${serverUrl || 'not set'}
         - NEXT_PUBLIC_VANBLOG_SERVER_URL: ${clientUrl || 'not set'}
         - isBrowser: ${isBrowser}
-        
-        Recommended actions:
-        ${isBrowser 
-          ? `- For browser requests, make sure NEXT_PUBLIC_VANBLOG_SERVER_URL points to a URL accessible from the browser
-        - Check browser console for CORS errors` 
-          : `- For server-side requests, make sure VAN_BLOG_SERVER_URL points to a URL accessible from the server
-        - Verify network connectivity between services`}
-        - If running in Docker, check container networking
-        - Verify the API server is running and responding to requests
-        
-        Make sure the API server is running and accessible.
       `);
     }
 
@@ -249,39 +240,51 @@ export class ApiClient {
       );
     }
 
-    throw new ApiError('Unknown error occurred', undefined, endpoint, context);
+    // This should never happen, but TypeScript requires a return value
+    throw new ApiError('Maximum retries exceeded', undefined, endpoint, context);
   }
 
   async get<T>(endpoint: string, params?: Record<string, any>, context = ''): Promise<T> {
-    if (isBuildTime) {
-      return {} as T;
-    }
-
     const cacheKey = this.getCacheKey(endpoint, params);
-    const cached = this.cache.get(cacheKey);
+    const cachedItem = this.cache.get(cacheKey);
 
-    if (cached && this.isCacheValid(cached.timestamp)) {
-      return cached.data as T;
+    if (cachedItem && this.isCacheValid(cachedItem.timestamp)) {
+      return cachedItem.data as T;
     }
 
-    const queryString = params ? `?${new URLSearchParams(params as any)}` : '';
-    const data = await this.fetchWithRetry<T>(`${endpoint}${queryString}`, {
-      method: 'GET'
-    }, 3, context);
+    let url = endpoint;
+    if (params) {
+      const queryParams = new URLSearchParams();
+      Object.entries(params).forEach(([key, value]) => {
+        if (value !== undefined && value !== null) {
+          queryParams.append(key, String(value));
+        }
+      });
+      
+      const queryString = queryParams.toString();
+      if (queryString) {
+        url = `${endpoint}?${queryString}`;
+      }
+    }
 
+    const data = await this.fetchWithRetry<T>(url, { method: 'GET' }, 3, context);
+    
+    // Cache the result
     this.cache.set(cacheKey, { data, timestamp: Date.now() });
+    
     return data;
   }
 
   async post<T>(endpoint: string, body: any, context = ''): Promise<T> {
-    if (isBuildTime) {
-      return {} as T;
-    }
-
-    return this.fetchWithRetry<T>(endpoint, {
+    const options: RequestInit = {
       method: 'POST',
-      body: JSON.stringify(body)
-    }, 3, context);
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    };
+
+    return this.fetchWithRetry<T>(endpoint, options, 3, context);
   }
 
   clearCache(): void {
@@ -293,7 +296,6 @@ export class ApiClient {
     this.cache.delete(cacheKey);
   }
 
-  // Helper method to check if a string is a valid URL
   private isValidUrlString(url: string): boolean {
     try {
       new URL(url);
@@ -304,5 +306,5 @@ export class ApiClient {
   }
 }
 
-// Export a singleton instance
+// Create a singleton instance of the API client
 export const apiClient = new ApiClient();

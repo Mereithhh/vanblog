@@ -24,9 +24,8 @@
 	}
 
 	# Handle Waline endpoints with /api/ prefix
-	@apiWaline path /api/comment* /api/user* /api/token* /api/oauth* /api/ui* /api/db*
+	@apiWaline path /api/comment* /api/user* /api/token* /api/oauth* /api/ui* /api/db* /api/article*
 	handle @apiWaline {
-		uri strip_prefix /api
 		reverse_proxy 127.0.0.1:8360
 	}
 

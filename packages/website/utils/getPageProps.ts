@@ -17,7 +17,7 @@ import { getCustomPage } from "../api/getAllData";
 import { config, isBuildTime } from "./loadConfig";
 import { TagPagesProps } from "../pages/tag/[tag]";
 import { getArticleViewer } from "../api/getArticleViewer";
-import { getServerPageview, PageViewData } from "../api/pageview";
+import { getServerPageview, PageViewData } from "../api/pageView";
 import { AuthorCardProps } from "../components/AuthorCard";
 
 const defaultLayoutProps: LayoutProps = {

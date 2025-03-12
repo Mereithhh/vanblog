@@ -77,7 +77,8 @@ export default PagePages;
 
 export async function getStaticPaths() {
   const data = await getPublicMeta();
-  const total = Math.ceil(data.totalArticles / 5);
+  const totalArticles = data?.totalArticles || 0;
+  const total = Math.ceil(totalArticles / 5);
   const paths = [];
   for (let i = 1; i <= total; i++) {
     paths.push({

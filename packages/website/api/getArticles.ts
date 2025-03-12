@@ -1,62 +1,54 @@
 import { GetArticleOption, ArticleResponse, ArticleDetail } from '../types/api';
 import { Article } from '../types/article';
-import { apiClient } from './client';
+import { apiService } from './service';
 
 // Re-export types for backward compatibility
 export type { GetArticleOption, SortOrder } from '../types/api';
 
 // Articles
 export const getArticlesByOption = async (option: GetArticleOption): Promise<ArticleResponse> => {
-  const response = await apiClient.get<{ statusCode: number; data: ArticleResponse }>('/api/public/article', option, 'getArticlesByOption');
-  return response.data;
+  return apiService.getArticles(option);
 };
 
 export const getArticlesByTimeLine = async (): Promise<Record<string, Article[]>> => {
-  const response = await apiClient.get<{ statusCode: number; data: Record<string, Article[]> }>('/api/public/timeline', {}, 'getArticlesByTimeline');
-  
-  // Extract the data field from the response
-  return response.data;
+  return apiService.getTimeline();
 };
 
 export const getArticlesByCategory = async (): Promise<Record<string, Article[]>> => {
-  const response = await apiClient.get<{ statusCode: number; data: Record<string, Article[]> }>('/api/public/category', {}, 'getArticlesByCategory');
-  
-  // Extract the data field from the response
-  return response.data;
+  return apiService.getCategories();
 };
 
 export const getArticlesByTag = async (): Promise<Record<string, Article[]>> => {
-  const response = await apiClient.get<{ statusCode: number; data: Record<string, Article[]> }>('/api/public/tag', {}, 'getArticlesByTag');
-  
-  // Extract the data field from the response
-  return response.data;
+  return apiService.getTags();
 };
 
 export const getArticleByIdOrPathname = async (
   idOrPathname: string | number
 ): Promise<ArticleDetail> => {
-  const response = await apiClient.get<{ statusCode: number; data: ArticleDetail }>(`/api/public/article/${idOrPathname}`, {}, 'getArticleByIdOrPathname');
-  return response.data;
+  return apiService.getArticleByIdOrPathname(idOrPathname);
 };
 
 export const getEncryptedArticleByIdOrPathname = async (
   idOrPathname: string | number,
   password: string
 ): Promise<ArticleDetail> => {
-  const response = await apiClient.post<{ statusCode: number; data: ArticleDetail }>(`/api/public/article/${idOrPathname}/decrypt`, { password }, 'getEncryptedArticleByIdOrPathname');
-  return response.data;
+  return apiService.getEncryptedArticle(idOrPathname, password);
 };
 
 // This function is for getting articles by a specific tag
 export const getArticlesByTagName = async (tag: string): Promise<Article[]> => {
-  const response = await apiClient.get<{ statusCode: number; data: Article[] }>(`/api/public/tag/${tag}`, {}, 'getArticlesByTagName');
-  return response.data;
+  return apiService.getArticlesByTag(tag);
 };
 
 // This function is for getting articles by a specific category
 export const getArticlesByCategoryName = async (category: string): Promise<Article[]> => {
   // Since there's no direct endpoint for getting articles by category name,
   // we'll get all categories and filter the one we need
-  const allCategories = await getArticlesByCategory();
+  const allCategories = await apiService.getCategories();
   return allCategories[category] || [];
+};
+
+// Search
+export const getArticlesBySearch = async (value: string): Promise<ArticleResponse> => {
+  return apiService.searchArticles(value);
 };

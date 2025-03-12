@@ -6,7 +6,7 @@ import { LayoutProps } from "../utils/getLayoutProps";
 import { getTagPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
 import { getTarget } from "../components/Link/tools";
-import { PageViewData } from "../api/pageview";
+import { PageViewData } from "../api/pageView";
 
 export interface TagPageProps {
   layoutProps: LayoutProps;

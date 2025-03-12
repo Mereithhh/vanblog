@@ -7,7 +7,7 @@ import PostCard from "../components/PostCard";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getAboutPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
-import { PageViewData } from "../api/pageview";
+import { PageViewData } from "../api/pageView";
 
 export interface About {
   updatedAt: string;

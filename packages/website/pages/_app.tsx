@@ -14,7 +14,7 @@ import type { AppProps } from "next/app";
 import { GlobalContext, GlobalState } from "../utils/globalContext";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
-import { getPageview, updatePageview } from "../api/pageview";
+import { getPageview, updatePageview } from "../api/pageView";
 import Head from "next/head";
 
 type AppPropsWithPageViewData = AppProps & {

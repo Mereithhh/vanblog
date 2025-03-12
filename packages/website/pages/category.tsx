@@ -5,7 +5,7 @@ import { Article } from "../types/article";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getCategoryPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
-import { PageViewData } from "../api/pageview";
+import { PageViewData } from "../api/pageView";
 
 export interface CategoryPageProps {
   layoutProps: LayoutProps;

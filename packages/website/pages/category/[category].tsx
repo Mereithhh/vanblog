@@ -54,7 +54,9 @@ export default CategoryPages;
 export async function getStaticPaths() {
   const data = await getPublicMeta();
 
-  const paths = data.meta.categories.map((category) => ({
+  // Handle case where meta or categories might be undefined
+  const categories = data?.meta?.categories || [];
+  const paths = categories.map((category) => ({
     params: {
       category: category,
     },
