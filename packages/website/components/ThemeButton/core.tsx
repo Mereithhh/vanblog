@@ -1,43 +1,48 @@
 import { useContext, useLayoutEffect, useRef } from "react";
 import { applyTheme, getTheme, initTheme } from "../../utils/theme";
-import { ThemeContext } from "../../utils/themeContext";
+import { RealThemeType, ThemeContext } from "../../utils/themeContext";
 
-export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
+export type ThemeType = "auto" | "dark" | "light";
+
+export default function (props: { defaultTheme: ThemeType }) {
   const { current } = useRef<any>({ hasInit: false });
   const { current: currentTimer } = useRef<any>({ timer: null });
   const { theme, setTheme: setState } = useContext(ThemeContext);
-  const setTheme = (newTheme: "auto" | "light" | "dark") => {
-    // console.log(`[setTheme] ${newTheme}`);
+
+  const setTheme = (newTheme: ThemeType) => {
     clearTimer();
     localStorage.setItem("theme", newTheme);
     // 设置真实的主题，然后把真实的主题搞到 state 里。
-    const realTheme = getTheme(newTheme);
-    applyTheme(realTheme, "setTheme", true);
+    const realTheme = getTheme(newTheme === "auto" ? "auto-light" : newTheme as RealThemeType);
+    applyTheme(realTheme);
     setState(realTheme);
     if (realTheme.includes("auto")) {
       setTimer();
     }
   };
+
   const clearTimer = () => {
     clearInterval(currentTimer.timer);
     currentTimer.timer = null;
   };
+
   const setTimer = () => {
     clearTimer();
     currentTimer.timer = setInterval(() => {
-      const realTheme = getTheme("auto");
-      applyTheme(realTheme, "autoThemeTimer", true);
+      const realTheme = getTheme("auto-light");
+      applyTheme(realTheme);
     }, 10000);
   };
+
   const getThemeTitleAuto = () => {
-    if ((theme as any) == "auto") {
-      return "自动模式";
+    if (theme.includes("auto")) {
+      if (theme === "auto-light") {
+        return "自动模式-亮色";
+      } else {
+        return "自动模式-暗色";
+      }
     }
-    if (theme.includes("light")) {
-      return "自动模式-亮色";
-    } else {
-      return "自动模式-暗色";
-    }
+    return "自动模式";
   };
 
   useLayoutEffect(() => {
@@ -49,7 +54,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
         clearTimer();
       } else {
         const iTheme = initTheme();
-        setTheme(iTheme);
+        setTheme(iTheme as ThemeType);
         clearTimer();
       }
     }
@@ -57,26 +62,28 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
       clearInterval(currentTimer.timer);
     };
   }, [current, setTheme, props, currentTimer, theme]);
+
   const handleSwitch = () => {
-    if (theme == "light") {
+    if (theme === "light" || theme === "auto-light") {
       setTheme("dark");
-    } else if (theme == "dark") {
+    } else if (theme === "dark" || theme === "auto-dark") {
       setTheme("auto");
     } else {
       setTheme("light");
     }
   };
+
   return (
     <div
-      className="flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 ml-4 sm:ml-2 lg:ml-6   "
+      className="flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 ml-4 sm:ml-2 lg:ml-6"
       onClick={handleSwitch}
     >
       <div
         style={{
-          display: theme == "light" ? "block" : "none",
+          display: (theme === "light" || theme === "auto-light") ? "block" : "none",
           height: 20,
         }}
-        className="dark:text-dark "
+        className="dark:text-dark"
         title="亮色模式"
       >
         <svg
@@ -94,7 +101,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
       <div
         className="dark:text-dark fill-gray-600"
         style={{
-          display: theme == "dark" ? "block" : "none",
+          display: (theme === "dark" || theme === "auto-dark") ? "block" : "none",
           height: 20,
         }}
         title="暗色模式"

@@ -1,9 +1,11 @@
+import { apiClient } from './client';
+
 export async function searchArticles(str: string): Promise<any> {
   try {
-    const url = `/api/public/search?value=${str}`;
-    const res = await fetch(url);
-    const { data } = await res.json();
-    return data.data;
+    const endpoint = `/api/public/search`;
+    const params = { value: str };
+    const response = await apiClient.get<{ statusCode: number; data: { total: number; data: any } }>(endpoint, params, 'searchArticles');
+    return response.data.data;
   } catch (err) {
     console.log(err);
     throw err;

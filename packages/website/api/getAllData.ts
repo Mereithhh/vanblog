@@ -1,5 +1,87 @@
 import { HeadTag } from "../utils/getLayoutProps";
 import { config, logDefaultValueUsage, isBuildTime } from "../utils/loadConfig";
+import { apiClient } from "./client";
+
+// Cache data to avoid repeated requests
+const metaCache = new Map<string, any>();
+
+// Generate cache key
+const getCacheKey = (endpoint: string, queryString: string = "") => {
+  return `${endpoint}:${queryString}`;
+};
+
+// Helper function for delayed retry
+const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Add error types
+export interface ApiError extends Error {
+  status?: number;
+  endpoint?: string;
+  details?: any;
+}
+
+// Helper function to create API error
+const createApiError = (message: string, status?: number, endpoint?: string, details?: any): ApiError => {
+  const error = new Error(message) as ApiError;
+  error.status = status;
+  error.endpoint = endpoint;
+  error.details = details;
+  return error;
+};
+
+// Helper function to handle API errors
+const handleApiError = (err: any, context: string, defaultValue: any) => {
+  const errorDetails = {
+    context,
+    error: err.message,
+    status: err.status,
+    endpoint: err.endpoint,
+    details: err.details,
+  };
+  
+  console.error(`[WebsiteProvider] Error in ${context}:`, errorDetails);
+  
+  if (isBuildTime) {
+    logDefaultValueUsage(context);
+  }
+  return defaultValue;
+};
+
+const MAX_RETRIES = 3;
+const RETRY_DELAY = 1000; // 1 second
+
+// Update fetchWithRetry with better error handling and environment detection
+const fetchWithRetry = async (url: string, options?: RequestInit, retries = MAX_RETRIES): Promise<Response> => {
+  // Check if we're in the browser (frontend) environment
+  const isBrowser = typeof window !== 'undefined';
+  
+  // If you want to run only in frontend, uncomment this:
+  if (!isBrowser) return new Response(null, { status: 404 });
+  
+  // If you want to run only in backend, uncomment this:
+  // if (isBrowser) return new Response(null, { status: 404 });
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw createApiError(
+        `HTTP error, fetching ${url}! status: ${response.status}`,
+        response.status,
+        url,
+        { method: options?.method || 'GET' }
+      );
+    }
+    return response;
+  } catch (error) {
+    if (retries > 0) {
+      console.log(`[WebsiteProvider] Retrying fetch to ${url}, ${retries} attempts remaining`);
+      await wait(RETRY_DELAY);
+      return fetchWithRetry(url, options, retries - 1);
+    }
+    throw error;
+  }
+};
+
 export type SocialType =
   | "bilibili"
   | "email"
@@ -141,6 +223,9 @@ export interface PublicMetaProp {
     html?: string;
     head?: HeadTag[];
   };
+  walineConfig?: {
+    serverURL?: string;
+  };
 }
 
 export const version = process.env["VAN_BLOG_VERSION"] || "dev";
@@ -245,37 +330,34 @@ export const defaultPublicMetaProp: PublicMetaProp = {
 let cachedPublicMeta: PublicMetaProp | null = null;
 let cachedCustomPages: CustomPageList[] | null = null;
 
-export async function getPublicMeta(): Promise<PublicMetaProp> {
-  // 如果已经有缓存数据，直接返回
-  if (cachedPublicMeta) {
-    return cachedPublicMeta;
-  }
-  
-  // 如果是构建环境，直接返回默认值
-  if (isBuildTime) {
-    logDefaultValueUsage("元数据");
+export const getPublicMeta = async () => {
+  try {
+    if (isBuildTime) {
+      logDefaultValueUsage("元信息");
+      return defaultPublicMetaProp;
+    }
+    
+    const endpoint = '/api/public/meta';
+    const response = await apiClient.get<{ statusCode: number; data: PublicMetaProp }>(
+      endpoint, 
+      undefined, 
+      'getPublicMeta'
+    );
+    
+    if (response.statusCode == 233) {
+      console.warn('[WebsiteProvider] Invalid meta data received, using default');
+      return defaultPublicMetaProp;
+    }
+    
+    return response.data;
+  } catch (err) {
+    console.error('[WebsiteProvider] Error in 获取元信息:', err);
+    if (isBuildTime) {
+      logDefaultValueUsage("元信息");
+    }
     return defaultPublicMetaProp;
   }
-  
-  try {
-    const url = `${config.baseUrl}api/public/meta`;
-    const res = await fetch(url);
-    const { statusCode, data } = await res.json();
-    if (statusCode == 233) {
-      return defaultPublicMetaProp;
-    }
-    // 缓存结果
-    cachedPublicMeta = data;
-    return data;
-  } catch (err) {
-    if (isBuildTime) {
-      logDefaultValueUsage("元数据");
-      return defaultPublicMetaProp;
-    } else {
-      throw err;
-    }
-  }
-}
+};
 
 export async function getAllCustomPages(): Promise<CustomPageList[]> {
   // 如果已经有缓存数据，直接返回
@@ -290,44 +372,47 @@ export async function getAllCustomPages(): Promise<CustomPageList[]> {
   }
   
   try {
-    const url = `${config.baseUrl}api/public/customPage/all`;
-    const res = await fetch(url);
-    const { statusCode, data } = await res.json();
-    if (statusCode == 200) {
+    const endpoint = '/api/public/customPage/all';
+    const response = await apiClient.get<{ statusCode: number; data: CustomPageList[] }>(
+      endpoint, 
+      undefined, 
+      'getAllCustomPages'
+    );
+    
+    if (response.statusCode == 200) {
       // 缓存结果
-      cachedCustomPages = data;
-      return data;
+      cachedCustomPages = response.data;
+      return response.data;
     } else {
       return [];
     }
   } catch (err) {
+    console.error('[WebsiteProvider] Error in 获取自定义页面:', err);
     if (isBuildTime) {
       logDefaultValueUsage("自定义页面");
-      return [];
-    } else {
-      throw err;
     }
+    return [];
   }
 }
 
-export async function getCustomPageByPath(
+export async function getCustomPage(
   path: string
 ): Promise<CustomPage | null> {
   try {
-    const url = `${config.baseUrl}api/public/customPage?path=${path}`;
-    const res = await fetch(url);
-    const { statusCode, data } = await res.json();
-    if (statusCode == 200) {
-      return data;
-    } else {
-      return null;
+    const endpoint = '/api/public/customPage';
+    const params = { path };
+    const response = await apiClient.get<{ statusCode: number; data: CustomPage }>(
+      endpoint, 
+      params, 
+      'getCustomPage'
+    );
+    
+    if (response.statusCode == 200) {
+      return response.data;
     }
+    return null;
   } catch (err) {
-    if (process.env.isBuild == "t") {
-      logDefaultValueUsage("自定义页面");
-      return null;
-    } else {
-      throw err;
-    }
+    console.error("Error fetching custom page:", err);
+    return null;
   }
 }

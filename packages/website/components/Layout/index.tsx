@@ -24,7 +24,7 @@ export default function (props: {
   // console.log("script", decode(props.option.customScript as string));
   const [isOpen, setIsOpen] = useState(false);
   const { current } = useRef({ hasInit: false });
-  const [theme, setTheme] = useState<RealThemeType>(getTheme("auto"));
+  const [theme, setTheme] = useState<RealThemeType>(getTheme("auto-light"));
   const handleClose = () => {
     console.log("关闭或刷新页面");
     localStorage.removeItem("saidHello");

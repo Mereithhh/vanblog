@@ -10,7 +10,7 @@ import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPostPagesProps } from "../../utils/getPageProps";
 import { hasToc } from "../../utils/hasToc";
 import { getArticlesKeyWord } from "../../utils/keywords";
-import { revalidate } from "../../utils/loadConfig";
+import { revalidate, isBuildTime } from "../../utils/loadConfig";
 import Custom404 from "../404";
 
 export interface PostPagesProps {
@@ -31,51 +31,59 @@ export interface PostPagesProps {
   };
   showSubMenu: "true" | "false";
 }
+
 const PostPages = (props: PostPagesProps) => {
-  const [content, setContent] = useState(props?.article?.content || "");
+  const [url, setUrl] = useState("");
+  const [content, setContent] = useState(props.article?.content || "");
+  
   useEffect(() => {
-    // nextjs 切换页面时，不会重新设置 content ，需要手动更新
-    setContent(props?.article?.content || "")
-  }, [props.article])
+    setUrl(window.location.origin);
+    setContent(props.article?.content || "");
+  }, [props.article, setUrl]);
+
   if (!props.article) {
-    return <Custom404 name="文章" />;
+    return <Custom404 />;
   }
+
+  const keywords = getArticlesKeyWord([props.article]);
+  const path = getArticlePath(props.article);
+  const showToc = hasToc(content);
+
   return (
     <Layout
       option={props.layoutProps}
       title={props.article.title}
       sideBar={
-        hasToc(content) ? (
-          <Toc content={content} showSubMenu={props.showSubMenu} />
-        ) : null
+        showToc ? (
+          <Toc
+            content={content}
+            showSubMenu={props.showSubMenu}
+          />
+        ) : undefined
       }
     >
       <Head>
-        <meta
-          name="keywords"
-          content={getArticlesKeyWord([props.article]).join(",")}
-        ></meta>
+        <meta name="keywords" content={keywords.join(",")} />
+        <meta name="description" content={props.article.content.slice(0, 100)} />
+        <meta property="og:title" content={props.article.title} />
+        <meta property="og:description" content={props.article.content.slice(0, 100)} />
+        <meta property="og:url" content={`${url}${path}`} />
       </Head>
       <PostCard
         showEditButton={props.layoutProps.showEditButton === "true"}
-        showExpirationReminder={
-          props.layoutProps.showExpirationReminder == "true"
-        }
+        showExpirationReminder={props.layoutProps.showExpirationReminder === "true"}
         copyrightAggreement={props.layoutProps.copyrightAggreement}
-        openArticleLinksInNewWindow={
-          props.layoutProps.openArticleLinksInNewWindow == "true"
-        }
-        customCopyRight={props.article.copyright || null}
+        openArticleLinksInNewWindow={props.layoutProps.openArticleLinksInNewWindow === "true"}
+        customCopyRight={props.article.copyright}
         top={props.article.top || 0}
-        id={getArticlePath(props.article)}
-        key={props.article.title}
+        id={path}
         title={props.article.title}
         updatedAt={new Date(props.article.updatedAt)}
         createdAt={new Date(props.article.createdAt)}
         catelog={props.article.category}
         content={content}
         setContent={setContent}
-        type={"article"}
+        type="article"
         pay={props.pay}
         payDark={props.payDark}
         private={props.article.private}
@@ -84,9 +92,9 @@ const PostPages = (props: PostPagesProps) => {
         pre={props.pre}
         next={props.next}
         enableComment={props.layoutProps.enableComment}
-        hideDonate={props.layoutProps.showDonateButton == "false"}
-        hideCopyRight={props.layoutProps.showCopyRight == "false"}
-      ></PostCard>
+        hideDonate={props.layoutProps.showDonateButton !== "true"}
+        hideCopyRight={props.layoutProps.showCopyRight !== "true"}
+      />
     </Layout>
   );
 };
@@ -94,27 +102,51 @@ const PostPages = (props: PostPagesProps) => {
 export default PostPages;
 
 export async function getStaticPaths() {
-  const data = await getArticlesByOption({
-    page: 1,
-    pageSize: -1,
-    toListView: true,
-  });
-  const paths = data.articles.map((article) => ({
-    params: {
-      id: String(getArticlePath(article)),
-    },
-  }));
-  return {
-    paths,
-    fallback: "blocking",
-  };
+  if (isBuildTime) {
+    // During build time, return an empty array of paths
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
+  }
+
+  try {
+    // In development or when not in build time, get all articles
+    const { articles } = await getArticlesByOption({
+      page: 1,
+      pageSize: -1, // Get all articles
+    });
+
+    const paths = articles.map((article) => ({
+      params: { id: article.pathname || article.id.toString() },
+    }));
+
+    return {
+      paths,
+      fallback: 'blocking',
+    };
+  } catch (error) {
+    console.error('Error getting article paths:', error);
+    return {
+      paths: [],
+      fallback: 'blocking',
+    };
+  }
 }
 
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: PostPagesProps; revalidate?: number }> {
-  return {
-    props: await getPostPagesProps(params.id),
-    ...revalidate,
-  };
+}: any): Promise<{ props: PostPagesProps; revalidate?: number } | { notFound: true }> {
+  try {
+    const props = await getPostPagesProps(params.id);
+    return {
+      props,
+      revalidate: typeof revalidate === 'number' ? revalidate : 60,
+    };
+  } catch (error) {
+    console.error('Error getting post props:', error);
+    return {
+      notFound: true,
+    };
+  }
 }

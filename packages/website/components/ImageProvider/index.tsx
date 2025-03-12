@@ -1,3 +1,4 @@
+import 'client-only';
 import React from "react";
 import { PhotoProvider } from "react-photo-view";
 const FullScreenIcon = (props: React.HTMLAttributes<any>) => {

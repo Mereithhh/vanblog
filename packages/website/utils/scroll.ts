@@ -1,3 +1,5 @@
+import 'client-only';
+
 type EasingOptions = "linear" | "ease-in" | "ease-out" | "ease-in-out";
 
 export interface ScrollToCustomOptions extends ScrollToOptions {

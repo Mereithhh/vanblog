@@ -1,15 +1,15 @@
+import { isBuildTime } from '../utils/loadConfig';
+import { apiClient } from './client';
+
 export const getArticleViewer = async (id: number | string) => {
-  try {
-    const url = `/api/public/article/viewer/${id}`;
-    const res = await fetch(url);
-    const { data } = await res.json();
-    return data;
-  } catch (err) {
-    if (process.env.isBuild == "t") {
-      console.log("无法连接，采用默认值");
-      return {};
-    } else {
-      throw err;
-    }
+  if(isBuildTime) {
+    return {
+      viewer: 0,
+      visited: 0
+    };
   }
+
+  const endpoint = `/api/public/article/viewer/${id}`;
+  const response = await apiClient.get<{ statusCode: number; data: any }>(endpoint, undefined, 'getArticleViewer');
+  return response.data;
 };

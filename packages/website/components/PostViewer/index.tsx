@@ -1,43 +1,55 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getArticleViewer } from "../../api/getArticleViewer";
+import { GetStaticProps } from "next";
 
-export default function (props: {
+interface PostViewerProps {
   shouldAddViewer: boolean;
   id: number | string;
-}) {
-  const [viewer, setViewer] = useState(0);
-  const { current } = useRef({ hasInit: false });
-  const fetchViewer = useCallback(async () => {
-    const res = await getArticleViewer(props.id);
-    if (!res) {
-      if (localStorage?.getItem("noViewer") === "true") {
-        setViewer(0)
-        return;
-      }
-      if (props.shouldAddViewer) {
-        setViewer(1);
-      } else {
-        setViewer(0);
-      }
-    }
-    if (res && res.viewer) {
-      if (localStorage?.getItem("noViewer") === "true") {
-        setViewer(res.viewer);
-        return;
-      }
-      if (props.shouldAddViewer) {
-        setViewer(res.viewer + 1);
-      } else {
-        setViewer(res.viewer);
-      }
-    }
-  }, [setViewer, props]);
+  initialViewer?: number;
+}
+
+export default function PostViewer({ shouldAddViewer, id, initialViewer = 0 }: PostViewerProps) {
+  const [viewer, setViewer] = useState(initialViewer);
+  
+  // Only run once on initial render
   useEffect(() => {
-    if (!current.hasInit) {
-      current.hasInit = true;
-      fetchViewer();
+    // Don't increment if noViewer is set to true
+    if (localStorage?.getItem("noViewer") === "true") {
+      return;
     }
-  }, [fetchViewer, current]);
+    
+    // If we should add a viewer, simply increment the local count
+    if (shouldAddViewer) {
+      setViewer(initialViewer + 1);
+    }
+    // No API calls here at all
+  }, [shouldAddViewer, initialViewer]);
 
   return <span>{viewer}</span>;
 }
+
+export const getStaticProps = (async (context) => {
+  // Extract the id from context params
+  const id = context.params?.id;
+  
+  // If no id is provided, return initialViewer as 0
+  if (!id) {
+    return {
+      props: { initialViewer: 0 }
+    };
+  }
+
+  // Ensure id is a string or number
+  const postId = Array.isArray(id) ? id[0] : id;
+
+  // Fetch initial viewer count at build time
+  const res = await getArticleViewer(postId);
+  
+  return {
+    props: { 
+      initialViewer: res?.viewer || 0
+    },
+    // Revalidate every hour to keep viewer counts somewhat up-to-date
+    revalidate: 3600, 
+  };
+}) satisfies GetStaticProps;

@@ -2,6 +2,8 @@ import { defaultMenu, MenuItem, PublicMetaProp } from "../api/getAllData";
 import dayjs from "dayjs";
 import { AuthorCardProps } from "../components/AuthorCard";
 import { checkLogin } from "./auth";
+import { getPublicMeta } from "../api/getAllData";
+
 export interface LayoutProps {
   description: string;
   ipcNumber: string;
@@ -40,6 +42,7 @@ export interface LayoutProps {
   customScript?: string;
   customHtml?: string;
   customHead?: HeadTag[];
+  walineServerURL: string;
 }
 
 export interface HeadTag {
@@ -48,7 +51,7 @@ export interface HeadTag {
   content: string;
 }
 
-export function getLayoutProps(data: PublicMetaProp): LayoutProps {
+export function getLayoutPropsFromData(data: PublicMetaProp): LayoutProps {
   const siteInfo = data.meta.siteInfo;
   const showSubMenu =
     Boolean(data.meta.categories.length) && siteInfo?.showSubMenu == "true";
@@ -114,6 +117,8 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     openArticleLinksInNewWindow = "true";
   }
 
+  const walineConfig = data?.walineConfig || {};
+
   return {
     showFriends,
     version: data?.version || "dev",
@@ -147,6 +152,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showRSS,
     showEditButton,
     ...customSetting,
+    walineServerURL: walineConfig.serverURL || '',
   };
 }
 
@@ -170,4 +176,50 @@ export function getAuthorCardProps(data: PublicMetaProp): AuthorCardProps {
     showSubMenu: showSubMenu ? "true" : "false",
     showRSS,
   };
+}
+
+// Async function to fetch and get layout props
+export async function getLayoutProps(): Promise<LayoutProps> {
+  try {
+    const meta = await getPublicMeta();
+    return getLayoutPropsFromData(meta);
+  } catch (err) {
+    console.log(err);
+    // Return default values for all required properties
+    return {
+      description: "",
+      ipcNumber: "",
+      since: dayjs().toISOString(),
+      ipcHref: "",
+      gaBeianNumber: "",
+      gaBeianUrl: "",
+      gaBeianLogoUrl: "",
+      copyrightAggreement: "BY-NC-SA",
+      logo: "",
+      categories: [],
+      favicon: "",
+      siteName: "",
+      siteDesc: "",
+      baiduAnalysisID: "",
+      gaAnalysisID: "",
+      logoDark: "",
+      version: "dev",
+      menus: defaultMenu,
+      showSubMenu: "false",
+      showAdminButton: "false",
+      showFriends: "false",
+      headerLeftContent: "siteName",
+      enableComment: "false",
+      defaultTheme: "auto",
+      enableCustomizing: "false",
+      showDonateButton: "false",
+      showCopyRight: "false",
+      showRSS: "false",
+      showExpirationReminder: "false",
+      openArticleLinksInNewWindow: "false",
+      showEditButton: "false",
+      subMenuOffset: 0,
+      walineServerURL: '',
+    };
+  }
 }

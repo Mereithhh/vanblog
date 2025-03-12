@@ -7,6 +7,8 @@ import PostCard from "../components/PostCard";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getAboutPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
+import { PageViewData } from "../api/pageview";
+
 export interface About {
   updatedAt: string;
   content: string;
@@ -20,6 +22,7 @@ export interface AboutPageProps {
   payDark: string[];
   showDonateInfo: "true" | "false";
   showDonateInAbout: "true" | "false";
+  pageViewData: PageViewData;
 }
 const getDonateTableMarkdown = (donates: DonateItem[]) => {
   let content = `

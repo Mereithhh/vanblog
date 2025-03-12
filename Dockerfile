@@ -208,6 +208,7 @@ ENV NODE_ENV="production"
 ENV PORT="3001"
 # 确保服务器 URL 使用正确的本地地址
 ENV VAN_BLOG_SERVER_URL="http://127.0.0.1:3000"
+ENV NEXT_PUBLIC_VANBLOG_SERVER_URL="window.location.origin"
 # 设置 CORS 配置，允许来自所有源的请求
 ENV VAN_BLOG_CORS="true"
 ENV VAN_BLOG_ALLOW_DOMAINS="pic.mereith.com"

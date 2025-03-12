@@ -8,11 +8,13 @@ import WaLine from "../components/WaLine";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getLinkPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
+import { PageViewData } from "../api/pageview";
 
 export interface LinkPageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
   links: LinkItem[];
+  pageViewData: PageViewData;
 }
 
 const LinkPage = (props: LinkPageProps) => {
