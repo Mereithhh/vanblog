@@ -78,6 +78,7 @@ export interface WalineSetting {
   webhook?: string;
   forceLoginComment: boolean;
   otherConfig?: string;
+  serverURL?: string;
 }
 
 export interface HttpsSetting {

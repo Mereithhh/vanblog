@@ -157,7 +157,7 @@ export class DraftProvider {
       .skip(option.pageSize * option.page - option.pageSize)
       .limit(option.pageSize)
       .exec();
-    const total = await this.draftModel.count(query).exec();
+    const total = await this.draftModel.countDocuments(query).exec();
 
     return {
       drafts,

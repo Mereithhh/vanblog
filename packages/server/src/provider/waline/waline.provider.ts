@@ -27,6 +27,7 @@ export class WalineProvider {
       authorEmail: 'AUTHOR_EMAIL',
       webhook: 'WEBHOOK',
       forceLoginComment: 'LOGIN',
+      serverURL: 'VAN_BLOG_WALINE_URL',
     };
     const result = {};
     if (!config) {

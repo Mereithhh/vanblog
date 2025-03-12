@@ -10,13 +10,14 @@ import { checkFolder } from 'src/utils/checkFolder';
 @Controller('c')
 export class PublicCustomPageController {
   constructor(private readonly customPageProvider: CustomPageProvider) {}
-  @Get('/:pathname*')
+  @Get('/:pathname/*path')
   async getPageContent(
     @Param('pathname') pathname: string,
+    @Param('path') path: string,
     @Res() res: Response,
     @Req() req: Request,
   ) {
-    const foldername = pathname;
+    const foldername = pathname + (path ? '/' + path : '');
     if (!foldername) {
       res.status(404);
       throw new HttpException('未找到该页面！', 404);
@@ -60,7 +61,7 @@ export class PublicCustomPageController {
 
 @Controller('custom')
 export class PublicOldCustomPageRedirectController {
-  @Get('/:pathname*')
+  @Get('/:pathname/*path')
   async redirect(@Res() res: Response, @Req() req: Request) {
     const newUrl = req.url.replace('/custom/', '/c/');
     res.redirect(301, newUrl);

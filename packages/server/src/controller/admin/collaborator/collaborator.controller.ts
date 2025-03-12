@@ -30,18 +30,15 @@ export class CollaboratorController {
   }
   @Get('/list')
   async getAllCollaboratorsList() {
-    // 管理员优先用作者名称吧
-    const siteInfo = await this.metaProvider.getSiteInfo();
-    const admin = await this.userProvider.getUser(true);
     const adminUser = {
-      name: admin.name,
-      nickname: siteInfo.author,
       id: 0,
+      username: 'admin',
+      role: 'admin',
     };
     const data = await this.userProvider.getAllCollaborators(true);
     return {
       statusCode: 200,
-      data: [adminUser, ...data] || [adminUser],
+      data: [adminUser, ...data],
     };
   }
   @Delete('/:id')

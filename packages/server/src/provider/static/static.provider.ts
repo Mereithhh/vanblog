@@ -262,7 +262,7 @@ export class StaticProvider {
     if (option.staticType) {
       query.staticType = option.staticType;
     }
-    const total = await this.staticModel.count(query);
+    const total = await this.staticModel.countDocuments(query);
     const items = await this.staticModel
       .find(query, this.getView(option.view))
       .sort({ updatedAt: -1 })

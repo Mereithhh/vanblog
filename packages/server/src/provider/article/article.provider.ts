@@ -154,8 +154,8 @@ export class ArticleProvider {
   async updateViewerByPathname(pathname: string, isNew: boolean) {
     let article = await this.getByPathName(pathname, 'list');
     if (!article) {
-      // 这是通过 id 的吧。
-      article = await this.getById(Number(pathname), 'list');
+      // Try to get by ID
+      article = await this.getById(pathname, 'list');
       if (!article) {
         return;
       }
@@ -171,7 +171,7 @@ export class ArticleProvider {
     );
   }
 
-  async updateViewer(id: number, isNew: boolean) {
+  async updateViewer(id: number | string, isNew: boolean) {
     const article = await this.getById(id, 'list');
     if (!article) {
       return;
@@ -182,7 +182,7 @@ export class ArticleProvider {
     const newVisited = isNew ? oldVIsited + 1 : oldVIsited;
     const nowTime = new Date();
     await this.articleModel.updateOne(
-      { id: id },
+      { id: article.id },
       { visited: newVisited, viewer: newViewer, lastVisitedTime: nowTime },
     );
   }
@@ -368,7 +368,7 @@ export class ArticleProvider {
       .find({
         $and,
       })
-      .count();
+      .countDocuments();
   }
 
   getView(view: ArticleView) {
@@ -618,7 +618,7 @@ export class ArticleProvider {
     }
     // withWordCount 只会返回当前分页的文字数量
 
-    const total = await this.articleModel.count(query).exec();
+    const total = await this.articleModel.countDocuments(query).exec();
     // 过滤私有文章
     if (isPublic) {
       const tmpArticles: any[] = [];
@@ -672,15 +672,86 @@ export class ArticleProvider {
   }
 
   async getByIdOrPathname(id: string | number, view: ArticleView) {
-    const articleByPathname = await this.getByPathName(String(id), view);
+    try {
+      // First try to get by pathname
+      const articleByPathname = await this.getByPathName(String(id), view);
+      if (articleByPathname) {
+        return articleByPathname;
+      }
 
-    if (articleByPathname) {
-      return articleByPathname;
+      // Then try by ID
+      const article = await this.getById(id, view);
+      if (!article) {
+        throw new NotFoundException('找不到文章');
+      }
+      return article;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      console.error('Error in getByIdOrPathname:', error);
+      throw new NotFoundException('找不到文章');
     }
-    return await this.getById(Number(id), view);
   }
 
-  async getByPathName(pathname: string, view: ArticleView): Promise<Article> {
+  async getByPathName(pathname: string, view: ArticleView): Promise<Article | null> {
+    if (!pathname) {
+      return null;
+    }
+
+    const $and: any = [
+      {
+        $or: [
+          {
+            deleted: false,
+          },
+          {
+            deleted: { $exists: false },
+          },
+        ],
+      },
+    ];
+
+    try {
+      // Handle both encoded and decoded pathnames
+      const decodedPath = decodeURIComponent(pathname);
+      const encodedPath = encodeURIComponent(pathname);
+
+      const article = await this.articleModel
+        .findOne(
+          {
+            $and,
+            $or: [
+              { pathname: decodedPath },
+              { pathname: encodedPath },
+              { pathname: pathname }
+            ]
+          },
+          this.getView(view),
+        )
+        .exec();
+
+      return article || null;
+    } catch (error) {
+      console.error('Error finding article by pathname:', error);
+      return null;
+    }
+  }
+
+  async getById(id: number | string | undefined, view: ArticleView): Promise<Article | null> {
+    // Handle invalid id values
+    if (id === undefined || id === null) {
+      return null;
+    }
+
+    // Convert string id to number if needed
+    const numericId = typeof id === 'string' ? parseInt(id, 10) : id;
+    
+    // Handle NaN and invalid numbers
+    if (typeof numericId !== 'number' || isNaN(numericId)) {
+      return null;
+    }
+
     const $and: any = [
       {
         $or: [
@@ -697,32 +768,7 @@ export class ArticleProvider {
     return await this.articleModel
       .findOne(
         {
-          pathname: decodeURIComponent(pathname),
-          $and,
-        },
-        this.getView(view),
-      )
-      .exec();
-  }
-
-  async getById(id: number, view: ArticleView): Promise<Article> {
-    const $and: any = [
-      {
-        $or: [
-          {
-            deleted: false,
-          },
-          {
-            deleted: { $exists: false },
-          },
-        ],
-      },
-    ];
-
-    return await this.articleModel
-      .findOne(
-        {
-          id,
+          id: numericId,
           $and,
         },
         this.getView(view),

@@ -12,6 +12,46 @@ import { version } from 'src/utils/loadConfig';
 import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
 import { encode } from 'js-base64';
 
+// Import defaultMenu from website package
+const defaultMenu = [
+  {
+    id: 0,
+    name: "首页",
+    value: "/",
+    level: 0,
+  },
+  {
+    id: 1,
+    name: "标签",
+    value: "/tag",
+    level: 0,
+  },
+  {
+    id: 2,
+    name: "分类",
+    value: "/category",
+    level: 0,
+  },
+  {
+    id: 3,
+    name: "时间线",
+    value: "/timeline",
+    level: 0,
+  },
+  {
+    id: 4,
+    name: "友链",
+    value: "/link",
+    level: 0,
+  },
+  {
+    id: 5,
+    name: "关于",
+    value: "/about",
+    level: 0,
+  },
+];
+
 @ApiTags('public')
 @Controller('/api/public/')
 export class PublicController {
@@ -179,30 +219,124 @@ export class PublicController {
 
   @Get('/meta')
   async getBuildMeta() {
-    const tags = await this.tagProvider.getAllTags(false);
-    const meta = await this.metaProvider.getAll();
-    const metaDoc = (meta as any)?._doc || meta;
-    const categories = await this.categoryProvider.getAllCategories(false);
-    const { data: menus } = await this.settingProvider.getMenuSetting();
-    const totalArticles = await this.articleProvider.getTotalNum(false);
-    const totalWordCount = await this.metaProvider.getTotalWords();
-    const LayoutSetting = await this.settingProvider.getLayoutSetting();
-    const LayoutRes = this.settingProvider.encodeLayoutSetting(LayoutSetting);
-    const data = {
-      version: version,
-      tags,
-      meta: {
-        ...metaDoc,
-        categories,
-      },
-      menus,
-      totalArticles,
-      totalWordCount,
-      ...(LayoutSetting ? { layout: LayoutRes } : {}),
-    };
-    return {
-      statusCode: 200,
-      data,
-    };
+    try {
+      const tags = await this.tagProvider.getAllTags(false) || [];
+      const meta = await this.metaProvider.getAll();
+      console.log('Raw meta:', meta);
+      
+      // Ensure we have a valid meta object
+      const metaDoc = {
+        links: [],
+        socials: [],
+        rewards: [],
+        about: {
+          updatedAt: new Date().toISOString(),
+          content: "",
+        },
+        siteInfo: {
+          author: "",
+          authorDesc: "",
+          authorLogo: "",
+          siteLogo: "",
+          favicon: "",
+          siteName: "",
+          siteDesc: "",
+          baseUrl: "",
+          since: "",
+          copyrightAggreement: "",
+          showSubMenu: "false",
+          showAdminButton: "false",
+          headerLeftContent: "siteName",
+          showDonateInfo: "false",
+          showFriends: "false",
+          enableComment: "false",
+          defaultTheme: "auto",
+          enableCustomizing: "false",
+          showDonateButton: "false",
+          showCopyRight: "false",
+          showRSS: "false",
+          openArticleLinksInNewWindow: "false",
+          showExpirationReminder: "false",
+          showEditButton: "false",
+        },
+        ...(meta as any)?._doc || meta || {},
+      };
+      
+      console.log('Meta doc:', metaDoc);
+      const categories = await this.categoryProvider.getAllCategories(false) || [];
+      const { data: menus } = await this.settingProvider.getMenuSetting() || { data: defaultMenu };
+      const totalArticles = await this.articleProvider.getTotalNum(false) || 0;
+      const totalWordCount = await this.metaProvider.getTotalWords() || 0;
+      const LayoutSetting = await this.settingProvider.getLayoutSetting();
+      const LayoutRes = this.settingProvider.encodeLayoutSetting(LayoutSetting);
+
+      const data = {
+        version: version || 'dev',
+        tags,
+        meta: {
+          ...metaDoc,
+          categories,
+        },
+        menus: menus || defaultMenu,
+        totalArticles,
+        totalWordCount,
+        ...(LayoutSetting ? { layout: LayoutRes } : {}),
+      };
+      
+      console.log('Final data:', data);
+      return {
+        statusCode: 200,
+        data,
+      };
+    } catch (error) {
+      console.error('Error in getBuildMeta:', error);
+      // Return default data structure on error
+      return {
+        statusCode: 200,
+        data: {
+          version: version || 'dev',
+          tags: [],
+          meta: {
+            links: [],
+            socials: [],
+            rewards: [],
+            categories: [],
+            about: {
+              updatedAt: new Date().toISOString(),
+              content: "",
+            },
+            siteInfo: {
+              author: "",
+              authorDesc: "",
+              authorLogo: "",
+              siteLogo: "",
+              favicon: "",
+              siteName: "",
+              siteDesc: "",
+              baseUrl: "",
+              since: "",
+              copyrightAggreement: "",
+              showSubMenu: "false",
+              showAdminButton: "false",
+              headerLeftContent: "siteName",
+              showDonateInfo: "false",
+              showFriends: "false",
+              enableComment: "false",
+              defaultTheme: "auto",
+              enableCustomizing: "false",
+              showDonateButton: "false",
+              showCopyRight: "false",
+              showRSS: "false",
+              openArticleLinksInNewWindow: "false",
+              showExpirationReminder: "false",
+              showEditButton: "false",
+            }
+          },
+          menus: defaultMenu,
+          totalArticles: 0,
+          totalWordCount: 0
+        }
+      };
+    }
   }
 }
