@@ -1,7 +1,7 @@
 #!/bin/sh
 echo "============================================="
 echo "欢迎使用 VanBlog 博客系统"
-echo "Github: https://github.com/mereithhh/vanblog"
+echo "Github: https://github.com/CornWorld/vanblog"
 echo "Version(Env): ${VAN_BLOG_VERSION}"
 echo "============================================="
 
@@ -10,11 +10,6 @@ echo "系统网络信息:"
 ip -4 addr show
 echo "============================================="
 
-# 显示 admin 目录内容以确认文件存在
-echo "检查 admin 目录内容："
-ls -la /app/admin
-echo "检查 admin/admin 目录内容："
-ls -la /app/admin/admin || echo "admin/admin 目录不存在，创建软链接..."
 # 确保 admin/admin 目录存在
 if [ ! -d "/app/admin/admin" ]; then
     mkdir -p /app/admin/admin
@@ -88,12 +83,6 @@ fi
 # 等待 Caddy 启动
 sleep 2
 
-# 检查 Caddy 运行状态
-echo "============================================="
-echo "Caddy 运行状态:"
-caddy status
-echo "============================================="
-
 # 启动应用程序
-echo "启动应用程序..."
+echo "启动 VanBlog 博客系统..."
 node start.js

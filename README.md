@@ -1,3 +1,7 @@
+<h3 align="center">
+  <strong>📌此分支是由 <a href="https://github.com/CornWorld">CornWorld</a> 维护的分支版本📌</strong>  
+</h3>
+
 <p align="center">
 	<img src="/img/logo.svg" style="width: 200px"></img>
 </p>
@@ -6,7 +10,7 @@
 </p>
 <p align="center">
   <img src="https://img.shields.io/github/v/release/CornWorld/vanblog?display_name=tag" />
-  <img src="https://img.shields.io/docker/pulls/CornWorld/vanblog" />
+  <img src="https://img.shields.io/docker/pulls/cornworld/vanblog" />
   <img src="https://img.shields.io/github/stars/CornWorld/vanblog" />
   <img src="https://img.shields.io/bitbucket/issues/CornWorld/vanblog" />
   <img src="https://github.com/CornWorld/vanblog/workflows/release/badge.svg" />
@@ -14,9 +18,6 @@
   <a href="https://github.com/CornWorld/vanblog"><img src="https://img.shields.io/badge/Derivative_Fork-CornWorld-critical?logo=git" /></a>
 </p>
 
-<h3 align="center">
-  <strong>📌此分支是由 <a href="https://github.com/CornWorld">CornWorld</a> 维护的分支版本📌</strong>  
-</h3>
 <!-- <p align="center">
 	<strong>项目主页: </strong>  <a target="_blank" href='https://vanblog.mereith.com'>vanblog.mereith.com</a>
 </p> -->
@@ -58,6 +59,11 @@
 - [x] 支持 RSS 订阅
 - [x] 完善的 API，完全利用本项目后台和服务端，自己写前端或适配其他页面生成器
 - [x] 有较完善的日志记录，后台可直接查看登录日志和 Caddy 日志。
+
+## Fork 说明
+
+- 这是由 [CornWorld](https://github.com/CornWorld) 维护的 VanBlog 分支版本
+- 与上游的差异报告: [查看实时对比](https://github.com/CornWorld/vanblog/compare/upstream-baseline..main)
 
 <!-- ## 快速上手/部署教程
 
@@ -124,11 +130,6 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 ## 开发指南
 
 - [开发指南](https://vanblog.mereith.com/contribution.html) -->
-
-## Fork 说明
-
-- 这是由 [CornWorld](https://github.com/CornWorld) 维护的 VanBlog 分支版本
-- 与上游的差异报告: [查看实时对比](https://github.com/CornWorld/vanblog/compare/upstream-baseline..main)
 
 <!-- ## 谁在使用
 
