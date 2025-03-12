@@ -27,8 +27,8 @@ RUN set -ex && \
     apt-get install -y --no-install-recommends ca-certificates && \
     # 安装其他必要软件包
     apt-get install -y --no-install-recommends \
-      python3 make g++ git libvips-dev curl jq \
-      tzdata caddy libnss3-tools webp libvips && \
+      curl jq \
+      tzdata caddy&& \
     # 设置时区
     ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata && \
@@ -49,8 +49,6 @@ RUN set -ex && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
-
-ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
 
 # 依赖构建阶段
 FROM base AS deps
