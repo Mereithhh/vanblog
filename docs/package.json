@@ -8,12 +8,12 @@
     "docs:dev": "vuepress dev ."
   },
   "devDependencies": {
-    "@vuepress/client": "2.0.0-rc.0",
-    "@vuepress/utils": "2.0.0-rc.0",
-    "vue": "^3.3.9",
+    "@vuepress/client": "2.0.0-rc.2",
+    "@vuepress/utils": "2.0.0-rc.2",
+    "vue": "^3.5.13",
     "vuepress": "2.0.0-rc.0",
-    "vuepress-plugin-redirect": "2.0.0-rc.1",
-    "vuepress-plugin-search-pro": "2.0.0-rc.1",
-    "vuepress-theme-hope": "2.0.0-rc.1"
+    "vuepress-plugin-redirect": "2.0.0-rc.19",
+    "vuepress-plugin-search-pro": "2.0.0-rc.59",
+    "vuepress-theme-hope": "2.0.0-rc.74"
   }
 }
