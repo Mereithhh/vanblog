@@ -21,17 +21,21 @@ redirectFrom: /ref/changelog.html
   const newVersion = arr.join('.');
   fs.writeFileSync('doc-version', newVersion, { encoding: 'utf-8' });
 
-  // 添加并应用
-  const { execSync } = require('child_process');
-  execSync(
-    `git add . && git commit -m 'docs: 更新文档' && git tag doc-${newVersion} && git push --follow-tags origin master && git push --tags`,
-    (err, stdout, stderr) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      console.log(`stdout: ${stdout}`);
-    },
-  );
+  // Use spawnSync for safer command execution
+  const { spawnSync } = require('child_process');
+  
+  try {
+    // Execute git commands separately for better security and error handling
+    spawnSync('git', ['add', '.'], { stdio: 'inherit' });
+    spawnSync('git', ['commit', '-m', 'docs: 更新文档'], { stdio: 'inherit' });
+    spawnSync('git', ['tag', `doc-${newVersion}`], { stdio: 'inherit' });
+    spawnSync('git', ['push', '--follow-tags', 'origin', 'master'], { stdio: 'inherit' });
+    spawnSync('git', ['push', '--tags'], { stdio: 'inherit' });
+    
+    console.log(`✅ 成功发布文档 v${newVersion}`);
+  } catch (err) {
+    console.log('❌ 发布文档失败:', err);
+    process.exit(1);
+  }
 };
 insertLog();
