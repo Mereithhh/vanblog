@@ -65,6 +65,12 @@
 - 这是由 [CornWorld](https://github.com/CornWorld) 维护的 VanBlog 分支版本
 - 与上游的差异报告: [查看实时对比](https://github.com/CornWorld/vanblog/compare/upstream-baseline..main)
 
+### TODO
+- [] 迁移所有包的依赖到最新版本
+- [] 修复 Mermaid 渲染问题
+- [] 删除冗余文件
+- [] 重构 admin 包，抛弃 Umijs
+
 <!-- ## 快速上手/部署教程
 
 ### 一键脚本部署
