@@ -8,7 +8,7 @@
       "esnext"
     ],
     "allowJs": true,
-    "noEmit": true,
+    "noEmit": false,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
