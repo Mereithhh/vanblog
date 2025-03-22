@@ -11,7 +11,7 @@ export default function (props: {
   label: string;
   placeholder: string;
   required: boolean;
-  formRef: any;
+  formRef?: any;
   isInit: boolean;
   isFavicon?: boolean;
 }) {
@@ -22,23 +22,46 @@ export default function (props: {
       setUrl(val);
     }
   }, 500);
+
   useEffect(() => {
-    if (props.formRef && props.formRef.getFieldValue) {
-      const src = props.formRef.getFieldValue(props.name);
+    if (!props.formRef) return;
+    
+    const form = props.formRef?.current || props.formRef;
+    if (form?.getFieldValue) {
+      const src = form.getFieldValue(props.name);
       setUrl(src);
     }
-    if (props.formRef?.current?.getFieldValue) {
-      const src = props.formRef.current.getFieldValue(props.name);
-      setUrl(src);
-    }
-  }, [props, setUrl]);
+  }, [props.formRef, props.name]);
+
   const dest = useMemo(() => {
     let r = props.isInit ? '/api/admin/init/upload' : '/api/admin/img/upload';
     if (props.isFavicon) {
       r = r + '?favicon=true';
     }
     return r;
-  }, [props]);
+  }, [props.isInit, props.isFavicon]);
+
+  const handleUploadFinish = (info: any) => {
+    if (info?.response?.data?.isNew) {
+      message.success(`${info.name} 上传成功!`);
+    } else {
+      message.warning(`${info.name} 已存在!`);
+    }
+    const src = getImgLink(info?.response?.data?.src);
+    setUrl(src);
+
+    if (!props.formRef) return;
+    
+    const form = props.formRef?.current || props.formRef;
+    if (form?.setFieldsValue) {
+      const oldVal = form.getFieldsValue();
+      form.setFieldsValue({
+        ...oldVal,
+        [props.name]: src,
+      });
+    }
+  };
+
   return (
     <>
       <ProFormText
@@ -59,29 +82,7 @@ export default function (props: {
                 muti={false}
                 crop={true}
                 text="上传图片"
-                onFinish={(info) => {
-                  if (info?.response?.data?.isNew) {
-                    message.success(`${info.name} 上传成功!`);
-                  } else {
-                    message.warning(`${info.name} 已存在!`);
-                  }
-                  const src = getImgLink(info?.response?.data?.src);
-                  setUrl(src);
-                  if (props?.formRef?.setFieldsValue) {
-                    const oldVal = props.formRef.getFieldsValue();
-                    props?.formRef?.setFieldsValue({
-                      ...oldVal,
-                      [props.name]: src,
-                    });
-                  }
-                  if (props.formRef?.current?.setFieldsValue) {
-                    const oldVal = props.formRef.current.getFieldsValue();
-                    props?.formRef?.current.setFieldsValue({
-                      ...oldVal,
-                      [props.name]: src,
-                    });
-                  }
-                }}
+                onFinish={handleUploadFinish}
                 url={dest}
                 accept=".png,.jpg,.jpeg,.webp,.jiff,.gif"
               />

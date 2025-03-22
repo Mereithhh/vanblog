@@ -18,6 +18,7 @@ const InitPage = () => {
   const formMapRef = useRef<React.MutableRefObject<ProFormInstance<any> | undefined>[]>([]);
   const formRef1 = useRef<ProFormInstance>();
   const formRef2 = useRef<ProFormInstance>();
+  const formRef3 = useRef<ProFormInstance>();
   return (
     <div className={styles.container}>
       <div className={styles.content}>
@@ -51,7 +52,7 @@ const InitPage = () => {
                 Modal.success({
                   title: '初始化成功!',
                   content:
-                    '首次使用请记得去后台 “站点管理/评论管理” 中注册一下评论系统的管理员账号哦！评论通知等设置可在 “系统设置/评论设置” 中找到。',
+                    '首次使用请记得去后台 "站点管理/评论管理" 中注册一下评论系统的管理员账号哦！评论通知等设置可在 "系统设置/评论设置" 中找到。',
                   onOk: () => {
                     history.push('/user/login');
                   },
@@ -145,7 +146,7 @@ const InitPage = () => {
                 isInit={true}
               />
             </StepsForm.StepForm>
-            <StepsForm.StepForm name="step4" title={'布局配置'}>
+            <StepsForm.StepForm name="step4" title={'布局配置'} formRef={formRef3}>
               <Alert
                 type="info"
                 message="初始化页面所有配置都可在初始化后进入后台修改。"
@@ -156,7 +157,7 @@ const InitPage = () => {
                 showRequire={false}
                 showOption={false}
                 showLayout={true}
-                form={null}
+                form={formRef3}
               />
             </StepsForm.StepForm>
           </StepsForm>
