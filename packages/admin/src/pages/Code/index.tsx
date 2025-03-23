@@ -14,7 +14,7 @@ import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Menu, message, Modal, Space, Spin, Tag, Tree } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { history } from 'umi';
+import { history } from '@/utils/umiCompat';
 import PipelineModal from '../Pipeline/components/PipelineModal';
 import RunCodeModal from '../Pipeline/components/RunCodeModal';
 import './index.less';

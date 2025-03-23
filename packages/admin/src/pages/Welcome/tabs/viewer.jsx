@@ -1,12 +1,13 @@
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
-import { Spin } from 'antd';
+import { Area, Pie } from '@ant-design/plots';
+import { Spin, Table } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { getWelcomeData } from '@/services/van-blog/api';
 import ArticleList from '@/components/ArticleList';
 import { getRecentTimeDes } from '@/services/van-blog/tool';
-import { Link } from 'umi';
+import { Link } from '@/utils/umiCompat';
 import TipTitle from '@/components/TipTitle';
-import style from '../index.less';
+import '../index.less';
 import NumSelect from '@/components/NumSelect';
 import { useNum } from '@/services/van-blog/useNum';
 import RcResizeObserver from 'rc-resize-observer';
@@ -206,7 +207,7 @@ const Viewer = () => {
                   <NumSelect d="条" value={num} setValue={setNum} />
                 </div>
               }
-              className={style['card-full-title']}
+              className="card-full-title"
               chart={
                 <div style={{ marginTop: -14 }}>
                   <ArticleList showRecentViewTime articles={data?.recentVisitArticles || []} />
@@ -222,7 +223,7 @@ const Viewer = () => {
                   <NumSelect d="条" value={num} setValue={setNum} />
                 </div>
               }
-              className={style['card-full-title']}
+              className="card-full-title"
               chart={
                 <div style={{ marginTop: -14 }}>
                   <ArticleList showViewerNum articles={data?.topViewer || []} />

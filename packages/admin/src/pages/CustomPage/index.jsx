@@ -3,7 +3,7 @@ import { deleteCustomPageByPath, getCustomPages } from '@/services/van-blog/api'
 import { ProTable } from '@ant-design/pro-components';
 import { Button, Card, message, Modal, Space } from 'antd';
 import { useRef } from 'react';
-import { Link } from 'umi';
+import { Link } from '@/utils/umiCompat';
 const columns = [
   {
     title: '序号',
@@ -103,7 +103,7 @@ export default function () {
             前者可直接通过后台内置编辑器编辑其 HTML
             内容，比较省事、后者需要上传相关的文件，适合复杂页面。
           </p>
-          <p>多文件页面后续会演进成“文件管理”功能～</p>
+          <p>多文件页面后续会演进成"文件管理"功能～</p>
           <a
             target="_blank"
             href="https://vanblog.mereith.com/feature/advance/customPage.html"

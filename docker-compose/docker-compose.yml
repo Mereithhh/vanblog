@@ -10,6 +10,10 @@ services:
       TZ: 'Asia/Shanghai'
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: 'someone@mereith.com'
+      # Debug mode for admin development (set to true to enable dev mode)
+      VAN_BLOG_DEBUG_MODE: 'false'
+      # Admin proxy URL for development (e.g., http://localhost:3000)
+      VAN_BLOG_ADMIN_PROXY: ''
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static
@@ -19,6 +23,9 @@ services:
       - ${PWD}/caddy/config:/root/.config/caddy
       # caddy 证书存储
       - ${PWD}/caddy/data:/root/.local/share/caddy
+      # 挂载Caddyfile
+      - ${PWD}/Caddyfile:/app/Caddyfile
+      - ${PWD}/Caddyfile.dev:/app/Caddyfile.dev
     ports:
       # 前面的是映射到宿主机的端口号，改端口的话该前面的
       - 80:80

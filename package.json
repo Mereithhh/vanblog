@@ -37,6 +37,7 @@
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.3",
     "nan": "^2.22.2",
+    "patch-package": "^8.0.0",
     "prettier": "^3.5.3",
     "standard-version": "^9.5.0"
   }

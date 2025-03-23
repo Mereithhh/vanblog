@@ -1,6 +1,6 @@
 import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
-import thinstyle from '../Welcome/index.less';
+import '../Welcome/index.less';
 import Advance from './tabs/Advance';
 import Backup from './tabs/Backup';
 import Caddy from './tabs/Caddy';
@@ -31,7 +31,7 @@ export default function () {
       title={null}
       extra={null}
       header={{ title: null, extra: null, ghost: true }}
-      className={thinstyle.thinheader}
+      className="thinheader"
       tabActiveKey={tab}
       tabList={[
         {

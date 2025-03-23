@@ -1,20 +1,22 @@
 import { useEffect, useRef, useMemo } from 'react';
-import { history, useModel } from 'umi';
+import { history, useModel } from '@/utils/umiCompat';
+import { useLocation } from 'react-router-dom';
 import './index.css';
 
 const Footer = () => {
-  const { initialState } = useModel('@@initialState');
+  const { initialState } = useModel();
   const { current } = useRef({ hasInit: false });
-  const isInitPage = history.location.pathname.includes('/init');
+  const location = useLocation();
+  const isInitPage = location.pathname.includes('/init');
 
   const version = useMemo(() => {
     if (isInitPage) return '初始化中...';
     let v = initialState?.version || '获取中...';
-    if (history.location.pathname == '/user/login') {
+    if (location.pathname === '/user/login') {
       v = '登录后显示';
     }
     return v;
-  }, [initialState, history, isInitPage]);
+  }, [initialState, location, isInitPage]);
 
   useEffect(() => {
     if (!current.hasInit) {
@@ -27,7 +29,7 @@ const Footer = () => {
         console.log('If you like this project, please give it a star! 🌟');
       }
     }
-  }, [initialState, history, version, isInitPage]);
+  }, [initialState, version, isInitPage]);
 
   return (
     <>

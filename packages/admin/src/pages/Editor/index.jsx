@@ -21,9 +21,9 @@ import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Input, Menu, message, Modal, Space, Tag, Upload, Spin } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { history } from 'umi';
+import { history } from '@/utils/umiCompat';
 import moment from 'moment';
-import styles from './index.less';
+import './index.less';
 
 export default function () {
   const [value, setValue] = useState('');
@@ -430,7 +430,7 @@ export default function () {
   );
   return (
     <PageContainer
-      className={styles.editorContainer}
+      className="editorContainer"
       header={{
         title: (
           <Space>
@@ -469,7 +469,6 @@ export default function () {
       }}
       footer={null}
     >
-      <div style={{ height: '100%' }}>
         <div style={{ display: 'none' }}>
           <Upload
             showUploadList={false}
@@ -483,24 +482,24 @@ export default function () {
             </a>
           </Upload>
         </div>
-        <Editor
-          loading={loading}
-          setLoading={setLoading}
-          value={value}
-          onChange={(val) => {
-            setValue(val);
-            if (editorConfig?.useLocalCache && editorConfig?.useLocalCache == 'open') {
+        <div className="editor-wrapper">
+          <Editor
+            loading={loading}
+            setLoading={setLoading}
+            value={value}
+            onChange={(v) => {
+              setValue(v);
+              const date = new Date();
               window.localStorage.setItem(
                 getCacheKey(),
                 JSON.stringify({
-                  content: val,
-                  time: new Date().valueOf(),
+                  content: v,
+                  time: date,
                 }),
               );
-            }
-          }}
-        />
-      </div>
+            }}
+          />
+        </div>
     </PageContainer>
   );
 }

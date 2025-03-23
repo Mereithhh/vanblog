@@ -6,10 +6,10 @@ import math from '@bytemd/plugin-math-ssr';
 import mediumZoom from '@bytemd/plugin-medium-zoom';
 import mermaid from '@bytemd/plugin-mermaid';
 import { Editor } from '@bytemd/react';
-import { Spin } from 'antd';
+import { Spin, Button, Dropdown, message, Modal, Space, Tooltip } from 'antd';
 import 'bytemd/dist/index.css';
 import 'katex/dist/katex.css';
-import { useMemo } from 'react';
+import React, { MutableRefObject, useCallback, useEffect, useRef, useState, useMemo } from 'react';
 import '../../style/github-markdown.css';
 import '../../style/code-light.css';
 import '../../style/code-dark.css';
@@ -18,7 +18,7 @@ import { emoji } from './emoji';
 import { imgUploadPlugin, uploadImg } from './imgUpload';
 import { insertMore } from './insertMore';
 import { cn } from './locales';
-import { useModel } from '@@/plugin-model/useModel';
+import { useModel } from '@/utils/umiCompat';
 import { customContainer } from './plugins/customContainer';
 import { historyIcon } from './history';
 import rawHTML from './rawHTML';
@@ -26,7 +26,53 @@ import { Heading } from './plugins/heading';
 import { customCodeBlock } from './plugins/codeBlock';
 import { LinkTarget } from './plugins/linkTarget';
 
-const sanitize = (schema) => {
+// Toast UI editor styles (needed for reference in production)
+import './style.less';
+import './diff-style.css';
+
+// Add custom styles for the editor
+import './editor.css';
+
+// Add type declaration for sanitize
+const sanitize = (schema: any) => {
+  // Allow specific tags and attributes for SVG
+  schema.svg = {
+    tag: true,
+    attrs: {
+      xmlns: true,
+      width: true,
+      height: true,
+      viewbox: true,
+      version: true,
+      'stroke-width': true,
+      'stroke-linecap': true,
+      'stroke-linejoin': true,
+      stroke: true,
+      fill: true,
+      'class': true,
+      'font-size': true,
+      'text-anchor': true,
+      style: true,
+    },
+    children: ['path', 'polygon', 'rect', 'text', 'line', 'circle', 'defs', 'marker', 'g', 'tspan']
+  };
+
+  // Allow SVG path element
+  schema.path = {
+    tag: true,
+    attrs: {
+      d: true,
+      fill: true,
+      stroke: true,
+      class: true,
+      'marker-end': true,
+      'stroke-width': true,
+      'stroke-linecap': true,
+      'stroke-linejoin': true,
+      'data-id': true,
+    }
+  };
+
   // Allow data URIs in src attributes
   schema.protocols.src.push('data');
   
@@ -73,6 +119,7 @@ export default function EditorComponent(props: {
   setLoading: (l: boolean) => void;
 }) {
   const { loading, setLoading } = props;
+  // @ts-ignore
   const { initialState } = useModel('@@initialState');
   const navTheme = initialState?.settings?.navTheme || 'light';
   const themeClass = navTheme.toLowerCase().includes('dark') ? 'dark' : 'light';
@@ -97,7 +144,7 @@ export default function EditorComponent(props: {
   }, []);
 
   return (
-    <div style={{ height: '100%' }} className={themeClass}>
+    <div className={`editor-container ${themeClass}`}>
       <Spin spinning={loading} className="editor-wrapper">
         <Editor
           value={props.value}

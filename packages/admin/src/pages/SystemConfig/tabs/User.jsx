@@ -5,7 +5,7 @@ import { encryptPwd } from '@/services/van-blog/encryptPwd';
 import { ProForm, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, Card, message, Modal, Space } from 'antd';
 import { useRef } from 'react';
-import { history, useModel } from 'umi';
+import { history, useModel } from '@/utils/umiCompat';
 const columns = [
   { dataIndex: 'id', title: 'ID' },
   { dataIndex: 'name', title: '用户名' },

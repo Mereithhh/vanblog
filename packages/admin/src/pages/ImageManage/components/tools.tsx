@@ -1,7 +1,8 @@
 import { writeClipBoardText } from '@/services/van-blog/clipboard';
 import { message } from 'antd';
-import { StaticItem } from '../type';
-export const getImgLink = (realPath, autoCompleteHost = true) => {
+import { StaticItem } from '../types';
+
+export const getImgLink = (realPath: string, autoCompleteHost = true) => {
   let url = realPath;
   if (realPath.includes('http://') || realPath.includes('https://')) {
     url = realPath;
@@ -14,10 +15,11 @@ export const getImgLink = (realPath, autoCompleteHost = true) => {
   url = url.replace(/\(/g, '%28');
   return url;
 };
+
 export const copyImgLink = (
-  realPath,
+  realPath: string,
   isMarkdown = false,
-  info = undefined,
+  info?: string,
   autoCompleteHost = true,
 ) => {
   let url = getImgLink(realPath, autoCompleteHost);
@@ -34,6 +36,7 @@ export const copyImgLink = (
     }
   });
 };
+
 export const mergeMetaInfo = (item: StaticItem) => {
   const Dic = {
     type: '格式',
@@ -56,18 +59,19 @@ export const mergeMetaInfo = (item: StaticItem) => {
     storageType: item.storageType,
     url,
   };
-  const res = {};
+  const res: Record<string, any> = {};
 
   for (const [k, v] of Object.entries(rawObj)) {
-    res[Dic[k] || k] = KeyDic[v as any] || v;
+    res[Dic[k as keyof typeof Dic] || k] = KeyDic[v as keyof typeof KeyDic] || v;
   }
   return res;
 };
-export const downloadImg = (name, url) => {
+
+export const downloadImg = (name: string, url: string) => {
   const tag = document.createElement('a');
   // 此属性的值就是下载时图片的名称，注意，名称中不能有半角点，否则下载时后缀名会错误
   tag.setAttribute('download', name);
   const link = getImgLink(url);
   tag.href = link;
   tag.dispatchEvent(new MouseEvent('click'));
-};
+}; 

@@ -28,6 +28,8 @@ export default function () {
         grid={true}
         layout={'horizontal'}
         labelCol={{ span: 6 }}
+        wrapperCol={{ span: 16 }}
+        rowProps={{ gutter: [16, 0] }}
         request={async (params) => {
           const { data } = await getSiteInfo();
           return data;

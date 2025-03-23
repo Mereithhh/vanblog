@@ -1,25 +1,57 @@
-.theme-button {
+.theme-link {
   display: flex;
   align-items: center;
   cursor: pointer;
-  height: 100%;
-  margin-right: 6px;
-}
-.theme-icon {
-  fill: #4b5563;
-  height: 100%;
-  align-items: center;
-  :hover {
-    fill: #7a7e84;
+  color: inherit;
+  
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  span {
+    margin-left: 0;
   }
 }
+
+.theme-icon {
+  fill: currentColor;
+  height: 100%;
+  align-items: center;
+  margin-right: 8px;
+  
+  :hover {
+    fill: inherit;
+  }
+}
+
 :global {
   .ant-menu-inline-collapsed {
-    .theme-text {
+    .theme-link span {
       display: none;
     }
   }
 }
+
+// For backwards compatibility
+.theme-button {
+  display: block;
+  cursor: pointer;
+}
+
+.theme-text {
+  display: inline-block;
+}
+
+.theme-content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  padding-left: 16px;
+  width: 100%;
+}
+
 .theme-icon-dark {
   fill: rgb(158, 158, 158);
   height: 100%;

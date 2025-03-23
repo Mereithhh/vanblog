@@ -8,8 +8,9 @@ import {
 import ProForm, { ProFormSwitch } from '@ant-design/pro-form';
 import { Alert, Button, Card, Input, message, Modal, Row, Space, Spin } from 'antd';
 import lodash from 'lodash';
-import { useMemo, useState } from 'react';
-import { useModel } from 'umi';
+import { useMemo, useState, useEffect } from 'react';
+import { useForm } from 'antd/lib/form/Form';
+import { useModel } from '@/utils/umiCompat';
 
 export default function (props) {
   const [loading, setLoading] = useState(false);

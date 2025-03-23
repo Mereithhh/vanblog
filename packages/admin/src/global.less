@@ -1,4 +1,13 @@
-@import '~antd/es/style/variable.less';
+/* commented out since it doesn't exist in antd v5 */
+/* @import 'antd/es/style/themes/default.less'; */
+
+/* Define screen breakpoints directly */
+@screen-xs: 480px;
+@screen-sm: 576px;
+@screen-md: 768px;
+@screen-lg: 992px;
+@screen-xl: 1200px;
+@screen-xxl: 1600px;
 
 html,
 body,
@@ -17,6 +26,170 @@ body,
   left: unset;
 }
 
+/* Custom styles for sidebar logo and title */
+.ant-layout-sider-children {
+  display: flex;
+  flex-direction: column;
+  
+  .ant-pro-sider-logo {
+    padding: 16px !important; 
+    align-items: center !important;
+    justify-content: flex-start !important;
+    
+    a {
+      display: flex !important;
+      align-items: center !important;
+    }
+    
+    h1 {
+      margin: 0 !important;
+      color: #1890ff !important; /* Blue color for light theme */
+      font-weight: bold !important;
+      white-space: nowrap !important;
+      font-size: 18px !important;
+    }
+    
+    img {
+      height: 28px !important;
+      margin-right: 12px !important;
+    }
+  }
+  
+  /* Menu items styling - to be consistent with bottom links */
+  .ant-menu-item {
+    display: flex;
+    align-items: center;
+    
+    .anticon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .ant-menu-title-content {
+      font-weight: normal;
+    }
+  }
+  
+  /* Custom bottom links styles */
+  .custom-bottom-links {
+    margin-top: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    
+    // Remove excess padding to match main menu
+    .ant-menu {
+      border-right: none !important;
+    }
+    
+    // Style the theme button container
+    .ant-menu-item:nth-last-child(2), 
+    .ant-menu-item:last-child {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      
+      div {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+      }
+    }
+  }
+}
+
+/* Fix title color for dark themes */
+[data-theme='dark'], 
+.ant-layout-sider-dark,
+.dark-theme-body {
+  .ant-pro-sider-logo h1 {
+    color: #1890ff !important; /* Brighter blue for dark theme */
+  }
+  
+  /* Dark theme for custom bottom links */
+  .custom-bottom-links {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    
+    // Make sure menu background matches sidebar in dark mode
+    .ant-menu {
+      background: transparent !important;
+    }
+  }
+  
+  /* ByteMD dark theme styles */
+  .bytemd {
+    --bg-color: #141414 !important;
+    --border-color: #303030 !important;
+    --color: rgba(255, 255, 255, 0.65) !important;
+    border-color: #303030 !important;
+    
+    .bytemd-toolbar {
+      background-color: #141414 !important;
+      border-color: #303030 !important;
+      
+      .bytemd-toolbar-left {
+        color: rgba(255, 255, 255, 0.65) !important;
+        
+        svg {
+          color: rgba(255, 255, 255, 0.65) !important;
+          fill: rgba(255, 255, 255, 0.65) !important;
+        }
+      }
+    }
+    
+    .CodeMirror {
+      background-color: #141414 !important;
+      color: rgba(255, 255, 255, 0.65) !important;
+      
+      .CodeMirror-cursor {
+        border-left-color: rgba(255, 255, 255, 0.85) !important;
+      }
+      
+      .cm-s-default {
+        .cm-header,
+        .cm-variable-2,
+        .cm-comment,
+        .cm-link,
+        .cm-url,
+        .cm-string {
+          color: rgba(255, 255, 255, 0.65) !important;
+        }
+      }
+    }
+    
+    .bytemd-preview {
+      background-color: #141414 !important;
+      color: rgba(255, 255, 255, 0.65) !important;
+    }
+  }
+}
+
+/* Fix for collapsed logo */
+.ant-layout-sider-collapsed {
+  .ant-pro-sider-logo {
+    padding: 16px 8px !important;
+    justify-content: center !important;
+    
+    h1 {
+      display: none !important;
+    }
+  }
+  
+  /* Fix for collapsed bottom links */
+  .custom-bottom-links {
+    a, .ant-menu-item, div[style*="menuItemStyle"] {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+      justify-content: center !important;
+      margin-left: 8px !important;
+      margin-right: 8px !important;
+      
+      span:not(:first-child) {
+        display: none !important;
+      }
+    }
+  }
+}
+
 canvas {
   display: block;
 }
@@ -25,6 +198,7 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 ul,
@@ -203,3 +377,52 @@ body .ant-page-header-heading-title {
     padding: 0;
   }
 }
+
+// Fix for theme button and SVG icons
+.ant-pro-sider-link-menu {
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+// Fix SVG data URL handling
+img[src^="data:image/svg+xml"] {
+  display: inline-block;
+  width: auto;
+  height: auto;
+}
+
+.ant-layout-sider,
+.ant-menu,
+.ant-layout-content,
+.ant-card,
+.ant-table,
+.ant-form-item,
+.ant-input,
+.ant-btn {
+  transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, color 0.3s ease-in-out !important;
+}
+
+/* Add specific class for dark theme links */
+.dark-theme-link {
+  color: rgba(255, 255, 255, 0.9) !important;
+  
+  svg {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  span {
+    color: rgba(255, 255, 255, 0.9) !important;
+  }
+  
+  &:hover {
+    color: #40a9ff !important;
+    
+    svg, span {
+      color: #40a9ff !important;
+    }
+  }
+}
+
+/* Add theme transition for better UX */

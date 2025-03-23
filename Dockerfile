@@ -45,7 +45,7 @@ RUN set -ex && \
       pnpm config set registry https://registry.npmmirror.com; \
     fi && \
     # 清理
-    apt-get remove -y curl jq && \
+    # apt-get remove -y curl jq && \
     apt-get autoremove -y && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -75,6 +75,7 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store \
 # Admin 构建
 FROM deps AS admin-builder
 WORKDIR /app
+# Use a more standard memory setting and keep legacy openssl provider
 ENV NODE_OPTIONS="--max_old_space_size=4096 --openssl-legacy-provider"
 ENV NODE_ENV="production"
 # 禁用 husky
@@ -84,31 +85,31 @@ ENV npm_config_husky_skip_install="1"
 # 禁用 esbuild 服务
 ENV ESBUILD_SKIP_DOWNLOAD="1"
 
-# 复制 admin 包源码
+# 复制 admin 包源码和所需依赖 
 COPY packages/admin ./packages/admin
 
 # 在 admin 目录中执行构建
 RUN cd packages/admin && \
+    # 确保使用生产模式构建
+    export NODE_ENV=production && \
     # 安装依赖并跳过 husky 安装
     npm config set ignore-scripts true && \
     pnpm install --frozen-lockfile && \
-    # 在上层目录安装所有依赖，确保 PageLoading 可用
-    cd .. && pnpm install --frozen-lockfile && \
-    # 返回 admin 目录进行构建
-    cd admin && \
-    echo "====== 查看配置文件 ======" && \
-    ls -la config/ && \
+    # 确保 vite.config.ts 文件存在且可读
+    ls -la vite.config.ts && \
     echo "====== 开始构建 ======" && \
-    # 使用默认命令进行构建
-    (pnpm build && ls -la dist || (echo "===== 构建失败，错误信息 =====" && \
-    ls -la node_modules/.cache/umi/ 2>/dev/null || echo "UMI 缓存目录不存在" && \
+    # 直接使用 Vite 构建，确保使用正确的配置文件
+    pnpm build && \
+    # 检查构建结果
+    ls -la dist || (echo "===== 构建失败，错误信息 =====" && \
     cat npm-debug.log 2>/dev/null || echo "没有找到 npm-debug.log" && \
-    echo "===== 尝试输出 UMI 日志 =====" && \
-    find node_modules/.cache -name "*.log" -exec cat {} \; 2>/dev/null || echo "找不到任何日志文件" && \
-    exit 1))
+    cat vite.log 2>/dev/null || echo "没有找到 vite.log" && exit 1)
 
-# 确保 dist 目录存在
-RUN test -d /app/packages/admin/dist || (echo "Admin 构建失败：dist 目录不存在" && exit 1)
+# 确保 dist 目录存在并显示其内容
+RUN test -d /app/packages/admin/dist && \
+    echo "Admin 构建成功，文件列表：" && \
+    ls -la /app/packages/admin/dist || \
+    (echo "Admin 构建失败：dist 目录不存在" && exit 1)
 
 # Server 构建
 FROM deps AS server-builder
@@ -197,7 +198,7 @@ RUN mkdir -p /app/admin/admin && \
 # 复制配置文件
 WORKDIR /app
 COPY caddyTemplate.json ./
-COPY Caddyfile ./
+COPY Caddyfile* ./
 COPY scripts/start.js ./
 COPY entrypoint.sh ./
 
@@ -213,6 +214,9 @@ ENV VAN_BLOG_ALLOW_DOMAINS="pic.mereith.com"
 ENV VAN_BLOG_DATABASE_URL="mongodb://mongo:27017/vanBlog?authSource=admin"
 ENV EMAIL="vanblog@mereith.com"
 ENV VAN_BLOG_WALINE_DB="waline"
+# Debug mode configuration
+ENV VAN_BLOG_DEBUG_MODE="false"
+ENV VAN_BLOG_ADMIN_PROXY=""
 
 # 版本信息
 ARG CORN_VERSION

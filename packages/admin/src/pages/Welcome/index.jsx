@@ -1,86 +1,45 @@
-import { useTab } from '@/services/van-blog/useTab';
+import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
-import style from './index.less';
-import Article from './tabs/article';
+import './index.less';
+import ArticleTab from './tabs/article';
 import OverView from './tabs/overview';
 import Viewer from './tabs/viewer';
-const Welcome = () => {
-  const [tab, setTab] = useTab('overview', 'tab');
+import { useModel } from '@/utils/umiCompat';
 
-  // const { initialState } = useModel('@@initialState');
-  const tabMap = {
-    overview: <OverView />,
-    viewer: <Viewer />,
-    article: <Article />,
-  };
-  // const showCommentBtn = useMemo(() => {
-  //   const url = initialState?.walineServerUrl;
-  //   if (!url || url == '') {
-  //     return false;
-  //   }
-  //   return true;
-  // }, [initialState]);
+export default () => {
+  const { initialState } = useModel('@@initialState');
+  const isDarkMode = initialState?.settings?.navTheme?.toLowerCase().includes('dark');
+  
+  const navs = useRef([
+    {
+      key: 'overview',
+      tab: '总览',
+    },
+    {
+      key: 'article',
+      tab: '文章数据',
+    },
+    {
+      key: 'viewer',
+      tab: '访问数据',
+    },
+  ]);
+  const [key, setKey] = useState('overview');
+  
+  // Use appropriate background color based on theme
+  const backgroundColor = isDarkMode ? '#141414' : '#f0f2f5';
+  
   return (
-    <PageContainer
-      // title={null}
-      extra={null}
-      header={{ title: null, extra: null, ghost: true }}
-      className={style.thinheader}
-      onTabChange={(k) => {
-        setTab(k);
-      }}
-      tabActiveKey={tab}
-      tabList={[
-        {
-          tab: '数据概览',
-          key: 'overview',
-        },
-        {
-          tab: '访客统计',
-          key: 'viewer',
-        },
-        {
-          tab: '文章分析',
-          key: 'article',
-        },
-      ]}
-      title={null}
-      // extra={
-      //   <Space>
-      //     {showCommentBtn && (
-      //       <Button
-      //         type="primary"
-      //         onClick={() => {
-      //           const urlRaw = data?.link?.walineServerUrl || '';
-      //           if (urlRaw == '') {
-      //             return;
-      //           }
-      //           const u = new URL(urlRaw).toString();
-      //           window.open(`${u}ui`, '_blank');
-      //         }}
-      //       >
-      //         评论管理
-      //       </Button>
-      //     )}
-      //     <Button
-      //       type="primary"
-      //       onClick={() => {
-      //         const urlRaw = data?.link?.baseUrl || '';
-      //         if (urlRaw == '') {
-      //           return;
-      //         }
-
-      //         window.open(`${urlRaw}`, '_blank');
-      //       }}
-      //     >
-      //       前往主站
-      //     </Button>
-      //   </Space>
-      // }
-    >
-      {tabMap[tab]}
-    </PageContainer>
+    <div style={{ background: backgroundColor, margin: -24, padding: 24 }}>
+      <PageContainer
+        className="thinheader"
+        tabList={navs.current}
+        onTabChange={(value) => setKey(value)}
+      >
+        {key === 'overview' && <OverView />}
+        {key === 'article' && <ArticleTab />}
+        {key === 'viewer' && <Viewer />}
+      </PageContainer>
+    </div>
   );
 };
-
-export default Welcome;

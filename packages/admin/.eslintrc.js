@@ -5,4 +5,9 @@ module.exports = {
     page: true,
     REACT_APP_ENV: true,
   },
+  rules: {
+    'react/no-find-dom-node': process.env.NODE_ENV === 'development' ? 'warn' : 'error',
+    'react/no-deprecated': process.env.NODE_ENV === 'development' ? 'warn' : 'error',
+    'react/jsx-props-no-spreading': 'off',
+  },
 };

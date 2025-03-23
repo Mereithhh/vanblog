@@ -1,0 +1,74 @@
+{
+	# Global options for Caddy
+	debug
+}
+
+:80 {
+	# Log configuration for admin routes in dev mode
+	log {
+		output file /var/log/caddy-admin-dev.log
+		format console
+		level DEBUG
+	}
+
+	# Handle admin routes
+	@adminRoutes path /admin*
+	handle @adminRoutes {
+		reverse_proxy ADMIN_PROXY_PLACEHOLDER
+	}
+
+	# Handle admin static files (but don't serve them in dev mode)
+	@adminStatic path /admin/*.js /admin/*.css /admin/*.png /admin/*.jpg /admin/*.svg /admin/*.json /admin/*chunk*.js /admin/*.async.js /admin/p__*.js
+	handle @adminStatic {
+		reverse_proxy ADMIN_PROXY_PLACEHOLDER
+	}
+
+	# Handle direct Waline endpoints
+	@comment path /comment* /token* /oauth* /user* /ui* /db*
+	handle @comment {
+		reverse_proxy 127.0.0.1:8360
+	}
+
+	# Handle Waline endpoints with /api/ prefix
+	@apiWaline path /api/comment* /api/user* /api/token* /api/oauth* /api/ui* /api/db* /api/article*
+	handle @apiWaline {
+		reverse_proxy 127.0.0.1:8360
+	}
+
+	# Handle regular API endpoints
+	@api path /api/*
+	handle @api {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	# Static assets, RSS feeds, etc.
+	@favicon path /favicon*
+	handle @favicon {
+		uri replace /favicon /static/img/favicon
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	@feeds path /feed.json /feed.xml /atom.xml /sitemap.xml
+	handle @feeds {
+		uri replace /feed.json /rss/feed.json
+		uri replace /feed.xml /rss/feed.xml
+		uri replace /atom.xml /rss/atom.xml
+		uri replace /sitemap.xml /sitemap/sitemap.xml
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	@static path /static/* /custom/* /c/* /rss/* /swagger*
+	handle @static {
+		reverse_proxy 127.0.0.1:3000
+	}
+
+	# Default handler for website
+	handle {
+		reverse_proxy 127.0.0.1:3001
+	}
+
+	encode gzip zstd
+	log {
+		output file /var/log/caddy.log
+	}
+} 

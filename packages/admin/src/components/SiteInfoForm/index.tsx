@@ -5,6 +5,7 @@ import {
   ProFormText,
 } from '@ant-design/pro-components';
 import UrlFormItem from '../UrlFormItem';
+import { Col } from 'antd';
 
 export default function (props: {
   showOption: boolean;
@@ -23,6 +24,7 @@ export default function (props: {
             label="作者名字"
             placeholder={'请输入作者名字'}
             rules={[{ required: true, message: '这是必填项' }]}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormText
             name="authorDesc"
@@ -30,64 +32,76 @@ export default function (props: {
             label="作者描述"
             placeholder={'请输入作者描述'}
             rules={[{ required: true, message: '这是必填项' }]}
+            colProps={{ xs: 24, sm: 24 }}
           />
-          <UrlFormItem
-            isInit={props.isInit}
-            formRef={props.form}
-            name="authorLogo"
-            required
-            label="作者 Logo"
-            placeholder={'请输入作者 Logo Url'}
-          />
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              isInit={props.isInit}
+              formRef={props.form}
+              name="authorLogo"
+              required
+              label="作者 Logo"
+              placeholder={'请输入作者 Logo Url'}
+            />
+          </Col>
         </>
       )}
       {props.showOption && (
-        <UrlFormItem
-          required={false}
-          formRef={props.form}
-          name="authorLogoDark"
-          label="作者 Logo（黑暗模式）"
-          placeholder={'请输入黑暗模式作者 Logo Url，留空表示沿用上个'}
-          isInit={props.isInit}
-        />
+        <Col xs={24} sm={24}>
+          <UrlFormItem
+            required={false}
+            formRef={props.form}
+            name="authorLogoDark"
+            label="作者 Logo（黑暗模式）"
+            placeholder={'请输入黑暗模式作者 Logo Url，留空表示沿用上个'}
+            isInit={props.isInit}
+          />
+        </Col>
       )}
       {props.showOption && (
         <>
-          <UrlFormItem
-            formRef={props.form}
-            name="siteLogo"
-            required={false}
-            label="网站 Logo"
-            placeholder={'请输入网站 Logo Url'}
-            isInit={props.isInit}
-          />
-          <UrlFormItem
-            formRef={props.form}
-            name="siteLogoDark"
-            label="网站 Logo（黑暗模式）"
-            required={false}
-            placeholder={'请输入网站黑暗模式 Logo Url，留空表示沿用上个'}
-            isInit={props.isInit}
-          />
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              formRef={props.form}
+              name="siteLogo"
+              required={false}
+              label="网站 Logo"
+              placeholder={'请输入网站 Logo Url'}
+              isInit={props.isInit}
+            />
+          </Col>
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              formRef={props.form}
+              name="siteLogoDark"
+              label="网站 Logo（黑暗模式）"
+              required={false}
+              placeholder={'请输入网站黑暗模式 Logo Url，留空表示沿用上个'}
+              isInit={props.isInit}
+            />
+          </Col>
         </>
       )}
       {props.showRequire && (
         <>
-          <UrlFormItem
-            isInit={props.isInit}
-            formRef={props.form}
-            name="favicon"
-            required
-            label="网站图标(favicon)"
-            placeholder={'请输入网站图标 Url'}
-            isFavicon={true}
-          />
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              isInit={props.isInit}
+              formRef={props.form}
+              name="favicon"
+              required
+              label="网站图标(favicon)"
+              placeholder={'请输入网站图标 Url'}
+              isFavicon={true}
+            />
+          </Col>
           <ProFormText
             name="siteName"
             required
             label="网站名"
             placeholder={'请输入网站名'}
             rules={[{ required: true, message: '这是必填项' }]}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormText
             name="siteDesc"
@@ -95,43 +109,52 @@ export default function (props: {
             label="网站描述"
             placeholder={'请输入网站描述'}
             rules={[{ required: true, message: '这是必填项' }]}
+            colProps={{ xs: 24, sm: 24 }}
           />
         </>
       )}
       {props.showOption && (
         <>
-          <UrlFormItem
-            formRef={props.form}
-            isInit={props.isInit}
-            name="payAliPay"
-            label="支付宝图片 Url"
-            placeholder={'请输入支付宝打赏图片 Url，留空不启用打赏'}
-            required={false}
-          />
-          <UrlFormItem
-            formRef={props.form}
-            isInit={props.isInit}
-            name="payAliPayDark"
-            label="支付宝图片 Url（黑暗模式）"
-            placeholder={'请输入黑暗模式支付宝打赏图片 Url，留空沿用上个'}
-            required={false}
-          />
-          <UrlFormItem
-            formRef={props.form}
-            isInit={props.isInit}
-            name="payWechat"
-            label="微信图片 Url"
-            placeholder={'请输入微信打赏图片 Url，留空不启用打赏'}
-            required={false}
-          />
-          <UrlFormItem
-            formRef={props.form}
-            isInit={props.isInit}
-            name="payWechatDark"
-            label="微信图片 Url（黑暗模式）"
-            placeholder={'请输入黑暗模式微信打赏图片 Url，留空沿用上个'}
-            required={false}
-          />
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              formRef={props.form}
+              isInit={props.isInit}
+              name="payAliPay"
+              label="支付宝图片 Url"
+              placeholder={'请输入支付宝打赏图片 Url，留空不启用打赏'}
+              required={false}
+            />
+          </Col>
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              formRef={props.form}
+              isInit={props.isInit}
+              name="payAliPayDark"
+              label="支付宝图片 Url（黑暗模式）"
+              placeholder={'请输入黑暗模式支付宝打赏图片 Url，留空沿用上个'}
+              required={false}
+            />
+          </Col>
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              formRef={props.form}
+              isInit={props.isInit}
+              name="payWechat"
+              label="微信图片 Url"
+              placeholder={'请输入微信打赏图片 Url，留空不启用打赏'}
+              required={false}
+            />
+          </Col>
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              formRef={props.form}
+              isInit={props.isInit}
+              name="payWechatDark"
+              label="微信图片 Url（黑暗模式）"
+              placeholder={'请输入黑暗模式微信打赏图片 Url，留空沿用上个'}
+              required={false}
+            />
+          </Col>
         </>
       )}
       {props.showRequire && (
@@ -142,48 +165,62 @@ export default function (props: {
           placeholder={'请输入包含访问协议的完整 URL'}
           tooltip={'请输入包含访问协议的完整 URL，此 URL 会被用来生成前后台/RSS的相关数据。'}
           required={true}
+          colProps={{ xs: 24, sm: 24 }}
         />
       )}
       {props.showOption && (
         <>
-          <ProFormText name="copyrightAggreement" label="版权协议" placeholder={'版权协议'} />
+          <ProFormText 
+            name="copyrightAggreement" 
+            label="版权协议" 
+            placeholder={'版权协议'} 
+            colProps={{ xs: 24, sm: 24 }}
+          />
           <ProFormText
             name="beianNumber"
             label="ICP 备案号"
             placeholder={'请输入备案号，留空不显示备案信息'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormText
             name="beianUrl"
             label="ICP 备案网址"
             placeholder={'请输入备案网址，留空不显示备案信息'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormText
             name="gaBeianNumber"
             label="公安备案号"
             placeholder={'请输入公安备案号，留空不显示公安备案信息'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormText
             name="gaBeianUrl"
             label="公安备案网址"
             placeholder={'请输入公安备案号点击后跳转的网址，留空则不跳转'}
+            colProps={{ xs: 24, sm: 24 }}
           />
-          <UrlFormItem
-            formRef={props.form}
-            isInit={props.isInit}
-            name="gaBeianLogoUrl"
-            label="公安备案 Logo 地址"
-            placeholder={'请输入公安备案的 logo 的 url，留空不显示公安备案 logo'}
-            required={false}
-          />
+          <Col xs={24} sm={24}>
+            <UrlFormItem
+              formRef={props.form}
+              isInit={props.isInit}
+              name="gaBeianLogoUrl"
+              label="公安备案 Logo 地址"
+              placeholder={'请输入公安备案的 logo 的 url，留空不显示公安备案 logo'}
+              required={false}
+            />
+          </Col>
           <ProFormText
             name="gaAnalysisId"
             label="Google Analysis ID"
             placeholder={'请输入 Google Analysis ID，留空表示不启用'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormText
             name="baiduAnalysisId"
             label="Baidu 分析 ID"
             placeholder={'请输入 Baidu 分析 ID，留空表示不启用'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'enableComment'}
@@ -194,12 +231,14 @@ export default function (props: {
               false: '关闭',
             }}
             tooltip={'默认开启'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormDateTimePicker
             name="since"
             width={'lg'}
             label="建站时间"
             placeholder="不填默认为此刻"
+            colProps={{ xs: 24, sm: 24 }}
           />
         </>
       )}
@@ -215,6 +254,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认隐藏，开启后将在主导航栏下方显示分类子导航栏（其实就是双层导航栏）。'}
+            colProps={{ xs: 24, sm: 24 }}
           />
 
           <ProFormDigit
@@ -226,6 +266,7 @@ export default function (props: {
             min={0}
             max={200}
             tooltip={'导航栏显示的是网站名的时候，设置正确偏移以对其分类第一个字。'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'headerLeftContent'}
@@ -236,6 +277,7 @@ export default function (props: {
             }}
             placeholder="网站名"
             tooltip={'显示网站 logo 的前提是已设置正确的网站 logo 哦。默认显示网站名'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'showAdminButton'}
@@ -246,6 +288,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后前台会隐藏后台按钮'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'showDonateInfo'}
@@ -256,6 +299,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后关于页面会隐藏捐赠信息'}
+            colProps={{ xs: 24, sm: 24 }}
           />
 
           <ProFormSelect
@@ -267,6 +311,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后文章页面将不显示版权声明'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'showDonateButton'}
@@ -277,6 +322,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示（前提是设置了支付宝和微信支付图片），关闭后所有位置将不显示打赏按钮'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'showDonateInAbout'}
@@ -287,6 +333,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认隐藏，开启后关于页面会显示打赏按钮'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'defaultTheme'}
@@ -298,6 +345,7 @@ export default function (props: {
               light: '亮色模式',
             }}
             tooltip={'设置后第一次进入前台的用户将以此作为默认主题模式'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'allowOpenHiddenPostByUrl'}
@@ -308,6 +356,7 @@ export default function (props: {
               false: '不允许',
             }}
             tooltip={'默认不允许，开启后可通过 URL 打开隐藏文章。'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'enableCustomizing'}
@@ -318,6 +367,7 @@ export default function (props: {
               false: '关闭',
             }}
             tooltip={'默认开启，关闭后即使通过客制化面板，自定义了 CSS、Script、HTML 也不会生效。'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'showRSS'}
@@ -328,6 +378,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后所有位置会隐藏 RSS 按钮。'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'openArticleLinksInNewWindow'}
@@ -340,6 +391,7 @@ export default function (props: {
             tooltip={
               '默认在当前页面跳转，会影响除了导航栏之外的大部分链接。注意如果打开新标签的话，就不会那么丝滑了哦（当前页面跳转的话是无感切换的）'
             }
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'showExpirationReminder'}
@@ -350,6 +402,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认显示，关闭后文章页面不会显示内容过期提醒。'}
+            colProps={{ xs: 24, sm: 24 }}
           />
           <ProFormSelect
             name={'showEditButton'}
@@ -360,6 +413,7 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认开启，关闭后登录后台时，前台将不再显示编辑按钮。'}
+            colProps={{ xs: 24, sm: 24 }}
           />
         </>
       )}

@@ -1,6 +1,8 @@
 import { logout } from '@/services/van-blog/api';
 import { message } from 'antd';
-import { history, useModel } from 'umi';
+import { history, useModel } from '@/utils/umiCompat';
+import { removeAccessToken } from '@/utils/auth';
+
 const loginOut = async () => {
   await logout();
 
@@ -14,12 +16,14 @@ const loginOut = async () => {
       //   redirect: pathname + search,
       // }),
     });
-    window.localStorage.removeItem('token');
+    removeAccessToken();
   }
 };
+
 export default function (props) {
-  const { setInitialState } = useModel('@@initialState');
+  const { setInitialState } = useModel();
   const { trigger } = props;
+  
   return (
     <div
       onClick={() => {

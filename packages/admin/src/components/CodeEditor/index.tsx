@@ -1,5 +1,8 @@
-import MonacoEditor from 'react-monaco-editor';
-import { useModel } from 'umi';
+// import MonacoEditor from 'react-monaco-editor';
+import { useModel } from '@/utils/umiCompat';
+import { Input } from 'antd';
+
+const { TextArea } = Input;
 
 export interface CodeEditorProps {
   value: string;
@@ -11,18 +14,15 @@ export interface CodeEditorProps {
 }
 
 export default function ({ style, width, height, language, onChange, value }: CodeEditorProps) {
-  const { initialState } = useModel('@@initialState');
+  const { initialState } = useModel();
 
   return (
     <div style={style}>
-      <MonacoEditor
-        width={width}
-        height={height}
-        language={language}
-        theme={initialState?.settings?.navTheme == 'light' ? 'vs-light' : 'vs-dark'}
+      <TextArea
+        style={{ width: width || '100%', height: height || 300 }}
         value={value}
-        onChange={(v) => {
-          onChange(v);
+        onChange={(e) => {
+          onChange(e.target.value);
         }}
       />
     </div>

@@ -1,13 +1,17 @@
-import NumSelect from '@/components/NumSelect';
-import TipTitle from '@/components/TipTitle';
+import { Line, Column } from '@ant-design/plots';
+import {
+  ProCard,
+  StatisticCard,
+} from '@ant-design/pro-components';
+import { Col, Row, Spin, Statistic as AntdStatistic } from 'antd';
 import { getWelcomeData } from '@/services/van-blog/api';
-import { useNum } from '@/services/van-blog/useNum';
-import { Area } from '@ant-design/plots';
-import { ProCard, StatisticCard } from '@ant-design/pro-components';
-import { Spin } from 'antd';
+import NumSelect from '@/components/NumSelect';
 import RcResizeObserver from 'rc-resize-observer';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import style from '../index.less';
+import '../index.less';
+import { Area } from '@ant-design/plots';
+import TipTitle from '@/components/TipTitle';
+import { useNum } from '@/services/van-blog/useNum';
 const { Statistic } = StatisticCard;
 
 const OverView = () => {
@@ -132,7 +136,7 @@ const OverView = () => {
           <StatisticCard
             style={{ marginBottom: responsive ? 8 : 0 }}
             colSpan={!responsive ? 12 : 24}
-            className={style['card-full-title']}
+            className="card-full-title"
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>访客数趋势图</div>
@@ -144,7 +148,7 @@ const OverView = () => {
 
           <StatisticCard
             colSpan={!responsive ? 12 : 24}
-            className={style['card-full-title']}
+            className="card-full-title"
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>访问量趋势图</div>
@@ -162,7 +166,7 @@ const OverView = () => {
           <StatisticCard
             style={{ marginBottom: responsive ? 8 : 0 }}
             colSpan={!responsive ? 12 : 24}
-            className={style['card-full-title']}
+            className="card-full-title"
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>总访客数趋势图</div>
@@ -174,7 +178,7 @@ const OverView = () => {
 
           <StatisticCard
             colSpan={!responsive ? 12 : 24}
-            className={style['card-full-title']}
+            className="card-full-title"
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>总访问量趋势图</div>

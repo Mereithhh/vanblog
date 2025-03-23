@@ -1,7 +1,7 @@
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Modal, Space, Spin } from 'antd';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { history, useModel } from 'umi';
+import { history, useModel } from '@/utils/umiCompat';
 import TipTitle from '../../components/TipTitle';
 export default function () {
   const { initialState } = useModel('@@initialState');
@@ -29,8 +29,8 @@ export default function () {
           <p>本管理页面也是内嵌的 Waline 后台管理页面。</p>
           <p>首次使用请先注册，首个注册的用户将默认成为管理员。</p>
           <p>
-            PS: 评论功能默认开启，关闭请前往
-            站点设置->系统设置->站点配置->高级设置->是否开启评论系统
+            PS: 评论功能默认开启，关闭请前往站点设置-{'>'} 系统设置
+            -{'>'}站点配置-{'>'} 高级设置-{'>'} 是否开启评论系统
           </p>
           <p>
             <a

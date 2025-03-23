@@ -1,4 +1,4 @@
-import { copyImgLink, getImgLink } from '@/pages/Static/img/tools';
+import { copyImgLink, getImgLink } from '@/pages/ImageManage/components/tools';
 import { getClipboardContents } from '@/services/van-blog/clipboard';
 import { message } from 'antd';
 import { BytemdPlugin } from 'bytemd';

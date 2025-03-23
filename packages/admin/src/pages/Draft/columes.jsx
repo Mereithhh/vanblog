@@ -4,8 +4,11 @@ import UpdateModal from '@/components/UpdateModal';
 import { genActiveObj } from '@/services/van-blog/activeColTools';
 import { deleteDraft, getAllCategories, getDraftById, getTags } from '@/services/van-blog/api';
 import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
-import { message, Modal, Tag } from 'antd';
-import { history } from 'umi';
+import { message, Modal, Tag, Button, Skeleton, Space } from 'antd';
+import { history } from '@/utils/umiCompat';
+import PublishModal from '@/components/PublishDraftModal';
+import { withoutKey } from '@/utils/props';
+
 export const columns = [
   {
     dataIndex: 'id',
@@ -52,8 +55,8 @@ export const columns = [
     fieldProps: { showSearch: true, placeholder: '请搜索或选择' },
     valueType: 'select',
     width: 120,
-    renderFormItem: (_, { defaultRender }) => {
-      return defaultRender(_);
+    renderFormItem: (item, { defaultRender }) => {
+      return defaultRender(withoutKey(item));
     },
     request: async () => {
       const { data: tags } = await getTags();

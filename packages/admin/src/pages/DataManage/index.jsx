@@ -1,12 +1,13 @@
 import { useTab } from '@/services/van-blog/useTab';
 import { PageContainer } from '@ant-design/pro-layout';
-import thinstyle from '../Welcome/index.less';
+import '../Welcome/index.less';
 import Category from './tabs/Category';
 import Donate from './tabs/Donate';
 import Link from './tabs/Link';
 import Menu from './tabs/Menu';
 import Social from './tabs/Social';
 import Tag from './tabs/Tag';
+
 export default function () {
   const tabMap = {
     category: <Category />,
@@ -23,7 +24,7 @@ export default function () {
       title={null}
       extra={null}
       header={{ title: null, extra: null, ghost: true }}
-      className={thinstyle.thinheader}
+      className="thinheader"
       tabActiveKey={tab}
       tabList={[
         {

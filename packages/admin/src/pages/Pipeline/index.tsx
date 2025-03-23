@@ -5,7 +5,7 @@ import { Button, message, Modal, Space, Tag } from 'antd';
 import { getPiplelines, getPipelineConfig, deletePipelineById } from '@/services/van-blog/api';
 import PipelineModal from './components/PipelineModal';
 import { useEffect, useRef, useState } from 'react';
-import { history } from 'umi';
+import { history } from '@/utils/umiCompat';
 
 export default function () {
   const [pipelineConfig, setPipelineConfig] = useState<any[]>([]);

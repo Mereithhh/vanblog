@@ -1,8 +1,6 @@
-// @ts-ignore
-
-/* eslint-disable */
-import { request } from 'umi';
+import request from '@/utils/request';
 import { encodeQuerystring } from './encode';
+import { encryptPwd } from './encryptPwd';
 
 export async function fetchAllMeta(options) {
   return request('/api/admin/meta', {
@@ -28,7 +26,7 @@ export async function getLoginConfig() {
 export async function updateLoginConfig(body) {
   return request('/api/admin/setting/login', {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function getLayoutConfig() {
@@ -39,7 +37,7 @@ export async function getLayoutConfig() {
 export async function updateLayoutConfig(body) {
   return request('/api/admin/setting/layout', {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function getWalineConfig() {
@@ -50,7 +48,7 @@ export async function getWalineConfig() {
 export async function updateWalineConfig(body) {
   return request('/api/admin/setting/waline', {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function getISRConfig() {
@@ -61,7 +59,7 @@ export async function getISRConfig() {
 export async function updateISRConfig(body) {
   return request('/api/admin/isr', {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function clearCaddyLog() {
@@ -82,20 +80,20 @@ export async function getCaddyLog() {
 export async function setHttpsConfig(data) {
   return request('/api/admin/caddy/https', {
     method: 'PUT',
-    data: data,
+    body: data,
   });
 }
 
 export async function fetchInit(body) {
   return request('/api/admin/init', {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function searchArtclesByLink(link) {
   return request('/api/admin/article/searchByLink', {
     method: 'POST',
-    data: {
+    body: {
       link,
     },
   });
@@ -112,12 +110,30 @@ export async function exportAllImgs() {
 }
 
 export async function login(body, options) {
+  body.username = body.username.toLowerCase();
+  body.password = encryptPwd(body.username, body.password);
+  console.log('[DEBUG] API login called with body structure:', 
+    JSON.stringify({
+      ...body,
+      username: body.username,
+      password: body.password
+    }, null, 2)
+  );
+  
+  const payload = {
+    username: body.username,
+    password: body.password
+  };
+  
+  console.log('[DEBUG] Sending login request with username:', payload.username, '(using pre-encrypted password)');
+  
+  // 使用POST方法发送登录请求
   return request('/api/admin/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    data: body,
+    body: payload,
     ...(options || {}),
   });
 }
@@ -138,7 +154,7 @@ export async function restore(data, options) {
 export async function createArticle(body) {
   return request('/api/admin/article', {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 
@@ -150,13 +166,13 @@ export async function deleteArticle(id) {
 export async function createCollaborator(body) {
   return request('/api/admin/collaborator', {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function createCustomPage(body) {
   return request('/api/admin/customPage', {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function createCustomFile(path, subPath) {
@@ -172,13 +188,13 @@ export async function createCustomFolder(path, subPath) {
 export async function updateCustomPage(body) {
   return request('/api/admin/customPage', {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function updateCustomPageFileInFolder(pathname, filePath, content) {
   return request('/api/admin/customPage/file', {
     method: 'PUT',
-    data: {
+    body: {
       pathname,
       filePath,
       content,
@@ -213,7 +229,7 @@ export async function getCustomPageFileDataByPath(path, key) {
 export async function updateCollaborator(body) {
   return request('/api/admin/collaborator', {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function deleteCollaborator(id) {
@@ -240,25 +256,25 @@ export async function getLog(type, page, pageSize = 10) {
 export async function updateSiteInfo(body) {
   return request(`/api/admin/meta/site`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function updateUser(body) {
   return request(`/api/admin/auth`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function createCategory(body) {
   return request(`/api/admin/category/`, {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function updateCategory(name, value) {
   return request(`/api/admin/category/${name}`, {
     method: 'PUT',
-    data: value,
+    body: value,
   });
 }
 export async function updateTag(name, value) {
@@ -284,25 +300,25 @@ export async function deleteDraft(id) {
 export async function createDraft(body) {
   return request(`/api/admin/draft`, {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function publishDraft(id, body) {
   return request(`/api/admin/draft/publish?id=${id}`, {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function createDonate(body) {
   return request(`/api/admin/meta/reward`, {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function updateLink(body) {
   return request(`/api/admin/meta/link`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function getLink() {
@@ -313,7 +329,7 @@ export async function getLink() {
 export async function updateMenu(body) {
   return request(`/api/admin/meta/menu`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function getMenu() {
@@ -330,13 +346,13 @@ export async function deleteLink(name) {
 export async function createLink(body) {
   return request(`/api/admin/meta/link`, {
     method: 'POST',
-    data: body,
+    body: body,
   });
 }
 export async function updateDonate(body) {
   return request(`/api/admin/meta/reward`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function deleteDonate(name) {
@@ -352,7 +368,7 @@ export async function getDonate() {
 export async function updateSocial(body) {
   return request(`/api/admin/meta/social`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function getSocial() {
@@ -395,19 +411,19 @@ export async function deleteSocial(name) {
 export async function updateArticle(id, body) {
   return request(`/api/admin/article/${id}`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function updateDraft(id, body) {
   return request(`/api/admin/draft/${id}`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function updateAbout(body) {
   return request(`/api/admin/meta/about`, {
     method: 'PUT',
-    data: body,
+    body: body,
   });
 }
 export async function getAbout() {
@@ -467,7 +483,7 @@ export async function getStaticSetting() {
 export async function updateStaticSetting(data) {
   return request(`/api/admin/setting/static`, {
     method: 'PUT',
-    data: data,
+    body: data,
   });
 }
 export async function getDraftsByOption(option) {
@@ -527,7 +543,7 @@ export async function createPipeline(data) {
 export async function triggerPipelineById(id, input) {
   return request(`/api/admin/pipeline/trigger/${id}`, {
     method: 'POST',
-    data: input,
+    body: input,
   });
 }
 export async function createApiToken(data) {

@@ -3,7 +3,7 @@ import { ModalForm, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, Card, message, Modal, Space, Typography } from 'antd';
 
 import { useRef } from 'react';
-import { history } from 'umi';
+import { history } from '@/utils/umiCompat';
 const columns = [
   { dataIndex: '_id', title: 'ID' },
   { dataIndex: 'name', title: '名称' },

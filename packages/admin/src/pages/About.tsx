@@ -1,91 +1,53 @@
-import ProCard from '@ant-design/pro-card';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Image, Space, Spin, Tag } from 'antd';
 import { useMemo } from 'react';
-import { useModel } from 'umi';
-export default function (props) {
-  const { initialState } = useModel('@@initialState');
+import { useModel } from '@/utils/umiCompat';
+
+interface InitialState {
+  version?: string;
+}
+
+export default function() {
+  const { initialState } = useModel() as { initialState: InitialState | undefined };
+  
   const version = useMemo(() => {
-    let v = initialState?.version || '获取中';
-    return v;
-  }, [initialState, history]);
+    return initialState?.version || 'Unknown';
+  }, [initialState]);
+
+  if (!initialState) {
+    return (
+      <PageContainer title="关于" ghost>
+        <Spin spinning={true} />
+      </PageContainer>
+    );
+  }
 
   return (
-    <PageContainer title={null} extra={null} header={{ title: null, extra: null, ghost: true }}>
-      <Spin spinning={version == '获取中'}>
-        <ProCard>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              flexDirection: 'column',
-              userSelect: 'none',
-            }}
-          >
-            <Image width={200} src="/logo.svg" alt="logo" preview={false} />
-            <div
-              style={{
-                fontSize: 26,
-                fontWeight: 500,
-                marginBottom: 8,
-                display: 'flex',
-                alignItems: 'center',
-              }}
-            >
-              <div>VanBlog</div>
-              <div style={{ marginBottom: 4, marginLeft: 4 }}>
-                <Tag color="cyan">{version}</Tag>
-              </div>
+    <PageContainer title="关于" ghost>
+      <div style={{ marginTop: 32 }}>
+        <Space direction="vertical" size={24}>
+          <div>
+            <div style={{ marginBottom: 12 }}>
+              <a
+                href="https://vanblog.mereith.com/"
+                rel="noopener noreferrer"
+                target={'_blank'}
+              >
+                <Image width={64} src="/logo.svg" preview={false}></Image>
+              </a>
             </div>
-            <p align="center">一款简洁实用优雅的高性能个人博客系统</p>
-
-            <Space>
-              <a target={'_blank'} rel="noreferrer" href="https://github.com/Mereithhh/van-blog">
-                Github
-              </a>
-              <a target={'_blank'} rel="noreferrer" href="https://vanblog.mereith.com">
-                项目文档
-              </a>
-              <a
-                target={'_blank'}
-                rel="noreferrer"
-                href="https://vanblog.mereith.com/changelog.html"
-              >
-                更新日志
-              </a>
-              <a target={'_blank'} rel="noreferrer" href="/swagger">
-                API文档
-              </a>
-            </Space>
-            <Space style={{ marginTop: 8 }}>
-              <a
-                target={'_blank'}
-                rel="noreferrer"
-                href="https://github.com/Mereithhh/van-blog/issues/new/choose"
-              >
-                提交BUG
-              </a>
-              <a
-                target={'_blank'}
-                rel="noreferrer"
-                href="https://github.com/Mereithhh/van-blog/issues/new/choose"
-              >
-                提交案例
-              </a>
-              <a
-                target={'_blank'}
-                rel="noreferrer"
-                href="https://github.com/Mereithhh/van-blog#%E6%89%93%E8%B5%8F"
-              >
-                打赏
-              </a>
-              <a target={'_blank'} rel="noreferrer" href="https://jq.qq.com/?_wv=1027&k=5NRyK2Sw">
-                交流群
-              </a>
-            </Space>
+            <p>VanBlog 博客系统</p>
+            <p>版本: {version}</p>
+            <p style={{ textAlign: 'left' }}>
+              此项目是 VanBlog 的 Fork 版本，提供更多的功能和优化，并支持
+              <Tag color="#87d068">Docker</Tag>
+              <Tag color="#108ee9">TypeScript</Tag>
+              <Tag color="#2db7f5">Markdown</Tag>
+              部署方式。
+            </p>
           </div>
-        </ProCard>
-      </Spin>
+        </Space>
+      </div>
     </PageContainer>
   );
 }

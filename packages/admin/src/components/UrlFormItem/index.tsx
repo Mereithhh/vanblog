@@ -1,5 +1,5 @@
-import { errorImg } from '@/pages/Static/img';
-import { getImgLink } from '@/pages/Static/img/tools';
+import { errorImg } from '@/assets/error';
+import { getImgLink } from '@/pages/ImageManage/components/tools';
 import { ProFormText } from '@ant-design/pro-form';
 import { Image, message } from 'antd';
 import { debounce } from 'lodash';
@@ -14,6 +14,7 @@ export default function (props: {
   formRef?: any;
   isInit: boolean;
   isFavicon?: boolean;
+  colProps?: { xs: number; sm: number };
 }) {
   const [url, setUrl] = useState('');
   const handleOnChange = debounce((ev) => {
@@ -73,6 +74,7 @@ export default function (props: {
         fieldProps={{
           onChange: handleOnChange,
         }}
+        colProps={props.colProps}
         extra={
           <div style={{ display: 'flex', marginTop: '10px' }}>
             <Image src={url || ''} fallback={errorImg} height={100} width={100} />

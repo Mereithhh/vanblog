@@ -15,7 +15,8 @@ import path from 'path';
 import { WebsiteProvider } from '../website/website.provider';
 import { CategoryDocument } from 'src/scheme/category.schema';
 import { CustomPageDocument } from 'src/scheme/customPage.schema';
-import e from 'express';
+import { SiteInfo } from 'src/types/site.dto';
+
 @Injectable()
 export class InitProvider {
   logger = new Logger(InitProvider.name);
@@ -32,9 +33,9 @@ export class InitProvider {
   ) {}
 
   async init(initDto: InitDto) {
-    const { user, siteInfo } = initDto;
+    const { user, siteInfo = {} as Partial<SiteInfo> } = initDto;
     let toUpdateDto = siteInfo;
-    if (!siteInfo.since) {
+    if (!siteInfo?.since) {
       toUpdateDto = { ...siteInfo, since: new Date() };
     }
     try {

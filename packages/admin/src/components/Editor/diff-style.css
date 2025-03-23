@@ -1,0 +1,37 @@
+/* Diff styling for the editor */
+.diff-wrapper {
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.diff-added {
+  background-color: #e6ffed;
+  border-left: 4px solid #2cbe4e;
+}
+
+.diff-removed {
+  background-color: #ffeef0;
+  border-left: 4px solid #cb2431;
+}
+
+.diff-changed {
+  background-color: #fff5b1;
+  border-left: 4px solid #f6c40c;
+}
+
+/* Dark theme diff styling */
+.dark .diff-added {
+  background-color: rgba(46, 160, 67, 0.15);
+  border-left-color: #2ea043;
+}
+
+.dark .diff-removed {
+  background-color: rgba(248, 81, 73, 0.15);
+  border-left-color: #f85149;
+}
+
+.dark .diff-changed {
+  background-color: rgba(187, 128, 9, 0.15);
+  border-left-color: #bb8009;
+} 

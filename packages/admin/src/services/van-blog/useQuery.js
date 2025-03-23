@@ -1,4 +1,4 @@
-import { useHistory, useLocation } from 'umi';
+import { useHistory, useLocation } from '@/utils/umiCompat';
 
 export const useQuery = () => {
   const { query } = useLocation();

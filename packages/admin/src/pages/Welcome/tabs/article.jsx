@@ -1,8 +1,9 @@
+import { Card, Col, Row, Statistic, Table } from 'antd';
 import { ProCard, StatisticCard } from '@ant-design/pro-components';
 import { Spin } from 'antd';
 import { useCallback, useEffect, useState } from 'react';
 import { getWelcomeData } from '@/services/van-blog/api';
-import style from '../index.less';
+import '../index.less';
 import NumSelect from '@/components/NumSelect';
 import { Pie, Column } from '@ant-design/plots';
 import { useNum } from '@/services/van-blog/useNum';
@@ -124,7 +125,7 @@ const ArticleTab = () => {
         >
           <StatisticCard
             colSpan={24}
-            className={style['card-full-title']}
+            className="card-full-title"
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>分类饼图</div>
@@ -144,7 +145,7 @@ const ArticleTab = () => {
         >
           <StatisticCard
             colSpan={24}
-            className={style['card-full-title']}
+            className="card-full-title"
             title={
               <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 <div>标签文章数 TOP 柱状图</div>

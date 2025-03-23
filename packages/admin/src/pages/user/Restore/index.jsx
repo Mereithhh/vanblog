@@ -3,7 +3,8 @@ import { encryptPwd } from '@/services/van-blog/encryptPwd';
 import ProCard from '@ant-design/pro-card';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { Alert, message } from 'antd';
-import { history } from 'umi';
+import { history } from '@/utils/umiCompat';
+
 export default function () {
   return (
     <div
@@ -32,7 +33,7 @@ export default function () {
               restore.key 文件中。
             </p>
           }
-        ></Alert>
+        />
         <ProForm
           onFinish={async (values) => {
             await restore({

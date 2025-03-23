@@ -1,19 +1,25 @@
+{
+	# Global options for Caddy
+	debug
+	# Environment variables will be accessed directly where needed
+}
+
 :80 {
-	# Handle admin static files first
+	# Handle admin routes
+	@adminRoutes path /admin*
+	handle @adminRoutes {
+		uri strip_prefix /admin
+		root * /app/admin
+		try_files {path} {path}/ /index.html
+		file_server
+	}
+
+	# Handle admin static files
 	@adminStatic path /admin/*.js /admin/*.css /admin/*.png /admin/*.jpg /admin/*.svg /admin/*.json /admin/*chunk*.js /admin/*.async.js /admin/p__*.js
 	handle @adminStatic {
 		uri strip_prefix /admin
 		root * /app/admin
 		header Content-Type {header.content-type}
-		file_server
-	}
-
-	# Then handle general admin routes
-	@admin path /admin*
-	handle @admin {
-		uri strip_prefix /admin
-		root * /app/admin
-		try_files {path} {path}/ /index.html
 		file_server
 	}
 

@@ -1,0 +1,160 @@
+/* Editor container styles */
+.editor-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 64px) !important;
+  min-height: 600px !important;
+  width: 100%;
+  overflow: visible;
+}
+
+.editor-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100% !important;
+  min-height: 500px !important;
+  overflow: visible;
+}
+
+/* ByteMD editor specific styles */
+.editor-container .bytemd {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+  height: 100% !important;
+  min-height: 500px !important;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+  margin: 0 !important;
+}
+
+.editor-container .bytemd-toolbar {
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+}
+
+.editor-container .bytemd-body {
+  flex: 1 !important;
+  min-height: 400px !important;
+  display: flex !important;
+  height: 100% !important;
+  overflow: hidden !important;
+}
+
+.editor-container .bytemd-editor {
+  height: auto !important;
+  flex: 1 !important;
+  min-height: 400px !important;
+}
+
+.editor-container .CodeMirror {
+  height: 100% !important;
+  min-height: 400px !important;
+}
+
+.editor-container .bytemd-preview {
+  flex: 1;
+  overflow-y: auto;
+  height: 100% !important;
+  min-height: 400px !important;
+}
+
+/* Fix for Ant Design Spin component */
+.ant-spin-nested-loading,
+.ant-spin-container {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 !important;
+}
+
+/* Emoji picker styles */
+.emoji-container {
+  position: fixed;
+  z-index: 1050;
+  visibility: visible;
+  overflow: visible;
+  background: var(--background-color, #fff);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.emoji-container.hidden {
+  display: none !important;
+}
+
+.emoji-mart {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Remove Ant Design Pro padding/margins */
+.ant-pro-page-container-children-content {
+  height: calc(100vh - 100px);
+  padding: 0 !important;
+}
+
+.ant-pro-grid-content {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+/* Hide footer if present */
+.ant-pro-footer-bar {
+  display: none !important;
+}
+
+/* Override the default padding from Ant Design Pro */
+.css-dev-only-do-not-override-cg4vza.ant-pro-page-container-children-container {
+  padding: 0 !important;
+}
+
+/* Additional page-specific fixes */
+.editor-container .bytemd,
+.editor-container .bytemd-body,
+.editor-container .CodeMirror,
+.editor-container .bytemd-preview {
+  height: calc(100vh - 30px) !important;
+}
+
+/* Fix for the Editor inside PageContainer */
+.ant-pro-page-container-children-content {
+  height: calc(100vh - 20px);
+  padding: 0 !important;
+}
+
+/* Remove footer for editor pages */
+.editorContainer .ant-pro-footer-bar,
+.editor-container .ant-pro-footer-bar,
+.editor-wrapper .ant-pro-footer-bar {
+  display: none !important;
+}
+
+/* Add thin bottom border instead of footer */
+.editorContainer::after,
+.editor-container::after,
+.editor-wrapper::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background-color: #e8e8e8;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+/* Ensure Page Container doesn't add unnecessary padding */
+.ant-pro-grid-content {
+  padding: 0 !important;
+}
+
+/* Ensure the emoji picker is visible */
+.bytemd-toolbar .emoji-container {
+  z-index: 1050;
+  position: absolute;
+  overflow: visible;
+  visibility: visible;
+} 

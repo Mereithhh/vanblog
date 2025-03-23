@@ -124,10 +124,10 @@ const columns = [
 export default function () {
   const fetchData = async () => {
     const { data: res } = await getAllCategories(true);
-    return res.map((item) => ({
+    return Array.isArray(res) ? res.map((item) => ({
       key: item.id,
       ...item,
-    }));
+    })) : [];
   };
   const actionRef = useRef();
   return (

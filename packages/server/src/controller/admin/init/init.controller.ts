@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpException,
   Post,
   Query,
@@ -41,6 +42,15 @@ export class InitController {
     };
   }
 
+  @Get('/init')
+  async checkInit() {
+    const hasInit = await this.initProvider.checkHasInited();
+    return {
+      statusCode: 200,
+      data: { hasInit },
+    };
+  }
+  
   @Post('/init/upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadImg(@UploadedFile() file: any, @Query('favicon') favicon: string) {
