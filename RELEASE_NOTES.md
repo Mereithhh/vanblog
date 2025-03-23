@@ -1,4 +1,4 @@
-# VanBlog 0.54.0-corn.2
+# VanBlog 0.54.0-corn.3
 
 ## 📝 Changelog
 # Changelog
@@ -10,5 +10,5 @@
 
 ## 📦 Installation
 ```bash
-docker pull cornworld/vanblog:0.54.0-corn.2
+docker pull cornworld/vanblog:0.54.0-corn.3
 ```

@@ -1,6 +1,6 @@
 {
   "name": "@vanblog/admin",
-  "version": "0.54.0-corn.2",
+  "version": "0.54.0-corn.3",
   "private": true,
   "description": "An out-of-box UI solution for enterprise applications",
   "scripts": {

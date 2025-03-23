@@ -2,8 +2,12 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-// Get current version from git tag
-const currentVersion = execSync('git describe --tags --abbrev=0').toString().trim().replace(/^v/, '');
+const args = process.argv.slice(2);
+if (args.length === 0) {
+  console.error('Error: Version argument is required');
+  process.exit(1);
+}
+const currentVersion = args[0];
 
 // Update version in package.json
 const packageJson = JSON.parse(fs.readFileSync('package.json', 'utf8'));
