@@ -1,6 +1,7 @@
+import { viteBundler } from '@vuepress/bundler-vite';
+import { baiduAnalyticsPlugin } from '@vuepress/plugin-baidu-analytics';
 import { defineUserConfig } from 'vuepress';
-import { searchProPlugin } from 'vuepress-plugin-search-pro';
-import { getDirname, path } from '@vuepress/utils';
+import { getDirname, path } from 'vuepress/utils';
 
 import theme from './theme.js';
 
@@ -18,32 +19,24 @@ export default defineUserConfig({
     [
       'script',
       {
-        type: 'text/javascript',
-        charset: 'utf-8',
         src: 'https://cdn.wwads.cn/js/makemoney.js',
         async: true,
       },
     ],
-    [
-      'script',
-      {},
-      `
-var _hmt = _hmt || [];
-(function() {
-var hm = document.createElement("script");
-hm.src = "https://hm.baidu.com/hm.js?4949ead4adffe6403bf4036fe6dcca04";
-var s = document.getElementsByTagName("script")[0];
-s.parentNode.insertBefore(hm, s);
-})();
-`,
-    ],
   ],
 
-  plugins: [searchProPlugin({ indexContent: true })],
+  bundler: viteBundler(),
 
   theme,
 
+  plugins: [
+    baiduAnalyticsPlugin({
+      id: '4949ead4adffe6403bf4036fe6dcca04',
+    }),
+  ],
+
   pagePatterns: ['**/*.md', '!**/*.snippet.md', '!.vuepress', '!node_modules'],
+
   alias: {
     '@theme-hope/modules/info/components/TOC': path.resolve(__dirname, './components/TOC.vue'),
   },

@@ -1,5 +1,7 @@
-import { getDirname, path } from '@vuepress/utils';
+import { getDirname, path } from 'vuepress/utils';
 import { hopeTheme } from 'vuepress-theme-hope';
+
+import caddyfile from "./caddyfile.tmLanguage.json" with { type: 'json'};
 
 const __dirname = getDirname(import.meta.url);
 
@@ -15,7 +17,6 @@ export default hopeTheme({
   },
 
   darkmode: 'switch',
-  iconAssets: 'fontawesome-with-brands',
 
   logo: '/logo.svg',
 
@@ -52,6 +53,33 @@ export default hopeTheme({
 
   pageInfo: ['Author', 'Original', 'Date', 'Category', 'Tag', 'ReadingTime'],
 
+  markdown: {
+    highlighter: {
+      type: 'shiki',
+      langs: [{
+        id: "Caddyfile",
+        aliases: ["caddyfile", "caddy"],
+        ...caddyfile,
+      }]
+    },
+    align: true,
+    codeTabs: true,
+    figure: true,
+    imgLazyload: true,
+    imgSize: true,
+    include: {
+      deep: true,
+      resolvePath: (filePath, cwd) => {
+        if (filePath.startsWith('@'))
+          return filePath.replace('@', path.resolve(__dirname, '../'));
+
+        return path.resolve(cwd, filePath);
+      },
+    },
+    tabs: true,
+    tasklist: true,
+  },
+
   plugins: {
     comment: {
       provider: 'Giscus',
@@ -61,23 +89,10 @@ export default hopeTheme({
       categoryId: 'DIC_kwDOHtQfpc4CQZcs',
     },
 
-    mdEnhance: {
-      align: true,
-      codetabs: true,
-      figure: true,
-      imgLazyload: true,
-      imgSize: true,
-      include: {
-        deep: true,
-        resolvePath: (filePath, cwd) => {
-          if (filePath.startsWith('@'))
-            return filePath.replace('@', path.resolve(__dirname, '../'));
-
-          return path.resolve(cwd, filePath);
-        },
-      },
-      tabs: true,
-      tasklist: true,
+    icon: {
+      assets: 'fontawesome-with-brands',
     },
+
+    slimsearch: true
   },
 });

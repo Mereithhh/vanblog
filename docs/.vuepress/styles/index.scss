@@ -1,0 +1,11 @@
+html[data-theme='dark'] .wwads-vertical {
+  background-color: #3a3a3a;
+
+  .wwads-text {
+    color: #848484;
+  }
+
+  .wwads-img {
+    filter: grayscale(0.5);
+  }
+}

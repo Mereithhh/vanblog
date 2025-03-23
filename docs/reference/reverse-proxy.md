@@ -29,7 +29,7 @@ VanBlog 内置了 caddy，可以全自动申请 https 证书，如没有其他�
 
 @tab Caddy V2
 
-```conf
+```caddy
 example.com {
   tls admin@example.com
   reverse_proxy  127.0.0.1:<你映射的端口号> {
@@ -40,7 +40,7 @@ example.com {
 
 @tab Caddy V1
 
-```conf
+```caddy
 example.com {
   tls admin@example.com
   proxy / 127.0.0.1:<你映射的端口号> {

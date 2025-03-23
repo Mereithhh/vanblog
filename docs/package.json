@@ -8,12 +8,11 @@
     "docs:dev": "vuepress dev ."
   },
   "devDependencies": {
-    "@vuepress/client": "2.0.0-rc.2",
-    "@vuepress/utils": "2.0.0-rc.2",
+    "@vuepress/bundler-vite": "2.0.0-rc.20",
+    "@vuepress/plugin-baidu-analytics": "2.0.0-rc.86",
+    "@vuepress/plugin-slimsearch": "2.0.0-rc.86",
     "vue": "^3.5.13",
-    "vuepress": "2.0.0-rc.0",
-    "vuepress-plugin-redirect": "2.0.0-rc.19",
-    "vuepress-plugin-search-pro": "2.0.0-rc.59",
-    "vuepress-theme-hope": "2.0.0-rc.74"
+    "vuepress": "2.0.0-rc.20",
+    "vuepress-theme-hope": "2.0.0-rc.75"
   }
 }
