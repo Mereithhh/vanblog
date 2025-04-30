@@ -3,7 +3,7 @@
   "version": "0.54.0",
   "private": true,
   "scripts": {
-    "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf packages/*/dist",
+    "clean": "rm -rf node_modules && rm -rf packages/*/node_modules && rm -rf packages/*/dist && rm -rf packages/admin/src/.umi && rm -rf packages/admin/src/.umi-production",
     "build": "pnpm --filter @vanblog/server --filter @vanblog/theme-default --filter @vanblog/admin --parallel build",
     "build:admin": "pnpm --filter @vanblog/admin build",
     "build:server": "pnpm --filter @vanblog/server build",

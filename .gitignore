@@ -147,3 +147,7 @@ staticFolder
 localBuild.sh
 log
 log/**
+
+v8-compile-cache*
+
+*/**/v8-compile-cache*
