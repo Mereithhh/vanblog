@@ -127,32 +127,21 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 如果您想把自己加进来，请提一个 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)，我会尽快添加的。
 
 - [Mereith's Blog](https://www.mereith.com)
-- [handy 的小窝](https://www.handyzyg.cn)
 - [GT 的官方博客](https://gt-it.net)
 - [無糧不聚兵‘s Blog](https://www.wongcw.cn)
-- [oldmoon](https://oldmoon.top)
+- [oldmoon](https://www.oldmoon.top/)
 - [seek.wiki](https://seek.wiki)
-- [joker's blog](https://jingjianqian.top)
 - [SnailBlog](https://blog.mldd521.com)
-- [谷粒 corn.li](https://corn.li)
-- [BARM Blog](https://blog.ccz.life)
-- [凌览社](http://www.linglan01.cn)
 - [Peter's blog](https://niuery.com)
 - [我本无罪的博客](https://blog.rnaan.com/)
-- [还是夸张一点](https://blog.ynsites.com/)
 - [青菜的杂货铺](https://211222.xyz)
 - [花菜的博客](https://blog.huacai.one)
 - [智芯物联的空间](https://www.tingshuo.online)
-- [郭郭的博客](https://blog.warmplace.cn)
 - [Done](https://www.dong-blog.fun/)
 - [SpaceX](https://tech.twjblog.top/)
 - [没想好的个人博客](https://blog.shizhuoran.top/)
-- [春天运维之旅](https://blog.tenchuntian.cn/)
-- [编程小客栈](http://mystyouth.com/)
-- [Newhand](https://newhand.top/)
-- [Jerome's Blog](https://www.blog-jerome.top/)
 - [宁骑播客](https://blog.xintianyuehui.cn/)
-<!-- - [耿老师](https://transfer.teachergeng.space) -->
+- [fanyang](https://fuis.me/)
 
 ## TODO
 
@@ -219,6 +208,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时候消息多可能会漏掉，十分抱歉）
 
+PS2: 不好意思中间有段时间没管，有些记录找不到了，后续有时间补上。
+
 | 捐赠者    | 捐赠金额 | 捐赠日期   |
 | --------- | -------- | ---------- |
 | Sirit     | 6.66 元  | 2022-09-01 |
@@ -229,6 +220,10 @@ PS：如果打赏时请备注捐赠者，如有遗漏请联系我添加（有时
 | ziva      | 8.80 元  | 2022-09-15 |
 | Velen     | 50 元    | 2022-09-18 |
 | pcz       | 50 元    | 2022-10-19 |
+| fanyang   | 100 元    | 2025-06-12 |
+
+
+
 
 ## Star 趋势图
 

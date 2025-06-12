@@ -131,6 +131,8 @@ order: 1
 
 ## 捐赠信息
 
+PS: 不好意思中间有段时间没管，有些记录找不到了，后续有时间补上。
+
 | 捐赠者    | 捐赠金额 | 捐赠日期   |
 | --------- | -------- | ---------- |
 | Sirit     | 6.66 元  | 2022-09-01 |
@@ -141,6 +143,7 @@ order: 1
 | ziva      | 8.80 元  | 2022-09-15 |
 | Velen     | 50 元    | 2022-09-18 |
 | pcz       | 50 元    | 2022-10-19 |
+| fanyang   | 100 元    | 2025-06-12 |
 
 ::: note
 
@@ -155,32 +158,21 @@ order: 1
 如果您想把自己加进来，请提一个 [issue](https://github.com/Mereithhh/vanblog/issues/new?assignees=&labels=%E6%A0%B7%E4%BE%8B%E6%8F%90%E4%BA%A4&template=add-website.yml&title=%5B%E6%A0%B7%E4%BE%8B%E6%8F%90%E4%BA%A4%5D%3A+)，我会尽快添加的。
 
 - [Mereith's Blog](https://www.mereith.com)
-- [handy 的小窝](https://www.handyzyg.cn)
 - [GT 的官方博客](https://gt-it.net)
 - [無糧不聚兵‘s Blog](https://www.wongcw.cn)
-- [oldmoon](https://oldmoon.top)
+- [oldmoon](https://www.oldmoon.top/)
 - [seek.wiki](https://seek.wiki)
-- [joker's blog](https://jingjianqian.top)
 - [SnailBlog](https://blog.mldd521.com)
-- [谷粒 corn.li](https://corn.li)
-- [BARM Blog](https://blog.ccz.life)
-- [凌览社](http://www.linglan01.cn)
 - [Peter's blog](https://niuery.com)
 - [我本无罪的博客](https://blog.rnaan.com/)
-- [还是夸张一点](https://blog.ynsites.com/)
 - [青菜的杂货铺](https://211222.xyz)
 - [花菜的博客](https://blog.huacai.one)
 - [智芯物联的空间](https://www.tingshuo.online)
-- [郭郭的博客](https://blog.warmplace.cn)
 - [Done](https://www.dong-blog.fun/)
 - [SpaceX](https://tech.twjblog.top/)
 - [没想好的个人博客](https://blog.shizhuoran.top/)
-- [春天运维之旅](https://blog.tenchuntian.cn/)
-- [编程小客栈](http://mystyouth.com/)
-- [Newhand](https://newhand.top/)
-- [Jerome's Blog](https://www.blog-jerome.top/)
 - [宁骑播客](https://blog.xintianyuehui.cn/)
-<!-- - [耿老师](https://transfer.teachergeng.space) -->
+- [fanyang](https://fuis.me/)
 
 ## 预览图
 
