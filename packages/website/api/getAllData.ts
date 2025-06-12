@@ -109,7 +109,11 @@ export interface MetaProps {
     baiduAnalysisId?: string;
     gaAnalysisId?: string;
     siteLogoDark?: string;
+    /**
+     * @deprecated You should use `copyrightAgreement` instead
+     */
     copyrightAggreement: string;
+    copyrightAgreement: string;
     showSubMenu?: "true" | "false";
     showAdminButton?: "true" | "false";
     headerLeftContent?: "siteLogo" | "siteName";
@@ -162,7 +166,7 @@ const defaultMeta: MetaProps = {
     favicon: "/logo.svg",
     siteName: "VanBlog",
     siteDesc: "Vanblog",
-    copyrightAggreement: "",
+    copyrightAgreement: "",
     beianNumber: "",
     beianUrl: "",
     gaBeianNumber: "",

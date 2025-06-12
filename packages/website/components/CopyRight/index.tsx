@@ -6,7 +6,7 @@ export default function (props: {
   author: string;
   id: number | string;
   showDonate: boolean;
-  copyrightAggreement: string;
+  copyrightAgreement: string;
   customCopyRight: string | null;
 }) {
   const [url, setUrl] = useState("");
@@ -16,9 +16,9 @@ export default function (props: {
 
   const text = useMemo(() => {
     if (props.customCopyRight) return props.customCopyRight;
-    return `本博客所有文章除特别声明外，均采用 ${props.copyrightAggreement}
+    return `本博客所有文章除特别声明外，均采用 ${props.copyrightAgreement}
     许可协议。转载请注明出处！`;
-  }, [props.customCopyRight, props.copyrightAggreement]);
+  }, [props.customCopyRight, props.copyrightAgreement]);
 
   return (
     <div
