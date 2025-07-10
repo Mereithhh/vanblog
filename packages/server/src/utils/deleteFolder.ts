@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 export const rmDir = (p: string) => {
-  execSync(`rm -rf ${p}`);
+  spawnSync('rm', ['-rf', p], { stdio: 'inherit' });
 };

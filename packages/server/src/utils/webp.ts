@@ -1,4 +1,4 @@
-import { execSync } from 'child_process';
+import { spawnSync } from 'child_process';
 import { writeFileSync, readFileSync, rmSync } from 'fs';
 export const compressImgToWebp = async (srcImage: Buffer) => {
   const filenameTemp = `temp${Date.now()}`;
@@ -6,7 +6,7 @@ export const compressImgToWebp = async (srcImage: Buffer) => {
   const o = `/tmp/${filenameTemp}.webp`;
   writeFileSync(p, srcImage);
 
-  execSync(`cwebp -q 80 ${p} -o ${o}`);
+  spawnSync('cwebp', ['-q', '80', p, '-o', o], { stdio: 'inherit' });
 
   const f = readFileSync(o);
   rmSync(p);
