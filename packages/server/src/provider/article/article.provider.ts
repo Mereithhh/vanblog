@@ -878,7 +878,7 @@ export class ArticleProvider {
   toSearchResult(articles: Article[]) {
     return articles.map((each) => ({
       title: each.title,
-      id: each.id,
+      id: each.pathname ? each.pathname : each.id,
       category: each.category,
       tags: each.tags,
       updatedAt: each.updatedAt,
