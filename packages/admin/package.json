@@ -32,7 +32,7 @@
     "start:test": "cross-env REACT_APP_ENV=test MOCK=none UMI_ENV=dev umi dev",
     "test": "umi test",
     "test:component": "umi test ./src/components",
-    "test:e2e": "node ./tests/run-tests.js",
+    "test:e2e": "playwright test",
     "tsc": "tsc --noEmit"
   },
   "browserslist": [

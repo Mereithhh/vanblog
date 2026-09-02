@@ -4,7 +4,6 @@ import gfm from '@bytemd/plugin-gfm';
 import highlight from '@bytemd/plugin-highlight-ssr';
 import math from '@bytemd/plugin-math-ssr';
 import mediumZoom from '@bytemd/plugin-medium-zoom';
-import mermaid from '@bytemd/plugin-mermaid';
 import { Editor } from '@bytemd/react';
 import { Spin } from 'antd';
 import 'bytemd/dist/index.css';
@@ -17,6 +16,7 @@ import '../../style/custom-container.css';
 import { emoji } from './emoji';
 import { imgUploadPlugin, uploadImg } from './imgUpload';
 import './index.less';
+import './mermaid-safety.css';
 import { insertMore } from './insertMore';
 import { cn } from './locales';
 import { useModel } from 'umi';
@@ -26,6 +26,7 @@ import rawHTML from './rawHTML';
 import { Heading } from './plugins/heading';
 import { customCodeBlock } from './plugins/codeBlock';
 import { LinkTarget } from './plugins/linkTarget';
+import { mermaidForEditor } from './plugins/mermaidSafety';
 
 const sanitize = (schema) => {
   schema.protocols.src.push('data');
@@ -61,7 +62,7 @@ export default function EditorComponent(props: {
       frontmatter(),
       math({ locale: cn }),
       mediumZoom(),
-      mermaid({ locale: cn }),
+      mermaidForEditor({ locale: cn }),
       imgUploadPlugin(setLoading),
       emoji(),
       insertMore(),

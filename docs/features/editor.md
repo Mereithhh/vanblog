@@ -28,6 +28,8 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
 - Mermaid 图表
 
+  文章里的 mermaid 代码块会在预览区和前台渲染为图表，后台编辑器的光标、选区和输入不受影响。
+
   ::: info 图表语法速查
 
   - [Mermaid 从入门到入土——Markdown 进阶语法](https://zhuanlan.zhihu.com/p/355997933)

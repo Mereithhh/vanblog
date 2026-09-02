@@ -1,0 +1,46 @@
+/* Mermaid 10 leaves measurement nodes on document.body that can cover the editor. */
+body > [id^='dbytemd-mermaid'],
+body > [id^='dmermaid'],
+body > [id^='dvb-admin-mermaid'],
+.mermaidTooltip {
+  position: absolute !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+.bytemd-body {
+  position: relative;
+}
+
+.bytemd-editor {
+  position: relative;
+  z-index: 2;
+}
+
+.bytemd-editor,
+.bytemd-editor .CodeMirror,
+.bytemd-editor textarea {
+  pointer-events: auto;
+  user-select: text;
+}
+
+.bytemd-preview {
+  position: relative;
+  z-index: 1;
+  overflow: auto !important;
+}
+
+.bytemd-preview .bytemd-mermaid,
+.bytemd-preview pre > code.language-mermaid {
+  max-width: 100%;
+  overflow: auto;
+}
+
+.bytemd-preview .bytemd-mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
