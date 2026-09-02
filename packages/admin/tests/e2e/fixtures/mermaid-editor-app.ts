@@ -28,3 +28,18 @@ const win = window as unknown as {
 
 win.__editorValue = value;
 win.__editor = editor;
+
+const syncFromCodeMirror = () => {
+  const cm = document.querySelector('.CodeMirror') as { CodeMirror?: { getValue: () => string; on: Function } } | null;
+  if (!cm?.CodeMirror) {
+    window.setTimeout(syncFromCodeMirror, 50);
+    return;
+  }
+  const update = () => {
+    win.__editorValue = cm.CodeMirror.getValue();
+  };
+  cm.CodeMirror.on('change', update);
+  update();
+};
+
+syncFromCodeMirror();

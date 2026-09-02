@@ -112,6 +112,7 @@
     "cross-env": "^7.0.3",
     "cross-port-killer": "^1.4.0",
     "detect-installer": "^1.0.2",
+    "esbuild": "0.19.8",
     "eslint": "^7.32.0",
     "gh-pages": "^3.2.3",
     "jsdom-global": "^3.0.2",

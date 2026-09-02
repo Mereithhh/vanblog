@@ -23,13 +23,20 @@ test('article with mermaid stays editable in the admin editor', async ({ page })
   expect(hit.inEditor).toBe(true);
   expect(hit.leftover).toBe(false);
 
-  await editor.click();
-  await page.keyboard.press('Control+Home');
+  await editor.click({ position: { x: 24, y: 24 } });
+  await expect(editor).toHaveClass(/CodeMirror-focused/);
   await page.keyboard.type('E2E_MERMAID_EDITOR_OK ');
 
-  await expect.poll(async () => page.evaluate(() => window.__editorValue || '')).toContain(
-    'E2E_MERMAID_EDITOR_OK',
-  );
+  await expect
+    .poll(async () =>
+      page.evaluate(
+        () =>
+          window.__editorValue ||
+          document.querySelector('.CodeMirror')?.CodeMirror?.getValue() ||
+          '',
+      ),
+    )
+    .toContain('E2E_MERMAID_EDITOR_OK');
 
   const previewHasMermaid = await page.locator('.bytemd-preview .bytemd-mermaid, .bytemd-preview code.language-mermaid').count();
   expect(previewHasMermaid).toBeGreaterThan(0);

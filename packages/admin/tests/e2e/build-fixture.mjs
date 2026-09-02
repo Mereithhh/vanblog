@@ -10,12 +10,12 @@ const adminRoot = path.resolve(here, '..', '..');
 
 await mkdir(outdir, { recursive: true });
 
+const esbuildBin = path.join(adminRoot, 'node_modules', '.bin', 'esbuild');
+
 await new Promise((resolve, reject) => {
   const child = spawn(
-    'npx',
+    esbuildBin,
     [
-      '--yes',
-      'esbuild',
       path.join(fixtures, 'mermaid-editor-app.ts'),
       `--outfile=${path.join(outdir, 'app.js')}`,
       '--bundle',
