@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台自定义页面「修改信息」保存后刷新仍是旧名称/路径 [#453](https://github.com/Mereithhh/vanblog/issues/453)
 - 后台编辑器填写文章信息时方向键无法移动光标 [#470](https://github.com/Mereithhh/vanblog/issues/470)
 - 后台 `/api/admin/meta` 不再被远程版本检查拖慢 [#343](https://github.com/Mereithhh/vanblog/issues/343)
 - 后台修改文章后，数字 ID 前台地址不更新 [#356](https://github.com/Mereithhh/vanblog/issues/356)
