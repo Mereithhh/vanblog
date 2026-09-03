@@ -68,6 +68,21 @@ const ARTICLE_68 = {
   },
 };
 
+const ARTICLE_108 = {
+  statusCode: 200,
+  data: {
+    id: 108,
+    title: '方向键光标测试标题',
+    content: 'arrow key cursor e2e\n',
+    category: '测试',
+    tags: ['E2E'],
+    hidden: false,
+    pathname: 'arrow-key-cursor',
+    updatedAt: '2024-11-14T00:00:00.000Z',
+    createdAt: '2024-11-14T00:00:00.000Z',
+  },
+};
+
 function json(route, body) {
   return route.fulfill({
     status: 200,
@@ -90,6 +105,21 @@ async function mockAdminApis(page) {
     }
     if (path === '/api/admin/article/68' && method === 'PUT') {
       return json(route, { statusCode: 200, data: ARTICLE_68.data });
+    }
+    if (path === '/api/admin/article/108' && method === 'GET') {
+      return json(route, ARTICLE_108);
+    }
+    if (path === '/api/admin/article/108' && method === 'PUT') {
+      return json(route, { statusCode: 200, data: ARTICLE_108.data });
+    }
+    if (path === '/api/admin/tag/all' && method === 'GET') {
+      return json(route, { statusCode: 200, data: ['E2E', 'Markdown'] });
+    }
+    if (path.startsWith('/api/admin/category/all') && method === 'GET') {
+      return json(route, { statusCode: 200, data: ['测试'] });
+    }
+    if (path === '/api/admin/collaborator/list' && method === 'GET') {
+      return json(route, { statusCode: 200, data: [] });
     }
 
     return json(route, { statusCode: 200, data: {} });

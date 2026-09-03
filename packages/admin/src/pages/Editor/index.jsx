@@ -28,6 +28,7 @@ export default function () {
   const [value, setValue] = useState('');
   const [currObj, setCurrObj] = useState({});
   const [loading, setLoading] = useState(true);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
   const [editorConfig, setEditorConfig] = useCacheState(
     { afterSave: 'stay', useLocalCache: 'close' },
     'editorConfig',
@@ -42,19 +43,13 @@ export default function () {
     };
   }, [currObj, value, type]);
   const onKeyDown = (ev) => {
-    let save = false;
-    if (ev.metaKey == true && ev.key.toLocaleLowerCase() == 's') {
-      save = true;
+    // Only intercept Ctrl/Cmd+S. Arrow keys and other input must reach form fields (#470).
+    const key = ev.key?.toLocaleLowerCase?.();
+    if (key !== 's' || !(ev.metaKey || ev.ctrlKey)) {
+      return;
     }
-    if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == 's') {
-      save = true;
-    }
-    if (save) {
-      event?.preventDefault();
-      ev?.preventDefault();
-      handleSave();
-    }
-    return false;
+    ev.preventDefault();
+    handleSave();
   };
 
   const typeMap = {
@@ -273,16 +268,10 @@ export default function () {
         type != 'about'
           ? {
               key: 'updateModalBtn',
-              label: (
-                <UpdateModal
-                  onFinish={() => {
-                    fetchData(true);
-                  }}
-                  type={type}
-                  currObj={currObj}
-                  setLoading={setLoading}
-                />
-              ),
+              label: '修改信息',
+              onClick: () => {
+                setUpdateModalVisible(true);
+              },
             }
           : null,
         type == 'draft'
@@ -469,6 +458,18 @@ export default function () {
       }}
       footer={null}
     >
+      {type != 'about' && (
+        <UpdateModal
+          visible={updateModalVisible}
+          onVisibleChange={setUpdateModalVisible}
+          onFinish={() => {
+            fetchData(true);
+          }}
+          type={type}
+          currObj={currObj}
+          setLoading={setLoading}
+        />
+      )}
       <div style={{ height: '100%' }}>
         <div style={{ height: '0' }}>
           <Upload

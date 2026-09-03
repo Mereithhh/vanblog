@@ -2,15 +2,24 @@ import { getAllCategories, getTags, updateArticle, updateDraft } from '@/service
 import { ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { Form, message, Modal } from 'antd';
 import moment from 'moment';
-import { useEffect } from 'react';
+import { KeyboardEvent, useEffect } from 'react';
 import AuthorField from '../AuthorField';
+
+/** Dropdown/Menu treats arrows as navigation; stop that from reaching the menu. */
+function stopMenuKeydown(e: KeyboardEvent) {
+  e.stopPropagation();
+}
+
 export default function (props: {
   currObj: any;
   setLoading: any;
   onFinish: any;
   type: 'article' | 'draft' | 'about';
+  visible?: boolean;
+  onVisibleChange?: (visible: boolean) => void;
 }) {
-  const { currObj, setLoading, type, onFinish } = props;
+  const { currObj, setLoading, type, onFinish, visible, onVisibleChange } = props;
+  const controlled = typeof visible === 'boolean';
   const [form] = Form.useForm();
   useEffect(() => {
     if (form && form.setFieldsValue) form.setFieldsValue(currObj);
@@ -20,10 +29,17 @@ export default function (props: {
       form={form}
       title="修改信息"
       trigger={
-        <a key="button" type="link">
-          修改信息
-        </a>
+        controlled ? undefined : (
+          <a key="button" type="link">
+            修改信息
+          </a>
+        )
       }
+      visible={visible}
+      onVisibleChange={onVisibleChange}
+      modalProps={{
+        onKeyDown: stopMenuKeydown,
+      }}
       width={450}
       autoFocusFirstInput
       submitTimeout={3000}
@@ -61,6 +77,7 @@ export default function (props: {
       key="editForm"
       // wrapperCol: { span: 14 },
     >
+      <div onKeyDown={stopMenuKeydown}>
       <ProFormText
         width="md"
         required
@@ -185,6 +202,7 @@ export default function (props: {
           />
         </>
       )}
+      </div>
     </ModalForm>
   );
 }
