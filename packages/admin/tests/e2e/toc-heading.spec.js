@@ -19,7 +19,8 @@ async function headingMetrics(page, dataId) {
 }
 
 async function clickToc(page, title) {
-  await page.locator('.markdown-navigation .title-anchor', { hasText: new RegExp(`^${title}$`) }).click();
+  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  await page.locator('.markdown-navigation .title-anchor', { hasText: new RegExp(`^${escaped}$`) }).click();
 }
 
 test.describe('public article TOC heading jump', () => {
@@ -106,6 +107,69 @@ test.describe('public article TOC heading jump', () => {
       })
       .toMatchObject({
         id: 'My Title',
+        dataId: 'My Title',
+        inViewport: true,
+      });
+  });
+});
+
+test.describe('public article TOC lazy-load jump', () => {
+  test('later heading is not in the initial DOM', async ({ page }) => {
+    const pageErrors = [];
+    page.on('pageerror', (err) => pageErrors.push(String(err)));
+    await page.goto('/toc-lazy-article.html');
+    await expect(page.locator('h2[data-id="1. 概述"]')).toBeVisible();
+    await expect(page.locator('[data-lazy-markdown-sentinel]')).toHaveCount(1);
+    await expect(page.locator('h2[data-id="4. 配置DHCP引导选项"]')).toHaveCount(0);
+    await expect(
+      page.locator('.markdown-navigation .title-anchor', { hasText: /^4\. 配置DHCP引导选项$/ }),
+    ).toBeVisible();
+    expect(pageErrors, `fixture pageerror: ${pageErrors.join('\n')}`).toEqual([]);
+  });
+
+  test('TOC click jumps to a heading that is not in the initial DOM', async ({ page }) => {
+    await page.goto('/toc-lazy-article.html');
+    await expect(page.locator('h2[data-id="1. 概述"]')).toBeVisible();
+    await expect(page.locator('h2[data-id="4. 配置DHCP引导选项"]')).toHaveCount(0);
+
+    await clickToc(page, '4. 配置DHCP引导选项');
+
+    await expect
+      .poll(async () => {
+        const after = await headingMetrics(page, '4. 配置DHCP引导选项');
+        return after && Math.abs(after.scrollY - after.offsetTop) < 8 ? after : null;
+      })
+      .toMatchObject({
+        dataId: '4. 配置DHCP引导选项',
+        inViewport: true,
+      });
+    await expect(page.locator('[data-lazy-markdown-sentinel]')).toHaveCount(0);
+  });
+
+  test('hash navigation lands on a heading below the lazy-load fold', async ({ page }) => {
+    await page.goto('/toc-lazy-article.html#4. 配置DHCP引导选项');
+    await expect
+      .poll(async () => {
+        const after = await headingMetrics(page, '4. 配置DHCP引导选项');
+        return after && after.inViewport ? after : null;
+      })
+      .toMatchObject({
+        id: '4. 配置DHCP引导选项',
+        dataId: '4. 配置DHCP引导选项',
+        inViewport: true,
+      });
+  });
+
+  test('trailing-space headings still jump after remaining content loads', async ({ page }) => {
+    await page.goto('/toc-lazy-article.html');
+    await expect(page.locator('h2[data-id="My Title"]')).toHaveCount(0);
+    await clickToc(page, 'My Title');
+    await expect
+      .poll(async () => {
+        const after = await headingMetrics(page, 'My Title');
+        return after && Math.abs(after.scrollY - after.offsetTop) < 8 ? after : null;
+      })
+      .toMatchObject({
         dataId: 'My Title',
         inViewport: true,
       });

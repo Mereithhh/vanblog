@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 超长文章懒加载后，点击目录中尚未渲染的标题会先加载剩余正文再跳转到该标题 [#82](https://github.com/Mereithhh/vanblog/issues/82)
 - 前台选择白色后刷新不再先闪暗色；自动模式跟随系统配色，浅色系统下不再因夜间时段强制黑色 [#292](https://github.com/Mereithhh/vanblog/issues/292)
 - 后台「自定义环境变量」未生效：`imageUploader: false` 未传到前台评论组件，数字 `IPQPS` 也未作为字符串环境变量传给内嵌 Waline [#139](https://github.com/Mereithhh/vanblog/issues/139)
 - 站点总字数与后台编辑器使用同一口径（中文按字、英文按词，不是 UTF-8 字节），且只统计已发布文章 [#293](https://github.com/Mereithhh/vanblog/issues/293)
