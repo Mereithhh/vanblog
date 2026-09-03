@@ -12,7 +12,7 @@ await mkdir(outdir, { recursive: true });
 
 const esbuildBin = path.join(adminRoot, 'node_modules', '.bin', 'esbuild');
 
-function bundle(entry, outfile) {
+function bundle(entry, outfile, extraArgs = []) {
   return new Promise((resolve, reject) => {
     const child = spawn(
       esbuildBin,
@@ -23,6 +23,7 @@ function bundle(entry, outfile) {
         '--format=iife',
         '--platform=browser',
         '--loader:.md=text',
+        ...extraArgs,
       ],
       { cwd: adminRoot, stdio: 'inherit' },
     );
@@ -33,8 +34,17 @@ function bundle(entry, outfile) {
   });
 }
 
+const react = path.join(adminRoot, 'node_modules/react');
+const reactDom = path.join(adminRoot, 'node_modules/react-dom');
+
 await bundle(path.join(fixtures, 'mermaid-editor-app.ts'), path.join(outdir, 'app.js'));
-await bundle(path.join(fixtures, 'toc-article-app.tsx'), path.join(outdir, 'toc.js'));
+// Website TOC/heading components resolve their own React 18; alias to the
+// admin copy so the IIFE has a single React (duplicate copies crash useMemo).
+await bundle(path.join(fixtures, 'toc-article-app.tsx'), path.join(outdir, 'toc.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  '--jsx=automatic',
+]);
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
 await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));

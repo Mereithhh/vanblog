@@ -7,6 +7,8 @@ module.exports = {
   timeout: 90_000,
   use: {
     trace: 'on-first-retry',
+    channel: process.env.CI ? undefined : 'chrome',
+    launchOptions: process.env.CI ? undefined : { args: ['--no-sandbox'] },
   },
   webServer: {
     command: 'node tests/e2e/serve-fixture.mjs',

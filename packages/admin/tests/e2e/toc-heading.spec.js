@@ -24,10 +24,13 @@ async function clickToc(page, title) {
 
 test.describe('public article TOC heading jump', () => {
   test.beforeEach(async ({ page }) => {
+    const pageErrors = [];
+    page.on('pageerror', (err) => pageErrors.push(String(err)));
     await page.goto('/toc-article.html');
     await expect(page.locator('h2[data-id="My Title"]')).toBeVisible();
     await expect(page.locator('h2[data-id="Extra Spaces"]')).toBeVisible();
     await expect(page.locator('h2[data-id="Clean Title"]')).toBeVisible();
+    expect(pageErrors, `fixture pageerror: ${pageErrors.join('\n')}`).toEqual([]);
   });
 
   test('heading ids drop trailing and extra spaces', async ({ page }) => {

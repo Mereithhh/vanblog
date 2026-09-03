@@ -18,9 +18,12 @@ const onClickHeading = (e: any) => {
   window.location.hash = `#${id}`;
 }
 
-const headingPlugin = () => (tree) => {
+export const headingRehypePlugin = () => (tree) => {
   visit(tree, (node) => {
     if (node.type === "element" && headings.includes(node.tagName)) {
+      if (!node.properties) {
+        node.properties = {};
+      }
       const title = normalizeHeadingText(node.children[0]?.value);
       node.properties['data-id'] = title;
       node.properties['id'] = title;
@@ -31,7 +34,7 @@ const headingPlugin = () => (tree) => {
 
 export function Heading(): BytemdPlugin {
   return {
-    rehype: (processor) => processor.use(headingPlugin),
+    rehype: (processor) => processor.use(headingRehypePlugin),
     viewerEffect: ({markdownBody}) => {
       const headings = markdownBody.querySelectorAll('.markdown-heading');
       headings.forEach((heading) => {
