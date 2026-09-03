@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { StaticType, StoragePath } from 'src/types/setting.dto';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -13,6 +13,7 @@ import { checkOrCreate, checkOrCreateByFilePath } from 'src/utils/checkFolder';
 import { rmDir } from 'src/utils/deleteFolder';
 import { readDirs } from 'src/utils/readFileList';
 import { checkOrCreateFile } from 'src/utils/checkFile';
+import { normalizeCustomPageRel, resolveCustomPageAbs } from 'src/utils/customPagePath';
 @Injectable()
 export class LocalProvider {
   async saveFile(fileName: string, buffer: Buffer, type: StaticType, toRootPath?: boolean) {
@@ -20,9 +21,8 @@ export class LocalProvider {
       return await this.saveImg(fileName, buffer, type, toRootPath);
     } else if (type == 'customPage') {
       const storagePath = StoragePath[type];
-      const realName = fileName;
-      const srcPath = path.join(config.staticPath, storagePath, realName);
-      // 创建文件夹。
+      const realName = normalizeCustomPageRel(fileName);
+      const srcPath = resolveCustomPageAbs(fileName);
       const byteLength = buffer.byteLength;
       const realPath = `/static/${storagePath}/${realName}`;
       checkOrCreateByFilePath(srcPath);
@@ -36,47 +36,27 @@ export class LocalProvider {
   }
 
   async getFolderFiles(p: string) {
-    const storagePath = StoragePath['customPage'];
-    const absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
-    const res = readDirs(absPath, absPath);
-    return res;
+    const absPath = resolveCustomPageAbs(p);
+    return readDirs(absPath, absPath);
   }
   async createFile(p: string, subPath: string) {
-    const storagePath = StoragePath['customPage'];
-    let absPath = '';
-    if (subPath && subPath != '') {
-      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''), subPath);
-    } else {
-      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
-    }
-    checkOrCreateFile(absPath);
+    checkOrCreateFile(resolveCustomPageAbs(p, subPath));
   }
   async createFolder(p: string, subPath: string) {
-    const storagePath = StoragePath['customPage'];
-    let absPath = '';
-    if (subPath && subPath != '') {
-      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''), subPath);
-    } else {
-      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
-    }
-    checkOrCreate(absPath);
+    checkOrCreate(resolveCustomPageAbs(p, subPath));
   }
   async getFileContent(p: string, subPath: string) {
-    const storagePath = StoragePath['customPage'];
-    let absPath = '';
-    if (subPath && subPath != '') {
-      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''), subPath);
-    } else {
-      absPath = path.join(config.staticPath, storagePath, p.replace('/', ''));
-    }
-
-    const r = fs.readFileSync(absPath, { encoding: 'utf-8' });
-    return r;
+    return fs.readFileSync(resolveCustomPageAbs(p, subPath), { encoding: 'utf-8' });
   }
   async updateCustomPageFileContent(pathname: string, filePath: string, content: string) {
-    const storagePath = StoragePath['customPage'];
-    const absPath = path.join(config.staticPath, storagePath, pathname.replace('/', ''), filePath);
-    fs.writeFileSync(absPath, content, { encoding: 'utf-8' });
+    fs.writeFileSync(resolveCustomPageAbs(pathname, filePath), content, { encoding: 'utf-8' });
+  }
+  async deleteCustomPageFile(pathname: string, filePath: string) {
+    const absPath = resolveCustomPageAbs(pathname, filePath);
+    if (!fs.existsSync(absPath) || !fs.statSync(absPath).isFile()) {
+      throw new HttpException('文件不存在', HttpStatus.NOT_FOUND);
+    }
+    fs.rmSync(absPath);
   }
 
   async saveImg(fileName: string, buffer: Buffer, type: StaticType, toRootPath?: boolean) {

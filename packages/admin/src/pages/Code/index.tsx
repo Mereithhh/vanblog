@@ -6,6 +6,7 @@ import {
   getCustomPageFolderTreeByPath,
   updateCustomPage,
   updateCustomPageFileInFolder,
+  deleteCustomPageFile,
   getPipelineById,
   updatePipelineById,
   getPipelineConfig,
@@ -255,7 +256,7 @@ export default function () {
                     onFinish={(info) => {
                       fetchData();
                     }}
-                    url={`/api/admin/customPage/upload?path=${path}`}
+                    url={`/api/admin/customPage/upload?path=${encodeURIComponent(path || '')}`}
                     accept="*"
                     loading={uploadLoading}
                     plainText={true}
@@ -276,11 +277,35 @@ export default function () {
                     onFinish={(info) => {
                       fetchData();
                     }}
-                    url={`/api/admin/customPage/upload?path=${path}`}
+                    url={`/api/admin/customPage/upload?path=${encodeURIComponent(path || '')}`}
                     accept="*"
                     loading={uploadLoading}
                   />
                 ),
+              },
+              {
+                key: 'deleteFile',
+                label: '删除文件',
+                disabled: !node || (node as any).type === 'directory',
+                onClick: () => {
+                  const current = node as any;
+                  if (!current?.key || current.type === 'directory') {
+                    message.warning('请先选择要删除的文件');
+                    return;
+                  }
+                  Modal.confirm({
+                    title: '删除确认',
+                    content: `是否确认删除文件 ${current.title}？`,
+                    onOk: async () => {
+                      await deleteCustomPageFile(path, current.key);
+                      setNode(undefined);
+                      setSelectedKeys([]);
+                      setValue('');
+                      await fetchData();
+                      message.success('删除成功！');
+                    },
+                  });
+                },
               },
             ]
           : []),

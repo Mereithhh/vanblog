@@ -4,6 +4,10 @@ icon: wrench
 order: 2
 ---
 
+## 多文件自定义页面上传失败或无法删除文件
+
+在 Windows 上「上传文件 / 上传文件夹」可能直接报错（`ENOENT: no such file or directory, mkdir`），或上传成功后无法从文件树里删掉单个文件。旧实现创建目录时按 `/` 硬拆路径，Windows 上 `path.join` 得到反斜杠，拆完变成空路径；同时后台没有删除单个文件的接口。已修复（[#338](https://github.com/Mereithhh/vanblog/issues/338)）。请升级到包含该修复的版本。
+
 ## 水印文字带小数点或域名时不显示
 
 在「图床设置」里把水印设成 `example.com` 这类带 `.` 的文字后，上传的图片上可能完全看不到水印；改成不含点的短文本（如 `VanBlog`）又正常。这不是点号本身画不出来，而是旧实现用固定 500px 宽画布去印 128px 字体，域名一类较长的「单词」会被 Jimp 换到画布外。已修复（[#322](https://github.com/Mereithhh/vanblog/issues/322)）。请升级到包含该修复的版本。
