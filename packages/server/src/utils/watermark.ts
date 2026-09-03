@@ -4,6 +4,15 @@ const WATERMARK_MIN_WIDTH = 500;
 const WATERMARK_HEIGHT = 150;
 const LOGO_MARGIN_PERCENTAGE = 5 / 100;
 
+let watermarkFontPromise: ReturnType<typeof Jimp.loadFont> | null = null;
+
+function loadWaterMarkFont() {
+  if (!watermarkFontPromise) {
+    watermarkFontPromise = Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
+  }
+  return watermarkFontPromise;
+}
+
 export const addWaterMarkToIMG = async (srcImage: Buffer, waterMarkText: string) => {
   let logo = await generateWaterMark(waterMarkText);
   const image = await Jimp.read(srcImage);
@@ -31,7 +40,7 @@ export const addWaterMarkToIMG = async (srcImage: Buffer, waterMarkText: string)
 };
 
 export const generateWaterMark: any = async (waterMark: string) => {
-  const font = await Jimp.loadFont(Jimp.FONT_SANS_128_WHITE);
+  const font = await loadWaterMarkFont();
   // Jimp print() wraps when maxWidth is set. A single word wider than that
   // width is pushed onto a second line at y=lineHeight (143). The old 500x150
   // canvas then clips that line, so domain text like "example.com" vanishes.

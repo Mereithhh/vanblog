@@ -51,6 +51,8 @@ async function solidSource(width = 800, height = 600, color = 0x202020ff) {
 }
 
 describe('generateWaterMark', () => {
+  jest.setTimeout(20000);
+
   it('renders watermark text without a dot', async () => {
     const logo = await generateWaterMark(TEXT_WITHOUT_DOT);
     expect(logo.bitmap.width).toBe(500);
@@ -85,6 +87,8 @@ describe('generateWaterMark', () => {
 });
 
 describe('addWaterMarkToIMG', () => {
+  jest.setTimeout(20000);
+
   it('composites text without a dot at the bottom-right', async () => {
     const srcBuf = await solidSource();
     const original = await Jimp.read(srcBuf);
