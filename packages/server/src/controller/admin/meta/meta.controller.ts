@@ -16,15 +16,32 @@ export class MetaController {
   @Get()
   async getAllMeta(@Req() req: Request) {
     const meta = await this.metaProvider.getAll();
-    const serverData = await getVersionFromServer();
     const data = {
       version: version,
-      latestVersion: serverData?.version || version,
-      updatedAt: serverData?.updatedAt || new Date(),
       user: req.user,
       baseUrl: meta.siteInfo.baseUrl,
       enableComment: meta.siteInfo.enableComment || 'true',
       allowDomains: process.env.VAN_BLOG_ALLOW_DOMAINS || '',
+    };
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+}
+
+@ApiTags('meta')
+@UseGuards(...AdminGuard)
+@ApiToken
+@Controller('/api/admin/meta_upstream')
+export class MetaController {
+  constructor(private readonly metaProvider: MetaProvider) {}
+  @Get()
+  async getAllMetaUpstream(@Req() req: Request) {
+    const serverData = await getVersionFromServer();
+    const data = {
+      latestVersion: serverData?.version || version,
+      updatedAt: serverData?.updatedAt || new Date(),
     };
     return {
       statusCode: 200,
