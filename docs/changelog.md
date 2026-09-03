@@ -20,6 +20,7 @@ redirectFrom: /ref/changelog.html
 - 后台 `/api/admin/meta` 不再被远程版本检查拖慢 [#343](https://github.com/Mereithhh/vanblog/issues/343)
 - 后台修改文章后，数字 ID 前台地址不更新 [#356](https://github.com/Mereithhh/vanblog/issues/356)
 - 备份恢复后分类未导入，导致分类管理为空、首页刷新不出文章 [#496](https://github.com/Mereithhh/vanblog/issues/496) [#280](https://github.com/Mereithhh/vanblog/issues/280)
+- 后台文章编辑页即时预览遇到 mermaid 时不再抛异常，左侧可继续输入 [#424](https://github.com/Mereithhh/vanblog/issues/424)
 - 文章含 mermaid 图表时后台编辑器无法输入 [#477](https://github.com/Mereithhh/vanblog/issues/477)
 
 ## [0.54.0](https://github.com/Mereithhh/vanblog/compare/v0.53.0...v0.54.0) (2023-06-27)

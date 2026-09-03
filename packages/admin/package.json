@@ -56,6 +56,7 @@
     "@bytemd/plugin-math-ssr": "^1.21.0",
     "@bytemd/plugin-medium-zoom": "^1.21.0",
     "@bytemd/plugin-mermaid": "^1.21.0",
+    "mermaid": "10.6.1",
     "@bytemd/react": "^1.21.0",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",

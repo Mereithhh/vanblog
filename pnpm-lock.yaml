@@ -161,6 +161,9 @@ importers:
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
+      mermaid:
+        specifier: 10.6.1
+        version: 10.6.1
       moment:
         specifier: ^2.29.4
         version: 2.29.4
@@ -29651,7 +29654,7 @@ packages:
     dependencies:
       debug: 2.6.9
       string-hash: 1.1.3
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -29660,14 +29663,14 @@ packages:
     resolution: {integrity: sha512-BESywQ9at4xyzwtago8ApgWBxYksfHWKmlwPOqrAWUk+gkpNy1bwcPCvlCcMz5O4MZOZwBeY8wMX5dmH66548g==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     dev: false
 
   /think-controller@1.0.5:
     resolution: {integrity: sha512-MP6sEJUPe3/DI7fajWwu2QWdksWdyqG6H8VMdOF9juv9f3tFMvOU/lG/6MKaUR1IUn34oxeCB+W9pl3WIBqpgQ==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     dev: false
 
   /think-crontab@1.0.4:
@@ -29677,7 +29680,7 @@ packages:
       debug: 2.6.9
       node-schedule: 1.3.3
       think-cluster: 1.5.8
-      think-helper: 1.1.4
+      think-helper: 1.3.0
       think-mock-http: 1.0.6
     transitivePeerDependencies:
       - supports-color
@@ -29721,7 +29724,7 @@ packages:
     dependencies:
       debug: 2.6.9
       path-to-regexp: 1.8.0
-      think-helper: 1.1.4
+      think-helper: 1.3.0
       thinkjs: 3.2.15
     transitivePeerDependencies:
       - supports-color
@@ -29739,14 +29742,14 @@ packages:
     resolution: {integrity: sha512-nzWubVr51XZYZ2L0c4TxFw+xOZu829s43n5R5+eW2kBzdjppmf2HgcxHttxGy+cafjFMCohHpQF6KP0aSgRIoA==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     dev: false
 
   /think-meta@1.0.6:
     resolution: {integrity: sha512-dSQPcjFFrI/2eYEFTXqFMjZXMIDn1aE3vrGhPHCLHTsglMJ/5CxHIoCO+2mvnu+BGnbDdv3WTurJX+VAz2bv7Q==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     dev: false
 
   /think-mock-http@1.0.6:
@@ -29754,7 +29757,7 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       debug: 2.6.9
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -29852,7 +29855,7 @@ packages:
       debug: 2.6.9
       mysql: /mysql2@3.6.5
       think-debounce: 1.0.4
-      think-helper: 1.1.4
+      think-helper: 1.3.0
       think-instance: 1.0.2
     transitivePeerDependencies:
       - supports-color
@@ -29878,7 +29881,7 @@ packages:
       inflation: 2.1.0
       on-finished: 2.4.1
       raw-body: 2.5.2
-      think-helper: 1.1.4
+      think-helper: 1.3.0
       xml2js: 0.4.23
     dev: false
 
@@ -29912,7 +29915,7 @@ packages:
     dependencies:
       debug: 2.6.9
       path-to-regexp: 1.8.0
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -29923,13 +29926,13 @@ packages:
       source-map-support: 0.4.18
       stack-trace: 0.0.9
       statuses: 1.5.0
-      think-helper: 1.1.4
+      think-helper: 1.3.0
     dev: false
 
   /think-validator@1.6.7:
     resolution: {integrity: sha512-igc0kNrfjucJ+CCeG33wsAxMHGPW3UdP1R3lFE8WJj5n9MdgqwxNZsT3sqHqp1TuowAV+1hCM+DV+1fXAF6XxA==}
     dependencies:
-      think-helper: 1.1.4
+      think-helper: 1.3.0
       validator: 9.4.1
     dev: false
 
@@ -31262,16 +31265,18 @@ packages:
 
   /uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   /uuid@7.0.3:
     resolution: {integrity: sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
     dev: false
 
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
     requiresBuild: true
     dev: true

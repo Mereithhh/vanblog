@@ -12,9 +12,11 @@ order: 2
 
 后台每次打开都会请求 `/api/admin/meta`。这个接口过去会同步查询远程版本接口（`https://api.mereith.com/vanblog/version`）来提示更新；远程慢或不可达时，后台会被拖住大约 30 秒，前台不受影响。该问题已修复（[#343](https://github.com/Mereithhh/vanblog/issues/343)）：版本检查改为短超时 + 后台缓存，不再阻塞后台。请升级到包含该修复的版本。
 
-## 文章里有 Mermaid 图表时编辑器无法输入
+## 文章里有 Mermaid 图表时编辑器无法输入或预览报错
 
-含 mermaid 代码块的文章在后台打开后，编辑器可能无法点击或输入。该问题已修复（[#477](https://github.com/Mereithhh/vanblog/issues/477)）。若仍使用 `v0.54.0` 及更早版本，请升级到包含该修复的版本。
+含 mermaid 代码块的文章在后台打开后，编辑器可能无法点击或输入，或左侧一改字右侧即时预览就抛异常。这两个问题都已修复（[#477](https://github.com/Mereithhh/vanblog/issues/477)、[#424](https://github.com/Mereithhh/vanblog/issues/424)）。若仍使用 `v0.54.0` 及更早版本，请升级到包含该修复的版本。
+
+临时办法：用开发者工具挡住预览区，或把窗口缩到只显示编辑区，即可继续改正文。
 
 ## 备份恢复后分类为空、首页没有文章
 

@@ -28,7 +28,7 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
 - Mermaid 图表
 
-  文章里的 mermaid 代码块会在预览区和前台渲染为图表，后台编辑器的光标、选区和输入不受影响。
+  文章里的 mermaid 代码块会在预览区和前台渲染为图表。后台分栏预览时，左侧改字不会再因为 mermaid 重绘而抛异常，光标、选区和输入不受影响。
 
   ::: info 图表语法速查
 
