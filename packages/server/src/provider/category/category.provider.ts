@@ -2,6 +2,7 @@ import { Injectable, NotAcceptableException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ArticleProvider } from '../article/article.provider';
+import { DraftProvider } from '../draft/draft.provider';
 import { CategoryDocument } from 'src/scheme/category.schema';
 import { sleep } from 'src/utils/sleep';
 import { UpdateCategoryDto } from 'src/types/category.dto';
@@ -13,6 +14,7 @@ export class CategoryProvider {
   constructor(
     @InjectModel('Category') private categoryModal: Model<CategoryDocument>,
     private readonly articleProvider: ArticleProvider,
+    private readonly draftProvider: DraftProvider,
   ) {}
   async getCategoriesWithArticle(includeHidden: boolean) {
     const allArticles = await this.articleProvider.getAll('list', includeHidden);
@@ -154,15 +156,11 @@ export class CategoryProvider {
       if (existData) {
         throw new NotAcceptableException('分类名重复，无法修改！');
       }
-      // 先修改文章分类
-      const articles = await this.getArticlesByCategory(name, true);
-      if (articles && articles.length) {
-        for (const article of articles) {
-          await this.articleProvider.updateById(article.id, {
-            category: dto.name,
-          });
-        }
-      }
+      // Articles and drafts store the category as a name string, so rename
+      // must rewrite every reference. updateMany avoids depending on list
+      // views / numeric ids, and also covers hidden or soft-deleted docs.
+      await this.articleProvider.updateCategoryName(name, dto.name);
+      await this.draftProvider.updateCategoryName(name, dto.name);
     }
     await this.categoryModal.updateOne(
       {

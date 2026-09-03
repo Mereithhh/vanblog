@@ -961,6 +961,13 @@ export class ArticleProvider {
     return res;
   }
 
+  async updateCategoryName(oldName: string, newName: string) {
+    if (!oldName || !newName || oldName === newName) {
+      return { modifiedCount: 0 };
+    }
+    return this.articleModel.updateMany({ category: oldName }, { category: newName });
+  }
+
   async updateById(
     id: number | string,
     updateArticleDto: UpdateArticleDto,

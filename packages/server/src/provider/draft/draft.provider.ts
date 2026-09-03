@@ -220,6 +220,13 @@ export class DraftProvider {
     return this.draftModel.updateOne({ id: numericId }, { deleted: true }).exec();
   }
 
+  async updateCategoryName(oldName: string, newName: string) {
+    if (!oldName || !newName || oldName === newName) {
+      return { modifiedCount: 0 };
+    }
+    return this.draftModel.updateMany({ category: oldName }, { category: newName });
+  }
+
   async updateById(id: number | string, updateDraftDto: UpdateDraftDto) {
     const numericId = parseNumericId(id);
     return this.draftModel.updateOne(

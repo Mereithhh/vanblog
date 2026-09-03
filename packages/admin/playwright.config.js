@@ -6,6 +6,7 @@ const backupPort = Number(process.env.BACKUP_E2E_PORT || 4178);
 const postIsrPort = Number(process.env.POST_ISR_E2E_PORT || 4179);
 const adminMetaPort = Number(process.env.ADMIN_META_E2E_PORT || 4180);
 const commentLoginPort = Number(process.env.COMMENT_LOGIN_E2E_PORT || 4181);
+const categoryRenamePort = Number(process.env.CATEGORY_RENAME_E2E_PORT || 4182);
 
 module.exports = {
   testDir: './tests/e2e',
@@ -49,6 +50,12 @@ module.exports = {
     {
       command: 'node tests/e2e/comment-login-server.mjs',
       url: `http://127.0.0.1:${commentLoginPort}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
+    {
+      command: 'node tests/e2e/category-rename-server.mjs',
+      url: `http://127.0.0.1:${categoryRenamePort}`,
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
     },
@@ -104,6 +111,15 @@ module.exports = {
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${commentLoginPort}`,
+        viewport: { width: 1280, height: 800 },
+      },
+    },
+    {
+      name: 'category-rename',
+      testMatch: /category-rename\.spec\.js/,
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: `http://127.0.0.1:${categoryRenamePort}`,
         viewport: { width: 1280, height: 800 },
       },
     },

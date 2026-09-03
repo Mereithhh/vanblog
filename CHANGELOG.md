@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台分类管理重命名后，文章和草稿仍保留旧分类名 [#324](https://github.com/Mereithhh/vanblog/issues/324)
 - 后台多文件自定义页面上传文件/文件夹失败，且无法删除已上传文件 [#338](https://github.com/Mereithhh/vanblog/issues/338)
 - 水印文字含 `.`（如域名）时不再整段消失 [#322](https://github.com/Mereithhh/vanblog/issues/322)
 - 非法或缺失的文章/草稿 ID 不再以 `NaN` 查询 MongoDB，避免打开草稿变成空文档 [#427](https://github.com/Mereithhh/vanblog/issues/427)
