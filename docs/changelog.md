@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 非法或缺失的文章/草稿 ID 不再以 `NaN` 查询 MongoDB，避免打开草稿变成空文档 [#427](https://github.com/Mereithhh/vanblog/issues/427)
 - 导入备份不再覆盖当前后台账号，避免新机器刚配好的登录被旧数据顶掉 [#280](https://github.com/Mereithhh/vanblog/issues/280)
 - 使用外部 MongoDB（Atlas）时，内嵌 Waline 不再强制 `authSource=admin` [#493](https://github.com/Mereithhh/vanblog/issues/493)
 - Docker 环境变量 `VAN_BLOG_CDN_URL` 启动时未生效，前台 `/_next/static` 仍走主站相对路径 [#450](https://github.com/Mereithhh/vanblog/issues/450)

@@ -5,6 +5,7 @@ import { CreateArticleDto, SearchArticleOption, UpdateArticleDto } from 'src/typ
 import { Article, ArticleDocument } from 'src/scheme/article.schema';
 import { parseImgLinksOfMarkdown } from 'src/utils/parseImgOfMarkdown';
 import { wordCount } from 'src/utils/wordCount';
+import { parseNumericId, tryParseNumericId } from 'src/utils/numericId';
 import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';
 import { sleep } from 'src/utils/sleep';
@@ -155,7 +156,11 @@ export class ArticleProvider {
     let article = await this.getByPathName(pathname, 'list');
     if (!article) {
       // 这是通过 id 的吧。
-      article = await this.getById(Number(pathname), 'list');
+      const numericId = tryParseNumericId(pathname);
+      if (numericId == null) {
+        return;
+      }
+      article = await this.getById(numericId, 'list');
       if (!article) {
         return;
       }
@@ -677,7 +682,11 @@ export class ArticleProvider {
     if (articleByPathname) {
       return articleByPathname;
     }
-    return await this.getById(Number(id), view);
+    const numericId = tryParseNumericId(id);
+    if (numericId == null) {
+      return null;
+    }
+    return await this.getById(numericId, view);
   }
 
   async getByPathName(pathname: string, view: ArticleView): Promise<Article> {
@@ -705,7 +714,8 @@ export class ArticleProvider {
       .exec();
   }
 
-  async getById(id: number, view: ArticleView): Promise<Article> {
+  async getById(id: number | string, view: ArticleView): Promise<Article> {
+    const numericId = parseNumericId(id);
     const $and: any = [
       {
         $or: [
@@ -722,7 +732,7 @@ export class ArticleProvider {
     return await this.articleModel
       .findOne(
         {
-          id,
+          id: numericId,
           $and,
         },
         this.getView(view),
@@ -944,15 +954,21 @@ export class ArticleProvider {
   async findAll(): Promise<Article[]> {
     return this.articleModel.find({}).exec();
   }
-  async deleteById(id: number) {
-    const res = await this.articleModel.updateOne({ id }, { deleted: true }).exec();
+  async deleteById(id: number | string) {
+    const numericId = parseNumericId(id);
+    const res = await this.articleModel.updateOne({ id: numericId }, { deleted: true }).exec();
     this.metaProvider.updateTotalWords('删除文章');
     return res;
   }
 
-  async updateById(id: number, updateArticleDto: UpdateArticleDto, skipUpdateWordCount?: boolean) {
+  async updateById(
+    id: number | string,
+    updateArticleDto: UpdateArticleDto,
+    skipUpdateWordCount?: boolean,
+  ) {
+    const numericId = parseNumericId(id);
     const res = await this.articleModel.updateOne(
-      { id },
+      { id: numericId },
       {
         ...updateArticleDto,
         updatedAt: updateArticleDto.updatedAt || new Date(),

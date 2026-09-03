@@ -10,6 +10,7 @@ import {
 } from 'src/types/draft.dto';
 import { Draft, DraftDocument } from 'src/scheme/draft.schema';
 import { ArticleProvider } from '../article/article.provider';
+import { parseNumericId } from 'src/utils/numericId';
 import { sleep } from 'src/utils/sleep';
 export type DraftView = 'admin' | 'public' | 'list';
 @Injectable()
@@ -188,11 +189,13 @@ export class DraftProvider {
     return this.draftModel.find({ deleted: false }).exec();
   }
 
-  async getById(id: number): Promise<Draft> {
-    return this.draftModel.findOne({ id, deleted: false }).exec();
+  async getById(id: number | string): Promise<Draft> {
+    const numericId = parseNumericId(id);
+    return this.draftModel.findOne({ id: numericId, deleted: false }).exec();
   }
-  async findById(id: number): Promise<Draft> {
-    return this.draftModel.findOne({ id }).exec();
+  async findById(id: number | string): Promise<Draft> {
+    const numericId = parseNumericId(id);
+    return this.draftModel.findOne({ id: numericId }).exec();
   }
   async findOneByTitle(title: string): Promise<Draft> {
     return this.draftModel.findOne({ title }).exec();
@@ -212,12 +215,17 @@ export class DraftProvider {
   async findAll(): Promise<Draft[]> {
     return this.draftModel.find().exec();
   }
-  async deleteById(id: number) {
-    return this.draftModel.updateOne({ id }, { deleted: true }).exec();
+  async deleteById(id: number | string) {
+    const numericId = parseNumericId(id);
+    return this.draftModel.updateOne({ id: numericId }, { deleted: true }).exec();
   }
 
-  async updateById(id: number, updateDraftDto: UpdateDraftDto) {
-    return this.draftModel.updateOne({ id }, { ...updateDraftDto, updatedAt: new Date() });
+  async updateById(id: number | string, updateDraftDto: UpdateDraftDto) {
+    const numericId = parseNumericId(id);
+    return this.draftModel.updateOne(
+      { id: numericId },
+      { ...updateDraftDto, updatedAt: new Date() },
+    );
   }
 
   async getNewId() {

@@ -105,7 +105,7 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
 ### 保存快捷键
 
-<kbd>Ctrl</kbd> + <kbd>S</kbd> 可以保存文章/草稿
+<kbd>Ctrl</kbd> + <kbd>S</kbd> 可以保存文章/草稿。保存和打开都需要有效的数字 ID；缺少 ID 时会提示错误，而不会用空内容覆盖原文。
 
 ## 偏好设置
 

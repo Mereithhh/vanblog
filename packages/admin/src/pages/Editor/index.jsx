@@ -24,6 +24,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { history } from 'umi';
 import moment from 'moment';
 
+function parseDocId(id) {
+  if (id === undefined || id === null || id === '') {
+    return null;
+  }
+  const parsed = Number(id);
+  return Number.isInteger(parsed) ? parsed : null;
+}
+
 export default function () {
   const [value, setValue] = useState('');
   const [currObj, setCurrObj] = useState({});
@@ -62,7 +70,8 @@ export default function () {
       setLoading(true);
 
       const type = history.location.query?.type || 'article';
-      const id = history.location.query?.id;
+      const id = parseDocId(history.location.query?.id);
+      try {
       const cacheString = window.localStorage.getItem(getCacheKey());
       let cacheObj = {};
       try {
@@ -123,8 +132,12 @@ export default function () {
           if (!noMessage) {
             message.success('从缓存中恢复状态！');
           }
+        } else if (data) {
+          setValue(data.content || '');
         } else {
-          setValue(data?.content || '');
+          message.error('未找到文章，已保留当前编辑内容以免覆盖');
+          setLoading(false);
+          return;
         }
         document.title = `${data?.title || ''} - VanBlog 编辑器`;
         setCurrObj(data);
@@ -137,13 +150,24 @@ export default function () {
             message.success('从缓存中恢复状态！');
           }
           setValue(cache);
+        } else if (data) {
+          setValue(data.content || '');
         } else {
-          setValue(data?.content || '');
+          message.error('未找到草稿，已保留当前编辑内容以免覆盖');
+          setLoading(false);
+          return;
         }
         setCurrObj(data);
         document.title = `${data?.title || ''} - VanBlog 编辑器`;
       }
-      setLoading(false);
+      if ((type == 'article' || type == 'draft') && !id) {
+        message.error('无效的文档 ID，无法加载');
+      }
+      } catch (err) {
+        message.error('加载文档失败，已保留当前内容以免覆盖');
+      } finally {
+        setLoading(false);
+      }
     },
     [history, setLoading, setValue, type],
   );
@@ -162,25 +186,36 @@ export default function () {
 
   const saveFn = async () => {
     const v = value;
+    const docId = parseDocId(currObj?.id) ?? parseDocId(history.location.query?.id);
     setLoading(true);
-    if (type == 'article') {
-      await updateArticle(currObj?.id, { content: v });
-      await fetchData();
-      message.success('保存成功！');
-    } else if (type == 'draft') {
-      await updateDraft(currObj?.id, { content: v });
-      await fetchData();
-      message.success('保存成功！');
-    } else if (type == 'about') {
-      await updateAbout({ content: v });
-      await fetchData();
-      message.success('保存成功！');
-    } else {
+    try {
+      if (type == 'article') {
+        if (docId == null) {
+          message.error('无法保存：缺少有效的文章 ID');
+          return;
+        }
+        await updateArticle(docId, { content: v });
+        await fetchData();
+        message.success('保存成功！');
+      } else if (type == 'draft') {
+        if (docId == null) {
+          message.error('无法保存：缺少有效的草稿 ID');
+          return;
+        }
+        await updateDraft(docId, { content: v });
+        await fetchData();
+        message.success('保存成功！');
+      } else if (type == 'about') {
+        await updateAbout({ content: v });
+        await fetchData();
+        message.success('保存成功！');
+      }
+      if (editorConfig.afterSave && editorConfig.afterSave == 'goBack') {
+        history.go(-1);
+      }
+    } finally {
+      setLoading(false);
     }
-    if (editorConfig.afterSave && editorConfig.afterSave == 'goBack') {
-      history.go(-1);
-    }
-    setLoading(false);
   };
 
   const handleSave = async () => {
