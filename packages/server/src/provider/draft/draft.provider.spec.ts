@@ -34,7 +34,9 @@ function createMemoryDraftModel(initial: any[] = []) {
   };
   return {
     docs,
-    findOne: jest.fn(async (query: any) => findMatching(query)),
+    findOne: jest.fn((query: any) => ({
+      exec: async () => findMatching(query),
+    })),
     updateOne: jest.fn(async (query: any, patch: any) => {
       assertQueryId(query?.id);
       const target = findMatching(query);
