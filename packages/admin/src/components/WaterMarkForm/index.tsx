@@ -105,7 +105,7 @@ export default function (props: {}) {
           name="waterMarkText"
           label={'水印文字'}
           required
-          tooltip={'此文字会作为水印加到图片右下角，目前不支持中文'}
+          tooltip={'此文字会作为水印加到图片右下角，可包含 .（如域名），目前不支持中文'}
           placeholder="请输入水印文字"
         />
       </ProForm>
