@@ -31,7 +31,9 @@ describe('admin meta stays fast when version API is slow (e2e)', () => {
     const started = Date.now();
     const { data } = await axios.get('https://api.mereith.com/vanblog/version');
     const elapsed = Date.now() - started;
-    expect(elapsed).toBeGreaterThanOrEqual(remoteDelayMs);
+    // Wall-clock vs setTimeout can land 1ms early (CI measured 399 < 400).
+    expect(elapsed).toBeGreaterThanOrEqual(remoteDelayMs - 20);
+    expect(elapsed).toBeLessThan(remoteDelayMs + 200);
     expect(data?.data?.version).toBe('0.99.0');
   });
 
