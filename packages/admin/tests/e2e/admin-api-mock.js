@@ -92,6 +92,43 @@ const ARTICLE_108 = {
   },
 };
 
+const nestedFiller = (label, count) =>
+  Array.from({ length: count }, (_, i) => `${label} ${i + 1}。这段用来把子标题顶出编辑器视口。`).join(
+    '\n\n',
+  );
+
+const TOC_NESTED_ARTICLE_CONTENT = `# 一级标题
+
+VanBlog 后台编辑器目录测试
+
+${nestedFiller('填充段落', 36)}
+
+## 二级标题
+
+这是一级标题下面的 markdown 标题。
+
+${nestedFiller('子级填充', 18)}
+
+### 三级标题
+
+文末。
+`;
+
+const ARTICLE_370 = {
+  statusCode: 200,
+  data: {
+    id: 370,
+    title: '目录点击空白测试',
+    content: TOC_NESTED_ARTICLE_CONTENT,
+    category: '测试',
+    tags: ['E2E'],
+    hidden: false,
+    pathname: 'editor-toc-blank',
+    updatedAt: '2024-11-14T00:00:00.000Z',
+    createdAt: '2024-11-14T00:00:00.000Z',
+  },
+};
+
 function json(route, body) {
   return route.fulfill({
     status: 200,
@@ -121,6 +158,12 @@ async function mockAdminApis(page) {
     if (path === '/api/admin/article/108' && method === 'PUT') {
       return json(route, { statusCode: 200, data: ARTICLE_108.data });
     }
+    if (path === '/api/admin/article/370' && method === 'GET') {
+      return json(route, ARTICLE_370);
+    }
+    if (path === '/api/admin/article/370' && method === 'PUT') {
+      return json(route, { statusCode: 200, data: ARTICLE_370.data });
+    }
     if (path === '/api/admin/tag/all' && method === 'GET') {
       return json(route, { statusCode: 200, data: ['E2E', 'Markdown'] });
     }
@@ -145,6 +188,7 @@ async function loginAsAdmin(page) {
 
 module.exports = {
   MERMAID_ARTICLE_CONTENT,
+  TOC_NESTED_ARTICLE_CONTENT,
   mockAdminApis,
   loginAsAdmin,
 };

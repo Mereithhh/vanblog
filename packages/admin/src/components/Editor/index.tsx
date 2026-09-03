@@ -17,6 +17,7 @@ import { emoji } from './emoji';
 import { imgUploadPlugin, uploadImg } from './imgUpload';
 import './index.less';
 import './mermaid-safety.css';
+import './toc-viewport.css';
 import { insertMore } from './insertMore';
 import { cn } from './locales';
 import { useModel } from 'umi';
@@ -27,6 +28,7 @@ import { Heading } from './plugins/heading';
 import { customCodeBlock } from './plugins/codeBlock';
 import { LinkTarget } from './plugins/linkTarget';
 import { mermaidForEditor } from './plugins/mermaidSafety';
+import { tocViewportGuard } from './plugins/tocViewport';
 
 const sanitize = (schema) => {
   schema.protocols.src.push('data');
@@ -66,6 +68,7 @@ export default function EditorComponent(props: {
       math({ locale: cn }),
       mediumZoom(),
       mermaidForEditor({ locale: cn }),
+      tocViewportGuard(),
       imgUploadPlugin(setLoading),
       emoji(),
       insertMore(),
