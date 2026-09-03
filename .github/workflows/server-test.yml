@@ -29,7 +29,7 @@ jobs:
 
       - name: Run server unit tests
         working-directory: packages/server
-        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|customPage.provider|walineLogin|waline.provider|setting.provider|cdnUrl|website.provider|walineMongo|numericId|article.provider|draft.provider|watermark|wordCount" --passWithNoTests=false
+        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|customPage.provider|walineLogin|waline.provider|walineExtra|setting.provider|cdnUrl|website.provider|walineMongo|numericId|article.provider|draft.provider|watermark|wordCount" --passWithNoTests=false
 
       - name: Run website unit tests
         run: pnpm --filter @vanblog/theme-default exec vitest run
@@ -49,6 +49,10 @@ jobs:
       - name: Run force-login comment e2e
         working-directory: packages/server
         run: pnpm test:force-login-comment-e2e
+
+      - name: Run waline extra options e2e
+        working-directory: packages/server
+        run: pnpm test:waline-extra-e2e
 
       - name: Run CDN URL e2e
         working-directory: packages/server

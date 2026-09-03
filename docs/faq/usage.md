@@ -14,6 +14,12 @@ order: 2
 
 旧版本首屏 HTML 会按服务器时间套上 `dark`，再等 `/initTheme.js` 读 localStorage 后改回来，所以选「白色」刷新会黑约半秒，选「自动」在浅色系统（尤其晚上）也会被强制成黑色。已修复（[#292](https://github.com/Mereithhh/vanblog/issues/292)、[#25](https://github.com/Mereithhh/vanblog/issues/25)、[#54](https://github.com/Mereithhh/vanblog/issues/54)）：记住的主题在首屏绘制前生效；自动模式跟随系统配色，系统为浅色时不会强制夜间模式。请升级到包含该修复的版本。
 
+## 后台设置了 Waline 自定义变量但不生效
+
+在「评论设置」里填了 `imageUploader: false`（关掉评论图片上传）或 `IPQPS`（同一 IP 发言频率）后，旧版本不会把客户端选项传给前台评论组件，数字环境变量也可能没按字符串交给内嵌 Waline。已修复（[#139](https://github.com/Mereithhh/vanblog/issues/139)）。请升级到包含该修复的版本后重新保存一次评论设置（会重启内嵌 Waline）。
+
+布尔请写 `false` 而不是 `"false"`。`IPQPS` 的单位是「每分钟请求次数」，默认已经是 `60`，填 `60` 看起来会像没变化。
+
 ## 分类管理改名后文章或草稿还是旧名称
 
 在「站点管理 / 数据管理 / 分类管理」把分类从 `AAA` 改成 `BBB` 后，用过 `AAA` 的文章和草稿可能仍显示旧名称，或看起来像未分类。文章和草稿存的是分类名字符串，旧版本只改了分类表本身。已修复（[#324](https://github.com/Mereithhh/vanblog/issues/324)）：重命名会同步更新所有文章和草稿上的分类名。请升级到包含该修复的版本。

@@ -11,6 +11,7 @@ redirectFrom: /ref/changelog.html
 ### 🐛 Bug Fixes | Bug 修复
 
 - 前台选择白色后刷新不再先闪暗色；自动模式跟随系统配色，浅色系统下不再因夜间时段强制黑色 [#292](https://github.com/Mereithhh/vanblog/issues/292)
+- 后台「自定义环境变量」未生效：`imageUploader: false` 未传到前台评论组件，数字 `IPQPS` 也未作为字符串环境变量传给内嵌 Waline [#139](https://github.com/Mereithhh/vanblog/issues/139)
 - 站点总字数与后台编辑器使用同一口径（中文按字、英文按词，不是 UTF-8 字节），且只统计已发布文章 [#293](https://github.com/Mereithhh/vanblog/issues/293)
 - 文章标题末尾或多余空格时，前台目录点击无法跳转到对应标题 [#308](https://github.com/Mereithhh/vanblog/issues/308)
 - 后台分类管理重命名后，文章和草稿仍保留旧分类名 [#324](https://github.com/Mereithhh/vanblog/issues/324)

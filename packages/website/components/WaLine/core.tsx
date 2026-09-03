@@ -1,18 +1,20 @@
 import "@waline/client/dist/waline.css";
 import { useEffect, useRef } from "react";
 import { init, commentCount } from "@waline/client";
+import {
+  buildWalineInitOptions,
+  WalineCommentSetting,
+} from "../../utils/walineClient";
 
-async function loadCommentLogin(): Promise<"enable" | "force"> {
+async function loadCommentSetting(): Promise<WalineCommentSetting> {
   try {
     const res = await fetch("/api/public/comment-setting");
     const json = await res.json();
-    if (json?.data?.forceLoginComment === true) {
-      return "force";
-    }
+    return json?.data ?? {};
   } catch {
     // Keep Waline default when the setting endpoint is unavailable.
   }
-  return "enable";
+  return {};
 }
 
 export default function (props: {
@@ -27,10 +29,11 @@ export default function (props: {
       state.hasInit = true;
       const setup = async () => {
         if (props.visible) {
-          const login = await loadCommentLogin();
+          const setting = await loadCommentSetting();
           if (cancelled) {
             return;
           }
+          const extra = buildWalineInitOptions(setting);
           state.wa = init({
             el: "#waline",
             serverURL: `${window.location.protocol}//${window.location.host}`,
@@ -38,7 +41,7 @@ export default function (props: {
             pageview: false,
             dark: ".dark",
             lang: "zh",
-            login,
+            ...extra,
           });
         } else {
           state.wa = commentCount({

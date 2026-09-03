@@ -4,6 +4,11 @@ import { config } from 'src/config';
 import { WalineSetting } from 'src/types/setting.dto';
 import { makeSalt } from 'src/utils/crypto';
 import { isForceLoginCommentEnabled } from 'src/utils/walineLogin';
+import {
+  buildWalineEnvFromOtherConfig,
+  stringifyWalineEnvValue,
+  toWalineProcessEnv,
+} from 'src/utils/walineExtra';
 import { buildWalineMongoEnv } from 'src/utils/walineMongo';
 import { MetaProvider } from '../meta/meta.provider';
 import { SettingProvider } from '../setting/setting.provider';
@@ -38,18 +43,14 @@ export class WalineProvider {
       if (key == 'forceLoginComment') {
         continue;
       } else if (key == 'otherConfig') {
-        if (config.otherConfig) {
-          try {
-            const data = JSON.parse(config.otherConfig);
-            for (const [k, v] of Object.entries(data)) {
-              result[k] = v;
-            }
-          } catch (err) {}
-        }
+        Object.assign(result, buildWalineEnvFromOtherConfig(config.otherConfig));
       } else {
         const rKey = walineEnvMapping[key];
         if (rKey) {
-          result[rKey] = config[key];
+          const asString = stringifyWalineEnvValue(config[key]);
+          if (asString !== undefined) {
+            result[rKey] = asString;
+          }
         }
       }
     }
@@ -73,10 +74,9 @@ export class WalineProvider {
           r2[k] = v;
         }
       }
-      return r2;
+      return toWalineProcessEnv(r2);
     }
-    // console.log(result);
-    return result;
+    return toWalineProcessEnv(result);
   }
   async loadEnv() {
     const mongoEnv = buildWalineMongoEnv(config.mongoUrl, config.walineDB);
@@ -149,7 +149,7 @@ export class WalineProvider {
       this.ctx = spawn('node', [base], {
         env: {
           ...process.env,
-          ...this.env,
+          ...toWalineProcessEnv(this.env as Record<string, unknown>),
         },
         cwd: process.cwd(),
         detached: true,
