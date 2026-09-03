@@ -33,3 +33,11 @@ Body under a heading indented with two spaces (CommonMark ATX).
 #### Deeper Nested
 
 Body under a deeper nested heading.
+
+## 比较 $A$<$B$
+
+Body under a heading with inline TeX, same pattern as the reporter screenshot.
+
+## 由方程 $F(x,y)=0$ 确定的隐函数 $y=y(x)$
+
+Body under a mixed prose-and-math heading.
