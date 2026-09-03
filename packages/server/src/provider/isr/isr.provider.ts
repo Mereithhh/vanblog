@@ -1,6 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import { Article } from 'src/scheme/article.schema';
+import { getAllArticlePublicPaths, getArticlePublicPaths } from 'src/utils/articlePublicPaths';
 import { sleep } from 'src/utils/sleep';
 import { ArticleProvider } from '../article/article.provider';
 import { RssProvider } from '../rss/rss.provider';
@@ -9,6 +10,7 @@ import { SiteMapProvider } from '../sitemap/sitemap.provider';
 export interface ActiveConfig {
   postId?: number;
   forceActice?: boolean;
+  previousPathname?: string;
 }
 @Injectable()
 export class ISRProvider {
@@ -36,12 +38,25 @@ export class ISRProvider {
     // ! 配置差的机器可能并发多了会卡，所以改成串行的。
 
     await this.activeUrls(this.urlList, false);
-    let postId: any = null;
-    const articleWithThisId = await this.articleProvider.getById(postId, 'list');
-    if (articleWithThisId) {
-      postId = articleWithThisId.pathname || articleWithThisId.id;
+    const requestedPostId = activeConfig?.postId;
+    const articleWithThisId =
+      requestedPostId != null ? await this.articleProvider.getById(requestedPostId, 'list') : null;
+    const priorityUrls: string[] = articleWithThisId
+      ? getArticlePublicPaths(articleWithThisId)
+      : requestedPostId != null
+      ? [`/post/${requestedPostId}`]
+      : [];
+    const previousPathname =
+      typeof activeConfig?.previousPathname === 'string'
+        ? activeConfig.previousPathname.trim()
+        : '';
+    if (previousPathname) {
+      const oldPath = `/post/${previousPathname}`;
+      if (!priorityUrls.includes(oldPath)) {
+        priorityUrls.push(oldPath);
+      }
     }
-    await this.activePath('post', postId || undefined);
+    await this.activePath('post', priorityUrls);
     await this.activePath('page');
     await this.activePath('category');
     await this.activePath('tag');
@@ -98,7 +113,7 @@ export class ISRProvider {
       await this.activeUrl(each, log);
     }
   }
-  async activePath(type: 'category' | 'tag' | 'page' | 'post', postId?: number) {
+  async activePath(type: 'category' | 'tag' | 'page' | 'post', priorityUrls?: string[]) {
     switch (type) {
       case 'category':
         const categoryUrls = await this.sitemapProvider.getCategoryUrls();
@@ -114,9 +129,9 @@ export class ISRProvider {
         break;
       case 'post':
         const articleUrls = await this.getArticleUrls();
-        if (postId) {
-          const urlsWithoutThisId = articleUrls.filter((u) => u !== `/post/${postId}`);
-          await this.activeUrls([`/post/${postId}`, ...urlsWithoutThisId], false);
+        if (priorityUrls?.length) {
+          const rest = articleUrls.filter((u) => !priorityUrls.includes(u));
+          await this.activeUrls([...priorityUrls, ...rest], false);
         } else {
           await this.activeUrls(articleUrls, false);
         }
@@ -131,12 +146,21 @@ export class ISRProvider {
       'list',
     );
     // 无论是什么事件都先触发文章本身、标签和分类。
-    this.activeUrl(`/post/${id}`, true);
+    for (const url of getArticlePublicPaths(article || { id })) {
+      this.activeUrl(url, true);
+    }
+    if (beforeObj?.pathname && beforeObj.pathname !== article?.pathname) {
+      this.activeUrl(`/post/${beforeObj.pathname}`, true);
+    }
     if (pre) {
-      this.activeUrl(`/post/${pre?.id}`, true);
+      for (const url of getArticlePublicPaths(pre)) {
+        this.activeUrl(url, true);
+      }
     }
     if (next) {
-      this.activeUrl(`/post/${next?.id}`, true);
+      for (const url of getArticlePublicPaths(next)) {
+        this.activeUrl(url, true);
+      }
     }
     const tags = article.tags;
     if (tags && tags.length > 0) {
@@ -201,8 +225,6 @@ export class ISRProvider {
 
   async getArticleUrls() {
     const articles = await this.articleProvider.getAll('list', true, true);
-    return articles.map((a) => {
-      return `/post/${a.pathname || a.id}`;
-    });
+    return getAllArticlePublicPaths(articles);
   }
 }

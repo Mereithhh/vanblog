@@ -91,9 +91,11 @@ export class ArticleController {
         updateDto = lastOuput;
       }
     }
+    const before = await this.articleProvider.getById(id, 'list');
     const data = await this.articleProvider.updateById(id, updateDto);
     this.isrProvider.activeAll('更新文章触发增量渲染！', undefined, {
       postId: id,
+      previousPathname: before?.pathname,
     });
     const updatedArticle = await this.articleProvider.getById(id, 'admin');
     this.pipelineProvider.dispatchEvent('afterUpdateArticle', updatedArticle);
@@ -152,6 +154,7 @@ export class ArticleController {
     const data = await this.articleProvider.deleteById(id);
     this.isrProvider.activeAll('删除文章触发增量渲染！', undefined, {
       postId: id,
+      previousPathname: toDeleteArticle?.pathname,
     });
     return {
       statusCode: 200,

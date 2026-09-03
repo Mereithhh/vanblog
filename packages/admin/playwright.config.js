@@ -3,6 +3,7 @@ const { devices } = require('@playwright/test');
 const fixturePort = Number(process.env.MERMAID_E2E_PORT || 4177);
 const adminPort = Number(process.env.ADMIN_E2E_PORT || 3002);
 const backupPort = Number(process.env.BACKUP_E2E_PORT || 4178);
+const postIsrPort = Number(process.env.POST_ISR_E2E_PORT || 4179);
 
 module.exports = {
   testDir: './tests/e2e',
@@ -31,6 +32,12 @@ module.exports = {
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
     },
+    {
+      command: 'node tests/e2e/post-isr-server.mjs',
+      url: `http://127.0.0.1:${postIsrPort}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
   ],
   projects: [
     {
@@ -56,6 +63,15 @@ module.exports = {
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${backupPort}`,
+        viewport: { width: 1280, height: 800 },
+      },
+    },
+    {
+      name: 'post-isr',
+      testMatch: /post-isr\.spec\.js/,
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: `http://127.0.0.1:${postIsrPort}`,
         viewport: { width: 1280, height: 800 },
       },
     },
