@@ -57,11 +57,22 @@ function seedOldMachine() {
     ],
     drafts: [],
     meta: { siteInfo: { siteName: 'VanBlog E2E' }, categories: ['随笔', '教程'] },
-    user: { name: 'admin' },
+    user: { name: 'oldadmin', password: 'oldpass' },
   };
 }
 
-let store = seedOldMachine();
+function seedNewMachine() {
+  return {
+    articles: [],
+    categories: [],
+    drafts: [],
+    meta: { siteInfo: { siteName: 'VanBlog E2E' }, categories: [] },
+    user: { name: 'newadmin', password: 'newpass' },
+    session: null,
+  };
+}
+
+let store = { ...seedOldMachine(), session: null };
 
 function json(res, status, body) {
   res.writeHead(status, { 'content-type': 'application/json; charset=utf-8' });
@@ -86,6 +97,7 @@ function html(res, title, body) {
 <body>
   <nav>
     <a href="/">首页</a>
+    <a href="/admin/login">登录</a>
     <a href="/admin/category">分类管理</a>
     <a href="/admin/backup">备份恢复</a>
   </nav>
@@ -106,9 +118,9 @@ const server = createServer(async (req, res) => {
   if (req.method === 'POST' && url.pathname === '/e2e/reset') {
     const body = JSON.parse((await readBody(req)).toString() || '{}');
     if (body.mode === 'new-machine') {
-      store = { articles: [], categories: [], drafts: [], meta: { siteInfo: { siteName: 'VanBlog E2E' }, categories: [] }, user: { name: 'admin' } };
+      store = seedNewMachine();
     } else {
-      store = seedOldMachine();
+      store = { ...seedOldMachine(), session: null };
     }
     return json(res, 200, { ok: true, store });
   }
@@ -150,7 +162,26 @@ const server = createServer(async (req, res) => {
       ...(data.meta || store.meta),
       categories: store.categories.map((item) => item.name),
     };
+    // Keep the current admin login. Applying data.user would lock the operator out.
     return json(res, 200, { statusCode: 200, data: '导入成功！' });
+  }
+
+  if (req.method === 'POST' && url.pathname === '/api/admin/auth/login') {
+    const body = JSON.parse((await readBody(req)).toString() || '{}');
+    const name = body.username || body.name;
+    const password = body.password;
+    if (store.user?.name === name && store.user?.password === password) {
+      store.session = { name: store.user.name };
+      return json(res, 200, { statusCode: 200, data: { user: { name: store.user.name } } });
+    }
+    return json(res, 401, { statusCode: 401, message: '用户名或密码错误！' });
+  }
+
+  if (req.method === 'GET' && url.pathname === '/api/admin/auth/me') {
+    if (!store.session) {
+      return json(res, 401, { statusCode: 401, message: '未登录' });
+    }
+    return json(res, 200, { statusCode: 200, data: store.session });
   }
 
   if (req.method === 'GET' && url.pathname === '/api/admin/category/all') {
@@ -199,6 +230,41 @@ const server = createServer(async (req, res) => {
           .join('')}</ul>`
       : '<p class="muted" data-empty-category>分类管理为空</p>';
     return html(res, '分类管理', `<h1>分类管理</h1>${list}`);
+  }
+
+  if (url.pathname === '/admin/login') {
+    return html(
+      res,
+      '后台登录',
+      `<h1>后台登录</h1>
+       <form id="login-form">
+         <label>用户名 <input id="username" name="username" /></label>
+         <label>密码 <input id="password" name="password" type="password" /></label>
+         <button id="login-btn" type="submit">登录</button>
+       </form>
+       <p id="login-status" data-login-status></p>
+       <script>
+         document.getElementById('login-form').onsubmit = async (event) => {
+           event.preventDefault();
+           const username = document.getElementById('username').value;
+           const password = document.getElementById('password').value;
+           const res = await fetch('/api/admin/auth/login', {
+             method: 'POST',
+             headers: { 'content-type': 'application/json' },
+             body: JSON.stringify({ username, password }),
+           });
+           const body = await res.json();
+           const status = document.getElementById('login-status');
+           if (res.ok) {
+             status.textContent = '登录成功：' + body.data.user.name;
+             status.dataset.loginUser = body.data.user.name;
+           } else {
+             status.textContent = body.message || '登录失败';
+             delete status.dataset.loginUser;
+           }
+         };
+       </script>`,
+    );
   }
 
   if (url.pathname === '/admin/backup') {

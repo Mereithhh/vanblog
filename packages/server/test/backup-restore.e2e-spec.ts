@@ -1,5 +1,8 @@
+import { BackupController } from '../src/controller/admin/backup/backup.controller';
 import { collectCategoriesFromBackup, toExportCategory } from '../src/utils/backupCategories';
 import { CategoryProvider } from '../src/provider/category/category.provider';
+import { UserProvider } from '../src/provider/user/user.provider';
+import { encryptPassword, makeSalt } from '../src/utils/crypto';
 
 /**
  * End-to-end of the backup export → new machine import path that #496 / #280
@@ -59,6 +62,56 @@ function publicArticleList(articles: any[], categories: any[]) {
 
 function publicMetaCategories(categoryDocs: any[]) {
   return categoryDocs.map((item) => item.name);
+}
+
+function asExec(value: any) {
+  const promise: any = Promise.resolve(value);
+  promise.exec = () => Promise.resolve(value);
+  return promise;
+}
+
+function createMemoryUserModel(initial: any[] = []) {
+  const docs = initial.map((item) => ({ ...item }));
+  const findMatching = (query: any) => {
+    if (!query || !Object.keys(query).length) {
+      return docs[0] || null;
+    }
+    return (
+      docs.find((item) => Object.entries(query).every(([key, value]) => item[key] === value)) ||
+      null
+    );
+  };
+  return {
+    docs,
+    findOne: jest.fn((query: any) => asExec(findMatching(query))),
+    updateOne: jest.fn((query: any, patch: any) => {
+      const target = findMatching(query);
+      if (target) {
+        Object.assign(target, patch);
+      }
+      return asExec({ acknowledged: true });
+    }),
+  };
+}
+
+function mockImportSink() {
+  return {
+    importArticles: jest.fn(async (articles: any[]) => articles),
+    importDrafts: jest.fn(async (drafts: any[]) => drafts),
+    importCategories: jest.fn(),
+    update: jest.fn(),
+    importSetting: jest.fn(),
+    importItems: jest.fn(),
+    import: jest.fn(),
+    activeAll: jest.fn(),
+    getAll: jest.fn(),
+    getAllCategories: jest.fn(),
+    getAllTags: jest.fn(),
+    getUser: jest.fn(),
+    getStaticSetting: jest.fn(),
+    exportAll: jest.fn(),
+    updateUser: jest.fn(),
+  };
 }
 
 describe('backup restore categories (e2e)', () => {
@@ -155,5 +208,131 @@ describe('backup restore categories (e2e)', () => {
     expect(homepageWithoutCategories).toHaveLength(2);
     expect(leakedCategories.docs).toEqual([]);
     expect(publicMetaCategories(leakedCategories.docs)).toEqual([]);
+  });
+});
+
+describe('backup restore keeps new-machine admin (#280)', () => {
+  const oldMachineArticles = [
+    {
+      id: 1,
+      title: '迁徙后的第一篇',
+      category: '随笔',
+      author: '旧站作者',
+      content: 'hello',
+      hidden: false,
+      private: false,
+    },
+    {
+      id: 2,
+      title: 'Docker 部署笔记',
+      category: '教程',
+      author: '旧站作者',
+      content: 'compose',
+      hidden: false,
+      private: false,
+    },
+  ];
+
+  it('lets the new-machine admin keep logging in after a full import', async () => {
+    const newAdminPassword = 'new-machine-pass';
+    const salt = makeSalt();
+    const newAdmin = {
+      id: 0,
+      name: 'newadmin',
+      nickname: '新机器管理员',
+      type: 'admin',
+      salt,
+      password: encryptPassword('newadmin', newAdminPassword, salt),
+    };
+    const userModel = createMemoryUserModel([newAdmin]);
+    const userProvider = new UserProvider(userModel as any);
+    const categoryModel = createMemoryCategoryModel();
+    const categoryProvider = new CategoryProvider(categoryModel as any, {} as any);
+    const articleProvider = mockImportSink();
+    const draftProvider = mockImportSink();
+    const metaProvider = mockImportSink();
+    const viewerProvider = mockImportSink();
+    const visitProvider = mockImportSink();
+    const settingProvider = mockImportSink();
+    const staticProvider = mockImportSink();
+    const isrProvider = mockImportSink();
+    const tagProvider = mockImportSink();
+
+    const controller = new BackupController(
+      articleProvider as any,
+      categoryProvider,
+      tagProvider as any,
+      metaProvider as any,
+      draftProvider as any,
+      userProvider,
+      viewerProvider as any,
+      visitProvider as any,
+      settingProvider as any,
+      staticProvider as any,
+      isrProvider as any,
+    );
+
+    const backup = {
+      articles: oldMachineArticles,
+      categories: [
+        { id: 1, name: '随笔', type: 'category', private: false },
+        { id: 2, name: '教程', type: 'category', private: false },
+      ],
+      drafts: [],
+      meta: { siteInfo: { siteName: 'old-site', author: '旧站作者' }, categories: ['随笔', '教程'] },
+      user: {
+        id: 0,
+        name: 'oldadmin',
+        nickname: '旧站作者',
+        password: encryptPassword('oldadmin', 'old-site-pass', makeSalt()),
+        salt: 'oldsalt',
+      },
+      viewer: [],
+      visit: [],
+      setting: { static: {} },
+      static: [],
+    };
+
+    const result = await controller.importAll({
+      buffer: Buffer.from(JSON.stringify(backup)),
+    } as any);
+
+    expect(result).toEqual({ statusCode: 200, data: '导入成功！' });
+
+    const stillLoggedIn = await userProvider.validateUser('newadmin', newAdminPassword);
+    expect(stillLoggedIn).toMatchObject({ name: 'newadmin', nickname: '新机器管理员' });
+    expect(await userProvider.validateUser('oldadmin', 'old-site-pass')).toBeNull();
+    expect(userModel.docs[0].name).toBe('newadmin');
+
+    expect(articleProvider.importArticles).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({ title: '迁徙后的第一篇', author: '旧站作者' }),
+        expect.objectContaining({ title: 'Docker 部署笔记', author: '旧站作者' }),
+      ]),
+    );
+    expect((await categoryProvider.getAllCategories()).sort()).toEqual(['教程', '随笔']);
+  });
+
+  it('reproduces the old lockout: applying backup user overwrites the new admin', async () => {
+    const newAdminPassword = 'new-machine-pass';
+    const salt = makeSalt();
+    const userModel = createMemoryUserModel([
+      {
+        id: 0,
+        name: 'newadmin',
+        type: 'admin',
+        salt,
+        password: encryptPassword('newadmin', newAdminPassword, salt),
+      },
+    ]);
+    const userProvider = new UserProvider(userModel as any);
+
+    await userProvider.updateUser({
+      name: 'oldadmin',
+      password: 'old-hashed-from-backup',
+    });
+
+    expect(await userProvider.validateUser('newadmin', newAdminPassword)).toBeNull();
+    expect(userModel.docs[0].name).toBe('oldadmin');
   });
 });
