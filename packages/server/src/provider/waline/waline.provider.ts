@@ -4,6 +4,7 @@ import { config } from 'src/config';
 import { WalineSetting } from 'src/types/setting.dto';
 import { makeSalt } from 'src/utils/crypto';
 import { isForceLoginCommentEnabled } from 'src/utils/walineLogin';
+import { buildWalineMongoEnv } from 'src/utils/walineMongo';
 import { MetaProvider } from '../meta/meta.provider';
 import { SettingProvider } from '../setting/setting.provider';
 @Injectable()
@@ -78,15 +79,7 @@ export class WalineProvider {
     return result;
   }
   async loadEnv() {
-    const url = new URL(config.mongoUrl);
-    const mongoEnv = {
-      MONGO_HOST: url.hostname,
-      MONGO_PORT: url.port,
-      MONGO_USER: url.username,
-      MONGO_PASSWORD: url.password,
-      MONGO_DB: config.walineDB,
-      MONGO_AUTHSOURCE: 'admin',
-    };
+    const mongoEnv = buildWalineMongoEnv(config.mongoUrl, config.walineDB);
     const siteInfo = await this.metaProvider.getSiteInfo();
     const otherEnv = {
       SITE_NAME: siteInfo?.siteName || undefined,

@@ -104,6 +104,14 @@ VanBlog 内嵌的评论系统支持在有新评论时发送 `webhook`，配置�
 }
 ```
 
+## 外部数据库 / Atlas
+
+内嵌 Waline 与主站共用 `VAN_BLOG_DATABASE_URL`，评论数据写在 `VAN_BLOG_WALINE_DB`（默认 `waline`）。
+
+- 默认 docker-compose 本地 Mongo 仍使用 `authSource=admin`。
+- 如果你提供了完整连接串，Waline 会沿用其中的 `authSource`，不再写死 `admin`。
+- MongoDB Atlas（`*.mongodb.net`）在 URL 未指定 `authSource` 时不会再追加 `authSource=admin`。需要时请把 `authSource` 写进连接串，和主库一样。
+
 ## 自定义环境变量
 
 你也可以传递 JSON 格式的自定义环境变量键值对，具体可配置的选项请参考 [Waline 文档](https://waline.js.org/reference/server.html)
