@@ -4,6 +4,10 @@ icon: wrench
 order: 2
 ---
 
+## 自定义页面修改信息后刷新又变回去
+
+在「站点管理 / 自定义页面」里点「修改信息」，接口返回 200，刷新后名称或路径仍是旧的。这是更新按新路径查找文档导致的，改路径时写不到原记录。已修复（[#453](https://github.com/Mereithhh/vanblog/issues/453)）。请升级到包含该修复的版本。
+
 ## 前台很快，后台却要转很久
 
 后台每次打开都会请求 `/api/admin/meta`。这个接口过去会同步查询远程版本接口（`https://api.mereith.com/vanblog/version`）来提示更新；远程慢或不可达时，后台会被拖住大约 30 秒，前台不受影响。该问题已修复（[#343](https://github.com/Mereithhh/vanblog/issues/343)）：版本检查改为短超时 + 后台缓存，不再阻塞后台。请升级到包含该修复的版本。

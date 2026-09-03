@@ -21,6 +21,8 @@ export default ({
     autoFocusFirstInput
     submitTimeout={3000}
     initialValues={initialValues}
+    key={initialValues?._id || 'create-custom-page'}
+    modalProps={{ destroyOnClose: true }}
     onFinish={async (values) => {
       // FIXME: Should be refactor in to an env variable controlling "A demo state"
       if (location.hostname === 'blog-demo.mereith.com') {
@@ -40,7 +42,12 @@ export default ({
       }
 
       if (initialValues) {
-        await updateCustomPage({ ...values });
+        // Keep _id so the server can update this row after path changes (#453).
+        await updateCustomPage({
+          _id: initialValues._id,
+          type: initialValues.type,
+          ...values,
+        });
       } else {
         await createCustomPage(values);
       }

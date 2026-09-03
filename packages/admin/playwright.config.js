@@ -49,7 +49,7 @@ module.exports = {
   projects: [
     {
       name: 'admin-app',
-      testMatch: /admin-editor-.*\.spec\.js/,
+      testMatch: /admin-editor-.*\.spec\.js|custom-page-info\.spec\.js/,
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${adminPort}`,
