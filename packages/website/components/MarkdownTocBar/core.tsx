@@ -2,8 +2,32 @@ import { useEffect, useMemo, useState } from "react";
 import throttle from "lodash/throttle";
 import { getEl, NavItem } from "./tools";
 import { scrollTo } from "../../utils/scroll";
-import { scrollToNavHeading } from "./scrollToHeading";
+import { scrollElUntilSettled, scrollToNavHeading } from "./scrollToHeading";
 import { renderTocLabelHtml, tocLabelNeedsMath } from "./tocMath";
+import {
+  decodeHeadingHash,
+  findNavItemByHash,
+  headingHashHref,
+  headingHashMatches,
+} from "../../utils/headingHash";
+
+function findHeadingElByHash(rawHash: string): HTMLElement | null {
+  const decoded = decodeHeadingHash(rawHash);
+  if (!decoded || typeof document === "undefined") return null;
+  const byId = document.getElementById(decoded);
+  if (byId) return byId;
+  const all = Array.from(
+    document.querySelectorAll<HTMLElement>("[data-id], .markdown-heading")
+  );
+  return (
+    all.find(
+      (el) =>
+        headingHashMatches(el.getAttribute("data-id"), rawHash) ||
+        headingHashMatches(el.id, rawHash)
+    ) || null
+  );
+}
+
 export default function (props: {
   items: NavItem[];
   headingOffset: number;
@@ -13,9 +37,12 @@ export default function (props: {
   const [currIndex, setCurrIndex] = useState(-1);
 
   const updateHash = (hash: string) => {
-    if (hash) {
-      window.history.replaceState(null, "", `#${hash}`);
+    if (!hash || typeof window === "undefined") return;
+    const next = headingHashHref(hash);
+    if (decodeHeadingHash(window.location.hash) === decodeHeadingHash(next)) {
+      return;
     }
+    window.history.replaceState(null, "", next);
   }
   const handleScroll = throttle((ev: Event) => {
     ev.stopPropagation();
@@ -56,7 +83,7 @@ export default function (props: {
 
   const updateTocScrollbar = () => {
     const el = document.querySelector(
-      "#toc-container > div > div.markdown-navigation > div.active"
+      "#toc-container > div > div.markdown-navigation > .title-anchor.active"
     ) as HTMLElement;
 
     const container = document.querySelector("#toc-container");
@@ -75,7 +102,6 @@ export default function (props: {
     // console.log(el?.offsetTop);
   };
 
-  //TODO 逻辑完善的 hash 更新
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -87,15 +113,14 @@ export default function (props: {
     const jumpHash = () => {
       const raw = window.location.hash.replace(/^#/, "");
       if (!raw) return;
-      let hash = raw;
-      try {
-        hash = decodeURIComponent(raw);
-      } catch {
-        hash = raw;
-      }
-      const item = items.find((each) => each.text === hash);
+      const item = findNavItemByHash(items, raw);
       if (item) {
         void scrollToNavHeading(item, items, props.headingOffset);
+        return;
+      }
+      const el = findHeadingElByHash(raw);
+      if (el) {
+        void scrollElUntilSettled(el, props.headingOffset);
       }
     };
     jumpHash();
@@ -112,6 +137,11 @@ export default function (props: {
     [items]
   );
 
+  const jumpToItem = (each: NavItem) => {
+    updateHash(each.text);
+    void scrollToNavHeading(each, items, props.headingOffset);
+  };
+
   const res = [];
   for (const each of items) {
     const cls = `title-anchor title-level${each.level} ${
@@ -119,12 +149,21 @@ export default function (props: {
     }`;
     const mathHtml = labelHtml[each.index];
     res.push(
-      <div
+      <a
         key={each.index}
         className={cls}
         data-id={each.text}
-        onClick={() => {
-          void scrollToNavHeading(each, items, props.headingOffset);
+        href={headingHashHref(each.text)}
+        aria-current={currIndex == each.index ? "true" : undefined}
+        onClick={(e) => {
+          e.preventDefault();
+          jumpToItem(each);
+        }}
+        onKeyDown={(e) => {
+          if (e.key === " " || e.key === "Spacebar") {
+            e.preventDefault();
+            jumpToItem(each);
+          }
         }}
       >
         {mathHtml != null ? (
@@ -132,7 +171,7 @@ export default function (props: {
         ) : (
           each.text
         )}
-      </div>
+      </a>
     );
   }
 

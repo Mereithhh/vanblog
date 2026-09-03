@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台文章标题旁增加可复制的 `#` 锚点链接，地址栏 hash 对中文/空格做 encodeURIComponent，打开编码 hash 会滚到对应标题；目录项改为真正的链接，可用键盘 Tab/Enter 操作 [#177](https://github.com/Mereithhh/vanblog/issues/177)
 - 前台文章目录标题里的 `$...$` / `$$...$$` 会按正文同一套 KaTeX 渲染，不再把 `$A$<$B$` 原样显示出来；点击仍按未解析的标题原文跳转 [#264](https://github.com/Mereithhh/vanblog/issues/264)
 - 前台白天模式分页当前页与其他页码看起来一样（都是白底），现用更深底色和白色文字标出当前页，夜间模式仍可读 [#333](https://github.com/Mereithhh/vanblog/issues/333)
 - 前台 Markdown 链接 `[文字](网址)` 文字或 URL 过长时，首页摘要和正文都会保留完整可见文字与 href，不再截断网址或把链接拆成残缺 markdown [#410](https://github.com/Mereithhh/vanblog/issues/410)
