@@ -228,7 +228,7 @@ export class MetaProvider {
 
     return this.metaModel.updateOne({}, { socials: newSocials });
   }
-  async addOrUpdateLink(addLinkDto: Partial<LinkItem>) {
+  async addOrUpdateLink(addLinkDto: Partial<LinkItem> & { oldName?: string }) {
     const meta = await this.getAll();
     const toAdd: LinkItem = {
       updatedAt: new Date(),
@@ -237,11 +237,12 @@ export class MetaProvider {
       desc: addLinkDto.desc,
       logo: addLinkDto.logo,
     };
+    const lookupName = addLinkDto.oldName || addLinkDto.name;
     const newLinks = [];
     let pushed = false;
 
-    meta.links.forEach((r) => {
-      if (r.name === toAdd.name) {
+    (meta.links || []).forEach((r) => {
+      if (r.name === lookupName) {
         pushed = true;
         newLinks.push(toAdd);
       } else {
@@ -258,7 +259,7 @@ export class MetaProvider {
   async deleteLink(name: string) {
     const meta = await this.getAll();
     const newLinks = [];
-    meta.links.forEach((r) => {
+    (meta.links || []).forEach((r) => {
       if (r.name !== name) {
         newLinks.push(r);
       }

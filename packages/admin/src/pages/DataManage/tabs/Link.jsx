@@ -129,6 +129,7 @@ export default function () {
                 url: data.url,
                 logo: data.logo,
                 desc: data.desc,
+                oldName: row?.name,
               };
               await updateLink(toSaveObj);
               // await waitTime(500);
