@@ -8,6 +8,8 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
 ![编辑器](https://www.mereith.com/static/img/e0ce4ddda865c9b7827983a219468599.clipboard-2022-09-06.png)
 
+编辑器右下角的「字数」按中文字符、英文单词统计（与 Obsidian 一类编辑器接近），站点总字数是已发布文章这一数字的加总，不会按 UTF-8 字节放大。
+
 编辑器支持:
 
 - Emoji
