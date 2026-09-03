@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import throttle from "lodash/throttle";
 import { getEl, NavItem } from "./tools";
 import { scrollTo } from "../../utils/scroll";
+import { scrollToNavHeading } from "./scrollToHeading";
 export default function (props: {
   items: NavItem[];
   headingOffset: number;
@@ -80,6 +81,28 @@ export default function (props: {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    const jumpHash = () => {
+      const raw = window.location.hash.replace(/^#/, "");
+      if (!raw) return;
+      let hash = raw;
+      try {
+        hash = decodeURIComponent(raw);
+      } catch {
+        hash = raw;
+      }
+      const item = items.find((each) => each.text === hash);
+      if (item) {
+        void scrollToNavHeading(item, items, props.headingOffset);
+      }
+    };
+    jumpHash();
+    window.addEventListener("hashchange", jumpHash);
+    return () => {
+      window.removeEventListener("hashchange", jumpHash);
+    };
+  }, [items, props.headingOffset]);
   const res = [];
   for (const each of items) {
     const cls = `title-anchor title-level${each.level} ${
@@ -90,16 +113,7 @@ export default function (props: {
         key={each.index}
         className={cls}
         onClick={() => {
-          const el: any = getEl(each, items);
-
-          if (el) {
-            let to = el.offsetTop - props.headingOffset;
-            if (to <= 100) {
-              to = 0;
-            }
-            scrollTo(window, { top: to, easing: "ease-in-out", duration: 800 });
-
-          }
+          void scrollToNavHeading(each, items, props.headingOffset);
         }}
       >
         {each.text}

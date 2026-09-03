@@ -19,7 +19,8 @@ async function headingMetrics(page, dataId) {
 }
 
 async function clickToc(page, title) {
-  await page.locator('.markdown-navigation .title-anchor', { hasText: new RegExp(`^${title}$`) }).click();
+  const escaped = title.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  await page.locator('.markdown-navigation .title-anchor', { hasText: new RegExp(`^${escaped}$`) }).click();
 }
 
 test.describe('public article TOC heading jump', () => {
@@ -107,6 +108,80 @@ test.describe('public article TOC heading jump', () => {
       .toMatchObject({
         id: 'My Title',
         dataId: 'My Title',
+        inViewport: true,
+      });
+  });
+});
+
+const TALL_SVG = `<svg xmlns="http://www.w3.org/2000/svg" width="640" height="1200">
+  <rect width="640" height="1200" fill="#c8c8c8"/>
+</svg>`;
+
+async function holdLazyScreenshots(page, delayMs = 600) {
+  await page.route('**/tall.svg', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, delayMs));
+    await route.fulfill({
+      contentType: 'image/svg+xml',
+      body: TALL_SVG,
+    });
+  });
+}
+
+test.describe('public article TOC jump below lazy images', () => {
+  test('heading below unloaded images is already in the DOM', async ({ page }) => {
+    const pageErrors = [];
+    page.on('pageerror', (err) => pageErrors.push(String(err)));
+    await holdLazyScreenshots(page);
+    await page.goto('/toc-article.html');
+    await expect(page.locator('h2[data-id="4. 配置DHCP引导选项"]')).toBeVisible();
+    await expect(page.locator('img[loading="lazy"]')).toHaveCount(3);
+    const before = await headingMetrics(page, '4. 配置DHCP引导选项');
+    expect(before).not.toBeNull();
+    expect(before.offsetTop).toBeLessThan(4000);
+    expect(pageErrors, `fixture pageerror: ${pageErrors.join('\n')}`).toEqual([]);
+  });
+
+  test('TOC click lands on a heading below unloaded lazy images', async ({ page }) => {
+    await holdLazyScreenshots(page);
+    await page.goto('/toc-article.html');
+    await expect(page.locator('h2[data-id="4. 配置DHCP引导选项"]')).toBeVisible();
+    const before = await headingMetrics(page, '4. 配置DHCP引导选项');
+    expect(before.offsetTop).toBeLessThan(4000);
+
+    await clickToc(page, '4. 配置DHCP引导选项');
+
+    await expect
+      .poll(
+        async () => {
+          const after = await headingMetrics(page, '4. 配置DHCP引导选项');
+          return after &&
+            after.offsetTop > before.offsetTop + 800 &&
+            Math.abs(after.scrollY - after.offsetTop) < 8
+            ? after
+            : null;
+        },
+        { timeout: 10_000 },
+      )
+      .toMatchObject({
+        dataId: '4. 配置DHCP引导选项',
+        inViewport: true,
+      });
+  });
+
+  test('hash navigation lands on a heading below unloaded lazy images', async ({ page }) => {
+    await holdLazyScreenshots(page);
+    await page.goto('/toc-article.html#4. 配置DHCP引导选项');
+    await expect
+      .poll(
+        async () => {
+          const after = await headingMetrics(page, '4. 配置DHCP引导选项');
+          return after && after.offsetTop > 5000 && after.inViewport ? after : null;
+        },
+        { timeout: 10_000 },
+      )
+      .toMatchObject({
+        id: '4. 配置DHCP引导选项',
+        dataId: '4. 配置DHCP引导选项',
         inViewport: true,
       });
   });

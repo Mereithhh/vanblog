@@ -1,4 +1,5 @@
 import { render } from 'react-dom';
+import { visit } from 'unist-util-visit';
 import { Viewer } from '@bytemd/react';
 import { Heading } from '../../../../website/components/Markdown/heading';
 import MarkdownTocBar from '../../../../website/components/MarkdownTocBar';
@@ -21,16 +22,30 @@ const sanitize = (schema) => {
   schema.attributes['*'].push('frameborder');
   schema.attributes['*'].push('framespacing');
   schema.attributes['*'].push('allowfullscreen');
+  schema.attributes['*'].push('loading');
   schema.strip = [];
   return schema;
 };
+
+// Same loading=lazy as ImageBox, set at render so below-fold screenshots are not fetched yet.
+const lazyScreenshots = () => ({
+  rehype: (processor) =>
+    processor.use(() => (tree) => {
+      visit(tree, (node) => {
+        if (node.type === 'element' && node.tagName === 'img') {
+          if (!node.properties) node.properties = {};
+          node.properties.loading = 'lazy';
+        }
+      });
+    }),
+});
 
 const App = () => (
   <div className="toc-e2e-layout">
     <article className="toc-e2e-article" data-post-content>
       <Viewer
         value={content}
-        plugins={[Heading()]}
+        plugins={[Heading(), lazyScreenshots()]}
         remarkRehype={{ allowDangerousHtml: true }}
         sanitize={sanitize}
       />
@@ -40,6 +55,7 @@ const App = () => (
     </aside>
   </div>
 );
+
 
 const target = document.getElementById('app');
 if (!target) {
