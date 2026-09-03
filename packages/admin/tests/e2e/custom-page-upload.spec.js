@@ -1,8 +1,5 @@
 const { test, expect } = require('@playwright/test');
 const { loginAsAdmin } = require('./admin-api-mock');
-const fs = require('node:fs');
-const os = require('node:os');
-const path = require('node:path');
 
 function filesToTree(files) {
   const root = [];
@@ -114,6 +111,10 @@ async function openFolderEditor(page, store) {
   await expect(page.getByRole('button', { name: /操\s*作/ })).toBeVisible({ timeout: 30_000 });
 }
 
+function uploadedName(uploads, suffix) {
+  return uploads.find((name) => name === suffix || name.endsWith(`/${suffix}`));
+}
+
 test.describe('custom page multi-file upload', () => {
   test('upload file, upload folder (nested), then delete a file', async ({ page }) => {
     const store = createFolderStore();
@@ -132,25 +133,39 @@ test.describe('custom page multi-file upload', () => {
     await expect.poll(() => store.uploads).toEqual(['note.md']);
     await expect(page.getByText('note.md', { exact: true })).toBeVisible();
 
-    const folderRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'vanblog-cp-folder-'));
-    const siteDir = path.join(folderRoot, 'site');
-    fs.mkdirSync(path.join(siteDir, 'css'), { recursive: true });
-    fs.writeFileSync(path.join(siteDir, 'index.html'), '<h1>hi</h1>');
-    fs.writeFileSync(path.join(siteDir, 'css', 'style.css'), 'body{}');
-
+    await page.keyboard.press('Escape');
     await page.getByRole('button', { name: /操\s*作/ }).click();
     const folderChooserPromise = page.waitForEvent('filechooser');
     await page.getByText('上传文件夹', { exact: true }).click();
     const folderChooser = await folderChooserPromise;
-    await folderChooser.setFiles(folderRoot);
+    expect(folderChooser.isMultiple()).toBeTruthy();
+    // Linux/CI filechooser does not reliably ingest a directory path. Feed the
+    // nested files as payloads so webkitRelativePath / name keep the folder layout.
+    await folderChooser.setFiles([
+      {
+        name: 'site/index.html',
+        mimeType: 'text/html',
+        buffer: Buffer.from('<h1>hi</h1>'),
+      },
+      {
+        name: 'site/css/style.css',
+        mimeType: 'text/css',
+        buffer: Buffer.from('body{}'),
+      },
+    ]);
 
-    await expect
-      .poll(() => store.uploads.slice().sort())
-      .toEqual(['css/style.css', 'index.html', 'note.md'].sort());
+    await expect.poll(() => uploadedName(store.uploads, 'index.html'), { timeout: 15_000 }).toBeTruthy();
+    await expect.poll(() => uploadedName(store.uploads, 'css/style.css')).toBeTruthy();
+    expect(store.uploads).toContain('note.md');
+
+    const closed = page.locator('.file-tree .ant-tree-switcher_close');
+    for (let i = 0; i < 8 && (await closed.count()); i += 1) {
+      await closed.first().click();
+    }
+
+    await expect(page.getByText('note.md', { exact: true })).toBeVisible();
     await expect(page.getByText('index.html', { exact: true })).toBeVisible();
     await expect(page.getByText('style.css', { exact: true })).toBeVisible();
-
-    fs.rmSync(folderRoot, { recursive: true, force: true });
 
     await page.getByText('note.md', { exact: true }).click();
     await page.getByRole('button', { name: /操\s*作/ }).click();
@@ -162,5 +177,6 @@ test.describe('custom page multi-file upload', () => {
     await expect.poll(() => store.deletes).toEqual(['note.md']);
     await expect(page.getByText('note.md', { exact: true })).toHaveCount(0);
     await expect(page.getByText('index.html', { exact: true })).toBeVisible();
+    await expect(page.getByText('style.css', { exact: true })).toBeVisible();
   });
 });

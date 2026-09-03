@@ -441,6 +441,7 @@ export default function () {
                 <DirectoryTree
                   style={{ height: editorHeight }}
                   className="file-tree"
+                  key={treeData.map((n) => n.key).join('|')}
                   defaultExpandAll
                   selectedKeys={selectedKeys}
                   // onRightClick={({ event, node }) => {
