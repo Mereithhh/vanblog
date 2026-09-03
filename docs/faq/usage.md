@@ -10,6 +10,10 @@ order: 2
 
 请升级到包含该修复的版本。编辑或删除文章后，总字数会随字数缓存更新。
 
+## 前台选了白色或自动，刷新还是先黑一下 / 变成夜间模式
+
+旧版本首屏 HTML 会按服务器时间套上 `dark`，再等 `/initTheme.js` 读 localStorage 后改回来，所以选「白色」刷新会黑约半秒，选「自动」在浅色系统（尤其晚上）也会被强制成黑色。已修复（[#292](https://github.com/Mereithhh/vanblog/issues/292)、[#25](https://github.com/Mereithhh/vanblog/issues/25)、[#54](https://github.com/Mereithhh/vanblog/issues/54)）：记住的主题在首屏绘制前生效；自动模式跟随系统配色，系统为浅色时不会强制夜间模式。请升级到包含该修复的版本。
+
 ## 分类管理改名后文章或草稿还是旧名称
 
 在「站点管理 / 数据管理 / 分类管理」把分类从 `AAA` 改成 `BBB` 后，用过 `AAA` 的文章和草稿可能仍显示旧名称，或看起来像未分类。文章和草稿存的是分类名字符串，旧版本只改了分类表本身。已修复（[#324](https://github.com/Mereithhh/vanblog/issues/324)）：重命名会同步更新所有文章和草稿上的分类名。请升级到包含该修复的版本。
