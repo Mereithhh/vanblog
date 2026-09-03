@@ -10,6 +10,7 @@ import { customCodeBlock } from "./codeBlock";
 import { LinkTarget } from "./linkTarget";
 import { Heading } from "./heading";
 import { Img } from "./img";
+import { sanitizeMarkdownSchema } from "../../utils/markdownSanitize";
 const plugins = [
   rawHTML(),
   gfm(),
@@ -22,21 +23,7 @@ const plugins = [
   Heading(),
   Img(),
 ]
-const sanitize = (schema) => {
-  schema.protocols.src.push('data')
-  schema.tagNames.push("center")
-  schema.tagNames.push("iframe");
-  schema.tagNames.push("script");
-  schema.attributes["*"].push("style");
-  schema.attributes["*"].push("src");
-  schema.attributes["*"].push("scrolling");
-  schema.attributes["*"].push("border");
-  schema.attributes["*"].push("frameborder");
-  schema.attributes["*"].push("framespacing");
-  schema.attributes["*"].push("allowfullscreen");
-  schema.strip = [];
-  return schema
-}
+export const sanitize = sanitizeMarkdownSchema;
 export default function ({ content }: { content: string }) {
   return <div className="markdown-body">
     <Viewer value={content} plugins={plugins} remarkRehype={{ allowDangerousHtml: true }} sanitize={sanitize} />

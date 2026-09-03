@@ -18,9 +18,26 @@ const onClickHeading = (e: any) => {
   window.location.hash = `#${id}`;
 }
 
+export function isFootnotesHeading(node): boolean {
+  const id = node?.properties?.id;
+  if (id === "footnote-label" || id === "user-content-footnote-label") {
+    return true;
+  }
+  const className = node?.properties?.className;
+  const classes = Array.isArray(className)
+    ? className
+    : typeof className === "string"
+      ? className.split(/\s+/)
+      : [];
+  return classes.includes("sr-only");
+}
+
 export const headingRehypePlugin = () => (tree) => {
   visit(tree, (node) => {
     if (node.type === "element" && headings.includes(node.tagName)) {
+      if (isFootnotesHeading(node)) {
+        return;
+      }
       if (!node.properties) {
         node.properties = {};
       }
