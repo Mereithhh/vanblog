@@ -28,6 +28,25 @@ describe('WalineProvider.mapConfig2Env', () => {
     expect(env.LOGIN).toBe('force');
   });
 
+  it('forwards extra admin JSON to Waline server env as strings (#139)', () => {
+    const env = provider.mapConfig2Env({
+      forceLoginComment: false,
+      otherConfig: JSON.stringify({ imageUploader: false, IPQPS: 60 }),
+    } as any);
+    expect(env.IPQPS).toBe('60');
+    expect(typeof env.IPQPS).toBe('string');
+    expect(env.imageUploader).toBe('false');
+    expect(Object.prototype.hasOwnProperty.call(env, 'imageUploader')).toBe(true);
+  });
+
+  it('coerces string false and still maps numeric IPQPS', () => {
+    const env = provider.mapConfig2Env({
+      otherConfig: JSON.stringify({ imageUploader: 'false', IPQPS: 1 }),
+    } as any);
+    expect(env.imageUploader).toBe('false');
+    expect(env.IPQPS).toBe('1');
+  });
+
   it('keeps webhook mapping when force login is on', () => {
     const env = provider.mapConfig2Env({
       forceLoginComment: true,

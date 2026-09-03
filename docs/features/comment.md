@@ -114,7 +114,25 @@ VanBlog 内嵌的评论系统支持在有新评论时发送 `webhook`，配置�
 
 ## 自定义环境变量
 
-你也可以传递 JSON 格式的自定义环境变量键值对，具体可配置的选项请参考 [Waline 文档](https://waline.js.org/reference/server.html)
+后台 `站点管理 / 系统设置 / 评论设置` 最下方的「自定义环境变量」是一个 JSON 对象，保存后会立刻重启内嵌 Waline。
+
+两类键会分别生效：
+
+- **服务端环境变量**（大写，见 [Waline Server 文档](https://waline.js.org/reference/server.html)）：例如 `IPQPS`（同一 IP 每分钟请求数，默认已是 `60`）。会作为字符串写入 Waline 进程环境变量。
+- **客户端选项**（见 [Waline Client 文档](https://waline.js.org/reference/client/props.html)）：例如 `imageUploader: false` 会传给前台 `@waline/client`，用来关掉评论框图片上传。这一项以前只写进了服务端环境，前台看不到，所以会表现为「设置了但不生效」。
+
+```json
+{
+  "imageUploader": false,
+  "IPQPS": 60
+}
+```
+
+注意：
+
+- 布尔值请写 `false` / `true`，不要写成字符串 `"false"`（虽然现在会自动转换）。
+- 可以带 `//` 行注释；必须是一个 JSON **对象**。
+- `LOGIN` 仍由「是否强制登录后评论」开关控制，自定义变量里的 `LOGIN` 不会覆盖该开关。
 
 ## 原理
 

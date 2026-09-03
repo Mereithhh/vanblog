@@ -1,4 +1,5 @@
 import { getWalineConfig, updateWalineConfig } from '@/services/van-blog/api';
+import { parseWalineOtherConfigJson } from '@/utils/walineOtherConfig';
 import {
   ProForm,
   ProFormDigit,
@@ -41,7 +42,7 @@ export default function (props: {}) {
           }
           if (data.otherConfig) {
             try {
-              JSON.parse(data.otherConfig);
+              parseWalineOtherConfigJson(data.otherConfig);
             } catch (err) {
               Modal.info({ title: '自定义环境变量不是合法 JSON 格式！' });
               return;
@@ -163,8 +164,10 @@ export default function (props: {}) {
               自定义环境变量
             </a>
           }
-          tooltip={'json 格式的键值对，会传递个 waline 作为环境变量'}
-          placeholder="json 格式的键值对，会传递个 waline 作为环境变量"
+          tooltip={
+            'JSON 对象。大写键（如 IPQPS）会作为环境变量传给内嵌 Waline 服务端；客户端选项（如 imageUploader: false）会传给前台评论组件。布尔请用 false/true，不要加引号。'
+          }
+          placeholder={'{\n  "imageUploader": false,\n  "IPQPS": 60\n}'}
           fieldProps={{
             autoSize: {
               minRows: 10,

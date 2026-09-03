@@ -11,7 +11,7 @@ import { VisitProvider } from 'src/provider/visit/visit.provider';
 import { version } from 'src/utils/loadConfig';
 import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
 import { encode } from 'js-base64';
-import { isForceLoginCommentEnabled } from 'src/utils/walineLogin';
+import { getWalinePublicCommentSetting } from 'src/utils/walineExtra';
 
 @ApiTags('public')
 @Controller('/api/public/')
@@ -30,9 +30,7 @@ export class PublicController {
     const waline = await this.settingProvider.getWalineSetting();
     return {
       statusCode: 200,
-      data: {
-        forceLoginComment: isForceLoginCommentEnabled(waline?.forceLoginComment),
-      },
+      data: getWalinePublicCommentSetting(waline),
     };
   }
 
