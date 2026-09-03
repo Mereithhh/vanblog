@@ -31,7 +31,7 @@ jobs:
         working-directory: packages/server
         run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|customPage.provider|walineLogin|waline.provider|setting.provider|cdnUrl|website.provider|walineMongo|numericId|article.provider|draft.provider|watermark|wordCount" --passWithNoTests=false
 
-      - name: Run website heading unit tests
+      - name: Run website unit tests
         run: pnpm --filter @vanblog/theme-default exec vitest run
 
       - name: Run backup restore e2e

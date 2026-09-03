@@ -1,12 +1,14 @@
 import { Head, Html, Main, NextScript } from "next/document";
-import Script from "next/script";
-import { getTheme, initTheme } from "../utils/theme";
+import { THEME_INIT_SCRIPT } from "../utils/theme";
 
 export default function Document() {
   return (
-    <Html className={getTheme(initTheme()).replace("auto-", "")} lang="zh">
+    <Html lang="zh" suppressHydrationWarning>
       <Head>
-        <Script src="/initTheme.js" strategy="beforeInteractive" />
+        <script
+          id="vanblog-theme-init"
+          dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
+        />
       </Head>
       <body>
         <Main />
