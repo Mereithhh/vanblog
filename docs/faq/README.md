@@ -15,7 +15,7 @@ VanBlog 目前处于快速迭代期，您可以先尝试参考升级指南进行
 
 ## 问题反馈
 
-如果你在使用过程中遇到问题，请 [开一个 Issue](https://github.com/Mereithhh/van-blog/issues/new/choose)。可复现的代码问题会进入自动化排查和修复流程并开出 PR。
+如果你在使用过程中遇到问题，请 [开一个 Issue](https://github.com/Mereithhh/van-blog/issues/new/choose)。可复现的代码问题会进入 AI 全自动排查和修复流程并开出 PR。
 
 <AutoCatalog />
 

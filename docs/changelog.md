@@ -26,7 +26,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
-- 说明日常迭代现由自动化维护，合并与 `v*` / `doc*` 发版仍由作者完成
+- 说明本项目现由 AI 全自动维护，合并与 `v*` / `doc*` 发版仍由作者完成
 
 ## [0.54.0](https://github.com/Mereithhh/vanblog/compare/v0.53.0...v0.54.0) (2023-06-27)
 

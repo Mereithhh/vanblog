@@ -5,7 +5,7 @@
 	<strong>VanBlog是一款简洁、实用、优雅的个人博客系统，支持全自动按需申请HTTPS证书、黑暗模式、移动端自适应和评论功能。它内置了流量统计和图床，并集成了评论系统。此外，VanBlog还具有无限的可扩展性，提供完备的后台管理面板，支持黑暗模式、移动端、一键上传剪贴板图片到图床，并带有强大的编辑器。</strong>
 </p>
 <p align="center">
-	日常迭代现由自动化流程维护：可复现的代码问题会复现、补测试并开 PR，changelog 与官网文档会同步更新。合并到 master 以及打发版 tag（<code>v*</code> 部署产品、<code>doc*</code> 部署官网）仍由作者完成。演示站和官网会停留在最近一次已打 tag 的版本。欢迎继续提 issue 和 PR。
+	现在这个项目由 AI 全自动维护：可复现的代码问题会复现、补测试并开 PR，changelog 与官网文档会同步更新。合并到 master 以及打发版 tag（<code>v*</code> 部署产品、<code>doc*</code> 部署官网）仍由作者完成。演示站和官网会停留在最近一次已打 tag 的版本。欢迎继续提 issue 和 PR。
 </p>
 <p align="center">
   <img src="https://img.shields.io/github/v/release/mereithhh/van-blog?display_name=tag" />
@@ -103,7 +103,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ## 关于更新
 
-日常迭代已改为自动化维护：可复现的代码问题会复现、补测试并以 PR 提交，changelog 和官网文档会跟着改。
+现在这个项目由 AI 全自动维护：可复现的代码问题会复现、补测试并以 PR 提交，changelog 和官网文档会跟着改。
 
 正式发版仍由作者打 tag：`v*` 部署产品，`doc*` 部署官网。演示站和官网会停留在最近一次已打 tag 的版本，直到作者发版。
 
@@ -196,7 +196,7 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 
 ## 问题反馈
 
-请提 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)。可复现的代码问题会进入自动化排查和修复流程并开出 PR；「样例提交」仍由作者处理。合并与发版由作者完成。
+请提 [issue](https://github.com/Mereithhh/van-blog/issues/new/choose)。可复现的代码问题会进入 AI 全自动排查和修复流程并开出 PR；「样例提交」仍由作者处理。合并与发版由作者完成。
 
 ## 打赏
 
