@@ -10,7 +10,6 @@ import { customCodeBlock } from "./codeBlock";
 import { LinkTarget } from "./linkTarget";
 import { Heading } from "./heading";
 import { Img } from "./img";
-import LazyArticleContent from "./lazyArticle";
 const plugins = [
   rawHTML(),
   gfm(),
@@ -40,11 +39,6 @@ const sanitize = (schema) => {
 }
 export default function ({ content }: { content: string }) {
   return <div className="markdown-body">
-    <LazyArticleContent
-      content={content}
-      render={(markdown) => (
-        <Viewer value={markdown} plugins={plugins} remarkRehype={{ allowDangerousHtml: true }} sanitize={sanitize} />
-      )}
-    />
+    <Viewer value={content} plugins={plugins} remarkRehype={{ allowDangerousHtml: true }} sanitize={sanitize} />
   </div>
 }

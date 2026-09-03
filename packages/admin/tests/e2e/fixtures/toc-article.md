@@ -13,3 +13,11 @@ Body under a heading with extra leading and trailing spaces.
 ## Clean Title
 
 Body under a heading with no extra spaces.
+
+![Citrix screenshot 1](./tall.svg)
+![Citrix screenshot 2](./tall.svg)
+![Citrix screenshot 3](./tall.svg)
+
+## 4. 配置DHCP引导选项
+
+DHCP 引导选项正文，点击目录应跳到这里。
