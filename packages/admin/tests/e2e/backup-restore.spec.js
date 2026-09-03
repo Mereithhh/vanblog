@@ -37,6 +37,41 @@ test.describe('backup restore categories', () => {
     await expect(page.locator('[data-article-category="随笔"]')).toHaveText('随笔');
   });
 
+  test('new-machine admin can still log in after importing old site backup', async ({ page }) => {
+    await reset(page, 'new-machine');
+
+    await page.goto('/admin/login');
+    await page.locator('#username').fill('newadmin');
+    await page.locator('#password').fill('newpass');
+    await page.locator('#login-btn').click();
+    await expect(page.locator('[data-login-status]')).toHaveText('登录成功：newadmin');
+
+    await page.request.post('/api/admin/backup/import', {
+      data: {
+        articles: [
+          { id: 1, title: '迁徙后的第一篇', category: '随笔', author: '旧站作者', hidden: false },
+        ],
+        categories: [{ id: 1, name: '随笔' }],
+        meta: { siteInfo: { author: '旧站作者' } },
+        user: { name: 'oldadmin', password: 'oldpass' },
+      },
+    });
+
+    await page.goto('/admin/login');
+    await page.locator('#username').fill('newadmin');
+    await page.locator('#password').fill('newpass');
+    await page.locator('#login-btn').click();
+    await expect(page.locator('[data-login-status]')).toHaveText('登录成功：newadmin');
+
+    await page.locator('#username').fill('oldadmin');
+    await page.locator('#password').fill('oldpass');
+    await page.locator('#login-btn').click();
+    await expect(page.locator('[data-login-status]')).toHaveText('用户名或密码错误！');
+
+    await page.goto('/');
+    await expect(page.locator('[data-article-title="迁徙后的第一篇"]')).toBeVisible();
+  });
+
   test('old name-only backup still recreates Category documents', async ({ page }) => {
     await reset(page, 'new-machine');
     await page.request.post('/api/admin/backup/import', {

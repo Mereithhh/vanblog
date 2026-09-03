@@ -103,7 +103,7 @@ export class BackupController {
     }
     const json = file.buffer.toString();
     const data = JSON.parse(json);
-    const { meta, user, setting, categories } = data;
+    const { meta, setting, categories } = data;
     let { articles, drafts, viewer, visit, static: staticItems } = data;
     // 去掉 id
     articles = removeID(articles);
@@ -116,9 +116,9 @@ export class BackupController {
     if (setting && setting.static) {
       setting.static = { ...setting.static, _id: undefined, __v: undefined };
     }
-    delete user._id;
-    delete user.__v;
-    delete meta._id;
+    if (meta) {
+      delete meta._id;
+    }
 
     const toImportCategories = collectCategoriesFromBackup({
       categories,
@@ -133,7 +133,11 @@ export class BackupController {
 
     await this.articleProvider.importArticles(articles);
     await this.draftProvider.importDrafts(drafts);
-    await this.userProvider.updateUser(user);
+    // 新机器必须先初始化后台账号才能打开导入页。覆盖 user 会把刚配好的登录顶掉，
+    // 甚至把备份里已哈希的密码再哈希一次，两边账号都登不进去。账号改走设置页。
+    if (data.user) {
+      this.logger.log('导入备份时保留当前后台账号，未覆盖用户数据');
+    }
     await this.metaProvider.update(meta);
     await this.settingProvider.importSetting(setting);
     await this.staticProvider.importItems(staticItems);
