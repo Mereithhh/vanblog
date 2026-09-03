@@ -49,6 +49,10 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
   ![上传图片](https://pic.mereith.com/img/0a54a1e4fe8ac47cea8fa7aea89964ca.clipboard-2022-08-29.png)
 
+- 标题锚点 / 前台目录
+
+  文章里的 `## 标题` 会生成目录和锚点。标题前后多出来的空格会被忽略，目录点击仍会跳到该标题。
+
 - 一键插入 `more` 标记
 
   `more` 标记是下面代码的简写，会被用来分割文章摘要。

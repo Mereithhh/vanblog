@@ -1,9 +1,13 @@
+import { normalizeHeadingText } from "../../utils/headingText";
+
 export interface NavItem {
   index: number;
   level: number;
   listNo: string;
   text: string;
 }
+
+export { normalizeHeadingText };
 
 export const washMarkdownContent = (source: string) => {
   if (!source) return "";
@@ -45,7 +49,7 @@ export const parseNavStructure = (source: string): NavItem[] => {
       index: i,
       //@ts-ignore
       level: r.match(/^#+/g)[0].length,
-      text: titleText as string,
+      text: normalizeHeadingText(titleText),
     };
   });
 
@@ -104,12 +108,18 @@ const trimArrZero = (arr: any) => {
 };
 export const getEl = (item: NavItem, all: NavItem[]) => {
   const tagName = `h${item.level}`;
-  const els = document.querySelectorAll(`${tagName}[data-id="${item.text}"]`);
+  const target = normalizeHeadingText(item.text);
+  const els = Array.from(document.querySelectorAll(`${tagName}[data-id]`)).filter(
+    (el) => normalizeHeadingText(el.getAttribute("data-id")) === target
+  );
   if (els.length > 1) {
     // 相同的规则找 index
     const index = all
       .filter((j) => {
-        return j.level == item.level && j.text == item.text;
+        return (
+          j.level == item.level &&
+          normalizeHeadingText(j.text) === target
+        );
       })
       .findIndex((val) => {
         if (val.index == item.index) {

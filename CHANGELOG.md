@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 文章标题末尾或多余空格时，前台目录点击无法跳转到对应标题 [#308](https://github.com/Mereithhh/vanblog/issues/308)
 - 后台分类管理重命名后，文章和草稿仍保留旧分类名 [#324](https://github.com/Mereithhh/vanblog/issues/324)
 - 后台多文件自定义页面上传文件/文件夹失败，且无法删除已上传文件 [#338](https://github.com/Mereithhh/vanblog/issues/338)
 - 水印文字含 `.`（如域名）时不再整段消失 [#322](https://github.com/Mereithhh/vanblog/issues/322)
