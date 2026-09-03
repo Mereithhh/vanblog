@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台 Markdown 链接 `[文字](网址)` 文字或 URL 过长时，首页摘要和正文都会保留完整可见文字与 href，不再截断网址或把链接拆成残缺 markdown [#410](https://github.com/Mereithhh/vanblog/issues/410)
 - 前台文章目录会漏掉正文里已渲染的标题（含缩进的嵌套标题），现与后台编辑器大纲对齐 [#409](https://github.com/Mereithhh/vanblog/issues/409)
 - 后台文章编辑器点目录再点子标题后，编辑区不再变成只能刷新才能恢复的空白 [#370](https://github.com/Mereithhh/vanblog/issues/370)
 - 访客时区与站长时区不同时，相对时间（如后台「最近访问」）不再显示成负值（例如 `-113秒前`）[#369](https://github.com/Mereithhh/vanblog/issues/369)

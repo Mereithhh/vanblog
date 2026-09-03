@@ -19,7 +19,7 @@ module.exports = {
   projects: [
     {
       name: 'toc-heading',
-      testMatch: /toc-heading\.spec\.js|footnote-nav\.spec\.js/,
+      testMatch: /toc-heading\.spec\.js|footnote-nav\.spec\.js|markdown-link\.spec\.js/,
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${fixturePort}`,

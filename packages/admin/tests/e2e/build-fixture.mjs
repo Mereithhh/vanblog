@@ -50,10 +50,19 @@ await bundle(path.join(fixtures, 'footnote-article-app.tsx'), path.join(outdir, 
   `--alias:react-dom=${reactDom}`,
   '--jsx=automatic',
 ]);
+await bundle(path.join(fixtures, 'markdown-link-article-app.tsx'), path.join(outdir, 'markdown-link.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  '--jsx=automatic',
+]);
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
 await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));
 await cp(path.join(fixtures, 'footnote-article.html'), path.join(outdir, 'footnote-article.html'));
+await cp(
+  path.join(fixtures, 'markdown-link-article.html'),
+  path.join(outdir, 'markdown-link-article.html'),
+);
 await cp(
   path.resolve(adminRoot, '../website/styles/github-markdown.css'),
   path.join(outdir, 'github-markdown.css'),
