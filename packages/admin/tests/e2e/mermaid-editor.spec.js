@@ -1,9 +1,16 @@
 const { test, expect } = require('@playwright/test');
+const {
+  collectUncaughtErrors,
+  expectNoEditorCrash,
+  expectPreviewVisibleAndIdle,
+} = require('./page-errors');
 
 test('article with mermaid stays editable in the admin editor', async ({ page }) => {
+  const errors = collectUncaughtErrors(page);
   await page.goto('/');
   const editor = page.locator('.CodeMirror').first();
   await expect(editor).toBeVisible();
+  await expectPreviewVisibleAndIdle(page);
 
   await page.waitForTimeout(1500);
 
@@ -38,6 +45,22 @@ test('article with mermaid stays editable in the admin editor', async ({ page })
     )
     .toContain('E2E_MERMAID_EDITOR_OK');
 
+  await page.keyboard.type('AND_AGAIN');
+  await expect
+    .poll(async () =>
+      page.evaluate(
+        () =>
+          window.__editorValue ||
+          document.querySelector('.CodeMirror')?.CodeMirror?.getValue() ||
+          '',
+      ),
+    )
+    .toContain('AND_AGAIN');
+
+  await expect(page.getByText('Something went wrong')).toHaveCount(0);
+  expectNoEditorCrash(page, errors);
+
   const previewHasMermaid = await page.locator('.bytemd-preview .bytemd-mermaid, .bytemd-preview code.language-mermaid').count();
   expect(previewHasMermaid).toBeGreaterThan(0);
+  await expectPreviewVisibleAndIdle(page);
 });

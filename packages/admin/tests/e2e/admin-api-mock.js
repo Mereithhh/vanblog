@@ -3,6 +3,15 @@ const MERMAID_ARTICLE_CONTENT = `# Markdown 语法测试
 VanBlog 文章测试
 
 \`\`\`mermaid
+graph LR
+  A[设备]-->B["Dnsmasq(:53)"]
+  subgraph 软路由
+      B-->|重定向| C["ADG Home(:3053)"]
+  end
+  C-->|转发| D["上游公共DNS服务器"]
+\`\`\`
+
+\`\`\`mermaid
 graph TD
 Start --> Stop
 \`\`\`

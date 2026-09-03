@@ -1,8 +1,14 @@
 const { test, expect } = require('@playwright/test');
 const { loginAsAdmin, mockAdminApis } = require('./admin-api-mock');
+const {
+  collectUncaughtErrors,
+  expectNoEditorCrash,
+  expectPreviewVisibleAndIdle,
+} = require('./page-errors');
 
 test.describe('real Umi admin editor', () => {
   test('article 68 with mermaid stays editable', async ({ page }) => {
+    const errors = collectUncaughtErrors(page);
     await loginAsAdmin(page);
     await mockAdminApis(page);
 
@@ -11,6 +17,7 @@ test.describe('real Umi admin editor', () => {
     const editor = page.locator('.bytemd-editor .CodeMirror').first();
     await expect(editor).toBeVisible({ timeout: 30_000 });
     await expect(page.getByText('Markdown 语法测试').first()).toBeVisible();
+    await expectPreviewVisibleAndIdle(page);
 
     await expect
       .poll(async () =>
@@ -49,9 +56,22 @@ test.describe('real Umi admin editor', () => {
       )
       .toContain('E2E_ADMIN_MERMAID_OK');
 
+    await page.keyboard.press('Backspace');
+    await page.keyboard.type('STILL_EDITABLE');
+
+    await expect
+      .poll(async () =>
+        page.evaluate(() => document.querySelector('.CodeMirror')?.CodeMirror?.getValue() || ''),
+      )
+      .toContain('STILL_EDITABLE');
+
+    await expect(page.getByText('Something went wrong')).toHaveCount(0);
+    expectNoEditorCrash(page, errors);
+
     const previewHasMermaid = await page
       .locator('.bytemd-preview .bytemd-mermaid, .bytemd-preview code.language-mermaid')
       .count();
     expect(previewHasMermaid).toBeGreaterThan(0);
+    await expectPreviewVisibleAndIdle(page);
   });
 });
