@@ -107,6 +107,19 @@ const server = createServer(async (req, res) => {
     return json(res, 200, { statusCode: 200, data: article, revalidated: paths });
   }
 
+  if (url.pathname === '/' || url.pathname === '/index.html') {
+    return html(
+      res,
+      'VanBlog ISR E2E',
+      `<h1>VanBlog ISR E2E</h1>
+       <p>同一篇文章的两个前台地址：</p>
+       <ul>
+         <li><a href="/post/30">/post/30</a></li>
+         <li><a href="/post/gitea">/post/gitea</a></li>
+       </ul>`,
+    );
+  }
+
   if (url.pathname === '/admin/editor') {
     return html(
       res,
