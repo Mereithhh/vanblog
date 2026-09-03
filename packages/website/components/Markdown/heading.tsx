@@ -1,6 +1,7 @@
 import { BytemdPlugin } from "bytemd";
 import { visit } from "unist-util-visit";
 import { collectHeadingText, normalizeHeadingText } from "../../utils/headingText";
+import { headingHashHref } from "../../utils/headingHash";
 
 
 const headings = [
@@ -12,10 +13,29 @@ const headings = [
   'h6'
 ]
 
-const onClickHeading = (e: any) => {
-  const id = e.target.getAttribute('data-id');
-  // 改一下 hash
-  window.location.hash = `#${id}`;
+function permalinkClassName(node: {
+  properties?: { className?: unknown; class?: unknown };
+}): string {
+  const props = node.properties || {};
+  const className = props.className;
+  if (Array.isArray(className)) return className.join(" ");
+  if (typeof className === "string") return className;
+  return String(props.class ?? "");
+}
+
+function hasPermalink(node: { children?: unknown[] }): boolean {
+  return (node.children || []).some((child) => {
+    const el = child as {
+      type?: string;
+      tagName?: string;
+      properties?: { className?: unknown; class?: unknown };
+    };
+    return (
+      el?.type === "element" &&
+      el?.tagName === "a" &&
+      /\bheading-permalink\b/.test(permalinkClassName(el))
+    );
+  });
 }
 
 export function isFootnotesHeading(node): boolean {
@@ -44,7 +64,22 @@ export const headingRehypePlugin = () => (tree) => {
       const title = normalizeHeadingText(collectHeadingText(node));
       node.properties['data-id'] = title;
       node.properties['id'] = title;
-      node.properties['class'] = 'markdown-heading cursor-pointer';
+      node.properties['class'] = 'markdown-heading';
+      if (title && !hasPermalink(node)) {
+        if (!node.children) {
+          node.children = [];
+        }
+        node.children.push({
+          type: "element",
+          tagName: "a",
+          properties: {
+            className: ["heading-permalink"],
+            href: headingHashHref(title),
+            title,
+          },
+          children: [{ type: "text", value: "#" }],
+        });
+      }
     }
   });
 }
@@ -52,12 +87,5 @@ export const headingRehypePlugin = () => (tree) => {
 export function Heading(): BytemdPlugin {
   return {
     rehype: (processor) => processor.use(headingRehypePlugin),
-    viewerEffect: ({markdownBody}) => {
-      const headings = markdownBody.querySelectorAll('.markdown-heading');
-      headings.forEach((heading) => {
-        heading.removeEventListener('click', onClickHeading);
-        heading.addEventListener('click', onClickHeading);
-      });
-    }
   };
 }

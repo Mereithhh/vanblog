@@ -47,6 +47,12 @@
   line-height: 2em;
   padding-right: 1.8em;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.markdown-navigation .title-anchor:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
 }
 
 .markdown-navigation .title-anchor:hover,

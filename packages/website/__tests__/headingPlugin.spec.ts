@@ -76,4 +76,49 @@ describe("heading plugin anchors", () => {
     headingRehypePlugin()(tree);
     expect(tree.children[0].properties.id).toBe("Clean Title");
   });
+
+  it("adds a selectable permalink with an encoded hash href", () => {
+    const tree = {
+      type: "root",
+      children: [
+        {
+          type: "element",
+          tagName: "h2",
+          properties: {},
+          children: [{ type: "text", value: "评论系统" }],
+        },
+      ],
+    };
+    headingRehypePlugin()(tree);
+    const heading = tree.children[0];
+    const permalink = heading.children.find((child) => child.tagName === "a");
+    expect(heading.properties.id).toBe("评论系统");
+    expect(heading.properties["data-id"]).toBe("评论系统");
+    expect(heading.properties.class).toBe("markdown-heading");
+    expect(permalink.properties.href).toBe(
+      "#%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F"
+    );
+    expect(permalink.properties.className).toEqual(["heading-permalink"]);
+    expect(permalink.children[0].value).toBe("#");
+  });
+
+  it("encodes spaces in the permalink href and keeps the raw id", () => {
+    const tree = {
+      type: "root",
+      children: [
+        {
+          type: "element",
+          tagName: "h2",
+          properties: {},
+          children: [{ type: "text", value: "My Title" }],
+        },
+      ],
+    };
+    headingRehypePlugin()(tree);
+    const permalink = tree.children[0].children.find(
+      (child) => child.tagName === "a"
+    );
+    expect(tree.children[0].properties.id).toBe("My Title");
+    expect(permalink.properties.href).toBe("#My%20Title");
+  });
 });

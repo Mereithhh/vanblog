@@ -41,3 +41,7 @@ Body under a heading with inline TeX, same pattern as the reporter screenshot.
 ## 由方程 $F(x,y)=0$ 确定的隐函数 $y=y(x)$
 
 Body under a mixed prose-and-math heading.
+
+## 评论系统
+
+Body under the reporter Chinese heading used for encoded hash and permalink tests.

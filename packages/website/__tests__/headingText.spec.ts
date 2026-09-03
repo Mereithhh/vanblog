@@ -39,6 +39,24 @@ describe("collectHeadingText", () => {
       })
     ).toBe("Title with code");
   });
+
+  it("ignores a heading permalink when flattening visible title text", () => {
+    expect(
+      collectHeadingText({
+        type: "element",
+        tagName: "h2",
+        children: [
+          { type: "text", value: "评论系统" },
+          {
+            type: "element",
+            tagName: "a",
+            properties: { className: ["heading-permalink"], href: "#x" },
+            children: [{ type: "text", value: "#" }],
+          },
+        ],
+      })
+    ).toBe("评论系统");
+  });
 });
 
 describe("parseNavStructure heading whitespace", () => {

@@ -388,6 +388,20 @@
   color: var(--color-fg-muted);
 }
 
+.markdown-body .markdown-heading .heading-permalink {
+  margin-left: 0.4em;
+  font-weight: 400;
+  font-size: 0.85em;
+  color: var(--color-fg-muted);
+  text-decoration: none;
+  user-select: text;
+}
+
+.markdown-body .markdown-heading .heading-permalink:hover,
+.markdown-body .markdown-heading .heading-permalink:focus {
+  color: var(--color-accent-fg);
+}
+
 .markdown-body p {
   margin-top: 0;
   margin-bottom: 10px;

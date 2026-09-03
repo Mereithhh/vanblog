@@ -303,3 +303,99 @@ test.describe('public article TOC math headings (#264)', () => {
       });
   });
 });
+
+test.describe('public article heading hash, permalink, and TOC keyboard (#177)', () => {
+  const commentId = '评论系统';
+  const commentEncoded = encodeURIComponent(commentId);
+
+  test('encoded Chinese hash navigation lands on the heading', async ({ page }) => {
+    const pageErrors = [];
+    page.on('pageerror', (err) => pageErrors.push(String(err)));
+    await page.goto(`/toc-article.html#${commentEncoded}`);
+    await expect
+      .poll(async () => {
+        const after = await headingMetrics(page, commentId);
+        return after && after.inViewport ? after : null;
+      })
+      .toMatchObject({
+        id: commentId,
+        dataId: commentId,
+        inViewport: true,
+      });
+    expect(pageErrors, `fixture pageerror: ${pageErrors.join('\n')}`).toEqual([]);
+  });
+
+  test('encoded spaced hash navigation lands on the heading', async ({ page }) => {
+    await page.goto(`/toc-article.html#${encodeURIComponent('My Title')}`);
+    await expect
+      .poll(async () => {
+        const after = await headingMetrics(page, 'My Title');
+        return after && after.inViewport ? after : null;
+      })
+      .toMatchObject({
+        id: 'My Title',
+        dataId: 'My Title',
+        inViewport: true,
+      });
+  });
+
+  test('TOC item is a keyboard-focusable link and Enter still jumps', async ({ page }) => {
+    await page.goto('/toc-article.html');
+    const tocItem = page.locator('.markdown-navigation a.title-anchor[data-id="Clean Title"]');
+    await expect(tocItem).toBeVisible();
+    await expect(tocItem).toHaveAttribute('href', `#${encodeURIComponent('Clean Title')}`);
+
+    await tocItem.focus();
+    await expect(tocItem).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    await expect
+      .poll(async () => {
+        const after = await headingMetrics(page, 'Clean Title');
+        return after && Math.abs(after.scrollY - after.offsetTop) < 8 ? after : null;
+      })
+      .toMatchObject({
+        dataId: 'Clean Title',
+        inViewport: true,
+      });
+  });
+
+  test('TOC click still jumps when the item is a real link', async ({ page }) => {
+    await page.goto('/toc-article.html');
+    await clickToc(page, 'Clean Title');
+    await expect
+      .poll(async () => {
+        const after = await headingMetrics(page, 'Clean Title');
+        return after && Math.abs(after.scrollY - after.offsetTop) < 8 ? after : null;
+      })
+      .toMatchObject({
+        dataId: 'Clean Title',
+        inViewport: true,
+      });
+  });
+
+  test('heading permalink contains the encoded hash and is selectable', async ({ page }) => {
+    await page.goto('/toc-article.html');
+    const heading = page.locator(`h2[data-id="${commentId}"]`);
+    await expect(heading).toBeVisible();
+    const permalink = heading.locator('a.heading-permalink');
+    await expect(permalink).toBeVisible();
+    await expect(permalink).toHaveAttribute('href', `#${commentEncoded}`);
+    await expect(permalink).toHaveText('#');
+
+    const info = await permalink.evaluate((el) => {
+      const style = getComputedStyle(el);
+      return {
+        href: el.getAttribute('href'),
+        userSelect: style.userSelect,
+        pointerEvents: style.pointerEvents,
+      };
+    });
+    expect(info.href).toBe(`#${commentEncoded}`);
+    expect(info.userSelect).not.toBe('none');
+    expect(info.pointerEvents).not.toBe('none');
+
+    const spaced = page.locator('h2[data-id="My Title"] a.heading-permalink');
+    await expect(spaced).toHaveAttribute('href', `#${encodeURIComponent('My Title')}`);
+  });
+});
