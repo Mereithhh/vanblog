@@ -3,6 +3,7 @@ import { ChildProcess, spawn } from 'node:child_process';
 import { config } from 'src/config';
 import { WalineSetting } from 'src/types/setting.dto';
 import { makeSalt } from 'src/utils/crypto';
+import { isForceLoginCommentEnabled } from 'src/utils/walineLogin';
 import { MetaProvider } from '../meta/meta.provider';
 import { SettingProvider } from '../setting/setting.provider';
 @Injectable()
@@ -16,7 +17,7 @@ export class WalineProvider {
     private readonly settingProvider: SettingProvider,
   ) {}
 
-  mapConfig2Env(config: WalineSetting) {
+  mapConfig2Env(config: WalineSetting): Record<string, any> {
     const walineEnvMapping = {
       'smtp.port': 'SMTP_PORT',
       'smtp.host': 'SMTP_HOST',
@@ -34,9 +35,7 @@ export class WalineProvider {
     }
     for (const key of Object.keys(config)) {
       if (key == 'forceLoginComment') {
-        if (config.forceLoginComment) {
-          result['LOGIN'] = 'force';
-        }
+        continue;
       } else if (key == 'otherConfig') {
         if (config.otherConfig) {
           try {
@@ -52,6 +51,10 @@ export class WalineProvider {
           result[rKey] = config[key];
         }
       }
+    }
+    // Apply last so Ant Design string "true" and otherConfig LOGIN cannot skip/override the toggle.
+    if (isForceLoginCommentEnabled(config.forceLoginComment)) {
+      result['LOGIN'] = 'force';
     }
     if (!config['smtp.enabled']) {
       const r2 = {};
@@ -110,12 +113,41 @@ export class WalineProvider {
     await this.run();
   }
   async stop() {
-    if (this.ctx) {
-      this.ctx.unref();
-      process.kill(-this.ctx.pid);
-      this.ctx = null;
-      this.logger.log('waline 停止成功！');
+    if (!this.ctx) {
+      return;
     }
+    const child = this.ctx;
+    this.ctx = null;
+    await new Promise<void>((resolve) => {
+      let settled = false;
+      const finish = () => {
+        if (settled) {
+          return;
+        }
+        settled = true;
+        resolve();
+      };
+      child.once('exit', finish);
+      const kill = (signal: NodeJS.Signals) => {
+        try {
+          process.kill(-child.pid, signal);
+        } catch {
+          try {
+            child.kill(signal);
+          } catch {
+            finish();
+          }
+        }
+      };
+      kill('SIGTERM');
+      setTimeout(() => {
+        if (!settled) {
+          kill('SIGKILL');
+        }
+        setTimeout(finish, 200);
+      }, 2000);
+    });
+    this.logger.log('waline 停止成功！');
   }
   async run(): Promise<any> {
     await this.loadEnv();

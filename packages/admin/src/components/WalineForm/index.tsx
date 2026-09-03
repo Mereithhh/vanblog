@@ -22,10 +22,16 @@ export default function (props: {}) {
           if (!data) {
             return {
               'smtp.enabled': false,
-              forceLoginComment: false,
+              forceLoginComment: 'false',
             };
           }
-          return { ...data };
+          return {
+            ...data,
+            forceLoginComment:
+              data.forceLoginComment === true || data.forceLoginComment === 'true'
+                ? 'true'
+                : 'false',
+          };
         }}
         syncToInitialValues={true}
         onFinish={async (data) => {
@@ -42,7 +48,10 @@ export default function (props: {}) {
             }
           }
           setEnableEmail(data?.['smtp.enabled'] || false);
-          await updateWalineConfig(data);
+          await updateWalineConfig({
+            ...data,
+            forceLoginComment: data.forceLoginComment === true || data.forceLoginComment === 'true',
+          });
           message.success('更新成功！');
         }}
       >
@@ -57,16 +66,17 @@ export default function (props: {}) {
             options: [
               {
                 label: '开启',
-                value: true as any,
+                value: 'true',
               },
               {
                 label: '关闭',
-                value: false as any,
+                value: 'false',
               },
             ],
           }}
           name="forceLoginComment"
           label="是否强制登录后评论"
+          tooltip="开启后访客必须登录 Waline 评论账号才能发表评论，匿名提交会被拒绝"
           placeholder={'是否强制登录后评论，默认关闭'}
         ></ProFormSelect>
         <ProFormSelect
