@@ -6,11 +6,20 @@ order: 1
 
 ## 如何部署到 CDN
 
-在编排文件 `docker-compose.yaml` 中设置 `vanblog` 容器的 `VAN_BLOG_CDN_URL` 这个环境变量后，按部就班增加 CDN 即可。
+`VAN_BLOG_CDN_URL` 只给前台 Next.js 的公共资源加前缀（页面里的 `/_next/static` JS/CSS），**不会**改写文章里的图片或本地图床 `/static` 路径。
+
+在编排文件 `docker-compose.yaml` 中设置 `vanblog` 容器的环境变量后重启容器即可，例如：
+
+```yaml
+environment:
+  VAN_BLOG_CDN_URL: "https://cdn.example.com"
+```
+
+然后按部就班增加 CDN：回源到博客主站，缓存 `/_next/static`。
 
 ![image](https://user-images.githubusercontent.com/95157017/204312649-8d02dfd6-bb2a-4646-921c-d59f07221854.png)
 
-原则上 CDN 只缓存 `/_next/static` 这个目录就够了。
+原则上 CDN 只缓存 `/_next/static` 这个目录就够了。设置后需要重启 VanBlog 容器，HTML 里的脚本/样式会变成 `https://cdn.example.com/_next/static/...`。
 
 ## 如何安装 docker ?
 

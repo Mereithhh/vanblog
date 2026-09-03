@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- Docker 环境变量 `VAN_BLOG_CDN_URL` 启动时未生效，前台 `/_next/static` 仍走主站相对路径 [#450](https://github.com/Mereithhh/vanblog/issues/450)
 - 开启「强制登录后评论」后匿名评论仍可提交 [#446](https://github.com/Mereithhh/vanblog/issues/446)
 - 后台自定义页面「修改信息」保存后刷新仍是旧名称/路径 [#453](https://github.com/Mereithhh/vanblog/issues/453)
 - 后台编辑器填写文章信息时方向键无法移动光标 [#470](https://github.com/Mereithhh/vanblog/issues/470)

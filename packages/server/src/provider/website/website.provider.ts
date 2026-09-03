@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ChildProcess, spawn } from 'node:child_process';
-import path from 'node:path';
+import { applyRuntimeCdnPrefix, getWebsiteRoot } from 'src/utils/cdnUrl';
 import { MetaProvider } from '../meta/meta.provider';
 import { SettingProvider } from '../setting/setting.provider';
 
@@ -99,9 +99,16 @@ export class WebsiteProvider {
     }
     let cmd = 'pnpm';
     let args = ['dev'];
+    const websiteRoot = getWebsiteRoot();
     if (process.env.NODE_ENV == 'production') {
       cmd = 'node';
       args = ['./packages/website/server.js'];
+      const cdn = applyRuntimeCdnPrefix(websiteRoot, process.env.VAN_BLOG_CDN_URL);
+      if (cdn.assetPrefix) {
+        this.logger.log(
+          `已应用 VAN_BLOG_CDN_URL=${cdn.assetPrefix}（config=${cdn.patchedConfig}, html=${cdn.rewrittenHtml}）`,
+        );
+      }
     }
     const loadEnvs = await this.loadEnv();
     this.logger.log(JSON.stringify(loadEnvs, null, 2));
@@ -111,7 +118,7 @@ export class WebsiteProvider {
           ...process.env,
           ...loadEnvs,
         },
-        cwd: path.join(path.resolve(process.cwd(), '..'), 'website'),
+        cwd: websiteRoot,
         detached: true,
         shell: process.platform === 'win32',
       });
