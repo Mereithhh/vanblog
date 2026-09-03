@@ -45,7 +45,8 @@ describe('CategoryProvider.importCategories', () => {
     ]);
 
     expect(model.docs.map((item) => item.name)).toEqual(['随笔', '教程']);
-    expect(model.docs[1].id).toBe(1);
+    expect(model.docs[0].id).toBe(1);
+    expect(model.docs[1].id).toBe(2);
     expect(model.docs[1].type).toBe('category');
   });
 

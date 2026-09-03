@@ -31,7 +31,7 @@ function addCategory(byName: Map<string, BackupCategory>, raw: any) {
   if (!name) {
     return;
   }
-  const prev = byName.get(name) || { name };
+  const prev: BackupCategory = byName.get(name) || { name };
   byName.set(name, {
     name,
     id: raw.id ?? prev.id,
