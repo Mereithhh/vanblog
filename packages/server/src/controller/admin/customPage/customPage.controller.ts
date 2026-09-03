@@ -10,6 +10,8 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
@@ -34,12 +36,17 @@ export class CustomPageController {
   @UseInterceptors(FileInterceptor('file'))
   async upload(
     @UploadedFile() file: any,
-    @Query('path') path: string,
+    @Query('path') pagePath: string,
     @Query('name') name: string,
   ) {
-    this.logger.log(`上传自定义页面文件：${path}\t ${name}`);
-    file.originalname = name;
-    const res = await this.staticProvider.upload(file, 'customPage', false, path);
+    if (!file) {
+      throw new HttpException('未收到上传文件', HttpStatus.BAD_REQUEST);
+    }
+    if (name) {
+      file.originalname = name.replace(/\\/g, '/');
+    }
+    this.logger.log(`上传自定义页面文件：${pagePath}\t ${file.originalname}`);
+    const res = await this.staticProvider.upload(file, 'customPage', false, pagePath);
     return {
       statusCode: 200,
       data: res,
@@ -111,6 +118,21 @@ export class CustomPageController {
       };
     }
     const data = await this.staticProvider.createFolder(pathname, subPath);
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+
+  @Delete('file')
+  async deleteFile(@Query('path') pagePath: string, @Query('key') key: string) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
+    const data = await this.staticProvider.deleteCustomPageFile(pagePath, key);
     return {
       statusCode: 200,
       data,

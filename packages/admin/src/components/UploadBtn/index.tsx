@@ -1,6 +1,9 @@
 import { Button, message, Upload } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { RcFile } from 'antd/lib/upload';
+
+const toPosix = (p: string) => (p || '').replace(/\\/g, '/');
+
 export default function (props: {
   setLoading: (loading: boolean) => void;
   text: string;
@@ -17,13 +20,15 @@ export default function (props: {
 }) {
   const upload = (file: RcFile, rPath: string) => {
     const formData = new FormData();
-    let fileName = rPath || file.name;
+    let fileName = toPosix(rPath || file.name);
     if (!props.folder && props.basePath) {
-      fileName = `${props.basePath}/${file.name}`;
+      fileName = `${toPosix(props.basePath)}/${file.name}`.replace(/\/+/g, '/');
     }
-    formData.append('file', file, fileName);
+    // Basename only in multipart: some browsers strip path separators from the filename param.
+    formData.append('file', file, file.name);
     props.setLoading(true);
-    fetch(`${props.url}&name=${fileName}`, {
+    const sep = props.url.includes('?') ? '&' : '?';
+    fetch(`${props.url}${sep}name=${encodeURIComponent(fileName)}`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -33,11 +38,14 @@ export default function (props: {
       },
     })
       .then((res) => res.json())
-      .then(() => {
-        props?.onFinish(file, name);
+      .then((body) => {
+        if (body?.statusCode && body.statusCode !== 200) {
+          throw new Error(body.message || 'upload failed');
+        }
+        props?.onFinish(file, fileName);
       })
       .catch(() => {
-        message.error(`${name} 上传失败!`);
+        message.error(`${fileName} 上传失败!`);
       })
       .finally(() => {
         props.setLoading(false);
@@ -53,8 +61,8 @@ export default function (props: {
       directory={props.folder}
       beforeUpload={
         props.customUpload
-          ? (file, fileList) => {
-              let rPath = file.webkitRelativePath;
+          ? (file) => {
+              let rPath = toPosix(file.webkitRelativePath);
               if (rPath && rPath.split('/').length >= 2) {
                 rPath = rPath.split('/').slice(1).join('/');
               }

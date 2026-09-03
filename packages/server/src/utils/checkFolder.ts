@@ -1,4 +1,5 @@
 import * as fs from 'fs';
+import * as path from 'path';
 
 export const checkOrCreate = (p: string) => {
   try {
@@ -19,12 +20,13 @@ export const checkFolder = (p: string) => {
 };
 
 export const checkOrCreateByFilePath = (p: string) => {
-  const folderPathArr = p.split('/');
-  folderPathArr.pop();
-  const folderPath = folderPathArr.join('/');
-  try {
-    fs.readdirSync(folderPath);
-  } catch (err) {
+  // path.dirname is OS-aware. Splitting only on `/` breaks Windows (issue #338):
+  // path.join produces `\`, pop() drops the whole string, mkdir('') throws ENOENT.
+  const folderPath = path.dirname(p);
+  if (!folderPath || folderPath === '.') {
+    return;
+  }
+  if (!fs.existsSync(folderPath)) {
     console.log(`${folderPath}不存在，创建。`);
     fs.mkdirSync(folderPath, { recursive: true });
   }

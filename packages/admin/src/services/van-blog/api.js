@@ -201,14 +201,25 @@ export async function getCustomPageByPath(path) {
   });
 }
 export async function getCustomPageFolderTreeByPath(path) {
-  return request('/api/admin/customPage/folder?path=' + path, {
+  return request(`/api/admin/customPage/folder?path=${encodeURIComponent(path)}`, {
     method: 'GET',
   });
 }
 export async function getCustomPageFileDataByPath(path, key) {
-  return request('/api/admin/customPage/file?path=' + path + '&key=' + key, {
-    method: 'GET',
-  });
+  return request(
+    `/api/admin/customPage/file?path=${encodeURIComponent(path)}&key=${encodeURIComponent(key)}`,
+    {
+      method: 'GET',
+    },
+  );
+}
+export async function deleteCustomPageFile(path, key) {
+  return request(
+    `/api/admin/customPage/file?path=${encodeURIComponent(path)}&key=${encodeURIComponent(key)}`,
+    {
+      method: 'DELETE',
+    },
+  );
 }
 export async function updateCollaborator(body) {
   return request('/api/admin/collaborator', {

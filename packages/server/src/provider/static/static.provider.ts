@@ -16,6 +16,7 @@ import { UploadConfig } from 'src/types/upload';
 import { addWaterMarkToIMG } from 'src/utils/watermark';
 import { checkTrue } from 'src/utils/checkTrue';
 import { compressImgToWebp } from 'src/utils/webp';
+import { normalizeCustomPageRel } from 'src/utils/customPagePath';
 @Injectable()
 export class StaticProvider {
   constructor(
@@ -91,7 +92,7 @@ export class StaticProvider {
     const pureFileName = arr.slice(0, arr.length - 1).join('.');
     let fileName = currentSign + '.' + file.originalname;
     if (type == 'customPage') {
-      fileName = customPathname + '/' + file.originalname;
+      fileName = normalizeCustomPageRel(customPathname, file.originalname);
     }
     if (type == 'img' && checkTrue(staticConfigInDB.enableWebp) && compressSuccess) {
       fileName = currentSign + '.' + pureFileName + '.webp';
@@ -293,6 +294,9 @@ export class StaticProvider {
   }
   async updateCustomPageFileContent(pathname: string, filePath: string, content: string) {
     return this.localProvider.updateCustomPageFileContent(pathname, filePath, content);
+  }
+  async deleteCustomPageFile(pathname: string, filePath: string) {
+    return this.localProvider.deleteCustomPageFile(pathname, filePath);
   }
 
   async deleteOneBySign(sign: string) {
