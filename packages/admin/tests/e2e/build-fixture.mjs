@@ -72,3 +72,7 @@ await cp(
   path.join(outdir, 'mermaid-safety.css'),
 );
 await cp(path.join(adminRoot, 'node_modules/bytemd/dist/index.css'), path.join(outdir, 'bytemd.css'));
+await cp(
+  path.join(adminRoot, 'node_modules/katex/dist/katex.min.css'),
+  path.join(outdir, 'katex.min.css'),
+);

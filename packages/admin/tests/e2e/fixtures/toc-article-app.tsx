@@ -1,6 +1,7 @@
 import { render } from 'react-dom';
 import { visit } from 'unist-util-visit';
 import { Viewer } from '@bytemd/react';
+import math from '@bytemd/plugin-math-ssr';
 import { Heading } from '../../../../website/components/Markdown/heading';
 import MarkdownTocBar from '../../../../website/components/MarkdownTocBar';
 import { getEl, parseNavStructure } from '../../../../website/components/MarkdownTocBar/tools';
@@ -45,7 +46,7 @@ const App = () => (
     <article className="toc-e2e-article" data-post-content>
       <Viewer
         value={content}
-        plugins={[Heading(), lazyScreenshots()]}
+        plugins={[math(), Heading(), lazyScreenshots()]}
         remarkRehype={{ allowDangerousHtml: true }}
         sanitize={sanitize}
       />

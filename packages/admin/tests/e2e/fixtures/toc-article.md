@@ -14,6 +14,14 @@ Body under a heading with extra leading and trailing spaces.
 
 Body under a heading with no extra spaces.
 
+## 比较 $A$<$B$
+
+Body under a heading with inline TeX, same pattern as the reporter screenshot.
+
+## 由方程 $F(x,y)=0$ 确定的隐函数 $y=y(x)$
+
+Body under a mixed prose-and-math heading.
+
 ![Citrix screenshot 1](./tall.svg)
 ![Citrix screenshot 2](./tall.svg)
 ![Citrix screenshot 3](./tall.svg)

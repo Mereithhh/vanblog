@@ -39,6 +39,58 @@ describe("collectHeadingText", () => {
       })
     ).toBe("Title with code");
   });
+
+  it("reconstructs $tex$ from rehype-katex so heading ids keep source TeX", () => {
+    expect(
+      collectHeadingText({
+        type: "element",
+        tagName: "h2",
+        children: [
+          { type: "text", value: "比较 " },
+          {
+            type: "element",
+            tagName: "span",
+            properties: { className: ["math", "math-inline"] },
+            children: [
+              {
+                type: "element",
+                tagName: "span",
+                properties: { className: ["katex"] },
+                children: [
+                  {
+                    type: "element",
+                    tagName: "annotation",
+                    properties: { encoding: "application/x-tex" },
+                    children: [{ type: "text", value: "A" }],
+                  },
+                  {
+                    type: "element",
+                    tagName: "span",
+                    properties: { className: ["katex-html"] },
+                    children: [{ type: "text", value: "A" }],
+                  },
+                ],
+              },
+            ],
+          },
+          { type: "text", value: "<" },
+          {
+            type: "element",
+            tagName: "span",
+            properties: { className: ["math", "math-inline"] },
+            children: [
+              {
+                type: "element",
+                tagName: "annotation",
+                properties: { encoding: "application/x-tex" },
+                children: [{ type: "text", value: "B" }],
+              },
+            ],
+          },
+        ],
+      } as Parameters<typeof collectHeadingText>[0])
+    ).toBe("比较 $A$<$B$");
+  });
 });
 
 describe("parseNavStructure heading whitespace", () => {

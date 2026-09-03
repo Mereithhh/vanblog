@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import throttle from "lodash/throttle";
 import { getEl, NavItem } from "./tools";
 import { scrollTo } from "../../utils/scroll";
 import { scrollToNavHeading } from "./scrollToHeading";
+import { renderTocLabelHtml, tocLabelNeedsMath } from "./tocMath";
 export default function (props: {
   items: NavItem[];
   headingOffset: number;
@@ -103,20 +104,34 @@ export default function (props: {
       window.removeEventListener("hashchange", jumpHash);
     };
   }, [items, props.headingOffset]);
+  const labelHtml = useMemo(
+    () =>
+      items.map((each) =>
+        tocLabelNeedsMath(each.text) ? renderTocLabelHtml(each.text) : null
+      ),
+    [items]
+  );
+
   const res = [];
   for (const each of items) {
     const cls = `title-anchor title-level${each.level} ${
       currIndex == each.index ? "active" : ""
     }`;
+    const mathHtml = labelHtml[each.index];
     res.push(
       <div
         key={each.index}
         className={cls}
+        data-id={each.text}
         onClick={() => {
           void scrollToNavHeading(each, items, props.headingOffset);
         }}
       >
-        {each.text}
+        {mathHtml != null ? (
+          <span dangerouslySetInnerHTML={{ __html: mathHtml }} />
+        ) : (
+          each.text
+        )}
       </div>
     );
   }
