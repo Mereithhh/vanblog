@@ -4,6 +4,10 @@ icon: wrench
 order: 2
 ---
 
+## 分类管理改名后文章或草稿还是旧名称
+
+在「站点管理 / 数据管理 / 分类管理」把分类从 `AAA` 改成 `BBB` 后，用过 `AAA` 的文章和草稿可能仍显示旧名称，或看起来像未分类。文章和草稿存的是分类名字符串，旧版本只改了分类表本身。已修复（[#324](https://github.com/Mereithhh/vanblog/issues/324)）：重命名会同步更新所有文章和草稿上的分类名。请升级到包含该修复的版本。
+
 ## 多文件自定义页面上传失败或无法删除文件
 
 在 Windows 上「上传文件 / 上传文件夹」可能直接报错（`ENOENT: no such file or directory, mkdir`），或上传成功后无法从文件树里删掉单个文件。旧实现创建目录时按 `/` 硬拆路径，Windows 上 `path.join` 得到反斜杠，拆完变成空路径；同时后台没有删除单个文件的接口。已修复（[#338](https://github.com/Mereithhh/vanblog/issues/338)）。请升级到包含该修复的版本。

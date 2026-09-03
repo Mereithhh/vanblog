@@ -148,7 +148,7 @@ describe('backup restore categories (e2e)', () => {
     };
 
     const newMachineCategories = createMemoryCategoryModel();
-    const categoryProvider = new CategoryProvider(newMachineCategories as any, {} as any);
+    const categoryProvider = new CategoryProvider(newMachineCategories as any, {} as any, {} as any);
     let importedArticles: any[] = [];
 
     const toImportCategories = collectCategoriesFromBackup(exported);
@@ -177,7 +177,7 @@ describe('backup restore categories (e2e)', () => {
     };
 
     const newMachineCategories = createMemoryCategoryModel();
-    const categoryProvider = new CategoryProvider(newMachineCategories as any, {} as any);
+    const categoryProvider = new CategoryProvider(newMachineCategories as any, {} as any, {} as any);
     await categoryProvider.importCategories(collectCategoriesFromBackup(exported));
 
     expect(await categoryProvider.getAllCategories()).toEqual(['随笔', '教程']);
@@ -190,7 +190,7 @@ describe('backup restore categories (e2e)', () => {
     };
 
     const newMachineCategories = createMemoryCategoryModel();
-    const categoryProvider = new CategoryProvider(newMachineCategories as any, {} as any);
+    const categoryProvider = new CategoryProvider(newMachineCategories as any, {} as any, {} as any);
     await categoryProvider.importCategories(collectCategoriesFromBackup(exported));
 
     expect(await categoryProvider.getAllCategories()).toEqual(['随笔', '教程']);
@@ -247,7 +247,7 @@ describe('backup restore keeps new-machine admin (#280)', () => {
     const userModel = createMemoryUserModel([newAdmin]);
     const userProvider = new UserProvider(userModel as any);
     const categoryModel = createMemoryCategoryModel();
-    const categoryProvider = new CategoryProvider(categoryModel as any, {} as any);
+    const categoryProvider = new CategoryProvider(categoryModel as any, {} as any, {} as any);
     const articleProvider = mockImportSink();
     const draftProvider = mockImportSink();
     const metaProvider = mockImportSink();
