@@ -159,6 +159,14 @@ const server = createServer(async (req, res) => {
     return json(res, 200, { errno: 0, data: { token, ...user } });
   }
 
+  if (req.method === 'GET' && (url.pathname === '/' || url.pathname === '/index.html')) {
+    return html(
+      res,
+      'force-login comment e2e',
+      `<div class="card"><h1>force-login comment e2e</h1><p>ready</p></div>`,
+    );
+  }
+
   if (req.method === 'GET' && url.pathname === '/admin/setting') {
     const enabled = isForceLoginCommentEnabled(state.waline.forceLoginComment);
     return html(
