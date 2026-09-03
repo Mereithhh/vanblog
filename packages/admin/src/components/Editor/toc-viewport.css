@@ -1,0 +1,16 @@
+/*
+ * ByteMD's outline click and CodeMirror cursor-into-view both call
+ * Element.scrollIntoView(). That walks every overflow ancestor, so
+ * `.bytemd-body` (overflow:auto) can scroll and leave a blank editor
+ * that only a full refresh restores. Keep chrome from becoming a
+ * scroll container; the preview pane and `.CodeMirror-scroll` still scroll.
+ */
+.bytemd-body {
+  overflow: hidden !important;
+  overflow: clip !important;
+}
+
+.bytemd-editor,
+.bytemd-editor > .CodeMirror {
+  overflow: hidden !important;
+}

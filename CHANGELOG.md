@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台文章编辑器点目录再点子标题后，编辑区不再变成只能刷新才能恢复的空白 [#370](https://github.com/Mereithhh/vanblog/issues/370)
 - 访客时区与站长时区不同时，相对时间（如后台「最近访问」）不再显示成负值（例如 `-113秒前`）[#369](https://github.com/Mereithhh/vanblog/issues/369)
 - 点击 Markdown 脚注（`[^1]` / `[^1]:`）会在当前页滚到对应脚注，返回链接也能回到原文，不再新开同一篇文章；前台脚注区也会显示分隔线 [#290](https://github.com/Mereithhh/vanblog/issues/290)
 - 伙伴名为 URL（如 `https://testbug`）时，后台友情链接可以删除，编辑会更新原条目而不是新增 [#252](https://github.com/Mereithhh/vanblog/issues/252)
