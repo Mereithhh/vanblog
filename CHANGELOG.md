@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 备份恢复后分类未导入，导致分类管理为空、首页刷新不出文章 [#496](https://github.com/Mereithhh/vanblog/issues/496) [#280](https://github.com/Mereithhh/vanblog/issues/280)
 - 文章含 mermaid 图表时后台编辑器无法输入 [#477](https://github.com/Mereithhh/vanblog/issues/477)
 
 ## [0.54.0](https://github.com/Mereithhh/vanblog/compare/v0.53.0...v0.54.0) (2023-06-27)

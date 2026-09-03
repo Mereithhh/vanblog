@@ -5,6 +5,7 @@ import { ArticleProvider } from '../article/article.provider';
 import { CategoryDocument } from 'src/scheme/category.schema';
 import { sleep } from 'src/utils/sleep';
 import { UpdateCategoryDto } from 'src/types/category.dto';
+import { BackupCategory } from 'src/utils/backupCategories';
 
 @Injectable()
 export class CategoryProvider {
@@ -53,6 +54,52 @@ export class CategoryProvider {
   async getArticlesByCategory(name: string, includeHidden: boolean) {
     const d = await this.getCategoriesWithArticle(includeHidden);
     return d[name] ?? [];
+  }
+
+  async importCategories(categories: BackupCategory[]) {
+    if (!categories || !categories.length) {
+      return;
+    }
+    for (const item of categories) {
+      if (!item?.name) {
+        continue;
+      }
+      const existData = await this.categoryModal.findOne({
+        name: item.name,
+      });
+      if (existData) {
+        const patch: Partial<BackupCategory> = {};
+        if (item.private !== undefined) {
+          patch.private = item.private;
+        }
+        if (item.password !== undefined) {
+          patch.password = item.password;
+        }
+        if (item.type !== undefined) {
+          patch.type = item.type;
+        }
+        if (Object.keys(patch).length) {
+          await this.categoryModal.updateOne({ name: item.name }, patch);
+        }
+        continue;
+      }
+      let id = item.id;
+      if (id != null) {
+        const existById = await this.categoryModal.findOne({ id });
+        if (existById) {
+          id = await this.getNewId();
+        }
+      } else {
+        id = await this.getNewId();
+      }
+      await this.categoryModal.create({
+        id,
+        name: item.name,
+        type: item.type || 'category',
+        private: item.private || false,
+        password: item.password || '',
+      });
+    }
   }
 
   async addOne(name: string) {
