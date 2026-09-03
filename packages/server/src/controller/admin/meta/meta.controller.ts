@@ -4,7 +4,7 @@ import { version } from '../../../utils/loadConfig';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { Request } from 'express';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
-import { getVersionFromServer } from 'src/utils/getVersion';
+import { getCachedVersionFromServer } from 'src/utils/getVersion';
 import { ApiToken } from 'src/provider/swagger/token';
 
 @ApiTags('meta')
@@ -12,11 +12,13 @@ import { ApiToken } from 'src/provider/swagger/token';
 @ApiToken
 @Controller('/api/admin/meta')
 export class MetaController {
-  constructor(private readonly metaProvider: MetaProvider) {}
+  constructor(private readonly metaProvider: MetaProvider) {
+    getCachedVersionFromServer();
+  }
   @Get()
   async getAllMeta(@Req() req: Request) {
     const meta = await this.metaProvider.getAll();
-    const serverData = await getVersionFromServer();
+    const serverData = getCachedVersionFromServer();
     const data = {
       version: version,
       latestVersion: serverData?.version || version,

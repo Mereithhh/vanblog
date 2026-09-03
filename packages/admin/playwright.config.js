@@ -4,6 +4,7 @@ const fixturePort = Number(process.env.MERMAID_E2E_PORT || 4177);
 const adminPort = Number(process.env.ADMIN_E2E_PORT || 3002);
 const backupPort = Number(process.env.BACKUP_E2E_PORT || 4178);
 const postIsrPort = Number(process.env.POST_ISR_E2E_PORT || 4179);
+const adminMetaPort = Number(process.env.ADMIN_META_E2E_PORT || 4180);
 
 module.exports = {
   testDir: './tests/e2e',
@@ -35,6 +36,12 @@ module.exports = {
     {
       command: 'node tests/e2e/post-isr-server.mjs',
       url: `http://127.0.0.1:${postIsrPort}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
+    {
+      command: 'node tests/e2e/admin-meta-server.mjs',
+      url: `http://127.0.0.1:${adminMetaPort}`,
       reuseExistingServer: !process.env.CI,
       timeout: 30_000,
     },
@@ -72,6 +79,15 @@ module.exports = {
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${postIsrPort}`,
+        viewport: { width: 1280, height: 800 },
+      },
+    },
+    {
+      name: 'admin-meta',
+      testMatch: /admin-meta\.spec\.js/,
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: `http://127.0.0.1:${adminMetaPort}`,
         viewport: { width: 1280, height: 800 },
       },
     },

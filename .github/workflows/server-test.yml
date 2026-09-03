@@ -29,7 +29,7 @@ jobs:
 
       - name: Run server unit tests
         working-directory: packages/server
-        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider" --passWithNoTests=false
+        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller" --passWithNoTests=false
 
       - name: Run backup restore e2e
         working-directory: packages/server
@@ -38,3 +38,7 @@ jobs:
       - name: Run post ISR e2e
         working-directory: packages/server
         run: pnpm test:isr-e2e
+
+      - name: Run admin meta e2e
+        working-directory: packages/server
+        run: pnpm test:admin-meta-e2e

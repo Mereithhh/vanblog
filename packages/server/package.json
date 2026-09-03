@@ -24,7 +24,8 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "test:backup-e2e": "jest --config ./test/jest-backup-e2e.json",
-    "test:isr-e2e": "jest --config ./test/jest-isr-e2e.json"
+    "test:isr-e2e": "jest --config ./test/jest-isr-e2e.json",
+    "test:admin-meta-e2e": "jest --config ./test/jest-admin-meta-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^9.4.3",
