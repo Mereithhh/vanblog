@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="light">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Public article markdown link e2e</title>
+    <link rel="stylesheet" href="./bytemd.css" />
+    <link rel="stylesheet" href="./github-markdown.css" />
+    <style>
+      html,
+      body,
+      #app {
+        margin: 0;
+        min-height: 100%;
+      }
+      a {
+        word-wrap: break-word;
+        word-break: break-all;
+      }
+      .markdown-link-e2e-card {
+        max-width: 360px;
+        overflow: hidden;
+        padding: 16px 24px;
+        border-bottom: 1px solid #ddd;
+      }
+      .markdown-link-e2e-article {
+        max-width: 720px;
+        padding: 16px 24px 80px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./markdown-link.js"></script>
+  </body>
+</html>

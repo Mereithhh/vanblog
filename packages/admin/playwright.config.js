@@ -72,7 +72,7 @@ module.exports = {
     },
     {
       name: 'bytemd-fixture',
-      testMatch: /mermaid-editor\.spec\.js|toc-heading\.spec\.js|footnote-nav\.spec\.js/,
+      testMatch: /mermaid-editor\.spec\.js|toc-heading\.spec\.js|footnote-nav\.spec\.js|markdown-link\.spec\.js/,
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${fixturePort}`,

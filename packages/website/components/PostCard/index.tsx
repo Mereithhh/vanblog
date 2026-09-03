@@ -12,6 +12,7 @@ import { getTarget } from "../Link/tools";
 import TocMobile from "../TocMobile";
 import { hasToc } from "../../utils/hasToc";
 import Markdown from "../Markdown";
+import { articleOverviewMarkdown } from "../../utils/articleExcerpt";
 
 export default function (props: {
   id: number | string;
@@ -66,12 +67,7 @@ export default function (props: {
       if (props.private) {
         return "该文章已加密，点击 `阅读全文` 并输入密码后方可查看。";
       }
-      const r = content.split("<!-- more -->");
-      if (r.length > 1) {
-        return r[0];
-      } else {
-        return content.substring(0, 50);
-      }
+      return articleOverviewMarkdown(content);
     } else {
       return content.replace("<!-- more -->", "");
     }
