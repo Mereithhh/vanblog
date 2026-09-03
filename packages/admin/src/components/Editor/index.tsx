@@ -33,6 +33,9 @@ const sanitize = (schema) => {
   schema.tagNames.push('center');
   schema.tagNames.push('iframe');
   schema.tagNames.push('script');
+  schema.tagNames.push('section');
+  // remark-rehype already prefixes footnote ids; a second prefix breaks hrefs.
+  schema.clobberPrefix = '';
   schema.attributes['*'].push('style');
   schema.attributes['*'].push('src');
   schema.attributes['*'].push('scrolling');

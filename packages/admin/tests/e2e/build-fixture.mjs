@@ -45,9 +45,19 @@ await bundle(path.join(fixtures, 'toc-article-app.tsx'), path.join(outdir, 'toc.
   `--alias:react-dom=${reactDom}`,
   '--jsx=automatic',
 ]);
+await bundle(path.join(fixtures, 'footnote-article-app.tsx'), path.join(outdir, 'footnote.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  '--jsx=automatic',
+]);
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
 await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));
+await cp(path.join(fixtures, 'footnote-article.html'), path.join(outdir, 'footnote-article.html'));
+await cp(
+  path.resolve(adminRoot, '../website/styles/github-markdown.css'),
+  path.join(outdir, 'github-markdown.css'),
+);
 await cp(
   path.join(adminRoot, 'src/components/Editor/mermaid-safety.css'),
   path.join(outdir, 'mermaid-safety.css'),

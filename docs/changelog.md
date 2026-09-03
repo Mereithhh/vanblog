@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 点击 Markdown 脚注（`[^1]` / `[^1]:`）会在当前页滚到对应脚注，返回链接也能回到原文，不再新开同一篇文章；前台脚注区也会显示分隔线 [#290](https://github.com/Mereithhh/vanblog/issues/290)
 - 伙伴名为 URL（如 `https://testbug`）时，后台友情链接可以删除，编辑会更新原条目而不是新增 [#252](https://github.com/Mereithhh/vanblog/issues/252)
 - 截图很多的长文章里，目录点击或 hash 会等上方图片撑开后再跳到标题，而不是停在未加载完的位置 [#82](https://github.com/Mereithhh/vanblog/issues/82)
 - 前台选择白色后刷新不再先闪暗色；自动模式跟随系统配色，浅色系统下不再因夜间时段强制黑色 [#292](https://github.com/Mereithhh/vanblog/issues/292)
