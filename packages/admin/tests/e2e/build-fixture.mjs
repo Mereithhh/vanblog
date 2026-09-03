@@ -12,26 +12,32 @@ await mkdir(outdir, { recursive: true });
 
 const esbuildBin = path.join(adminRoot, 'node_modules', '.bin', 'esbuild');
 
-await new Promise((resolve, reject) => {
-  const child = spawn(
-    esbuildBin,
-    [
-      path.join(fixtures, 'mermaid-editor-app.ts'),
-      `--outfile=${path.join(outdir, 'app.js')}`,
-      '--bundle',
-      '--format=iife',
-      '--platform=browser',
-      '--loader:.md=text',
-    ],
-    { cwd: adminRoot, stdio: 'inherit' },
-  );
-  child.on('exit', (code) => {
-    if (code === 0) resolve();
-    else reject(new Error(`esbuild failed with code ${code}`));
+function bundle(entry, outfile) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(
+      esbuildBin,
+      [
+        entry,
+        `--outfile=${outfile}`,
+        '--bundle',
+        '--format=iife',
+        '--platform=browser',
+        '--loader:.md=text',
+      ],
+      { cwd: adminRoot, stdio: 'inherit' },
+    );
+    child.on('exit', (code) => {
+      if (code === 0) resolve();
+      else reject(new Error(`esbuild failed with code ${code} for ${entry}`));
+    });
   });
-});
+}
+
+await bundle(path.join(fixtures, 'mermaid-editor-app.ts'), path.join(outdir, 'app.js'));
+await bundle(path.join(fixtures, 'toc-article-app.tsx'), path.join(outdir, 'toc.js'));
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
+await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));
 await cp(
   path.join(adminRoot, 'src/components/Editor/mermaid-safety.css'),
   path.join(outdir, 'mermaid-safety.css'),

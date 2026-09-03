@@ -5,7 +5,7 @@ const headings = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'];
 const headingPlugin = () => (tree) => {
   visit(tree, (node) => {
     if (node.type === 'element' && headings.includes(node.tagName)) {
-      const title = node.children[0]?.value;
+      const title = String(node.children[0]?.value ?? '').trim();
       node.properties['data-id'] = title;
     }
   });

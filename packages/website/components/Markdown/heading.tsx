@@ -1,5 +1,6 @@
 import { BytemdPlugin } from "bytemd";
 import { visit } from "unist-util-visit";
+import { normalizeHeadingText } from "../../utils/headingText";
 
 
 const headings = [
@@ -20,7 +21,7 @@ const onClickHeading = (e: any) => {
 const headingPlugin = () => (tree) => {
   visit(tree, (node) => {
     if (node.type === "element" && headings.includes(node.tagName)) {
-      const title = node.children[0]?.value;
+      const title = normalizeHeadingText(node.children[0]?.value);
       node.properties['data-id'] = title;
       node.properties['id'] = title;
       node.properties['class'] = 'markdown-heading cursor-pointer';
