@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 站点总字数与后台编辑器使用同一口径（中文按字、英文按词，不是 UTF-8 字节），且只统计已发布文章 [#293](https://github.com/Mereithhh/vanblog/issues/293)
 - 文章标题末尾或多余空格时，前台目录点击无法跳转到对应标题 [#308](https://github.com/Mereithhh/vanblog/issues/308)
 - 后台分类管理重命名后，文章和草稿仍保留旧分类名 [#324](https://github.com/Mereithhh/vanblog/issues/324)
 - 后台多文件自定义页面上传文件/文件夹失败，且无法删除已上传文件 [#338](https://github.com/Mereithhh/vanblog/issues/338)

@@ -310,7 +310,8 @@ export class ArticleProvider {
   }
 
   async countTotalWords() {
-    //! 默认不保存 hidden 文章的！
+    // Public 总字数: unpublished hidden/deleted copies are excluded.
+    // Drafts live in another collection and are never counted here.
     let total = 0;
     const $and: any = [
       {
@@ -340,7 +341,7 @@ export class ArticleProvider {
       })
       .exec();
     articles.forEach((a) => {
-      total = total + wordCount(a.content);
+      total = total + wordCount(a?.content || '');
     });
     return total;
   }
