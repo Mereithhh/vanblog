@@ -333,7 +333,7 @@ export async function getMenu() {
   });
 }
 export async function deleteLink(name) {
-  return request(`/api/admin/meta/link/${name}`, {
+  return request(`/api/admin/meta/link?name=${encodeURIComponent(name)}`, {
     method: 'DELETE',
   });
 }

@@ -10,4 +10,6 @@ export class LinkDto {
   name: string;
   desc: string;
   logo: string;
+  /** Original 伙伴名 when renaming, so a URL name updates in place instead of inserting. */
+  oldName?: string;
 }

@@ -29,7 +29,7 @@ jobs:
 
       - name: Run server unit tests
         working-directory: packages/server
-        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|customPage.provider|walineLogin|waline.provider|walineExtra|setting.provider|cdnUrl|website.provider|walineMongo|numericId|article.provider|draft.provider|watermark|wordCount" --passWithNoTests=false
+        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|meta.provider|linkName|customPage.provider|walineLogin|waline.provider|walineExtra|setting.provider|cdnUrl|website.provider|walineMongo|numericId|article.provider|draft.provider|watermark|wordCount" --passWithNoTests=false
 
       - name: Run website unit tests
         run: pnpm --filter @vanblog/theme-default exec vitest run
@@ -61,3 +61,7 @@ jobs:
       - name: Run word count e2e
         working-directory: packages/server
         run: pnpm test:word-count-e2e
+
+      - name: Run friend link e2e
+        working-directory: packages/server
+        run: pnpm test:friend-link-e2e

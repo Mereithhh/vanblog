@@ -1,11 +1,25 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { LinkDto } from 'src/types/link.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { config } from 'src/config';
 import { ApiToken } from 'src/provider/swagger/token';
+import { decodeLinkName, linkNameFromRequestPath } from 'src/utils/linkName';
 @ApiTags('link')
 @UseGuards(...AdminGuard)
 @ApiToken
@@ -56,8 +70,26 @@ export class LinkMetaController {
       data,
     };
   }
-  @Delete('/:name')
-  async delete(@Param('name') name: string) {
+
+  @Delete()
+  async deleteByQuery(@Query('name') name: string) {
+    return this.removeLink(decodeLinkName(name));
+  }
+
+  @Delete(':name')
+  async deleteByParam(@Param('name') name: string) {
+    return this.removeLink(decodeLinkName(name));
+  }
+
+  @Delete('*')
+  async deleteByPath(@Req() req: Request) {
+    return this.removeLink(linkNameFromRequestPath(req.originalUrl || req.url || ''));
+  }
+
+  private async removeLink(name: string) {
+    if (!name) {
+      throw new BadRequestException('name is required');
+    }
     if (config.demo && config.demo == 'true') {
       return {
         statusCode: 401,

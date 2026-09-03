@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 伙伴名为 URL（如 `https://testbug`）时，后台友情链接可以删除，编辑会更新原条目而不是新增 [#252](https://github.com/Mereithhh/vanblog/issues/252)
 - 截图很多的长文章里，目录点击或 hash 会等上方图片撑开后再跳到标题，而不是停在未加载完的位置 [#82](https://github.com/Mereithhh/vanblog/issues/82)
 - 前台选择白色后刷新不再先闪暗色；自动模式跟随系统配色，浅色系统下不再因夜间时段强制黑色 [#292](https://github.com/Mereithhh/vanblog/issues/292)
 - 后台「自定义环境变量」未生效：`imageUploader: false` 未传到前台评论组件，数字 `IPQPS` 也未作为字符串环境变量传给内嵌 Waline [#139](https://github.com/Mereithhh/vanblog/issues/139)
