@@ -209,7 +209,9 @@ export function buildWalineClientOptionsFromOtherConfig(
   return client;
 }
 
-export function getWalinePublicCommentSetting(waline?: { forceLoginComment?: unknown; otherConfig?: string } | null) {
+export function getWalinePublicCommentSetting(
+  waline?: { forceLoginComment?: unknown; otherConfig?: string } | null,
+): { forceLoginComment: boolean } & Record<string, unknown> {
   return {
     forceLoginComment: isForceLoginCommentEnabled(waline?.forceLoginComment),
     ...buildWalineClientOptionsFromOtherConfig(waline?.otherConfig),

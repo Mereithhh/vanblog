@@ -16,6 +16,24 @@ export type WalineCommentSetting = {
   turnstileKey?: unknown;
 };
 
+export type WalineInitExtra = {
+  login: "enable" | "force";
+  imageUploader?: false;
+  wordLimit?: unknown;
+  pageSize?: unknown;
+  meta?: unknown;
+  requiredMeta?: unknown;
+  emoji?: unknown;
+  lang?: unknown;
+  locale?: unknown;
+  dark?: unknown;
+  search?: unknown;
+  reaction?: unknown;
+  copyright?: unknown;
+  recaptchaV3Key?: unknown;
+  turnstileKey?: unknown;
+};
+
 const CLIENT_EXTRA_KEYS = [
   "wordLimit",
   "pageSize",
@@ -40,9 +58,12 @@ function coerceFalse(value: unknown): boolean {
  * Maps /api/public/comment-setting into @waline/client init() props.
  * `login` always comes from the admin force-login toggle, not otherConfig.
  */
-export function buildWalineInitOptions(setting?: WalineCommentSetting | null) {
-  const login = setting?.forceLoginComment === true ? "force" : "enable";
-  const extra: Record<string, unknown> = {};
+export function buildWalineInitOptions(
+  setting?: WalineCommentSetting | null,
+): WalineInitExtra {
+  const extra: WalineInitExtra = {
+    login: setting?.forceLoginComment === true ? "force" : "enable",
+  };
   if (coerceFalse(setting?.imageUploader)) {
     extra.imageUploader = false;
   }
@@ -52,5 +73,5 @@ export function buildWalineInitOptions(setting?: WalineCommentSetting | null) {
       extra[key] = value;
     }
   }
-  return { login, ...extra };
+  return extra;
 }
