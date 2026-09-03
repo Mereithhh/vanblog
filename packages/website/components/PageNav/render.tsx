@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { CSSProperties } from "react";
 import { PageItem } from "./core";
-const commonCls =
-  "inline-flex justify-center items-center   transition-all text-gray-600";
-const btnCls =
-  "bg-white hover:bg-gray-200 dark:hover:bg-dark-hover dark:hover:pg-text-dark-hover";
+import {
+  pageNavControlClass,
+  pageNavEllipsisCls,
+  pageNavNumberClass,
+} from "./classes";
+
 const commonStyle: CSSProperties = {
   height: "28px",
   width: "28px",
@@ -15,15 +17,10 @@ const renderLink = (item: PageItem, isCur: boolean) => {
   return (
     <Link
       href={item.href}
+      aria-current={isCur ? "page" : undefined}
       key={`LinkItem-${item.page}-${item.type}-${item.href}`}
     >
-      <div
-        style={commonStyle}
-        className={`${commonCls} ${btnCls}  ${isCur
-          ? "bg-gray-200 dark:bg-dark-hover dark:pg-text-dark-hover"
-          : "dark:bg-dark-1 dark:pg-text-dark "
-          }`}
-      >
+      <div style={commonStyle} className={pageNavNumberClass(isCur)}>
         {item.page}
       </div>
     </Link>
@@ -36,10 +33,7 @@ const renderBtn = (item: PageItem, disable: boolean, isNext: boolean) => {
       key={`pagenav-btn-${item.page}-${item.href}-${isNext}`}
     // className="justify-center items-center "
     >
-      <div
-        style={commonStyle}
-        className={`${commonCls} dark:bg-dark-1 dark:pg-text-dark  ${btnCls}`}
-      >
+      <div style={commonStyle} className={pageNavControlClass()}>
         {isNext ? "›" : "‹"}
       </div>
     </Link>
@@ -51,7 +45,7 @@ const renderMore = (item: PageItem, isNext: boolean) => {
       href={item.href}
       key={`pagenav-more-${item.page}-${item.href}-${isNext}`}
     >
-      <div style={commonStyle} className={`dark:pg-text-dark ${commonCls}`}>
+      <div style={commonStyle} className={pageNavEllipsisCls}>
         •••
       </div>
     </Link>
