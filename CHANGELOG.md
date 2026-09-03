@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 多文件自定义页面在 Windows 上上传文件和文件夹失败（路径分隔符），并补上删除已上传文件 [#338](https://github.com/Mereithhh/vanblog/issues/338)
 - 水印文字含 `.`（如域名）时不再整段消失 [#322](https://github.com/Mereithhh/vanblog/issues/322)
 - 非法或缺失的文章/草稿 ID 不再以 `NaN` 查询 MongoDB，避免打开草稿变成空文档 [#427](https://github.com/Mereithhh/vanblog/issues/427)
 - 导入备份不再覆盖当前后台账号，避免新机器刚配好的登录被旧数据顶掉 [#280](https://github.com/Mereithhh/vanblog/issues/280)

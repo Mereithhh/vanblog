@@ -27,7 +27,8 @@
     "test:isr-e2e": "jest --config ./test/jest-isr-e2e.json",
     "test:admin-meta-e2e": "jest --config ./test/jest-admin-meta-e2e.json",
     "test:force-login-comment-e2e": "jest --config ./test/jest-force-login-comment-e2e.json",
-    "test:cdn-url-e2e": "jest --config ./test/jest-cdn-url-e2e.json"
+    "test:cdn-url-e2e": "jest --config ./test/jest-cdn-url-e2e.json",
+    "test:custom-page-upload-e2e": "jest --config ./test/jest-custom-page-upload-e2e.json"
   },
   "dependencies": {
     "@nestjs/common": "^9.4.3",

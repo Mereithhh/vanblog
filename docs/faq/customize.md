@@ -15,3 +15,5 @@ order: 4
 ## 自定义页面
 
 现在已经可以自定义页面了！请参考 [自定义页面](../advanced/custom-page.md)
+
+多文件页面在 Windows 上上传文件/文件夹失败、上传后无法删除单个文件的问题已修复（[#338](https://github.com/Mereithhh/vanblog/issues/338)）。

@@ -13,6 +13,7 @@ import { checkOrCreate, checkOrCreateByFilePath } from 'src/utils/checkFolder';
 import { rmDir } from 'src/utils/deleteFolder';
 import { readDirs } from 'src/utils/readFileList';
 import { checkOrCreateFile } from 'src/utils/checkFile';
+import { resolveUnderCustomPageRoot, toCustomPageRelativePath } from 'src/utils/customPagePath';
 @Injectable()
 export class LocalProvider {
   async saveFile(fileName: string, buffer: Buffer, type: StaticType, toRootPath?: boolean) {
@@ -20,8 +21,8 @@ export class LocalProvider {
       return await this.saveImg(fileName, buffer, type, toRootPath);
     } else if (type == 'customPage') {
       const storagePath = StoragePath[type];
-      const realName = fileName;
-      const srcPath = path.join(config.staticPath, storagePath, realName);
+      const realName = toCustomPageRelativePath(fileName);
+      const srcPath = resolveUnderCustomPageRoot(config.staticPath, storagePath, realName);
       // 创建文件夹。
       const byteLength = buffer.byteLength;
       const realPath = `/static/${storagePath}/${realName}`;
@@ -102,11 +103,25 @@ export class LocalProvider {
 
   async deleteCustomPageFolder(name: string) {
     const storagePath = StoragePath['customPage'];
-    const srcPath = path.join(config.staticPath, storagePath, name);
+    const srcPath = resolveUnderCustomPageRoot(config.staticPath, storagePath, name);
     try {
       rmDir(srcPath);
     } catch (err) {
       console.log('删除实际文件夹失败：', name);
+    }
+  }
+
+  async deleteCustomPageFile(pathname: string, filePath: string) {
+    const storagePath = StoragePath['customPage'];
+    const absPath = resolveUnderCustomPageRoot(config.staticPath, storagePath, pathname, filePath);
+    if (!fs.existsSync(absPath)) {
+      return;
+    }
+    const stat = fs.statSync(absPath);
+    if (stat.isDirectory()) {
+      rmDir(absPath);
+    } else {
+      fs.rmSync(absPath);
     }
   }
 

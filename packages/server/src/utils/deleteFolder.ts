@@ -1,4 +1,5 @@
-import { execSync } from 'child_process';
+import * as fs from 'fs';
+
 export const rmDir = (p: string) => {
-  execSync(`rm -rf ${p}`);
+  fs.rmSync(p, { recursive: true, force: true });
 };

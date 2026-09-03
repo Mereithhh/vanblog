@@ -16,6 +16,7 @@ import { UploadConfig } from 'src/types/upload';
 import { addWaterMarkToIMG } from 'src/utils/watermark';
 import { checkTrue } from 'src/utils/checkTrue';
 import { compressImgToWebp } from 'src/utils/webp';
+import { toCustomPageRelativePath } from 'src/utils/customPagePath';
 @Injectable()
 export class StaticProvider {
   constructor(
@@ -91,7 +92,7 @@ export class StaticProvider {
     const pureFileName = arr.slice(0, arr.length - 1).join('.');
     let fileName = currentSign + '.' + file.originalname;
     if (type == 'customPage') {
-      fileName = customPathname + '/' + file.originalname;
+      fileName = toCustomPageRelativePath(customPathname, file.originalname);
     }
     if (type == 'img' && checkTrue(staticConfigInDB.enableWebp) && compressSuccess) {
       fileName = currentSign + '.' + pureFileName + '.webp';
@@ -277,6 +278,17 @@ export class StaticProvider {
     const folderName = path.replace('/', '');
     // 直接删除文件夹
     await this.localProvider.deleteCustomPageFolder(folderName);
+  }
+
+  async deleteCustomPageFile(pathname: string, filePath: string) {
+    try {
+      return await this.localProvider.deleteCustomPageFile(pathname, filePath);
+    } catch (err) {
+      if (err instanceof Error && err.message === '非法路径') {
+        throw new HttpException('非法路径', HttpStatus.BAD_REQUEST);
+      }
+      throw err;
+    }
   }
 
   async getFolderFiles(path: string) {

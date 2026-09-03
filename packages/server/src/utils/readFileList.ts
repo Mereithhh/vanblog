@@ -19,6 +19,8 @@ export function dirSort(a: IFile, b: IFile) {
   if (a.type !== b.type) return FileType[a.type] < FileType[b.type] ? -1 : 1;
   else if (a.mtime !== b.mtime) return a.mtime > b.mtime ? -1 : 1;
 }
+const toPosixPath = (p: string) => p.split(path.sep).join('/');
+
 export function readDirs(dir: string, baseDir = '', blacklist: string[] = []) {
   const relativePath = path.relative(baseDir, dir);
   checkOrCreate(dir);
@@ -28,13 +30,13 @@ export function readDirs(dir: string, baseDir = '', blacklist: string[] = []) {
     .map((file: string) => {
       const subPath = path.join(dir, file);
       const stats = fs.statSync(subPath);
-      const key = path.join(relativePath, file);
+      const key = toPosixPath(path.join(relativePath, file));
       if (stats.isDirectory()) {
         return {
           title: file,
           key,
           type: 'directory',
-          parent: relativePath,
+          parent: toPosixPath(relativePath),
           mtime: stats.mtime.getTime(),
           children: readDirs(subPath, baseDir).sort(dirSort),
         };
@@ -44,7 +46,7 @@ export function readDirs(dir: string, baseDir = '', blacklist: string[] = []) {
         type: 'file',
         isLeaf: true,
         key,
-        parent: relativePath,
+        parent: toPosixPath(relativePath),
         mtime: stats.mtime.getTime(),
       };
     });
@@ -59,7 +61,7 @@ export function readDir(dir: string, baseDir = '', blacklist: string[] = []) {
     .map((file: string) => {
       const subPath = path.join(dir, file);
       const stats = fs.statSync(subPath);
-      const key = path.join(relativePath, file);
+      const key = path.join(relativePath, file).split(path.sep).join('/');
       return {
         title: file,
         type: stats.isDirectory() ? 'directory' : 'file',

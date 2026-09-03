@@ -190,6 +190,14 @@ export async function deleteCustomPageByPath(path) {
     method: 'DELETE',
   });
 }
+export async function deleteCustomPageFile(path, key) {
+  return request(
+    `/api/admin/customPage/file?path=${encodeURIComponent(path)}&key=${encodeURIComponent(key)}`,
+    {
+      method: 'DELETE',
+    },
+  );
+}
 export async function getCustomPages() {
   return request('/api/admin/customPage/all', {
     method: 'GET',

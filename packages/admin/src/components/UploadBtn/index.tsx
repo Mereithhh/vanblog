@@ -23,7 +23,7 @@ export default function (props: {
     }
     formData.append('file', file, fileName);
     props.setLoading(true);
-    fetch(`${props.url}&name=${fileName}`, {
+    fetch(`${props.url}&name=${encodeURIComponent(fileName)}`, {
       method: 'POST',
       body: formData,
       headers: {
@@ -34,10 +34,10 @@ export default function (props: {
     })
       .then((res) => res.json())
       .then(() => {
-        props?.onFinish(file, name);
+        props?.onFinish(file, fileName);
       })
       .catch(() => {
-        message.error(`${name} 上传失败!`);
+        message.error(`${fileName} 上传失败!`);
       })
       .finally(() => {
         props.setLoading(false);

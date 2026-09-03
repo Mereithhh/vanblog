@@ -29,7 +29,7 @@ jobs:
 
       - name: Run server unit tests
         working-directory: packages/server
-        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|customPage.provider|walineLogin|waline.provider|setting.provider|cdnUrl|website.provider" --passWithNoTests=false
+        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|customPage.provider|walineLogin|waline.provider|setting.provider|cdnUrl|website.provider|walineMongo|numericId|article.provider|draft.provider|watermark|checkFolder|customPagePath" --passWithNoTests=false
 
       - name: Run backup restore e2e
         working-directory: packages/server
@@ -50,3 +50,7 @@ jobs:
       - name: Run CDN URL e2e
         working-directory: packages/server
         run: pnpm test:cdn-url-e2e
+
+      - name: Run custom page upload e2e
+        working-directory: packages/server
+        run: pnpm test:custom-page-upload-e2e
