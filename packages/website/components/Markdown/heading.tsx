@@ -1,6 +1,6 @@
 import { BytemdPlugin } from "bytemd";
 import { visit } from "unist-util-visit";
-import { normalizeHeadingText } from "../../utils/headingText";
+import { collectHeadingText, normalizeHeadingText } from "../../utils/headingText";
 
 
 const headings = [
@@ -41,7 +41,7 @@ export const headingRehypePlugin = () => (tree) => {
       if (!node.properties) {
         node.properties = {};
       }
-      const title = normalizeHeadingText(node.children[0]?.value);
+      const title = normalizeHeadingText(collectHeadingText(node));
       node.properties['data-id'] = title;
       node.properties['id'] = title;
       node.properties['class'] = 'markdown-heading cursor-pointer';

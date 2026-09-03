@@ -1,3 +1,8 @@
+import { getProcessor } from "bytemd";
+import gfm from "@bytemd/plugin-gfm";
+import { visit } from "unist-util-visit";
+import { Heading } from "../Markdown/heading";
+import { sanitizeMarkdownSchema } from "../../utils/markdownSanitize";
 import { normalizeHeadingText } from "../../utils/headingText";
 
 export interface NavItem {
@@ -25,33 +30,50 @@ export const washMarkdownContent = (source: string) => {
   );
 };
 
+function headingDataId(node: { properties?: Record<string, unknown> }): string {
+  const props = node.properties || {};
+  return normalizeHeadingText(
+    (props["data-id"] ?? props.dataId) as string | undefined
+  );
+}
+
+/** Same heading pipeline as the public article Viewer, so TOC matches rendered h1–h6. */
+function extractRenderedHeadings(source: string): { level: number; text: string }[] {
+  const headings: { level: number; text: string }[] = [];
+  getProcessor({
+    plugins: [
+      gfm(),
+      Heading(),
+      {
+        rehype: (processor) =>
+          processor.use(() => (tree) => {
+            visit(tree, (node: any) => {
+              if (node?.type !== "element") return;
+              const tag = String(node.tagName || "");
+              if (!/^h[1-6]$/.test(tag)) return;
+              const text = headingDataId(node);
+              if (!text) return;
+              headings.push({
+                level: Number(tag.slice(1)),
+                text,
+              });
+            });
+          }),
+      },
+    ],
+    remarkRehype: { allowDangerousHtml: true },
+    sanitize: sanitizeMarkdownSchema,
+  }).processSync(source || "");
+  return headings;
+}
+
 export const parseNavStructure = (source: string): NavItem[] => {
-  const contentWithoutCode = washMarkdownContent(source);
-  const pattOfTitle = /#+\s(.+)\n/g;
-  const matchResult = contentWithoutCode.match(pattOfTitle);
-
-  if (!matchResult) {
-    return [];
-  }
-
-  const navData = matchResult.map((r, i) => {
-    let titleText = r.replace(pattOfTitle, "$1");
-    const urlReg = /\[[\s\S]*?\]\([\s\S]*?\)/g;
-    const results = titleText.match(urlReg);
-    if (results) {
-      results.forEach((r) => {
-        const srcText = r;
-        const dstText = r.split("]")[0].substring(1);
-        titleText = titleText.replace(srcText, dstText);
-      });
-    }
-    return {
-      index: i,
-      //@ts-ignore
-      level: r.match(/^#+/g)[0].length,
-      text: normalizeHeadingText(titleText),
-    };
-  });
+  const navData = extractRenderedHeadings(source).map((item, i) => ({
+    index: i,
+    level: item.level,
+    text: item.text,
+    listNo: "",
+  }));
 
   let maxLevel = 0;
   navData.forEach((t) => {

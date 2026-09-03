@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { normalizeHeadingText } from "../utils/headingText";
+import { collectHeadingText, normalizeHeadingText } from "../utils/headingText";
 import { parseNavStructure } from "../components/MarkdownTocBar/tools";
 
 describe("normalizeHeadingText", () => {
@@ -15,6 +15,29 @@ describe("normalizeHeadingText", () => {
   it("treats empty values as empty string", () => {
     expect(normalizeHeadingText(undefined)).toBe("");
     expect(normalizeHeadingText(null)).toBe("");
+  });
+});
+
+describe("collectHeadingText", () => {
+  it("reads a plain text node", () => {
+    expect(collectHeadingText({ type: "text", value: "My Title " })).toBe(
+      "My Title "
+    );
+  });
+
+  it("joins nested inline children", () => {
+    expect(
+      collectHeadingText({
+        type: "element",
+        children: [
+          { type: "text", value: "Title with " },
+          {
+            type: "element",
+            children: [{ type: "text", value: "code" }],
+          },
+        ],
+      })
+    ).toBe("Title with code");
   });
 });
 

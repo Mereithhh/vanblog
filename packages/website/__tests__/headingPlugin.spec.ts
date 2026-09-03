@@ -19,6 +19,29 @@ describe("heading plugin anchors", () => {
     expect(tree.children[0].properties["data-id"]).toBe("My Title");
   });
 
+  it("uses the full visible text when a heading has inline markdown", () => {
+    const tree = {
+      type: "root",
+      children: [
+        {
+          type: "element",
+          tagName: "h3",
+          properties: {},
+          children: [
+            {
+              type: "element",
+              tagName: "strong",
+              children: [{ type: "text", value: "Bold Title" }],
+            },
+          ],
+        },
+      ],
+    };
+    headingRehypePlugin()(tree);
+    expect(tree.children[0].properties.id).toBe("Bold Title");
+    expect(tree.children[0].properties["data-id"]).toBe("Bold Title");
+  });
+
   it("does not rewrite the GFM footnotes section heading", () => {
     const tree = {
       type: "root",
