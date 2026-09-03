@@ -1,5 +1,5 @@
 const { test, expect } = require('@playwright/test');
-const { loginAsAdmin, mockAdminApis } = require('./admin-api-mock');
+const { loginAsAdmin } = require('./admin-api-mock');
 
 function createCustomPageStore() {
   const pages = [];
@@ -48,12 +48,25 @@ function json(route, body) {
 }
 
 async function mockCustomPageApis(page, store) {
-  await mockAdminApis(page);
-  await page.route('**/api/admin/customPage**', async (route) => {
+  await page.route('**/api/admin/**', async (route) => {
     const url = new URL(route.request().url());
     const method = route.request().method();
     const path = url.pathname;
 
+    if (path === '/api/admin/meta' && method === 'GET') {
+      return json(route, {
+        statusCode: 200,
+        data: {
+          version: 'dev',
+          latestVersion: 'dev',
+          updatedAt: new Date().toISOString(),
+          user: { id: 0, name: 'admin' },
+          baseUrl: 'http://127.0.0.1:3002',
+          enableComment: 'true',
+          allowDomains: '',
+        },
+      });
+    }
     if (path === '/api/admin/customPage/all' && method === 'GET') {
       return json(route, { statusCode: 200, data: store.list() });
     }
@@ -69,8 +82,11 @@ async function mockCustomPageApis(page, store) {
       const found = store.pages.find((item) => item.path === url.searchParams.get('path'));
       return json(route, { statusCode: 200, data: found || null });
     }
+    if (path === '/api/admin/collaborator/list' && method === 'GET') {
+      return json(route, { statusCode: 200, data: [] });
+    }
 
-    return json(route, { statusCode: 200, data: {} });
+    return json(route, { statusCode: 200, data: [] });
   });
 }
 
@@ -78,11 +94,11 @@ async function openCustomPageAdmin(page, store) {
   await loginAsAdmin(page);
   await mockCustomPageApis(page, store);
   await page.goto('/admin/site/customPage');
-  await expect(page.getByText('自定义页面').first()).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByRole('button', { name: /新\s*建/ })).toBeVisible({ timeout: 30_000 });
 }
 
 async function submitModal(dialog) {
-  const submit = dialog.getByRole('button', { name: /确[定认]|提交/ });
+  const submit = dialog.getByRole('button', { name: /提\s*交|确\s*[定认]/ });
   await expect(submit).toBeVisible();
   await submit.click();
 }
@@ -92,7 +108,7 @@ test.describe('custom page info persists', () => {
     const store = createCustomPageStore();
     await openCustomPageAdmin(page, store);
 
-    await page.getByRole('button', { name: '新建' }).click();
+    await page.getByRole('button', { name: /新\s*建/ }).click();
     const createDialog = page.locator('.ant-modal-content').filter({ hasText: '新建自定义页面' });
     await expect(createDialog).toBeVisible();
 
