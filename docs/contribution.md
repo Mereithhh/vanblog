@@ -6,7 +6,7 @@ order: 7
 
 ::: info 提示
 
-本项目处于早期开发阶段 (Early WIP)，如有 bug 请多担待。
+欢迎提交 issue 和 PR。日常可复现的代码问题由 AI 全自动排查、补测试并开 PR；合并进 master 以及打发版 tag 仍由作者完成。
 
 :::
 
@@ -190,19 +190,21 @@ docker build --build-arg VAN_BLOG_BUILD_SERVER=$VAN_BLOG_BUILD_SERVER -t mereith
 
 ## 文档发版
 
-已经有了对应的 `github actions`，向远端推送 `doc*` 的 `tag` 会触发然后发布到项目官方。
+官网由作者向远端推送 `doc*` tag 触发 GitHub Actions 发布。请不要自行推送 `doc*` tag。
 
-有一键脚本可以在发版之后自动拷贝 changelog 并发布：
+作者发版后可用下面的脚本拷贝 changelog 并发布文档：
 
 ```bash
+# 仅作者使用
 pnpm release-doc
 ```
 
 ## Release
 
-本项目使用 [standard-version](https://github.com/conventional-changelog/standard-version) 管理版本，并有了对应的 `github actions`，执行下列命令会发布版本并触发流水线打包发版。
+本项目使用 [standard-version](https://github.com/conventional-changelog/standard-version) 管理版本。`pnpm release` 会打 `v*` tag 并触发产品发版流水线，仅作者使用。请不要自行执行 `pnpm release` 或推送 `v*` / `doc*` / `test*` tag。
 
 ```bash
+# 仅作者使用
 pnpm release
 pnpm release-doc
 ```
