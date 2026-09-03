@@ -18,6 +18,7 @@ import { encode } from 'js-base64';
 import { defaultMenu, MenuItem } from 'src/types/menu.dto';
 import { MetaProvider } from '../meta/meta.provider';
 import { parseHtmlToHeadTagArr } from 'src/utils/htmlParser';
+import { isForceLoginCommentEnabled } from 'src/utils/walineLogin';
 @Injectable()
 export class SettingProvider {
   logger = new Logger(SettingProvider.name);
@@ -147,16 +148,21 @@ export class SettingProvider {
     }
     return res;
   }
+  toPlainWalineSetting(value: any): WalineSetting {
+    const raw = value && typeof value.toObject === 'function' ? value.toObject() : value;
+    const plain = raw && typeof raw === 'object' ? { ...raw } : {};
+    return {
+      email: process.env.EMAIL || undefined,
+      'smtp.enabled': false,
+      ...plain,
+      forceLoginComment: isForceLoginCommentEnabled(plain?.forceLoginComment),
+    } as WalineSetting;
+  }
+
   async getWalineSetting(): Promise<WalineSetting> {
     const res = await this.settingModel.findOne({ type: 'waline' }).exec();
     if (res) {
-      return (
-        (res?.value as any) || {
-          email: process.env.EMAIL || undefined,
-          'smtp.enabled': false,
-          forceLoginComment: false,
-        }
-      );
+      return this.toPlainWalineSetting(res?.value);
     }
     return null;
   }
@@ -187,7 +193,11 @@ export class SettingProvider {
 
   async updateWalineSetting(dto: WalineSetting) {
     const oldValue = await this.getWalineSetting();
-    const newValue = { ...oldValue, ...dto };
+    const forceLoginComment =
+      dto && Object.prototype.hasOwnProperty.call(dto, 'forceLoginComment')
+        ? isForceLoginCommentEnabled(dto.forceLoginComment)
+        : isForceLoginCommentEnabled(oldValue?.forceLoginComment);
+    const newValue = { ...oldValue, ...dto, forceLoginComment };
     if (!oldValue) {
       return await this.settingModel.create({
         type: 'waline',
