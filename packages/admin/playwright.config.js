@@ -2,6 +2,7 @@ const { devices } = require('@playwright/test');
 
 const fixturePort = Number(process.env.MERMAID_E2E_PORT || 4177);
 const adminPort = Number(process.env.ADMIN_E2E_PORT || 3002);
+const backupPort = Number(process.env.BACKUP_E2E_PORT || 4178);
 
 module.exports = {
   testDir: './tests/e2e',
@@ -24,6 +25,12 @@ module.exports = {
       reuseExistingServer: !process.env.CI,
       timeout: 120_000,
     },
+    {
+      command: 'node tests/e2e/backup-restore-server.mjs',
+      url: `http://127.0.0.1:${backupPort}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 30_000,
+    },
   ],
   projects: [
     {
@@ -41,6 +48,15 @@ module.exports = {
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${fixturePort}`,
+      },
+    },
+    {
+      name: 'backup-restore',
+      testMatch: /backup-restore\.spec\.js/,
+      use: {
+        ...devices['Desktop Chrome'],
+        baseURL: `http://127.0.0.1:${backupPort}`,
+        viewport: { width: 1280, height: 800 },
       },
     },
   ],

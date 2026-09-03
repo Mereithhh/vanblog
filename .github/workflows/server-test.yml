@@ -1,0 +1,36 @@
+name: server-test
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  server-test:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8.11.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Run server unit tests
+        working-directory: packages/server
+        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller" --passWithNoTests=false
+
+      - name: Run backup restore e2e
+        working-directory: packages/server
+        run: pnpm test:backup-e2e

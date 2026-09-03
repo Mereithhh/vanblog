@@ -29,6 +29,8 @@ import { StaticProvider } from 'src/provider/static/static.provider';
 import { SettingProvider } from 'src/provider/setting/setting.provider';
 import { config } from 'src/config';
 import { ApiToken } from 'src/provider/swagger/token';
+import { ISRProvider } from 'src/provider/isr/isr.provider';
+import { collectCategoriesFromBackup, toExportCategory } from 'src/utils/backupCategories';
 
 @ApiTags('backup')
 @UseGuards(...AdminGuard)
@@ -47,12 +49,14 @@ export class BackupController {
     private readonly visitProvider: VisitProvider,
     private readonly settingProvider: SettingProvider,
     private readonly staticProvider: StaticProvider,
+    private readonly isrProvider: ISRProvider,
   ) {}
 
   @Get('export')
   async getAll(@Res() res: Response) {
     const articles = await this.articleProvider.getAll('admin', true);
-    const categories = await this.categoryProvider.getAllCategories();
+    const categoryDocs = await this.categoryProvider.getAllCategories(true);
+    const categories = (categoryDocs || []).map((item) => toExportCategory(item));
     const tags = await this.tagProvider.getAllTags(true);
     const meta = await this.metaProvider.getAll();
     const drafts = await this.draftProvider.getAll();
@@ -99,7 +103,7 @@ export class BackupController {
     }
     const json = file.buffer.toString();
     const data = JSON.parse(json);
-    const { meta, user, setting } = data;
+    const { meta, user, setting, categories } = data;
     let { articles, drafts, viewer, visit, static: staticItems } = data;
     // 去掉 id
     articles = removeID(articles);
@@ -116,6 +120,17 @@ export class BackupController {
     delete user.__v;
     delete meta._id;
 
+    const toImportCategories = collectCategoriesFromBackup({
+      categories,
+      articles,
+      drafts,
+      meta,
+    });
+    await this.categoryProvider.importCategories(toImportCategories);
+    if (toImportCategories.length && meta) {
+      meta.categories = toImportCategories.map((item) => item.name);
+    }
+
     await this.articleProvider.importArticles(articles);
     await this.draftProvider.importDrafts(drafts);
     await this.userProvider.updateUser(user);
@@ -128,6 +143,7 @@ export class BackupController {
     if (viewer) {
       await this.viewerProvider.import(viewer);
     }
+    this.isrProvider.activeAll('导入备份触发增量渲染！');
     return {
       statusCode: 200,
       data: '导入成功！',
