@@ -1,4 +1,4 @@
-import Dayjs from "dayjs";
+import { daysAgo } from "../../utils/relativeTime";
 
 // TODO: support expiration time
 export default function (props: {
@@ -8,15 +8,13 @@ export default function (props: {
   expirationDays?: number;
 }) {
   if (props.showExpirationReminder) {
-    const dayjs = Dayjs();
-    const diff = dayjs.diff(props.createdAt, "days");
+    const diff = daysAgo(props.createdAt);
 
     if (diff > (props.expirationDays || 30)) {
       return (
         <div className="warning-card text-gray-600 dark:text-dark">
           <div>
-            请注意，本文编写于 {diff} 天前，最后修改于{" "}
-            {dayjs.diff(props.updatedAt, "days")}{" "}
+            请注意，本文编写于 {diff} 天前，最后修改于 {daysAgo(props.updatedAt)}{" "}
             天前，其中某些信息可能已经过时。
           </div>
         </div>
