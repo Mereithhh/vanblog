@@ -24,6 +24,10 @@ redirectFrom: /ref/changelog.html
 - 后台文章编辑页即时预览遇到 mermaid 时不再抛异常，左侧可继续输入 [#424](https://github.com/Mereithhh/vanblog/issues/424)
 - 文章含 mermaid 图表时后台编辑器无法输入 [#477](https://github.com/Mereithhh/vanblog/issues/477)
 
+### ✏️ Documentation | 文档
+
+- 说明日常迭代现由自动化维护，合并与 `v*` / `doc*` 发版仍由作者完成
+
 ## [0.54.0](https://github.com/Mereithhh/vanblog/compare/v0.53.0...v0.54.0) (2023-06-27)
 
 ### 🐛 Bug Fixes | Bug 修复
