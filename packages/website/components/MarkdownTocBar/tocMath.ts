@@ -15,7 +15,7 @@ function unwrapSingleParagraph(html: string): string {
 
 /**
  * Render a public TOC label with the same KaTeX path as the article body.
- * Scroll/hash keys stay on the unparsed heading text; only the visible label
+ * Scroll matching stays on the unparsed heading text; only the visible label
  * goes through `@bytemd/plugin-math-ssr`.
  */
 export function renderTocLabelHtml(text: string): string {

@@ -68,7 +68,7 @@ order: 2
 
 ## 前台目录里的 TeX 公式未解析
 
-文章标题写成 `## 比较 $A$<$B$` 或 `## 由方程 $F(x,y)=0$ 确定的隐函数 $y=y(x)$` 后，正文里的公式会按 KaTeX 渲染，但前台「目录」可能把 `$...$` 原样显示成未解析的 TeX。已修复（[#264](https://github.com/Mereithhh/vanblog/issues/264)）：目录的可见文字走与正文相同的 `@bytemd/plugin-math-ssr`，点击、hash 和 `data-id` 仍使用未解析的标题原文，所以跳转不受影响。请升级到包含该修复的版本。
+文章标题写成 `## 比较 $A$<$B$` 或 `## 由方程 $F(x,y)=0$ 确定的隐函数 $y=y(x)$` 后，正文里的公式会按 KaTeX 渲染，但前台「目录」可能把 `$...$` 原样显示成未解析的 TeX。已修复（[#264](https://github.com/Mereithhh/vanblog/issues/264)）：目录的可见文字走与正文相同的 `@bytemd/plugin-math-ssr`。目录条目用来跳转的键仍是未解析的标题原文（`NavItem.text`），不改正文标题锚点。请升级到包含该修复的版本。
 
 不含公式的标题、以及嵌套目录完整性（[#409](https://github.com/Mereithhh/vanblog/issues/409)）不受影响。后台编辑器右侧大纲不是同一套组件。
 

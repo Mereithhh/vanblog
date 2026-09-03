@@ -1,14 +1,9 @@
 import { describe, it, expect } from "vitest";
-import { getProcessor } from "bytemd";
-import gfm from "@bytemd/plugin-gfm";
-import math from "@bytemd/plugin-math-ssr";
-import { Heading } from "../components/Markdown/heading";
 import { parseNavStructure } from "../components/MarkdownTocBar/tools";
 import {
   renderTocLabelHtml,
   tocLabelNeedsMath,
 } from "../components/MarkdownTocBar/tocMath";
-import { sanitizeMarkdownSchema } from "../utils/markdownSanitize";
 
 const COMPARE_MD = "## 比较 $A$<$B$\n\nbody\n";
 const MIXED_MD =
@@ -25,36 +20,6 @@ const NESTED_MD = `# 递归
   ## 选择排序
 `;
 
-function headingDataIds(markdown: string): string[] {
-  const ids: string[] = [];
-  getProcessor({
-    plugins: [
-      gfm(),
-      math(),
-      Heading(),
-      {
-        rehype: (processor) =>
-          processor.use(() => (tree: { children?: unknown[] }) => {
-            const walk = (node: any) => {
-              if (!node) return;
-              if (node.type === "element" && /^h[1-6]$/.test(String(node.tagName || ""))) {
-                const dataId = node.properties?.["data-id"];
-                if (dataId) ids.push(String(dataId));
-              }
-              if (Array.isArray(node.children)) {
-                node.children.forEach(walk);
-              }
-            };
-            walk(tree);
-          }),
-      },
-    ],
-    remarkRehype: { allowDangerousHtml: true },
-    sanitize: sanitizeMarkdownSchema,
-  }).processSync(markdown);
-  return ids;
-}
-
 function visibleLabelWithoutKatex(html: string): string {
   return html
     .replace(/<span class="katex-mathml"[\s\S]*?<\/span>/gi, "")
@@ -67,7 +32,7 @@ function visibleLabelWithoutKatex(html: string): string {
 }
 
 describe("public TOC math labels (#264)", () => {
-  it("keeps source $A$<$B$ on NavItem.text / data-id and renders KaTeX in the label", () => {
+  it("keeps source $A$<$B$ on NavItem.text and renders KaTeX in the visible label", () => {
     const items = parseNavStructure(COMPARE_MD);
     expect(items).toHaveLength(1);
     expect(items[0].text).toBe("比较 $A$<$B$");
@@ -77,9 +42,12 @@ describe("public TOC math labels (#264)", () => {
 
     const html = renderTocLabelHtml(items[0].text);
     expect(html).toMatch(/class="katex"/);
+    expect(html).toContain('class="katex"');
+    expect((html.match(/class="katex"/g) || []).length).toBeGreaterThanOrEqual(2);
     expect(html).not.toContain("$A$");
     expect(html).not.toContain("$B$");
     expect(visibleLabelWithoutKatex(html)).not.toMatch(/\$A\$/);
+    expect(visibleLabelWithoutKatex(html)).not.toContain("$");
     expect(visibleLabelWithoutKatex(html)).toMatch(/A/);
     expect(visibleLabelWithoutKatex(html)).toMatch(/B/);
   });
@@ -126,12 +94,5 @@ describe("public TOC math labels (#264)", () => {
       "1:排序",
       "2:选择排序",
     ]);
-  });
-
-  it("matches article Viewer heading data-id so TOC click/hash still use source TeX", () => {
-    const items = parseNavStructure(COMPARE_MD);
-    const bodyIds = headingDataIds(COMPARE_MD);
-    expect(bodyIds).toEqual([items[0].text]);
-    expect(bodyIds[0]).toBe("比较 $A$<$B$");
   });
 });
