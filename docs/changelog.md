@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台文章目录会漏掉正文里已渲染的标题（含缩进的嵌套标题），现与后台编辑器大纲对齐 [#409](https://github.com/Mereithhh/vanblog/issues/409)
 - 后台文章编辑器点目录再点子标题后，编辑区不再变成只能刷新才能恢复的空白 [#370](https://github.com/Mereithhh/vanblog/issues/370)
 - 访客时区与站长时区不同时，相对时间（如后台「最近访问」）不再显示成负值（例如 `-113秒前`）[#369](https://github.com/Mereithhh/vanblog/issues/369)
 - 点击 Markdown 脚注（`[^1]` / `[^1]:`）会在当前页滚到对应脚注，返回链接也能回到原文，不再新开同一篇文章；前台脚注区也会显示分隔线 [#290](https://github.com/Mereithhh/vanblog/issues/290)

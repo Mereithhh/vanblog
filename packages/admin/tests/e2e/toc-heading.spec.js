@@ -186,3 +186,32 @@ test.describe('public article TOC jump below lazy images', () => {
       });
   });
 });
+
+test.describe('public article TOC completeness', () => {
+  test('nested headings that render in the article also appear in the public TOC', async ({
+    page,
+  }) => {
+    const pageErrors = [];
+    page.on('pageerror', (err) => pageErrors.push(String(err)));
+    await page.goto('/toc-article.html');
+    await expect(page.locator('h3[data-id="Indented Nested"]')).toBeVisible();
+    await expect(page.locator('h4[data-id="Deeper Nested"]')).toBeVisible();
+
+    const bodyHeadings = await page.evaluate(() =>
+      [...document.querySelectorAll('[data-post-content] .markdown-heading')]
+        .map((el) => (el.getAttribute('data-id') || '').trim())
+        .filter(Boolean),
+    );
+    const tocHeadings = await page.evaluate(() =>
+      [...document.querySelectorAll('.markdown-navigation .title-anchor')].map((el) =>
+        (el.textContent || '').trim(),
+      ),
+    );
+
+    expect(bodyHeadings).toEqual(
+      expect.arrayContaining(['Indented Nested', 'Deeper Nested', 'Nested Parent', 'My Title']),
+    );
+    expect(tocHeadings).toEqual(bodyHeadings);
+    expect(pageErrors, `fixture pageerror: ${pageErrors.join('\n')}`).toEqual([]);
+  });
+});
