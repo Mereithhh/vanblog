@@ -10,6 +10,8 @@ services:
       TZ: 'Asia/Shanghai'
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: 'someone@mereith.com'
+      # 前台 /_next/static 的 CDN 前缀，未配置 CDN 时不要设置
+      # VAN_BLOG_CDN_URL: 'https://cdn.example.com'
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static

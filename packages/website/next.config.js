@@ -37,8 +37,8 @@ const getCdnUrl = () => {
   if (isDev) {
     return {};
   }
-  const UrlInEnv = process.env.VAN_BLOG_CDN_URL || "";
-  if (UrlInEnv && UrlInEnv != "") {
+  const UrlInEnv = (process.env.VAN_BLOG_CDN_URL || "").trim().replace(/\/+$/, "");
+  if (UrlInEnv) {
     return { assetPrefix: UrlInEnv };
   } else {
     return {};
