@@ -37,13 +37,12 @@ const PagePages = (props: PagePagesProps) => {
       <div className="space-y-2 md:space-y-4">
         {props.articles.map((article) => (
           <PostCard
-          
             showEditButton={props.layoutProps.showEditButton === "true"}
             setContent={() => {}}
             showExpirationReminder={
               props.layoutProps.showExpirationReminder == "true"
             }
-            copyrightAggreement={props.layoutProps.copyrightAggreement}
+            copyrightAgreement={props.layoutProps.copyrightAgreement}
             openArticleLinksInNewWindow={
               props.layoutProps.openArticleLinksInNewWindow == "true"
             }

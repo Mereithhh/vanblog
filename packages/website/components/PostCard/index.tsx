@@ -36,7 +36,7 @@ export default function (props: {
   hideDonate?: boolean;
   hideCopyRight?: boolean;
   openArticleLinksInNewWindow: boolean;
-  copyrightAggreement: string;
+  copyrightAgreement: string;
   customCopyRight: string | null;
   showExpirationReminder: boolean;
   showEditButton: boolean;
@@ -154,7 +154,7 @@ export default function (props: {
             author={props.author as any}
             id={props.id}
             showDonate={showDonate}
-            copyrightAggreement={props.copyrightAggreement}
+            copyrightAgreement={props.copyrightAgreement}
           ></CopyRight>
         )}
 
