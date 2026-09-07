@@ -10,7 +10,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.3.4"
+VANBLOG_SCRIPT_VERSION="v0.3.5"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -755,37 +755,118 @@ show_log() {
   fi
 }
 
+is_vanblog_backup_entry() {
+  local name="$1"
+  [[ "${name}" == vanblog-backup-* ]]
+}
+
+list_vanblog_backups() {
+  local path name
+  if [[ -z "${VANBLOG_BASE_PATH}" || ! -d "${VANBLOG_BASE_PATH}" ]]; then
+    return 0
+  fi
+  for path in "${VANBLOG_BASE_PATH}"/vanblog-backup-*; do
+    [[ -e "${path}" ]] || continue
+    name="$(basename "${path}")"
+    if is_vanblog_backup_entry "${name}"; then
+      printf '%s\n' "${path}"
+    fi
+  done
+}
+
+remove_vanblog_install_files() {
+  local compose data_path
+  data_path="${VANBLOG_DATA_PATH}"
+  if [[ -z "${data_path}" || "${data_path}" == "/" || "${data_path}" == "${VANBLOG_BASE_PATH}" ]]; then
+    echo -e "${red}拒绝删除无效的数据目录：${data_path:-<empty>}${plain}"
+    return 1
+  fi
+  if [[ -e "${data_path}" ]]; then
+    echo -e "> 删除安装数据 ${data_path}"
+    rm -rf "${data_path}"
+  fi
+  for compose in \
+    docker-compose.yaml \
+    docker-compose.yml \
+    docker-compose-template.yaml \
+    docker-compose-template.yml; do
+    if [[ -e "${VANBLOG_BASE_PATH}/${compose}" ]]; then
+      echo -e "> 删除 ${VANBLOG_BASE_PATH}/${compose}"
+      rm -f "${VANBLOG_BASE_PATH}/${compose}"
+    fi
+  done
+  if [[ -e "${VANBLOG_BASE_PATH}/force-https" ]]; then
+    rm -f "${VANBLOG_BASE_PATH}/force-https"
+  fi
+}
+
 uninstall_vanblog() {
-  echo -e "> 卸载 VanBlog，所有数据将都被删除"
-  read -e -r -p "是否退出卸载? [Y/n] " input
+  local skip_menu=0
+  if [[ $# -gt 0 ]]; then
+    skip_menu=1
+  fi
+
+  echo -e "> 卸载 VanBlog"
+  echo -e "${yellow}将删除安装数据与编排文件（${VANBLOG_DATA_PATH} 以及 docker-compose*.yaml），并停止容器、移除镜像。${plain}"
+  echo -e "${yellow}不会删除脚本备份 vanblog-backup-*，也不会删除安装目录以外的备份。${plain}"
+
+  local backups
+  backups="$(list_vanblog_backups || true)"
+  if [[ -n "${backups}" ]]; then
+    echo -e "${green}检测到将保留的备份：${plain}"
+    echo "${backups}"
+  fi
+  echo -e "${red}安装数据删除后不可恢复（备份除外）。${plain}"
+
+  local input
+  read -e -r -p "确认卸载并删除安装数据（备份会保留）? [y/N] " input
   case $input in
   [yY][eE][sS] | [yY])
-    echo "退出卸载"
-    exit 0
-    ;;
-  [nN][oO] | [nN])
     echo "继续卸载"
     ;;
   *)
     echo "退出卸载"
-    exit 0
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 0
     ;;
   esac
 
-  cd $VANBLOG_BASE_PATH &&
-    docker-compose down -v
-  rm -rf $VANBLOG_BASE_PATH
-  docker rmi -f mereith/van-blog:latest >/dev/null 2>&1
+  if [[ -d "${VANBLOG_BASE_PATH}" ]]; then
+    if [[ -f "${VANBLOG_BASE_PATH}/docker-compose.yaml" || -f "${VANBLOG_BASE_PATH}/docker-compose.yml" ]]; then
+      (cd "${VANBLOG_BASE_PATH}" && docker-compose down -v) || true
+    fi
+    remove_vanblog_install_files || true
+  fi
+  docker rmi -f mereith/van-blog:latest >/dev/null 2>&1 || true
   clean_all
 
-  if [[ $# == 0 ]]; then
+  if [[ -d "${VANBLOG_BASE_PATH}" ]]; then
+    echo -e "${green}已卸载 VanBlog，安装数据已删除${plain}"
+    backups="$(list_vanblog_backups || true)"
+    if [[ -n "${backups}" ]]; then
+      echo -e "${green}已保留备份：${plain}"
+      echo "${backups}"
+    else
+      echo -e "${yellow}安装目录仍在（含非安装文件），未整目录删除：${VANBLOG_BASE_PATH}${plain}"
+    fi
+  else
+    echo -e "${green}已卸载 VanBlog，安装目录已删除${plain}"
+  fi
+
+  if [[ ${skip_menu} == 0 ]]; then
     before_show_menu
   fi
+  return 0
 }
 
 clean_all() {
-  if [ -z "$(ls -A ${VANBLOG_BASE_PATH})" ]; then
-    rm -rf ${VANBLOG_BASE_PATH}
+  if [[ -z "${VANBLOG_BASE_PATH}" || "${VANBLOG_BASE_PATH}" == "/" || ! -d "${VANBLOG_BASE_PATH}" ]]; then
+    return 0
+  fi
+  if [ -z "$(ls -A "${VANBLOG_BASE_PATH}")" ]; then
+    rm -rf "${VANBLOG_BASE_PATH}"
   fi
 }
 
