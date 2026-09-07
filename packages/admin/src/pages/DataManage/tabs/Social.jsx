@@ -3,6 +3,19 @@ import { EditableProTable } from '@ant-design/pro-components';
 import { Modal, Spin } from 'antd';
 import { useRef, useState } from 'react';
 
+const CUSTOM_SOCIAL_TYPE = 'custom';
+
+function isCustomSocialType(type) {
+  return type === CUSTOM_SOCIAL_TYPE || String(type || '').startsWith(`${CUSTOM_SOCIAL_TYPE}-`);
+}
+
+function socialRowKey(item) {
+  if (isCustomSocialType(item.type) && item.id) {
+    return item.id;
+  }
+  return item.type || item.key;
+}
+
 export default function () {
   const [loading, setLoading] = useState(true);
   const [editableKeys, setEditableRowKeys] = useState([]);
@@ -12,12 +25,13 @@ export default function () {
     const { data } = await getSocial();
 
     setLoading(false);
-    return data.map((item) => ({ key: item.type, ...item }));
+    return (data || []).map((item) => ({ key: socialRowKey(item), ...item }));
   };
   const columns = [
     {
       title: '类型',
       dataIndex: 'type',
+      valueType: 'select',
       formItemProps: (form, { rowIndex }) => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
@@ -29,12 +43,43 @@ export default function () {
       },
     },
     {
+      title: '显示名称',
+      dataIndex: 'label',
+      fieldProps: {
+        placeholder: '自定义时必填，如 Telegram',
+      },
+      formItemProps: (form) => {
+        return {
+          rules: [
+            {
+              validator: async (_, value) => {
+                const type = form?.getFieldValue?.('type');
+                if (isCustomSocialType(type) && !String(value || '').trim()) {
+                  throw new Error('自定义联系方式需要填写显示名称');
+                }
+              },
+            },
+          ],
+        };
+      },
+    },
+    {
       title: '值',
       dataIndex: 'value',
+      fieldProps: {
+        placeholder: '链接 / 邮箱 / 微信二维码地址',
+      },
       formItemProps: (form, { rowIndex }) => {
         return {
           rules: [{ required: true, message: '此项为必填项' }],
         };
+      },
+    },
+    {
+      title: '图标 URL',
+      dataIndex: 'icon',
+      fieldProps: {
+        placeholder: '可选，自定义联系方式的图标地址',
       },
     },
     {
@@ -57,7 +102,7 @@ export default function () {
         <a
           key="editable"
           onClick={() => {
-            action?.startEditable?.(record.type);
+            action?.startEditable?.(record.key);
           }}
         >
           编辑
@@ -67,10 +112,10 @@ export default function () {
           onClick={async () => {
             Modal.confirm({
               onOk: async () => {
-                await deleteSocial(record.type);
+                await deleteSocial(socialRowKey(record));
                 action?.reload();
               },
-              title: `确认删除"${record.type}"吗?`,
+              title: `确认删除"${record.label || record.type}"吗?`,
             });
           }}
         >
@@ -114,6 +159,9 @@ export default function () {
               const toSaveObj = {
                 type: data.type,
                 value: data.value,
+                label: data.label,
+                icon: data.icon,
+                id: data.id,
               };
               await updateSocial(toSaveObj);
               actionRef?.current?.reload();

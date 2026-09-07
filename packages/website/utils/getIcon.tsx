@@ -1,6 +1,17 @@
 import { SocialType } from "../api/getAllData";
 
-export function getIcon(type: SocialType, size: number) {
+export function getIcon(type: SocialType, size: number, iconUrl?: string) {
+  if (iconUrl) {
+    return (
+      <img
+        src={iconUrl}
+        width={size}
+        height={size}
+        alt=""
+        style={{ objectFit: "contain" }}
+      />
+    );
+  }
   if (type == "bilibili") {
     return (
       <svg
@@ -82,4 +93,15 @@ export function getIcon(type: SocialType, size: number) {
       </svg>
     );
   }
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      width={size}
+      height={size}
+    >
+      <path d="M14.5 3.5a3.5 3.5 0 0 1 4.95 4.95l-2.12 2.12a1 1 0 0 1-1.41-1.41l2.12-2.12a1.5 1.5 0 1 0-2.12-2.12L13.8 7.04a1 1 0 1 1-1.41-1.41l2.12-2.12zM9.5 20.5a3.5 3.5 0 0 1-4.95-4.95l2.12-2.12a1 1 0 0 1 1.41 1.41l-2.12 2.12a1.5 1.5 0 1 0 2.12 2.12l2.12-2.12a1 1 0 1 1 1.41 1.41L9.5 20.5zm7.07-12.02a1 1 0 0 1 0 1.41l-6.36 6.36a1 1 0 1 1-1.41-1.41l6.36-6.36a1 1 0 0 1 1.41 0z"></path>
+    </svg>
+  );
 }
