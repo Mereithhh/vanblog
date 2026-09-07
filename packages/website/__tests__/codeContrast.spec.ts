@@ -162,8 +162,6 @@ describe("public fenced-code contrast", () => {
     [".hljs-comment", "comment"],
     [".hljs-regexp", "regexp"],
     [".hljs-doctag", "doctag"],
-    [".header-right", "language / copy chrome"],
-    [".language-tag", "language label"],
   ])("dark %s (%s) is ≥ 4.5:1", (className) => {
     const color = colorForClass(darkRules, className);
     expect(color).toBeTruthy();
@@ -209,11 +207,5 @@ describe("public fenced-code contrast", () => {
     expect(darkCss).not.toMatch(/#9a5334/i);
     expect(darkCss).not.toMatch(/#608b4e/i);
     expect(colorForClass(darkRules, ".hljs-regexp")).toBe("#d16969");
-  });
-
-  it("does not pin the language chrome to the old #6f7177 inline color", () => {
-    const codeBlock = readStyle("components/Markdown/codeBlock.tsx");
-    expect(codeBlock).not.toMatch(/#6f7177/);
-    expect(codeBlock).toMatch(/header-right/);
   });
 });

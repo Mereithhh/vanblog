@@ -4,12 +4,6 @@
   padding: 22px 16px 16px;
 }
 
-/* Language label + copy control sit on the same panel as the fence. */
-.dark .markdown-body .header-right,
-.dark .markdown-body .language-tag {
-  color: #b0b4ba;
-}
-
 /* .dark code.hljs {
   padding: 3px 5px
 }

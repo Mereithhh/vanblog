@@ -6,7 +6,7 @@ order: 2
 
 ## 前台代码块对比度不足
 
-夜间模式阅读文章时，围栏代码块里部分高亮（常见是偏暗红的关键字/路径、发灰的注释）和右上角语言标签、复制图标会贴在深色底上，看起来像糊成一团。已提高前台 highlight 主题和代码块控件的对比度，正文类 token（默认文字、关键字、字符串、注释等）相对代码块背景达到 WCAG AA（≥ 4.5:1），并保持接近 VS Code 暗色主题的配色（[#175](https://github.com/Mereithhh/vanblog/issues/175)）。请升级到包含该修复的版本。
+夜间模式阅读文章时，围栏代码块里部分高亮（常见是偏暗红的路径/正则、发暗的文档注释）会贴在深色底上，看起来像糊成一团。已只调整前台 `code-dark.css` 的 highlight 颜色，正文类 token（默认文字、关键字、字符串、注释等）相对代码块背景达到 WCAG AA（≥ 4.5:1），并保持接近 VS Code 暗色主题的配色（[#175](https://github.com/Mereithhh/vanblog/issues/175)）。请升级到包含该修复的版本。
 
 这次只处理了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里的「Bad contrast on code block」。键盘无法操作的按钮、导航图标、分页方向键 / 跳转 / 省略号当链接等其他无障碍项仍开放，不在此修复范围内。
 
