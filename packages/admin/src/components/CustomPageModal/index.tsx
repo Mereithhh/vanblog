@@ -17,7 +17,7 @@ export default ({
   <ModalForm
     title={initialValues ? '修改自定义页面' : '新建自定义页面'}
     trigger={trigger}
-    width={450}
+    width={520}
     autoFocusFirstInput
     submitTimeout={3000}
     initialValues={initialValues}
@@ -37,6 +37,13 @@ export default ({
       if (path.substring(0, 1) != '/') {
         Modal.info({
           title: '路径必须以斜杠为开头！',
+        });
+        return false;
+      }
+
+      if (path === '/' || path.slice(1).includes('/')) {
+        Modal.info({
+          title: '路径必须是单级，例如 /uptime（对应 /c/uptime/），不要写成 /foo/bar',
         });
         return false;
       }
@@ -66,13 +73,13 @@ export default ({
         <Alert
           style={{ marginBottom: 8 }}
           type="info"
-          message="具体内容请在创建后在列表中点击对应操作按钮进行修改"
+          message="创建后到列表里编辑内容或上传文件。多文件页面只托管静态 HTML/CSS/JS，入口必须是根目录的 index.html（路径 /uptime 对应 /c/uptime/）。带 /static/... 绝对路径的 React 打包产物通常打不开，请改相对路径或用反代。"
         />
         <ProFormSelect
           width="md"
           name="type"
           required
-          tooltip="单文件页面可直接通过后台内置编辑器编辑内容，比较方便；多文件页面需要上传相关文件，适合复杂场景。"
+          tooltip="单文件：后台编辑一段 HTML。多文件：上传 HTML/CSS/JS 等静态文件；不支持 Node/PHP 后端。SPA 请用相对资源路径，并保证根目录有 index.html。"
           label="类型"
           placeholder="请选择类型"
           rules={[{ required: true, message: '这是必填项' }]}
@@ -103,8 +110,8 @@ export default ({
       id="path"
       name="path"
       label="路径"
-      placeholder="自定义页面的路径"
-      tooltip="自定义页面的路径，必须以斜杠开头，会加载到 /c 路径下。"
+      placeholder="例如 /uptime"
+      tooltip="必须以 / 开头，且只能有一级，例如 /uptime。实际地址是 /c + 路径，即 /c/uptime/。多文件页面会读取该目录下的 index.html。"
       rules={[{ required: true, message: '这是必填项' }]}
     />
   </ModalForm>

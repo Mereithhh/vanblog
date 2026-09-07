@@ -1,9 +1,13 @@
 ---
 title: 自定义页面
 icon: file
+redirectFrom:
+  - /feature/advance/customPage.html
 ---
 
 VanBlog 支持自定义页面，但首先请您明确自己的需求。
+
+自定义页面**只托管静态 HTML/CSS/JS 文件**，把内容挂到站点的 `/c/<路径>/` 下。它不是通用应用平台：不能跑 Node / PHP / Docker 后端，也不会给 SPA 自动改 `base` 或做 History 路由回退。需要独立后端或根路径应用时，请用反代或单独容器，见 [和其他项目共存](#和其他项目共存)。
 
 ## 自定义带有默认布局的页面
 
@@ -33,7 +37,9 @@ VanBlog 支持自定义页面，但首先请您明确自己的需求。
 
 ![新建页面](https://pic.mereith.com/img/0540fdf061d9106f11470cf5ed65e9d2.clipboard-2023-02-01.png)
 
-PS：路径必须以 `/` 开头，实际的访问路径会在前面加上 `/c`。比如我定义了自定义页面路径为 `/door`，实际我可以通过 `/c/door` 来访问此页面。
+路径必须以 `/` 开头，且只能有**一级**（例如 `/door`、`/uptime`），不要写成 `/foo/bar`。实际访问地址会在前面加上 `/c`：路径 `/door` 对应 `/c/door/`。
+
+多文件页面访问 `/c/door/` 时会读取该目录下的 **`index.html`**。请在后台文件树的**根目录**确认能看到 `index.html`，而不是 `某个文件夹/index.html`。带查询参数的地址（如 `/c/door/?x=1`）同样读这份入口文件。
 
 ### 修改信息
 
@@ -77,3 +83,47 @@ PS：路径必须以 `/` 开头，实际的访问路径会在前面加上 `/c`�
 ![设置效果](https://pic.mereith.com/img/3797fa90700decd37cab3983c8eac867.clipboard-2023-02-01.png)
 
 可以在编辑器修改它们，并点击 `操作/保存` 以保存更改。
+
+## 多文件页面能托管什么
+
+适合：静态站点、纯前端页面、已经按子路径打包好的 HTML/CSS/JS。
+
+不适合：需要自己的 API 服务、WebSocket 服务、或默认假设自己在网站根路径 `/` 的 React / Vue 打包产物（常见现象是页面打开了但是白屏、控制台里 `/static/js/...` 404）。
+
+上传后请先核对：
+
+1. 左侧文件树根上有 `index.html`（访问 `/c/<路径>/` 读的就是它）。
+1. 用浏览器开发者工具看 `index.html` 里的脚本/样式地址：应是相对路径（`./static/js/app.js`）或带前缀的 `/c/<路径>/static/...`，而不是站点根上的 `/static/...`。
+1. 若用了前端路由，把 router 的 `basename`（或 Vue 的 `base`）设成 `/c/<路径>/`。VanBlog **不会**把所有子路径都回退到 `index.html`。
+
+## 为什么把 uptime-status 一类项目丢进去会打不开
+
+[uptime-status](https://github.com/yb/uptime-status) 的 Release zip 在根目录确有 `index.html`，但里面的脚本/样式是站点根路径：
+
+```html
+<script defer="defer" src="/static/js/main.ace24a8b.js"></script>
+<link href="/static/css/main.e4003dc1.css" rel="stylesheet">
+```
+
+放到 VanBlog 的 `/c/uptime/` 后，浏览器会去请求 `https://你的域名/static/js/...`（那是博客图床目录），而不是 `/c/uptime/static/js/...`，所以页面「打开无效」、看起来像白屏。这不是上传失败。
+
+可以任选一种做法：
+
+- **改静态资源路径后继续用自定义页面**：在后台打开 `index.html`，把 `/static/...` 改成 `./static/...`（该 zip 里的 `config.js`、`favicon.ico` 已经是相对路径）。Create React App 若自行构建，把 `package.json` 的 `homepage` 设为 `"."` 或 `"/c/uptime"` 再打包。Vite 则设 `base: '/c/uptime/'` 或 `base: './'`。
+- **不要用自定义页面，改走反代**：状态面板、需要 API 代理、或必须占根路径的应用，放到独立容器/目录，用 Nginx / Caddy 按路径或子域名转发。见下一节。
+
+解压 zip 后若用「上传文件夹」，VanBlog 会去掉最外层文件夹名，一般可以把 `index.html` 放到自定义页面根上。若树里看到的是 `uptime-status/index.html`，请打开 `/c/uptime/uptime-status/`，或把文件移到根目录后再访问 `/c/uptime/`。
+
+## 和其他项目共存
+
+一键脚本部署的 VanBlog 是 Docker Compose（VanBlog + Mongo），内置 Caddy 占用 80/443。它**不会**变成可以随便再塞项目的 PaaS。旁挂其他站点可以：
+
+| 方式 | 适用 | 说明 |
+| --- | --- | --- |
+| 自定义页面 `/c/<name>/` | 静态 HTML/CSS/JS | 后台上传即可，受上面的 `index.html` 与资源路径限制 |
+| 反代到另一容器/端口 | 需要后端、自己的路由、或必须占 `/status` 这类路径 | 在编排里加服务，或宿主机另起进程；外层 Nginx/Caddy 把该路径转到它。VanBlog 仍只反代自己的 HTTP 端口，见 [反代](../reference/reverse-proxy.md) |
+| 独立子域名或另一台机器 | 和其他站点长期共存 | `status.example.com` → 状态面板，`blog.example.com` → VanBlog，互不影响 |
+
+不要把其他项目的文件解压进 VanBlog 容器的 `/app/static` 里当「部署」。图床目录不是应用托管目录。
+
+脚本再次运行只会管理 VanBlog 自己的编排；额外服务请写在你改过的 `docker-compose.yaml` 里并自行 `up`，以免被脚本覆盖。更细的端口、证书、Host 头说明仍见 [部署常见问题](../faq/deploy.md) 与 [反代](../reference/reverse-proxy.md)，本文不重复整份部署文档。

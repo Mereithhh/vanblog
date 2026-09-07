@@ -151,4 +151,29 @@ test.describe('custom page info persists', () => {
     await expect(page.getByText('旧名称')).toHaveCount(0);
     await expect(page.getByText('/old-path')).toHaveCount(0);
   });
+
+  test('help and create copy mention static assets, index.html, and SPA base', async ({ page }) => {
+    const store = createCustomPageStore();
+    await openCustomPageAdmin(page, store);
+
+    await page.getByRole('button', { name: /帮\s*助/ }).click();
+    const helpDialog = page.locator('.ant-modal-content').filter({ hasText: '帮助' });
+    await expect(helpDialog).toBeVisible();
+    await expect(helpDialog.getByText('/c/路径/')).toBeVisible();
+    await expect(helpDialog.getByText('index.html')).toBeVisible();
+    await expect(helpDialog.getByText('/static/...')).toBeVisible();
+    await helpDialog.getByRole('button', { name: /知\s*道\s*了|确\s*定|OK/i }).click();
+
+    await page.getByRole('button', { name: /新\s*建/ }).click();
+    const createDialog = page.locator('.ant-modal-content').filter({ hasText: '新建自定义页面' });
+    await expect(createDialog).toBeVisible();
+    await expect(createDialog.getByText('index.html')).toBeVisible();
+    await expect(createDialog.getByText('/c/uptime/')).toBeVisible();
+
+    await createDialog.locator('#name').fill('nested-bad');
+    await createDialog.locator('#path').fill('/foo/bar');
+    await submitModal(createDialog);
+    await expect(page.getByText('路径必须是单级')).toBeVisible();
+    expect(store.list()).toEqual([]);
+  });
 });

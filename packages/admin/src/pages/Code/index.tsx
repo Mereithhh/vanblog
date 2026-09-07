@@ -14,7 +14,7 @@ import {
 import { handleEditorHotkey } from '@/services/van-blog/editableKeyboard';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
-import { Button, Dropdown, Menu, message, Modal, Space, Spin, Tag, Tree } from 'antd';
+import { Alert, Button, Dropdown, Menu, message, Modal, Space, Spin, Tag, Tree } from 'antd';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { history } from 'umi';
 import PipelineModal from '../Pipeline/components/PipelineModal';
@@ -364,7 +364,7 @@ export default function () {
                 window.open('https://vanblog.mereith.com/features/pipeline.html', '_blank');
               } else {
                 window.open(
-                  'https://vanblog.mereith.com/feature/advance/customPage.html',
+                  'https://vanblog.mereith.com/advanced/custom-page.html',
                   '_blank',
                 );
               }
@@ -377,6 +377,14 @@ export default function () {
       }}
       footer={null}
     >
+      {isFolder && (
+        <Alert
+          type="info"
+          showIcon
+          style={{ margin: '8px 12px 0' }}
+          message="多文件页面只托管静态 HTML/CSS/JS。访问 /c/路径/ 时读取根目录的 index.html（左侧树根上要能看到它）。React/Vue 等 SPA 请把资源改成相对路径（如 ./static/...），或构建时设置 homepage/base 为 /c/路径/。"
+        />
+      )}
       <div style={{ height: '100%', display: 'flex' }} className="code-editor-content">
         {isFolder && (
           <>

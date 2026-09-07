@@ -95,18 +95,24 @@ export default function () {
   const handleHelp = () => {
     Modal.info({
       title: '帮助',
+      width: 560,
       content: (
         <div>
-          <p>自定义页面可以添加页面到 /c 路径下。</p>
-          <p>自定义页面分为两种：单文件页面、多文件页面。</p>
+          <p>自定义页面把静态内容挂到站点的 <code>/c/路径/</code> 下，不是通用应用托管。</p>
+          <p>分为两种：单文件页面（后台编辑一段 HTML）、多文件页面（上传 HTML/CSS/JS 等静态文件）。</p>
           <p>
-            前者可直接通过后台内置编辑器编辑其 HTML
-            内容，比较省事、后者需要上传相关的文件，适合复杂页面。
+            多文件页面访问 <code>/c/路径/</code> 时读取<strong>根目录的 index.html</strong>
+            。请在文件树根上确认能看到它，不要多包一层解压文件夹。
           </p>
-          <p>多文件页面后续会演进成“文件管理”功能～</p>
+          <p>
+            React / Vue 等 SPA 若资源写成 <code>/static/...</code> 这种站点根路径，放到{' '}
+            <code>/c/uptime/</code> 下通常是白屏。请改成相对路径（如 <code>./static/...</code>
+            ），或构建时把 homepage / base 设为 <code>/c/路径/</code>
+            。需要后端或独立域名时请用反代，不要把整个项目塞进自定义页面。
+          </p>
           <a
             target="_blank"
-            href="https://vanblog.mereith.com/feature/advance/customPage.html"
+            href="https://vanblog.mereith.com/advanced/custom-page.html"
             rel="noreferrer"
           >
             帮助文档
