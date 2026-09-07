@@ -44,3 +44,16 @@ body > [id^='dvb-admin-mermaid'],
   max-width: 100%;
   height: auto;
 }
+
+.dark .bytemd-preview .bytemd-mermaid,
+.dark .bytemd-preview .mermaid-theme-dark,
+.dark .bytemd-preview pre > code.language-mermaid {
+  background-color: #26282c;
+  color: #e6edf3;
+}
+
+.light .bytemd-preview .bytemd-mermaid,
+.light .bytemd-preview .mermaid-theme-light,
+.light .bytemd-preview pre > code.language-mermaid {
+  background-color: #ffffff;
+}

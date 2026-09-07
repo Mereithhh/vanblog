@@ -68,6 +68,45 @@ test('article with mermaid stays editable in the admin editor', async ({ page })
   await expectPreviewVisibleAndIdle(page);
 });
 
+test('dark-mode admin preview mermaid containers get the dark theme class (#404)', async ({
+  page,
+}) => {
+  await page.addInitScript(() => {
+    document.documentElement.classList.add('dark');
+    document.documentElement.classList.remove('light');
+  });
+  await page.goto('/');
+  await expect(page.locator('.CodeMirror').first()).toBeVisible();
+  await expect
+    .poll(async () =>
+      page
+        .locator(
+          '.bytemd-preview .mermaid-theme-dark, .bytemd-preview [data-mermaid-theme="dark"]',
+        )
+        .count(),
+    )
+    .toBeGreaterThan(0);
+
+  const theme = await page.evaluate(() => {
+    const diagram = document.querySelector('.bytemd-preview .bytemd-mermaid');
+    const fence = document.querySelector('.bytemd-preview code.language-mermaid');
+    const node = diagram || fence;
+    if (!node) {
+      return null;
+    }
+    return {
+      theme: node.getAttribute('data-mermaid-theme'),
+      darkClass: node.classList.contains('mermaid-theme-dark'),
+      htmlDark: document.documentElement.classList.contains('dark'),
+    };
+  });
+
+  expect(theme).toBeTruthy();
+  expect(theme.htmlDark).toBe(true);
+  expect(theme.theme).toBe('dark');
+  expect(theme.darkClass).toBe(true);
+});
+
 test('pasting styled mermaid with Chinese labels stays editable (#391)', async ({ page }) => {
   const errors = collectUncaughtErrors(page);
   await page.goto('/');
