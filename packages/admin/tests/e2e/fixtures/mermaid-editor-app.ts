@@ -9,6 +9,13 @@ if (!target) {
   throw new Error('Missing #app');
 }
 
+// Same first-paint signal as the public site (`html.dark`) so mermaid can
+// pick theme dark before the first preview paint. Used by the #404 e2e.
+if (new URLSearchParams(window.location.search).has('dark')) {
+  document.documentElement.classList.add('dark');
+  document.documentElement.classList.remove('light');
+}
+
 const editor = new Editor({
   target,
   props: {

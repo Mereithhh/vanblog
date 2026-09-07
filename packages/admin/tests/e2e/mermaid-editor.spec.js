@@ -71,11 +71,7 @@ test('article with mermaid stays editable in the admin editor', async ({ page })
 test('dark-mode admin preview mermaid containers get the dark theme class (#404)', async ({
   page,
 }) => {
-  await page.addInitScript(() => {
-    document.documentElement.classList.add('dark');
-    document.documentElement.classList.remove('light');
-  });
-  await page.goto('/');
+  await page.goto('/?dark=1');
   await expect(page.locator('.CodeMirror').first()).toBeVisible();
   await expect
     .poll(async () =>
