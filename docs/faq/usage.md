@@ -16,6 +16,10 @@ order: 2
 
 页面地址仍是 `/admin/site/log`，只改了拉取数据的 API。
 
+## 登录日志里的 IP 是 VPS / Cloudflare 节点地址
+
+站点套了 Cloudflare（或同类 CDN）后，登录日志有时会记下边缘节点或 VPS 自己的 IP，而不是访客。已改为优先读取请求头 `CF-Connecting-IP`（以及常见的 `True-Client-IP`）（[#127](https://github.com/Mereithhh/vanblog/issues/127)）；没有这些头时仍用原来的 `X-Real-IP` / `X-Forwarded-For`。请升级到包含该修复的版本。若前面还有一层 Nginx，把 `CF-Connecting-IP` 原样转给 VanBlog，不要改写成边缘 IP。见 [日志](../reference/log.md) 与 [反代](../reference/reverse-proxy.md)。
+
 ## 前台夜间模式流程图看不清
 
 夜间模式阅读文章时，mermaid / 流程图以前按 mermaid 默认浅色主题渲染，浅色节点和发灰的线条贴在深色正文底上，对比很差。已修复（[#404](https://github.com/Mereithhh/vanblog/issues/404)）：站点或后台预览为暗色时 mermaid 使用 `theme: 'dark'`，并提高文字/描边对比度；白天模式仍是原来的浅色图表。请升级到包含该修复的版本。
