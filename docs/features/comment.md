@@ -32,9 +32,39 @@ VanBlog 内嵌了 [Waline 评论系统](https://waline.js.org/)，你不需要�
 - 当某人的评论被回复时，会通过这个人在评论时所写的邮箱进行通知。
 - 通知时的站点名称和站点地址取自 `站点管理/系统设置/站点配置` 。
 
+VanBlog **没有单独的邮件系统**。通知走的是内嵌 [Waline](https://waline.js.org/) 的 SMTP，全部在后台 `站点管理 / 系统设置 / 评论设置` 里改。
+
+### 更换通知邮箱
+
+整了自定义域名邮箱（如 `noreply@yourdomain.com`），或想把通知从 QQ 邮箱换成这个域名邮箱时，**不用另外部署**，还是改同一张表单：
+
+1. 后台进入 **站点管理 / 系统设置 / 评论设置**。
+2. 开启 **是否启用邮件通知**。
+3. 填写邮箱服务商的 SMTP（不是博客域名）：
+   - **SMTP 地址 (host)**：服务商 SMTP，例如 `smtp.exmail.qq.com`、`smtp.gmail.com`，或自定义域名邮箱后台给出的 `smtp.xxx.com`。
+   - **SMTP 端口号**：常见 `465`（SSL）或 `587`（STARTTLS）。
+   - **SMTP 用户名**：一般是完整邮箱，例如 `noreply@yourdomain.com`。
+   - **SMTP 密码（授权码）**：多数不是登录密码，而是 SMTP **授权码 / 应用专用密码（App Password）**。需要先在邮箱后台开启 SMTP 再生成。
+4. **博主邮箱（通知收件人）**：有新评论时发到这个地址。可以填自定义域名邮箱，也可以和发件地址不同（例如用域名邮箱发信、用常用邮箱收信）。
+5. **发件人显示名称**：收件箱里显示的 From 名称，可填站点名。
+6. **发件地址（From）**：填自定义域名邮箱。多数服务商要求它与 **SMTP 用户名** 一致，否则可能报 `501 Mail from address must be same as authorization user`。
+7. 保存后会立刻把配置传给内嵌 Waline 并重启评论进程。若仍不发信，可再重启一次 VanBlog。
+
+三种地址可以这样理解：
+
+| 字段 | 作用 |
+| --- | --- |
+| SMTP 用户名 | 登录发信服务器的账号 |
+| 发件地址（From） | 收件人看到的发件邮箱，自定义域名邮箱填这里 |
+| 博主邮箱 | 站长自己收「有新评论」通知的收件箱 |
+
+最简单的做法是三个都填同一个自定义域名邮箱。Waline 服务端对应的环境变量说明见 [评论通知](https://waline.js.org/guide/features/notification.html) 和 [服务端环境变量（邮件）](https://waline.js.org/reference/server/env.html)；VanBlog 会从本表单映射过去，一般不必自己设环境变量。
+
+常见问题见 [如何更换评论系统通知邮箱](../faq/usage.md#如何更换评论系统通知邮箱)。
+
 ### 配置邮件消息通知
 
-选择 `启用邮件通知` 后，会出现一些表单，必填项就是开启邮件消息通知所必需的。
+选择 `是否启用邮件通知` 后，会出现一些表单，必填项就是开启邮件消息通知所必需的。
 
 和 `SMTP` 有关的四项需要您在自己的邮件服务商处获取。
 
@@ -57,9 +87,9 @@ VanBlog 内嵌了 [Waline 评论系统](https://waline.js.org/)，你不需要�
 > - **SMTP 地址(host)**：个人邮箱可使用 `smtp.qq.com` ，企业邮箱可使用 `smtp.exmail.qq.com`
 > - **SMTP 端口号**：`465` 或 `587`
 > - **SMTP 用户名**：发送邮件的邮箱地址，即你的QQ邮箱地址
-> - **SMTP 密码**：生成的授权码（需要在QQ邮箱设置中生成）
-> - **自定义发送邮件的发件人**：不重要，自定义即可
-> - **自定义发送邮件的发件地址**：需要与 **SMTP 用户名** 一致，否则发送邮件时可能报错`501 Mail from address must be same as authorization user`。
+> - **SMTP 密码（授权码）**：生成的授权码（需要在QQ邮箱设置中生成）
+> - **发件人显示名称**：不重要，自定义即可
+> - **发件地址（From）**：需要与 **SMTP 用户名** 一致，否则发送邮件时可能报错`501 Mail from address must be same as authorization user`。
 >
 > 附上QQ邮箱官方说明：[QQ邮箱 SMTP/IMAP服务](https://wx.mail.qq.com/list/readtemplate?name=app_intro.html#/agreement/authorizationCode)、[腾讯企业邮 常用邮件客户端软件设置](https://service.exmail.qq.com/cgi-bin/help?subtype=1&id=28&no=1000564)
 

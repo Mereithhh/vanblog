@@ -10,7 +10,10 @@ export default function () {
           message={
             <div>
               <p>
-                <span>本表单可以控制内嵌 waline 评论系统的配置。具体请参考：</span>
+                <span>
+                  本表单控制内嵌 Waline 评论系统。换成自定义域名邮箱时，开启「是否启用邮件通知」后填写
+                  SMTP、博主邮箱（收件人）和发件地址（From）即可，不用另外部署邮件服务。说明见：
+                </span>
                 <a
                   target={'_blank'}
                   rel="noreferrer"

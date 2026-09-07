@@ -116,6 +116,16 @@ iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页�
 
 旧版本首屏 HTML 会按服务器时间套上 `dark`，再等 `/initTheme.js` 读 localStorage 后改回来，所以选「白色」刷新会黑约半秒，选「自动」在浅色系统（尤其晚上）也会被强制成黑色。已修复（[#292](https://github.com/Mereithhh/vanblog/issues/292)、[#25](https://github.com/Mereithhh/vanblog/issues/25)、[#54](https://github.com/Mereithhh/vanblog/issues/54)）：记住的主题在首屏绘制前生效；自动模式跟随系统配色，系统为浅色时不会强制夜间模式。请升级到包含该修复的版本。
 
+## 如何更换评论系统通知邮箱
+
+评论通知走内嵌 Waline 的 SMTP，VanBlog 没有另一套邮件系统。后台进入 **站点管理 / 系统设置 / 评论设置**，开启「是否启用邮件通知」，再填：
+
+- **SMTP**（host / 端口 / 用户名 / 密码）：邮箱服务商的发信服务器。自定义域名邮箱填服务商给出的 SMTP，**不是**博客域名。用户名一般是完整邮箱；密码多数是 **授权码 / 应用专用密码**，不是登录密码。
+- **博主邮箱（通知收件人）**：有新评论时通知这个地址，可填自定义域名邮箱，也可以和发件地址不同。
+- **发件人显示名称 / 发件地址（From）**：收件箱里看到的发件人。自定义域名邮箱填进发件地址；多数服务商要求发件地址与 SMTP 用户名一致。
+
+保存后会重启内嵌 Waline。最简单是 SMTP 用户名、发件地址、博主邮箱都填同一个域名邮箱。逐步说明见 [评论 · 更换通知邮箱](../features/comment.md#更换通知邮箱)，Waline 官方见 [评论通知](https://waline.js.org/guide/features/notification.html)。
+
 ## 评论登录跳到 localhost
 
 外层 Nginx 反代后，Waline 评论登录或管理后台 OAuth 可能跳到 `localhost` / `0.0.0.0` 而不是站点域名（[#396](https://github.com/Mereithhh/vanblog/issues/396)）。反代需要转发 `Host`：`proxy_set_header Host $host;`。完整示例见 [反代](../reference/reverse-proxy.md)，说明见 [部署常见问题](./deploy.md#反代后-waline-登录跳到-localhost)。内置 Caddy、没有再套一层反代时一般不用改。

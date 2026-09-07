@@ -1,4 +1,5 @@
 import { getWalineConfig, updateWalineConfig } from '@/services/van-blog/api';
+import { WALINE_EMAIL_FIELDS } from '@/utils/walineEmailFields';
 import { parseWalineOtherConfigJson } from '@/utils/walineOtherConfig';
 import {
   ProForm,
@@ -97,59 +98,59 @@ export default function (props: {}) {
               },
             ],
           }}
-          name="smtp.enabled"
-          label="是否启用邮件通知"
-          tooltip="启用后新评论会通知博主，被回复时会通知填写邮箱的被回复者"
-          placeholder={'默认关闭'}
+          name={WALINE_EMAIL_FIELDS.smtpEnabled.name}
+          label={WALINE_EMAIL_FIELDS.smtpEnabled.label}
+          tooltip={WALINE_EMAIL_FIELDS.smtpEnabled.tooltip}
+          placeholder={WALINE_EMAIL_FIELDS.smtpEnabled.placeholder}
         ></ProFormSelect>
         {enableEmail && (
           <>
             <ProFormText
-              name="smtp.host"
-              label="SMTP 地址(host)"
-              tooltip={'发送邮件使用的 smtp 地址'}
-              placeholder="请输入发送邮件使用的 smtp 地址"
+              name={WALINE_EMAIL_FIELDS.smtpHost.name}
+              label={WALINE_EMAIL_FIELDS.smtpHost.label}
+              tooltip={WALINE_EMAIL_FIELDS.smtpHost.tooltip}
+              placeholder={WALINE_EMAIL_FIELDS.smtpHost.placeholder}
               rules={[{ required: true, message: '这是必填项' }]}
             />
             <ProFormDigit
-              name="smtp.port"
-              label="SMTP 端口号"
-              tooltip={'发送邮件使用的 smtp 端口号'}
-              placeholder="请输入发送邮件使用的 smtp 端口号"
+              name={WALINE_EMAIL_FIELDS.smtpPort.name}
+              label={WALINE_EMAIL_FIELDS.smtpPort.label}
+              tooltip={WALINE_EMAIL_FIELDS.smtpPort.tooltip}
+              placeholder={WALINE_EMAIL_FIELDS.smtpPort.placeholder}
               rules={[{ required: true, message: '这是必填项' }]}
             />
             <ProFormText
-              name="smtp.user"
-              label="SMTP 用户名"
-              tooltip={'发送邮件使用的 smtp 用户名'}
-              placeholder="请输入发送邮件使用的 smtp 用户名"
+              name={WALINE_EMAIL_FIELDS.smtpUser.name}
+              label={WALINE_EMAIL_FIELDS.smtpUser.label}
+              tooltip={WALINE_EMAIL_FIELDS.smtpUser.tooltip}
+              placeholder={WALINE_EMAIL_FIELDS.smtpUser.placeholder}
               rules={[{ required: true, message: '这是必填项' }]}
             />
             <ProFormText.Password
-              name="smtp.password"
-              label="SMTP 密码"
-              tooltip={'发送邮件使用的 smtp 密码'}
-              placeholder="请输入发送邮件使用的 smtp 密码"
+              name={WALINE_EMAIL_FIELDS.smtpPassword.name}
+              label={WALINE_EMAIL_FIELDS.smtpPassword.label}
+              tooltip={WALINE_EMAIL_FIELDS.smtpPassword.tooltip}
+              placeholder={WALINE_EMAIL_FIELDS.smtpPassword.placeholder}
               rules={[{ required: true, message: '这是必填项' }]}
             />
             <ProFormText
-              name="authorEmail"
-              label="博主邮箱"
-              tooltip={'用来通知博主有新评论'}
-              placeholder="用来通知博主有新评论"
+              name={WALINE_EMAIL_FIELDS.authorEmail.name}
+              label={WALINE_EMAIL_FIELDS.authorEmail.label}
+              tooltip={WALINE_EMAIL_FIELDS.authorEmail.tooltip}
+              placeholder={WALINE_EMAIL_FIELDS.authorEmail.placeholder}
               rules={[{ required: true, message: '这是必填项' }]}
             />
             <ProFormText
-              name="sender.name"
-              label="自定义发送邮件的发件人"
-              tooltip={'自定义发送邮件的发件人'}
-              placeholder="自定义发送邮件的发件人"
+              name={WALINE_EMAIL_FIELDS.senderName.name}
+              label={WALINE_EMAIL_FIELDS.senderName.label}
+              tooltip={WALINE_EMAIL_FIELDS.senderName.tooltip}
+              placeholder={WALINE_EMAIL_FIELDS.senderName.placeholder}
             />
             <ProFormText
-              name="sender.email"
-              label="自定义发送邮件的发件地址"
-              tooltip={'自定义发送邮件的发件地址'}
-              placeholder="自定义发送邮件的发件地址"
+              name={WALINE_EMAIL_FIELDS.senderEmail.name}
+              label={WALINE_EMAIL_FIELDS.senderEmail.label}
+              tooltip={WALINE_EMAIL_FIELDS.senderEmail.tooltip}
+              placeholder={WALINE_EMAIL_FIELDS.senderEmail.placeholder}
             />
           </>
         )}
