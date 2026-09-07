@@ -67,7 +67,8 @@ export class SiteMapProvider {
   }
   async getPageUrls() {
     const num = await this.articleProvider.getTotalNum(false);
-    const total = Math.ceil(num / 5);
+    const pageSize = await this.metaProvider.getArticlesPerPage();
+    const total = Math.ceil(num / pageSize);
     const paths = [];
     for (let i = 1; i <= total; i++) {
       paths.push(`/page/${i}`);

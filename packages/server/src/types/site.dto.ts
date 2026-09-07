@@ -39,6 +39,8 @@ export class SiteInfo {
   openArticleLinksInNewWindow: 'true' | 'false';
   showExpirationReminder?: 'true' | 'false';
   showEditButton?: 'true' | 'false';
+  /** Front home /page/n list size. Default 5, clamped to 1–50. */
+  articlesPerPage?: number;
 }
 export interface updateUserDto {
   username: string;

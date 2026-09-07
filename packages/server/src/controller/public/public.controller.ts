@@ -12,6 +12,7 @@ import { version } from 'src/utils/loadConfig';
 import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
 import { encode } from 'js-base64';
 import { getWalinePublicCommentSetting } from 'src/utils/walineExtra';
+import { sanitizeArticlesPerPage } from 'src/utils/articlesPerPage';
 import { sanitizePagination } from 'src/utils/pagination';
 
 @ApiTags('public')
@@ -136,7 +137,7 @@ export class PublicController {
   @Get('article')
   async getByOption(
     @Query('page') page: number,
-    @Query('pageSize') pageSize = 5,
+    @Query('pageSize') pageSize: number | undefined,
     @Query('toListView') toListView = false,
     @Query('regMatch') regMatch = false,
     @Query('withWordCount') withWordCount = false,
@@ -145,7 +146,11 @@ export class PublicController {
     @Query('sortCreatedAt') sortCreatedAt?: SortOrder,
     @Query('sortTop') sortTop?: SortOrder,
   ) {
-    const paging = sanitizePagination(page, pageSize, { allowUnlimited: true });
+    const defaultPageSize = await this.metaProvider.getArticlesPerPage();
+    const paging = sanitizePagination(page, pageSize, {
+      allowUnlimited: true,
+      defaultPageSize,
+    });
     const option = {
       page: paging.page,
       pageSize: paging.pageSize,
@@ -200,11 +205,16 @@ export class PublicController {
     const totalWordCount = await this.metaProvider.getTotalWords();
     const LayoutSetting = await this.settingProvider.getLayoutSetting();
     const LayoutRes = this.settingProvider.encodeLayoutSetting(LayoutSetting);
+    const siteInfo = {
+      ...(metaDoc?.siteInfo || {}),
+      articlesPerPage: sanitizeArticlesPerPage(metaDoc?.siteInfo?.articlesPerPage),
+    };
     const data = {
       version: version,
       tags,
       meta: {
         ...metaDoc,
+        siteInfo,
         categories,
       },
       menus,

@@ -4,6 +4,7 @@ import { TagPageProps } from "../pages/tag";
 import { TimeLinePageProps } from "../pages/timeline";
 import { CategoryPageProps } from "../pages/category";
 import { getAuthorCardProps, getLayoutProps } from "./getLayoutProps";
+import { sanitizeArticlesPerPage } from "./articlesPerPage";
 import { washArticlesByKey } from "./washArticles";
 import { AboutPageProps } from "../pages/about";
 import { TagPagesProps } from "../pages/tag/[tag]";
@@ -22,9 +23,10 @@ export async function getIndexPageProps(): Promise<IndexPageProps> {
   const data = await getPublicMeta();
   const layoutProps = getLayoutProps(data);
   const authorCardProps = getAuthorCardProps(data);
+  const pageSize = sanitizeArticlesPerPage(data.meta.siteInfo?.articlesPerPage);
   const { articles } = await getArticlesByOption({
     page: 1,
-    pageSize: 5,
+    pageSize,
   });
   return {
     layoutProps,
@@ -185,9 +187,10 @@ export async function getPagePagesProps(
   const layoutProps = getLayoutProps(data);
   const authorCardProps = getAuthorCardProps(data);
   const currPage = parseInt(curId);
+  const pageSize = sanitizeArticlesPerPage(data.meta.siteInfo?.articlesPerPage);
   const { articles } = await getArticlesByOption({
     page: currPage,
-    pageSize: 5,
+    pageSize,
   });
   return {
     layoutProps,

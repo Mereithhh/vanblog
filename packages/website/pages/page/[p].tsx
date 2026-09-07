@@ -11,6 +11,8 @@ import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPagePagesProps } from "../../utils/getPageProps";
 import { getArticlesKeyWord } from "../../utils/keywords";
 import { revalidate } from "../../utils/loadConfig";
+import { sanitizeArticlesPerPage } from "../../utils/articlesPerPage";
+import { pageCount } from "../../components/PageNav/core";
 import Custom404 from "../404";
 export interface PagePagesProps {
   layoutProps: LayoutProps;
@@ -67,6 +69,7 @@ const PagePages = (props: PagePagesProps) => {
         current={props.currPage}
         base={"/"}
         more={"/page"}
+        pageSize={props.layoutProps.articlesPerPage}
       ></PageNav>
       <Waline enable={props.layoutProps.enableComment} visible={false} />
     </Layout>
@@ -77,7 +80,8 @@ export default PagePages;
 
 export async function getStaticPaths() {
   const data = await getPublicMeta();
-  const total = Math.ceil(data.totalArticles / 5);
+  const pageSize = sanitizeArticlesPerPage(data.meta.siteInfo?.articlesPerPage);
+  const total = pageCount(data.totalArticles, pageSize);
   const paths = [];
   for (let i = 1; i <= total; i++) {
     paths.push({

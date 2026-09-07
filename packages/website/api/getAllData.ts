@@ -126,6 +126,7 @@ export interface MetaProps {
     openArticleLinksInNewWindow: "true" | "false";
     showExpirationReminder: "true" | "false";
     showEditButton: "true" | "false";
+    articlesPerPage?: number;
   };
 }
 export interface PublicMetaProp {
@@ -187,6 +188,7 @@ const defaultMeta: MetaProps = {
     showRSS: "true",
     openArticleLinksInNewWindow: "false",
     showEditButton: "false",
+    articlesPerPage: 5,
   },
 };
 

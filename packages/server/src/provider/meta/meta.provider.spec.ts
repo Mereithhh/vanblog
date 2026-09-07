@@ -96,3 +96,43 @@ describe('MetaProvider friend links (#252)', () => {
     expect(await provider.getLinks()).toEqual([]);
   });
 });
+
+describe('MetaProvider articlesPerPage (#346)', () => {
+  it('defaults getArticlesPerPage to 5 when siteInfo is missing or unset', async () => {
+    const { provider } = createProvider();
+    expect(await provider.getArticlesPerPage()).toBe(5);
+
+    const withSite = createProvider();
+    withSite.model.state.siteInfo = { siteName: 'demo' };
+    expect(await withSite.provider.getArticlesPerPage()).toBe(5);
+    expect((await withSite.provider.getSiteInfo()).articlesPerPage).toBe(5);
+  });
+
+  it('returns a configured size', async () => {
+    const { provider, model } = createProvider();
+    model.state.siteInfo = { siteName: 'demo', articlesPerPage: 12 };
+    expect(await provider.getArticlesPerPage()).toBe(12);
+    expect((await provider.getSiteInfo()).articlesPerPage).toBe(12);
+  });
+
+  it('clamps on read so a huge stored value cannot DoS lists', async () => {
+    const { provider, model } = createProvider();
+    model.state.siteInfo = { articlesPerPage: 9999 };
+    expect(await provider.getArticlesPerPage()).toBe(50);
+  });
+
+  it('persists a clamped size on update', async () => {
+    const { provider, model } = createProvider();
+    await provider.updateSiteInfo({ siteName: 'demo', articlesPerPage: 10 } as any);
+    expect(model.state.siteInfo.articlesPerPage).toBe(10);
+
+    await provider.updateSiteInfo({ articlesPerPage: 0 } as any);
+    expect(model.state.siteInfo.articlesPerPage).toBe(1);
+
+    await provider.updateSiteInfo({ articlesPerPage: 999 } as any);
+    expect(model.state.siteInfo.articlesPerPage).toBe(50);
+
+    await provider.updateSiteInfo({ articlesPerPage: 'nope' } as any);
+    expect(model.state.siteInfo.articlesPerPage).toBe(5);
+  });
+});
