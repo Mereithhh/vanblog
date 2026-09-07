@@ -159,9 +159,9 @@ test.describe('custom page info persists', () => {
     await page.getByRole('button', { name: /帮\s*助/ }).click();
     const helpDialog = page.locator('.ant-modal-content').filter({ hasText: '帮助' });
     await expect(helpDialog).toBeVisible();
-    await expect(helpDialog.getByText('/c/路径/')).toBeVisible();
-    await expect(helpDialog.getByText('index.html')).toBeVisible();
-    await expect(helpDialog.getByText('/static/...')).toBeVisible();
+    await expect(helpDialog.getByText('index.html').first()).toBeVisible();
+    await expect(helpDialog.getByText('/static/...', { exact: true })).toBeVisible();
+    await expect(helpDialog.getByText('相对路径')).toBeVisible();
     await helpDialog.getByRole('button', { name: /知\s*道\s*了|确\s*定|OK/i }).click();
 
     await page.getByRole('button', { name: /新\s*建/ }).click();
