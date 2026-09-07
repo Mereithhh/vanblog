@@ -44,7 +44,9 @@ test.describe('admin editor article tags bulk paste (#489)', () => {
     const dialog = await openArticleInfoForm(page);
     const select = tagsSelect(dialog);
 
-    await expect(dialog.getByText(/粘贴多个标签|逗号 \/ 分号 \/ 换行/)).toBeVisible();
+    const tagItem = dialog.locator('.ant-form-item').filter({ hasText: '标签' }).first();
+    await tagItem.locator('.anticon-question-circle, .ant-form-item-tooltip').first().hover();
+    await expect(page.getByRole('tooltip')).toContainText('粘贴多个标签');
 
     await pasteIntoTags(page, select, 'tag1,tag2，tag3');
 
