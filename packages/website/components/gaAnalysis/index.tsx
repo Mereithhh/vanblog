@@ -1,23 +1,21 @@
 import Script from "next/script";
-export default function (props: { id: string }) {
+import { describeGaInjection } from "./load";
+
+export default function GaAnalysis(props: { id: string }) {
+  const injection = describeGaInjection(props.id);
+  if (!injection) {
+    return null;
+  }
   return (
     <>
-      {props.id != "" && (
-        <>
-          <Script
-            strategy="afterInteractive"
-            src={`https://www.googletagmanager.com/gtag/js?id=${props.id}`}
-          ></Script>
-          <Script id="google-analytics" strategy="afterInteractive">
-            {`
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){window.dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${props.id}');
-        `}
-          </Script>
-        </>
-      )}
+      <Script
+        strategy={injection.strategy}
+        src={injection.src}
+        async={injection.async}
+      ></Script>
+      <Script id="google-analytics" strategy={injection.strategy}>
+        {injection.initSnippet}
+      </Script>
     </>
   );
 }
