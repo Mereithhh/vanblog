@@ -18,18 +18,18 @@ async function openArticleInfoForm(page) {
   return dialog;
 }
 
-async function assertArrowsNotPreventDefaulted(input) {
-  await input.evaluate((el) => {
-    window.__vanblogArrowKeyLog = [];
-    if (el.__vanblogArrowKeyListener) {
-      el.removeEventListener('keydown', el.__vanblogArrowKeyListener, true);
+async function installKeyLog(input, keys) {
+  await input.evaluate((el, watched) => {
+    window.__vanblogFormKeyLog = [];
+    if (el.__vanblogFormKeyListener) {
+      el.removeEventListener('keydown', el.__vanblogFormKeyListener, true);
     }
-    el.__vanblogArrowKeyListener = (e) => {
-      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+    el.__vanblogFormKeyListener = (e) => {
+      if (!watched.includes(e.key)) {
         return;
       }
       queueMicrotask(() => {
-        window.__vanblogArrowKeyLog.push({
+        window.__vanblogFormKeyLog.push({
           key: e.key,
           defaultPrevented: e.defaultPrevented,
           tag: e.target && e.target.tagName,
@@ -37,13 +37,17 @@ async function assertArrowsNotPreventDefaulted(input) {
         });
       });
     };
-    el.addEventListener('keydown', el.__vanblogArrowKeyListener, true);
-  });
+    el.addEventListener('keydown', el.__vanblogFormKeyListener, true);
+  }, keys);
+}
+
+async function assertArrowsNotPreventDefaulted(input) {
+  await installKeyLog(input, ['ArrowLeft', 'ArrowRight']);
 
   await input.press('ArrowLeft');
   await input.press('ArrowRight');
 
-  const log = await input.evaluate(() => window.__vanblogArrowKeyLog || []);
+  const log = await input.evaluate(() => window.__vanblogFormKeyLog || []);
   const left = log.filter((row) => row.key === 'ArrowLeft');
   const right = log.filter((row) => row.key === 'ArrowRight');
   expect(left.length).toBeGreaterThan(0);
@@ -81,6 +85,39 @@ async function assertArrowsMoveCaret(page, input, typed) {
   expect(await input.evaluate((el) => el.selectionStart)).toBe(typed.length);
 }
 
+async function assertBackspaceDeleteEdit(input, typed) {
+  await input.click();
+  await input.fill(typed);
+  await input.evaluate((el, value) => {
+    el.focus();
+    el.setSelectionRange(value.length, value.length);
+  }, typed);
+
+  await installKeyLog(input, ['Backspace', 'Delete']);
+
+  await input.press('Backspace');
+  expect(await input.inputValue()).toBe(typed.slice(0, -1));
+  expect(await input.evaluate((el) => el.selectionStart)).toBe(typed.length - 1);
+
+  await input.fill(typed);
+  await input.evaluate((el, value) => {
+    el.focus();
+    el.setSelectionRange(0, 0);
+  }, typed);
+
+  await input.press('Delete');
+  expect(await input.inputValue()).toBe(typed.slice(1));
+  expect(await input.evaluate((el) => el.selectionStart)).toBe(0);
+
+  const log = await input.evaluate(() => window.__vanblogFormKeyLog || []);
+  const backspace = log.filter((row) => row.key === 'Backspace');
+  const del = log.filter((row) => row.key === 'Delete');
+  expect(backspace.length).toBeGreaterThan(0);
+  expect(del.length).toBeGreaterThan(0);
+  expect(backspace.every((row) => row.defaultPrevented === false)).toBe(true);
+  expect(del.every((row) => row.defaultPrevented === false)).toBe(true);
+}
+
 test.describe('admin editor article form keys', () => {
   test('arrow keys move the caret in the article title input (#390)', async ({ page }) => {
     const dialog = await openArticleInfoForm(page);
@@ -100,5 +137,25 @@ test.describe('admin editor article form keys', () => {
     const pathname = dialog.locator('#pathname');
     await expect(pathname).toBeVisible();
     await assertArrowsMoveCaret(page, pathname, 'hello-path');
+  });
+
+  test('Backspace / Delete edit the article title input (#233)', async ({ page }) => {
+    const dialog = await openArticleInfoForm(page);
+
+    const title = dialog.locator('#title');
+    await expect(title).toBeVisible();
+    await assertBackspaceDeleteEdit(title, 'ABCDEF');
+  });
+
+  test('Backspace / Delete edit 修改信息 fields (#233)', async ({ page }) => {
+    const dialog = await openArticleInfoForm(page);
+
+    const title = dialog.locator('#title');
+    await expect(title).toBeVisible();
+    await assertBackspaceDeleteEdit(title, 'ABCDEF');
+
+    const pathname = dialog.locator('#pathname');
+    await expect(pathname).toBeVisible();
+    await assertBackspaceDeleteEdit(pathname, 'hello-path');
   });
 });

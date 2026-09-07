@@ -1,6 +1,7 @@
 /**
  * Keyboard helpers for admin forms / editor shortcuts.
  * Arrow keys must reach title and other text fields so the caret can move (#390).
+ * Backspace / Delete (and other native edit keys) must change the value (#233).
  */
 
 const NON_TEXT_INPUT_TYPES = new Set([
@@ -14,6 +15,24 @@ const NON_TEXT_INPUT_TYPES = new Set([
   'range',
   'color',
   'hidden',
+]);
+
+const NATIVE_EDIT_KEYS = new Set([
+  'backspace',
+  'delete',
+  'del',
+  'arrowleft',
+  'arrowright',
+  'arrowup',
+  'arrowdown',
+  'left',
+  'right',
+  'up',
+  'down',
+  'home',
+  'end',
+  'pageup',
+  'pagedown',
 ]);
 
 function nodeOf(target) {
@@ -50,8 +69,12 @@ function isEditableKeyboardTarget(target) {
   return false;
 }
 
+function normalizeKey(key) {
+  return key == null ? '' : String(key).toLocaleLowerCase();
+}
+
 function isArrowKey(key) {
-  const normalized = key == null ? '' : String(key).toLocaleLowerCase();
+  const normalized = normalizeKey(key);
   return (
     normalized === 'arrowleft' ||
     normalized === 'arrowright' ||
@@ -64,19 +87,23 @@ function isArrowKey(key) {
   );
 }
 
+function isNativeEditKey(key) {
+  return NATIVE_EDIT_KEYS.has(normalizeKey(key));
+}
+
 function isSaveHotkey(ev) {
   const key = ev?.key == null ? '' : String(ev.key).toLocaleLowerCase();
   return key === 's' && !!(ev?.metaKey || ev?.ctrlKey);
 }
 
 /**
- * True only for Ctrl/Cmd+S. Arrow keys and typing in inputs are never intercepted.
+ * True only for Ctrl/Cmd+S. Native edit keys and typing in inputs are never intercepted.
  */
 function shouldInterceptEditorHotkey(ev) {
   if (!ev) {
     return false;
   }
-  if (isArrowKey(ev.key)) {
+  if (isNativeEditKey(ev.key)) {
     return false;
   }
   if (isSaveHotkey(ev)) {
@@ -103,16 +130,29 @@ function handleEditorHotkey(ev, onSave) {
   return true;
 }
 
-/** Dropdown/Menu treats arrows as navigation; stop that from reaching the menu. */
+/**
+ * Dropdown/Menu treats arrows as navigation and may swallow typeahead keys.
+ * Stop bubbling so Backspace/Delete/arrows keep native field behavior.
+ * Never preventDefault — that would block caret movement and deletion.
+ */
 function stopMenuKeydown(ev) {
-  if (ev && typeof ev.stopPropagation === 'function') {
+  if (!ev) {
+    return;
+  }
+  if (typeof ev.stopPropagation === 'function') {
     ev.stopPropagation();
+  }
+  if (isNativeEditKey(ev.key) && isEditableKeyboardTarget(ev.target)) {
+    if (typeof ev.stopImmediatePropagation === 'function') {
+      ev.stopImmediatePropagation();
+    }
   }
 }
 
 module.exports = {
   isEditableKeyboardTarget,
   isArrowKey,
+  isNativeEditKey,
   isSaveHotkey,
   shouldInterceptEditorHotkey,
   handleEditorHotkey,

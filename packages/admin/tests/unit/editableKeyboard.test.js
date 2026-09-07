@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const {
   isEditableKeyboardTarget,
   isArrowKey,
+  isNativeEditKey,
   shouldInterceptEditorHotkey,
   handleEditorHotkey,
   stopMenuKeydown,
@@ -11,6 +12,7 @@ const {
 function createKeyEvent(key, extras = {}) {
   let defaultPrevented = false;
   let propagationStopped = false;
+  let immediateStopped = false;
   return {
     key,
     metaKey: false,
@@ -22,25 +24,34 @@ function createKeyEvent(key, extras = {}) {
     stopPropagation() {
       propagationStopped = true;
     },
+    stopImmediatePropagation() {
+      immediateStopped = true;
+      propagationStopped = true;
+    },
     get defaultPrevented() {
       return defaultPrevented;
     },
     get cancelBubble() {
       return propagationStopped;
     },
+    get immediatePropagationStopped() {
+      return immediateStopped;
+    },
     ...extras,
   };
 }
 
 const titleInput = { tagName: 'INPUT', type: 'text', id: 'title' };
+const pathnameInput = { tagName: 'INPUT', type: 'text', id: 'pathname' };
 const titleTextarea = { tagName: 'TEXTAREA', id: 'title' };
 const contentEditable = { tagName: 'DIV', isContentEditable: true };
 const buttonInput = { tagName: 'INPUT', type: 'button' };
 const submitButton = { tagName: 'BUTTON' };
 
-describe('editableKeyboard (#390)', () => {
+describe('editableKeyboard (#390, #233)', () => {
   it('treats title input / textarea / contenteditable as editable targets', () => {
     assert.equal(isEditableKeyboardTarget(titleInput), true);
+    assert.equal(isEditableKeyboardTarget(pathnameInput), true);
     assert.equal(isEditableKeyboardTarget(titleTextarea), true);
     assert.equal(isEditableKeyboardTarget(contentEditable), true);
     assert.equal(isEditableKeyboardTarget(buttonInput), false);
@@ -58,6 +69,17 @@ describe('editableKeyboard (#390)', () => {
     assert.equal(isArrowKey('s'), false);
   });
 
+  it('recognizes Backspace / Delete (and legacy Del) as native edit keys', () => {
+    assert.equal(isNativeEditKey('Backspace'), true);
+    assert.equal(isNativeEditKey('Delete'), true);
+    assert.equal(isNativeEditKey('Del'), true);
+    assert.equal(isNativeEditKey('Home'), true);
+    assert.equal(isNativeEditKey('End'), true);
+    assert.equal(isNativeEditKey('ArrowLeft'), true);
+    assert.equal(isNativeEditKey('s'), false);
+    assert.equal(isNativeEditKey('Enter'), false);
+  });
+
   it('does not intercept ArrowLeft / ArrowRight when the title input is focused', () => {
     for (const key of ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown']) {
       const ev = createKeyEvent(key, { target: titleInput });
@@ -67,6 +89,20 @@ describe('editableKeyboard (#390)', () => {
       assert.equal(handled, false);
       assert.equal(ev.defaultPrevented, false);
       assert.deepEqual(saved, []);
+    }
+  });
+
+  it('does not intercept Backspace / Delete when title or 修改信息 fields are focused', () => {
+    for (const target of [titleInput, pathnameInput, titleTextarea, contentEditable]) {
+      for (const key of ['Backspace', 'Delete', 'Del', 'Home', 'End']) {
+        const ev = createKeyEvent(key, { target });
+        assert.equal(shouldInterceptEditorHotkey(ev), false);
+        const handled = handleEditorHotkey(ev, () => {
+          throw new Error('save must not run');
+        });
+        assert.equal(handled, false);
+        assert.equal(ev.defaultPrevented, false);
+      }
     }
   });
 
@@ -114,5 +150,15 @@ describe('editableKeyboard (#390)', () => {
     stopMenuKeydown(ev);
     assert.equal(ev.cancelBubble, true);
     assert.equal(ev.defaultPrevented, false);
+  });
+
+  it('stopMenuKeydown does not preventDefault Backspace / Delete on editable fields', () => {
+    for (const key of ['Backspace', 'Delete']) {
+      const ev = createKeyEvent(key, { target: titleInput });
+      stopMenuKeydown(ev);
+      assert.equal(ev.cancelBubble, true);
+      assert.equal(ev.immediatePropagationStopped, true);
+      assert.equal(ev.defaultPrevented, false);
+    }
   });
 });
