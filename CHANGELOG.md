@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台搜索弹层可用键盘操作：打开后焦点进入对话框，Escape 关闭且不再在关闭时误拦截 Escape，Tab / Shift+Tab 只在弹层内循环，清除改为真正的按钮（Enter/空格），方向键浏览结果并用 Enter 打开；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「Not interactive with keyboard」一项（不含跳转到第 N 页），其余无障碍项仍开放
 - 前台顶栏搜索、主题、RSS、管理后台、移动端菜单和代码块复制改为真正的按钮/链接，可用键盘 Tab 聚焦并用 Enter/空格激活（RSS 仍复制订阅地址）；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「Inaccessible buttons with keyboard」一项（不含搜索框内键盘导航），其余无障碍项仍开放
 - 前台分页支持方向键在页码控件间移动焦点，省略号不再是链接，禁用的上一页/下一页不可聚焦；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「Pagination issues」一项（不含跳转到第 N 页），其余无障碍项仍开放
 - 前台夜间模式文章代码块部分高亮（如正则、文档注释）过暗，现提高到 WCAG AA 对比度；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「代码块对比度」一项，其余无障碍项仍开放

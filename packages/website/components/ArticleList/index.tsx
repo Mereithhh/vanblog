@@ -10,6 +10,8 @@ export default (props: {
   showYear?: boolean;
   openArticleLinksInNewWindow: boolean;
   onClick?: () => void;
+  /** Optional data-* attr on each result <a>, used by the search dialog. */
+  itemAttr?: string;
 }) => (
   <div className="space-y-2" onClick={props.onClick}>
     {props.articles.map((article) => (
@@ -17,6 +19,7 @@ export default (props: {
         href={`/post/${getArticlePath(article)}`}
         key={article.id}
         target={getTarget(props.openArticleLinksInNewWindow)}
+        {...(props.itemAttr ? { [props.itemAttr]: "" } : {})}
       >
         <div className="dark:border-dark-2 dark:hover:border-nav-dark-light flex items-center border-b pb-1 border-dashed cursor-pointer group border-gray-200 hover:border-gray-400 ">
           <div className="text-gray-400 flex-grow-0 flex-shrink-0 text-sm  group-hover:text-gray-600 dark:text-dark-400 dark:group-hover:text-dark-light">

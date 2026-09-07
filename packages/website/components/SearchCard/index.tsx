@@ -3,6 +3,19 @@ import { searchArticles } from "../../api/search";
 import { useDebounce } from "react-use";
 import ArticleList from "../ArticleList";
 import KeyCard from "../KeyCard";
+import {
+  SEARCH_CLEAR_LABEL,
+  SEARCH_DIALOG_INPUT_ATTR,
+  SEARCH_DIALOG_LABEL,
+  SEARCH_INPUT_LABEL,
+  SEARCH_RESULT_ATTR,
+  SEARCH_RESULTS_LABEL,
+  describeSearchDialog,
+  focusSearchDialogInput,
+  handleSearchDialogKeyDown,
+  handleSearchShortcutKeyDown,
+} from "./a11y";
+import { ICON_ACTION_BUTTON_CLASS } from "../NavBar/a11y";
 
 export default function (props: {
   visible: boolean;
@@ -13,30 +26,59 @@ export default function (props: {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [typing, setTyping] = useState(false);
-  const innerRef = useRef(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const visibleRef = useRef(props.visible);
+  const setVisibleRef = useRef(props.setVisible);
+  visibleRef.current = props.visible;
+  setVisibleRef.current = props.setVisible;
+
+  const closeSearch = () => {
+    document.body.style.overflow = "auto";
+    setVisibleRef.current(false);
+  };
+
+  const openSearch = () => {
+    document.body.style.overflow = "hidden";
+    setVisibleRef.current(true);
+  };
 
   useEffect(() => {
+    const onKeyDown = (ev: KeyboardEvent) => {
+      const shortcut = handleSearchShortcutKeyDown({
+        key: ev.key,
+        ctrlKey: ev.ctrlKey,
+        metaKey: ev.metaKey,
+        visible: visibleRef.current,
+        preventDefault: () => ev.preventDefault(),
+        onOpen: openSearch,
+        onClose: closeSearch,
+      });
+      if (shortcut) return;
+      if (!visibleRef.current || !innerRef.current) return;
+      handleSearchDialogKeyDown({
+        key: ev.key,
+        shiftKey: ev.shiftKey,
+        visible: true,
+        currentTarget: innerRef.current,
+        target: ev.target,
+        preventDefault: () => ev.preventDefault(),
+      });
+    };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       window.removeEventListener("keydown", onKeyDown);
     };
   }, []);
-  const onKeyDown = (ev: KeyboardEvent) => {
-    if (ev.key == "Escape") {
-      props.setVisible(false);
-      event?.preventDefault();
-      document.body.style.overflow = "auto";
+
+  useEffect(() => {
+    if (props.visible) {
+      focusSearchDialogInput({
+        querySelector: (selector) =>
+          innerRef.current?.querySelector(selector) ?? inputRef.current,
+      });
     }
-    if (ev.ctrlKey == true || ev.metaKey == true) {
-      if (ev.key.toLocaleLowerCase() == "k") {
-        props.setVisible(true);
-        event?.preventDefault();
-        document.body.style.overflow = "hidden";
-      }
-    }
-    return false;
-  };
+  }, [props.visible]);
   const onSearch = async (search: string) => {
     setTyping(false);
     setLoading(true);
@@ -84,11 +126,9 @@ export default function (props: {
           <ArticleList
             showYear={true}
             articles={result}
+            itemAttr={SEARCH_RESULT_ATTR}
             openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
-            onClick={() => {
-              props.setVisible(false);
-              document.body.style.overflow = "auto";
-            }}
+            onClick={closeSearch}
           ></ArticleList>
         </div>
       );
@@ -111,16 +151,18 @@ export default function (props: {
       }}
       onClick={(ev) => {
         if (innerRef.current) {
-          if (!(innerRef.current as any).contains(ev.target as any)) {
-            // 外
-            document.body.style.overflow = "auto";
-            props.setVisible(false);
+          if (!innerRef.current.contains(ev.target as Node)) {
+            closeSearch();
           }
         }
       }}
     >
       <div
         ref={innerRef}
+        role={describeSearchDialog().role}
+        aria-modal={props.visible}
+        aria-label={SEARCH_DIALOG_LABEL}
+        aria-hidden={!props.visible}
         className="bg-white w-3/4  p-4 rounded-xl card-shadow dark:card-shadow-dark transition-all dark:bg-dark"
         style={{
           minHeight: "280px",
@@ -143,6 +185,7 @@ export default function (props: {
             width="24"
             height="24"
             fill="currentColor"
+            aria-hidden="true"
           >
             <path
               d="M789.804097 737.772047 742.865042 784.699846 898.765741 940.600545 945.704796 893.672746Z"
@@ -156,6 +199,8 @@ export default function (props: {
           <input
             ref={inputRef}
             value={search}
+            aria-label={SEARCH_INPUT_LABEL}
+            {...{ [SEARCH_DIALOG_INPUT_ATTR]: "" }}
             onChange={(ev) => {
               setTyping(true);
               setSearch(ev.currentTarget.value);
@@ -163,7 +208,7 @@ export default function (props: {
                 setResult([]);
               }
             }}
-            placeholder={"搜索内容"}
+            placeholder={SEARCH_INPUT_LABEL}
             className="w-full ml-2 text-base "
             style={{
               height: 32,
@@ -174,14 +219,18 @@ export default function (props: {
             }}
           ></input>
 
-          <div
-            className="transition-all transform hover:scale-125 text-gray-600 dark:text-dark"
+          <button
+            type="button"
+            aria-label={SEARCH_CLEAR_LABEL}
+            tabIndex={showClear ? 0 : -1}
+            className={`${ICON_ACTION_BUTTON_CLASS} transition-all transform hover:scale-125 text-gray-600 dark:text-dark`}
             style={{
               visibility: showClear ? "visible" : "hidden",
             }}
             onClick={() => {
               setSearch("");
               setResult([]);
+              inputRef.current?.focus();
             }}
           >
             <svg
@@ -193,18 +242,20 @@ export default function (props: {
               width="20"
               height="20"
               className="cursor-pointer"
+              aria-hidden="true"
             >
               <path
                 d="M512 39.384615C250.092308 39.384615 39.384615 250.092308 39.384615 512s210.707692 472.615385 472.615385 472.615385 472.615385-210.707692 472.615385-472.615385S773.907692 39.384615 512 39.384615z m96.492308 488.369231l153.6 153.6c7.876923 7.876923 7.876923 19.692308 0 27.569231l-55.138462 55.138461c-7.876923 7.876923-19.692308 7.876923-27.569231 0L525.784615 610.461538c-7.876923-7.876923-19.692308-7.876923-27.56923 0l-153.6 153.6c-7.876923 7.876923-19.692308 7.876923-27.569231 0L261.907692 708.923077c-7.876923-7.876923-7.876923-19.692308 0-27.569231l153.6-153.6c7.876923-7.876923 7.876923-19.692308 0-27.569231l-155.56923-155.56923c-7.876923-7.876923-7.876923-19.692308 0-27.569231l55.138461-55.138462c7.876923-7.876923 19.692308-7.876923 27.569231 0l155.569231 155.569231c7.876923 7.876923 19.692308 7.876923 27.56923 0l153.6-153.6c7.876923-7.876923 19.692308-7.876923 27.569231 0l55.138462 55.138462c7.876923 7.876923 7.876923 19.692308 0 27.56923l-153.6 153.6c-5.907692 7.876923-5.907692 19.692308 0 27.569231z"
                 p-id="2259"
               ></path>
             </svg>
-          </div>
+          </button>
           <KeyCard type="esc"></KeyCard>
         </div>
         <hr className="my-2 dark:border-hr-dark"></hr>
         <div
           className="dark:text-dark"
+          aria-label={SEARCH_RESULTS_LABEL}
           style={{ maxHeight: 400, overflowY: "auto" }}
         >
           {renderResult()}

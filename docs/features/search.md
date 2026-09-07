@@ -19,6 +19,8 @@ VanBlog 会通过你输入的关键词模糊匹配文章的内容、题目、标
 ::: tip
 
 - 按下 <kbd>Esc</kbd> 可关闭搜索卡片
+- 打开后焦点进入搜索框；<kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> 只在弹层内循环
+- <kbd>↑</kbd> / <kbd>↓</kbd> 在结果间移动，<kbd>Enter</kbd> 打开当前结果；清除按钮可用 <kbd>Enter</kbd> / 空格
 - 不支持拼音搜索
 
 :::
