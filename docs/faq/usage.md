@@ -238,3 +238,15 @@ docker compose restart vanblog
 ```
 
 旧版 `resetHttps.js` 只删数据库记录、不会关 Caddy 跳转，执行后需要重启容器才会恢复 HTTP / IP 访问。
+
+## 卸载后脚本备份文件被删掉了
+
+旧版一键脚本「卸载」会 `rm -rf /var/vanblog`，而选项 10「备份 VanBlog」正好把 `vanblog-backup-*.tar.gz` 写在这个目录里，所以卸载会把刚做好的备份一起删掉（[#408](https://github.com/Mereithhh/vanblog/issues/408)）。
+
+请先用选项 20 更新到最新脚本，再卸载。新脚本只会删除安装数据（`data/`）和编排文件，**不会**删除 `vanblog-backup-*`，也不会动安装目录以外的备份；删除前会列出将保留的备份并要求确认。
+
+```bash
+curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh uninstall
+```
+
+卸载完成后，备份仍在 `/var/vanblog/vanblog-backup-*`（若安装目录里只剩下备份，目录本身也会保留）。请尽快把备份拷到别处再重装。

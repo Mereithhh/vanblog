@@ -20,6 +20,8 @@ curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog
 curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh restore
 ```
 
+脚本备份写在安装目录（默认 `/var/vanblog/vanblog-backup-*.tar.gz`）。卸载只会删除 `data/` 和编排文件，**不会**删掉这些备份，也不会动安装目录外的备份目录。卸载前仍建议先把备份拷到别处。
+
 @tab docker 手动部署时
 
 `docker` 部署的 VanBlog 所有的状态都存储在持久化目录中，所以只需要备份/迁移持久化目录。
