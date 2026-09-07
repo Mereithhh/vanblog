@@ -51,6 +51,7 @@ describe('admin preview code-block line numbers (#404)', () => {
     assert.match(pluginSrc, /CODE_BLOCK_LINE_NUMBERS_CLASS/);
     assert.match(pluginSrc, /readFencedCodeText/);
     assert.match(pluginSrc, /if \(language === 'mermaid'\) return/);
+    assert.match(pluginSrc, /findFencedCodeNode/);
   });
 
   it('keeps theme-safe gutter colors and mermaid dark canvas', () => {

@@ -28,6 +28,7 @@ import { Heading } from './plugins/heading';
 import { customCodeBlock } from './plugins/codeBlock';
 import { LinkTarget } from './plugins/linkTarget';
 import { mermaidForEditor } from './plugins/mermaidSafety';
+import { withSafeViewerEffects } from './plugins/previewSafety';
 import { tocViewportGuard } from './plugins/tocViewport';
 
 const sanitize = (schema) => {
@@ -60,7 +61,7 @@ export default function EditorComponent(props: {
   const navTheme = initialState.settings.navTheme;
   const themeClass = navTheme.toLowerCase().includes('dark') ? 'dark' : 'light';
   const plugins = useMemo(() => {
-    return [
+    return withSafeViewerEffects([
       customContainer(),
       gfm({ locale: cn }),
       highlight(),
@@ -77,7 +78,7 @@ export default function EditorComponent(props: {
       Heading(),
       customCodeBlock(),
       LinkTarget(),
-    ];
+    ]);
   }, [themeClass]);
 
   return (

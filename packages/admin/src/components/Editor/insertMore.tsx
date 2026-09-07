@@ -1,6 +1,9 @@
 import { BytemdPlugin } from 'bytemd';
+import { moreMarkerRehype } from './plugins/moreMarker';
+
 export function insertMore(): BytemdPlugin {
   return {
+    rehype: (processor) => processor.use(moreMarkerRehype),
     actions: [
       {
         title: '插入 more 标记',

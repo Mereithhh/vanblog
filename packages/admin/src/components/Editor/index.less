@@ -18,6 +18,11 @@ body .emoji-categories {
   display: flex;
 }
 
+/* <!-- more --> becomes a real node so ByteMD `{@html}` can re-render after Enter (#429). */
+.vanblog-more-marker {
+  display: none;
+}
+
 .mr-1 {
   margin-right: 4px;
 }

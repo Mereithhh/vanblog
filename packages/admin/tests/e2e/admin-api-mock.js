@@ -59,6 +59,20 @@ B -->|影响| C[幸运指数];
 \`\`\`
 `;
 
+const ISSUE_429_ARTICLE_CONTENT = `## VanBlog 文章测试
+
+:::tip{title="现在支持高亮块啦"}
+\`\`\`js
+console.log("欢迎体验")
+\`\`\`
+:::
+
+<!-- more -->
+----
+# 这是一级标题
+## 这是二级标题
+`;
+
 const ISSUE_391_MERMAID = `\`\`\`mermaid
 graph TD;
 style A fill:#9fe1e7,stroke:#333,stroke-width:2px;
@@ -133,6 +147,21 @@ ${nestedFiller('子级填充', 18)}
 文末。
 `;
 
+const ARTICLE_429 = {
+  statusCode: 200,
+  data: {
+    id: 429,
+    title: 'Markdown 语法测试',
+    content: ISSUE_429_ARTICLE_CONTENT,
+    category: '测试',
+    tags: ['Markdown'],
+    hidden: false,
+    pathname: 'markdown-syntax-test',
+    updatedAt: '2022-08-30T00:00:00.000Z',
+    createdAt: '2022-08-30T00:00:00.000Z',
+  },
+};
+
 const ARTICLE_370 = {
   statusCode: 200,
   data: {
@@ -183,6 +212,12 @@ async function mockAdminApis(page) {
     if (path === '/api/admin/article/370' && method === 'PUT') {
       return json(route, { statusCode: 200, data: ARTICLE_370.data });
     }
+    if (path === '/api/admin/article/429' && method === 'GET') {
+      return json(route, ARTICLE_429);
+    }
+    if (path === '/api/admin/article/429' && method === 'PUT') {
+      return json(route, { statusCode: 200, data: ARTICLE_429.data });
+    }
     if (path === '/api/admin/tag/all' && method === 'GET') {
       return json(route, { statusCode: 200, data: ['E2E', 'Markdown'] });
     }
@@ -208,6 +243,7 @@ async function loginAsAdmin(page) {
 module.exports = {
   MERMAID_ARTICLE_CONTENT,
   ISSUE_391_MERMAID,
+  ISSUE_429_ARTICLE_CONTENT,
   TOC_NESTED_ARTICLE_CONTENT,
   mockAdminApis,
   loginAsAdmin,
