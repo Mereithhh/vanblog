@@ -1,6 +1,7 @@
 import Footer from '@/components/Footer';
 import { login } from '@/services/van-blog/api';
 import { encryptPwd } from '@/services/van-blog/encryptPwd';
+import { notifyLoginSuccess } from '@/services/van-blog/requestError';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { message } from 'antd';
@@ -17,8 +18,7 @@ const Login = () => {
       const msg = await login({ ...values, type });
 
       if (msg.statusCode === 200) {
-        const defaultLoginSuccessMessage = '登录成功！';
-        message.success(defaultLoginSuccessMessage);
+        notifyLoginSuccess(message);
         const token = msg.data.token;
         const user = {
           name: msg.data.user.name,

@@ -9,6 +9,10 @@ import LogoutButton from './components/LogoutButton';
 import ThemeButton from './components/ThemeButton';
 import { fetchAllMeta } from './services/van-blog/api';
 import { checkUrl } from './services/van-blog/checkUrl';
+import {
+  adaptAdminResponse,
+  handleAdminRequestError,
+} from './services/van-blog/requestError';
 import { beforeSwitchTheme, getInitTheme, mapTheme } from './services/van-blog/theme';
 const isDev = process.env.UMI_ENV === 'dev';
 const loginPath = '/user/login';
@@ -264,20 +268,16 @@ export const layout = ({ initialState, setInitialState }) => {
 export const request = {
   errorConfig: {
     adaptor: (resData) => {
-      let errorMessage = resData.message;
-      let success = resData?.statusCode == 200 || resData?.statusCode == 233;
-      if (resData?.statusCode == 401 && resData?.message == 'Unauthorized') {
-        errorMessage = '登录失效';
-      }
-      if (errorMessage == 'Forbidden resource') {
-        errorMessage = '权限不足！';
-      }
-      return {
-        ...resData,
-        success,
-        errorMessage,
-      };
+      return adaptAdminResponse(resData, {
+        pathname: history?.location?.pathname,
+      });
     },
+  },
+  errorHandler: (error) => {
+    handleAdminRequestError(error, {
+      message,
+      pathname: history?.location?.pathname,
+    });
   },
   requestInterceptors: [
     (url, options) => {
