@@ -4,6 +4,12 @@ icon: wrench
 order: 2
 ---
 
+## 开启 uBlock 后日志管理无法加载
+
+后台「站点管理 / 日志管理」打开后提示 `NetworkError when attempting to fetch resource`、表格或系统日志空白，关掉 uBlock Origin（Chrome / Firefox 都一样）又正常。这是广告拦截列表常会拦截路径里带 `log` 的请求（旧接口是 `/api/admin/log`），不是账号或权限问题。已改为请求 `/api/admin/audit`（[#289](https://github.com/Mereithhh/vanblog/issues/289)）；旧路径仍可用。请升级到包含该修复的版本。
+
+页面地址仍是 `/admin/site/log`，只改了拉取数据的 API。
+
 ## 前台夜间模式流程图看不清
 
 夜间模式阅读文章时，mermaid / 流程图以前按 mermaid 默认浅色主题渲染，浅色节点和发灰的线条贴在深色正文底上，对比很差。已修复（[#404](https://github.com/Mereithhh/vanblog/issues/404)）：站点或后台预览为暗色时 mermaid 使用 `theme: 'dark'`，并提高文字/描边对比度；白天模式仍是原来的浅色图表。请升级到包含该修复的版本。

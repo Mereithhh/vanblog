@@ -4,7 +4,7 @@ icon: file-lines
 order: 5
 ---
 
-VanBlog 现在已上线登录日志、系统日志和流水线日志，可以在后台日志管理中查看。
+VanBlog 现在已上线登录日志、系统日志和流水线日志，可以在后台日志管理中查看。后台拉取这些记录走 `GET /api/admin/audit`（不再用会被广告拦截列表误杀的 `/api/admin/log`）。旧路径仍可用。
 
 ![日志管理](https://pic.mereith.com/img/a76cceb104214002da3c0c92d592bfff.clipboard-2023-06-26.webp)
 

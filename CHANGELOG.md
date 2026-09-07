@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台日志管理改为请求 `/api/admin/audit`，避免 uBlock Origin 等广告拦截列表因路径含 `log` 而拦截请求（`NetworkError when attempting to fetch resource`）；旧 `/api/admin/log` 仍可用。[#289](https://github.com/Mereithhh/vanblog/issues/289)
 - 一键脚本「更新」先停并移除容器，再 `compose pull vanblog` / `up`，只删除未再被占用的旧镜像；成功文案仅在运行中的 vanblog 镜像/版本确实前进后打印，失败以非 0 退出。中国镜像 `latest` 未同步时改拉 `mereith/van-blog:latest`。[#421](https://github.com/Mereithhh/vanblog/issues/421) Related to [#404](https://github.com/Mereithhh/vanblog/issues/404)
 - 前台（以及同样套了 ByteMD 的后台预览）围栏代码块重新显示行号：每行带 `code-line` / `data-line` 和 `aria-hidden` 的 gutter，浅色/深色对比可读；mermaid 围栏不加行号。覆盖 [#404](https://github.com/Mereithhh/vanblog/issues/404) 的代码块行号（更新脚本见上一项）
 - 前台夜间模式（以及同样套了暗色的后台预览）里 mermaid / 流程图不再用浅色主题画在深色底上：站点为暗色时 mermaid 使用 `theme: 'dark'` 和提高对比度的 themeVariables，容器带 `mermaid-theme-dark`；白天模式仍是默认浅色主题。覆盖 [#404](https://github.com/Mereithhh/vanblog/issues/404) 的流程图对比度（更新脚本见上一项）
