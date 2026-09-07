@@ -1,3 +1,4 @@
+import React from "react";
 import { SocialType } from "../api/getAllData";
 
 export function getIcon(type: SocialType, size: number, iconUrl?: string) {
