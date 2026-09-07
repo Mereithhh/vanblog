@@ -52,6 +52,26 @@ window.onload = () => {
 };
 ```
 
+## 接入 Umami 等第三方统计
+
+VanBlog 没有单独的 Umami 开关。把官方跟踪脚本放到定制化里即可，和内置的 Google Analytics / 百度统计可以并存。
+
+推荐用 **自定义 HTML (head)**（首屏源码里就有，适合带 `data-*` 的 script）：
+
+```html
+<script
+  defer
+  src="https://cloud.umami.is/script.js"
+  data-website-id="你的-Website-ID"
+></script>
+```
+
+自建 Umami 时把 `src` 换成你的脚本地址。保存前确认 **站点配置 / 布局设置** 里「是否开启客制化功能」为开启。
+
+也可以把同样的标签放到 **自定义 HTML (body)**。**自定义 Script** 只能写 JavaScript（不是 HTML），需要自己 `createElement('script')` 再设置 `data-website-id`。
+
+Google Analytics 请用站点配置里的测量 ID 字段，不要在这里再贴一份 gtag。说明见 [访客统计](../features/visitor.md#进阶分析) 与 [FAQ](../faq/usage.md#配置了-google-analytics-但谷歌显示尚未收到数据)。
+
 ## 使用演示
 
 通过定制化，你可以实现很多有趣的功能，比如通过 [Sakana! Widget](https://github.com/dsrkafuu/sakana-widget) 项目，你可以在博客中添加挂件:

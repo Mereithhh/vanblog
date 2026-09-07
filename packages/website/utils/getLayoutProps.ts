@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { AuthorCardProps } from "../components/AuthorCard";
 import { checkLogin } from "./auth";
 import { sanitizeArticlesPerPage } from "./articlesPerPage";
+import { normalizeGaAnalysisId } from "../components/gaAnalysis/load";
 export interface LayoutProps {
   description: string;
   ipcNumber: string;
@@ -134,7 +135,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     siteName: siteInfo.siteName,
     siteDesc: siteInfo.siteDesc,
     baiduAnalysisID: siteInfo?.baiduAnalysisId || "",
-    gaAnalysisID: siteInfo?.gaAnalysisId || "",
+    gaAnalysisID: normalizeGaAnalysisId(siteInfo?.gaAnalysisId),
     logoDark: siteInfo?.siteLogoDark || "",
     showExpirationReminder: showExpirationReminder,
     description: siteInfo?.siteDesc || "",

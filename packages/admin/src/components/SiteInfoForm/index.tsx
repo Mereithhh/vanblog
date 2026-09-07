@@ -1,3 +1,4 @@
+import { BAIDU_ANALYSIS_FIELD, GA_ANALYSIS_FIELD } from '@/utils/analysisFields';
 import {
   ProFormDateTimePicker,
   ProFormDigit,
@@ -176,14 +177,16 @@ export default function (props: {
             required={false}
           />
           <ProFormText
-            name="gaAnalysisId"
-            label="Google Analysis ID"
-            placeholder={'请输入 Google Analysis ID，留空表示不启用'}
+            name={GA_ANALYSIS_FIELD.name}
+            label={GA_ANALYSIS_FIELD.label}
+            placeholder={GA_ANALYSIS_FIELD.placeholder}
+            tooltip={GA_ANALYSIS_FIELD.tooltip}
           />
           <ProFormText
-            name="baiduAnalysisId"
-            label="Baidu 分析 ID"
-            placeholder={'请输入 Baidu 分析 ID，留空表示不启用'}
+            name={BAIDU_ANALYSIS_FIELD.name}
+            label={BAIDU_ANALYSIS_FIELD.label}
+            placeholder={BAIDU_ANALYSIS_FIELD.placeholder}
+            tooltip={BAIDU_ANALYSIS_FIELD.tooltip}
           />
           <ProFormSelect
             name={'enableComment'}
