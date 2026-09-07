@@ -8,6 +8,7 @@ import lineReader from 'line-reader';
 import { config } from 'src/config';
 import path from 'path';
 import { checkOrCreate } from 'src/utils/checkFolder';
+import { sanitizePagination } from 'src/utils/pagination';
 import { Pipeline } from 'src/scheme/pipeline.schema';
 import { CodeResult } from '../pipeline/pipeline.provider';
 @Injectable()
@@ -59,8 +60,9 @@ export class LogProvider {
     });
   }
   async searchLog(page: number, pageSize: number, eventType: EventType) {
-    const skip = page * pageSize - pageSize;
-    const all = page * pageSize;
+    const paging = sanitizePagination(page, pageSize, { defaultPageSize: 10 });
+    const skip = paging.skip;
+    const all = paging.page * paging.pageSize;
     const readFunc = (eventType) => {
       return new Promise((resolve) => {
         const res = [];

@@ -12,6 +12,7 @@ import { version } from 'src/utils/loadConfig';
 import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
 import { encode } from 'js-base64';
 import { getWalinePublicCommentSetting } from 'src/utils/walineExtra';
+import { sanitizePagination } from 'src/utils/pagination';
 
 @ApiTags('public')
 @Controller('/api/public/')
@@ -144,9 +145,10 @@ export class PublicController {
     @Query('sortCreatedAt') sortCreatedAt?: SortOrder,
     @Query('sortTop') sortTop?: SortOrder,
   ) {
+    const paging = sanitizePagination(page, pageSize, { allowUnlimited: true });
     const option = {
-      page: parseInt(page as any),
-      pageSize: parseInt(pageSize as any),
+      page: paging.page,
+      pageSize: paging.pageSize,
       category,
       tags,
       toListView,

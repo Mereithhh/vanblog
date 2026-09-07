@@ -19,6 +19,7 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { config } from 'src/config';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
 import { ApiToken } from 'src/provider/swagger/token';
+import { sanitizePagination } from 'src/utils/pagination';
 
 @ApiTags('draft')
 @UseGuards(...AdminGuard)
@@ -43,9 +44,10 @@ export class DraftController {
     @Query('startTime') startTime?: string,
     @Query('endTime') endTime?: string,
   ) {
+    const paging = sanitizePagination(page, pageSize);
     const option = {
-      page,
-      pageSize,
+      page: paging.page,
+      pageSize: paging.pageSize,
       category,
       tags,
       title,

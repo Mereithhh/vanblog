@@ -4,6 +4,7 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { LogProvider } from 'src/provider/log/log.provider';
 import { EventType } from 'src/provider/log/types';
 import { ApiToken } from 'src/provider/swagger/token';
+import { sanitizePagination } from 'src/utils/pagination';
 
 /** Canonical path: avoid a `log` segment so ad blockers do not drop the request (#289). */
 export const ADMIN_AUDIT_API_PATH = '/api/admin/audit';
@@ -23,8 +24,8 @@ export class LogController {
     @Query('pageSize') pageSize: number,
     @Query('event') event: EventType,
   ) {
-    // console.log(event, page, pageSize);
-    const data = await this.logProvider.searchLog(page, pageSize, event);
+    const paging = sanitizePagination(page, pageSize, { defaultPageSize: 10 });
+    const data = await this.logProvider.searchLog(paging.page, paging.pageSize, event);
     return {
       statusCode: 200,
       data,

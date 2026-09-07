@@ -19,6 +19,7 @@ import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
 import { ApiToken } from 'src/provider/swagger/token';
+import { sanitizePagination } from 'src/utils/pagination';
 @ApiTags('article')
 @ApiToken
 @UseGuards(...AdminGuard)
@@ -45,9 +46,10 @@ export class ArticleController {
     @Query('startTime') startTime?: string,
     @Query('endTime') endTime?: string,
   ) {
+    const paging = sanitizePagination(page, pageSize, { allowUnlimited: true });
     const option = {
-      page: parseInt(page as any),
-      pageSize: parseInt(pageSize as any),
+      page: paging.page,
+      pageSize: paging.pageSize,
       category,
       tags,
       title,

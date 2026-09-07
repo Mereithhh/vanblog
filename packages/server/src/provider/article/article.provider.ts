@@ -6,6 +6,7 @@ import { Article, ArticleDocument } from 'src/scheme/article.schema';
 import { parseImgLinksOfMarkdown } from 'src/utils/parseImgOfMarkdown';
 import { wordCount } from 'src/utils/wordCount';
 import { parseNumericId, tryParseNumericId } from 'src/utils/numericId';
+import { sanitizePagination, UNLIMITED_PAGE_SIZE } from 'src/utils/pagination';
 import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';
 import { sleep } from 'src/utils/sleep';
@@ -586,16 +587,17 @@ export class ArticleProvider {
     if (option.withWordCount) {
       view = isPublic ? this.publicView : this.adminView;
     }
+    const paging = sanitizePagination(option.page, option.pageSize, { allowUnlimited: true });
+    option.page = paging.page;
+    option.pageSize = paging.pageSize;
     let articlesQuery = this.articleModel.find(query, view).sort(sort);
-    if (option.pageSize != -1 && !isPublic) {
-      articlesQuery = articlesQuery
-        .skip(option.pageSize * option.page - option.pageSize)
-        .limit(option.pageSize);
+    if (option.pageSize != UNLIMITED_PAGE_SIZE && !isPublic) {
+      articlesQuery = articlesQuery.skip(paging.skip).limit(option.pageSize);
     }
 
     let articles = await articlesQuery.exec();
     // public 下 包括所有的，
-    if (isPublic && option.pageSize != -1) {
+    if (isPublic && option.pageSize != UNLIMITED_PAGE_SIZE) {
       // 把 top 的诺到前面去
       const topArticles = articles.filter((a: any) => {
         const top = a?._doc?.top || a?.top;
@@ -617,7 +619,7 @@ export class ArticleProvider {
         }
       });
       articles = [...sortedTopArticles, ...notTopArticles];
-      const skip = option.pageSize * option.page - option.pageSize;
+      const skip = paging.skip;
       const rawEnd = skip + option.pageSize;
       const end = rawEnd > articles.length - 1 ? articles.length : rawEnd;
       articles = articles.slice(skip, end);
