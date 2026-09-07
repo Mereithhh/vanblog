@@ -16,6 +16,9 @@ jobs:
       - name: Run vanblog.sh update tests
         run: bash scripts/tests/vanblog-update.test.sh
 
+      - name: Run vanblog.sh https reset tests
+        run: bash scripts/tests/vanblog-reset-https.test.sh
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:

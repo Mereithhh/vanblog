@@ -10,7 +10,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.3.3"
+VANBLOG_SCRIPT_VERSION="v0.3.4"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -462,10 +462,257 @@ update() {
   return 0
 }
 
+vanblog_data_dir() {
+  echo "${VANBLOG_DATA_PATH:-${VANBLOG_BASE_PATH}/data}"
+}
+
+vanblog_caddy_dir() {
+  echo "$(vanblog_data_dir)/caddy"
+}
+
+# Host-side HTTPS redirect leftovers: Caddy autosave / Caddyfile / https.json flags.
+https_redirect_files() {
+  local caddy_dir
+  caddy_dir="$(vanblog_caddy_dir)"
+  local data_dir
+  data_dir="$(vanblog_data_dir)"
+  find "${caddy_dir}" "${data_dir}" "${VANBLOG_BASE_PATH}" \
+    \( -name 'autosave.json' -o -name 'caddy.json' -o -name 'Caddyfile' -o -name 'Caddyfile.*' -o -name 'https.json' \) \
+    2>/dev/null
+}
+
+https_redirect_config_present() {
+  local file
+  while IFS= read -r file; do
+    [[ -f "${file}" ]] || continue
+    if grep -Eq 'http_redirect|"listener_wrappers"|redir[[:space:]].*https|"redirect"[[:space:]]*:[[:space:]]*true' "${file}"; then
+      return 0
+    fi
+  done < <(https_redirect_files)
+  return 1
+}
+
+strip_json_https_redirect() {
+  local file="$1"
+  if command -v python3 >/dev/null 2>&1; then
+    python3 - "${file}" <<'PY'
+import json
+import sys
+
+path = sys.argv[1]
+try:
+    with open(path, "r", encoding="utf-8") as fh:
+        data = json.load(fh)
+except Exception:
+    sys.exit(2)
+
+changed = False
+
+
+def strip_wrappers(obj):
+    global changed
+    if isinstance(obj, dict):
+        wrappers = obj.get("listener_wrappers")
+        if isinstance(wrappers, list):
+            kept = [
+                item
+                for item in wrappers
+                if not (
+                    item == "http_redirect"
+                    or (isinstance(item, dict) and item.get("wrapper") == "http_redirect")
+                )
+            ]
+            if len(kept) != len(wrappers):
+                changed = True
+            if kept:
+                obj["listener_wrappers"] = kept
+            else:
+                del obj["listener_wrappers"]
+                changed = True
+        elif "listener_wrappers" in obj:
+            del obj["listener_wrappers"]
+            changed = True
+        if obj.get("redirect") is True and set(obj.keys()) <= {"redirect", "domains", "type"}:
+            obj["redirect"] = False
+            changed = True
+        for value in list(obj.values()):
+            strip_wrappers(value)
+    elif isinstance(obj, list):
+        for value in obj:
+            strip_wrappers(value)
+
+
+strip_wrappers(data)
+if changed:
+    with open(path, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, ensure_ascii=False)
+    sys.exit(0)
+sys.exit(1)
+PY
+    return $?
+  fi
+
+  if grep -q 'http_redirect\|listener_wrappers\|"redirect"[[:space:]]*:[[:space:]]*true' "${file}"; then
+    sed -i \
+      -e 's/,"listener_wrappers":\[{"wrapper":"http_redirect"}\]//g' \
+      -e 's/"listener_wrappers":\[{"wrapper":"http_redirect"}\],//g' \
+      -e 's/"listener_wrappers":\[{"wrapper":"http_redirect"}\]//g' \
+      -e 's/"redirect"[[:space:]]*:[[:space:]]*true/"redirect":false/g' \
+      "${file}"
+    return 0
+  fi
+  return 1
+}
+
+strip_caddyfile_https_redirect() {
+  local file="$1"
+  if ! grep -Eq 'http_redirect|redir[[:space:]].*https' "${file}"; then
+    return 1
+  fi
+  # Drop force-HTTPS redir / http_redirect so the HTTP site block can serve again.
+  sed -i \
+    -e '/http_redirect/d' \
+    -e '/redir[[:space:]].*https/d' \
+    "${file}"
+  return 0
+}
+
+clear_caddy_https_redirect_files() {
+  local file first changed=0
+  while IFS= read -r file; do
+    [[ -f "${file}" ]] || continue
+    first="$(tr -d ' \t\n\r' <"${file}" | head -c 1)"
+    if [[ "${first}" == "{" || "${first}" == "[" ]]; then
+      if strip_json_https_redirect "${file}"; then
+        changed=1
+      fi
+    else
+      if strip_caddyfile_https_redirect "${file}"; then
+        changed=1
+      fi
+    fi
+  done < <(https_redirect_files)
+  # Known flag files created by older notes / manual toggles.
+  local flag
+  for flag in \
+    "$(vanblog_caddy_dir)/force-https" \
+    "$(vanblog_data_dir)/force-https" \
+    "${VANBLOG_BASE_PATH}/force-https"; do
+    if [[ -e "${flag}" ]]; then
+      rm -f "${flag}"
+      changed=1
+    fi
+  done
+  [[ "${changed}" == "1" ]]
+}
+
+clear_https_setting_in_mongo() {
+  local eval_js='db.getCollection("settings").deleteMany({type:"https"})'
+  if vanblog_compose exec -T mongo mongo --quiet vanBlog --eval "${eval_js}"; then
+    return 0
+  fi
+  if vanblog_compose exec -T mongo mongosh --quiet vanBlog --eval "${eval_js}"; then
+    return 0
+  fi
+  if vanblog_compose exec -T vanblog node -e \
+    'const {MongoClient}=require("mongodb");(async()=>{const c=new MongoClient("mongodb://mongo:27017/vanBlog?authSource=admin");await c.connect();const r=await c.db("vanBlog").collection("settings").deleteMany({type:"https"});console.log("deleted",r.deletedCount);await c.close();})().catch(e=>{console.error(e);process.exit(1);});'; then
+    return 0
+  fi
+  if printf '\n' | vanblog_compose exec -T vanblog node /app/cli/resetHttps.js; then
+    return 0
+  fi
+  return 1
+}
+
+clear_https_redirect_via_caddy_api() {
+  vanblog_compose exec -T vanblog node -e \
+    'const http=require("http");http.request({method:"DELETE",host:"127.0.0.1",port:2019,path:"/config/apps/http/servers/srv1/listener_wrappers"},res=>{process.exit(res.statusCode<400||res.statusCode===404?0:1);}).on("error",()=>process.exit(1)).end();'
+}
+
 reset_https() {
-    echo -e "> 重置 https 设置（需要先启动 vanblog）"
-    cd $VANBLOG_BASE_PATH && docker-compose exec vanblog node /app/cli/resetHttps.js
+  local skip_menu=0
+  if [[ $# -gt 0 ]]; then
+    skip_menu=1
+  fi
+
+  echo -e "> 重置 https 设置（关闭强制跳转，恢复 HTTP / IP 访问）"
+
+  if [[ ! -f "${VANBLOG_BASE_PATH}/docker-compose.yaml" ]]; then
+    echo -e "${red}未找到 ${VANBLOG_BASE_PATH}/docker-compose.yaml，无法重置 https${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  echo -e "> 清除本机 Caddy / https 重定向配置"
+  clear_caddy_https_redirect_files || true
+
+  echo -e "> 清除数据库中的 https 强制跳转设置"
+  local mongo_ok=0
+  if clear_https_setting_in_mongo >/dev/null 2>&1; then
+    mongo_ok=1
+  else
+    echo -e "> 尝试启动 mongo 后再清除 https 设置"
+    vanblog_compose up -d mongo >/dev/null 2>&1 || true
+    if clear_https_setting_in_mongo >/dev/null 2>&1; then
+      mongo_ok=1
+    fi
+  fi
+  if [[ ${mongo_ok} == 1 ]]; then
+    echo -e "> 已删除 settings 中的 https 配置"
+  else
+    echo -e "${yellow}未能通过容器清除数据库 https 设置（容器可能未运行）${plain}"
+  fi
+
+  echo -e "> 关闭运行中的 Caddy http_redirect"
+  local caddy_api_ok=0
+  if clear_https_redirect_via_caddy_api >/dev/null 2>&1; then
+    caddy_api_ok=1
+    echo -e "> 已通过 Caddy API 关闭自动重定向"
+  else
+    echo -e "${yellow}未能调用 Caddy API，将重启容器使模板配置生效${plain}"
+  fi
+
+  echo -e "> 重启 vanblog 以恢复 HTTP / IP 访问"
+  local restart_ok=0
+  if vanblog_compose restart vanblog; then
+    restart_ok=1
+  elif vanblog_compose up -d; then
+    restart_ok=1
+  fi
+
+  if [[ ${restart_ok} != 1 ]]; then
+    echo -e "${red}重置失败：容器重启失败，请查看日志${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  if https_redirect_config_present; then
+    echo -e "${red}重置失败：Caddy / https 配置中仍有强制跳转${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  if [[ ${mongo_ok} != 1 ]]; then
+    echo -e "${red}重置失败：未能清除数据库 https 设置，重启后可能再次强制跳转到 https${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  echo -e "${green}已重置 https 设置，HTTP 和 IP 访问应已恢复${plain}"
+  echo -e "如浏览器仍跳转到 https，请清除本地缓存或改用 http://IP 访问。"
+
+  if [[ ${skip_menu} == 0 ]]; then
     before_show_menu
+  fi
+  return 0
 }
 
 start_vanblog() {
@@ -695,6 +942,7 @@ if [[ $# > 0 ]]; then
     ;;
   "reset_https")
     reset_https 0
+    exit $?
     ;;
   "backup")
     backup 0

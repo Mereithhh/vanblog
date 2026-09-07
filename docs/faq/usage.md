@@ -216,16 +216,25 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 ## 开启了 https 重定向后关不掉
 
-现在有脚本可以一键重置 https 设置啦！
+开启「HTTPS 自动重定向」后，http 和用 IP 访问都会被跳到 https，证书对不上时站点会打不开。后台此时也进不去，需要在服务器上重置。
 
-如果你是用的一件脚本安装的，那么重新加载一遍最新版脚本，在里面选择重置 https 设置即可。
+如果你是用一键脚本安装的，先更新到最新脚本，再选菜单 **9. 重置 https 设置**（或 `./vanblog.sh reset_https`）。新脚本会：
+
+1. 清掉本机 Caddy 配置里的 `http_redirect` / 强制跳转；
+2. 删除数据库 `settings` 里的 https 记录，避免重启后又自动打开跳转；
+3. 调用 Caddy API 关掉正在生效的重定向，并重启 vanblog。
+
+成功或失败都会打印明确提示。成功后请用 `http://IP` 或 `http://域名` 访问；浏览器若仍跳 https，清一下缓存。
 
 ```bash
-curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
+curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh reset_https
 ```
 
-如果你是自己用 docker 部署的运行下面的命令即可：
+如果你是自己用 docker 部署的，在 vanblog 容器里执行（无 TTY 也可，会用默认 MongoDB 地址）：
 
 ```bash
-docker exec -it <vanblog容器名> node /app/cli/resetHttps.js
+docker exec -i <vanblog容器名> node /app/cli/resetHttps.js
+docker compose restart vanblog
 ```
+
+旧版 `resetHttps.js` 只删数据库记录、不会关 Caddy 跳转，执行后需要重启容器才会恢复 HTTP / IP 访问。
