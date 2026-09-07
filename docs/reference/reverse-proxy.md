@@ -60,7 +60,8 @@ example.com {
 
 - 宝塔面板用 Ngnix 反代，如果出现问题，可以去升级一下 Ngnix 版本，有可能会解决问题。
 - location 下面的配置块只保留下面提供配置的那几行就可以了，不要加奇奇怪怪的语句和请求头（看不懂请忽略）
-- 若站点在 Cloudflare（或同类 CDN）后面，请把来访请求的 `CF-Connecting-IP` 原样转给 VanBlog，不要改写成边缘节点 IP。登录日志会优先读这个头。
+- **必须转发 `Host`**（`proxy_set_header Host $host;`）。否则内嵌 Waline 评论登录 / 管理后台的 OAuth 回调会写成 `localhost` 或容器监听地址（如 `0.0.0.0`），而不是站点域名。见 [部署常见问题](../faq/deploy.md#反代后-waline-登录跳到-localhost)。
+- 建议同时转发 `X-Forwarded-For`。若站点在 Cloudflare（或同类 CDN）后面，请把来访请求的 `CF-Connecting-IP` 原样转给 VanBlog，不要改写成边缘节点 IP。Nginx 默认会透传该头；登录日志会优先读它。
 - 若 CDN 使用「缓存全部」，请为 `/admin*` 和 `/api/admin*` 设置绕过缓存。VanBlog 源站已对这两类路径发送 `Cache-Control: private, no-store` 以及 `CDN-Cache-Control` / `Cloudflare-CDN-Cache-Control: no-store`，避免后台 HTML/JSON 被边缘存储；页面规则仍建议保留。见 [部署常见问题](../faq/deploy.md#cloudflare-缓存了后台或后台-api)。
 
 :::
@@ -86,7 +87,9 @@ server {
   location / {
     # 改为容器的 PORT
     proxy_pass http://127.0.0.1:<PORT>;
+    proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Upgrade $http_upgrade;
   }
@@ -115,7 +118,9 @@ server {
   location / {
     # 改为容器的 PORT
     proxy_pass http://127.0.0.1:<PORT>;
+    proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Upgrade $http_upgrade;
   }

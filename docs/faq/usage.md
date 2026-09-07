@@ -96,6 +96,10 @@ iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页�
 
 旧版本首屏 HTML 会按服务器时间套上 `dark`，再等 `/initTheme.js` 读 localStorage 后改回来，所以选「白色」刷新会黑约半秒，选「自动」在浅色系统（尤其晚上）也会被强制成黑色。已修复（[#292](https://github.com/Mereithhh/vanblog/issues/292)、[#25](https://github.com/Mereithhh/vanblog/issues/25)、[#54](https://github.com/Mereithhh/vanblog/issues/54)）：记住的主题在首屏绘制前生效；自动模式跟随系统配色，系统为浅色时不会强制夜间模式。请升级到包含该修复的版本。
 
+## 评论登录跳到 localhost
+
+外层 Nginx 反代后，Waline 评论登录或管理后台 OAuth 可能跳到 `localhost` / `0.0.0.0` 而不是站点域名（[#396](https://github.com/Mereithhh/vanblog/issues/396)）。反代需要转发 `Host`：`proxy_set_header Host $host;`。完整示例见 [反代](../reference/reverse-proxy.md)，说明见 [部署常见问题](./deploy.md#反代后-waline-登录跳到-localhost)。内置 Caddy、没有再套一层反代时一般不用改。
+
 ## 后台设置了 Waline 自定义变量但不生效
 
 在「评论设置」里填了 `imageUploader: false`（关掉评论图片上传）或 `IPQPS`（同一 IP 发言频率）后，旧版本不会把客户端选项传给前台评论组件，数字环境变量也可能没按字符串交给内嵌 Waline。已修复（[#139](https://github.com/Mereithhh/vanblog/issues/139)）。请升级到包含该修复的版本后重新保存一次评论设置（会重启内嵌 Waline）。

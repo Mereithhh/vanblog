@@ -21,6 +21,22 @@ environment:
 
 原则上 CDN 只缓存 `/_next/static` 这个目录就够了。设置后需要重启 VanBlog 容器，HTML 里的脚本/样式会变成 `https://cdn.example.com/_next/static/...`。
 
+## 反代后 Waline 登录跳到 localhost
+
+在外层 Nginx 反代后面登录评论（GitHub 等 OAuth）或打开 Waline 管理后台时，浏览器可能跳到 `localhost` 或 `0.0.0.0`，而不是站点域名（[#396](https://github.com/Mereithhh/vanblog/issues/396)）。
+
+这是因为反代没有把真实 `Host` 传给 VanBlog。内嵌 Waline 会用 upstream 地址（容器映射的 `127.0.0.1` / `0.0.0.0`）去拼 OAuth 回调 URL。
+
+在 Nginx 的 `location` 里加上：
+
+```nginx
+proxy_set_header Host $host;
+```
+
+并建议同时转发 `X-Forwarded-Proto` 和 `X-Forwarded-For`。完整 Http / Https 示例见 [反代](../reference/reverse-proxy.md)。
+
+只用 VanBlog 内置 Caddy、没有再套一层反代时，一般不需要改这个。
+
 ## Cloudflare 缓存了后台或后台 API
 
 Cloudflare（或同类 CDN）如果用「缓存全部」覆盖 `/*`，即使另有 `/admin*` 绕过规则，**`/api/admin/*` 也不会被那条规则匹配**，登录和后台 JSON 仍可能被边缘缓存（[#140](https://github.com/Mereithhh/vanblog/issues/140)）。只改页面规则不够：旧版本源站没有 `Cache-Control`。
