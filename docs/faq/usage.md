@@ -4,6 +4,12 @@ icon: wrench
 order: 2
 ---
 
+## 配置了 Google Analysis 后前台一直转圈
+
+后台填了 `Google Analysis ID` 后，在中国大陆打开前台可能一直转圈或很久才出来，控制台出现 `GET https://www.googletagmanager.com/gtag/js?id=… net::ERR_CONNECTION_TIMED_OUT`。旧实现会在页面可交互后立刻去拉谷歌脚本，超时会拖住整页加载。已改为 `async` 并在 `window.load` 之后空闲时加载（[#375](https://github.com/Mereithhh/vanblog/issues/375)），谷歌统计不可达时不再堵塞首屏。请升级到包含该修复的版本。
+
+站点配置说明见 [访客统计](../features/visitor.md#进阶分析)。
+
 ## 开启 uBlock 后日志管理无法加载
 
 后台「站点管理 / 日志管理」打开后提示 `NetworkError when attempting to fetch resource`、表格或系统日志空白，关掉 uBlock Origin（Chrome / Firefox 都一样）又正常。这是广告拦截列表常会拦截路径里带 `log` 的请求（旧接口是 `/api/admin/log`），不是账号或权限问题。已改为请求 `/api/admin/audit`（[#289](https://github.com/Mereithhh/vanblog/issues/289)）；旧路径仍可用。请升级到包含该修复的版本。

@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 配置了 Google Analysis ID 后，前台不再同步等待 `googletagmanager.com/gtag/js`：脚本改为 `async` 并在页面 load 后空闲时加载（`lazyOnload`）。大陆访问该域名超时（`net::ERR_CONNECTION_TIMED_OUT`）时，不再堵塞首屏和 hydration。[#375](https://github.com/Mereithhh/vanblog/issues/375)
 - 后台登录过期后再登录，不再同时弹出「登录成功」和「登录失效」：成功登录会清掉未关闭的错误提示，登录页上以及刚登录成功后的过期 401 不再弹出失败 toast。[#316](https://github.com/Mereithhh/vanblog/issues/316)
 - 后台文章列表（以及草稿/图片/日志等同样用 page 算 skip 的列表）在 page / pageSize 被 CDN 或代理改成 NaN、负数或溢出时，不再把负数 skip 传给 Mongo（`Skip value must be non-negative, but received: -9223372036854775808`），避免文章管理整页「内部服务错误」。[#400](https://github.com/Mereithhh/vanblog/issues/400)
 - 官方 all-in-one Dockerfile 在 Alpine 上自建镜像时，`pnpm install --frozen-lockfile` 不再因 `sharp@0.31.3` 解析 musl `1.2.4_git*` 失败（`Installation error: Invalid Version: 1.2.4_git20230717`）。前台构建阶段安装 `vips-dev` / `libc6-compat` 等依赖，设置 `SHARP_IGNORE_GLOBAL_LIBVIPS=1` 走官方 musl prebuild，并把 website 的 sharp 固定为 `0.32.6`（有意更新 lockfile）。各阶段的 corepack 也改为 `pnpm@8.11.0`（与仓库 `packageManager` 一致），避免 `pnpm@latest` 拉到不兼容的 pnpm 12。[#413](https://github.com/Mereithhh/vanblog/issues/413)

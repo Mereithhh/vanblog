@@ -44,7 +44,7 @@ VanBlog 记录的信息远不止访客数和访问量，它还会记录最近访
 
 访问 [Google Analytics](https://analytics.google.com/analytics/web) 官网，并新建数据源，设置好之后把 ID 填写到 `站点设置/站点配置/高级设置` 中的 `Google Analysis ID` 上即可，无需重启直接生效。
 
-在大陆地区，谷歌统计上报不受影响，但是统计结果查看需要使用代理。
+gtag 脚本会以 `async` 在页面加载完成后空闲时注入，访问不到 `googletagmanager.com`（大陆常见超时）时不会卡住前台。在大陆地区，谷歌统计上报可能仍受网络影响，统计结果查看通常需要使用代理。
 
 :::
 

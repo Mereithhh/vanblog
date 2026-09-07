@@ -41,7 +41,7 @@ VanBlog 可以配置一系列的站点配置项，可在 `站点管理/系统设
 | 公安备案号                 | 否   | 页面底部的公安备案号，未填写则不显示                     |
 | 公安备案网址               | 否   | 公安备案号点击后的跳转地址                               |
 | 公安备案 Logo              | 否   | 公安备案号的 logo 地址，没有则不显示 logo                |
-| Google Analysis ID         | 否   | Google Analysis 的 ID，没有的话就不开启 GA 了            |
+| Google Analysis ID         | 否   | Google Analysis 的 ID，没有的话就不开启 GA 了。脚本异步/空闲加载，GTM 不可达时不会堵塞前台 |
 | Baidu 分析 ID              | 否   | 百度分析的 ID，没有的话就不开启百度分析（统计）了        |
 | 是否开启评论系统           | 否   | 默认开启，具体参考 [开启评论](../features/comment.md)    |
 | 建站时间                   | 否   | 用于显示页面底部的本站运行时间，没有的话从今天算起       |
