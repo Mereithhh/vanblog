@@ -182,6 +182,8 @@ pnpm build:test
 
 ### 手动打包
 
+根目录 `Dockerfile` 的前台阶段是 `node:18-alpine`。构建时会安装 `vips-dev` / `libc6-compat` / `fftw-dev`，并设置 `SHARP_IGNORE_GLOBAL_LIBVIPS=1`，让 `sharp@0.32.6` 使用官方 musl prebuild（避免 Alpine musl 版本号 `1.2.4_git*` 导致安装失败）。corepack 使用仓库的 `pnpm@8.11.0`，不要改成 `pnpm@latest`。请继续用仓库自带的 `pnpm-lock.yaml` 和 `--frozen-lockfile`，不要把前台构建改回未处理 sharp 的旧 `node:18` 阶段。
+
 ```bash
 # 这个build server 是第一次打包镜像拿数据的，不写也行，那就得等启动容器后增量渲染生效了。
 VAN_BLOG_BUILD_SERVER="https://some.vanblog-server.com"
