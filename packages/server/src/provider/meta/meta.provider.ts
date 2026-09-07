@@ -11,6 +11,7 @@ import { VisitProvider } from '../visit/visit.provider';
 import { ArticleProvider } from '../article/article.provider';
 import dayjs from 'dayjs';
 import { isTrue } from 'src/utils/isTrue';
+import { sanitizeArticlesPerPage } from 'src/utils/articlesPerPage';
 import { ViewerProvider } from '../viewer/viewer.provider';
 @Injectable()
 export class MetaProvider {
@@ -127,7 +128,20 @@ export class MetaProvider {
     return (await this.getAll())?.about;
   }
   async getSiteInfo() {
-    return (await this.getAll())?.siteInfo;
+    const raw = (await this.getAll())?.siteInfo as any;
+    if (!raw) {
+      return raw;
+    }
+    const siteInfo = typeof raw.toObject === 'function' ? raw.toObject() : { ...raw };
+    return {
+      ...siteInfo,
+      articlesPerPage: sanitizeArticlesPerPage(siteInfo.articlesPerPage),
+    };
+  }
+
+  async getArticlesPerPage() {
+    const siteInfo = await this.getSiteInfo();
+    return sanitizeArticlesPerPage(siteInfo?.articlesPerPage);
   }
   async getRewards() {
     return (await this.getAll())?.rewards;
@@ -155,7 +169,9 @@ export class MetaProvider {
     // @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment
     const { name, password, ...updateDto } = updateSiteInfoDto;
     const oldSiteInfo = await this.getSiteInfo();
-    return this.metaModel.updateOne({}, { siteInfo: { ...oldSiteInfo, ...updateDto } });
+    const nextSiteInfo = { ...oldSiteInfo, ...updateDto };
+    nextSiteInfo.articlesPerPage = sanitizeArticlesPerPage(nextSiteInfo.articlesPerPage);
+    return this.metaModel.updateOne({}, { siteInfo: nextSiteInfo });
   }
 
   async addOrUpdateReward(addReward: Partial<RewardItem>) {

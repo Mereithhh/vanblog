@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### ✨ Features | 新功能
+
+- 后台「站点配置 / 布局设置」增加「每页文章数」：前台首页和 `/page/n` 分页按该数字展示文章。默认仍是 5 篇（与升级前硬编码一致），可在 1–50 之间调整；超出范围会夹紧，避免一次拉太多文章。[#346](https://github.com/Mereithhh/vanblog/issues/346)
+
 ### 🐛 Bug Fixes | Bug 修复
 
 - 换域名后文章/草稿里写成绝对地址的图片（如 `https://旧域名/static/...`）不会跟着 DNS 或「网站 Url」一起改。后台「图床设置」增加旧地址 → 新地址改写，只替换以此前缀开头的链接，并统计更新篇数；相对路径和未填写的第三方图床不动。[#475](https://github.com/Mereithhh/vanblog/issues/475)
@@ -64,6 +68,7 @@
 
 ### ✏️ Documentation | 文档
 
+- FAQ / 站点配置：可在布局设置里改前台「每页文章数」（默认 5，范围 1–50）。[#346](https://github.com/Mereithhh/vanblog/issues/346)
 - FAQ：域名变更后如何改写文章图片链接，以及如何正确设置网站 Url / 静态访问地址。[#475](https://github.com/Mereithhh/vanblog/issues/475)
 - HTTPS 文档「自动重定向」段两句粘连已拆开：初始化后到 `站点管理/系统设置/HTTPS` 确认证书，再按需开启重定向。
 - FAQ / HTTPS：开启自动重定向后请用无痕窗口访问 `http://域名` 确认跳到 https；「查看 Caddy 配置」里 `srv1.listener_wrappers` 应含 `http_redirect`。[#150](https://github.com/Mereithhh/vanblog/issues/150)

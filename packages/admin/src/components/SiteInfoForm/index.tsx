@@ -206,6 +206,15 @@ export default function (props: {
       {/* 布局选项 */}
       {props.showLayout && (
         <>
+          <ProFormDigit
+            name={'articlesPerPage'}
+            label="每页文章数"
+            placeholder={'5'}
+            fieldProps={{ precision: 0 }}
+            min={1}
+            max={50}
+            tooltip={'前台首页与 /page/n 每页展示的文章数量。默认 5，范围 1–50。分类/标签/时间线仍是完整列表。'}
+          />
           <ProFormSelect
             name={'showSubMenu'}
             label="显示分类导航栏"

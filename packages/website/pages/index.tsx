@@ -61,6 +61,7 @@ const Home = (props: IndexPageProps) => {
         current={props.currPage}
         base={"/"}
         more={"/page"}
+        pageSize={props.layoutProps.articlesPerPage}
       ></PageNav>
       <Waline enable={props.layoutProps.enableComment} visible={false} />
     </Layout>
