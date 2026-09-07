@@ -4,13 +4,34 @@
  * `.bytemd-body` (overflow:auto) can scroll and leave a blank editor
  * that only a full refresh restores. Keep chrome from becoming a
  * scroll container; the preview pane and `.CodeMirror-scroll` still scroll.
+ *
+ * Long articles (#298): ByteMD's toolbar is not sticky. If `.bytemd` (or a
+ * layout ancestor) grows with the markdown, TOC jump / scrollIntoView
+ * scrolls the window and the toolbar row leaves the viewport. Contain
+ * overflow here and pin the toolbar to the top of the editor.
  */
+.bytemd {
+  overflow: hidden !important;
+  overflow: clip !important;
+  min-height: 0;
+  max-height: 100%;
+}
+
+.bytemd-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  flex-shrink: 0;
+}
+
 .bytemd-body {
   overflow: hidden !important;
   overflow: clip !important;
+  min-height: 0;
 }
 
 .bytemd-editor,
 .bytemd-editor > .CodeMirror {
   overflow: hidden !important;
+  min-height: 0;
 }

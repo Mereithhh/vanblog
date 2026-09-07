@@ -130,6 +130,23 @@ const nestedFiller = (label, count) =>
     '\n\n',
   );
 
+const longFiller = (label, count) =>
+  Array.from(
+    { length: count },
+    (_, i) => `${label} ${i + 1}。这段用来把文末标题顶出视口，模拟长文滚动后工具栏消失。`,
+  ).join('\n\n');
+
+const LONG_ARTICLE_CONTENT = `# 长文开头
+
+VanBlog 后台编辑器长文工具栏测试
+
+${longFiller('填充段落', 80)}
+
+## 文末标题
+
+跳转到这里之后工具栏仍应可见。
+`;
+
 const TOC_NESTED_ARTICLE_CONTENT = `# 一级标题
 
 VanBlog 后台编辑器目录测试
@@ -177,6 +194,21 @@ const ARTICLE_370 = {
   },
 };
 
+const ARTICLE_298 = {
+  statusCode: 200,
+  data: {
+    id: 298,
+    title: '长文工具栏测试',
+    content: LONG_ARTICLE_CONTENT,
+    category: '测试',
+    tags: ['E2E'],
+    hidden: false,
+    pathname: 'editor-toolbar-long',
+    updatedAt: '2024-11-14T00:00:00.000Z',
+    createdAt: '2024-11-14T00:00:00.000Z',
+  },
+};
+
 function json(route, body) {
   return route.fulfill({
     status: 200,
@@ -212,6 +244,12 @@ async function mockAdminApis(page) {
     if (path === '/api/admin/article/370' && method === 'PUT') {
       return json(route, { statusCode: 200, data: ARTICLE_370.data });
     }
+    if (path === '/api/admin/article/298' && method === 'GET') {
+      return json(route, ARTICLE_298);
+    }
+    if (path === '/api/admin/article/298' && method === 'PUT') {
+      return json(route, { statusCode: 200, data: ARTICLE_298.data });
+    }
     if (path === '/api/admin/article/429' && method === 'GET') {
       return json(route, ARTICLE_429);
     }
@@ -245,6 +283,7 @@ module.exports = {
   ISSUE_391_MERMAID,
   ISSUE_429_ARTICLE_CONTENT,
   TOC_NESTED_ARTICLE_CONTENT,
+  LONG_ARTICLE_CONTENT,
   mockAdminApis,
   loginAsAdmin,
 };

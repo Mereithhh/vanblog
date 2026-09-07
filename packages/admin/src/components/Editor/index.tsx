@@ -82,7 +82,7 @@ export default function EditorComponent(props: {
   }, [themeClass]);
 
   return (
-    <div style={{ height: '100%' }} className={themeClass}>
+    <div style={{ height: '100%', minHeight: 0 }} className={`editor-shell ${themeClass}`}>
       <Spin spinning={loading} className="editor-wrapper">
         <Editor
           value={props.value}

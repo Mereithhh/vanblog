@@ -5,6 +5,7 @@ import {
   guardHeadingScrollIntoView,
   isEditorChromeScroller,
   pinEditorChromeScroll,
+  resetAncestorScroll,
   resetEditorChromeScroll,
   scrollPreviewHeadingIntoView,
 } from './tocViewport';
@@ -12,6 +13,8 @@ import {
 function mountEditorChrome() {
   const root = document.createElement('div');
   root.className = 'bytemd';
+  Object.defineProperty(root, 'scrollTop', { value: 0, writable: true, configurable: true });
+  Object.defineProperty(root, 'scrollLeft', { value: 0, writable: true, configurable: true });
 
   const body = document.createElement('div');
   body.className = 'bytemd-body';
@@ -58,7 +61,8 @@ describe('tocViewport', () => {
   });
 
   it('treats bytemd body/editor/CodeMirror wrapper as chrome, not CodeMirror-scroll', () => {
-    const { body, editor, cm, cmScroll } = mountEditorChrome();
+    const { root, body, editor, cm, cmScroll } = mountEditorChrome();
+    expect(isEditorChromeScroller(root)).toBe(true);
     expect(isEditorChromeScroller(body)).toBe(true);
     expect(isEditorChromeScroller(editor)).toBe(true);
     expect(isEditorChromeScroller(cm)).toBe(true);
@@ -67,11 +71,13 @@ describe('tocViewport', () => {
 
   it('resetEditorChromeScroll zeros chrome scroll but leaves CodeMirror-scroll', () => {
     const { root, body, cm, cmScroll } = mountEditorChrome();
+    root.scrollTop = 90;
     body.scrollTop = 240;
     cm.scrollTop = 80;
     cmScroll.scrollTop = 120;
 
-    expect(resetEditorChromeScroll(root)).toBe(2);
+    expect(resetEditorChromeScroll(root)).toBe(3);
+    expect(root.scrollTop).toBe(0);
     expect(body.scrollTop).toBe(0);
     expect(cm.scrollTop).toBe(0);
     expect(cmScroll.scrollTop).toBe(120);
@@ -127,5 +133,50 @@ describe('tocViewport', () => {
     body.scrollTop = 50;
     body.dispatchEvent(new Event('scroll'));
     expect(body.scrollTop).toBe(50);
+  });
+
+  it('resetAncestorScroll zeros layout/window scroll that would hide the toolbar (#298)', () => {
+    const layout = document.createElement('div');
+    layout.className = 'ant-pro-layout-content';
+    Object.defineProperty(layout, 'scrollTop', { value: 480, writable: true, configurable: true });
+    Object.defineProperty(layout, 'scrollLeft', { value: 0, writable: true, configurable: true });
+
+    const page = document.createElement('div');
+    page.className = 'editor-full';
+    Object.defineProperty(page, 'scrollTop', { value: 160, writable: true, configurable: true });
+    Object.defineProperty(page, 'scrollLeft', { value: 0, writable: true, configurable: true });
+
+    const { root } = mountEditorChrome();
+    root.scrollTop = 40;
+    page.appendChild(root);
+    layout.appendChild(page);
+    document.body.appendChild(layout);
+
+    const reset = resetAncestorScroll(root);
+    expect(reset).toBeGreaterThanOrEqual(3);
+    expect(root.scrollTop).toBe(0);
+    expect(page.scrollTop).toBe(0);
+    expect(layout.scrollTop).toBe(0);
+  });
+
+  it('guarded heading.scrollIntoView also resets ancestor scroll so the toolbar stays (#298)', () => {
+    const layout = document.createElement('div');
+    layout.className = 'ant-pro-layout-content';
+    Object.defineProperty(layout, 'scrollTop', { value: 0, writable: true, configurable: true });
+
+    const { root, markdownBody, h2, preview } = mountEditorChrome();
+    layout.appendChild(root);
+    document.body.appendChild(layout);
+
+    const restore = guardHeadingScrollIntoView(markdownBody);
+    h2.getBoundingClientRect = () =>
+      ({ top: 40, left: 0, bottom: 70, right: 100, width: 100, height: 30, x: 0, y: 40, toJSON() {} });
+    preview.getBoundingClientRect = () =>
+      ({ top: 0, left: 0, bottom: 400, right: 400, width: 400, height: 400, x: 0, y: 0, toJSON() {} });
+
+    layout.scrollTop = 520;
+    h2.scrollIntoView();
+    expect(layout.scrollTop).toBe(0);
+    restore();
   });
 });
