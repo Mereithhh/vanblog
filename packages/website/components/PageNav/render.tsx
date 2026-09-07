@@ -1,5 +1,13 @@
 import Link from "next/link";
-import { CSSProperties } from "react";
+import { CSSProperties, KeyboardEvent } from "react";
+import {
+  PAGE_NAV_ITEM_ATTR,
+  PAGE_NAV_LABEL,
+  PageNavNode,
+  describePageNav,
+  handlePageNavKeyDown,
+} from "./a11y";
+
 import { PageItem } from "./core";
 import {
   pageNavControlClass,
@@ -13,74 +21,66 @@ const commonStyle: CSSProperties = {
   borderRadius: "4px",
   fontSize: "14px",
 };
-const renderLink = (item: PageItem, isCur: boolean) => {
+
+const renderNode = (node: PageNavNode) => {
+  if (node.kind === "ellipsis") {
+    return (
+      <span aria-hidden="true">
+        <div style={commonStyle} className={pageNavEllipsisCls}>
+          {node.content}
+        </div>
+      </span>
+    );
+  }
+  if (node.kind === "disabled") {
+    return (
+      <span aria-disabled="true" aria-label={node.ariaLabel}>
+        <div style={commonStyle} className={pageNavControlClass(true)}>
+          {node.content}
+        </div>
+      </span>
+    );
+  }
+  const innerClass =
+    node.type === "link" || node.type === "link-cur"
+      ? pageNavNumberClass(node.type === "link-cur")
+      : pageNavControlClass(false);
   return (
     <Link
-      href={item.href}
-      aria-current={isCur ? "page" : undefined}
-      key={`LinkItem-${item.page}-${item.type}-${item.href}`}
+      href={node.href as string}
+      aria-current={node.ariaCurrent}
+      aria-label={node.ariaLabel}
+      {...{ [PAGE_NAV_ITEM_ATTR]: "" }}
     >
-      <div style={commonStyle} className={pageNavNumberClass(isCur)}>
-        {item.page}
-      </div>
-    </Link>
-  );
-};
-const renderBtn = (item: PageItem, disable: boolean, isNext: boolean) => {
-  return (
-    <Link
-      href={item.href}
-      key={`pagenav-btn-${item.page}-${item.href}-${isNext}`}
-    // className="justify-center items-center "
-    >
-      <div style={commonStyle} className={pageNavControlClass()}>
-        {isNext ? "›" : "‹"}
-      </div>
-    </Link>
-  );
-};
-const renderMore = (item: PageItem, isNext: boolean) => {
-  return (
-    <Link
-      href={item.href}
-      key={`pagenav-more-${item.page}-${item.href}-${isNext}`}
-    >
-      <div style={commonStyle} className={pageNavEllipsisCls}>
-        •••
+      <div style={commonStyle} className={innerClass}>
+        {node.content}
       </div>
     </Link>
   );
 };
 
+const onPageNavKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+  handlePageNavKeyDown(event);
+};
+
 export const RenderItemList = (props: { items: PageItem[] }) => {
-  const res: React.ReactElement[] = [];
-  for (const item of props.items) {
-    switch (item.type) {
-      case "link":
-        res.push(renderLink(item, false));
-        break;
-      case "link-cur":
-        res.push(renderLink(item, true));
-        break;
-      case "next-btn":
-        res.push(renderBtn(item, false, true));
-        break;
-      case "next-btn-disable":
-        res.push(renderBtn(item, true, true));
-        break;
-      case "next-more":
-        res.push(renderMore(item, true));
-        break;
-      case "pre-more":
-        res.push(renderMore(item, false));
-        break;
-      case "pre-btn":
-        res.push(renderBtn(item, false, false));
-        break;
-      case "pre-btn-disable":
-        res.push(renderBtn(item, true, false));
-        break;
-    }
-  }
-  return <ul className="space-x-2 text-center">{res}</ul>;
+  const nodes = describePageNav(props.items);
+  return (
+    <nav aria-label={PAGE_NAV_LABEL} onKeyDown={onPageNavKeyDown}>
+      <ul
+        role="list"
+        className="inline-flex list-none justify-center space-x-2 p-0 m-0 text-center"
+      >
+        {nodes.map((node, index) => (
+          <li
+            key={`pagenav-${node.type}-${node.page}-${index}`}
+            className="inline-flex"
+            aria-hidden={node.ariaHidden || undefined}
+          >
+            {renderNode(node)}
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
 };

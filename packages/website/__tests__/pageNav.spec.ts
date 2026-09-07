@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { calItemList, PageItem, PageNavProps } from "../components/PageNav/core";
 import {
+  pageNavControlClass,
   pageNavCurrentCls,
   pageNavDefaultCls,
   pageNavNumberClass,
@@ -176,5 +177,13 @@ describe("page nav light-mode classes used by render.tsx", () => {
     expect(pageNavDefaultCls).toMatch(/\bdark:bg-dark-1\b/);
     expect(pageNavCurrentCls).toMatch(/\bdark:pg-text-dark-hover\b/);
     expect(pageNavDefaultCls).toMatch(/\bdark:pg-text-dark\b/);
+  });
+
+  it("keeps disabled prev/next on the default fill, not the current-page fill", () => {
+    expect(pageNavControlClass(true)).toContain("bg-white");
+    expect(pageNavControlClass(true)).not.toMatch(/\bbg-gray-700\b/);
+    expect(pageNavControlClass(true)).toContain("opacity-40");
+    expect(pageNavControlClass(false)).not.toContain("opacity-40");
+    expect(pageNavNumberClass(true)).toContain("bg-gray-700");
   });
 });
