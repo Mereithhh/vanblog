@@ -232,6 +232,12 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 ![粘贴示例](https://pic.mereith.com/img/88b29bad4ad0ef7d6e411e43f80ec1bc.clipboard-2022-08-22.png)
 
+## 开启了 https 自动重定向但仍走 http
+
+后台打开「HTTPS 自动重定向」后，直接输入域名（不写 `https://`）仍是 http，手动加 `https://` 却能打开。旧实现用 Caddy Admin API `POST` 往 `listener_wrappers` 上追加：wrappers 已存在时会把整段数组再套一层，开启成功日志还误写成「已关闭」。已改为用 `PATCH` / `PUT` **整段替换**成 `http_redirect`，写入后再读回确认；关闭则删除 wrappers（没有这项时的 404 视为已关）（[#150](https://github.com/Mereithhh/vanblog/issues/150)）。请升级到包含该修复的版本。
+
+开启后请用无痕窗口访问 `http://你的域名`，应跳到 `https://`。也可在后台点「查看 Caddy 配置」，`srv1` 下应有 `"listener_wrappers": [{"wrapper":"http_redirect"}]`。用外层 Nginx 反代 80 端口时请保持关闭，见 [反代](../reference/reverse-proxy.md)。关不掉时见下一节。
+
 ## 开启了 https 重定向后关不掉
 
 开启「HTTPS 自动重定向」后，http 和用 IP 访问都会被跳到 https，证书对不上时站点会打不开。后台此时也进不去，需要在服务器上重置。

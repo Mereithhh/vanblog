@@ -2,6 +2,12 @@ import { Injectable, Logger } from '@nestjs/common';
 import axios from 'axios';
 import * as fs from 'fs';
 import { SettingProvider } from '../setting/setting.provider';
+
+export const CADDY_LISTENER_WRAPPERS_URL =
+  'http://127.0.0.1:2019/config/apps/http/servers/srv1/listener_wrappers';
+
+export const HTTP_REDIRECT_WRAPPERS = [{ wrapper: 'http_redirect' }];
+
 @Injectable()
 export class CaddyProvider {
   subjects: string[] = [];
@@ -40,28 +46,37 @@ export class CaddyProvider {
   async setRedirect(redirect: boolean) {
     if (!redirect) {
       try {
-        await axios.delete('http://127.0.0.1:2019/config/apps/http/servers/srv1/listener_wrappers');
-        this.logger.log('https 自动重定向已关闭');
-        return '关闭成功！';
+        await axios.delete(CADDY_LISTENER_WRAPPERS_URL);
       } catch (err) {
-        // console.log(err);
+        if (!this.isNotFound(err)) {
+          this.logger.error('关闭 https 自动重定向失败');
+          return false;
+        }
+      }
+      try {
+        if (await this.hasHttpRedirectWrapper()) {
+          this.logger.error('关闭 https 自动重定向失败');
+          return false;
+        }
+      } catch (err) {
         this.logger.error('关闭 https 自动重定向失败');
         return false;
       }
-    } else {
-      try {
-        await axios.post('http://127.0.0.1:2019/config/apps/http/servers/srv1/listener_wrappers', [
-          {
-            wrapper: 'http_redirect',
-          },
-        ]);
-        this.logger.log('https 自动重定向已关闭');
-        return '开启成功！';
-      } catch (err) {
-        // console.log(err);
+      this.logger.log('https 自动重定向已关闭');
+      return '关闭成功！';
+    }
+
+    try {
+      await this.replaceListenerWrappers(HTTP_REDIRECT_WRAPPERS);
+      if (!(await this.hasHttpRedirectWrapper())) {
         this.logger.error('开启 https 自动重定向失败');
         return false;
       }
+      this.logger.log('https 自动重定向已开启');
+      return '开启成功！';
+    } catch (err) {
+      this.logger.error('开启 https 自动重定向失败');
+      return false;
     }
   }
 
@@ -132,5 +147,57 @@ export class CaddyProvider {
     } catch (err) {
       return '';
     }
+  }
+
+  /**
+   * Caddy 2019 API: POST appends to an existing array (and would nest a whole
+   * array payload as one element). PATCH replaces the field when it exists;
+   * PUT creates it when missing. Enable must replace, not append.
+   */
+  private async replaceListenerWrappers(wrappers: Array<{ wrapper: string }>) {
+    try {
+      await axios.patch(CADDY_LISTENER_WRAPPERS_URL, wrappers);
+    } catch (err) {
+      if (!this.isNotFound(err)) {
+        throw err;
+      }
+      await axios.put(CADDY_LISTENER_WRAPPERS_URL, wrappers);
+    }
+  }
+
+  private async hasHttpRedirectWrapper(): Promise<boolean> {
+    try {
+      const res = await axios.get(CADDY_LISTENER_WRAPPERS_URL);
+      return this.wrappersIncludeHttpRedirect(res?.data);
+    } catch (err) {
+      if (this.isNotFound(err)) {
+        return false;
+      }
+      throw err;
+    }
+  }
+
+  private wrappersIncludeHttpRedirect(wrappers: unknown): boolean {
+    if (!Array.isArray(wrappers)) {
+      return false;
+    }
+    return wrappers.some((item) => {
+      if (item === 'http_redirect') {
+        return true;
+      }
+      return Boolean(
+        item &&
+          typeof item === 'object' &&
+          (item as { wrapper?: string }).wrapper === 'http_redirect',
+      );
+    });
+  }
+
+  private isNotFound(err: unknown): boolean {
+    return (
+      Boolean(err) &&
+      typeof err === 'object' &&
+      (err as { response?: { status?: number } }).response?.status === 404
+    );
   }
 }
