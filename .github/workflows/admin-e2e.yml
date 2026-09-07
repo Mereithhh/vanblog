@@ -27,6 +27,10 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Run admin editor hotkey unit tests
+        working-directory: packages/admin
+        run: node --test tests/unit/editableKeyboard.test.js
+
       - name: Install Playwright Chromium
         working-directory: packages/admin
         run: ./node_modules/.bin/playwright install --with-deps chromium

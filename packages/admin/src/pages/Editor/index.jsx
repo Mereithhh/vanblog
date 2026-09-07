@@ -17,6 +17,7 @@ import {
 import { getPathname } from '@/services/van-blog/getPathname';
 import { parseMarkdownFile, parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
 import { useCacheState } from '@/services/van-blog/useCacheState';
+import { handleEditorHotkey } from '@/services/van-blog/editableKeyboard';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Input, Menu, message, Modal, Space, Tag, Upload } from 'antd';
@@ -51,13 +52,8 @@ export default function () {
     };
   }, [currObj, value, type]);
   const onKeyDown = (ev) => {
-    // Only intercept Ctrl/Cmd+S. Arrow keys and other input must reach form fields (#470).
-    const key = ev.key?.toLocaleLowerCase?.();
-    if (key !== 's' || !(ev.metaKey || ev.ctrlKey)) {
-      return;
-    }
-    ev.preventDefault();
-    handleSave();
+    // Ctrl/Cmd+S saves. Arrow keys and other input reach title/form fields (#390, #470).
+    handleEditorHotkey(ev, handleSave);
   };
 
   const typeMap = {
