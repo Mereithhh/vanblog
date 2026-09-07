@@ -9,6 +9,7 @@ import {
   buildGaScriptSrc,
   describeGaInjection,
   isGaInjectionNonBlocking,
+  normalizeGaAnalysisId,
   runPaintAndHydrateThenScheduleGa,
   scheduleGaScriptLoad,
   shouldInjectGa,
@@ -91,14 +92,53 @@ const createFakeLoadEnv = (
   return env;
 };
 
-describe("shouldInjectGa / describeGaInjection", () => {
-  it("does not inject when Analysis ID is missing or empty", () => {
+describe("normalizeGaAnalysisId / shouldInjectGa / describeGaInjection", () => {
+  it("does not inject when Analysis ID is missing, empty, or whitespace", () => {
+    expect(normalizeGaAnalysisId("")).toBe("");
+    expect(normalizeGaAnalysisId("   ")).toBe("");
+    expect(normalizeGaAnalysisId(undefined)).toBe("");
+    expect(normalizeGaAnalysisId(null)).toBe("");
     expect(shouldInjectGa("")).toBe(false);
+    expect(shouldInjectGa("   ")).toBe(false);
     expect(shouldInjectGa(undefined)).toBe(false);
     expect(shouldInjectGa(null)).toBe(false);
     expect(describeGaInjection("")).toBeNull();
+    expect(describeGaInjection(" \t\n ")).toBeNull();
     expect(describeGaInjection(undefined)).toBeNull();
     expect(isGaInjectionNonBlocking(null)).toBe(true);
+  });
+
+  it("accepts GA4 G- measurement IDs and legacy UA- tracking IDs", () => {
+    expect(normalizeGaAnalysisId("G-XXXXXXXXX")).toBe("G-XXXXXXXXX");
+    expect(normalizeGaAnalysisId("G-ABC12DEF34")).toBe("G-ABC12DEF34");
+    expect(normalizeGaAnalysisId("UA-123456-1")).toBe("UA-123456-1");
+    expect(shouldInjectGa("G-XXXXXXXXX")).toBe(true);
+    expect(shouldInjectGa("UA-123456-1")).toBe(true);
+    expect(describeGaInjection("G-XXXXXXXXX")!.src).toBe(
+      "https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXX"
+    );
+    expect(describeGaInjection("UA-123456-1")!.initSnippet).toContain(
+      `gtag('config', ${JSON.stringify("UA-123456-1")})`
+    );
+  });
+
+  it("trims pasted IDs and extracts G-/UA- from a gtag URL or snippet", () => {
+    expect(normalizeGaAnalysisId("  G-TEST375ID  ")).toBe("G-TEST375ID");
+    expect(
+      normalizeGaAnalysisId(
+        "https://www.googletagmanager.com/gtag/js?id=G-TEST375ID"
+      )
+    ).toBe("G-TEST375ID");
+    expect(
+      normalizeGaAnalysisId(
+        `<!-- Global site tag -->\n<script async src="https://www.googletagmanager.com/gtag/js?id=G-TEST375ID"></script>`
+      )
+    ).toBe("G-TEST375ID");
+    const injection = describeGaInjection("  G-TEST375ID  ");
+    expect(injection!.src).toBe(buildGaScriptSrc("G-TEST375ID"));
+    expect(injection!.initSnippet).toContain(
+      `gtag('config', ${JSON.stringify("G-TEST375ID")})`
+    );
   });
 
   it("describes an async, lazyOnload gtag script when Analysis ID is set", () => {
@@ -322,6 +362,14 @@ describe("GaAnalysis component wiring", () => {
     expect(layout).toMatch(/props\.option\.gaAnalysisID != ""/);
     expect(layout).toMatch(
       /<GaAnalysis id=\{props\.option\.gaAnalysisID\}/
+    );
+  });
+
+  it("normalizes the site-setting Analysis ID before Layout sees it", () => {
+    const propsSrc = readSrc("utils/getLayoutProps.ts");
+    expect(propsSrc).toMatch(/normalizeGaAnalysisId/);
+    expect(propsSrc).toMatch(
+      /gaAnalysisID:\s*normalizeGaAnalysisId\(siteInfo\?\.gaAnalysisId\)/
     );
   });
 });

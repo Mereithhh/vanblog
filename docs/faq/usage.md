@@ -26,9 +26,25 @@ order: 2
 
 ## 配置了 Google Analysis 后前台一直转圈
 
-后台填了 `Google Analysis ID` 后，在中国大陆打开前台可能一直转圈或很久才出来，控制台出现 `GET https://www.googletagmanager.com/gtag/js?id=… net::ERR_CONNECTION_TIMED_OUT`。旧实现会在页面可交互后立刻去拉谷歌脚本，超时会拖住整页加载。已改为 `async` 并在 `window.load` 之后空闲时加载（[#375](https://github.com/Mereithhh/vanblog/issues/375)），谷歌统计不可达时不再堵塞首屏。请升级到包含该修复的版本。
+后台填了 Google Analytics 测量 ID 后，在中国大陆打开前台可能一直转圈或很久才出来，控制台出现 `GET https://www.googletagmanager.com/gtag/js?id=… net::ERR_CONNECTION_TIMED_OUT`。旧实现会在页面可交互后立刻去拉谷歌脚本，超时会拖住整页加载。已改为 `async` 并在 `window.load` 之后空闲时加载（[#375](https://github.com/Mereithhh/vanblog/issues/375)），谷歌统计不可达时不再堵塞首屏。请升级到包含该修复的版本。
 
-站点配置说明见 [访客统计](../features/visitor.md#进阶分析)。
+站点配置说明见 [访客统计](../features/visitor.md#进阶分析)。谷歌后台没有数据见下一节。
+
+## 配置了 Google Analytics 但谷歌显示尚未收到数据
+
+后台 **站点管理 / 系统设置 / 站点配置 / 高级设置** 里填了测量 ID 后，Google Analytics 提示「尚未从您的网站收到任何数据」。
+
+**`G-XXXXXXXXX` 就是 GA4 的正确格式**，VanBlog 会把它交给 `googletagmanager.com/gtag/js?id=…` 和 `gtag('config', …)`。旧版 `UA-XXXXXXXXX-X` 也可以。不是必须改成别的写法。
+
+更常见的原因：
+
+1. **大陆访问 Google API / `googletagmanager.com` 不通**。访客浏览器加载不了 gtag，谷歌就收不到事件。站长在大陆打开 Analytics 控制台通常也需要代理。这和 [#375](https://github.com/Mereithhh/vanblog/issues/375) 里前台超时是同一类网络问题，不是 ID 填错。
+1. 新数据流默认报表可能要等几小时到一天。先看 Analytics 的 **实时** 报表，并用能访问 Google 的网络打开自己的站点。
+1. 广告拦截扩展会拦 gtag。本地 `next dev` 也不会注入这段脚本，请用 Docker / 生产前台验证。
+
+需要国内可访问的统计时，不必等 VanBlog 做内置 Umami：到 **站点管理 / 系统设置 / 定制化** 的「自定义 HTML (head)」粘贴 Umami 官方脚本即可，见 [定制化](../advanced/customizing.md#接入-umami-等第三方统计)。布局设置里「是否开启客制化功能」需保持开启。
+
+相关：[访客统计](../features/visitor.md#进阶分析)、[站点配置](../reference/config.md)。
 
 ## 开启 uBlock 后日志管理无法加载
 

@@ -3,6 +3,9 @@ export const GA_SCRIPT_HOST = "https://www.googletagmanager.com/gtag/js";
 /** Next.js Script strategy: after window load + idle, never during SSR / first paint. */
 export const GA_SCRIPT_STRATEGY = "lazyOnload" as const;
 
+/** GA4 measurement ID (`G-…`) or legacy Universal Analytics (`UA-…`). */
+export const GA_MEASUREMENT_ID_RE = /\b((?:G|UA)-[A-Z0-9-]+)\b/i;
+
 export type GaScriptStrategy = typeof GA_SCRIPT_STRATEGY;
 
 export type GaScriptInjection = {
@@ -13,16 +16,39 @@ export type GaScriptInjection = {
   initSnippet: string;
 };
 
-export function shouldInjectGa(id?: string | null): id is string {
-  return typeof id === "string" && id !== "";
+/**
+ * Trim a site-setting Analysis ID and, if the user pasted a gtag URL or
+ * snippet, pull out the `G-` / `UA-` measurement ID. Whitespace-only is empty.
+ */
+export function normalizeGaAnalysisId(id?: string | null): string {
+  if (typeof id !== "string") {
+    return "";
+  }
+  const trimmed = id.trim();
+  if (!trimmed) {
+    return "";
+  }
+  const fromQuery = trimmed.match(/[?&]id=((?:G|UA)-[A-Z0-9-]+)/i);
+  if (fromQuery) {
+    return fromQuery[1];
+  }
+  const fromText = trimmed.match(GA_MEASUREMENT_ID_RE);
+  if (fromText) {
+    return fromText[1];
+  }
+  return trimmed;
+}
+
+export function shouldInjectGa(id?: string | null): boolean {
+  return normalizeGaAnalysisId(id) !== "";
 }
 
 export function buildGaScriptSrc(id: string): string {
-  return `${GA_SCRIPT_HOST}?id=${id}`;
+  return `${GA_SCRIPT_HOST}?id=${normalizeGaAnalysisId(id) || id}`;
 }
 
 export function buildGaInitSnippet(id: string): string {
-  const jsonId = JSON.stringify(id);
+  const jsonId = JSON.stringify(normalizeGaAnalysisId(id) || id);
   return `
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
@@ -34,15 +60,16 @@ export function buildGaInitSnippet(id: string): string {
 export function describeGaInjection(
   id?: string | null
 ): GaScriptInjection | null {
-  if (!shouldInjectGa(id)) {
+  const normalized = normalizeGaAnalysisId(id);
+  if (!normalized) {
     return null;
   }
   return {
-    src: buildGaScriptSrc(id),
+    src: buildGaScriptSrc(normalized),
     strategy: GA_SCRIPT_STRATEGY,
     async: true,
     blocking: false,
-    initSnippet: buildGaInitSnippet(id),
+    initSnippet: buildGaInitSnippet(normalized),
   };
 }
 

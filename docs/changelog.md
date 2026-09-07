@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✨ Features | 新功能
 
+- 后台「站点配置 / 高级设置」将「Google Analysis ID」改为「Google Analytics 测量 ID」，占位与 tooltip 标明 GA4 的 `G-XXXXXXXXX`（旧版 `UA-` 也可），并提示大陆访问 Google 可能导致控制台「尚未收到数据」。前台注入 gtag 前会去掉首尾空白，若误粘贴整段脚本或 URL 则抽出 `G-` / `UA-` ID。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - 后台「系统设置 / 评论设置」SMTP 表单标明博主邮箱（通知收件人）、发件地址（From）和 SMTP 授权码/应用专用密码的用途，便于换成自定义域名邮箱；仍走内嵌 Waline，不另建邮件系统。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 后台新建 / 修改 / 导入文章和草稿时，标签输入框支持一次粘贴或输入多个标签：用英文/中文逗号、分号或换行分隔。空格不会拆开，以便「machine learning」这类多词标签保持完整。[#489](https://github.com/Mereithhh/vanblog/issues/489)
 - 后台「数据管理 / 联系方式」支持自定义联系方式：除 GitHub / 邮箱 / 微信 / Bilibili / Gitee 外，可添加 Telegram、Twitter/X 等任意链接，填写显示名称、URL，以及可选的图标 URL。内置类型仍每种一条，自定义可以有多条；已有站点的旧数据不用改。[#394](https://github.com/Mereithhh/vanblog/issues/394)
@@ -78,6 +79,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- FAQ / 访客统计 / 站点配置：说明 Google Analytics 测量 ID 填 `G-XXXXXXXXX`、后台路径，以及「尚未收到数据」常见原因（大陆访问 Google API、需等待或看实时）。Umami 等第三方统计通过定制化「自定义 HTML (head)」插入，不做单独集成。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - FAQ / 评论：说明如何在「系统设置 / 评论设置」更换 Waline 通知邮箱、使用自定义域名邮箱（SMTP + 博主邮箱 + 发件地址）。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 文章 / 草稿 / 标签：标签输入框支持粘贴逗号、分号或换行分隔的多个标签；空格不会拆开多词标签。[#489](https://github.com/Mereithhh/vanblog/issues/489)
 - 社交媒体：可在联系方式里添加自定义条目（显示名称 + 链接 + 可选图标），不再仅限内置的几种。[#394](https://github.com/Mereithhh/vanblog/issues/394)
