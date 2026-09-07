@@ -42,7 +42,7 @@
     "remark-directive": "^2.0.1",
     "remark-gfm": "^3.0.1",
     "remark-rehype": "^10.1.0",
-    "sharp": "^0.31.3",
+    "sharp": "0.32.6",
     "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {

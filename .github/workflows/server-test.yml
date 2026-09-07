@@ -13,6 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Run official Dockerfile Alpine/sharp assertions
+        run: bash scripts/tests/dockerfile-alpine-sharp.test.sh
+
       - name: Run vanblog.sh update tests
         run: bash scripts/tests/vanblog-update.test.sh
 
@@ -78,3 +81,16 @@ jobs:
       - name: Run friend link e2e
         working-directory: packages/server
         run: pnpm test:friend-link-e2e
+
+  alpine-sharp-install:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run official Dockerfile Alpine/sharp assertions
+        run: bash scripts/tests/dockerfile-alpine-sharp.test.sh
+
+      - name: Install website sharp on node:18-alpine
+        run: bash scripts/tests/dockerfile-alpine-sharp-install.sh

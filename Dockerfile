@@ -30,9 +30,12 @@ RUN pnpm config set fetch-timeout 600000 -g
 RUN pnpm i
 RUN pnpm build
 
-FROM node:18-alpine AS WEBSITE_BUILDER
+# 前台依赖：Alpine + sharp。musl 版本号可能是 1.2.4_git*，sharp 0.31 会报
+# Installation error: Invalid Version。用 0.32.6 + 官方 musl prebuild，并装 vips 编译兜底。
+FROM node:18-alpine AS WEBSITE_DEPS
 WORKDIR /app
-RUN apk add --update python3 make g++ && rm -rf /var/cache/apk/*
+ENV SHARP_IGNORE_GLOBAL_LIBVIPS=1
+RUN apk add --no-cache python3 make g++ libc6-compat vips-dev fftw-dev
 COPY ./package.json ./
 COPY ./pnpm-lock.yaml ./
 COPY ./pnpm-workspace.yaml ./
@@ -51,13 +54,15 @@ RUN pnpm config set registry https://registry.npmmirror.com -g
 RUN pnpm config set fetch-retries 20 -g
 RUN pnpm config set fetch-timeout 600000 -g
 RUN pnpm install --frozen-lockfile
+
+FROM WEBSITE_DEPS AS WEBSITE_BUILDER
 RUN pnpm build:website
 
 
 #运行容器
 FROM node:18-alpine AS RUNNER
 WORKDIR /app
-RUN  apk add --no-cache --update tzdata caddy nss-tools libwebp-tools \
+RUN  apk add --no-cache --update tzdata caddy nss-tools libwebp-tools libc6-compat \
   && cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
   && echo "Asia/Shanghai" > /etc/timezone \
   && apk del tzdata
