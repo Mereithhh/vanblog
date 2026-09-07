@@ -43,6 +43,14 @@ function countAttr(html: string, re: RegExp) {
   return (html.match(re) || []).length;
 }
 
+function visibleText(html: string) {
+  return html
+    .replace(/<[^>]+>/g, "")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
 describe("wrapCodeChildrenWithLineNumbers", () => {
   it("numbers plain text lines and drops a trailing newline", () => {
     const wrapped = wrapCodeChildrenWithLineNumbers([
@@ -111,8 +119,9 @@ describe("public fenced-code line numbers (#404)", () => {
       /<span[^>]*class="code-line-number"[^>]*aria-hidden="true"[^>]*>1<\/span>/
     );
     expect(html).toMatch(/<span[^>]*class="code-line-content"/);
-    expect(html).toContain("const answer = 42;");
-    expect(html).toContain("const again = 7;");
+    const text = visibleText(html);
+    expect(text).toContain("const answer = 42;");
+    expect(text).toContain("const again = 7;");
   });
 
   it("still numbers lines when highlight-ssr is in the public plugin list", () => {
