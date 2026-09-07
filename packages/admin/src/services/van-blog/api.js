@@ -3,6 +3,7 @@
 /* eslint-disable */
 import { request } from 'umi';
 import { encodeQuerystring } from './encode';
+import { buildAuditSearchUrl } from './auditApi';
 
 export async function fetchAllMeta(options) {
   return request('/api/admin/meta', {
@@ -244,7 +245,7 @@ export async function getAllCategories(withAllData = false) {
   });
 }
 export async function getLog(type, page, pageSize = 10) {
-  return request(`/api/admin/log?event=${type}&pageSize=${pageSize}&page=${page}`, {
+  return request(buildAuditSearchUrl(type, page, pageSize), {
     method: 'GET',
   });
 }
