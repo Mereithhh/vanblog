@@ -1,10 +1,11 @@
-import { getAllCategories, getTags, updateArticle, updateDraft } from '@/services/van-blog/api';
+import { getAllCategories, updateArticle, updateDraft } from '@/services/van-blog/api';
 import { ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { Form, message, Modal } from 'antd';
 import moment from 'moment';
 import { useEffect } from 'react';
 import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
+import TagSelectField from '../TagSelectField';
 
 export default function (props: {
   currObj: any;
@@ -85,18 +86,7 @@ export default function (props: {
         fieldProps={{ onKeyDown: stopMenuKeydown }}
       />
       <AuthorField />
-      <ProFormSelect
-        mode="tags"
-        tokenSeparators={[',']}
-        width="md"
-        name="tags"
-        label="标签"
-        placeholder="请选择或输入标签"
-        request={async () => {
-          const msg = await getTags();
-          return msg?.data?.map((item) => ({ label: item, value: item })) || [];
-        }}
-      />
+      <TagSelectField name="tags" />
       <ProFormSelect
         width="md"
         required

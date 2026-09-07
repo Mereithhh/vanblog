@@ -1,4 +1,4 @@
-import { createDraft, getAllCategories, getTags } from '@/services/van-blog/api';
+import { createDraft, getAllCategories } from '@/services/van-blog/api';
 import {
   ModalForm,
   ProFormDateTimePicker,
@@ -9,6 +9,7 @@ import { Button } from 'antd';
 import moment from 'moment';
 import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
+import TagSelectField from '../TagSelectField';
 export default function (props) {
   const { onFinish } = props;
   return (
@@ -52,18 +53,7 @@ export default function (props) {
         rules={[{ required: true, message: '这是必填项' }]}
       />
       <AuthorField />
-      <ProFormSelect
-        mode="tags"
-        tokenSeparators={[',']}
-        width="md"
-        name="tagsC"
-        label="标签"
-        placeholder="请选择或输入标签"
-        request={async () => {
-          const msg = await getTags();
-          return msg?.data?.map((item) => ({ label: item, value: item })) || [];
-        }}
-      />
+      <TagSelectField name="tagsC" />
       <ProFormSelect
         width="md"
         required

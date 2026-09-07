@@ -1,4 +1,4 @@
-import { createDraft, getAllCategories, getTags } from '@/services/van-blog/api';
+import { createDraft, getAllCategories } from '@/services/van-blog/api';
 import { parseMarkdownFile } from '@/services/van-blog/parseMarkdownFile';
 import {
   ModalForm,
@@ -11,6 +11,7 @@ import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import { Button, Form, Upload } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
+import TagSelectField from '../TagSelectField';
 export default function (props) {
   const { onFinish } = props;
   const [visible, setVisible] = useState(false);
@@ -82,18 +83,7 @@ export default function (props) {
           placeholder="请输入标题"
           rules={[{ required: true, message: '这是必填项' }]}
         />
-        <ProFormSelect
-          mode="tags"
-          tokenSeparators={[',']}
-          width="md"
-          name="tags"
-          label="标签"
-          placeholder="请选择或输入标签"
-          request={async () => {
-            const msg = await getTags();
-            return msg?.data?.map((item) => ({ label: item, value: item })) || [];
-          }}
-        />
+        <TagSelectField name="tags" />
         <ProFormSelect
           width="md"
           required

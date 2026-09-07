@@ -1,4 +1,4 @@
-import { createArticle, getAllCategories, getTags } from '@/services/van-blog/api';
+import { createArticle, getAllCategories } from '@/services/van-blog/api';
 import {
   ModalForm,
   ProFormDateTimePicker,
@@ -9,6 +9,7 @@ import { Button, Modal } from 'antd';
 import moment from 'moment';
 import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
+import TagSelectField from '../TagSelectField';
 
 export default function (props) {
   const { onFinish } = props;
@@ -76,18 +77,7 @@ export default function (props) {
         tooltip="文章发布后的路径将为 /post/[自定义路径名]，如果未设置则使用文章 id 作为路径名"
         placeholder="留空或为空则使用 id 作为路径名"
       />
-      <ProFormSelect
-        mode="tags"
-        tokenSeparators={[',']}
-        width="md"
-        name="tagsC"
-        label="标签"
-        placeholder="请选择或输入标签"
-        request={async () => {
-          const msg = await getTags();
-          return msg?.data?.map((item) => ({ label: item, value: item })) || [];
-        }}
-      />
+      <TagSelectField name="tagsC" />
       <ProFormSelect
         width="md"
         required
