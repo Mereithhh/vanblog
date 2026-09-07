@@ -231,7 +231,6 @@ const SearchCard = forwardRef<
           <input
             ref={inputRef}
             value={search}
-            type="search"
             inputMode="search"
             enterKeyHint="search"
             autoComplete="off"
