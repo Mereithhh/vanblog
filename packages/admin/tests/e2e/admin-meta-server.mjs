@@ -88,13 +88,29 @@ function getCachedVersionFromServer() {
   return cache?.value ?? null;
 }
 
-function json(res, status, body) {
-  res.writeHead(status, { 'content-type': 'application/json; charset=utf-8' });
+function noStoreHeaders() {
+  return {
+    'cache-control': 'private, no-store, no-cache, must-revalidate',
+    'cdn-cache-control': 'no-store',
+    'cloudflare-cdn-cache-control': 'no-store',
+    pragma: 'no-cache',
+    expires: '0',
+  };
+}
+
+function json(res, status, body, extraHeaders = {}) {
+  res.writeHead(status, {
+    'content-type': 'application/json; charset=utf-8',
+    ...extraHeaders,
+  });
   res.end(JSON.stringify(body));
 }
 
-function html(res, title, body) {
-  res.writeHead(200, { 'content-type': 'text/html; charset=utf-8' });
+function html(res, title, body, extraHeaders = {}) {
+  res.writeHead(200, {
+    'content-type': 'text/html; charset=utf-8',
+    ...extraHeaders,
+  });
   res.end(`<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -155,7 +171,11 @@ const server = createServer(async (req, res) => {
   }
 
   if (req.method === 'GET' && url.pathname === '/api/admin/meta') {
-    return json(res, 200, buildMeta());
+    return json(res, 200, buildMeta(), noStoreHeaders());
+  }
+
+  if (req.method === 'GET' && url.pathname === '/api/public/article/1') {
+    return json(res, 200, { statusCode: 200, data: { title: 'hello' } });
   }
 
   if (url.pathname === '/' || url.pathname === '/index.html') {
@@ -195,6 +215,7 @@ const server = createServer(async (req, res) => {
          document.getElementById('refresh-meta').onclick = loadMeta;
          loadMeta();
        </script>`,
+      noStoreHeaders(),
     );
   }
 

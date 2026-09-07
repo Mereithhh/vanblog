@@ -95,10 +95,23 @@
       import h
     }
 	}
+	handle /api/admin* {
+    header Cache-Control "private, no-store, no-cache, must-revalidate"
+    header CDN-Cache-Control "no-store"
+    header Cloudflare-CDN-Cache-Control "no-store"
+    header Pragma "no-cache"
+    header Expires "0"
+		reverse_proxy 127.0.0.1:3000
+	}
 	handle /api/* {
 		reverse_proxy 127.0.0.1:3000
 	}
 	handle_path /admin* {
+    header Cache-Control "private, no-store, no-cache, must-revalidate"
+    header CDN-Cache-Control "no-store"
+    header Cloudflare-CDN-Cache-Control "no-store"
+    header Pragma "no-cache"
+    header Expires "0"
 		root * /app/admin
 		try_files {path} /index.html
 		file_server

@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 源站对 `/admin` 和 `/api/admin/*`（含登录等后台 API）返回 `Cache-Control: private, no-store` 以及 `CDN-Cache-Control` / `Cloudflare-CDN-Cache-Control: no-store`，避免 Cloudflare「缓存全部」把后台 HTML/JSON 存进边缘。前台文章页和 `/_next/static` 不强制 no-store。仍建议页面规则绕过 `/admin*` 与 `/api/admin*`。[#140](https://github.com/Mereithhh/vanblog/issues/140)
 - 前台菜单栏（自定义菜单、分类子菜单、移动端侧栏）和分页会标出当前项：匹配当前路由的菜单链接以及当前页码带可见选中样式和 `aria-current="page"`，其他项不再看起来像选中。[#448](https://github.com/Mereithhh/vanblog/issues/448)
 - 登录 / 访客 IP 在 Cloudflare 等 CDN 后优先使用 `CF-Connecting-IP`（以及常见的 `True-Client-IP`），不再把边缘节点或 VPS 地址记成访客 IP；没有这些头时仍按原来的 `X-Real-IP` / `X-Forwarded-For` / 套接字地址解析，并跳过内网和回环地址。[#127](https://github.com/Mereithhh/vanblog/issues/127)
 - 一键脚本下载 `docker-compose` 模板（以及更新脚本自身）时，若 `vanblog.mereith.com` 不可达，会依次回退到 GitHub raw 与 jsDelivr；全部失败才报错并以非 0 退出。[#115](https://github.com/Mereithhh/vanblog/issues/115)
@@ -67,6 +68,7 @@ redirectFrom: /ref/changelog.html
 ### ✏️ Documentation | 文档
 
 - 说明本项目现由 AI 全自动维护，合并与 `v*` / `doc*` 发版仍由作者完成
+- FAQ / 反代补充：Cloudflare「缓存全部」时后台与 `/api/admin/*` 可能被边缘缓存；源站现已发送 no-store，页面规则仍建议绕过 `/admin*` 与 `/api/admin*`。[#140](https://github.com/Mereithhh/vanblog/issues/140)
 
 ## [0.54.0](https://github.com/Mereithhh/vanblog/compare/v0.53.0...v0.54.0) (2023-06-27)
 

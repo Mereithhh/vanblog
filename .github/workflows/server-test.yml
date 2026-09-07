@@ -44,7 +44,7 @@ jobs:
 
       - name: Run server unit tests
         working-directory: packages/server
-        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|meta.provider|linkName|customPage.provider|walineLogin|waline.provider|walineExtra|setting.provider|cdnUrl|website.provider|walineMongo|numericId|pagination|article.controller|article.provider|draft.provider|watermark|wordCount|deleteFolder|webp|log.controller|provider/log/utils" --passWithNoTests=false
+        run: pnpm test -- --testPathPattern="backupCategories|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|meta.provider|linkName|customPage.provider|walineLogin|waline.provider|walineExtra|setting.provider|cdnUrl|website.provider|walineMongo|numericId|pagination|article.controller|article.provider|draft.provider|watermark|wordCount|deleteFolder|webp|log.controller|provider/log/utils|cacheControl" --passWithNoTests=false
 
       - name: Run website unit tests
         run: pnpm --filter @vanblog/theme-default exec vitest run
@@ -84,6 +84,10 @@ jobs:
       - name: Run friend link e2e
         working-directory: packages/server
         run: pnpm test:friend-link-e2e
+
+      - name: Run admin cache-control e2e
+        working-directory: packages/server
+        run: pnpm test:admin-cache-e2e
 
   alpine-sharp-install:
     runs-on: ubuntu-22.04

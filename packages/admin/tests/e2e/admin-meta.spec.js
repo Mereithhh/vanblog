@@ -56,4 +56,29 @@ test.describe('admin meta is not blocked by version check', () => {
     await page.goto('/admin');
     await expect(page.locator('#dashboard-status')).toHaveText('后台已就绪');
   });
+
+  test('admin HTML and /api/admin/meta send no-store; public API does not', async ({
+    page,
+  }) => {
+    const adminHtml = await page.request.get('/admin');
+    expect(adminHtml.ok()).toBeTruthy();
+    expect(adminHtml.headers()['cache-control'] || '').toMatch(/no-store/i);
+    expect(adminHtml.headers()['cache-control'] || '').toMatch(/private/i);
+    expect(adminHtml.headers()['cdn-cache-control']).toBe('no-store');
+    expect(adminHtml.headers()['cloudflare-cdn-cache-control']).toBe('no-store');
+
+    const meta = await page.request.get('/api/admin/meta');
+    expect(meta.ok()).toBeTruthy();
+    expect(meta.headers()['cache-control'] || '').toMatch(/no-store/i);
+    expect(meta.headers()['cdn-cache-control']).toBe('no-store');
+    expect(meta.headers()['cloudflare-cdn-cache-control']).toBe('no-store');
+
+    const pub = await page.request.get('/api/public/article/1');
+    expect(pub.ok()).toBeTruthy();
+    expect(pub.headers()['cache-control'] || '').not.toMatch(/no-store/i);
+    expect(pub.headers()['cdn-cache-control'] || '').not.toMatch(/no-store/i);
+    expect(pub.headers()['cloudflare-cdn-cache-control'] || '').not.toMatch(
+      /no-store/i,
+    );
+  });
 });

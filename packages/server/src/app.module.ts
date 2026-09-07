@@ -31,6 +31,7 @@ import { JwtStrategy } from './provider/auth/jwt.strategy';
 import { InitController } from './controller/admin/init/init.controller';
 import { InitProvider } from './provider/init/init.provider';
 import { InitMiddleware } from './provider/auth/init.middleware';
+import { NoStoreCacheMiddleware } from './provider/cache/no-store.middleware';
 import { BackupController } from './controller/admin/backup/backup.controller';
 import { MenuMetaController } from './controller/admin/menu/menu.meta.controller';
 import { ScheduleModule } from '@nestjs/schedule';
@@ -184,6 +185,10 @@ import { initJwt } from './utils/initJwt';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    consumer.apply(NoStoreCacheMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
     consumer
       .apply(InitMiddleware)
       .exclude(
