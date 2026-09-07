@@ -1,5 +1,11 @@
-import mermaidPlugin from '@bytemd/plugin-mermaid';
+import mermaidPluginModule from '@bytemd/plugin-mermaid';
 import type { BytemdPlugin } from 'bytemd';
+import {
+  pickMermaidLocale,
+  resolveCallable,
+  resolveMermaidApi,
+  svgFromRenderResult,
+} from './mermaidInterop';
 
 /**
  * Mermaid 10's `render()` appends temporary measurement nodes (`#d{id}`) to
@@ -10,12 +16,19 @@ import type { BytemdPlugin } from 'bytemd';
  * concurrent `render()` calls. ByteMD/Svelte then throws on the next
  * keystroke (`… is not iterable` / error overlay). Keep the source `<pre>`
  * in the tree, paint diagrams as siblings, and serialize renders.
+ *
+ * Load the UMD bundle (`mermaid.min.js`) instead of `mermaid.core.mjs`.
+ * The core entry re-exports `khroma` / `d3` / `lodash-es`; a default-vs-
+ * namespace import there is the #391 crash (`Yh is not a function or its
+ * return value is not iterable`) when a flowchart uses `style … fill:#…`.
  */
 const LEFTOVER_ID_PREFIXES = ['dbytemd-mermaid', 'dmermaid', 'dvb-admin-mermaid'];
 
+const mermaidPlugin = resolveCallable<typeof mermaidPluginModule>(mermaidPluginModule);
+
 export type MermaidRenderer = {
   initialize?: (config: Record<string, unknown>) => void;
-  render: (id: string, text: string) => Promise<{ svg: string }>;
+  render: (id: string, text: string) => Promise<unknown>;
 };
 
 export function isMermaidArtifact(node: Element): boolean {
@@ -82,7 +95,11 @@ export async function paintMermaidPreview(
     const source = code.textContent || '';
     const container = hideMermaidSourceAndMountOverlay(pre);
     try {
-      const { svg } = await mermaid.render(`vb-admin-mermaid-${Date.now()}-${i}`, source);
+      const rendered = await mermaid.render(`vb-admin-mermaid-${Date.now()}-${i}`, source);
+      const svg = svgFromRenderResult(rendered);
+      if (!svg) {
+        throw new Error('mermaid.render returned no svg');
+      }
       if (isCancelled() || !container.isConnected) {
         container.remove();
         continue;
@@ -109,11 +126,37 @@ function enqueuePaint(work: () => Promise<void>): Promise<void> {
   return run;
 }
 
+function globalMermaid(): MermaidRenderer | undefined {
+  if (typeof window === 'undefined') {
+    return undefined;
+  }
+  return (window as unknown as { mermaid?: MermaidRenderer }).mermaid;
+}
+
+async function importMermaidModule(): Promise<unknown> {
+  const loaders = [
+    () => import('mermaid/dist/mermaid.min.js'),
+    () => import('mermaid/dist/mermaid.js'),
+    () => import('mermaid'),
+  ];
+  let lastError: unknown;
+  for (let i = 0; i < loaders.length; i += 1) {
+    try {
+      return await loaders[i]();
+    } catch (err) {
+      lastError = err;
+    }
+  }
+  throw lastError || new Error('failed to import mermaid');
+}
+
 function loadMermaid(config: Record<string, unknown> = {}): Promise<MermaidRenderer> {
   if (!mermaidLoader) {
-    mermaidLoader = import('mermaid').then((mod) => {
-      const mermaid = ((mod as { default?: MermaidRenderer }).default ??
-        mod) as MermaidRenderer;
+    mermaidLoader = importMermaidModule().then((mod) => {
+      const mermaid = resolveMermaidApi<MermaidRenderer>(mod, globalMermaid());
+      if (!mermaid) {
+        throw new Error('mermaid.render is not a function');
+      }
       mermaid.initialize?.({
         startOnLoad: false,
         suppressErrorRendering: true,
@@ -126,11 +169,14 @@ function loadMermaid(config: Record<string, unknown> = {}): Promise<MermaidRende
 }
 
 export function mermaidForEditor(
-  options?: Parameters<typeof mermaidPlugin>[0],
+  options?: Parameters<typeof mermaidPluginModule>[0],
 ): BytemdPlugin {
+  const locale = pickMermaidLocale(
+    (options as { locale?: Record<string, unknown> } | undefined)?.locale,
+  );
   const mermaidConfig = { ...(options || {}) } as Record<string, unknown>;
   delete mermaidConfig.locale;
-  const official = mermaidPlugin(options);
+  const official = mermaidPlugin ? mermaidPlugin({ ...(options || {}), locale }) : {};
 
   return {
     ...official,
@@ -141,16 +187,15 @@ export function mermaidForEditor(
         if (cancelled) {
           return;
         }
-        let mermaid: MermaidRenderer;
         try {
-          mermaid = await loadMermaid(mermaidConfig);
+          const mermaid = await loadMermaid(mermaidConfig);
+          if (cancelled) {
+            return;
+          }
+          await paintMermaidPreview(markdownBody, mermaid, () => cancelled);
         } catch {
-          return;
+          // Keep the source fence. Never let mermaid interop brick the editor.
         }
-        if (cancelled) {
-          return;
-        }
-        await paintMermaidPreview(markdownBody, mermaid, () => cancelled);
       });
 
       return () => {

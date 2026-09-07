@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台编辑器写入带 `style` / 十六进制颜色 / 中文标签的 mermaid 流程图后再按键，不再抛 `Yh is not a function or its return value is not iterable` 并导致无法继续编辑。预览改为加载 mermaid 的 UMD 包并解开 default/namespace 导入，避免 `khroma` 等 ESM 依赖被 webpack 绑错 [#391](https://github.com/Mereithhh/vanblog/issues/391)
 - 后台编辑文章标题时左右方向键无法移动光标：全局快捷键不再拦截输入框里的方向键 [#390](https://github.com/Mereithhh/vanblog/issues/390)
 - 后台删除目录改用 `fs.rmSync`，webp 压缩用 `spawnSync` 传参数数组，不再把路径拼进 shell 命令，避免命令注入 [#482](https://github.com/Mereithhh/vanblog/issues/482)
 - 前台分页增加跳转到指定页：多页时显示页码输入框，回车或点「前往」按现有路由跳到 `/` 或 `/page/n`，超出 1..总页数会落到最近的有效页，空值或非法输入不跳转；补齐 [#175](https://github.com/Mereithhh/vanblog/issues/175) 剩余的「跳转到第 N 页」。此前已合并：代码块对比度（#541）、分页方向键/省略号（#542）、顶栏与代码复制键盘（#543）、搜索弹层键盘（#544）

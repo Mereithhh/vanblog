@@ -1,8 +1,11 @@
 const { test, expect } = require('@playwright/test');
+const { ISSUE_391_MERMAID } = require('./admin-api-mock');
 const {
   collectUncaughtErrors,
   expectNoEditorCrash,
   expectPreviewVisibleAndIdle,
+  pasteMermaidFenceAndType,
+  readEditorValue,
 } = require('./page-errors');
 
 test('article with mermaid stays editable in the admin editor', async ({ page }) => {
@@ -62,5 +65,29 @@ test('article with mermaid stays editable in the admin editor', async ({ page })
 
   const previewHasMermaid = await page.locator('.bytemd-preview .bytemd-mermaid, .bytemd-preview code.language-mermaid').count();
   expect(previewHasMermaid).toBeGreaterThan(0);
+  await expectPreviewVisibleAndIdle(page);
+});
+
+test('pasting styled mermaid with Chinese labels stays editable (#391)', async ({ page }) => {
+  const errors = collectUncaughtErrors(page);
+  await page.goto('/');
+  const editor = page.locator('.CodeMirror').first();
+  await expect(editor).toBeVisible();
+  await expectPreviewVisibleAndIdle(page);
+
+  await editor.click({ position: { x: 24, y: 24 } });
+  await expect(editor).toHaveClass(/CodeMirror-focused/);
+  await pasteMermaidFenceAndType(page, ISSUE_391_MERMAID, 'E2E_391_FIXTURE_OK');
+
+  await expect.poll(async () => readEditorValue(page)).toContain('fill:#9fe1e7');
+  await expect.poll(async () => readEditorValue(page)).toContain('协商脑力');
+  await expect.poll(async () => readEditorValue(page)).toContain('E2E_391_FIXTURE_OK');
+
+  await page.keyboard.press('Enter');
+  await page.keyboard.type('STILL_TYPING');
+  await expect.poll(async () => readEditorValue(page)).toContain('STILL_TYPING');
+
+  await expect(page.getByText('Something went wrong')).toHaveCount(0);
+  expectNoEditorCrash(page, errors);
   await expectPreviewVisibleAndIdle(page);
 });

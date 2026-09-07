@@ -31,8 +31,34 @@ function expectNoEditorCrash(page, errors) {
   expect(errors, errors.join('\n')).toEqual([]);
 }
 
+async function readEditorValue(page) {
+  return page.evaluate(
+    () =>
+      window.__editorValue ||
+      document.querySelector('.CodeMirror')?.CodeMirror?.getValue() ||
+      '',
+  );
+}
+
+async function pasteMermaidFenceAndType(page, mermaidFence, token) {
+  await page.evaluate((text) => {
+    const cm = document.querySelector('.CodeMirror')?.CodeMirror;
+    if (!cm) {
+      throw new Error('CodeMirror is not ready');
+    }
+    const current = String(cm.getValue() || '').replace(/\s+$/, '');
+    cm.setValue(`${current}\n\n${text}\n`);
+    cm.setCursor({ line: cm.lineCount() - 1, ch: 0 });
+    cm.focus();
+  }, mermaidFence);
+  await page.keyboard.press('Enter');
+  await page.keyboard.type(token);
+}
+
 module.exports = {
   collectUncaughtErrors,
   expectNoEditorCrash,
   expectPreviewVisibleAndIdle,
+  pasteMermaidFenceAndType,
+  readEditorValue,
 };
