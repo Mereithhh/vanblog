@@ -168,6 +168,12 @@ iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页�
 
 在「图床设置」里把水印设成 `example.com` 这类带 `.` 的文字后，上传的图片上可能完全看不到水印；改成不含点的短文本（如 `VanBlog`）又正常。这不是点号本身画不出来，而是旧实现用固定 500px 宽画布去印 128px 字体，域名一类较长的「单词」会被 Jimp 换到画布外。已修复（[#322](https://github.com/Mereithhh/vanblog/issues/322)）。请升级到包含该修复的版本。
 
+## 文章里写的 HTML 不生效
+
+Markdown 里写了 `<u>下划线</u>`、`<font color="red">` 或 `<center>` 后，前台可能只剩纯文本、没有样式。这是 ByteMD 默认的 GitHub sanitizer 会丢掉这些标签导致的，已修复（[#490](https://github.com/Mereithhh/vanblog/issues/490)）：文章正文会解析 HTML，并保留常见格式/嵌入标签；`<script>`、`onclick` / `onerror` 和 `javascript:` 链接仍会被去掉。请升级到包含该修复的版本。
+
+整站要插入脚本请用 [定制化](../advanced/customizing.md)，完整页面用 [自定义页面](../advanced/custom-page.md)，不要指望文章正文执行 JS。语法与允许范围见 [编辑器](../features/editor.md#在-markdown-里写-html)。
+
 ## 前台 Markdown 链接文字或网址显示不完整
 
 文章里写了 `[很长的文字](https://example.com/很长的路径)` 这类链接后，前台首页「阅读全文」前可能露出 `[文字](https://www.` 这样的残缺 markdown，点进去详情页却是完整蓝字链接。没有 `<!-- more -->` 时，旧版本按 50 个字符硬截摘要，会把 `[文字](网址)` 从中间切开，解析器再把剩下的 `https://www.` 当成自动链接。已修复（[#410](https://github.com/Mereithhh/vanblog/issues/410)）：截断点落在链接中间时会把这一条链接补全，可见文字和 `href` 都保持完整。链接文字里有反引号、URL 带查询参数或括号时同样适用。请升级到包含该修复的版本。

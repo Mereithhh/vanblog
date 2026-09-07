@@ -31,12 +31,16 @@ import { mermaidForEditor } from './plugins/mermaidSafety';
 import { withSafeViewerEffects } from './plugins/previewSafety';
 import { tocViewportGuard } from './plugins/tocViewport';
 
+// Keep extra tags / strip list aligned with website/utils/markdownSanitize.ts (#490).
 const sanitize = (schema) => {
   schema.protocols.src.push('data');
   schema.tagNames.push('center');
   schema.tagNames.push('iframe');
-  schema.tagNames.push('script');
   schema.tagNames.push('section');
+  schema.tagNames.push('u');
+  schema.tagNames.push('font');
+  schema.tagNames = schema.tagNames.filter((tag) => tag !== 'script');
+  schema.strip = Array.from(new Set([...(schema.strip || []), 'script']));
   // remark-rehype already prefixes footnote ids; a second prefix breaks hrefs.
   schema.clobberPrefix = '';
   schema.attributes['*'].push('style');
@@ -46,7 +50,9 @@ const sanitize = (schema) => {
   schema.attributes['*'].push('frameborder');
   schema.attributes['*'].push('framespacing');
   schema.attributes['*'].push('allowfullscreen');
-  schema.strip = [];
+  schema.attributes.font = Array.from(
+    new Set([...(schema.attributes.font || []), 'color', 'size', 'face']),
+  );
   return schema;
 };
 
@@ -89,6 +95,7 @@ export default function EditorComponent(props: {
           plugins={plugins}
           onChange={props.onChange}
           locale={cn}
+          remarkRehype={{ allowDangerousHtml: true }}
           sanitize={sanitize}
           uploadImages={async (files: File[]) => {
             setLoading(true);

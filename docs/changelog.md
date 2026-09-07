@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✨ Features | 新功能
 
+- 前台文章（以及同一套 ByteMD 的后台预览）会渲染 Markdown 里嵌入的常见 HTML：`<u>`、`<font>`、`<center>`、带 `style` 的标签、`<iframe>` 等。`<script>`、事件属性（`onclick` / `onerror`）和 `javascript:` 链接会被消毒去掉；整站脚本仍走定制化，不在文章正文执行。[#490](https://github.com/Mereithhh/vanblog/issues/490)
 - 后台「自定义页面」新建提示、帮助和文件编辑器标明：只托管静态资源、入口是根目录 `index.html`、SPA 需要相对路径；路径必须是单级（如 `/uptime` → `/c/uptime/`）。[#337](https://github.com/Mereithhh/vanblog/issues/337)
 - 后台「站点配置 / 高级设置」将「Google Analysis ID」改为「Google Analytics 测量 ID」，占位与 tooltip 标明 GA4 的 `G-XXXXXXXXX`（旧版 `UA-` 也可），并提示大陆访问 Google 可能导致控制台「尚未收到数据」。前台注入 gtag 前会去掉首尾空白，若误粘贴整段脚本或 URL 则抽出 `G-` / `UA-` ID。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - 后台「系统设置 / 评论设置」SMTP 表单标明博主邮箱（通知收件人）、发件地址（From）和 SMTP 授权码/应用专用密码的用途，便于换成自定义域名邮箱；仍走内嵌 Waline，不另建邮件系统。[#342](https://github.com/Mereithhh/vanblog/issues/342)
@@ -81,6 +82,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- 编辑器 / 文章 / FAQ：说明可以在 Markdown 正文里写常见 HTML，以及哪些标签会被消毒去掉。[#490](https://github.com/Mereithhh/vanblog/issues/490)
 - 自定义页面文档 / FAQ：说明只托管静态 HTML/CSS/JS、`/c/<name>/` 的入口是根目录 `index.html`、SPA 需要相对 `base`/`homepage`（uptime-status 一类 zip 的 `/static/...` 会白屏），以及一键部署后如何用反代或独立容器旁挂其他站点。[#337](https://github.com/Mereithhh/vanblog/issues/337)
 - FAQ / 访客统计 / 站点配置：说明 Google Analytics 测量 ID 填 `G-XXXXXXXXX`、后台路径，以及「尚未收到数据」常见原因（大陆访问 Google API、需等待或看实时）。Umami 等第三方统计通过定制化「自定义 HTML (head)」插入，不做单独集成。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - FAQ / 评论：说明如何在「系统设置 / 评论设置」更换 Waline 通知邮箱、使用自定义域名邮箱（SMTP + 博主邮箱 + 发件地址）。[#342](https://github.com/Mereithhh/vanblog/issues/342)
