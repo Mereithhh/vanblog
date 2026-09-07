@@ -26,8 +26,17 @@
   .nav-item {
     @apply transition cursor-pointer flex items-center h-full   ;
   }
+  .nav-item-current {
+    @apply text-gray-900 font-medium dark:text-dark-hover;
+  }
+  .nav-item-current-fill {
+    @apply bg-gray-200 font-medium text-gray-900 dark:bg-dark-2 dark:text-dark-hover;
+  }
   .side-bar-item {
     @apply text-base leading-9 w-full hover:bg-gray-100 cursor-pointer;
+  }
+  .side-bar-item-current {
+    @apply bg-gray-100 font-medium text-gray-900 dark:bg-dark-2 dark:text-dark-hover;
   }
   .dark-border-hover {
     @apply dark:hover:text-gray-300 dark:hover:border-gray-300;
@@ -203,6 +212,12 @@ body .ua-link::before {
   width: 100%;
   left: 0;
   right: 0;
+}
+.nav-item-current.ua:before {
+  width: 100%;
+  left: 0;
+  right: 0;
+  background: currentColor;
 }
 #nav li a {
   word-break: keep-all;

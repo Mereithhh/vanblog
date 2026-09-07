@@ -1,3 +1,5 @@
+import { readFileSync } from "fs";
+import path from "path";
 import { describe, expect, it } from "vitest";
 import {
   PAGE_NAV_ITEM_ATTR,
@@ -9,7 +11,12 @@ import {
   handlePageNavKeyDown,
   movePageNavFocusIndex,
 } from "../components/PageNav/a11y";
+import { pageNavNumberClass } from "../components/PageNav/classes";
 import { calItemList, PageNavProps } from "../components/PageNav/core";
+
+const websiteRoot = path.join(__dirname, "..");
+const readSrc = (rel: string) =>
+  readFileSync(path.join(websiteRoot, rel), "utf8");
 
 const itemsOf = (
   overrides: Partial<PageNavProps> & Pick<PageNavProps, "total" | "current">
@@ -106,6 +113,34 @@ describe("PageNav a11y render model", () => {
     expect(nodes.filter((node) => node.type === "link-cur")).toHaveLength(1);
   });
 
+  it("marks only the current page as selected (visual + aria-current)", () => {
+    for (const current of [1, 2, 6, 10]) {
+      const nodes = describePageNav(itemsOf({ total: 50, current }));
+      const selected = nodes.filter((node) => node.ariaCurrent === "page");
+      expect(selected).toHaveLength(1);
+      expect(selected[0].page).toBe(current);
+      expect(selected[0].type).toBe("link-cur");
+      for (const node of nodes) {
+        const isCurrent = node.type === "link-cur";
+        expect(node.ariaCurrent).toBe(isCurrent ? "page" : undefined);
+        if (node.type === "link" || node.type === "link-cur") {
+          const cls = pageNavNumberClass(isCurrent);
+          if (isCurrent) {
+            expect(cls).toContain("bg-gray-700");
+            expect(cls).not.toContain("bg-white");
+            expect(cls).toMatch(/\bdark:bg-dark-hover\b/);
+          } else {
+            expect(cls).toContain("bg-white");
+            expect(cls).not.toMatch(/\bbg-gray-700\b/);
+            expect(cls).toMatch(/\bdark:bg-dark-1\b/);
+          }
+        } else if (node.type === "pre-btn" || node.type === "next-btn") {
+          expect(node.ariaCurrent).toBeUndefined();
+        }
+      }
+    }
+  });
+
   it("skips ellipsis and disabled controls in the focusable set", () => {
     const start = focusablePageNavNodes(itemsOf({ total: 50, current: 1 }));
     expect(start.map((node) => node.type)).toEqual([
@@ -192,5 +227,14 @@ describe("PageNav arrow-key focus", () => {
     expect(PAGE_NAV_PREV_LABEL).toBe("Previous page");
     expect(PAGE_NAV_NEXT_LABEL).toBe("Next page");
     expect(PAGE_NAV_ITEM_ATTR).toBe("data-page-nav-item");
+  });
+});
+
+describe("PageNav selected-state markup", () => {
+  const render = readSrc("components/PageNav/render.tsx");
+
+  it("applies aria-current and the current-page class only via link-cur", () => {
+    expect(render).toMatch(/aria-current=\{node\.ariaCurrent\}/);
+    expect(render).toMatch(/pageNavNumberClass\(node\.type === "link-cur"\)/);
   });
 });

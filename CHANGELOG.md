@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台菜单栏（自定义菜单、分类子菜单、移动端侧栏）和分页会标出当前项：匹配当前路由的菜单链接以及当前页码带可见选中样式和 `aria-current="page"`，其他项不再看起来像选中。[#448](https://github.com/Mereithhh/vanblog/issues/448)
 - 登录 / 访客 IP 在 Cloudflare 等 CDN 后优先使用 `CF-Connecting-IP`（以及常见的 `True-Client-IP`），不再把边缘节点或 VPS 地址记成访客 IP；没有这些头时仍按原来的 `X-Real-IP` / `X-Forwarded-For` / 套接字地址解析，并跳过内网和回环地址。[#127](https://github.com/Mereithhh/vanblog/issues/127)
 - 一键脚本下载 `docker-compose` 模板（以及更新脚本自身）时，若 `vanblog.mereith.com` 不可达，会依次回退到 GitHub raw 与 jsDelivr；全部失败才报错并以非 0 退出。[#115](https://github.com/Mereithhh/vanblog/issues/115)
 - 配置了 Google Analysis ID 后，前台不再同步等待 `googletagmanager.com/gtag/js`：脚本改为 `async` 并在页面 load 后空闲时加载（`lazyOnload`）。大陆访问该域名超时（`net::ERR_CONNECTION_TIMED_OUT`）时，不再堵塞首屏和 hydration。[#375](https://github.com/Mereithhh/vanblog/issues/375)
