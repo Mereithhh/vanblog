@@ -1,4 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useLayoutEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { searchArticles } from "../../api/search";
 import { useDebounce } from "react-use";
 import ArticleList from "../ArticleList";
@@ -14,18 +22,27 @@ import {
   focusSearchDialogInput,
   handleSearchDialogKeyDown,
   handleSearchShortcutKeyDown,
+  openSearchFromUserGesture,
 } from "./a11y";
 import { ICON_ACTION_BUTTON_CLASS } from "../NavBar/a11y";
 
-export default function (props: {
-  visible: boolean;
-  setVisible: (v: boolean) => void;
-  openArticleLinksInNewWindow: boolean;
-}) {
+export type SearchCardHandle = {
+  openFromUserGesture: () => boolean;
+};
+
+const SearchCard = forwardRef<
+  SearchCardHandle,
+  {
+    visible: boolean;
+    setVisible: (v: boolean) => void;
+    openArticleLinksInNewWindow: boolean;
+  }
+>(function SearchCard(props, ref) {
   const [result, setResult] = useState<any>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
   const [typing, setTyping] = useState(false);
+  const overlayRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const visibleRef = useRef(props.visible);
@@ -38,9 +55,23 @@ export default function (props: {
     setVisibleRef.current(false);
   };
 
+  const openFromUserGesture = () =>
+    openSearchFromUserGesture({
+      overlay: overlayRef.current,
+      dialog: innerRef.current,
+      input: inputRef.current,
+      setVisible: (v) => setVisibleRef.current(v),
+      setBodyOverflow: (overflow) => {
+        document.body.style.overflow = overflow;
+      },
+    });
+
+  useImperativeHandle(ref, () => ({
+    openFromUserGesture,
+  }));
+
   const openSearch = () => {
-    document.body.style.overflow = "hidden";
-    setVisibleRef.current(true);
+    openFromUserGesture();
   };
 
   useEffect(() => {
@@ -71,7 +102,7 @@ export default function (props: {
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (props.visible) {
       focusSearchDialogInput({
         querySelector: (selector) =>
@@ -143,6 +174,7 @@ export default function (props: {
 
   return (
     <div
+      ref={overlayRef}
       className="fixed w-full h-full top-0 left-0 right-0 bottom-0  justify-center items-center flex"
       style={{
         zIndex: 100,
@@ -199,6 +231,10 @@ export default function (props: {
           <input
             ref={inputRef}
             value={search}
+            type="search"
+            inputMode="search"
+            enterKeyHint="search"
+            autoComplete="off"
             aria-label={SEARCH_INPUT_LABEL}
             {...{ [SEARCH_DIALOG_INPUT_ATTR]: "" }}
             onChange={(ev) => {
@@ -263,4 +299,6 @@ export default function (props: {
       </div>
     </div>
   );
-}
+});
+
+export default SearchCard;

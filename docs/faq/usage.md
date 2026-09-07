@@ -52,7 +52,13 @@ order: 2
 
 点顶栏搜索或按 <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd> 打开搜索后，以前 Tab 会跑到后面的页面，结果列表不能用方向键选，清除按钮只是带 `onClick` 的 `div`。已修复（[#175](https://github.com/Mereithhh/vanblog/issues/175) 的 Not interactive with keyboard）：打开后焦点进入对话框（搜索输入框），<kbd>Esc</kbd> 关闭（关闭时不再误拦截 Escape），<kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> 只在弹层内循环，清除是真正的按钮（Enter / 空格），<kbd>↑</kbd> / <kbd>↓</kbd> 在结果间移动，<kbd>Enter</kbd> 打开当前结果。弹层带 `role="dialog"`、`aria-modal` 和中文名称「搜索」。
 
-这次只处理了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里的「Not interactive with keyboard」。跳转到指定页见 [前台分页跳转到指定页](#前台分页跳转到指定页)。请升级到包含该修复的版本。
+这次只处理了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里的「Not interactive with keyboard」。跳转到指定页见 [前台分页跳转到指定页](#前台分页跳转到指定页)。请升级到包含该修复的版本。iPhone Safari 点搜索后页面变暗但没有键盘，见 [iPhone Safari 点搜索没有键盘](#iphone-safari-点搜索没有键盘)。
+
+## iPhone Safari 点搜索没有键盘
+
+iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页面会变暗（弹层已打开），但输入框没有焦点、系统键盘不出现。这是 Safari 的限制：只有在同一次点击里对输入框调用 `focus()` 才会弹出键盘；以前焦点写在 `useEffect` / 动画结束后，手势已经结束。已改为在点击处理函数里先显示弹层再聚焦搜索框（[#155](https://github.com/Mereithhh/vanblog/issues/155)），桌面 <kbd>Ctrl</kbd> / <kbd>⌘</kbd> + <kbd>K</kbd>、<kbd>Esc</kbd> 和弹层内键盘导航不变。请升级到包含该修复的版本。
+
+搜索弹层键盘操作见 [前台搜索弹层无法用键盘](#前台搜索弹层无法用键盘)。
 
 ## 前台白天模式分页当前页看不清
 

@@ -148,6 +148,63 @@ export function focusSearchDialogInput(dialog: {
   return true;
 }
 
+/**
+ * iOS Safari only raises the software keyboard if `focus()` runs in the
+ * same user-gesture turn as the tap. `useEffect` / `transitionend` are
+ * too late. The overlay is already mounted (`visibility: hidden` +
+ * `scale(0)`), so reveal it synchronously and then focus — do not wait
+ * for React to commit, and do not use a `readOnly` input trick.
+ */
+export function describeSearchOpenFocusContract() {
+  return {
+    focusInUserGesture: true,
+    revealOverlayBeforeFocus: true,
+    delayedFocusIsFallbackOnly: true,
+    readOnlyFocusTrick: false,
+    inputMode: "search" as const,
+  };
+}
+
+type SearchOverlayEl = {
+  style: { visibility: string };
+};
+
+type SearchDialogEl = {
+  style?: { transform?: string };
+  setAttribute?: (name: string, value: string) => void;
+};
+
+export function revealSearchDialogForFocus(parts: {
+  overlay?: SearchOverlayEl | null;
+  dialog?: SearchDialogEl | null;
+}): void {
+  if (parts.overlay) {
+    parts.overlay.style.visibility = "visible";
+  }
+  if (parts.dialog?.style) {
+    parts.dialog.style.transform = "scale(100%)";
+  }
+  parts.dialog?.setAttribute?.("aria-hidden", "false");
+}
+
+export function openSearchFromUserGesture(options: {
+  overlay?: SearchOverlayEl | null;
+  dialog?: SearchDialogEl | null;
+  input?: FocusableEl | null;
+  setVisible: (visible: boolean) => void;
+  setBodyOverflow?: (overflow: string) => void;
+}): boolean {
+  options.setVisible(true);
+  options.setBodyOverflow?.("hidden");
+  revealSearchDialogForFocus({
+    overlay: options.overlay,
+    dialog: options.dialog,
+  });
+  if (!options.input) return false;
+  options.input.focus?.();
+  return true;
+}
+
 export function handleSearchShortcutKeyDown(event: {
   key: string;
   ctrlKey?: boolean;
