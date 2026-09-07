@@ -25,6 +25,9 @@ jobs:
       - name: Run vanblog.sh uninstall tests
         run: bash scripts/tests/vanblog-uninstall.test.sh
 
+      - name: Run vanblog.sh download fallback tests
+        run: bash scripts/tests/vanblog-download-fallback.test.sh
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
