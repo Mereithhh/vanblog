@@ -114,9 +114,13 @@ body .dark-switch {
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  overflow: hidden;
   .ant-pro-grid-content {
     max-width: 50000px !important;
     height: 100%;
+    min-height: 0;
   }
   .ant-pro-page-container-children-content {
     margin: 0 !important;
@@ -124,9 +128,40 @@ body .dark-switch {
   .ant-pro-grid-content-children,
   .ant-pro-page-container-children-content,
   .ant-spin-nested-loading,
-  .ant-spin-container {
+  .ant-spin-container,
+  .editor-shell {
     height: 100%;
+    min-height: 0;
   }
+}
+
+/*
+ * On the article editor, ProLayout content is otherwise height:auto, so
+ * ByteMD's height:100% does not resolve and a long markdown doc expands
+ * the window. TOC jump then scrolls the page and the toolbar disappears
+ * (#298). Lock the layout to the viewport only while .editor-full is mounted.
+ */
+#root:has(.editor-full) {
+  overflow: hidden;
+}
+#root:has(.editor-full) .ant-design-pro,
+#root:has(.editor-full) .ant-pro-layout,
+#root:has(.editor-full) .ant-pro-layout > .ant-layout,
+#root:has(.editor-full) .ant-layout,
+#root:has(.editor-full) .ant-layout-content,
+#root:has(.editor-full) .ant-pro-layout-content {
+  height: 100%;
+  max-height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+#root:has(.editor-full) .ant-layout-content,
+#root:has(.editor-full) .ant-pro-layout-content {
+  display: flex;
+  flex-direction: column;
+}
+#root:has(.editor-full) .editor-full {
+  flex: 1 1 auto;
 }
 .ant-pro-grid-content.wide {
   max-width: 50000px !important;
@@ -144,10 +179,15 @@ body .ant-pro-table .ant-pro-table-search {
   margin-bottom: 22px;
 }
 
-.editor-full .ant-spin-container > div {
-  height: 100%;
+.editor-full .ant-spin-nested-loading,
+.editor-full .ant-spin-container {
   position: relative;
 }
+.editor-full .ant-spin-container > div {
+  height: 100%;
+  min-height: 0;
+}
+body .editor-full .bytemd,
 body .bytemd {
   z-index: 999;
   position: absolute;
@@ -156,6 +196,8 @@ body .bytemd {
   left: 0;
   right: 0;
   height: 100%;
+  max-height: 100%;
+  min-height: 0;
 }
 .medium-zoom-image,
 .medium-zoom-overlay {

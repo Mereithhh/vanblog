@@ -8,6 +8,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台编辑很长的 Markdown 时，用右侧目录跳到靠后的标题后，顶部工具栏（加粗、标题、上传等功能键）会整行消失。现把编辑器锁在视口高度内，工具栏 sticky 在编辑区顶部，目录跳转也不再把页面/外层容器滚走。[#298](https://github.com/Mereithhh/vanblog/issues/298)
 - 换域名后文章/草稿里写成绝对地址的图片（如 `https://旧域名/static/...`）不会跟着 DNS 或「网站 Url」一起改。后台「图床设置」增加旧地址 → 新地址改写，只替换以此前缀开头的链接，并统计更新篇数；相对路径和未填写的第三方图床不动。[#475](https://github.com/Mereithhh/vanblog/issues/475)
 - 内置 Caddy「HTTPS 自动重定向」开启后可能仍走 HTTP：`setRedirect(true)` 原先 `POST` 追加 `listener_wrappers`（形状不对、重启会再套一层），成功日志还误写成「已关闭」。现改为 `PATCH`/`PUT` 整段替换为 `http_redirect`，写入后再读回确认；关闭则删除 wrappers（404 视为已关）。[#150](https://github.com/Mereithhh/vanblog/issues/150)
 - 外层 Nginx 反代未转发 `Host` 时，Waline 评论登录 / 管理后台 OAuth 会跳到 `localhost` 或 `0.0.0.0`。官方反代示例已补上 `proxy_set_header Host $host`（以及 `X-Forwarded-For`）。[#396](https://github.com/Mereithhh/vanblog/issues/396)

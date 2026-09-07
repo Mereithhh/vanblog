@@ -3,6 +3,7 @@ import type { BytemdPlugin } from 'bytemd';
 const HEADING_SELECTOR = 'h1, h2, h3, h4, h5, h6';
 
 export const EDITOR_CHROME_SELECTORS = [
+  '.bytemd',
   '.bytemd-body',
   '.bytemd-editor',
   '.bytemd-editor > .CodeMirror',
@@ -11,6 +12,9 @@ export const EDITOR_CHROME_SELECTORS = [
 export function isEditorChromeScroller(node: Element): boolean {
   if (node.classList.contains('CodeMirror-scroll')) {
     return false;
+  }
+  if (node.classList.contains('bytemd') && !node.classList.contains('bytemd-body')) {
+    return true;
   }
   if (node.classList.contains('bytemd-body')) {
     return true;
@@ -21,20 +25,64 @@ export function isEditorChromeScroller(node: Element): boolean {
   return node.classList.contains('CodeMirror') && Boolean(node.closest('.bytemd-editor'));
 }
 
+function visitEditorChrome(root: ParentNode, visit: (el: HTMLElement) => void): void {
+  const seen = new Set<HTMLElement>();
+  const consider = (node: Element | null | undefined) => {
+    if (!(node instanceof HTMLElement) || seen.has(node) || !isEditorChromeScroller(node)) {
+      return;
+    }
+    seen.add(node);
+    visit(node);
+  };
+  if (root instanceof Element) {
+    consider(root);
+  }
+  EDITOR_CHROME_SELECTORS.forEach((selector) => {
+    root.querySelectorAll(selector).forEach((node) => consider(node));
+  });
+}
+
 export function resetEditorChromeScroll(root: ParentNode = document): number {
   let reset = 0;
-  EDITOR_CHROME_SELECTORS.forEach((selector) => {
-    root.querySelectorAll(selector).forEach((node) => {
-      if (!(node instanceof HTMLElement) || !isEditorChromeScroller(node)) {
-        return;
-      }
-      if (node.scrollTop !== 0 || node.scrollLeft !== 0) {
-        node.scrollTop = 0;
-        node.scrollLeft = 0;
-        reset += 1;
-      }
-    });
+  visitEditorChrome(root, (node) => {
+    if (node.scrollTop !== 0 || node.scrollLeft !== 0) {
+      node.scrollTop = 0;
+      node.scrollLeft = 0;
+      reset += 1;
+    }
   });
+  return reset;
+}
+
+export function resetAncestorScroll(from: ParentNode | Element | null = document): number {
+  let reset = 0;
+  let node: Element | null =
+    from instanceof Element
+      ? from
+      : from && 'querySelector' in from
+        ? from.querySelector('.bytemd') || (from instanceof Document ? from.documentElement : null)
+        : null;
+  while (node instanceof HTMLElement) {
+    if (node.scrollTop !== 0 || node.scrollLeft !== 0) {
+      node.scrollTop = 0;
+      node.scrollLeft = 0;
+      reset += 1;
+    }
+    node = node.parentElement;
+  }
+  const scrollingEl = typeof document !== 'undefined' ? document.scrollingElement : null;
+  if (
+    scrollingEl instanceof HTMLElement &&
+    (scrollingEl.scrollTop !== 0 || scrollingEl.scrollLeft !== 0)
+  ) {
+    scrollingEl.scrollTop = 0;
+    scrollingEl.scrollLeft = 0;
+    reset += 1;
+  }
+  if (typeof window !== 'undefined' && (window.scrollY || window.scrollX)) {
+    window.scrollTo(0, 0);
+    reset += 1;
+  }
   return reset;
 }
 
@@ -62,6 +110,7 @@ export function guardHeadingScrollIntoView(markdownBody: ParentNode): () => void
       scrollPreviewHeadingIntoView(heading);
       const root = heading.closest('.bytemd') || document;
       resetEditorChromeScroll(root);
+      resetAncestorScroll(root instanceof Element ? root : heading);
     };
   });
   return () => {
@@ -73,22 +122,17 @@ export function guardHeadingScrollIntoView(markdownBody: ParentNode): () => void
 
 export function pinEditorChromeScroll(root: ParentNode): () => void {
   const pinned: Array<{ el: HTMLElement; onScroll: () => void }> = [];
-  EDITOR_CHROME_SELECTORS.forEach((selector) => {
-    root.querySelectorAll(selector).forEach((node) => {
-      if (!(node instanceof HTMLElement) || !isEditorChromeScroller(node)) {
-        return;
+  visitEditorChrome(root, (node) => {
+    const onScroll = () => {
+      if (node.scrollTop !== 0) {
+        node.scrollTop = 0;
       }
-      const onScroll = () => {
-        if (node.scrollTop !== 0) {
-          node.scrollTop = 0;
-        }
-        if (node.scrollLeft !== 0) {
-          node.scrollLeft = 0;
-        }
-      };
-      node.addEventListener('scroll', onScroll);
-      pinned.push({ el: node, onScroll });
-    });
+      if (node.scrollLeft !== 0) {
+        node.scrollLeft = 0;
+      }
+    };
+    node.addEventListener('scroll', onScroll);
+    pinned.push({ el: node, onScroll });
   });
   return () => {
     pinned.forEach(({ el, onScroll }) => el.removeEventListener('scroll', onScroll));
@@ -100,6 +144,7 @@ export function recoverEditorViewport(
   editor?: { refresh?: () => void; setSize?: (w: unknown, h: unknown) => void },
 ): void {
   resetEditorChromeScroll(root);
+  resetAncestorScroll(root instanceof Element ? root : root.querySelector?.('.bytemd'));
   editor?.setSize?.(null, null);
   editor?.refresh?.();
 }
