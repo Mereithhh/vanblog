@@ -44,6 +44,8 @@ order: 7
 
 ## 标签管理
 
+写文章或草稿时，标签输入框可以一次粘贴多个标签（英文/中文逗号、分号或换行分隔）。空格不会拆开，多词标签（如 `machine learning`）会保持一条。详见 [文章管理 · 标签](./article.md)。
+
 标签管理位于后台的 `站点管理/数据管理/标签管理`:
 
 ![标签管理](https://www.mereith.com/static/img/40e8150b4c40fcdbcb9353bebabf5e1f.clipboard-2022-09-01.png)
