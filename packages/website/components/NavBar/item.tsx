@@ -1,17 +1,26 @@
 import Link from "next/link";
-import { MouseEventHandler, useMemo, useRef, useState } from "react";
+import { MouseEventHandler, useMemo, useState } from "react";
 import { MenuItem } from "../../api/getAllData";
+import { describeNavItem, NavItemState, withNavCurrentClass } from "./active";
 
 function LinkItemAtom(props: {
   item: MenuItem;
+  state: NavItemState;
+  variant: "underline" | "fill";
   onMouseEnter?: MouseEventHandler<HTMLLIElement>;
   onMouseLeave?: MouseEventHandler<HTMLLIElement>;
   children?: React.ReactNode;
   clsA?: string;
   cls?: string;
 }) {
-  const { item } = props;
-  const cls = `nav-item transform hover:scale-110 dark:border-nav-dark  dark:transition-all ua`;
+  const { item, state } = props;
+  const cls = withNavCurrentClass(
+    props.cls
+      ? props.cls
+      : `nav-item transform hover:scale-110 dark:border-nav-dark  dark:transition-all ua`,
+    state.current,
+    props.variant
+  );
   const clsA = `h-full flex items-center px-2 md:px-4 `;
   if (item.value.includes("http")) {
     return (
@@ -19,7 +28,7 @@ function LinkItemAtom(props: {
         onMouseEnter={props?.onMouseEnter}
         onMouseLeave={props?.onMouseLeave}
         key={item.id}
-        className={props.cls ? props.cls : cls}
+        className={cls}
       >
         <a
           className={props.clsA ? props.clsA : clsA}
@@ -37,9 +46,13 @@ function LinkItemAtom(props: {
         onMouseEnter={props?.onMouseEnter}
         onMouseLeave={props?.onMouseLeave}
         key={item.id}
-        className={props.cls ? props.cls : cls}
+        className={cls}
       >
-        <Link href={item.value} style={{ height: "100%" }}>
+        <Link
+          href={item.value}
+          style={{ height: "100%" }}
+          aria-current={state.ariaCurrent}
+        >
           <div className={props.clsA ? props.clsA : clsA}>{item.name}</div>
         </Link>
       </li>
@@ -47,8 +60,11 @@ function LinkItemAtom(props: {
   }
 }
 
-function LinkItemWithChildren(props: { item: MenuItem }) {
-  const { item } = props;
+function LinkItemWithChildren(props: {
+  item: MenuItem;
+  state: NavItemState;
+}) {
+  const { item, state } = props;
   const [hover, setHover] = useState(false);
   const [hoverSub, setHoverSub] = useState(false);
   const show = useMemo(() => {
@@ -60,6 +76,8 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
       <div className="h-full relative">
         <LinkItemAtom
           item={item}
+          state={state}
+          variant="underline"
           onMouseEnter={() => {
             setHover(true);
           }}
@@ -85,10 +103,14 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
             setHoverSub(false);
           }}
         >
-          {item.children?.map((c) => {
+          {item.children?.map((c, index) => {
+            const childState =
+              state.children?.[index] ?? describeNavItem(c, "", "fill");
             return (
               <LinkItemAtom
                 item={c}
+                state={childState}
+                variant="fill"
                 key={c.id}
                 clsA={"h-full flex items-center px-2 md:px-4 py-2 "}
                 cls={
@@ -103,11 +125,12 @@ function LinkItemWithChildren(props: { item: MenuItem }) {
   );
 }
 
-export default function (props: { item: MenuItem }) {
-  const { item } = props;
+export default function (props: { item: MenuItem; currentPath: string }) {
+  const { item, currentPath } = props;
+  const state = describeNavItem(item, currentPath);
   if (!item.children) {
-    return <LinkItemAtom item={item} />;
+    return <LinkItemAtom item={item} state={state} variant="underline" />;
   } else {
-    return <LinkItemWithChildren item={item} />;
+    return <LinkItemWithChildren item={item} state={state} />;
   }
 }

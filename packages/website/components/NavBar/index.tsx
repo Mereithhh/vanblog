@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Headroom from "headroom.js";
+import { useRouter } from "next/router";
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import SearchCard, { SearchCardHandle } from "../SearchCard";
 import ThemeButton from "../ThemeButton";
@@ -14,6 +15,7 @@ import {
   HEADER_ACTION_LABELS,
   ICON_ACTION_BUTTON_CLASS,
 } from "./a11y";
+import { describeNavLink, withNavCurrentClass } from "./active";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -35,6 +37,7 @@ export default function (props: {
   const [headroom, setHeadroom] = useState<Headroom>();
   const searchCardRef = useRef<SearchCardHandle>(null);
   const { theme } = useContext(ThemeContext);
+  const { asPath } = useRouter();
 
   const picUrl = useMemo(() => {
     if (theme.includes("dark") && props.logoDark && props.logoDark != "") {
@@ -136,7 +139,7 @@ export default function (props: {
             </div>
             <ul className=" md:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
               {props.menus.map((m) => {
-                return <Item key={m.id} item={m} />;
+                return <Item key={m.id} item={m} currentPath={asPath} />;
               })}
             </ul>
             <div className="flex nav-action">
@@ -189,12 +192,17 @@ export default function (props: {
             ></div>
             <ul className="flex h-full items-center text-sm text-gray-600 dark:text-dark ">
               {props.categories.map((catelog) => {
+                const href = `/category/${encodeQuerystring(catelog)}`;
+                const state = describeNavLink(href, asPath);
                 return (
                   <li
                     key={catelog}
-                    className="flex items-center h-full md:px-2 hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 cursor-pointer transition-all"
+                    className={withNavCurrentClass(
+                      "flex items-center h-full md:px-2 hover:text-gray-900 dark:hover:text-dark-hover transform hover:scale-110 cursor-pointer transition-all ua",
+                      state.current
+                    )}
                   >
-                    <Link href={`/category/${encodeQuerystring(catelog)}`}>
+                    <Link href={href} aria-current={state.ariaCurrent}>
                       <div>{catelog}</div>
                     </Link>
                   </li>
