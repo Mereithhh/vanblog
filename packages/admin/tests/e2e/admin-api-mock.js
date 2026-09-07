@@ -48,6 +48,25 @@ pie title Pets adopted by volunteers
 "Cats" : 85
 "Rats" : 15
 \`\`\`
+
+\`\`\`mermaid
+graph TD;
+style A fill:#9fe1e7,stroke:#333,stroke-width:2px;
+style B fill:#ffcc99,stroke:#333,stroke-width:2px;
+style C fill:#b3ffb3,stroke:#333,stroke-width:2px;
+A[努力学习] -->|促进| B[协商脑力];
+B -->|影响| C[幸运指数];
+\`\`\`
+`;
+
+const ISSUE_391_MERMAID = `\`\`\`mermaid
+graph TD;
+style A fill:#9fe1e7,stroke:#333,stroke-width:2px;
+style B fill:#ffcc99,stroke:#333,stroke-width:2px;
+style C fill:#b3ffb3,stroke:#333,stroke-width:2px;
+A[努力学习] -->|促进| B[协商脑力];
+B -->|影响| C[幸运指数];
+\`\`\`
 `;
 
 const META = {
@@ -188,6 +207,7 @@ async function loginAsAdmin(page) {
 
 module.exports = {
   MERMAID_ARTICLE_CONTENT,
+  ISSUE_391_MERMAID,
   TOC_NESTED_ARTICLE_CONTENT,
   mockAdminApis,
   loginAsAdmin,

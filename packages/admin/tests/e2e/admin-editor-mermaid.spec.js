@@ -1,9 +1,11 @@
 const { test, expect } = require('@playwright/test');
-const { loginAsAdmin, mockAdminApis } = require('./admin-api-mock');
+const { ISSUE_391_MERMAID, loginAsAdmin, mockAdminApis } = require('./admin-api-mock');
 const {
   collectUncaughtErrors,
   expectNoEditorCrash,
   expectPreviewVisibleAndIdle,
+  pasteMermaidFenceAndType,
+  readEditorValue,
 } = require('./page-errors');
 
 test.describe('real Umi admin editor', () => {
@@ -72,6 +74,34 @@ test.describe('real Umi admin editor', () => {
       .locator('.bytemd-preview .bytemd-mermaid, .bytemd-preview code.language-mermaid')
       .count();
     expect(previewHasMermaid).toBeGreaterThan(0);
+    await expectPreviewVisibleAndIdle(page);
+  });
+
+  test('pasting styled mermaid with Chinese labels stays editable (#391)', async ({ page }) => {
+    const errors = collectUncaughtErrors(page);
+    await loginAsAdmin(page);
+    await mockAdminApis(page);
+
+    await page.goto('/admin/editor?type=article&id=68');
+
+    const editor = page.locator('.bytemd-editor .CodeMirror').first();
+    await expect(editor).toBeVisible({ timeout: 30_000 });
+    await expectPreviewVisibleAndIdle(page);
+
+    await editor.click({ position: { x: 24, y: 24 } });
+    await expect(editor).toHaveClass(/CodeMirror-focused/);
+    await pasteMermaidFenceAndType(page, ISSUE_391_MERMAID, 'E2E_391_STILL_EDITABLE');
+
+    await expect.poll(async () => readEditorValue(page)).toContain('fill:#9fe1e7');
+    await expect.poll(async () => readEditorValue(page)).toContain('努力学习');
+    await expect.poll(async () => readEditorValue(page)).toContain('E2E_391_STILL_EDITABLE');
+
+    await page.keyboard.press('Enter');
+    await page.keyboard.type('AFTER_ENTER');
+    await expect.poll(async () => readEditorValue(page)).toContain('AFTER_ENTER');
+
+    await expect(page.getByText('Something went wrong')).toHaveCount(0);
+    expectNoEditorCrash(page, errors);
     await expectPreviewVisibleAndIdle(page);
   });
 });

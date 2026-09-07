@@ -34,9 +34,9 @@ jobs:
       - name: Run website unit tests
         run: pnpm --filter @vanblog/theme-default exec vitest run
 
-      - name: Run admin editor hotkey unit tests
+      - name: Run admin editor unit tests
         working-directory: packages/admin
-        run: node --test tests/unit/editableKeyboard.test.js
+        run: node --test tests/unit/*.test.js
 
       - name: Run backup restore e2e
         working-directory: packages/server

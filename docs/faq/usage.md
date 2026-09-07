@@ -126,7 +126,7 @@ order: 2
 
 ## 文章里有 Mermaid 图表时编辑器无法输入或预览报错
 
-含 mermaid 代码块的文章在后台打开后，编辑器可能无法点击或输入，或左侧一改字右侧即时预览就抛异常。这两个问题都已修复（[#477](https://github.com/Mereithhh/vanblog/issues/477)、[#424](https://github.com/Mereithhh/vanblog/issues/424)）。若仍使用 `v0.54.0` 及更早版本，请升级到包含该修复的版本。
+含 mermaid 代码块的文章在后台打开后，编辑器可能无法点击或输入，或左侧一改字右侧即时预览就抛异常。流程图里写了 `style A fill:#9fe1e7` 这类十六进制颜色（以及中文节点名）时，还可能弹出 `Yh is not a function or its return value is not iterable`，之后整篇无法再改。这些问题都已修复（[#477](https://github.com/Mereithhh/vanblog/issues/477)、[#424](https://github.com/Mereithhh/vanblog/issues/424)、[#391](https://github.com/Mereithhh/vanblog/issues/391)）。若仍使用 `v0.54.0` 及更早版本，请升级到包含该修复的版本。
 
 临时办法：用开发者工具挡住预览区，或把窗口缩到只显示编辑区，即可继续改正文。
 
