@@ -55,6 +55,11 @@ await bundle(path.join(fixtures, 'markdown-link-article-app.tsx'), path.join(out
   `--alias:react-dom=${reactDom}`,
   '--jsx=automatic',
 ]);
+await bundle(path.join(fixtures, 'code-block-article-app.tsx'), path.join(outdir, 'code-block.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  '--jsx=automatic',
+]);
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
 await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));
@@ -64,8 +69,20 @@ await cp(
   path.join(outdir, 'markdown-link-article.html'),
 );
 await cp(
+  path.join(fixtures, 'code-block-article.html'),
+  path.join(outdir, 'code-block-article.html'),
+);
+await cp(
   path.resolve(adminRoot, '../website/styles/github-markdown.css'),
   path.join(outdir, 'github-markdown.css'),
+);
+await cp(
+  path.resolve(adminRoot, '../website/styles/code-light.css'),
+  path.join(outdir, 'code-light.css'),
+);
+await cp(
+  path.resolve(adminRoot, '../website/styles/code-dark.css'),
+  path.join(outdir, 'code-dark.css'),
 );
 await cp(
   path.join(adminRoot, 'src/components/Editor/mermaid-safety.css'),

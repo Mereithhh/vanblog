@@ -25,6 +25,8 @@ export const sanitizeMarkdownSchema = (schema) => {
       "ariaLabel",
       "ariaHidden",
       "title",
+      // Fenced-code line numbers: <span class="code-line" data-line="1">
+      "dataLine",
     ])
   );
   // remark-rehype already prefixes footnote ids; a second prefix breaks hrefs.

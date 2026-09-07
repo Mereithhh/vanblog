@@ -1,4 +1,5 @@
 import { activatesWithKey, isFocusableActionControl } from "../../utils/keyboardA11y";
+import { readFencedCodeText } from "./codeBlockLines";
 
 export const CODE_COPY_LABEL = "复制代码";
 export const CODE_COPY_CLASS = "code-copy-btn";
@@ -28,12 +29,17 @@ export function codeCopyIsKeyboardActivatable(key: string): boolean {
 export function readCodeFromCopyButton(copyBtn: {
   parentElement?: {
     parentElement?: {
-      querySelector?: (selector: string) => { innerText?: string } | null;
+      querySelector?: (selector: string) => {
+        innerText?: string;
+        textContent?: string;
+        querySelectorAll?: (
+          selector: string
+        ) => ArrayLike<{ textContent?: string; innerText?: string }>;
+      } | null;
     } | null;
   } | null;
 }): string {
-  return (
-    copyBtn.parentElement?.parentElement?.querySelector?.("code")?.innerText ??
-    ""
+  return readFencedCodeText(
+    copyBtn.parentElement?.parentElement?.querySelector?.("code")
   );
 }

@@ -8,7 +8,13 @@ order: 2
 
 夜间模式阅读文章时，mermaid / 流程图以前按 mermaid 默认浅色主题渲染，浅色节点和发灰的线条贴在深色正文底上，对比很差。已修复（[#404](https://github.com/Mereithhh/vanblog/issues/404)）：站点或后台预览为暗色时 mermaid 使用 `theme: 'dark'`，并提高文字/描边对比度；白天模式仍是原来的浅色图表。请升级到包含该修复的版本。
 
-这次只处理了 [#404](https://github.com/Mereithhh/vanblog/issues/404) 里的流程图暗色对比度。代码块行号仍是开放项。围栏代码块高亮对比度见 [前台代码块对比度不足](#前台代码块对比度不足)。主题切换本身见 [黑暗模式与响应式](../advanced/darkmode.md)。
+这次只处理了 [#404](https://github.com/Mereithhh/vanblog/issues/404) 里的流程图暗色对比度。代码块行号见 [前台代码块没有行号](#前台代码块没有行号)。围栏代码块高亮对比度见 [前台代码块对比度不足](#前台代码块对比度不足)。主题切换本身见 [黑暗模式与响应式](../advanced/darkmode.md)。
+
+## 前台代码块没有行号
+
+文章（以及后台预览里同一套 ByteMD 围栏）以前只包了语言标签和复制按钮，代码左侧没有行号。已修复（[#404](https://github.com/Mereithhh/vanblog/issues/404)）：每行有可见行号（`code-line` / `data-line`，gutter 带 `aria-hidden`），浅色和深色都保持可读对比；mermaid / 流程图围栏不加行号。请升级到包含该修复的版本。
+
+这次只处理了 [#404](https://github.com/Mereithhh/vanblog/issues/404) 里的代码块行号。流程图暗色对比度见上一节。更新脚本执行后仍显示旧版本是另一件事，尚未改动。围栏高亮对比度见 [前台代码块对比度不足](#前台代码块对比度不足)。
 
 ## 前台代码块对比度不足
 
