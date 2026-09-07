@@ -31,3 +31,11 @@ export function pageNavControlClass(disabled = false): string {
   }
   return `${pageNavCommonCls} ${pageNavDefaultCls}`;
 }
+
+export const pageNavJumpFormCls =
+  "inline-flex items-center space-x-1 text-sm text-gray-600 dark:pg-text-dark";
+
+export const pageNavJumpInputCls =
+  "w-12 h-7 px-1 text-center text-sm rounded bg-white text-gray-600 dark:bg-dark-1 dark:pg-text-dark";
+
+export const pageNavJumpGoCls = `${pageNavCommonCls} ${pageNavDefaultCls} h-7 w-auto px-2`;
