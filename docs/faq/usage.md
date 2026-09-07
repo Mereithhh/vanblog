@@ -144,7 +144,7 @@ order: 2
 
 ## 后台编辑器填写信息时方向键无法移动光标
 
-在编辑器右上角「操作 → 修改信息」中填写标题等字段时，方向键无法移动光标。该问题已修复（[#470](https://github.com/Mereithhh/vanblog/issues/470)）。若仍使用 `v0.54.0` 及更早版本，请升级到包含该修复的版本。
+在编辑器右上角「操作 → 修改信息」中填写标题等字段时，方向键无法移动光标。该问题已修复（[#390](https://github.com/Mereithhh/vanblog/issues/390)、[#470](https://github.com/Mereithhh/vanblog/issues/470)）。若仍使用 `v0.54.0` 及更早版本，请升级到包含该修复的版本。
 
 ## 后台编辑器主题颜色错乱
 

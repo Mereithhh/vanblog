@@ -7,6 +7,7 @@ import {
 } from '@ant-design/pro-components';
 import { Button, Modal } from 'antd';
 import moment from 'moment';
+import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
 
 export default function (props) {
@@ -21,6 +22,9 @@ export default function (props) {
       }
       width={450}
       autoFocusFirstInput
+      modalProps={{
+        onKeyDown: stopMenuKeydown,
+      }}
       submitTimeout={3000}
       onFinish={async (values) => {
         if (location.hostname == 'blog-demo.mereith.com') {
@@ -46,6 +50,7 @@ export default function (props) {
       labelCol={{ span: 6 }}
       // wrapperCol: { span: 14 },
     >
+      <div onKeyDown={stopMenuKeydown}>
       <ProFormText
         width="md"
         required
@@ -168,6 +173,7 @@ export default function (props) {
         tooltip="设置后会替换掉文章页底部默认的版权声明文字，留空则根据系统设置中的相关选项进行展示"
         placeholder="设置后会替换掉文章底部默认的版权"
       />
+      </div>
     </ModalForm>
   );
 }

@@ -2,13 +2,9 @@ import { getAllCategories, getTags, updateArticle, updateDraft } from '@/service
 import { ModalForm, ProFormDateTimePicker, ProFormSelect, ProFormText } from '@ant-design/pro-form';
 import { Form, message, Modal } from 'antd';
 import moment from 'moment';
-import { KeyboardEvent, useEffect } from 'react';
+import { useEffect } from 'react';
+import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
-
-/** Dropdown/Menu treats arrows as navigation; stop that from reaching the menu. */
-function stopMenuKeydown(e: KeyboardEvent) {
-  e.stopPropagation();
-}
 
 export default function (props: {
   currObj: any;

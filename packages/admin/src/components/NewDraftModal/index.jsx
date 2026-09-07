@@ -7,6 +7,7 @@ import {
 } from '@ant-design/pro-components';
 import { Button } from 'antd';
 import moment from 'moment';
+import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
 export default function (props) {
   const { onFinish } = props;
@@ -20,6 +21,9 @@ export default function (props) {
       }
       width={450}
       autoFocusFirstInput
+      modalProps={{
+        onKeyDown: stopMenuKeydown,
+      }}
       submitTimeout={3000}
       onFinish={async (values) => {
         const washedValues = {};
@@ -37,6 +41,7 @@ export default function (props) {
       labelCol={{ span: 6 }}
       // wrapperCol: { span: 14 },
     >
+      <div onKeyDown={stopMenuKeydown}>
       <ProFormText
         width="md"
         required
@@ -88,6 +93,7 @@ export default function (props) {
           defaultValue: moment('00:00:00', 'HH:mm:ss'),
         }}
       />
+      </div>
     </ModalForm>
   );
 }

@@ -18,9 +18,47 @@ async function openArticleInfoForm(page) {
   return dialog;
 }
 
-async function assertArrowsMoveCaret(input, typed) {
+async function assertArrowsNotPreventDefaulted(page, input) {
+  await page.evaluate(() => {
+    window.__vanblogArrowKeyLog = [];
+    if (window.__vanblogArrowKeyListener) {
+      window.removeEventListener('keydown', window.__vanblogArrowKeyListener);
+    }
+    window.__vanblogArrowKeyListener = (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        window.__vanblogArrowKeyLog.push({
+          key: e.key,
+          defaultPrevented: e.defaultPrevented,
+          tag: e.target && e.target.tagName,
+          id: e.target && e.target.id,
+        });
+      }
+    };
+    window.addEventListener('keydown', window.__vanblogArrowKeyListener);
+  });
+
+  await input.press('ArrowLeft');
+  await input.press('ArrowRight');
+
+  const log = await page.evaluate(() => window.__vanblogArrowKeyLog || []);
+  const left = log.filter((row) => row.key === 'ArrowLeft');
+  const right = log.filter((row) => row.key === 'ArrowRight');
+  expect(left.length).toBeGreaterThan(0);
+  expect(right.length).toBeGreaterThan(0);
+  expect(left.every((row) => row.defaultPrevented === false)).toBe(true);
+  expect(right.every((row) => row.defaultPrevented === false)).toBe(true);
+}
+
+async function assertArrowsMoveCaret(page, input, typed) {
   await input.click();
   await input.fill(typed);
+  await input.evaluate((el, value) => {
+    el.focus();
+    el.setSelectionRange(value.length, value.length);
+  }, typed);
+
+  await assertArrowsNotPreventDefaulted(page, input);
+
   await input.evaluate((el, value) => {
     el.focus();
     el.setSelectionRange(value.length, value.length);
@@ -41,15 +79,23 @@ async function assertArrowsMoveCaret(input, typed) {
 }
 
 test.describe('admin editor article form keys', () => {
+  test('arrow keys move the caret in the article title input (#390)', async ({ page }) => {
+    const dialog = await openArticleInfoForm(page);
+
+    const title = dialog.locator('#title');
+    await expect(title).toBeVisible();
+    await assertArrowsMoveCaret(page, title, 'ABCDEF');
+  });
+
   test('arrow keys move the caret in 修改信息 fields', async ({ page }) => {
     const dialog = await openArticleInfoForm(page);
 
     const title = dialog.locator('#title');
     await expect(title).toBeVisible();
-    await assertArrowsMoveCaret(title, 'ABCDEF');
+    await assertArrowsMoveCaret(page, title, 'ABCDEF');
 
     const pathname = dialog.locator('#pathname');
     await expect(pathname).toBeVisible();
-    await assertArrowsMoveCaret(pathname, 'hello-path');
+    await assertArrowsMoveCaret(page, pathname, 'hello-path');
   });
 });

@@ -7,6 +7,7 @@ import {
   ProFormText,
   ProFormTextArea,
 } from '@ant-design/pro-components';
+import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import { Button, Form, Upload } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
@@ -50,6 +51,9 @@ export default function (props) {
         }}
         width={450}
         autoFocusFirstInput
+        modalProps={{
+          onKeyDown: stopMenuKeydown,
+        }}
         submitTimeout={3000}
         onFinish={async (values) => {
           const washedValues = {};
@@ -68,6 +72,7 @@ export default function (props) {
         labelCol={{ span: 6 }}
         // wrapperCol: { span: 14 },
       >
+        <div onKeyDown={stopMenuKeydown}>
         <ProFormText
           width="md"
           required
@@ -177,6 +182,7 @@ export default function (props) {
           id="content"
           fieldProps={{ autoSize: { minRows: 3, maxRows: 5 } }}
         />
+        </div>
       </ModalForm>
     </>
   );

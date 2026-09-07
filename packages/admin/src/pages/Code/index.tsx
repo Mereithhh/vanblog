@@ -11,6 +11,7 @@ import {
   updatePipelineById,
   getPipelineConfig,
 } from '@/services/van-blog/api';
+import { handleEditorHotkey } from '@/services/van-blog/editableKeyboard';
 import { DownOutlined } from '@ant-design/icons';
 import { PageContainer } from '@ant-design/pro-layout';
 import { Button, Dropdown, Menu, message, Modal, Space, Spin, Tag, Tree } from 'antd';
@@ -118,19 +119,7 @@ export default function () {
   };
 
   const onKeyDown = (ev) => {
-    let save = false;
-    if (ev.metaKey == true && ev.key.toLocaleLowerCase() == 's') {
-      save = true;
-    }
-    if (ev.ctrlKey == true && ev.key.toLocaleLowerCase() == 's') {
-      save = true;
-    }
-    if (save) {
-      event?.preventDefault();
-      ev?.preventDefault();
-      handleSave();
-    }
-    return false;
+    handleEditorHotkey(ev, handleSave);
   };
 
   useEffect(() => {
