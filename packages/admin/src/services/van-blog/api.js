@@ -406,7 +406,7 @@ export async function exportAll() {
   });
 }
 export async function deleteSocial(name) {
-  return request(`/api/admin/meta/social/${name}`, {
+  return request(`/api/admin/meta/social/${encodeURIComponent(name)}`, {
     method: 'DELETE',
   });
 }

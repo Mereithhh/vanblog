@@ -5,6 +5,14 @@ import { Meta, MetaDocument } from 'src/scheme/meta.schema';
 import { UpdateSiteInfoDto } from 'src/types/site.dto';
 import { RewardItem } from 'src/types/reward.dto';
 import { SocialItem, SocialType } from 'src/types/social.dto';
+import {
+  CUSTOM_SOCIAL_TYPE,
+  generateSocialId,
+  isBuiltinSocialType,
+  isCustomSocialType,
+  sameSocialItem,
+  shouldDeleteSocial,
+} from 'src/utils/social';
 import { LinkItem } from 'src/types/link.dto';
 import { UserProvider } from '../user/user.provider';
 import { VisitProvider } from '../visit/visit.provider';
@@ -115,6 +123,10 @@ export class MetaProvider {
         label: '微信（暗色模式）',
         value: 'wechat-dark',
       },
+      {
+        label: '自定义',
+        value: CUSTOM_SOCIAL_TYPE,
+      },
     ];
   }
   async getTotalWords() {
@@ -212,26 +224,17 @@ export class MetaProvider {
 
   async deleteSocial(type: SocialType) {
     const meta = await this.getAll();
-    const newSocials = [];
-    meta.socials.forEach((r) => {
-      if (r.type !== type) {
-        newSocials.push(r);
-      }
-    });
+    const newSocials = (meta.socials || []).filter((r) => !shouldDeleteSocial(r, type));
     return this.metaModel.updateOne({}, { socials: newSocials });
   }
 
   async addOrUpdateSocial(addSocial: Partial<SocialItem>) {
     const meta = await this.getAll();
-    const toAdd: SocialItem = {
-      updatedAt: new Date(),
-      value: addSocial.value,
-      type: addSocial.type,
-    };
+    const toAdd = this.normalizeSocialItem(addSocial);
     const newSocials = [];
     let pushed = false;
-    meta.socials.forEach((r) => {
-      if (r.type === toAdd.type) {
+    (meta.socials || []).forEach((r) => {
+      if (sameSocialItem(r, toAdd)) {
         pushed = true;
         newSocials.push(toAdd);
       } else {
@@ -243,6 +246,36 @@ export class MetaProvider {
     }
 
     return this.metaModel.updateOne({}, { socials: newSocials });
+  }
+
+  normalizeSocialItem(addSocial: Partial<SocialItem>): SocialItem {
+    const rawType = String(addSocial.type || '').trim();
+    const value = addSocial.value == null ? '' : String(addSocial.value);
+    const label = typeof addSocial.label === 'string' ? addSocial.label.trim() : undefined;
+    const icon = typeof addSocial.icon === 'string' ? addSocial.icon.trim() : undefined;
+    const updatedAt = new Date();
+
+    if (isBuiltinSocialType(rawType)) {
+      return {
+        updatedAt,
+        value,
+        type: rawType,
+      };
+    }
+
+    const id =
+      (typeof addSocial.id === 'string' && addSocial.id.trim()) ||
+      (isCustomSocialType(rawType) && rawType !== CUSTOM_SOCIAL_TYPE ? rawType : '') ||
+      generateSocialId();
+
+    return {
+      updatedAt,
+      value,
+      type: CUSTOM_SOCIAL_TYPE,
+      id,
+      ...(label ? { label } : {}),
+      ...(icon ? { icon } : {}),
+    };
   }
   async addOrUpdateLink(addLinkDto: Partial<LinkItem> & { oldName?: string }) {
     const meta = await this.getAll();

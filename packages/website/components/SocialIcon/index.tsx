@@ -2,9 +2,13 @@ import { useContext, useMemo, useState } from "react";
 import { SocialItem } from "../../api/getAllData";
 import { getIcon } from "../../utils/getIcon";
 import { Popover, ArrowContainer } from "react-tiny-popover";
-import { capitalize } from "../../utils/capitalize";
 import { ThemeContext } from "../../utils/themeContext";
 import ImageBox from "../ImageBox";
+import {
+  getSocialHref,
+  getSocialLabel,
+  isQrSocialType,
+} from "../../utils/social";
 
 export default function (props: { item: SocialItem }) {
   const { theme } = useContext(ThemeContext);
@@ -25,13 +29,13 @@ export default function (props: { item: SocialItem }) {
       return "white";
     }
   }, [theme]);
-  // 链接、二维码、邮箱 三个类别
   const [show, setShow] = useState(false);
   const iconSize = 20;
-  const qrCode = ["wechat"];
   const iconStyle = { marginLeft: "12px" };
   const iconClass =
     "fill-gray-500 dark:text-dark dark:group-hover:text-dark-r transition-all ";
+  const label = getSocialLabel(props.item);
+  const icon = getIcon(props.item.type, iconSize, props.item.icon);
   if (props.item.type == "email") {
     return (
       <a
@@ -40,15 +44,15 @@ export default function (props: { item: SocialItem }) {
           width: "100%",
           justifyContent: "start",
         }}
-        href={`mailto:${props.item.value}`}
+        href={getSocialHref(props.item)}
       >
         <span className={iconClass} style={iconStyle}>
-          {getIcon(props.item.type, iconSize)}
+          {icon}
         </span>
-        <span className="inline-flex items-center ml-1">Email</span>
+        <span className="inline-flex items-center ml-1">{label}</span>
       </a>
     );
-  } else if (qrCode.includes(props.item.type)) {
+  } else if (isQrSocialType(props.item.type)) {
     return (
       <Popover
         isOpen={show}
@@ -97,11 +101,9 @@ export default function (props: { item: SocialItem }) {
           }}
         >
           <span style={iconStyle} className={iconClass}>
-            {getIcon(props.item.type, iconSize)}
+            {icon}
           </span>
-          <span className="inline-flex items-center ml-1">
-            {capitalize(props.item.type)}
-          </span>
+          <span className="inline-flex items-center ml-1">{label}</span>
         </a>
       </Popover>
     );
@@ -113,15 +115,13 @@ export default function (props: { item: SocialItem }) {
           width: "100%",
           justifyContent: "start",
         }}
-        href={props.item.value}
+        href={getSocialHref(props.item)}
         target="_blank"
       >
         <span style={iconStyle} className={iconClass}>
-          {getIcon(props.item.type, iconSize)}
+          {icon}
         </span>
-        <span className="inline-flex items-center ml-1">
-          {capitalize(props.item.type)}
-        </span>
+        <span className="inline-flex items-center ml-1">{label}</span>
       </a>
     );
   }

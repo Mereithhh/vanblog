@@ -6,7 +6,9 @@ export type SocialType =
   | "github"
   | "wechat"
   | "gitee"
-  | "wechat-dark";
+  | "wechat-dark"
+  | "custom"
+  | string;
 export const defaultMenu: MenuItem[] = [
   {
     id: 0,
@@ -57,6 +59,9 @@ export interface SocialItem {
   type: SocialType;
   value: string;
   dark?: string;
+  label?: string;
+  icon?: string;
+  id?: string;
 }
 export interface MenuItem {
   id: number;

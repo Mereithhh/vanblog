@@ -1,7 +1,7 @@
 import { MetaProvider } from './meta.provider';
 
 function createMemoryMetaModel(links: any[] = []) {
-  const state: any = { links: links.map((item) => ({ ...item })) };
+  const state: any = { links: links.map((item) => ({ ...item })), socials: [] };
   return {
     state,
     findOne: jest.fn(() => ({
@@ -134,5 +134,128 @@ describe('MetaProvider articlesPerPage (#346)', () => {
 
     await provider.updateSiteInfo({ articlesPerPage: 'nope' } as any);
     expect(model.state.siteInfo.articlesPerPage).toBe(5);
+  });
+});
+
+describe('MetaProvider custom socials (#394)', () => {
+  it('keeps builtin types unique and still overwrites by type', async () => {
+    const { provider } = createProvider();
+    await provider.addOrUpdateSocial({ type: 'github', value: 'https://github.com/old' });
+    await provider.addOrUpdateSocial({ type: 'github', value: 'https://github.com/new' });
+    await provider.addOrUpdateSocial({ type: 'email', value: 'hi@example.com' });
+
+    const socials = await provider.getSocials();
+    expect(socials).toHaveLength(2);
+    expect(socials.find((s) => s.type === 'github')?.value).toBe('https://github.com/new');
+    expect(socials.find((s) => s.type === 'email')?.value).toBe('hi@example.com');
+    expect(socials.find((s) => s.type === 'github')?.id).toBeUndefined();
+    expect(socials.find((s) => s.type === 'github')?.label).toBeUndefined();
+  });
+
+  it('adds multiple custom contacts with label, url, and optional icon', async () => {
+    const { provider } = createProvider();
+    await provider.addOrUpdateSocial({
+      type: 'custom',
+      value: 'https://t.me/vanblog',
+      label: 'Telegram',
+      icon: 'https://example.com/tg.png',
+    });
+    await provider.addOrUpdateSocial({
+      type: 'custom',
+      value: 'https://x.com/vanblog',
+      label: 'Twitter / X',
+    });
+
+    const socials = await provider.getSocials();
+    expect(socials).toHaveLength(2);
+    expect(socials.every((s) => s.type === 'custom')).toBe(true);
+    expect(socials[0].id).toMatch(/^custom-/);
+    expect(socials[1].id).toMatch(/^custom-/);
+    expect(socials[0].id).not.toBe(socials[1].id);
+    expect(socials[0]).toEqual(
+      expect.objectContaining({
+        label: 'Telegram',
+        value: 'https://t.me/vanblog',
+        icon: 'https://example.com/tg.png',
+      }),
+    );
+    expect(socials[1]).toEqual(
+      expect.objectContaining({
+        label: 'Twitter / X',
+        value: 'https://x.com/vanblog',
+      }),
+    );
+    expect(socials[1].icon).toBeUndefined();
+  });
+
+  it('updates a custom contact in place by id without replacing another custom', async () => {
+    const { provider } = createProvider();
+    await provider.addOrUpdateSocial({
+      type: 'custom',
+      value: 'https://t.me/old',
+      label: 'Telegram',
+    });
+    await provider.addOrUpdateSocial({
+      type: 'custom',
+      value: 'https://x.com/vanblog',
+      label: 'Twitter / X',
+    });
+    const firstId = (await provider.getSocials())[0].id;
+
+    await provider.addOrUpdateSocial({
+      type: 'custom',
+      id: firstId,
+      value: 'https://t.me/new',
+      label: 'TG',
+      icon: 'https://example.com/tg.png',
+    });
+
+    const socials = await provider.getSocials();
+    expect(socials).toHaveLength(2);
+    expect(socials[0]).toEqual(
+      expect.objectContaining({
+        id: firstId,
+        label: 'TG',
+        value: 'https://t.me/new',
+        icon: 'https://example.com/tg.png',
+      }),
+    );
+    expect(socials[1].label).toBe('Twitter / X');
+  });
+
+  it('deletes one custom contact by id and leaves builtins and other customs', async () => {
+    const { provider } = createProvider();
+    await provider.addOrUpdateSocial({ type: 'github', value: 'https://github.com/Mereithhh' });
+    await provider.addOrUpdateSocial({
+      type: 'custom',
+      value: 'https://t.me/vanblog',
+      label: 'Telegram',
+    });
+    await provider.addOrUpdateSocial({
+      type: 'custom',
+      value: 'https://x.com/vanblog',
+      label: 'Twitter / X',
+    });
+    const telegramId = (await provider.getSocials()).find((s) => s.label === 'Telegram')?.id;
+
+    await provider.deleteSocial(telegramId as any);
+    const socials = await provider.getSocials();
+    expect(socials.map((s) => s.type)).toEqual(['github', 'custom']);
+    expect(socials.find((s) => s.label === 'Telegram')).toBeUndefined();
+    expect(socials.find((s) => s.label === 'Twitter / X')?.value).toBe('https://x.com/vanblog');
+
+    await provider.deleteSocial('github');
+    expect((await provider.getSocials()).map((s) => s.type)).toEqual(['custom']);
+  });
+
+  it('lists 自定义 among social types', async () => {
+    const { provider } = createProvider();
+    const types = await provider.getSocialTypes();
+    expect(types).toEqual(
+      expect.arrayContaining([
+        { label: 'GitHub', value: 'github' },
+        { label: '自定义', value: 'custom' },
+      ]),
+    );
   });
 });
