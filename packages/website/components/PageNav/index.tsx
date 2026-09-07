@@ -1,12 +1,10 @@
-import { calItemList, PageNavProps } from "./core";
+import { calItemList, PageNavProps, shouldShowPageNav } from "./core";
 import { RenderItemList } from "./render";
 export default function (props: PageNavProps) {
-  const pageSize = props?.pageSize || 5;
-  const show = props.total > pageSize;
-  return show ? (
+  return shouldShowPageNav(props.total, props.pageSize) ? (
     <div className="mt-4">
       <div>
-        <RenderItemList items={calItemList(props)}></RenderItemList>
+        <RenderItemList items={calItemList(props)} jump={props}></RenderItemList>
       </div>
     </div>
   ) : (
