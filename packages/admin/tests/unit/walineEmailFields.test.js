@@ -9,7 +9,7 @@ const {
   WALINE_SERVER_ENV_DOCS_URL,
 } = require('../../src/utils/walineEmailFields');
 
-const repoRoot = path.join(__dirname, '../../..');
+const repoRoot = path.join(__dirname, '../../../..');
 const formSrc = readFileSync(
   path.join(__dirname, '../../src/components/WalineForm/index.tsx'),
   'utf8',
