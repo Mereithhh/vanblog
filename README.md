@@ -65,6 +65,12 @@
 curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
 ```
 
+文档站不可达时，可用 GitHub raw：
+
+```bash
+curl -L https://raw.githubusercontent.com/Mereithhh/vanblog/master/scripts/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
+```
+
 将来如果需要再次运行脚本，可以运行：
 
 ```bash

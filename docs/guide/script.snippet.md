@@ -4,6 +4,14 @@
 curl -L https://vanblog.mereith.com/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
 ```
 
+如果文档站不可达，也可以从 GitHub 下载同一份脚本：
+
+```bash
+curl -L https://raw.githubusercontent.com/Mereithhh/vanblog/master/scripts/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
+```
+
+安装过程中下载 `docker-compose` 模板时，脚本会按顺序尝试文档站、GitHub raw、jsDelivr，某一源成功即继续，无需手动选镜像。详见 [部署常见问题](../faq/deploy.md#一键脚本下载编排文件失败)。
+
 如果未来需要再次运行脚本，可直接运行：
 
 ```bash

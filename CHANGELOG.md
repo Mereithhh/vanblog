@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 一键脚本下载 `docker-compose` 模板（以及更新脚本自身）时，若 `vanblog.mereith.com` 不可达，会依次回退到 GitHub raw 与 jsDelivr；全部失败才报错并以非 0 退出。[#115](https://github.com/Mereithhh/vanblog/issues/115)
 - 配置了 Google Analysis ID 后，前台不再同步等待 `googletagmanager.com/gtag/js`：脚本改为 `async` 并在页面 load 后空闲时加载（`lazyOnload`）。大陆访问该域名超时（`net::ERR_CONNECTION_TIMED_OUT`）时，不再堵塞首屏和 hydration。[#375](https://github.com/Mereithhh/vanblog/issues/375)
 - 后台登录过期后再登录，不再同时弹出「登录成功」和「登录失效」：成功登录会清掉未关闭的错误提示，登录页上以及刚登录成功后的过期 401 不再弹出失败 toast。[#316](https://github.com/Mereithhh/vanblog/issues/316)
 - 后台文章列表（以及草稿/图片/日志等同样用 page 算 skip 的列表）在 page / pageSize 被 CDN 或代理改成 NaN、负数或溢出时，不再把负数 skip 传给 Mongo（`Skip value must be non-negative, but received: -9223372036854775808`），避免文章管理整页「内部服务错误」。[#400](https://github.com/Mereithhh/vanblog/issues/400)

@@ -10,10 +10,15 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.3.5"
+VANBLOG_SCRIPT_VERSION="v0.3.6"
 
+# Ordered fallbacks: docs host (historical default), then GitHub raw, then jsDelivr.
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
+COMPOSE_URL_GITHUB="https://raw.githubusercontent.com/Mereithhh/vanblog/master/docker-compose/docker-compose-template.yml"
+COMPOSE_URL_JSDELIVR="https://cdn.jsdelivr.net/gh/Mereithhh/vanblog@master/docker-compose/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
+SCRIPT_URL_GITHUB="https://raw.githubusercontent.com/Mereithhh/vanblog/master/scripts/vanblog.sh"
+SCRIPT_URL_JSDELIVR="https://cdn.jsdelivr.net/gh/Mereithhh/vanblog@master/scripts/vanblog.sh"
 GITHUB_URL="dn-dao-github-mirror.daocloud.io"
 Get_Docker_URL="vanblog.mereith.com/docker.sh"
 Get_Docker_Argu=" -s docker --mirror Aliyun"
@@ -188,13 +193,97 @@ confirm() {
   fi
 }
 
+compose_template_urls() {
+  printf '%s\n' "${COMPOSE_URL}" "${COMPOSE_URL_GITHUB}" "${COMPOSE_URL_JSDELIVR}"
+}
+
+script_urls() {
+  printf '%s\n' "${SCRIPT_URL}" "${SCRIPT_URL_GITHUB}" "${SCRIPT_URL_JSDELIVR}"
+}
+
+is_valid_compose_template() {
+  local file="$1"
+  if [[ ! -s "${file}" ]]; then
+    return 1
+  fi
+  grep -q "services:" "${file}" && grep -q "vanblog:" "${file}"
+}
+
+is_valid_vanblog_script() {
+  local file="$1"
+  if [[ ! -s "${file}" ]]; then
+    return 1
+  fi
+  grep -q "VANBLOG_SCRIPT_VERSION" "${file}"
+}
+
+download_url_to_file() {
+  local url="$1"
+  local dest="$2"
+  if command -v wget >/dev/null 2>&1; then
+    wget -t 2 --no-check-certificate -T 10 -O "${dest}" "${url}" >/dev/null 2>&1
+    return $?
+  fi
+  if command -v curl >/dev/null 2>&1; then
+    curl -fsSL --connect-timeout 10 --retry 2 -o "${dest}" "${url}" >/dev/null 2>&1
+    return $?
+  fi
+  echo -e "${red}未找到 wget 或 curl，无法下载${plain}"
+  return 1
+}
+
+download_with_fallback() {
+  local dest="$1"
+  local validator="$2"
+  shift 2
+  local url tmp
+  tmp="${dest}.download.$$"
+  mkdir -p "$(dirname "${dest}")"
+  for url in "$@"; do
+    echo -e "> 尝试下载: ${url}"
+    rm -f "${tmp}"
+    if download_url_to_file "${url}" "${tmp}" && "${validator}" "${tmp}"; then
+      mv -f "${tmp}" "${dest}"
+      echo -e "${green}下载成功: ${url}${plain}"
+      return 0
+    fi
+    echo -e "${yellow}该地址不可用: ${url}${plain}"
+    rm -f "${tmp}"
+  done
+  echo -e "${red}下载失败，已尝试全部地址${plain}"
+  return 1
+}
+
+download_compose_template() {
+  local dest="${1:-${VANBLOG_BASE_PATH}/docker-compose-template.yaml}"
+  local urls=()
+  local line
+  while IFS= read -r line; do
+    [[ -n "${line}" ]] && urls+=("${line}")
+  done < <(compose_template_urls)
+  download_with_fallback "${dest}" is_valid_compose_template "${urls[@]}"
+}
+
+download_script() {
+  local dest="${1:-/tmp/vanblog.sh}"
+  local urls=()
+  local line
+  while IFS= read -r line; do
+    [[ -n "${line}" ]] && urls+=("${line}")
+  done < <(script_urls)
+  download_with_fallback "${dest}" is_valid_vanblog_script "${urls[@]}"
+}
+
 update_script() {
   echo -e "> 更新脚本"
 
-  curl -sL ${SCRIPT_URL} -o /tmp/vanblog.sh
+  if ! download_script /tmp/vanblog.sh; then
+    echo -e "${red}脚本获取失败，请检查本机能否连接文档站、GitHub 或 jsDelivr${plain}"
+    return 1
+  fi
   new_version=$(cat /tmp/vanblog.sh | grep "VANBLOG_SCRIPT_VERSION" | head -n 1 | awk -F "=" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
   if [ ! -n "$new_version" ]; then
-    echo -e "脚本获取失败，请检查本机能否链接 ${SCRIPT_URL}"
+    echo -e "脚本获取失败，已下载的文件无法解析版本号"
     return 1
   fi
   echo -e "当前最新版本为: ${new_version}"
@@ -281,7 +370,13 @@ install_vanblog() {
   fi
 
   config 0
-
+  if [[ $? != 0 ]]; then
+    echo -e "${red}安装失败：未能下载编排文件${plain}"
+    if [[ $# == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
   if [[ $# == 0 ]]; then
     before_show_menu
   fi
@@ -299,14 +394,21 @@ selinux() {
 }
 
 config() {
+  local skip_menu=0
+  if [[ $# -gt 0 ]]; then
+    skip_menu=1
+  fi
+
   echo -e "> 修改配置"
 
   echo -e "正在下载编排文件"
   rm ${VANBLOG_BASE_PATH}/docker-compose-template.yaml >/dev/null 2>&1
-  wget -t 2 --no-check-certificate -T 10 -O ${VANBLOG_BASE_PATH}/docker-compose-template.yaml ${COMPOSE_URL} >/dev/null 2>&1
-  if [[ $? != 0 ]]; then
-    echo -e "${red}下载脚本失败，请检查本机能否连接 ${COMPOSE_URL}${plain}"
-    return 0
+  if ! download_compose_template "${VANBLOG_BASE_PATH}/docker-compose-template.yaml"; then
+    echo -e "${red}下载编排文件失败，请检查本机能否连接文档站、GitHub 或 jsDelivr${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
   fi
 
   # read -ep "请输入您想要安装的版本，默认不填为最新：" vanblog_version &&

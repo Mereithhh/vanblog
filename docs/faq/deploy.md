@@ -21,6 +21,26 @@ environment:
 
 原则上 CDN 只缓存 `/_next/static` 这个目录就够了。设置后需要重启 VanBlog 容器，HTML 里的脚本/样式会变成 `https://cdn.example.com/_next/static/...`。
 
+## 一键脚本下载编排文件失败
+
+一键安装 / `config` 需要下载 `docker-compose-template.yml`。旧脚本只请求 `https://vanblog.mereith.com/docker-compose-template.yml`，部分网络（例如北美）即使能上网也连不上该主机，于是报「下载脚本失败」（[#115](https://github.com/Mereithhh/vanblog/issues/115)）。
+
+请先更新到最新脚本（菜单 **20. 更新此脚本**，或重新下载）。新脚本会按顺序尝试：
+
+1. `https://vanblog.mereith.com/docker-compose-template.yml`
+1. GitHub raw：`https://raw.githubusercontent.com/Mereithhh/vanblog/master/docker-compose/docker-compose-template.yml`
+1. jsDelivr：`https://cdn.jsdelivr.net/gh/Mereithhh/vanblog@master/docker-compose/docker-compose-template.yml`
+
+某一地址成功就会继续安装，并打印实际使用的 URL。全部失败才会报错退出。更新脚本自身也使用同一套回退。
+
+若连文档站上的 `vanblog.sh` 都下不下来，可以用 GitHub raw：
+
+```bash
+curl -L https://raw.githubusercontent.com/Mereithhh/vanblog/master/scripts/vanblog.sh -o vanblog.sh && chmod +x vanblog.sh && ./vanblog.sh
+```
+
+这与 Docker Hub / 镜像仓库拉取失败不是同一类问题。
+
 ## 如何安装 docker ?
 
 可以用这个一键安装脚本:
