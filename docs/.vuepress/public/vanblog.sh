@@ -377,6 +377,9 @@ install_vanblog() {
     fi
     return 1
   fi
+  if [[ $# == 0 ]]; then
+    before_show_menu
+  fi
 }
 
 selinux() {

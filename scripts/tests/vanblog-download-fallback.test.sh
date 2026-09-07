@@ -433,6 +433,57 @@ else
   pass "script all-fail does not leave a partial script"
 fi
 
+stub_install_vanblog() {
+  VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+  VANBLOG_DATA_PATH="${TEST_DIR}/vanblog/data"
+  install_base() { :; }
+  config() {
+    echo "config $*"
+    return "${CONFIG_STUB_RC:-0}"
+  }
+  before_show_menu() {
+    echo "before_show_menu"
+  }
+  cat >"${TEST_DIR}/bin/docker" <<'EOF'
+#!/usr/bin/env bash
+exit 0
+EOF
+  chmod +x "${TEST_DIR}/bin/docker"
+}
+
+# --- menu install (no args) still returns to the menu after config succeeds ---
+setup_case
+source_script
+CONFIG_STUB_RC=0
+stub_install_vanblog
+INSTALL_OUT="$(install_vanblog 2>&1)"
+INSTALL_RC=$?
+assert_eq "${INSTALL_RC}" "0" "menu install success exits 0"
+assert_contains "${INSTALL_OUT}" "config 0" "menu install runs config"
+assert_contains "${INSTALL_OUT}" "before_show_menu" "menu install returns to menu on success"
+
+# --- CLI install (with arg) does not return to the menu on success ---
+setup_case
+source_script
+CONFIG_STUB_RC=0
+stub_install_vanblog
+INSTALL_OUT="$(install_vanblog 0 2>&1)"
+INSTALL_RC=$?
+assert_eq "${INSTALL_RC}" "0" "CLI install success exits 0"
+assert_contains "${INSTALL_OUT}" "config 0" "CLI install runs config"
+assert_not_contains "${INSTALL_OUT}" "before_show_menu" "CLI install does not return to menu on success"
+
+# --- menu install still returns to the menu when config fails ---
+setup_case
+source_script
+CONFIG_STUB_RC=1
+stub_install_vanblog
+INSTALL_OUT="$(install_vanblog 2>&1)" || INSTALL_RC=$?
+INSTALL_RC="${INSTALL_RC:-0}"
+assert_eq "${INSTALL_RC}" "1" "menu install config-fail exits 1"
+assert_contains "${INSTALL_OUT}" "安装失败：未能下载编排文件" "menu install config-fail prints error"
+assert_contains "${INSTALL_OUT}" "before_show_menu" "menu install returns to menu on config failure"
+
 echo
 echo "passed=${PASS} failed=${FAIL}"
 if [[ "${FAIL}" -ne 0 ]]; then
