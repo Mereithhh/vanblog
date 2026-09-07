@@ -2,9 +2,21 @@ import { BytemdPlugin } from "bytemd";
 import { visit } from "unist-util-visit";
 import copy from 'copy-to-clipboard';
 import toast from "react-hot-toast";
+import {
+  CODE_COPY_CLASS,
+  CODE_COPY_LABEL,
+  readCodeFromCopyButton,
+} from "./codeCopyA11y";
+
+export { CODE_COPY_CLASS, CODE_COPY_LABEL, readCodeFromCopyButton };
+export {
+  CODE_COPY_CONTROL,
+  codeCopyIsKeyboardActivatable,
+  describeCodeCopyControl,
+} from "./codeCopyA11y";
 
 // FIXME: Addd Types
-const codeBlockPlugin = () => (tree) => {
+export const codeBlockPlugin = () => (tree) => {
   visit(tree, (node) => {
     if (node.type === "element" && node.tagName === "pre") {
       const oldChildren = JSON.parse(JSON.stringify(node.children));
@@ -24,9 +36,12 @@ const codeBlockPlugin = () => (tree) => {
       // 复制按钮
       const codeCopyBtn = {
         type: "element",
-        tagName: "div",
+        tagName: "button",
         properties: {
-          class: "code-copy-btn",
+          class: CODE_COPY_CLASS,
+          type: "button",
+          ariaLabel: CODE_COPY_LABEL,
+          title: CODE_COPY_LABEL,
         },
         children: [],
       };
@@ -76,13 +91,35 @@ const codeBlockPlugin = () => (tree) => {
   });
 };
 
-const onClickCopyCode = (e: PointerEvent) => {
-  const copyBtn = e.target as HTMLElement;
-  const code = copyBtn.parentElement?.parentElement?.querySelector("code")?.innerText;
-  copy(code);
-  toast.success("复制成功", {
+export function copyCodeFromButton(
+  copyBtn: Parameters<typeof readCodeFromCopyButton>[0],
+  deps: {
+    copy: (text: string) => void;
+    toastSuccess: (message: string, opts?: { className: string }) => void;
+  } = {
+    copy,
+    toastSuccess: (message, opts) => toast.success(message, opts),
+  }
+) {
+  const code = readCodeFromCopyButton(copyBtn);
+  deps.copy(code);
+  deps.toastSuccess("复制成功", {
     className: "toast",
-  })
+  });
+}
+
+export const onClickCopyCode = (e: Event) => {
+  const copyBtn = (e.currentTarget || e.target) as HTMLElement;
+  copyCodeFromButton(copyBtn);
+}
+
+export function bindCodeCopyButtons(markdownBody: ParentNode) {
+  markdownBody.querySelectorAll(".code-block-wrapper").forEach((codeBlock) => {
+    const copyBtn = codeBlock.querySelector(`.${CODE_COPY_CLASS}`);
+    if (!copyBtn) return;
+    copyBtn.removeEventListener("click", onClickCopyCode);
+    copyBtn.addEventListener("click", onClickCopyCode);
+  });
 }
 
 export function customCodeBlock(): BytemdPlugin {
@@ -90,12 +127,7 @@ export function customCodeBlock(): BytemdPlugin {
     rehype: (processor) =>
       processor.use(codeBlockPlugin),
     viewerEffect: ({ markdownBody }) => {
-      markdownBody.querySelectorAll(".code-block-wrapper").forEach((codeBlock) => {
-        const copyBtn = codeBlock.querySelector(".code-copy-btn")
-        //remove first
-        copyBtn.removeEventListener("click", onClickCopyCode);
-        copyBtn.addEventListener("click", onClickCopyCode);
-      })
+      bindCodeCopyButtons(markdownBody);
     }
   };
 }

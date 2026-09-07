@@ -12,6 +12,21 @@ export const sanitizeMarkdownSchema = (schema) => {
   schema.tagNames.push("iframe");
   schema.tagNames.push("script");
   schema.tagNames.push("section");
+  // Code-copy control is a native <button type="button">.
+  if (!schema.tagNames.includes("button")) {
+    schema.tagNames.push("button");
+  }
+  schema.attributes.button = Array.from(
+    new Set([...(schema.attributes.button || []), "type", "disabled"])
+  );
+  schema.attributes["*"] = Array.from(
+    new Set([
+      ...(schema.attributes["*"] || []),
+      "ariaLabel",
+      "ariaHidden",
+      "title",
+    ])
+  );
   // remark-rehype already prefixes footnote ids; a second prefix breaks hrefs.
   schema.clobberPrefix = "";
   schema.attributes["*"].push("style");
