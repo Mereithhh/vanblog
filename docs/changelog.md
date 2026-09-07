@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台分页支持方向键在页码控件间移动焦点，省略号不再是链接，禁用的上一页/下一页不可聚焦；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「Pagination issues」一项（不含跳转到第 N 页），其余无障碍项仍开放
 - 前台夜间模式文章代码块部分高亮（如正则、文档注释）过暗，现提高到 WCAG AA 对比度；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「代码块对比度」一项，其余无障碍项仍开放
 - 前台文章标题旁增加可复制的 `#` 锚点链接，地址栏 hash 对中文/空格做 encodeURIComponent，打开编码 hash 会滚到对应标题；目录项改为真正的链接，可用键盘 Tab/Enter 操作 [#177](https://github.com/Mereithhh/vanblog/issues/177)
 - 前台文章目录标题里的 `$...$` / `$$...$$` 会按正文同一套 KaTeX 渲染，不再把 `$A$<$B$` 原样显示出来；点击仍按未解析的标题原文跳转 [#264](https://github.com/Mereithhh/vanblog/issues/264)

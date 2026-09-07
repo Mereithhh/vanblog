@@ -8,9 +8,15 @@ order: 2
 
 夜间模式阅读文章时，围栏代码块里部分高亮（常见是偏暗红的路径/正则、发暗的文档注释）会贴在深色底上，看起来像糊成一团。已只调整前台 `code-dark.css` 的 highlight 颜色，正文类 token（默认文字、关键字、字符串、注释等）相对代码块背景达到 WCAG AA（≥ 4.5:1），并保持接近 VS Code 暗色主题的配色（[#175](https://github.com/Mereithhh/vanblog/issues/175)）。请升级到包含该修复的版本。
 
-这次只处理了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里的「Bad contrast on code block」。键盘无法操作的按钮、导航图标、分页方向键 / 跳转 / 省略号当链接等其他无障碍项仍开放，不在此修复范围内。
+这次只处理了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里的「Bad contrast on code block」。键盘无法操作的按钮、导航图标、代码复制按钮等其他无障碍项仍开放。分页方向键与省略号见 [前台分页方向键和无障碍](#前台分页方向键和无障碍)。
 
 主题切换本身见 [黑暗模式与响应式](../advanced/darkmode.md)。
+
+## 前台分页方向键和无障碍
+
+首页或 `/page/n` 底部分页以前：方向键无效；`•••` 是可点的跳页链接；禁用的上一页/下一页仍是 `<a>`。已修复（[#175](https://github.com/Mereithhh/vanblog/issues/175) 的 Pagination issues）：焦点在分页内时，← / → 会在可聚焦的页码和上一页/下一页之间移动焦点（两端不循环，省略号和禁用按钮会跳过）；省略号改为装饰性文字，不再带链接；禁用控件不可聚焦，并有 `aria-label`。当前页仍带 `aria-current="page"`。这次不含「跳转到第 N 页」输入框。
+
+这次只处理了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里的「Pagination issues」。代码块对比度已在上一轮修好；顶栏搜索 / 主题 / RSS / 头像按钮、代码复制按钮、搜索框键盘导航等其他无障碍项仍开放。请升级到包含该修复的版本。
 
 ## 前台白天模式分页当前页看不清
 

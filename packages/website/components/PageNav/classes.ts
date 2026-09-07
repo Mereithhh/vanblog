@@ -25,6 +25,9 @@ export function pageNavNumberClass(isCurrent: boolean): string {
   }`;
 }
 
-export function pageNavControlClass(): string {
+export function pageNavControlClass(disabled = false): string {
+  if (disabled) {
+    return `${pageNavCommonCls} ${pageNavDefaultCls} opacity-40 cursor-default`;
+  }
   return `${pageNavCommonCls} ${pageNavDefaultCls}`;
 }
