@@ -10,7 +10,7 @@
 VANBLOG_BASE_PATH="/var/vanblog"
 VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.3.2"
+VANBLOG_SCRIPT_VERSION="v0.3.3"
 
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
 SCRIPT_URL="https://vanblog.mereith.com/vanblog.sh"
@@ -27,15 +27,80 @@ export PATH=$PATH:/usr/local/bin
 os_arch=""
 
 
-delete_old_images() {
-  echo -e "> 删除旧镜像"
-  docker rmi -f mereith/van-blog-old
+vanblog_compose() {
+  (cd "${VANBLOG_BASE_PATH}" && docker-compose "$@")
 }
 
-retag_old_images() {
-  echo -e "> 重命名旧镜像"
-  docker tag $(docker images | grep van-blog | awk '{print $3}') mereith/van-blog-old
-  # docker tag $(docker images | grep vanblog | awk '{print $3}') mereith/van-blog-old
+get_compose_vanblog_image() {
+  local compose_file="${VANBLOG_BASE_PATH}/docker-compose.yaml"
+  if [[ ! -f "${compose_file}" ]]; then
+    return 1
+  fi
+  awk '
+    $1 == "vanblog:" { in_svc=1; next }
+    in_svc && $1 ~ /^[a-zA-Z0-9_]+:$/ && $1 != "image:" { in_svc=0 }
+    in_svc && $1 == "image:" { print $2; exit }
+  ' "${compose_file}"
+}
+
+align_compose_latest_image() {
+  local compose_file="${VANBLOG_BASE_PATH}/docker-compose.yaml"
+  local current_image
+  current_image=$(get_compose_vanblog_image)
+  if [[ "${current_image}" == "registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest" ]]; then
+    echo -e "> 中国镜像 latest 可能未同步，改用 mereith/van-blog:latest"
+    sed -i "s#registry.cn-beijing.aliyuncs.com/mereith/van-blog:latest#mereith/van-blog:latest#g" "${compose_file}"
+  fi
+}
+
+get_vanblog_container_id() {
+  vanblog_compose ps -q vanblog 2>/dev/null | head -n 1
+}
+
+get_container_image_id() {
+  local cid="$1"
+  if [[ -z "${cid}" ]]; then
+    return 1
+  fi
+  docker inspect -f '{{.Image}}' "${cid}" 2>/dev/null
+}
+
+get_container_version() {
+  local cid="$1"
+  if [[ -z "${cid}" ]]; then
+    return 1
+  fi
+  docker inspect -f '{{range .Config.Env}}{{println .}}{{end}}' "${cid}" 2>/dev/null \
+    | awk -F= '$1 == "VAN_BLOG_VERSION" { print $2; exit }'
+}
+
+is_container_running() {
+  local cid="$1"
+  if [[ -z "${cid}" ]]; then
+    return 1
+  fi
+  [[ "$(docker inspect -f '{{.State.Running}}' "${cid}" 2>/dev/null)" == "true" ]]
+}
+
+image_in_use() {
+  local image="$1"
+  if [[ -z "${image}" ]]; then
+    return 1
+  fi
+  [[ -n "$(docker ps -aq --filter "ancestor=${image}" 2>/dev/null)" ]]
+}
+
+remove_unused_image() {
+  local image="$1"
+  if [[ -z "${image}" ]]; then
+    return 0
+  fi
+  if image_in_use "${image}"; then
+    echo -e "> 旧镜像仍被容器使用，跳过删除"
+    return 0
+  fi
+  echo -e "> 删除未使用的旧镜像"
+  docker rmi "${image}" >/dev/null 2>&1 || true
 }
 
 pre_check() {
@@ -307,24 +372,94 @@ restart() {
   fi
 }
 update() {
-  echo -e "> 更新服务"
-  retag_old_images
-
-  cd $VANBLOG_BASE_PATH
-  docker-compose pull
-  docker-compose down -v
-  docker-compose up -d
-  if [[ $? == 0 ]]; then
-    echo -e "${green}VanBlog 更新并重启成功${plain}"
-    echo -e "默认管理面板地址：${yellow}域名:站点访问端口${plain}"
-  else
-    echo -e "${red}重启失败，可能是因为启动时间超过了两秒，请稍后查看日志信息${plain}"
+  local skip_menu=0
+  if [[ $# -gt 0 ]]; then
+    skip_menu=1
   fi
 
-  delete_old_images
+  echo -e "> 更新服务"
 
-  before_show_menu
+  if [[ ! -f "${VANBLOG_BASE_PATH}/docker-compose.yaml" ]]; then
+    echo -e "${red}未找到 ${VANBLOG_BASE_PATH}/docker-compose.yaml，无法更新${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
 
+  align_compose_latest_image
+
+  local old_cid old_image old_version
+  old_cid=$(get_vanblog_container_id)
+  old_image=$(get_container_image_id "${old_cid}")
+  old_version=$(get_container_version "${old_cid}")
+
+  echo -e "> 停止并移除旧容器"
+  vanblog_compose down -v
+  if [[ $? != 0 ]]; then
+    echo -e "${red}停止容器失败${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  echo -e "> 拉取最新镜像"
+  vanblog_compose pull vanblog
+  if [[ $? != 0 ]]; then
+    echo -e "${red}拉取镜像失败${plain}"
+    vanblog_compose up -d >/dev/null 2>&1 || true
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  echo -e "> 启动新容器"
+  vanblog_compose up -d
+  if [[ $? != 0 ]]; then
+    echo -e "${red}启动失败，请稍后查看日志信息${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  local new_cid new_image new_version
+  new_cid=$(get_vanblog_container_id)
+  new_image=$(get_container_image_id "${new_cid}")
+  new_version=$(get_container_version "${new_cid}")
+
+  if ! is_container_running "${new_cid}"; then
+    echo -e "${red}更新失败：vanblog 容器未在运行${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  if [[ -n "${old_image}" && "${new_image}" == "${old_image}" ]]; then
+    echo -e "${red}更新失败：运行中的容器仍使用旧镜像（版本 ${new_version:-未知}），未拉取到新版本${plain}"
+    if [[ ${skip_menu} == 0 ]]; then
+      before_show_menu
+    fi
+    return 1
+  fi
+
+  if [[ -n "${old_image}" ]]; then
+    remove_unused_image "${old_image}"
+  fi
+
+  echo -e "${green}VanBlog 更新并重启成功${plain}"
+  if [[ -n "${old_version}" || -n "${new_version}" ]]; then
+    echo -e "版本：${yellow}${old_version:-未知} -> ${new_version:-未知}${plain}"
+  fi
+  echo -e "默认管理面板地址：${yellow}域名:站点访问端口${plain}"
+
+  if [[ ${skip_menu} == 0 ]]; then
+    before_show_menu
+  fi
+  return 0
 }
 
 reset_https() {
@@ -522,6 +657,10 @@ show_menu() {
   esac
 }
 
+if [[ "${VANBLOG_SKIP_MAIN:-}" == "1" ]]; then
+  return 0 2>/dev/null || exit 0
+fi
+
 pre_check
 
 if [[ $# > 0 ]]; then
@@ -543,6 +682,7 @@ if [[ $# > 0 ]]; then
     ;;
   "update")
     update 0
+    exit $?
     ;;
   "log")
     show_log 0

@@ -4,6 +4,12 @@ icon: cloud-arrow-up
 order: 3
 ---
 
+## 一键脚本更新显示成功但仍是旧版本
+
+旧版 `./vanblog.sh` 选项 6 会在容器还在跑时 `docker rmi`，失败后仍继续 `pull` / `up`，并打印「VanBlog 更新并重启成功」。中国镜像的 `latest` 也可能停在 v0.53.0，所以后台看起来像更新成功，版本还是旧的（[#421](https://github.com/Mereithhh/vanblog/issues/421)、[#404](https://github.com/Mereithhh/vanblog/issues/404)）。
+
+请先用选项 20 更新脚本，再选 6。新脚本会先停容器再拉取并启动，只删已经没人用的旧镜像，并且只有运行中的 vanblog 镜像/版本确实前进才提示成功；否则报错并以非 0 退出。若编排里是阿里云 `latest`，更新时会改成 `mereith/van-blog:latest`。
+
 ## 如何回滚
 
 您可以通过指定镜像的版本号来实现，比如您想回滚到 `v0.29.0`，那您可以修改编排中的：
