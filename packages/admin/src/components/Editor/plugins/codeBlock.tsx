@@ -2,6 +2,11 @@ import type { BytemdPlugin } from 'bytemd';
 import { visit } from 'unist-util-visit';
 import copy from 'copy-to-clipboard';
 import { message } from 'antd';
+import {
+  CODE_BLOCK_LINE_NUMBERS_CLASS,
+  applyLineNumbersToCodeNode,
+  readFencedCodeText,
+} from './codeBlockLines';
 // FIXME: Addd Types
 const codeBlockPlugin = () => (tree) => {
   visit(tree, (node) => {
@@ -18,6 +23,7 @@ const codeBlockPlugin = () => (tree) => {
         }
       }
       if (language === 'mermaid') return;
+      applyLineNumbersToCodeNode(oldChildren.find((child: any) => child.tagName === 'code'));
       // 复制按钮
       const codeCopyBtn = {
         type: 'element',
@@ -56,7 +62,7 @@ const codeBlockPlugin = () => (tree) => {
         type: 'element',
         tagName: 'div',
         properties: {
-          class: 'code-block-wrapper relative',
+          class: `code-block-wrapper relative ${CODE_BLOCK_LINE_NUMBERS_CLASS}`,
         },
         children: [headerRight, ...oldChildren],
       };
@@ -67,7 +73,8 @@ const codeBlockPlugin = () => (tree) => {
 
 const onClickCopyCode = (e: PointerEvent) => {
   const copyBtn = e.target as HTMLElement;
-  const code = copyBtn.parentElement?.parentElement?.querySelector('code')?.innerText;
+  const codeEl = copyBtn.parentElement?.parentElement?.querySelector('code');
+  const code = readFencedCodeText(codeEl);
   copy(code);
   message.success('复制成功');
 };

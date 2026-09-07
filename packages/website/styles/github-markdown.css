@@ -1139,3 +1139,40 @@ body .markdown-body .code-block-wrapper::-webkit-scrollbar-thumb {
   display: inline-block;
   padding: 4px 8px;
 }
+
+.markdown-body pre code:has(.code-line) {
+  display: block;
+}
+
+.markdown-body .code-line {
+  display: flex;
+  align-items: flex-start;
+}
+
+.markdown-body .code-line-number {
+  display: inline-block;
+  min-width: 2.25em;
+  padding-right: 12px;
+  margin-right: 12px;
+  text-align: right;
+  user-select: none;
+  -webkit-user-select: none;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.light .markdown-body .code-line-number {
+  color: #57606a;
+  border-right: 1px solid #d0d7de;
+}
+
+.dark .markdown-body .code-line-number {
+  color: #9b9b9b;
+  border-right: 1px solid #3e4145;
+}
+
+.markdown-body .code-line-content {
+  flex: 1;
+  min-width: 0;
+  white-space: pre;
+}

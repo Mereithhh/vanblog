@@ -7,6 +7,19 @@ import {
   CODE_COPY_LABEL,
   readCodeFromCopyButton,
 } from "./codeCopyA11y";
+import {
+  CODE_BLOCK_LINE_NUMBERS_CLASS,
+  applyLineNumbersToCodeNode,
+} from "./codeBlockLines";
+
+export {
+  CODE_BLOCK_LINE_NUMBERS_CLASS,
+  CODE_LINE_CLASS,
+  CODE_LINE_CONTENT_CLASS,
+  CODE_LINE_NUMBER_CLASS,
+  applyLineNumbersToCodeNode,
+  wrapCodeChildrenWithLineNumbers,
+} from "./codeBlockLines";
 
 export { CODE_COPY_CLASS, CODE_COPY_LABEL, readCodeFromCopyButton };
 export {
@@ -33,6 +46,9 @@ export const codeBlockPlugin = () => (tree) => {
         }
       }
       if (language === "mermaid") return;
+      applyLineNumbersToCodeNode(
+        oldChildren.find((child: any) => child.tagName === "code")
+      );
       // 复制按钮
       const codeCopyBtn = {
         type: "element",
@@ -74,7 +90,7 @@ export const codeBlockPlugin = () => (tree) => {
         type: "element",
         tagName: "div",
         properties: {
-          class: "code-block-wrapper relative",
+          class: `code-block-wrapper relative ${CODE_BLOCK_LINE_NUMBERS_CLASS}`,
         },
         children: [headerRight, ...oldChildren],
       };
