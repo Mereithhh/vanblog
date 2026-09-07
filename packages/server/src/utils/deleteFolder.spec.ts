@@ -5,12 +5,16 @@ import { rmDir } from './deleteFolder';
 
 describe('rmDir', () => {
   let tmp: string;
+  let prevCwd: string;
 
   beforeEach(() => {
     tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'vanblog-rmdir-'));
+    prevCwd = process.cwd();
+    process.chdir(tmp);
   });
 
   afterEach(() => {
+    process.chdir(prevCwd);
     fs.rmSync(tmp, { recursive: true, force: true });
   });
 
@@ -43,27 +47,25 @@ describe('rmDir', () => {
   });
 
   it('does not execute shell metacharacters in the path (#482)', () => {
-    const marker = path.join(tmp, 'pwned');
-    const target = path.join(tmp, `safe && touch ${marker}`);
+    const target = path.join(tmp, 'safe && touch pwned');
     fs.mkdirSync(target);
     fs.writeFileSync(path.join(target, 'file.txt'), 'x');
 
     rmDir(target);
 
     expect(fs.existsSync(target)).toBe(false);
-    expect(fs.existsSync(marker)).toBe(false);
+    expect(fs.existsSync(path.join(tmp, 'pwned'))).toBe(false);
   });
 
   it('does not expand command substitution in the path (#482)', () => {
-    const marker = path.join(tmp, 'pwned-sub');
-    const target = path.join(tmp, `dir-$(touch ${marker})`);
+    const target = path.join(tmp, 'dir-$(touch pwned-sub)');
     fs.mkdirSync(target);
     fs.writeFileSync(path.join(target, 'file.txt'), 'x');
 
     rmDir(target);
 
     expect(fs.existsSync(target)).toBe(false);
-    expect(fs.existsSync(marker)).toBe(false);
+    expect(fs.existsSync(path.join(tmp, 'pwned-sub'))).toBe(false);
   });
 
   it('does not throw when the path is already missing', () => {
