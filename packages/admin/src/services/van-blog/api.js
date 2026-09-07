@@ -106,6 +106,12 @@ export async function scanImgsOfArticles() {
     method: 'POST',
   });
 }
+export async function rewriteArticleBaseUrl(body) {
+  return request('/api/admin/img/rewrite-base-url', {
+    method: 'POST',
+    data: body,
+  });
+}
 export async function exportAllImgs() {
   return request('/api/admin/img/export', {
     method: 'POST',

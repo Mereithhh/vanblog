@@ -13,6 +13,11 @@ import { ArticleProvider } from '../article/article.provider';
 import { parseNumericId } from 'src/utils/numericId';
 import { sanitizePagination } from 'src/utils/pagination';
 import { sleep } from 'src/utils/sleep';
+import {
+  prepareRewriteBases,
+  rewriteBaseUrlInDocuments,
+  RewriteBaseUrlCount,
+} from 'src/utils/rewriteBaseUrl';
 export type DraftView = 'admin' | 'public' | 'list';
 @Injectable()
 export class DraftProvider {
@@ -92,6 +97,31 @@ export class DraftProvider {
         await this.create(createDto);
       }
     }
+  }
+
+  async rewriteBaseUrl(oldBase?: string, newBase?: string): Promise<RewriteBaseUrlCount> {
+    const bases = prepareRewriteBases(oldBase, newBase);
+    if (!bases) {
+      return { updated: 0, replacements: 0 };
+    }
+    const drafts = await this.draftModel.find({
+      $or: [
+        {
+          deleted: false,
+        },
+        {
+          deleted: { $exists: false },
+        },
+      ],
+    });
+    return rewriteBaseUrlInDocuments(
+      drafts || [],
+      async (id, content) => {
+        await this.draftModel.updateOne({ id }, { content, updatedAt: new Date() });
+      },
+      bases.oldBase,
+      bases.newBase,
+    );
   }
 
   async getByOption(option: SearchDraftOption): Promise<{ drafts: Draft[]; total: number }> {

@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 换域名后文章/草稿里写成绝对地址的图片（如 `https://旧域名/static/...`）不会跟着 DNS 或「网站 Url」一起改。后台「图床设置」增加旧地址 → 新地址改写，只替换以此前缀开头的链接，并统计更新篇数；相对路径和未填写的第三方图床不动。[#475](https://github.com/Mereithhh/vanblog/issues/475)
 - 内置 Caddy「HTTPS 自动重定向」开启后可能仍走 HTTP：`setRedirect(true)` 原先 `POST` 追加 `listener_wrappers`（形状不对、重启会再套一层），成功日志还误写成「已关闭」。现改为 `PATCH`/`PUT` 整段替换为 `http_redirect`，写入后再读回确认；关闭则删除 wrappers（404 视为已关）。[#150](https://github.com/Mereithhh/vanblog/issues/150)
 - 外层 Nginx 反代未转发 `Host` 时，Waline 评论登录 / 管理后台 OAuth 会跳到 `localhost` 或 `0.0.0.0`。官方反代示例已补上 `proxy_set_header Host $host`（以及 `X-Forwarded-For`）。[#396](https://github.com/Mereithhh/vanblog/issues/396)
 - 源站对 `/admin` 和 `/api/admin/*`（含登录等后台 API）返回 `Cache-Control: private, no-store` 以及 `CDN-Cache-Control` / `Cloudflare-CDN-Cache-Control: no-store`，避免 Cloudflare「缓存全部」把后台 HTML/JSON 存进边缘。前台文章页和 `/_next/static` 不强制 no-store。仍建议页面规则绕过 `/admin*` 与 `/api/admin*`。[#140](https://github.com/Mereithhh/vanblog/issues/140)
@@ -63,6 +64,8 @@
 
 ### ✏️ Documentation | 文档
 
+- FAQ：域名变更后如何改写文章图片链接，以及如何正确设置网站 Url / 静态访问地址。[#475](https://github.com/Mereithhh/vanblog/issues/475)
+- HTTPS 文档「自动重定向」段两句粘连已拆开：初始化后到 `站点管理/系统设置/HTTPS` 确认证书，再按需开启重定向。
 - FAQ / HTTPS：开启自动重定向后请用无痕窗口访问 `http://域名` 确认跳到 https；「查看 Caddy 配置」里 `srv1.listener_wrappers` 应含 `http_redirect`。[#150](https://github.com/Mereithhh/vanblog/issues/150)
 - 说明本项目现由 AI 全自动维护，合并与 `v*` / `doc*` 发版仍由作者完成
 - 反代 Nginx 示例补上 `Host $host`；部署 FAQ 说明未转发 Host 时 Waline 登录会跳到 localhost。[#396](https://github.com/Mereithhh/vanblog/issues/396)
