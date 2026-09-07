@@ -10,7 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
-- 官方 all-in-one Dockerfile 在 Alpine 上自建镜像时，`pnpm install --frozen-lockfile` 不再因 `sharp@0.31.3` 解析 musl `1.2.4_git*` 失败（`Installation error: Invalid Version: 1.2.4_git20230717`）。前台构建阶段安装 `vips-dev` / `libc6-compat` 等依赖，设置 `SHARP_IGNORE_GLOBAL_LIBVIPS=1` 走官方 musl prebuild，并把 website 的 sharp 固定为 `0.32.6`（有意更新 lockfile）。[#413](https://github.com/Mereithhh/vanblog/issues/413)
+- 官方 all-in-one Dockerfile 在 Alpine 上自建镜像时，`pnpm install --frozen-lockfile` 不再因 `sharp@0.31.3` 解析 musl `1.2.4_git*` 失败（`Installation error: Invalid Version: 1.2.4_git20230717`）。前台构建阶段安装 `vips-dev` / `libc6-compat` 等依赖，设置 `SHARP_IGNORE_GLOBAL_LIBVIPS=1` 走官方 musl prebuild，并把 website 的 sharp 固定为 `0.32.6`（有意更新 lockfile）。各阶段的 corepack 也改为 `pnpm@8.11.0`（与仓库 `packageManager` 一致），避免 `pnpm@latest` 拉到不兼容的 pnpm 12。[#413](https://github.com/Mereithhh/vanblog/issues/413)
 - 后台编辑「Markdown 语法测试」这类含 `:::tip` 高亮块和 `<!-- more -->` 的文章时，在 more 标记和后面的 `----` / 标题之间按回车不再白屏（`C of Yh is not a function`）。预览把 more 注释换成普通节点，高亮块/代码块插件不再因缺字段抛错，viewerEffect 异常也不会拆掉编辑器。[#429](https://github.com/Mereithhh/vanblog/issues/429)
 - 一键脚本「卸载」只删除安装数据与编排文件，不再 `rm -rf` 整个安装目录；脚本生成的 `vanblog-backup-*` 以及安装目录外的备份会保留，删除前会明确提示。[#408](https://github.com/Mereithhh/vanblog/issues/408)
 - 一键脚本「重置 https 设置」会清除 Caddy `http_redirect` / 数据库 https 强制跳转并重启，使 HTTP 和 IP 访问恢复；成功或失败都会明确提示。Related to [#408](https://github.com/Mereithhh/vanblog/issues/408)
