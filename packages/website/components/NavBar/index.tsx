@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Headroom from "headroom.js";
-import { useContext, useEffect, useMemo, useState } from "react";
-import SearchCard from "../SearchCard";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
+import SearchCard, { SearchCardHandle } from "../SearchCard";
 import ThemeButton from "../ThemeButton";
 import KeyCard from "../KeyCard";
 import { MenuItem } from "../../api/getAllData";
@@ -33,6 +33,7 @@ export default function (props: {
 }) {
   const [showSearch, setShowSearch] = useState(false);
   const [headroom, setHeadroom] = useState<Headroom>();
+  const searchCardRef = useRef<SearchCardHandle>(null);
   const { theme } = useContext(ThemeContext);
 
   const picUrl = useMemo(() => {
@@ -56,6 +57,7 @@ export default function (props: {
   return (
     <>
       <SearchCard
+        ref={searchCardRef}
         openArticleLinksInNewWindow={props.openArticleLinksInNewWindow}
         visible={showSearch}
         setVisible={setShowSearch}
@@ -141,8 +143,7 @@ export default function (props: {
               <button
                 type="button"
                 onClick={() => {
-                  setShowSearch(true);
-                  document.body.style.overflow = "hidden";
+                  searchCardRef.current?.openFromUserGesture();
                 }}
                 title={HEADER_ACTION_LABELS.search}
                 aria-label={HEADER_ACTION_LABELS.search}

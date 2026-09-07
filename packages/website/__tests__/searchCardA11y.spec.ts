@@ -12,11 +12,14 @@ import {
   SEARCH_RESULTS_LABEL,
   describeSearchClearControl,
   describeSearchDialog,
+  describeSearchOpenFocusContract,
   focusSearchDialogInput,
   handleSearchDialogKeyDown,
   handleSearchShortcutKeyDown,
   moveSearchResultFocusIndex,
   nextSearchDialogTabIndex,
+  openSearchFromUserGesture,
+  revealSearchDialogForFocus,
   searchClearIsKeyboardActivatable,
   shouldTrapSearchDialogTab,
 } from "../components/SearchCard/a11y";
@@ -52,6 +55,113 @@ describe("search dialog a11y model", () => {
 });
 
 describe("search dialog open / escape / shortcut", () => {
+  it("requires a same-turn tap focus so iOS Safari can raise the keyboard", () => {
+    expect(describeSearchOpenFocusContract()).toEqual({
+      focusInUserGesture: true,
+      revealOverlayBeforeFocus: true,
+      delayedFocusIsFallbackOnly: true,
+      readOnlyFocusTrick: false,
+      inputMode: "search",
+    });
+  });
+
+  it("reveals the overlay then focuses the input in the same tap turn", () => {
+    const order: string[] = [];
+    const overlay = { style: { visibility: "hidden" } };
+    const dialog = {
+      style: { transform: "scale(0)" },
+      setAttribute: (name: string, value: string) => {
+        order.push(`attr:${name}=${value}`);
+      },
+    };
+    const input = {
+      focus: () => {
+        expect(overlay.style.visibility).toBe("visible");
+        expect(dialog.style.transform).toBe("scale(100%)");
+        order.push("focus");
+      },
+    };
+    let visible = false;
+
+    const tapOpen = () => {
+      order.push("tap");
+      return openSearchFromUserGesture({
+        overlay,
+        dialog,
+        input,
+        setVisible: (v) => {
+          visible = v;
+          order.push("setVisible");
+        },
+        setBodyOverflow: (overflow) => {
+          order.push(`overflow:${overflow}`);
+        },
+      });
+    };
+
+    expect(tapOpen()).toBe(true);
+    expect(visible).toBe(true);
+    expect(order).toEqual([
+      "tap",
+      "setVisible",
+      "overflow:hidden",
+      "attr:aria-hidden=false",
+      "focus",
+    ]);
+  });
+
+  it("still closes with Escape after a touch-oriented open that focused the field", () => {
+    let visible = false;
+    const focused: string[] = [];
+    expect(
+      openSearchFromUserGesture({
+        overlay: { style: { visibility: "hidden" } },
+        dialog: {
+          style: { transform: "scale(0)" },
+          setAttribute: () => undefined,
+        },
+        input: {
+          focus: () => {
+            focused.push("input");
+          },
+        },
+        setVisible: (v) => {
+          visible = v;
+        },
+      })
+    ).toBe(true);
+    expect(visible).toBe(true);
+    expect(focused).toEqual(["input"]);
+
+    expect(
+      handleSearchShortcutKeyDown({
+        key: "Escape",
+        visible,
+        preventDefault: () => undefined,
+        onOpen: () => {
+          visible = true;
+        },
+        onClose: () => {
+          visible = false;
+        },
+      })
+    ).toBe("close");
+    expect(visible).toBe(false);
+  });
+
+  it("does not claim focus when the search input is missing", () => {
+    revealSearchDialogForFocus({
+      overlay: { style: { visibility: "hidden" } },
+    });
+    expect(
+      openSearchFromUserGesture({
+        overlay: { style: { visibility: "hidden" } },
+        input: null,
+        setVisible: () => undefined,
+      })
+    ).toBe(false);
+  });
+
   it("moves focus into the dialog input when opened", () => {
     const focused: string[] = [];
     const input = {
@@ -303,6 +413,7 @@ describe("search result arrows and Enter", () => {
 
 describe("search dialog markup", () => {
   const card = readSrc("components/SearchCard/index.tsx");
+  const nav = readSrc("components/NavBar/index.tsx");
   const list = readSrc("components/ArticleList/index.tsx");
 
   it("uses dialog semantics and focuses the input on open", () => {
@@ -313,6 +424,18 @@ describe("search dialog markup", () => {
     expect(card).toMatch(/handleSearchDialogKeyDown/);
     expect(card).toMatch(/handleSearchShortcutKeyDown/);
     expect(card).toMatch(/aria-label=\{SEARCH_INPUT_LABEL\}/);
+  });
+
+  it("opens from the header tap via the same-turn focus helper (iOS Safari)", () => {
+    expect(card).toMatch(/openSearchFromUserGesture/);
+    expect(card).toMatch(/openFromUserGesture/);
+    expect(card).toMatch(/useImperativeHandle/);
+    expect(card).toMatch(/inputMode="search"/);
+    expect(card).not.toMatch(/readOnly|readonly/);
+    expect(nav).toMatch(/searchCardRef\.current\?\.openFromUserGesture\(\)/);
+    expect(nav).not.toMatch(
+      /setShowSearch\(true\);\s+document\.body\.style\.overflow/
+    );
   });
 
   it("makes the clear control a native button, not a click-only div", () => {
