@@ -84,6 +84,13 @@ function wrapCodeChildrenWithLineNumbers(children) {
   });
 }
 
+function findFencedCodeNode(children) {
+  if (!Array.isArray(children)) {
+    return undefined;
+  }
+  return children.find((child) => child && child.tagName === 'code');
+}
+
 function applyLineNumbersToCodeNode(codeNode) {
   if (!codeNode || codeNode.tagName !== 'code') return;
   codeNode.children = wrapCodeChildrenWithLineNumbers(codeNode.children || []);
@@ -108,6 +115,7 @@ module.exports = {
   splitHastNodeByLines,
   splitHastChildrenByLines,
   wrapCodeChildrenWithLineNumbers,
+  findFencedCodeNode,
   applyLineNumbersToCodeNode,
   readFencedCodeText,
 };

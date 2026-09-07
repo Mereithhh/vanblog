@@ -5,25 +5,30 @@ import { message } from 'antd';
 import {
   CODE_BLOCK_LINE_NUMBERS_CLASS,
   applyLineNumbersToCodeNode,
+  findFencedCodeNode,
   readFencedCodeText,
 } from './codeBlockLines';
 // FIXME: Addd Types
 const codeBlockPlugin = () => (tree) => {
   visit(tree, (node) => {
     if (node.type === 'element' && node.tagName === 'pre') {
-      const oldChildren = JSON.parse(JSON.stringify(node.children));
-      const codeProperties = oldChildren.find((child: any) => child.tagName === 'code').properties;
+      const oldChildren = JSON.parse(JSON.stringify(node.children || []));
+      const codeNode = findFencedCodeNode(oldChildren);
+      const codeProperties = codeNode && codeNode.properties ? codeNode.properties : {};
       let language = '';
       if (codeProperties.className) {
-        for (const each of codeProperties.className) {
-          if (each.startsWith('language-')) {
-            language = each.replace('language-', '');
+        const classNames = Array.isArray(codeProperties.className)
+          ? codeProperties.className
+          : [codeProperties.className];
+        for (const each of classNames) {
+          if (String(each).startsWith('language-')) {
+            language = String(each).replace('language-', '');
             break;
           }
         }
       }
       if (language === 'mermaid') return;
-      applyLineNumbersToCodeNode(oldChildren.find((child: any) => child.tagName === 'code'));
+      applyLineNumbersToCodeNode(codeNode);
       // 复制按钮
       const codeCopyBtn = {
         type: 'element',
@@ -85,7 +90,9 @@ export function customCodeBlock(): BytemdPlugin {
     viewerEffect: ({ markdownBody }) => {
       markdownBody.querySelectorAll('.code-block-wrapper').forEach((codeBlock) => {
         const copyBtn = codeBlock.querySelector('.code-copy-btn');
-        //remove first
+        if (!copyBtn) {
+          return;
+        }
         copyBtn.removeEventListener('click', onClickCopyCode);
         copyBtn.addEventListener('click', onClickCopyCode);
       });

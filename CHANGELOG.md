@@ -4,6 +4,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台编辑「Markdown 语法测试」这类含 `:::tip` 高亮块和 `<!-- more -->` 的文章时，在 more 标记和后面的 `----` / 标题之间按回车不再白屏（`C of Yh is not a function`）。预览把 more 注释换成普通节点，高亮块/代码块插件不再因缺字段抛错，viewerEffect 异常也不会拆掉编辑器。[#429](https://github.com/Mereithhh/vanblog/issues/429)
 - 一键脚本「卸载」只删除安装数据与编排文件，不再 `rm -rf` 整个安装目录；脚本生成的 `vanblog-backup-*` 以及安装目录外的备份会保留，删除前会明确提示。[#408](https://github.com/Mereithhh/vanblog/issues/408)
 - 一键脚本「重置 https 设置」会清除 Caddy `http_redirect` / 数据库 https 强制跳转并重启，使 HTTP 和 IP 访问恢复；成功或失败都会明确提示。Related to [#408](https://github.com/Mereithhh/vanblog/issues/408)
 - 后台「操作 → 修改信息」标题等输入框无法使用退格/删除键：焦点在 input/textarea/contenteditable 时全局快捷键和菜单不再拦截 Backspace / Delete，光标与删字恢复正常。[#233](https://github.com/Mereithhh/vanblog/issues/233)

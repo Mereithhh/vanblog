@@ -69,7 +69,7 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
   <!-- more -->
   ```
 
-  你可以点击工具栏最后第一个按钮快速在当前焦点插入 more 标记。
+  你可以点击工具栏最后第一个按钮快速在当前焦点插入 more 标记。在 `<!-- more -->` 附近（包括和高亮块 `:::tip`、后面的 `----` / 标题之间）按回车只会插入空行，不会让后台编辑器白屏。
 
   ![一键插入 more 标记](https://pic.mereith.com/img/59550a500ed84dea504f897dbe12ed07.clipboard-2022-08-29.png)
 
