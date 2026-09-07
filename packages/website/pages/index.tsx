@@ -52,7 +52,7 @@ const Home = (props: IndexPageProps) => {
             content={article.content || ""}
             type={"overview"}
             enableComment={props.layoutProps.enableComment}
-            copyrightAggreement={props.layoutProps.copyrightAggreement}
+            copyrightAgreement={props.layoutProps.copyrightAgreement}
           ></PostCard>
         ))}
       </div>
