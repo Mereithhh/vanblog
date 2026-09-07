@@ -44,6 +44,17 @@ const getCdnUrl = () => {
     return {};
   }
 };
+const adminNoStoreHeaders = [
+  {
+    key: "Cache-Control",
+    value: "private, no-store, no-cache, must-revalidate",
+  },
+  { key: "CDN-Cache-Control", value: "no-store" },
+  { key: "Cloudflare-CDN-Cache-Control", value: "no-store" },
+  { key: "Pragma", value: "no-cache" },
+  { key: "Expires", value: "0" },
+];
+
 module.exports = withBundleAnalyzer({
   reactStrictMode: true,
   output: "standalone",
@@ -52,6 +63,13 @@ module.exports = withBundleAnalyzer({
   },
   images: {
     domains: getAllowDomains(),
+  },
+  async headers() {
+    // Defense in depth if /admin is ever routed to Next.js; public pages stay cacheable.
+    return [
+      { source: "/admin", headers: adminNoStoreHeaders },
+      { source: "/admin/:path*", headers: adminNoStoreHeaders },
+    ];
   },
   ...getCdnUrl(),
   ...rewites,
