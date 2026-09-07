@@ -1,6 +1,10 @@
 import { useContext, useLayoutEffect, useRef } from "react";
 import { applyTheme, getTheme, initTheme } from "../../utils/theme";
 import { ThemeContext } from "../../utils/themeContext";
+import {
+  HEADER_ACTION_LABELS,
+  ICON_ACTION_BUTTON_CLASS,
+} from "../NavBar/a11y";
 
 export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
   const { current } = useRef<any>({ hasInit: false });
@@ -67,9 +71,12 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
     }
   };
   return (
-    <div
-      className="flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 ml-4 sm:ml-2 lg:ml-6   "
+    <button
+      type="button"
+      className={`${ICON_ACTION_BUTTON_CLASS} flex items-center cursor-pointer hover:scale-125 transform transition-all mr-4 ml-4 sm:ml-2 lg:ml-6`}
       onClick={handleSwitch}
+      aria-label={HEADER_ACTION_LABELS.theme}
+      title={HEADER_ACTION_LABELS.theme}
     >
       <div
         style={{
@@ -84,7 +91,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
           fill="currentColor"
-          aria-label="light icon"
+          aria-hidden="true"
           width={20}
           height={20}
         >
@@ -103,7 +110,7 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 1024 1024"
           fill="currentColor"
-          aria-label="dark icon"
+          aria-hidden="true"
           width={20}
           height={20}
         >
@@ -123,11 +130,11 @@ export default function (props: { defaultTheme: "auto" | "dark" | "light" }) {
           width={20}
           height={20}
           viewBox="0 0 1024 1024"
-          aria-label="auto icon"
+          aria-hidden="true"
         >
           <path d="M512 992C246.92 992 32 777.08 32 512S246.92 32 512 32s480 214.92 480 480-214.92 480-480 480zm0-840c-198.78 0-360 161.22-360 360 0 198.84 161.22 360 360 360s360-161.16 360-360c0-198.78-161.22-360-360-360zm0 660V212c165.72 0 300 134.34 300 300 0 165.72-134.28 300-300 300z"></path>
         </svg>
       </div>
-    </div>
+    </button>
   );
 }

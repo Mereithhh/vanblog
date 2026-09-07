@@ -1104,6 +1104,15 @@ body .markdown-body .code-block-wrapper::-webkit-scrollbar-thumb {
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
   border-radius: 4px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  line-height: inherit;
+  display: inline-block;
+  appearance: none;
+  -webkit-appearance: none;
 }
 
 .markdown-body .code-copy-btn:hover {
