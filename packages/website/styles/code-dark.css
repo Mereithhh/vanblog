@@ -4,6 +4,12 @@
   padding: 22px 16px 16px;
 }
 
+/* Language label + copy control sit on the same panel as the fence. */
+.dark .markdown-body .header-right,
+.dark .markdown-body .language-tag {
+  color: #b0b4ba;
+}
+
 /* .dark code.hljs {
   padding: 3px 5px
 }
@@ -44,7 +50,7 @@
 
 .dark .hljs-regexp,
 .dark .hljs-template-tag {
-  color: #9a5334
+  color: #d16969
 }
 
 .dark .hljs-formula,
@@ -62,7 +68,7 @@
 }
 
 .dark .hljs-doctag {
-  color: #608b4e
+  color: #6a9955
 }
 
 .dark .hljs-meta,

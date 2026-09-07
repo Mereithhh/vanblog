@@ -50,7 +50,6 @@ const codeBlockPlugin = () => (tree) => {
         tagName: "div",
         properties: {
           class: "header-right flex",
-          style: "color: #6f7177",
         },
         children: [languageTag, codeCopyBtn],
       };

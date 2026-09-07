@@ -4,6 +4,14 @@ icon: wrench
 order: 2
 ---
 
+## 前台代码块对比度不足
+
+夜间模式阅读文章时，围栏代码块里部分高亮（常见是偏暗红的关键字/路径、发灰的注释）和右上角语言标签、复制图标会贴在深色底上，看起来像糊成一团。已提高前台 highlight 主题和代码块控件的对比度，正文类 token（默认文字、关键字、字符串、注释等）相对代码块背景达到 WCAG AA（≥ 4.5:1），并保持接近 VS Code 暗色主题的配色（[#175](https://github.com/Mereithhh/vanblog/issues/175)）。请升级到包含该修复的版本。
+
+这次只处理了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里的「Bad contrast on code block」。键盘无法操作的按钮、导航图标、分页方向键 / 跳转 / 省略号当链接等其他无障碍项仍开放，不在此修复范围内。
+
+主题切换本身见 [黑暗模式与响应式](../advanced/darkmode.md)。
+
 ## 前台白天模式分页当前页看不清
 
 首页或 `/page/n` 底部分页在白天/白色主题下，`‹ 1 2 3 ›` 可能都是一样的白底灰字，看不出当前页。夜间模式对比足够，这是浅色主题下当前页和普通页都带了 `bg-white`，Tailwind 不会保证后写的 `bg-gray-200` 生效。已修复（[#333](https://github.com/Mereithhh/vanblog/issues/333)）：当前页用更深底色和白色文字，并带 `aria-current="page"`。请升级到包含该修复的版本。
