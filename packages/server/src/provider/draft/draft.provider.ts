@@ -11,6 +11,7 @@ import {
 import { Draft, DraftDocument } from 'src/scheme/draft.schema';
 import { ArticleProvider } from '../article/article.provider';
 import { parseNumericId } from 'src/utils/numericId';
+import { sanitizePagination } from 'src/utils/pagination';
 import { sleep } from 'src/utils/sleep';
 export type DraftView = 'admin' | 'public' | 'list';
 @Injectable()
@@ -152,11 +153,12 @@ export class DraftProvider {
     query.$and = $and;
     const view = option.toListView ? this.listView : this.adminView;
 
+    const paging = sanitizePagination(option.page, option.pageSize);
     const drafts = await this.draftModel
       .find(query, view)
       .sort(sort)
-      .skip(option.pageSize * option.page - option.pageSize)
-      .limit(option.pageSize)
+      .skip(paging.skip)
+      .limit(paging.pageSize)
       .exec();
     const total = await this.draftModel.count(query).exec();
 

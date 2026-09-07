@@ -11,6 +11,7 @@ import { PicgoProvider } from './picgo.provider';
 import { imageSize } from 'image-size';
 import { ImgMeta } from 'src/types/img';
 import { formatBytes } from 'src/utils/size';
+import { sanitizePagination } from 'src/utils/pagination';
 import axios from 'axios';
 import { UploadConfig } from 'src/types/upload';
 import { addWaterMarkToIMG } from 'src/utils/watermark';
@@ -263,12 +264,13 @@ export class StaticProvider {
     if (option.staticType) {
       query.staticType = option.staticType;
     }
+    const paging = sanitizePagination(option.page, option.pageSize);
     const total = await this.staticModel.count(query);
     const items = await this.staticModel
       .find(query, this.getView(option.view))
       .sort({ updatedAt: -1 })
-      .limit(option.pageSize)
-      .skip(option.page * option.pageSize - option.pageSize);
+      .limit(paging.pageSize)
+      .skip(paging.skip);
     return {
       total,
       data: items,

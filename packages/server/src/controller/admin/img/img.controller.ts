@@ -17,6 +17,7 @@ import { StaticProvider } from 'src/provider/static/static.provider';
 import { config } from 'src/config';
 import { checkTrue } from 'src/utils/checkTrue';
 import { ApiToken } from 'src/provider/swagger/token';
+import { sanitizePagination } from 'src/utils/pagination';
 
 @ApiTags('img')
 @UseGuards(...AdminGuard)
@@ -109,9 +110,10 @@ export class ImgController {
   }
   @Get('')
   async getByOption(@Query('page') page: number, @Query('pageSize') pageSize = 5) {
+    const paging = sanitizePagination(page, pageSize);
     const option: SearchStaticOption = {
-      page,
-      pageSize,
+      page: paging.page,
+      pageSize: paging.pageSize,
       staticType: 'img',
       view: 'public',
     };

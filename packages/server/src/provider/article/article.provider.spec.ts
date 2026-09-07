@@ -85,3 +85,45 @@ describe('ArticleProvider getById/updateById (#427)', () => {
     expect(model.docs[0].content).toBe(original.content);
   });
 });
+
+function createPagedArticleModel() {
+  const skipValues: number[] = [];
+  const query: any = {
+    sort: jest.fn().mockImplementation(() => query),
+    skip: jest.fn().mockImplementation((n: number) => {
+      skipValues.push(n);
+      return query;
+    }),
+    limit: jest.fn().mockImplementation(() => query),
+    exec: jest.fn().mockResolvedValue([]),
+  };
+  return {
+    skipValues,
+    find: jest.fn().mockReturnValue(query),
+    count: jest.fn().mockReturnValue({ exec: jest.fn().mockResolvedValue(0) }),
+  };
+}
+
+describe('ArticleProvider.getByOption pagination (#400)', () => {
+  it('never calls Mongo skip with a negative or non-finite value', async () => {
+    const hostile = [
+      { page: NaN, pageSize: 10 },
+      { page: 0, pageSize: 10 },
+      { page: -3, pageSize: 10 },
+      { page: undefined as any, pageSize: 5 },
+      { page: Number.MAX_VALUE, pageSize: 10 },
+      { page: '-9223372036854775808' as any, pageSize: 10 },
+      { page: 1, pageSize: NaN },
+    ];
+    for (const option of hostile) {
+      const model = createPagedArticleModel();
+      const provider = createProvider(model);
+      await provider.getByOption({ ...option, regMatch: false } as any, false);
+      expect(model.skipValues.length).toBeGreaterThan(0);
+      for (const skip of model.skipValues) {
+        expect(Number.isFinite(skip)).toBe(true);
+        expect(skip).toBeGreaterThanOrEqual(0);
+      }
+    }
+  });
+});

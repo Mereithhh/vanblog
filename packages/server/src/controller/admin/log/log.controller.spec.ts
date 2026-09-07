@@ -43,4 +43,16 @@ describe('LogController audit path (#289)', () => {
       data: { data: [row], total: 1 },
     });
   });
+
+  it('sanitizes a hostile page so searchLog never sees a negative offset (#400)', async () => {
+    const logProvider = {
+      searchLog: jest.fn().mockResolvedValue({ data: [], total: 0 }),
+    };
+    const controller = new LogController(logProvider as any);
+    await controller.get(NaN as any, 'nope' as any, EventType.LOGIN);
+    const [page, pageSize] = logProvider.searchLog.mock.calls[0];
+    expect(page).toBeGreaterThanOrEqual(1);
+    expect(pageSize).toBeGreaterThanOrEqual(1);
+    expect((page - 1) * pageSize).toBeGreaterThanOrEqual(0);
+  });
 });
