@@ -52,7 +52,7 @@ export default function () {
     };
   }, [currObj, value, type]);
   const onKeyDown = (ev) => {
-    // Ctrl/Cmd+S saves. Arrow keys and other input reach title/form fields (#390, #470).
+    // Ctrl/Cmd+S saves. Edit keys reach title/form fields (#233, #390, #470).
     handleEditorHotkey(ev, handleSave);
   };
 

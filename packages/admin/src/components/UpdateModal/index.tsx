@@ -82,6 +82,7 @@ export default function (props: {
         label="文章标题"
         placeholder="请输入标题"
         rules={[{ required: true, message: '这是必填项' }]}
+        fieldProps={{ onKeyDown: stopMenuKeydown }}
       />
       <AuthorField />
       <ProFormSelect
@@ -141,6 +142,7 @@ export default function (props: {
             label="自定义路径名"
             tooltip="文章发布后的路径将为 /post/[自定义路径名]，如果未设置则使用文章 id 作为路径名"
             placeholder="留空或为空则使用 id 作为路径名"
+            fieldProps={{ onKeyDown: stopMenuKeydown }}
           />
           <ProFormSelect
             width="md"
