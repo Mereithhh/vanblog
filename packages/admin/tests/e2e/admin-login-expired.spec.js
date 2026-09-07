@@ -71,7 +71,8 @@ async function submitAdminLogin(page) {
   await expect(username).toBeVisible({ timeout: 30_000 });
   await username.fill('admin');
   await password.fill('admin');
-  await page.getByRole('button', { name: '登录' }).click();
+  // Ant Design 4 inserts a space between two Chinese characters on large buttons.
+  await page.locator('button.ant-btn-primary').filter({ hasText: /登\s*录/ }).click();
 }
 
 test.describe('admin re-login after session expiry (#316)', () => {
