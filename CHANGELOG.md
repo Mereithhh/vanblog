@@ -4,8 +4,9 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
-- 前台（以及同样套了 ByteMD 的后台预览）围栏代码块重新显示行号：每行带 `code-line` / `data-line` 和 `aria-hidden` 的 gutter，浅色/深色对比可读；mermaid 围栏不加行号。只覆盖 [#404](https://github.com/Mereithhh/vanblog/issues/404) 的代码块行号，更新脚本仍显示旧版本等其余项仍开放
-- 前台夜间模式（以及同样套了暗色的后台预览）里 mermaid / 流程图不再用浅色主题画在深色底上：站点为暗色时 mermaid 使用 `theme: 'dark'` 和提高对比度的 themeVariables，容器带 `mermaid-theme-dark`；白天模式仍是默认浅色主题。只覆盖 [#404](https://github.com/Mereithhh/vanblog/issues/404) 的流程图对比度，代码块行号等其余项仍开放
+- 一键脚本「更新」先停并移除容器，再 `compose pull vanblog` / `up`，只删除未再被占用的旧镜像；成功文案仅在运行中的 vanblog 镜像/版本确实前进后打印，失败以非 0 退出。中国镜像 `latest` 未同步时改拉 `mereith/van-blog:latest`。[#421](https://github.com/Mereithhh/vanblog/issues/421) Related to [#404](https://github.com/Mereithhh/vanblog/issues/404)
+- 前台（以及同样套了 ByteMD 的后台预览）围栏代码块重新显示行号：每行带 `code-line` / `data-line` 和 `aria-hidden` 的 gutter，浅色/深色对比可读；mermaid 围栏不加行号。覆盖 [#404](https://github.com/Mereithhh/vanblog/issues/404) 的代码块行号（更新脚本见上一项）
+- 前台夜间模式（以及同样套了暗色的后台预览）里 mermaid / 流程图不再用浅色主题画在深色底上：站点为暗色时 mermaid 使用 `theme: 'dark'` 和提高对比度的 themeVariables，容器带 `mermaid-theme-dark`；白天模式仍是默认浅色主题。覆盖 [#404](https://github.com/Mereithhh/vanblog/issues/404) 的流程图对比度（更新脚本见上一项）
 - 后台编辑器写入带 `style` / 十六进制颜色 / 中文标签的 mermaid 流程图后再按键，不再抛 `Yh is not a function or its return value is not iterable` 并导致无法继续编辑。预览改为加载 mermaid 的 UMD 包并解开 default/namespace 导入，避免 `khroma` 等 ESM 依赖被 webpack 绑错 [#391](https://github.com/Mereithhh/vanblog/issues/391)
 - 后台编辑文章标题时左右方向键无法移动光标：全局快捷键不再拦截输入框里的方向键 [#390](https://github.com/Mereithhh/vanblog/issues/390)
 - 后台删除目录改用 `fs.rmSync`，webp 压缩用 `spawnSync` 传参数数组，不再把路径拼进 shell 命令，避免命令注入 [#482](https://github.com/Mereithhh/vanblog/issues/482)

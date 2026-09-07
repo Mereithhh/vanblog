@@ -14,7 +14,7 @@ order: 2
 
 文章（以及后台预览里同一套 ByteMD 围栏）以前只包了语言标签和复制按钮，代码左侧没有行号。已修复（[#404](https://github.com/Mereithhh/vanblog/issues/404)）：每行有可见行号（`code-line` / `data-line`，gutter 带 `aria-hidden`），浅色和深色都保持可读对比；mermaid / 流程图围栏不加行号。请升级到包含该修复的版本。
 
-这次只处理了 [#404](https://github.com/Mereithhh/vanblog/issues/404) 里的代码块行号。流程图暗色对比度见上一节。更新脚本执行后仍显示旧版本是另一件事，尚未改动。围栏高亮对比度见 [前台代码块对比度不足](#前台代码块对比度不足)。
+这次处理了 [#404](https://github.com/Mereithhh/vanblog/issues/404) 里的代码块行号。流程图暗色对比度见上一节。更新脚本显示成功但仍是旧版本见 [升级常见问题](./update.md#一键脚本更新显示成功但仍是旧版本)。围栏高亮对比度见 [前台代码块对比度不足](#前台代码块对比度不足)。
 
 ## 前台代码块对比度不足
 

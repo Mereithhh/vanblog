@@ -13,6 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Run vanblog.sh update tests
+        run: bash scripts/tests/vanblog-update.test.sh
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
