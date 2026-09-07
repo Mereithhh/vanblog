@@ -43,7 +43,7 @@ VanBlog 首次运行默认关闭 HTTPS，请通过 HTTP 协议访问。无需多
 
 当你确保可以通过自动申请的证书正常访问的时候，可以选择开启 `https 自动重定向` 功能，开启后所有的 `http` 访问将自动重定向到 HTTPS。
 
-在初始化后，进入后台确认 HTTPS 证书已自动生成，之后可手动开启 https 自动重定请在初始化后进入后台的 `站点管理/系统设置/ HTTPS` 中设置确认 HTTPS 状态后再按需开启 HTTPS 自动重定向。
+初始化完成后，请进入后台的 `站点管理/系统设置/HTTPS`，确认 HTTPS 证书已自动生成。确认状态正常后，再按需开启 HTTPS 自动重定向。
 
 ![开启 https 自动重定向](https://pic.mereith.com/img/d1e7b502279f0bd8225dfaedf89a5140.clipboard-2022-08-23.png)
 

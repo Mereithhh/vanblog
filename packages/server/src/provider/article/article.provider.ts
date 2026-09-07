@@ -7,6 +7,11 @@ import { parseImgLinksOfMarkdown } from 'src/utils/parseImgOfMarkdown';
 import { wordCount } from 'src/utils/wordCount';
 import { parseNumericId, tryParseNumericId } from 'src/utils/numericId';
 import { sanitizePagination, UNLIMITED_PAGE_SIZE } from 'src/utils/pagination';
+import {
+  prepareRewriteBases,
+  rewriteBaseUrlInDocuments,
+  RewriteBaseUrlCount,
+} from 'src/utils/rewriteBaseUrl';
 import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';
 import { sleep } from 'src/utils/sleep';
@@ -151,6 +156,31 @@ export class ArticleProvider {
       });
     }
     return res;
+  }
+
+  async rewriteBaseUrl(oldBase?: string, newBase?: string): Promise<RewriteBaseUrlCount> {
+    const bases = prepareRewriteBases(oldBase, newBase);
+    if (!bases) {
+      return { updated: 0, replacements: 0 };
+    }
+    const articles = await this.articleModel.find({
+      $or: [
+        {
+          deleted: false,
+        },
+        {
+          deleted: { $exists: false },
+        },
+      ],
+    });
+    return rewriteBaseUrlInDocuments(
+      articles || [],
+      async (id, content) => {
+        await this.articleModel.updateOne({ id }, { content, updatedAt: new Date() });
+      },
+      bases.oldBase,
+      bases.newBase,
+    );
   }
 
   async updateViewerByPathname(pathname: string, isNew: boolean) {

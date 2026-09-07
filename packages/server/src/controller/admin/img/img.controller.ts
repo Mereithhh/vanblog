@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
@@ -14,6 +15,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { SearchStaticOption } from 'src/types/setting.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { StaticProvider } from 'src/provider/static/static.provider';
+import { ArticleProvider } from 'src/provider/article/article.provider';
+import { DraftProvider } from 'src/provider/draft/draft.provider';
+import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { config } from 'src/config';
 import { checkTrue } from 'src/utils/checkTrue';
 import { ApiToken } from 'src/provider/swagger/token';
@@ -24,7 +28,12 @@ import { sanitizePagination } from 'src/utils/pagination';
 @ApiToken
 @Controller('/api/admin/img')
 export class ImgController {
-  constructor(private readonly staticProvider: StaticProvider) {}
+  constructor(
+    private readonly staticProvider: StaticProvider,
+    private readonly articleProvider: ArticleProvider,
+    private readonly draftProvider: DraftProvider,
+    private readonly isrProvider: ISRProvider,
+  ) {}
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async upload(
@@ -70,6 +79,28 @@ export class ImgController {
     return {
       statusCode: 200,
       data: res,
+    };
+  }
+  @Post('rewrite-base-url')
+  async rewriteBaseUrl(@Body() body: { oldBase?: string; newBase?: string }) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
+    const articles = await this.articleProvider.rewriteBaseUrl(body?.oldBase, body?.newBase);
+    const drafts = await this.draftProvider.rewriteBaseUrl(body?.oldBase, body?.newBase);
+    if (articles.updated > 0) {
+      this.isrProvider.activeAll('域名改写触发增量渲染！');
+    }
+    return {
+      statusCode: 200,
+      data: {
+        articlesUpdated: articles.updated,
+        draftsUpdated: drafts.updated,
+        replacements: articles.replacements + drafts.replacements,
+      },
     };
   }
   @Post('export')

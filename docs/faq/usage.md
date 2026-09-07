@@ -4,6 +4,20 @@ icon: wrench
 order: 2
 ---
 
+## 域名变更后文章里的图片打不开
+
+换域名（或换图床域名）后，文章里的图片可能全部裂开，后台又找不到「旧域名」存在哪个设置里。这是因为本地图床文件仍在容器的 `/static/...`，但编辑器插入时经常把**当时的访问域名**写成绝对地址，例如 `https://old.example.com/static/img/xxx.webp`。改 DNS、改「网站 Url」都不会改 Mongo 里已经存下来的正文。
+
+已提供批量改写（[#475](https://github.com/Mereithhh/vanblog/issues/475)）：后台进入 **站点管理 / 系统设置 / 图床设置**，在「域名变更后改写文章图片链接」填入旧地址和新地址（需带 `http://` 或 `https://`），确认后会改写**文章和草稿**正文里以此前缀开头的链接，并显示更新篇数。相对路径 `/static/...` 不用改；未填写的第三方图床（如七牛）也不会动。磁盘上的图片文件不会迁移。
+
+建议先到 **备份恢复** 导出一份数据。改完后：
+
+1. 在 **站点配置** 把「网站 Url」改成带协议的新域名（给 RSS / sitemap 用）。
+1. 确认新域名 DNS 已指向本站，必要时清 CDN 缓存。
+1. 之后请用新域名打开后台再上传图片，新插入的链接才会指向新地址。
+
+`VAN_BLOG_CDN_URL` 只给前台 `/_next/static` 静态资源加前缀，**不会**改文章图片。见 [部署常见问题](./deploy.md#域名变更后文章图片打不开)。
+
 ## 配置了 Google Analysis 后前台一直转圈
 
 后台填了 `Google Analysis ID` 后，在中国大陆打开前台可能一直转圈或很久才出来，控制台出现 `GET https://www.googletagmanager.com/gtag/js?id=… net::ERR_CONNECTION_TIMED_OUT`。旧实现会在页面可交互后立刻去拉谷歌脚本，超时会拖住整页加载。已改为 `async` 并在 `window.load` 之后空闲时加载（[#375](https://github.com/Mereithhh/vanblog/issues/375)），谷歌统计不可达时不再堵塞首屏。请升级到包含该修复的版本。
