@@ -75,6 +75,16 @@ curl -L https://raw.githubusercontent.com/Mereithhh/vanblog/master/scripts/vanbl
 
 这与 Docker Hub / 镜像仓库拉取失败不是同一类问题。
 
+## 一键脚本部署后如何再部署其他项目
+
+脚本装好的 VanBlog 是一组 Docker Compose 服务，不是可以把任意项目丢进去的应用平台。
+
+- **静态 HTML/CSS/JS**：用后台 [自定义页面](../advanced/custom-page.md)，挂到 `/c/<名称>/`。入口必须是根目录 `index.html`；默认假设自己在网站根路径的 React/Vue 打包产物（如 uptime-status 的 `/static/js/...`）通常打不开，见 [自定义常见问题](./customize.md#自定义页面)。
+- **需要后端、自己的路由、或必须占某个路径**：另起容器或进程，用 Nginx / Caddy **反代**到它（不同路径或子域名）。VanBlog 仍只反代自己映射的 HTTP 端口，见 [反代](../reference/reverse-proxy.md)。
+- **长期共存**：给其他站点单独的子域名最省事，不必塞进 VanBlog 容器的 `/app/static`。
+
+不要改 VanBlog 镜像内部去「顺便跑」别的项目。额外服务请写在你自己的编排文件里；脚本再次执行只管理 VanBlog。
+
 ## 如何安装 docker ?
 
 可以用这个一键安装脚本:

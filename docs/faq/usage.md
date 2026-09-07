@@ -160,6 +160,10 @@ iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页�
 
 在 Windows 上「上传文件 / 上传文件夹」可能直接报错（`ENOENT: no such file or directory, mkdir`），或上传成功后无法从文件树里删掉单个文件。旧实现创建目录时按 `/` 硬拆路径，Windows 上 `path.join` 得到反斜杠，拆完变成空路径；同时后台没有删除单个文件的接口。已修复（[#338](https://github.com/Mereithhh/vanblog/issues/338)）。请升级到包含该修复的版本。
 
+## 多文件自定义页面上传后打开是白屏
+
+把静态 zip（例如 [uptime-status](https://github.com/yb/uptime-status)）解压上传到 `/c/uptime/` 后，页面可能空白，控制台里 `/static/js/...` 404。自定义页面会正确返回根目录的 `index.html`，但 **Create React App 默认把资源写成站点根路径** `/static/...`，浏览器不会去 `/c/uptime/static/...` 找。把 `index.html` 里的地址改成 `./static/...`，或构建时设置 `homepage` / `base` 为 `/c/uptime/`。需要 API 或根路径时用反代旁挂，见 [自定义页面](../advanced/custom-page.md)。上传失败或删不掉文件是另一件事，见上一节。
+
 ## 水印文字带小数点或域名时不显示
 
 在「图床设置」里把水印设成 `example.com` 这类带 `.` 的文字后，上传的图片上可能完全看不到水印；改成不含点的短文本（如 `VanBlog`）又正常。这不是点号本身画不出来，而是旧实现用固定 500px 宽画布去印 128px 字体，域名一类较长的「单词」会被 Jimp 换到画布外。已修复（[#322](https://github.com/Mereithhh/vanblog/issues/322)）。请升级到包含该修复的版本。

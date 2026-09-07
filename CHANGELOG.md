@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 后台「自定义页面」新建提示、帮助和文件编辑器标明：只托管静态资源、入口是根目录 `index.html`、SPA 需要相对路径；路径必须是单级（如 `/uptime` → `/c/uptime/`）。[#337](https://github.com/Mereithhh/vanblog/issues/337)
 - 后台「站点配置 / 高级设置」将「Google Analysis ID」改为「Google Analytics 测量 ID」，占位与 tooltip 标明 GA4 的 `G-XXXXXXXXX`（旧版 `UA-` 也可），并提示大陆访问 Google 可能导致控制台「尚未收到数据」。前台注入 gtag 前会去掉首尾空白，若误粘贴整段脚本或 URL 则抽出 `G-` / `UA-` ID。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - 后台「系统设置 / 评论设置」SMTP 表单标明博主邮箱（通知收件人）、发件地址（From）和 SMTP 授权码/应用专用密码的用途，便于换成自定义域名邮箱；仍走内嵌 Waline，不另建邮件系统。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 后台新建 / 修改 / 导入文章和草稿时，标签输入框支持一次粘贴或输入多个标签：用英文/中文逗号、分号或换行分隔。空格不会拆开，以便「machine learning」这类多词标签保持完整。[#489](https://github.com/Mereithhh/vanblog/issues/489)
@@ -12,6 +13,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 多文件自定义页面访问带查询参数的目录（如 `/c/uptime/?x=1`）不再把 `?x=1` 当成文件名；缺失的 `index.html` 返回 404 而不是 `sendFile` 失败。[#337](https://github.com/Mereithhh/vanblog/issues/337)
 - 后台编辑很长的 Markdown 时，用右侧目录跳到靠后的标题后，顶部工具栏（加粗、标题、上传等功能键）会整行消失。现把编辑器锁在视口高度内，工具栏 sticky 在编辑区顶部，目录跳转也不再把页面/外层容器滚走。[#298](https://github.com/Mereithhh/vanblog/issues/298)
 - 换域名后文章/草稿里写成绝对地址的图片（如 `https://旧域名/static/...`）不会跟着 DNS 或「网站 Url」一起改。后台「图床设置」增加旧地址 → 新地址改写，只替换以此前缀开头的链接，并统计更新篇数；相对路径和未填写的第三方图床不动。[#475](https://github.com/Mereithhh/vanblog/issues/475)
 - 内置 Caddy「HTTPS 自动重定向」开启后可能仍走 HTTP：`setRedirect(true)` 原先 `POST` 追加 `listener_wrappers`（形状不对、重启会再套一层），成功日志还误写成「已关闭」。现改为 `PATCH`/`PUT` 整段替换为 `http_redirect`，写入后再读回确认；关闭则删除 wrappers（404 视为已关）。[#150](https://github.com/Mereithhh/vanblog/issues/150)
@@ -73,6 +75,7 @@
 
 ### ✏️ Documentation | 文档
 
+- 自定义页面文档 / FAQ：说明只托管静态 HTML/CSS/JS、`/c/<name>/` 的入口是根目录 `index.html`、SPA 需要相对 `base`/`homepage`（uptime-status 一类 zip 的 `/static/...` 会白屏），以及一键部署后如何用反代或独立容器旁挂其他站点。[#337](https://github.com/Mereithhh/vanblog/issues/337)
 - FAQ / 访客统计 / 站点配置：说明 Google Analytics 测量 ID 填 `G-XXXXXXXXX`、后台路径，以及「尚未收到数据」常见原因（大陆访问 Google API、需等待或看实时）。Umami 等第三方统计通过定制化「自定义 HTML (head)」插入，不做单独集成。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - FAQ / 评论：说明如何在「系统设置 / 评论设置」更换 Waline 通知邮箱、使用自定义域名邮箱（SMTP + 博主邮箱 + 发件地址）。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 文章 / 草稿 / 标签：标签输入框支持粘贴逗号、分号或换行分隔的多个标签；空格不会拆开多词标签。[#489](https://github.com/Mereithhh/vanblog/issues/489)

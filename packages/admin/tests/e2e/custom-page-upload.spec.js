@@ -109,6 +109,7 @@ async function openFolderEditor(page, store) {
   await mockFolderApis(page, store);
   await page.goto('/code?type=folder&path=/door');
   await expect(page.getByRole('button', { name: /操\s*作/ })).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByText('根目录的 index.html')).toBeVisible();
 }
 
 function uploadedName(uploads, suffix) {

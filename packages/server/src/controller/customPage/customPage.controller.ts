@@ -2,9 +2,7 @@ import { Controller, Get, HttpException, Param, Req, Res } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger';
 import { Response, Request } from 'express';
 import { CustomPageProvider } from 'src/provider/customPage/customPage.provider';
-import { join } from 'path';
-import { config } from 'src/config';
-import { checkFolder } from 'src/utils/checkFolder';
+import { resolvePublicCustomPageRequest } from 'src/utils/customPagePath';
 
 @ApiTags('c')
 @Controller('c')
@@ -34,23 +32,16 @@ export class PublicCustomPageController {
       res.send(cur.html);
       return;
     } else if (cur.type == 'folder') {
-      let rPath = req.url.replace('/c/', '');
-      const rPathArr = rPath.split('/');
-      const lastString = rPathArr[rPathArr.length - 1];
-      if (lastString == '') {
-        // 尝试读取 index.html
-        rPath = rPathArr.join('/') + `/index.html`;
+      const target = resolvePublicCustomPageRequest(req.url);
+      if (target.kind === 'redirect') {
+        res.redirect(302, target.location);
+        return;
       }
-      if (!lastString.includes('.')) {
-        // 两种情况： 无拓展名的文件/目录名
-        if (checkFolder(join(config.staticPath, 'customPage', rPath))) {
-          // 目录的话跳转。
-          res.redirect(302, req.url + '/');
-          return;
-        }
+      if (target.kind === 'missing') {
+        res.status(404);
+        throw new HttpException('未找到该页面！', 404);
       }
-      const absPath = join(config.staticPath, 'customPage', rPath);
-      res.sendFile(absPath);
+      res.sendFile(target.absPath);
       return;
     }
     res.status(404);
