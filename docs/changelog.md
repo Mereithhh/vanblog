@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 内置 Caddy「HTTPS 自动重定向」开启后可能仍走 HTTP：`setRedirect(true)` 原先 `POST` 追加 `listener_wrappers`（形状不对、重启会再套一层），成功日志还误写成「已关闭」。现改为 `PATCH`/`PUT` 整段替换为 `http_redirect`，写入后再读回确认；关闭则删除 wrappers（404 视为已关）。[#150](https://github.com/Mereithhh/vanblog/issues/150)
 - 外层 Nginx 反代未转发 `Host` 时，Waline 评论登录 / 管理后台 OAuth 会跳到 `localhost` 或 `0.0.0.0`。官方反代示例已补上 `proxy_set_header Host $host`（以及 `X-Forwarded-For`）。[#396](https://github.com/Mereithhh/vanblog/issues/396)
 - 源站对 `/admin` 和 `/api/admin/*`（含登录等后台 API）返回 `Cache-Control: private, no-store` 以及 `CDN-Cache-Control` / `Cloudflare-CDN-Cache-Control: no-store`，避免 Cloudflare「缓存全部」把后台 HTML/JSON 存进边缘。前台文章页和 `/_next/static` 不强制 no-store。仍建议页面规则绕过 `/admin*` 与 `/api/admin*`。[#140](https://github.com/Mereithhh/vanblog/issues/140)
 - 前台菜单栏（自定义菜单、分类子菜单、移动端侧栏）和分页会标出当前项：匹配当前路由的菜单链接以及当前页码带可见选中样式和 `aria-current="page"`，其他项不再看起来像选中。[#448](https://github.com/Mereithhh/vanblog/issues/448)
@@ -68,6 +69,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- FAQ / HTTPS：开启自动重定向后请用无痕窗口访问 `http://域名` 确认跳到 https；「查看 Caddy 配置」里 `srv1.listener_wrappers` 应含 `http_redirect`。[#150](https://github.com/Mereithhh/vanblog/issues/150)
 - 说明本项目现由 AI 全自动维护，合并与 `v*` / `doc*` 发版仍由作者完成
 - 反代 Nginx 示例补上 `Host $host`；部署 FAQ 说明未转发 Host 时 Waline 登录会跳到 localhost。[#396](https://github.com/Mereithhh/vanblog/issues/396)
 - FAQ / 反代补充：Cloudflare「缓存全部」时后台与 `/api/admin/*` 可能被边缘缓存；源站现已发送 no-store，页面规则仍建议绕过 `/admin*` 与 `/api/admin*`。[#140](https://github.com/Mereithhh/vanblog/issues/140)

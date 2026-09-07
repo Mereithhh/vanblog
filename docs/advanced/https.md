@@ -49,6 +49,8 @@ VanBlog 首次运行默认关闭 HTTPS，请通过 HTTP 协议访问。无需多
 
 这个配置将会保存到数据库，每次容器启动的时候都会初始化到 Caddy 中。
 
+开启后请用无痕窗口访问 `http://你的域名`，确认会跳到 `https://`。也可在后台点「查看 Caddy 配置」，`apps.http.servers.srv1.listener_wrappers` 应含 `{"wrapper":"http_redirect"}`。若仍是 http，说明重定向未写入，请看 Caddy 日志或重试保存。
+
 ::: note
 
 1. 开启后，不能通过 `http + ip` 访问站点
@@ -67,6 +69,8 @@ VanBlog 通过 Caddy 的 API 在运行时动态修改配置来开关 HTTPS 自�
 :::
 
 ::: tip 问题排查
+
+开启自动重定向后，用无痕窗口访问 `http://域名` 应跳到 https。若没有跳转，点「查看 Caddy 配置」确认 `srv1.listener_wrappers` 含 `http_redirect`（[#150](https://github.com/Mereithhh/vanblog/issues/150)）。
 
 如果你熟悉 Caddy ，或者想自己排查，可以点击 `查看日志` 或者 `查看配置` 按钮自行排查。
 

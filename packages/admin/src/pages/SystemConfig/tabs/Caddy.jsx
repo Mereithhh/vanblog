@@ -89,7 +89,11 @@ export default function (props) {
               第一次通过某域名 https
               访问时，如果没有证书会自动申请证书的。你也可以点击下面的按钮手动触发证书申请。
             </p>
-            <p>稳定后可打开 https 自动重定向功能，开启通过 http 访问将自动跳转至 https </p>
+            <p>
+              稳定后可打开 https 自动重定向功能，开启通过 http 访问将自动跳转至 https。开启后请用无痕窗口访问
+              http://你的域名 确认会跳到 https；也可点「查看 Caddy 配置」，srv1 的
+              listener_wrappers 应含 http_redirect。
+            </p>
             <p>如果你用了 80 端口反代，请不要开启 https 自动重定向！否则你的反代可能会失效。</p>
             <p>
               如果不小心开启了此选项后关不掉，可以参考：
