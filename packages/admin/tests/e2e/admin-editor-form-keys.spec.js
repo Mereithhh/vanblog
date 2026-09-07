@@ -18,29 +18,32 @@ async function openArticleInfoForm(page) {
   return dialog;
 }
 
-async function assertArrowsNotPreventDefaulted(page, input) {
-  await page.evaluate(() => {
+async function assertArrowsNotPreventDefaulted(input) {
+  await input.evaluate((el) => {
     window.__vanblogArrowKeyLog = [];
-    if (window.__vanblogArrowKeyListener) {
-      window.removeEventListener('keydown', window.__vanblogArrowKeyListener);
+    if (el.__vanblogArrowKeyListener) {
+      el.removeEventListener('keydown', el.__vanblogArrowKeyListener, true);
     }
-    window.__vanblogArrowKeyListener = (e) => {
-      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    el.__vanblogArrowKeyListener = (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') {
+        return;
+      }
+      queueMicrotask(() => {
         window.__vanblogArrowKeyLog.push({
           key: e.key,
           defaultPrevented: e.defaultPrevented,
           tag: e.target && e.target.tagName,
           id: e.target && e.target.id,
         });
-      }
+      });
     };
-    window.addEventListener('keydown', window.__vanblogArrowKeyListener);
+    el.addEventListener('keydown', el.__vanblogArrowKeyListener, true);
   });
 
   await input.press('ArrowLeft');
   await input.press('ArrowRight');
 
-  const log = await page.evaluate(() => window.__vanblogArrowKeyLog || []);
+  const log = await input.evaluate(() => window.__vanblogArrowKeyLog || []);
   const left = log.filter((row) => row.key === 'ArrowLeft');
   const right = log.filter((row) => row.key === 'ArrowRight');
   expect(left.length).toBeGreaterThan(0);
@@ -57,7 +60,7 @@ async function assertArrowsMoveCaret(page, input, typed) {
     el.setSelectionRange(value.length, value.length);
   }, typed);
 
-  await assertArrowsNotPreventDefaulted(page, input);
+  await assertArrowsNotPreventDefaulted(input);
 
   await input.evaluate((el, value) => {
     el.focus();
