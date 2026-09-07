@@ -6,6 +6,12 @@ import {
   resolveMermaidApi,
   svgFromRenderResult,
 } from './mermaidInterop';
+import {
+  applyMermaidThemeClass,
+  applyMermaidThemeToTree,
+  detectPaintIsDark,
+  mermaidInitConfig,
+} from './mermaidTheme';
 
 /**
  * Mermaid 10's `render()` appends temporary measurement nodes (`#d{id}`) to
@@ -56,9 +62,13 @@ export function cleanupMermaidArtifacts(root: ParentNode = document): number {
   return removed;
 }
 
-export function hideMermaidSourceAndMountOverlay(pre: HTMLElement): HTMLElement {
+export function hideMermaidSourceAndMountOverlay(
+  pre: HTMLElement,
+  isDark: boolean = detectPaintIsDark(pre),
+): HTMLElement {
   const container = document.createElement('div');
   container.className = 'bytemd-mermaid';
+  applyMermaidThemeClass(container, isDark);
   container.style.lineHeight = 'initial';
   pre.setAttribute('data-vanblog-mermaid-source', 'true');
   pre.style.display = 'none';
@@ -93,7 +103,7 @@ export async function paintMermaidPreview(
       continue;
     }
     const source = code.textContent || '';
-    const container = hideMermaidSourceAndMountOverlay(pre);
+    const container = hideMermaidSourceAndMountOverlay(pre, detectPaintIsDark(markdownBody));
     try {
       const rendered = await mermaid.render(`vb-admin-mermaid-${Date.now()}-${i}`, source);
       const svg = svgFromRenderResult(rendered);
@@ -160,6 +170,7 @@ function loadMermaid(config: Record<string, unknown> = {}): Promise<MermaidRende
       mermaid.initialize?.({
         startOnLoad: false,
         suppressErrorRendering: true,
+        ...mermaidInitConfig(detectPaintIsDark()),
         ...config,
       });
       return mermaid;
@@ -192,7 +203,15 @@ export function mermaidForEditor(
           if (cancelled) {
             return;
           }
+          const isDark = detectPaintIsDark(markdownBody);
+          mermaid.initialize?.({
+            startOnLoad: false,
+            suppressErrorRendering: true,
+            ...mermaidInitConfig(isDark),
+            ...mermaidConfig,
+          });
           await paintMermaidPreview(markdownBody, mermaid, () => cancelled);
+          applyMermaidThemeToTree(markdownBody, isDark);
         } catch {
           // Keep the source fence. Never let mermaid interop brick the editor.
         }

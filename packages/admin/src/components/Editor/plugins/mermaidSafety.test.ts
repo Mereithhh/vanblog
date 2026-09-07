@@ -73,7 +73,8 @@ describe('mermaidSafety', () => {
     expect(pre.style.display).toBe('none');
     expect(pre.getAttribute('data-vanblog-mermaid-source')).toBe('true');
     expect(pre.nextElementSibling).toBe(overlay);
-    expect(overlay.className).toBe('bytemd-mermaid');
+    expect(overlay.classList.contains('bytemd-mermaid')).toBe(true);
+    expect(overlay.getAttribute('data-mermaid-theme')).toMatch(/^(dark|default)$/);
 
     restoreMermaidPreview(markdownBody);
 

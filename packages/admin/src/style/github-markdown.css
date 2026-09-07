@@ -1089,12 +1089,24 @@
   list-style: decimal;
 }
 
-.dark .language-mermaid {
+.dark .language-mermaid,
+.dark .bytemd-mermaid,
+.dark .mermaid,
+.dark .mermaid-theme-dark {
   background-color: #26282c;
 }
 
-.language-mermaid {
+.language-mermaid,
+.bytemd-mermaid,
+.mermaid,
+.mermaid-theme-light {
   background-color: white;
+}
+
+.dark .bytemd-mermaid,
+.dark .mermaid,
+.dark .mermaid-theme-dark {
+  color: #e6edf3;
 }
 
 body .markdown-body pre {

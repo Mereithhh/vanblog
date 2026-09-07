@@ -4,6 +4,12 @@ icon: wrench
 order: 2
 ---
 
+## 前台夜间模式流程图看不清
+
+夜间模式阅读文章时，mermaid / 流程图以前按 mermaid 默认浅色主题渲染，浅色节点和发灰的线条贴在深色正文底上，对比很差。已修复（[#404](https://github.com/Mereithhh/vanblog/issues/404)）：站点或后台预览为暗色时 mermaid 使用 `theme: 'dark'`，并提高文字/描边对比度；白天模式仍是原来的浅色图表。请升级到包含该修复的版本。
+
+这次只处理了 [#404](https://github.com/Mereithhh/vanblog/issues/404) 里的流程图暗色对比度。代码块行号仍是开放项。围栏代码块高亮对比度见 [前台代码块对比度不足](#前台代码块对比度不足)。主题切换本身见 [黑暗模式与响应式](../advanced/darkmode.md)。
+
 ## 前台代码块对比度不足
 
 夜间模式阅读文章时，围栏代码块里部分高亮（常见是偏暗红的路径/正则、发暗的文档注释）会贴在深色底上，看起来像糊成一团。已只调整前台 `code-dark.css` 的 highlight 颜色，正文类 token（默认文字、关键字、字符串、注释等）相对代码块背景达到 WCAG AA（≥ 4.5:1），并保持接近 VS Code 暗色主题的配色（[#175](https://github.com/Mereithhh/vanblog/issues/175)）。请升级到包含该修复的版本。

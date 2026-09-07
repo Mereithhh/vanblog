@@ -78,7 +78,7 @@ export default function EditorComponent(props: {
       customCodeBlock(),
       LinkTarget(),
     ];
-  }, []);
+  }, [themeClass]);
 
   return (
     <div style={{ height: '100%' }} className={themeClass}>
