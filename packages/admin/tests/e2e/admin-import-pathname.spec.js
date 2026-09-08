@@ -71,11 +71,15 @@ async function openArticleAdmin(page, created) {
   await loginAsAdmin(page);
   await mockArticleImportApis(page, created);
   await page.goto('/admin/article');
-  await expect(page.getByRole('button', { name: '导入' })).toBeVisible({ timeout: 30_000 });
+  await expect(page.getByRole('heading', { name: '文章管理' }).or(page.getByText('文章管理').first())).toBeVisible({
+    timeout: 30_000,
+  });
+  await expect(page.getByRole('button', { name: /导\s*入/ }).last()).toBeVisible();
 }
 
 async function uploadMarkdown(page, name, content) {
-  const fileInput = page.locator('input[type="file"][accept=".md"]').first();
+  const toolbar = page.locator('.ant-pro-table-list-toolbar');
+  const fileInput = toolbar.locator('input[type="file"][accept=".md"]').first();
   await fileInput.setInputFiles({
     name,
     mimeType: 'text/markdown',
