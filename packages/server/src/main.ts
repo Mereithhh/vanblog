@@ -5,6 +5,7 @@ import { MetaProvider } from './provider/meta/meta.provider';
 
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { config as globalConfig } from './config/index';
+import { formatListenTarget, resolveListenAddress } from './utils/listenAddress';
 import { checkOrCreate } from './utils/checkFolder';
 import * as path from 'path';
 import { ISRProvider } from './provider/isr/isr.provider';
@@ -56,7 +57,12 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
-  await app.listen(3000);
+  const listen = resolveListenAddress(globalConfig.listenHost);
+  if (listen.host) {
+    await app.listen(listen.port, listen.host);
+  } else {
+    await app.listen(listen.port);
+  }
 
   const websiteProvider = app.get(WebsiteProvider);
 
@@ -95,7 +101,8 @@ async function bootstrap() {
     });
   }
   setTimeout(() => {
-    console.log('应用已启动，端口: 3000');
+    console.log(`应用已启动，端口: ${listen.port}`);
+    console.log(`监听地址: ${formatListenTarget(listen)}`);
     console.log('API 端点地址: http://<domain>/api');
     console.log('swagger 地址: http://<domain>/swagger');
     console.log('项目主页: https://vanblog.mereith.com');

@@ -8,6 +8,7 @@ export interface Config {
   walineDB: string;
   demo: boolean | string;
   log: string;
+  listenHost: string;
 }
 
 export const loadMongoUrl = () => {
@@ -36,4 +37,6 @@ export const config: Config = {
   log: loadConfig('log', '/var/log'),
   codeRunnerPath: loadConfig('codeRunner.path', '/app/codeRunner'),
   pluginRunnerPath: loadConfig('pluginRunner.path', '/app/pluginRunner'),
+  // Empty keeps app.listen(port) without a hostname (all interfaces).
+  listenHost: loadConfig('listen.host', ''),
 };

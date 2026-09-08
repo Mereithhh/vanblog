@@ -12,6 +12,8 @@ services:
       EMAIL: 'someone@mereith.com'
       # 前台 /_next/static 的 CDN 前缀，未配置 CDN 时不要设置
       # VAN_BLOG_CDN_URL: 'https://cdn.example.com'
+      # 本机反代时把 API 绑到回环地址；不设置则监听所有网卡（与现在一致）
+      # VAN_BLOG_LISTEN_HOST: '127.0.0.1'
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static

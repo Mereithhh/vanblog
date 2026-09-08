@@ -43,6 +43,12 @@ proxy_set_header Host $host;
 
 只用 VanBlog 内置 Caddy、没有再套一层反代时，一般不需要改这个。
 
+## 本机反代后如何不对外暴露 API 端口
+
+默认 Nest 监听所有网卡（端口 `3000`）。本机 Caddy/Nginx 反代时，可设置 `VAN_BLOG_LISTEN_HOST=127.0.0.1`（或 `config.yaml` 的 `listen.host`），只接受来自回环地址的连接（[#488](https://github.com/Mereithhh/vanblog/issues/488)）。不设置则与升级前相同。
+
+官方镜像请不用映射 `3000`，外层反代走 80/443。说明与示例见 [反代 · 本机反代时只监听回环地址](../reference/reverse-proxy.md#本机反代时只监听回环地址) 和 [环境变量](../reference/env.md)。
+
 ## Cloudflare 缓存了后台或后台 API
 
 Cloudflare（或同类 CDN）如果用「缓存全部」覆盖 `/*`，即使另有 `/admin*` 绕过规则，**`/api/admin/*` 也不会被那条规则匹配**，登录和后台 JSON 仍可能被边缘缓存（[#140](https://github.com/Mereithhh/vanblog/issues/140)）。只改页面规则不够：旧版本源站没有 `Cache-Control`。

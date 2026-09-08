@@ -146,6 +146,8 @@ iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页�
 
 外层 Nginx 反代后，Waline 评论登录或管理后台 OAuth 可能跳到 `localhost` / `0.0.0.0` 而不是站点域名（[#396](https://github.com/Mereithhh/vanblog/issues/396)）。反代需要转发 `Host`：`proxy_set_header Host $host;`。完整示例见 [反代](../reference/reverse-proxy.md)，说明见 [部署常见问题](./deploy.md#反代后-waline-登录跳到-localhost)。内置 Caddy、没有再套一层反代时一般不用改。
 
+本机反代时若希望 API（`3000`）不监听公网网卡，可设 `VAN_BLOG_LISTEN_HOST=127.0.0.1`（[#488](https://github.com/Mereithhh/vanblog/issues/488)），见 [部署常见问题](./deploy.md#本机反代后如何不对外暴露-api-端口)。
+
 ## 后台设置了 Waline 自定义变量但不生效
 
 在「评论设置」里填了 `imageUploader: false`（关掉评论图片上传）或 `IPQPS`（同一 IP 发言频率）后，旧版本不会把客户端选项传给前台评论组件，数字环境变量也可能没按字符串交给内嵌 Waline。已修复（[#139](https://github.com/Mereithhh/vanblog/issues/139)）。请升级到包含该修复的版本后重新保存一次评论设置（会重启内嵌 Waline）。
