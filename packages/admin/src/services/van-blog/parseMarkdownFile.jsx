@@ -1,4 +1,5 @@
 import { getAllCategories } from '@/services/van-blog/api';
+import { pathnameFromFrontMatter } from '@/utils/pathnameField';
 import { message, Modal } from 'antd';
 import fm from 'front-matter';
 
@@ -61,6 +62,7 @@ export const parseMarkdownFile = async (file, allowNotExistCategory) => {
   const password = attributes?.password || undefined;
   const privateAttr = password ? true : false;
   const hidden = attributes?.hidden || attributes?.hide || false;
+  const pathname = pathnameFromFrontMatter(attributes);
   const vals = {
     title,
     top,
@@ -73,6 +75,9 @@ export const parseMarkdownFile = async (file, allowNotExistCategory) => {
     content: body,
     updatedAt,
   };
+  if (pathname) {
+    vals.pathname = pathname;
+  }
   return vals;
 };
 
@@ -87,6 +92,7 @@ export const parseObjToMarkdown = (obj) => {
     'createdAt',
     'hidden',
     'password',
+    'pathname',
   ]) {
     if (Object.keys(obj).includes(key)) {
       if (['updatedAt', 'createdAt'].includes(key)) {

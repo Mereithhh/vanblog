@@ -4,6 +4,23 @@ icon: wrench
 order: 2
 ---
 
+## 从 Hugo 迁移固定链接
+
+Hugo 里常用 `permalinks.post = "/post/:slug"`。VanBlog **没有**全局固定链接模板，而是按篇设置「自定义路径名 / slug」（字段名 `pathname`）。
+
+默认地址是 `/post/<数字ID>`。把自定义路径名填成旧文章的 slug 后，发布地址就是 `/post/<slug>`，搜索引擎已收录的旧链接可以继续打开。数字 ID 地址（`/post/123`）始终可用，两种地址指向同一篇。
+
+在这些地方填写：
+
+- 新建文章
+- 导入 Markdown 的确认表单（Front Matter 的 `slug` / `pathname`，以及形如 `/post/my-slug` 的 `url`，会自动填入）
+- 发布草稿
+- 文章表格「操作 → 修改信息」，或编辑器右上角「修改信息」
+
+没有 `slug` 字段、只靠文件名生成 URL 的文章，导入后请手动补上自定义路径名。VanBlog 不会解析 `/post/:year/:month/:title` 这类站点级规则。
+
+见 [文章管理](../features/article.md) 与 [迁移助手](../advanced/migrate.md)。
+
 ## 如何修改首页每页展示多少篇文章
 
 后台进入 **站点管理 / 系统设置 / 站点配置**，打开 **布局设置**，找到「每页文章数」。默认 5 篇（和升级前硬编码的数量一样），可填 1–50。保存后前台首页和 `/page/n` 会按新数量分页；分类、标签、时间线仍是完整列表，不是按页切开。改完后会触发前台增量渲染。见 [站点配置](../reference/config.md)。
