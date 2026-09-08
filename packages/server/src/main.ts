@@ -15,6 +15,7 @@ import { UserProvider } from './provider/user/user.provider';
 import { SettingProvider } from './provider/setting/setting.provider';
 import { WebsiteProvider } from './provider/website/website.provider';
 import { initJwt } from './utils/initJwt';
+import { DEFAULT_SERVER_PORT, getListenTarget } from './utils/listenHost';
 
 async function bootstrap() {
   const jwtSecret = await initJwt();
@@ -56,7 +57,12 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
-  await app.listen(3000);
+  const { port, host } = getListenTarget(DEFAULT_SERVER_PORT, globalConfig.serverHost);
+  if (host) {
+    await app.listen(port, host);
+  } else {
+    await app.listen(port);
+  }
 
   const websiteProvider = app.get(WebsiteProvider);
 
@@ -95,7 +101,7 @@ async function bootstrap() {
     });
   }
   setTimeout(() => {
-    console.log('应用已启动，端口: 3000');
+    console.log(host ? `应用已启动，端口: ${port}，监听: ${host}` : `应用已启动，端口: ${port}`);
     console.log('API 端点地址: http://<domain>/api');
     console.log('swagger 地址: http://<domain>/swagger');
     console.log('项目主页: https://vanblog.mereith.com');

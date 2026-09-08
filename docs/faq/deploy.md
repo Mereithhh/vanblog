@@ -27,6 +27,47 @@ environment:
 
 原则上 CDN 只缓存 `/_next/static` 这个目录就够了。设置后需要重启 VanBlog 容器，HTML 里的脚本/样式会变成 `https://cdn.example.com/_next/static/...`。
 
+## 如何让 VanBlog 只接受本机反代的流量
+
+同机 Nginx / Caddy 反代时，可以让 VanBlog 只在回环上听，外网直接打到映射端口会被拒绝（[#488](https://github.com/Mereithhh/vanblog/issues/488)）。
+
+**Nest API（容器/进程内的 3000）**：编排里加环境变量后重启：
+
+```yaml
+environment:
+  VAN_BLOG_SERVER_HOST: "127.0.0.1"
+```
+
+未设置时与升级前一样监听所有网卡，现有 Docker 用户不用改。
+
+**宿主机映射的 80 / 443**：把编排的端口改成只绑本机，例如 `- "127.0.0.1:80:80"`，再让本机反代 `proxy_pass` / `reverse_proxy` 到 `127.0.0.1:<端口>`。只改 `VAN_BLOG_SERVER_HOST` 不会收紧宿主机上的 `80:80`。
+
+Caddy 示例（与 [反代](../reference/reverse-proxy.md) 一致）：
+
+```conf
+example.com {
+  tls admin@example.com
+  reverse_proxy 127.0.0.1:<你映射的端口号> {
+    trusted_proxies private_ranges
+  }
+}
+```
+
+Nginx 最小片段（必须转发 `Host`）：
+
+```nginx
+location / {
+  proxy_pass http://127.0.0.1:<PORT>;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  proxy_set_header Upgrade $http_upgrade;
+}
+```
+
+完整 Http / Https 配置见 [反代](../reference/reverse-proxy.md#仅接受来自本机反代的流量)。只用内置 Caddy、不再套一层时，一般不必绑 `127.0.0.1`。
+
 ## 反代后 Waline 登录跳到 localhost
 
 在外层 Nginx 反代后面登录评论（GitHub 等 OAuth）或打开 Waline 管理后台时，浏览器可能跳到 `localhost` 或 `0.0.0.0`，而不是站点域名（[#396](https://github.com/Mereithhh/vanblog/issues/396)）。

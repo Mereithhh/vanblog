@@ -36,6 +36,8 @@ services:
       TZ: 'Asia/Shanghai'
       # 邮箱地址，用于自动申请 https 证书
       EMAIL: 'someone@mereith.com'
+      # 本机反代时仅监听回环。默认留空（所有网卡）
+      # VAN_BLOG_SERVER_HOST: '127.0.0.1'
     volumes:
       # 图床文件的存放地址，按需修改。
       - ${PWD}/data/static:/app/static

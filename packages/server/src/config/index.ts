@@ -8,6 +8,8 @@ export interface Config {
   walineDB: string;
   demo: boolean | string;
   log: string;
+  /** Nest listen host. Empty = all interfaces (same as `app.listen(3000)`). */
+  serverHost: string;
 }
 
 export const loadMongoUrl = () => {
@@ -36,4 +38,5 @@ export const config: Config = {
   log: loadConfig('log', '/var/log'),
   codeRunnerPath: loadConfig('codeRunner.path', '/app/codeRunner'),
   pluginRunnerPath: loadConfig('pluginRunner.path', '/app/pluginRunner'),
+  serverHost: loadConfig('server.host', ''),
 };

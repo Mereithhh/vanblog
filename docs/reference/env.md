@@ -11,6 +11,7 @@ VanBlog 启动时，会读取一些环境变量以配置自身。
 | `VAN_BLOG_DATABASE_URL` | 否 | mongoDB URL。内嵌 Waline 会复用该连接串的主机与 `authSource`。Atlas 等 `*.mongodb.net` 主机在 URL 未写 `authSource` 时不再强制 `authSource=admin`。 | `mongodb://mongo:27017/vanBlog?authSource=admin` |
 | `VAN_BLOG_CDN_URL` | 否 | 前台 Next.js 公共资源（`/_next/static` 下的 JS/CSS）的 CDN 前缀。**不是**文章配图或本地图床 `/static` 的地址。镜像构建时此项为空，容器启动时读取并生效。未配置 CDN 前请不要设置。 | `""` |
 | `VAN_BLOG_WALINE_DB` | 否 | 内嵌评论系统的数据库名，默认为 waline | `""` |
+| `VAN_BLOG_SERVER_HOST` | 否 | Nest API（端口 3000）的监听地址，对应配置项 `server.host`。留空则与升级前一样监听所有网卡。本机 Nginx / Caddy 反代时可设为 `127.0.0.1`，只接受回环连接。官方镜像里内置 Caddy 本来就反代 `127.0.0.1:3000`，设此项不影响容器内反代。若要限制的是宿主机映射出来的 80/443，请改编排端口绑定，见 [反代](./reverse-proxy.md#仅接受来自本机反代的流量)。 | `""` |
 | `EMAIL` | 否 | 用于自动申请 https 证书的邮箱 | `""` |
 
 ## 注意事项
