@@ -61,6 +61,12 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
   支持 Obsidian / GitHub 风格的脚注：正文写 `[^1]`，文末写 `[^1]: 说明`。前台点击脚注编号会滚到文末对应条目，条目里的返回链接会回到原文，不会新开一页。脚注区上方有分隔线。普通外链仍在新标签页打开。
 
+- 在 Markdown 里写 HTML
+
+  文章正文可以直接嵌入常见 HTML，前台和后台预览都会渲染，例如 `<u>下划线</u>`、`<font color="red">颜色</font>`、`<center>`、带 `style` 的 `span`/`div`，以及 Bilibili 一类的 `<iframe>`。Markdown 没有下划线语法时用 `<u>` 即可。
+
+  `<script>`、`onclick` / `onerror` 等事件属性、以及 `javascript:` 链接会被消毒去掉，避免文章正文变成脚本入口。整站自定义脚本请用 [定制化](../advanced/customizing.md)，不要写在文章里。自定义页面的完整 HTML 仍走 [自定义页面](../advanced/custom-page.md)，与正文 sanitizer 无关。
+
 - 一键插入 `more` 标记
 
   `more` 标记是下面代码的简写，会被用来分割文章摘要。

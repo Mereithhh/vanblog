@@ -183,6 +183,11 @@
   font-style: italic;
 }
 
+/* Embedded <u> in Markdown (#490); keep underline if a reset drops it. */
+.markdown-body u {
+  text-decoration: underline;
+}
+
 .markdown-body h1 {
   margin: 0.67em 0;
   font-weight: 600;

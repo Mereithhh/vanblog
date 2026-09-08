@@ -114,6 +114,8 @@ order: 1
 
 在文章页面的表格点击编辑按钮，即可跳转到编辑器编辑文章。
 
+正文支持 CommonMark / GFM，也可以直接嵌入常见 HTML（如 `<u>`、`<font>`、`<center>`、带 `style` 的标签、`<iframe>`）。前台与后台预览同一套管线；`<script>` 和事件处理属性会被去掉，站点级 JS 请用 [定制化](../advanced/customizing.md)。详见 [编辑器 · 在 Markdown 里写 HTML](./editor.md#在-markdown-里写-html)。
+
 ![文章编辑](https://pic.mereith.com/img/577da489715c94c183247ba63887aac5.clipboard-2022-08-30.png)
 
 如需修改文章信息，点击 `操作/修改信息` 按钮即可。
