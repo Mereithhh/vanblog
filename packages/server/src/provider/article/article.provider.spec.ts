@@ -104,6 +104,33 @@ function createPagedArticleModel() {
   };
 }
 
+describe('ArticleProvider.create pathname (#383)', () => {
+  it('persists a custom pathname the same way create-article does', async () => {
+    const saved: any[] = [];
+    const Model: any = function ArticleModel(this: any, dto: any) {
+      Object.assign(this, dto);
+      this.save = async () => {
+        saved.push(this);
+        return this;
+      };
+    };
+    const provider = createProvider(Model);
+    jest.spyOn(provider, 'getNewId').mockResolvedValue(42);
+
+    const created = await provider.create({
+      title: 'Hexo 迁移',
+      category: '测试',
+      pathname: 'cb933e30',
+      content: 'from archives/cb933e30.html',
+    } as any);
+
+    expect(created.id).toBe(42);
+    expect(created.pathname).toBe('cb933e30');
+    expect(saved).toHaveLength(1);
+    expect(saved[0].pathname).toBe('cb933e30');
+  });
+});
+
 describe('ArticleProvider.getByOption pagination (#400)', () => {
   it('never calls Mongo skip with a negative or non-finite value', async () => {
     const hostile = [

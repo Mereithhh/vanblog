@@ -105,8 +105,10 @@ order: 1
 | hidden     | 是否隐藏文章            | 默认不隐藏                                        |
 | password   | 是否加密/密码           | 如果有，则文章自动为加密，且该字段为密码          |
 | top        | 置顶优先级              | 默认为 0                                          |
+| pathname   | 自定义路径名            | 与新建文章相同；发布后地址为 `/post/[自定义路径名]` |
+| abbrlink   | 自定义路径名            | hexo-abbrlink / hexo-addlink。若未写 `pathname`，用此值预填，便于把 `archives/cb933e30.html` 迁成 `/post/cb933e30` |
 
-选择文件后，会弹出确认窗口，您可以在这里继续编辑或修改信息：
+选择文件后，会弹出确认窗口（含自定义路径名，可改预填值），您可以在这里继续编辑或修改信息：
 
 ![信息确认](https://pic.mereith.com/img/1f0d74ef0ac87dd8f4b6e3e65b84bf84.clipboard-2022-08-29.png)
 

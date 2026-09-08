@@ -57,3 +57,35 @@ describe('ArticleController.getByOption (#400)', () => {
     expect((option.page - 1) * option.pageSize).toBe(0);
   });
 });
+
+describe('ArticleController.create pathname (#383)', () => {
+  it('forwards the same optional pathname as create-article', async () => {
+    const articleProvider = {
+      create: jest.fn().mockResolvedValue({ id: 42, pathname: 'cb933e30' }),
+    };
+    const isrProvider = { activeAll: jest.fn() };
+    const pipelineProvider = { dispatchEvent: jest.fn().mockResolvedValue([]) };
+    const controller = new ArticleController(
+      articleProvider as any,
+      isrProvider as any,
+      pipelineProvider as any,
+    );
+
+    const result = await controller.create({ user: { nickname: 'admin' } }, {
+      title: 'Hexo 迁移',
+      category: '测试',
+      pathname: 'cb933e30',
+      content: 'body',
+    } as any);
+
+    expect(articleProvider.create).toHaveBeenCalledWith(
+      expect.objectContaining({
+        title: 'Hexo 迁移',
+        category: '测试',
+        pathname: 'cb933e30',
+        author: 'admin',
+      }),
+    );
+    expect(result).toEqual({ statusCode: 200, data: { id: 42, pathname: 'cb933e30' } });
+  });
+});
