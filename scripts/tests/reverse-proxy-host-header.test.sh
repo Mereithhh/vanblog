@@ -206,6 +206,28 @@ else
   fail "deploy FAQ links to reverse-proxy doc"
 fi
 
+ENV_DOC="${ROOT}/docs/reference/env.md"
+if grep -Eq -- 'VAN_BLOG_SERVER_HOST' "${ENV_DOC}" \
+  && grep -Eq -- '127\.0\.0\.1' "${ENV_DOC}"; then
+  pass "env.md documents VAN_BLOG_SERVER_HOST for loopback bind"
+else
+  fail "env.md documents VAN_BLOG_SERVER_HOST for loopback bind"
+fi
+
+if grep -Eq -- 'VAN_BLOG_SERVER_HOST' "${REVERSE_PROXY}" \
+  && grep -Eq -- '127\.0\.0\.1:80:80' "${REVERSE_PROXY}"; then
+  pass "reverse-proxy.md documents listen host and compose bind"
+else
+  fail "reverse-proxy.md documents listen host and compose bind"
+fi
+
+if grep -Eq -- 'VAN_BLOG_SERVER_HOST' "${DEPLOY_FAQ}" \
+  && grep -Eq -- '127\.0\.0\.1:80:80' "${DEPLOY_FAQ}"; then
+  pass "deploy FAQ documents listen host and compose bind"
+else
+  fail "deploy FAQ documents listen host and compose bind"
+fi
+
 echo
 echo "passed=${PASS} failed=${FAIL}"
 if [[ "${FAIL}" -ne 0 ]]; then

@@ -8,7 +8,7 @@ yarn
 yarn start:dev
 ```
 
-端口号为: `3000`
+端口号为: `3000`（默认监听所有网卡）。本机反代时可设环境变量 `VAN_BLOG_SERVER_HOST=127.0.0.1`，或在 `config.yaml` 写 `server.host: 127.0.0.1`。
 
 `swagger` 路径为: `/swagger`
 
@@ -20,5 +20,8 @@ database:
 # 配置静态图床的文件夹
 static:
   path: /code/github/van-blog/staticFolder
+# 本机反代时只监听回环地址（可选，默认所有网卡）
+# server:
+#   host: 127.0.0.1
 
 ```
