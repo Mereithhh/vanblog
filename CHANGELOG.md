@@ -23,6 +23,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 手机端顶栏网站名改为相对整个页面宽度居中，不再只在汉堡菜单右侧的剩余栏里居中（短站名时错位更明显）。电脑端左侧网站名 / logo 布局不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 前台分页在第一页时「上一页」、最后一页时「下一页」不再可点：仍显示但禁用（无链接、无悬停高亮），不能翻出范围。页码链接、当前页选中样式和「每页文章数」不变。[#331](https://github.com/Mereithhh/vanblog/issues/331)
 - 加密文章密码框提示误写成「文章已解锁」，现改为「文章已加密，请输入密码后查看：」。Related to [#414](https://github.com/Mereithhh/vanblog/pull/414)
 - 多文件自定义页面访问带查询参数的目录（如 `/c/uptime/?x=1`）不再把 `?x=1` 当成文件名；缺失的 `index.html` 返回 404 而不是 `sendFile` 失败。[#337](https://github.com/Mereithhh/vanblog/issues/337)
@@ -87,6 +88,7 @@
 
 ### ✏️ Documentation | 文档
 
+- FAQ / 站点配置：说明手机端顶栏网站名相对整页宽度居中，电脑端左侧网站名 / logo 不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 文章 / FAQ：说明可在文章管理一级表格直接开关「是否隐藏」。`docs/features/article.md`、`docs/faq/usage.md` [#268](https://github.com/Mereithhh/vanblog/issues/268)
 - FAQ / 黑暗模式：说明前台分页在第一页 / 最后一页会禁用上一页 / 下一页（仍显示、不可跳转）。`docs/faq/usage.md`、`docs/advanced/darkmode.md` [#331](https://github.com/Mereithhh/vanblog/issues/331)
 - 编辑器 / FAQ：说明手机后台编辑可用精简工具栏（标题、加粗、链接、图片、列表、代码、引用），电脑端工具栏不变。[#504](https://github.com/Mereithhh/vanblog/issues/504)

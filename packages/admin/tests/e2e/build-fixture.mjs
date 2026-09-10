@@ -2,6 +2,7 @@ import { cp, mkdir } from 'node:fs/promises';
 import { spawn } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import esbuild from 'esbuild';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const fixtures = path.join(here, 'fixtures');
@@ -72,6 +73,30 @@ await bundle(path.join(fixtures, 'page-nav-app.tsx'), path.join(outdir, 'page-na
   `--alias:next/router=${path.join(fixtures, 'next-router.ts')}`,
   '--jsx=automatic',
 ]);
+await esbuild.build({
+  entryPoints: [path.join(fixtures, 'nav-bar-app.tsx')],
+  outfile: path.join(outdir, 'nav-bar.js'),
+  bundle: true,
+  format: 'iife',
+  platform: 'browser',
+  jsx: 'automatic',
+  alias: {
+    react,
+    'react-dom': reactDom,
+    'next/link': path.join(fixtures, 'next-link.tsx'),
+    'next/router': path.join(fixtures, 'nav-router.ts'),
+    'headroom.js': path.join(fixtures, 'headroom-stub.js'),
+  },
+  plugins: [
+    {
+      name: 'stub-search-card',
+      setup(build) {
+        const stub = path.join(fixtures, 'search-card-stub.tsx');
+        build.onResolve({ filter: /SearchCard$/ }, () => ({ path: stub }));
+      },
+    },
+  ],
+});
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
 await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));
@@ -86,6 +111,11 @@ await cp(
 );
 await cp(path.join(fixtures, 'social-card.html'), path.join(outdir, 'social-card.html'));
 await cp(path.join(fixtures, 'page-nav.html'), path.join(outdir, 'page-nav.html'));
+await cp(path.join(fixtures, 'nav-bar.html'), path.join(outdir, 'nav-bar.html'));
+await cp(
+  path.resolve(adminRoot, '../website/components/NavBar/siteNameLayout.css'),
+  path.join(outdir, 'nav-bar-layout.css'),
+);
 await cp(
   path.resolve(adminRoot, '../website/styles/github-markdown.css'),
   path.join(outdir, 'github-markdown.css'),

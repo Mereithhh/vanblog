@@ -1,0 +1,35 @@
+/* Mobile site name: center on the full header/viewport, not the leftover
+   column beside the hamburger (#262). Desktop title stays in normal flow. */
+.nav-bar-row {
+  position: relative;
+}
+.nav-bar-leading,
+.nav-bar-row .nav-action {
+  position: relative;
+  z-index: 2;
+}
+.nav-site-name-mobile {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 1;
+  max-width: calc(100% - 8.5rem);
+}
+.nav-site-name-mobile a {
+  pointer-events: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+@media (min-width: 768px) {
+  .nav-site-name-mobile {
+    display: none;
+  }
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NavBar mobile site name e2e</title>
+    <link rel="stylesheet" href="./nav-bar-layout.css" />
+    <style>
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, sans-serif;
+      }
+      .flex {
+        display: flex;
+      }
+      .items-center {
+        align-items: center;
+      }
+      .w-full {
+        width: 100%;
+      }
+      .h-full {
+        height: 100%;
+      }
+      .h-14 {
+        height: 3.5rem;
+      }
+      .flex-grow {
+        flex-grow: 1;
+      }
+      .justify-between {
+        justify-content: space-between;
+      }
+      .ml-auto {
+        margin-left: auto;
+      }
+      .mx-4 {
+        margin-left: 1rem;
+        margin-right: 1rem;
+      }
+      .mr-4 {
+        margin-right: 1rem;
+      }
+      .mr-0 {
+        margin-right: 0;
+      }
+      .ml-4 {
+        margin-left: 1rem;
+      }
+      .hidden {
+        display: none;
+      }
+      .block {
+        display: block;
+      }
+      .bg-white {
+        background: #fff;
+      }
+      .sticky {
+        position: sticky;
+      }
+      .top-0 {
+        top: 0;
+      }
+      .border-b {
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+      }
+      .border-gray-200 {
+        border-color: #e5e7eb;
+      }
+      .text-lg {
+        font-size: 1.125rem;
+      }
+      .font-medium {
+        font-weight: 500;
+      }
+      .text-gray-800 {
+        color: #1f2937;
+      }
+      .fill-gray-600 {
+        fill: #4b5563;
+      }
+      .cursor-pointer {
+        cursor: pointer;
+      }
+      .select-none {
+        user-select: none;
+      }
+      @media (min-width: 640px) {
+        .sm\:mr-2 {
+          margin-right: 0.5rem;
+        }
+        .sm\:ml-2 {
+          margin-left: 0.5rem;
+        }
+        .sm\:flex {
+          display: flex;
+        }
+      }
+      @media (min-width: 768px) {
+        .md\:hidden {
+          display: none;
+        }
+        .md\:block {
+          display: block;
+        }
+        .md\:flex {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./nav-bar.js"></script>
+  </body>
+</html>
