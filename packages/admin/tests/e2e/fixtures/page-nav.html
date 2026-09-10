@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PageNav edge disable e2e</title>
+    <title>PageNav edges and jump-to-page e2e</title>
     <style>
       body {
         font-family: system-ui, sans-serif;
@@ -35,6 +35,18 @@
       nav[aria-label='Pagination'] [aria-current='page'] {
         background: #374151;
         color: #fff;
+      }
+      nav[aria-label='Pagination'] form[aria-label='跳转到页码'] {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin-left: 8px;
+        font-size: 14px;
+      }
+      nav[aria-label='Pagination'] input[data-page-nav-jump-input] {
+        width: 48px;
+        height: 28px;
+        text-align: center;
       }
       .opacity-40 {
         opacity: 0.4;

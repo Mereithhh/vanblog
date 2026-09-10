@@ -97,6 +97,7 @@ const PageNavJump = (props: PageNavProps) => {
     <form
       className={pageNavJumpFormCls}
       aria-label={PAGE_NAV_JUMP_LABEL}
+      noValidate
       onSubmit={onSubmit}
     >
       <label htmlFor={PAGE_NAV_JUMP_INPUT_ID}>{PAGE_NAV_JUMP_PREFIX}</label>

@@ -18,12 +18,11 @@ export type PageNavJumpOk = {
   ok: true;
   page: number;
   href: string;
-  clamped: boolean;
 };
 
 export type PageNavJumpFail = {
   ok: false;
-  reason: "empty" | "invalid" | "unavailable";
+  reason: "empty" | "invalid" | "outofrange" | "unavailable";
 };
 
 export type PageNavJumpResult = PageNavJumpOk | PageNavJumpFail;
@@ -48,20 +47,6 @@ export function parseJumpPage(raw: string): number | null {
   const page = Number(trimmed);
   if (!Number.isFinite(page)) {
     return null;
-  }
-  return page;
-}
-
-/** Keep a parsed page inside 1..totalPages. */
-export function clampJumpPage(page: number, totalPages: number): number {
-  if (!Number.isFinite(page) || !Number.isFinite(totalPages) || totalPages < 1) {
-    return 1;
-  }
-  if (page < 1) {
-    return 1;
-  }
-  if (page > totalPages) {
-    return totalPages;
   }
   return page;
 }
@@ -118,12 +103,13 @@ export function resolvePageNavJump(
   if (parsed === null) {
     return { ok: false, reason: "invalid" };
   }
-  const page = clampJumpPage(parsed, totalPages);
+  if (parsed < 1 || parsed > totalPages) {
+    return { ok: false, reason: "outofrange" };
+  }
   return {
     ok: true,
-    page,
-    href: pageHref(props.base, props.more, page),
-    clamped: page !== parsed,
+    page: parsed,
+    href: pageHref(props.base, props.more, parsed),
   };
 }
 

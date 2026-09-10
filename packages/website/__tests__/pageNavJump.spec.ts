@@ -22,7 +22,6 @@ import {
   PAGE_NAV_JUMP_LABEL,
   PAGE_NAV_JUMP_PREFIX,
   PAGE_NAV_JUMP_UNIT,
-  clampJumpPage,
   describePageNavJump,
   handlePageNavJumpKeyDown,
   handlePageNavJumpSubmit,
@@ -110,21 +109,23 @@ describe("resolvePageNavJump navigation path", () => {
       ok: true,
       page: 3,
       href: "/page/3",
-      clamped: false,
     });
     expect(resolvePageNavJump("1", props)).toEqual({
       ok: true,
       page: 1,
       href: "/",
-      clamped: false,
     });
     expect(resolvePageNavJump("10", props)).toEqual({
       ok: true,
       page: 10,
       href: "/page/10",
-      clamped: false,
     });
     expect(pageHref(props.base, props.more, 3)).toBe("/page/3");
+    expect(resolvePageNavJump("90", jumpOf({ total: 500, current: 1 }))).toEqual({
+      ok: true,
+      page: 90,
+      href: "/page/90",
+    });
   });
 
   it("rejects empty and non-integer input without navigating", () => {
@@ -151,27 +152,44 @@ describe("resolvePageNavJump navigation path", () => {
     });
   });
 
-  it("clamps out-of-range values to 1..totalPages", () => {
-    expect(clampJumpPage(0, 10)).toBe(1);
-    expect(clampJumpPage(-4, 10)).toBe(1);
-    expect(clampJumpPage(99, 10)).toBe(10);
+  it("rejects out-of-range values without navigating", () => {
     expect(resolvePageNavJump("0", props)).toEqual({
-      ok: true,
-      page: 1,
-      href: "/",
-      clamped: true,
+      ok: false,
+      reason: "outofrange",
     });
     expect(resolvePageNavJump("-3", props)).toEqual({
-      ok: true,
-      page: 1,
-      href: "/",
-      clamped: true,
+      ok: false,
+      reason: "outofrange",
     });
     expect(resolvePageNavJump("999", props)).toEqual({
+      ok: false,
+      reason: "outofrange",
+    });
+  });
+
+  it("uses articles-per-page (#346) when building totalPages and href", () => {
+    const sized = jumpOf({ total: 50, current: 1, pageSize: 10 });
+    expect(pageCount(50, 10)).toBe(5);
+    expect(shouldShowPageNavJump(50, 10)).toBe(true);
+    expect(describePageNavJump(sized).totalPages).toBe(5);
+    expect(describePageNavJump(sized).input.max).toBe(5);
+    expect(resolvePageNavJump("5", sized)).toEqual({
+      ok: true,
+      page: 5,
+      href: "/page/5",
+    });
+    expect(resolvePageNavJump("6", sized)).toEqual({
+      ok: false,
+      reason: "outofrange",
+    });
+    expect(resolvePageNavJump("10", sized)).toEqual({
+      ok: false,
+      reason: "outofrange",
+    });
+    expect(resolvePageNavJump("10", props)).toEqual({
       ok: true,
       page: 10,
       href: "/page/10",
-      clamped: true,
     });
   });
 
@@ -197,6 +215,10 @@ describe("resolvePageNavJump navigation path", () => {
     expect(submitPageNavJump("nope", props, go)).toMatchObject({
       ok: false,
       reason: "invalid",
+    });
+    expect(submitPageNavJump("999", props, go)).toMatchObject({
+      ok: false,
+      reason: "outofrange",
     });
     expect(navigated).toEqual(["/page/4"]);
   });
@@ -228,7 +250,6 @@ describe("PageNav jump keyboard Enter", () => {
       ok: true,
       page: 2,
       href: "/page/2",
-      clamped: false,
     });
     expect(prevented).toBe(true);
 
@@ -289,6 +310,7 @@ describe("PageNav jump keyboard Enter", () => {
       );
     expect(fire("")).toEqual({ ok: false, reason: "empty" });
     expect(fire("xyz")).toEqual({ ok: false, reason: "invalid" });
+    expect(fire("90")).toEqual({ ok: false, reason: "outofrange" });
     expect(navigated).toEqual([]);
   });
 });
@@ -340,6 +362,7 @@ describe("PageNav jump markup", () => {
 
   it("renders a focusable number input and submit button when jump is shown", () => {
     expect(render).toMatch(/<form[\s\S]*aria-label=\{PAGE_NAV_JUMP_LABEL\}/);
+    expect(render).toMatch(/noValidate/);
     expect(render).toMatch(/handlePageNavJumpSubmit/);
     expect(render).toMatch(/handlePageNavJumpKeyDown/);
     expect(render).toMatch(/type="number"/);
