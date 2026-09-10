@@ -55,7 +55,7 @@ export default function () {
               validator: async (_, value) => {
                 const type = form?.getFieldValue?.('type');
                 if (isCustomSocialType(type) && !String(value || '').trim()) {
-                  throw new Error('自定义联系方式需要填写显示名称');
+                  throw new Error('自定义社交媒体需要填写显示名称');
                 }
               },
             },
@@ -79,7 +79,7 @@ export default function () {
       title: '图标 URL',
       dataIndex: 'icon',
       fieldProps: {
-        placeholder: '可选，自定义联系方式的图标地址',
+        placeholder: '可选，自定义社交媒体的图标地址',
       },
     },
     {
@@ -130,7 +130,7 @@ export default function () {
         <EditableProTable
           actionRef={actionRef}
           rowKey="key"
-          headerTitle="联系方式"
+          headerTitle="社交媒体"
           scroll={{
             x: 960,
           }}

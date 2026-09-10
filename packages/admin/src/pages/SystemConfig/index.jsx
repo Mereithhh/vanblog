@@ -39,7 +39,7 @@ export default function () {
           key: 'siteInfo',
         },
         {
-          tab: '客制化',
+          tab: '定制化',
           key: 'customizing',
         },
         {

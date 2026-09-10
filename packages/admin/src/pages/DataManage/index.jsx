@@ -47,7 +47,7 @@ export default function () {
           key: 'links',
         },
         {
-          tab: '联系方式',
+          tab: '社交媒体',
           key: 'socials',
         },
       ]}
