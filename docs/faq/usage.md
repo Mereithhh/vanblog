@@ -125,6 +125,12 @@ Hugo 里常用 `permalinks.post = "/post/:slug"`。VanBlog **没有**全局固�
 
 这次补齐了 [#175](https://github.com/Mereithhh/vanblog/issues/175) 任务列表里此前未做的 jump / navigate to 一项。此前已合并：代码块对比度（#541）、分页方向键与省略号（#542）、顶栏与代码复制键盘（#543）、搜索弹层键盘（#544）。请升级到包含该修复的版本。
 
+## 手机端顶栏网站名没有居中
+
+手机上看前台时，顶栏网站名以前是在汉堡菜单右侧剩下的那一栏里居中（短站名时会明显偏一边），而不是相对整个页面宽度居中。已修复（[#262](https://github.com/Mereithhh/vanblog/issues/262)）：网站名相对整页 / 视口水平居中；左侧菜单和右侧搜索、主题等按钮位置不变。电脑端导航栏仍是左侧网站名或 logo，布局不变。请升级到包含该修复的版本。
+
+见 [站点配置](../reference/config.md) 的「网站名」与「导航栏左侧显示内容」。
+
 ## 前台顶栏和代码复制按钮无法用键盘
 
 顶栏搜索、主题切换、RSS、管理后台图标和移动端汉堡菜单以前是带 `onClick` 的 `div`，Tab 到不了，Enter / 空格也点不了；文章代码块右上角复制同样是 `div.code-copy-btn`。已修复（[#175](https://github.com/Mereithhh/vanblog/issues/175) 的 Inaccessible buttons with keyboard）：这些控件改成真正的 `<button type="button">`（管理后台是指向 `/admin` 的链接），带中文 `aria-label`，可用键盘聚焦并激活。RSS 仍是复制订阅地址到剪贴板。搜索弹层内的方向键 / 焦点陷阱见 [前台搜索弹层无法用键盘](#前台搜索弹层无法用键盘)。

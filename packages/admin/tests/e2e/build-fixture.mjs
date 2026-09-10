@@ -72,6 +72,15 @@ await bundle(path.join(fixtures, 'page-nav-app.tsx'), path.join(outdir, 'page-na
   `--alias:next/router=${path.join(fixtures, 'next-router.ts')}`,
   '--jsx=automatic',
 ]);
+await bundle(path.join(fixtures, 'nav-bar-app.tsx'), path.join(outdir, 'nav-bar.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  `--alias:next/link=${path.join(fixtures, 'next-link.tsx')}`,
+  `--alias:next/router=${path.join(fixtures, 'nav-router.ts')}`,
+  `--alias:headroom.js=${path.join(fixtures, 'headroom-stub.js')}`,
+  `--alias:${path.resolve(adminRoot, '../website/components/SearchCard')}=${path.join(fixtures, 'search-card-stub.tsx')}`,
+  '--jsx=automatic',
+]);
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
 await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));
@@ -86,6 +95,11 @@ await cp(
 );
 await cp(path.join(fixtures, 'social-card.html'), path.join(outdir, 'social-card.html'));
 await cp(path.join(fixtures, 'page-nav.html'), path.join(outdir, 'page-nav.html'));
+await cp(path.join(fixtures, 'nav-bar.html'), path.join(outdir, 'nav-bar.html'));
+await cp(
+  path.resolve(adminRoot, '../website/components/NavBar/siteNameLayout.css'),
+  path.join(outdir, 'nav-bar-layout.css'),
+);
 await cp(
   path.resolve(adminRoot, '../website/styles/github-markdown.css'),
   path.join(outdir, 'github-markdown.css'),

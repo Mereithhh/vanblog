@@ -16,6 +16,13 @@ import {
   ICON_ACTION_BUTTON_CLASS,
 } from "./a11y";
 import { describeNavLink, withNavCurrentClass } from "./active";
+import {
+  NAV_BAR_ROW_CLASS,
+  NAV_SITE_NAME_DESKTOP,
+  NAV_SITE_NAME_DESKTOP_CLASS,
+  NAV_SITE_NAME_MOBILE,
+  NAV_SITE_NAME_MOBILE_CLASS,
+} from "./layout";
 export default function (props: {
   logo: string;
   logoDark: string;
@@ -72,10 +79,18 @@ export default function (props: {
       >
         {/* 上面的导航栏 */}
         <div
-          className=" flex  items-center w-full border-b border-gray-200 h-14 dark:border-nav-dark"
+          className={`${NAV_BAR_ROW_CLASS} flex  items-center w-full border-b border-gray-200 h-14 dark:border-nav-dark`}
           style={{ height: 56 }}
         >
-          <div className="mx-4 flex items-center">
+          <div
+            data-nav-site-name={NAV_SITE_NAME_MOBILE}
+            className={`${NAV_SITE_NAME_MOBILE_CLASS} cursor-pointer select-none dark:text-dark md:hidden`}
+          >
+            <Link href="/">
+              <div>{props.siteName}</div>
+            </Link>
+          </div>
+          <div className="nav-bar-leading mx-4 flex items-center">
             <button
               type="button"
               className={`${ICON_ACTION_BUTTON_CLASS} cursor-pointer block md:hidden`}
@@ -122,21 +137,16 @@ export default function (props: {
           </div>
           {props.headerLeftContent == "siteName" && (
             <Link href="/">
-              <div className="text-gray-800 cursor-pointer select-none text-lg dark:text-dark lg:text-xl font-medium  mr-4 hidden md:block">
+              <div
+                data-nav-site-name={NAV_SITE_NAME_DESKTOP}
+                className={`${NAV_SITE_NAME_DESKTOP_CLASS} text-gray-800 cursor-pointer select-none text-lg dark:text-dark lg:text-xl font-medium  mr-4 hidden md:block`}
+              >
                 {props.siteName}
               </div>
             </Link>
           )}
           {/* 第二个flex */}
           <div className="flex justify-between h-full flex-grow nav-content">
-            <div
-              style={{ transform: "translateX(30px)" }}
-              className="cursor-pointer md:hidden  flex-grow text-center  flex items-center justify-center select-none dark:text-dark"
-            >
-              <Link href="/">
-                <div>{props.siteName}</div>
-              </Link>
-            </div>
             <ul className=" md:flex h-full items-center  text-sm text-gray-600 dark:text-dark hidden">
               {props.menus.map((m) => {
                 return <Item key={m.id} item={m} currentPath={asPath} />;
