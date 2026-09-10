@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 前台首页和 `/page/n` 分页增加跳转到指定页：多页时在现有页码旁显示「跳转」输入框，回车或点「前往」按现有路由跳到 `/`（第 1 页）或 `/page/n`。只接受 1..总页数的整数，空值、非整数或超出范围不跳转。总页数跟随「每页文章数」。页码链接、当前页 `aria-current="page"` 以及第一页 / 最后一页禁用的上一页 / 下一页不变。[#229](https://github.com/Mereithhh/vanblog/issues/229)
 - 后台文章管理一级表格增加「是否隐藏」列，可直接开关隐藏状态，不必打开「修改信息」或编辑器。仍走现有更新文章接口。[#268](https://github.com/Mereithhh/vanblog/issues/268)
 - 手机上后台文章编辑器不再只剩「编辑 / 预览」切换：窄屏（ByteMD tab 模式，编辑器宽度 < 800px）工具栏会补上一组常用按钮（标题、加粗 / 斜体、链接、图片上传、列表、代码、引用）。电脑端分栏工具栏不变，也不会把表情、Mermaid、高亮块等整排桌面按钮塞到手机上。[#504](https://github.com/Mereithhh/vanblog/issues/504)
 - 后台文章编辑器工具栏增加「外链图片转存」：扫描正文里的远程 `![...](http...)` 和 `<img src>`，经现有图床上传管线下载并改写为本站 / 配置图床地址。已是本站 `/static`、已入库图床、相对路径和 `data:` 图片会跳过；失败的链接保持原样并提示。开启自动压缩时仍按 WebP / AVIF 设置处理。不会在保存时静默改写。[#434](https://github.com/Mereithhh/vanblog/issues/434)
@@ -51,7 +52,6 @@
 - 后台编辑器写入带 `style` / 十六进制颜色 / 中文标签的 mermaid 流程图后再按键，不再抛 `Yh is not a function or its return value is not iterable` 并导致无法继续编辑。预览改为加载 mermaid 的 UMD 包并解开 default/namespace 导入，避免 `khroma` 等 ESM 依赖被 webpack 绑错 [#391](https://github.com/Mereithhh/vanblog/issues/391)
 - 后台编辑文章标题时左右方向键无法移动光标：全局快捷键不再拦截输入框里的方向键 [#390](https://github.com/Mereithhh/vanblog/issues/390)
 - 后台删除目录改用 `fs.rmSync`，webp 压缩用 `spawnSync` 传参数数组，不再把路径拼进 shell 命令，避免命令注入 [#482](https://github.com/Mereithhh/vanblog/issues/482)
-- 前台分页增加跳转到指定页：多页时显示页码输入框，回车或点「前往」按现有路由跳到 `/` 或 `/page/n`，超出 1..总页数会落到最近的有效页，空值或非法输入不跳转；补齐 [#175](https://github.com/Mereithhh/vanblog/issues/175) 剩余的「跳转到第 N 页」。此前已合并：代码块对比度（#541）、分页方向键/省略号（#542）、顶栏与代码复制键盘（#543）、搜索弹层键盘（#544）
 - 前台搜索弹层可用键盘操作：打开后焦点进入对话框，Escape 关闭且不再在关闭时误拦截 Escape，Tab / Shift+Tab 只在弹层内循环，清除改为真正的按钮（Enter/空格），方向键浏览结果并用 Enter 打开；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「Not interactive with keyboard」一项（不含跳转到第 N 页），其余无障碍项仍开放
 - 前台顶栏搜索、主题、RSS、管理后台、移动端菜单和代码块复制改为真正的按钮/链接，可用键盘 Tab 聚焦并用 Enter/空格激活（RSS 仍复制订阅地址）；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「Inaccessible buttons with keyboard」一项（不含搜索框内键盘导航），其余无障碍项仍开放
 - 前台分页支持方向键在页码控件间移动焦点，省略号不再是链接，禁用的上一页/下一页不可聚焦；只覆盖 [#175](https://github.com/Mereithhh/vanblog/issues/175) 的「Pagination issues」一项（不含跳转到第 N 页），其余无障碍项仍开放
@@ -88,6 +88,7 @@
 
 ### ✏️ Documentation | 文档
 
+- FAQ / 站点配置：说明前台分页可输入页码跳转，非法或超出范围不跳转；总页数跟随「每页文章数」。`docs/faq/usage.md`、`docs/features/config.md` [#229](https://github.com/Mereithhh/vanblog/issues/229)
 - FAQ / 站点配置：说明手机端顶栏网站名相对整页宽度居中，电脑端左侧网站名 / logo 不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 文章 / FAQ：说明可在文章管理一级表格直接开关「是否隐藏」。`docs/features/article.md`、`docs/faq/usage.md` [#268](https://github.com/Mereithhh/vanblog/issues/268)
 - FAQ / 黑暗模式：说明前台分页在第一页 / 最后一页会禁用上一页 / 下一页（仍显示、不可跳转）。`docs/faq/usage.md`、`docs/advanced/darkmode.md` [#331](https://github.com/Mereithhh/vanblog/issues/331)
