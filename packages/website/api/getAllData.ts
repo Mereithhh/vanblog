@@ -82,6 +82,53 @@ export interface LinkItem {
   url: string;
   updatedAt: string;
 }
+/** Public `/api/public/meta` always includes this object; some fields may be absent. */
+export interface SiteInfo {
+  author: string;
+  authorDesc: string;
+  authorLogo: string;
+  authorLogoDark?: string;
+  siteLogo: string;
+  favicon: string;
+  siteName: string;
+  siteDesc: string;
+  beianNumber: string;
+  beianUrl: string;
+  gaBeianNumber: string;
+  gaBeianUrl: string;
+  gaBeianLogoUrl: string;
+  payAliPay: string;
+  payWechat: string;
+  payAliPayDark?: string;
+  payWechatDark?: string;
+  since: string;
+  baseUrl: string;
+  baiduAnalysisId?: string;
+  gaAnalysisId?: string;
+  siteLogoDark?: string;
+  copyrightAggreement: string;
+  showSubMenu?: "true" | "false";
+  showAdminButton?: "true" | "false";
+  headerLeftContent?: "siteLogo" | "siteName";
+  subMenuOffset?: number;
+  showDonateInfo: "true" | "false";
+  showFriends: "true" | "false";
+  enableComment: "true" | "false";
+  defaultTheme: "auto" | "light" | "dark";
+  showDonateInAbout?: "true" | "false";
+  enableCustomizing: "true" | "false";
+  showDonateButton: "true" | "false";
+  showCopyRight: "true" | "false";
+  showRSS: "true" | "false";
+  openArticleLinksInNewWindow: "true" | "false";
+  showExpirationReminder: "true" | "false";
+  showEditButton: "true" | "false";
+  articlesPerPage?: number;
+  defaultExpandAllCategories?: "true" | "false";
+  friendLinkIntro?: string;
+  friendLinkApplyContent?: string;
+  aboutTitle?: string;
+}
 export interface MetaProps {
   links: LinkItem[];
   socials: SocialItem[];
@@ -91,52 +138,7 @@ export interface MetaProps {
     updatedAt: string;
     content: string;
   };
-  siteInfo: {
-    author: string;
-    authorDesc: string;
-    authorLogo: string;
-    authorLogoDark?: string;
-    siteLogo: string;
-    favicon: string;
-    siteName: string;
-    siteDesc: string;
-    beianNumber: string;
-    beianUrl: string;
-    gaBeianNumber: string;
-    gaBeianUrl: string;
-    gaBeianLogoUrl: string;
-    payAliPay: string;
-    payWechat: string;
-    payAliPayDark?: string;
-    payWechatDark?: string;
-    since: string;
-    baseUrl: string;
-    baiduAnalysisId?: string;
-    gaAnalysisId?: string;
-    siteLogoDark?: string;
-    copyrightAggreement: string;
-    showSubMenu?: "true" | "false";
-    showAdminButton?: "true" | "false";
-    headerLeftContent?: "siteLogo" | "siteName";
-    subMenuOffset?: number;
-    showDonateInfo: "true" | "false";
-    showFriends: "true" | "false";
-    enableComment: "true" | "false";
-    defaultTheme: "auto" | "light" | "dark";
-    showDonateInAbout?: "true" | "false";
-    enableCustomizing: "true" | "false";
-    showDonateButton: "true" | "false";
-    showCopyRight: "true" | "false";
-    showRSS: "true" | "false";
-    openArticleLinksInNewWindow: "true" | "false";
-    showExpirationReminder: "true" | "false";
-    showEditButton: "true" | "false";
-    articlesPerPage?: number;
-    defaultExpandAllCategories?: "true" | "false";
-    friendLinkIntro?: string;
-    friendLinkApplyContent?: string;
-    aboutTitle?: string;
-  };
+  siteInfo: SiteInfo;
 }
 export interface PublicMetaProp {
   version: string;

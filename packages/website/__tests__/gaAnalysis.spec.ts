@@ -369,7 +369,7 @@ describe("GaAnalysis component wiring", () => {
     const propsSrc = readSrc("utils/getLayoutProps.ts");
     expect(propsSrc).toMatch(/normalizeGaAnalysisId/);
     expect(propsSrc).toMatch(
-      /gaAnalysisID:\s*normalizeGaAnalysisId\(siteInfo\?\.gaAnalysisId\)/
+      /gaAnalysisID:\s*normalizeGaAnalysisId\(siteInfo\.gaAnalysisId\)/
     );
   });
 });
