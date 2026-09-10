@@ -65,6 +65,13 @@ await bundle(path.join(fixtures, 'social-card-app.tsx'), path.join(outdir, 'soci
   `--alias:react-dom=${reactDom}`,
   '--jsx=automatic',
 ]);
+await bundle(path.join(fixtures, 'page-nav-app.tsx'), path.join(outdir, 'page-nav.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  `--alias:next/link=${path.join(fixtures, 'next-link.tsx')}`,
+  `--alias:next/router=${path.join(fixtures, 'next-router.ts')}`,
+  '--jsx=automatic',
+]);
 
 await cp(path.join(fixtures, 'index.html'), path.join(outdir, 'index.html'));
 await cp(path.join(fixtures, 'toc-article.html'), path.join(outdir, 'toc-article.html'));
@@ -78,6 +85,7 @@ await cp(
   path.join(outdir, 'code-block-article.html'),
 );
 await cp(path.join(fixtures, 'social-card.html'), path.join(outdir, 'social-card.html'));
+await cp(path.join(fixtures, 'page-nav.html'), path.join(outdir, 'page-nav.html'));
 await cp(
   path.resolve(adminRoot, '../website/styles/github-markdown.css'),
   path.join(outdir, 'github-markdown.css'),

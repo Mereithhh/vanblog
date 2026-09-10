@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PageNav edge disable e2e</title>
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        margin: 24px;
+      }
+      [data-page-nav-case] {
+        margin-bottom: 32px;
+      }
+      nav[aria-label='Pagination'] ul {
+        display: inline-flex;
+        list-style: none;
+        gap: 8px;
+        padding: 0;
+        margin: 0;
+      }
+      nav[aria-label='Pagination'] a,
+      nav[aria-label='Pagination'] span[aria-disabled='true'] {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 28px;
+        height: 28px;
+        border-radius: 4px;
+        text-decoration: none;
+        color: #4b5563;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+      }
+      nav[aria-label='Pagination'] [aria-current='page'] {
+        background: #374151;
+        color: #fff;
+      }
+      .opacity-40 {
+        opacity: 0.4;
+      }
+      .cursor-not-allowed {
+        cursor: not-allowed;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="./page-nav.js"></script>
+  </body>
+</html>
