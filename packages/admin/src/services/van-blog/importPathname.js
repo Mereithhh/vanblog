@@ -19,7 +19,7 @@
 
 const PATHNAME_FIELD = Object.freeze({
   name: 'pathname',
-  label: '自定义路径名 / slug',
+  label: '自定义路径名',
   placeholder: '例如 Hugo 的 slug；留空则用数字 id',
   tooltip:
     '发布后地址为 /post/[自定义路径名]，对应 Hugo 的 permalinks.post = "/post/:slug"。从 Hugo 迁移时把旧 slug 填到这里，可保持旧 URL、不影响 SEO。留空则用数字 id。数字 ID 地址始终可用；没有站点级固定链接模板。',

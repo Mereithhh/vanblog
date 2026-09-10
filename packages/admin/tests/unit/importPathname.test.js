@@ -95,8 +95,8 @@ describe('pathnameFromFrontMatter (#383 / #487)', () => {
 
   it('states Hugo /post/:slug, default numeric id, and SEO migration', () => {
     assert.equal(PATHNAME_FIELD.name, 'pathname');
-    assert.match(PATHNAME_FIELD.label, /自定义路径名/);
-    assert.match(PATHNAME_FIELD.label, /slug/);
+    assert.equal(PATHNAME_FIELD.label, '自定义路径名');
+    assert.match(PATHNAME_FIELD.placeholder, /Hugo/);
     assert.match(PATHNAME_FIELD.placeholder, /id/i);
     assert.match(PATHNAME_FIELD.tooltip, /\/post\/\[自定义路径名\]/);
     assert.match(PATHNAME_FIELD.tooltip, /Hugo/);

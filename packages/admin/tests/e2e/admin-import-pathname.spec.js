@@ -163,7 +163,7 @@ test.describe('admin import article pathname from Hugo slug (#487)', () => {
     await expect(dialog).toBeVisible();
     await expect(dialog.locator('#pathname')).toBeVisible();
     await expect(dialog.locator('#pathname')).toHaveValue('my-old-post');
-    await expect(dialog.getByText('自定义路径名 / slug')).toBeVisible();
+    await expect(dialog.getByText('自定义路径名', { exact: false })).toBeVisible();
     await expect(dialog.locator('#title')).toHaveValue('Hugo 迁移文章');
 
     await dialog.getByRole('button', { name: /提\s*交|确\s*[定认]/ }).click();
