@@ -84,15 +84,15 @@ describe("PageNav first/last edges (#331)", () => {
       type: "pre-btn",
       href: "/",
       focusable: true,
-      ariaDisabled: undefined,
     });
     expect(next).toMatchObject({
       kind: "link",
       type: "next-btn",
       href: "/page/3",
       focusable: true,
-      ariaDisabled: undefined,
     });
+    expect(prev?.ariaDisabled).toBeUndefined();
+    expect(next?.ariaDisabled).toBeUndefined();
     expect(current).toMatchObject({ page: 2, ariaCurrent: "page" });
   });
 
