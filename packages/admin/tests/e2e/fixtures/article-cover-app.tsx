@@ -2,7 +2,7 @@ import { render } from 'react-dom';
 import ArticleCover from '../../../../website/components/ArticleCover';
 import { articleShareImageMeta } from '../../../../website/utils/articleCover';
 
-const COVER = '/static/img/hero.webp';
+const COVER = '/cover.png';
 const SITE = 'https://blog.example.com';
 
 function ShareMeta({ cover, siteUrl }: { cover?: string; siteUrl?: string }) {

@@ -117,6 +117,7 @@ await cp(
 await cp(path.join(fixtures, 'social-card.html'), path.join(outdir, 'social-card.html'));
 await cp(path.join(fixtures, 'page-nav.html'), path.join(outdir, 'page-nav.html'));
 await cp(path.join(fixtures, 'article-cover.html'), path.join(outdir, 'article-cover.html'));
+await cp(path.join(fixtures, 'cover.png'), path.join(outdir, 'cover.png'));
 await cp(path.join(fixtures, 'nav-bar.html'), path.join(outdir, 'nav-bar.html'));
 await cp(
   path.resolve(adminRoot, '../website/components/NavBar/siteNameLayout.css'),

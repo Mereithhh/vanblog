@@ -18,7 +18,7 @@ test.describe('public article cover (#288)', () => {
 
     const cover = withCover.locator('[data-article-cover] img');
     await expect(cover).toBeVisible();
-    await expect(cover).toHaveAttribute('src', '/static/img/hero.webp');
+    await expect(cover).toHaveAttribute('src', '/cover.png');
     await expect(withCover.locator('h1')).toBeVisible();
 
     await expect(withoutCover.locator('[data-article-cover]')).toHaveCount(0);
@@ -32,8 +32,8 @@ test.describe('public article cover (#288)', () => {
     const og = page.locator('meta[property="og:image"]');
     const twitter = page.locator('meta[name="twitter:image"]');
     const card = page.locator('meta[name="twitter:card"]');
-    await expect(og).toHaveAttribute('content', 'https://blog.example.com/static/img/hero.webp');
-    await expect(twitter).toHaveAttribute('content', 'https://blog.example.com/static/img/hero.webp');
+    await expect(og).toHaveAttribute('content', 'https://blog.example.com/cover.png');
+    await expect(twitter).toHaveAttribute('content', 'https://blog.example.com/cover.png');
     await expect(card).toHaveAttribute('content', 'summary_large_image');
   });
 });
