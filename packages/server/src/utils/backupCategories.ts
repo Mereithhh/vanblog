@@ -4,6 +4,7 @@ export type BackupCategory = {
   type?: string;
   private?: boolean;
   password?: string;
+  hidden?: boolean;
 };
 
 export type BackupCategorySource = {
@@ -38,6 +39,7 @@ function addCategory(byName: Map<string, BackupCategory>, raw: any) {
     type: raw.type ?? prev.type,
     private: raw.private ?? prev.private,
     password: raw.password ?? prev.password,
+    hidden: raw.hidden ?? prev.hidden,
   });
 }
 
@@ -62,5 +64,6 @@ export function toExportCategory(doc: any): BackupCategory {
     type: doc?.type || 'category',
     private: Boolean(doc?.private),
     password: doc?.password || '',
+    hidden: Boolean(doc?.hidden),
   };
 }

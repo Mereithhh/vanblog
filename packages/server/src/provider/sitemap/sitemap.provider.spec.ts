@@ -17,6 +17,27 @@ function createProvider(total: number, articlesPerPage: number) {
   return { provider, articleProvider, metaProvider };
 }
 
+describe('SiteMapProvider.getCategoryUrls (#359)', () => {
+  it('omits hidden categories from sitemap paths', async () => {
+    const categoryProvider = {
+      getPublicCategoryNames: jest.fn().mockResolvedValue(['随笔', '教程']),
+    };
+    const provider = new SiteMapProvider(
+      { getTotalNum: jest.fn() } as any,
+      categoryProvider as any,
+      {} as any,
+      {} as any,
+      { getArticlesPerPage: jest.fn() } as any,
+    );
+
+    await expect(provider.getCategoryUrls()).resolves.toEqual([
+      '/category/随笔',
+      '/category/教程',
+    ]);
+    expect(categoryProvider.getPublicCategoryNames).toHaveBeenCalled();
+  });
+});
+
 describe('SiteMapProvider.getPageUrls (#346)', () => {
   it('builds /page/n paths using the configured articles-per-page size', async () => {
     const { provider } = createProvider(23, 10);

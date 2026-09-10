@@ -182,6 +182,7 @@ describe('CategoryProvider.updateCategoryByName (#324)', () => {
     expect(stack.articleModel.docs.some((item) => item.category === 'AAA')).toBe(false);
     expect(stack.draftModel.docs.some((item) => item.category === 'AAA')).toBe(false);
     expect(await stack.categoryProvider.getAllCategories()).toEqual(['BBB']);
+    expect(await stack.categoryProvider.getPublicCategoryNames()).toEqual(['BBB']);
   });
 
   it('keeps creating and editing posts after a rename', async () => {
@@ -238,5 +239,81 @@ describe('CategoryProvider.updateCategoryByName (#324)', () => {
     ).rejects.toBeInstanceOf(NotAcceptableException);
     expect(stack.articleModel.docs[0].category).toBe('AAA');
     expect(stack.categoryModel.docs.map((item) => item.name)).toEqual(['AAA', 'BBB']);
+  });
+});
+
+describe('CategoryProvider hidden flag (#359)', () => {
+  it('persists and clears the hidden flag without changing encrypt fields', async () => {
+    const stack = createRenameStack({
+      categories: [
+        { id: 1, name: '随笔', type: 'category', private: false, hidden: false },
+        { id: 2, name: '私密', type: 'category', private: true, password: 'pw', hidden: false },
+      ],
+    });
+
+    await stack.categoryProvider.updateCategoryByName('私密', { hidden: true });
+    expect(stack.categoryModel.docs.find((item) => item.name === '私密')).toMatchObject({
+      name: '私密',
+      hidden: true,
+      private: true,
+      password: 'pw',
+    });
+    expect(stack.categoryModel.docs.find((item) => item.name === '随笔').hidden).toBe(false);
+
+    await stack.categoryProvider.updateCategoryByName('私密', { hidden: false });
+    expect(stack.categoryModel.docs.find((item) => item.name === '私密').hidden).toBe(false);
+  });
+
+  it('keeps hidden categories in admin lists and omits them from public projections', async () => {
+    const articleProvider = {
+      getAll: jest.fn(async () => [
+        { id: 1, title: '随笔文', category: '随笔', hidden: false },
+        { id: 2, title: '私密文', category: '私密', hidden: false },
+        { id: 3, title: '教程文', category: '教程', hidden: false },
+      ]),
+    };
+    const model = createMemoryCategoryModel([
+      { id: 1, name: '随笔', type: 'category', private: false, hidden: false },
+      { id: 2, name: '私密', type: 'category', private: false, hidden: true },
+      { id: 3, name: '教程', type: 'category', private: false },
+    ]);
+    const provider = new CategoryProvider(model as any, articleProvider as any, {} as any);
+
+    expect(await provider.getAllCategories()).toEqual(['随笔', '私密', '教程']);
+    expect(await provider.getAllCategories(false, false)).toEqual(['随笔', '教程']);
+    expect(await provider.getPublicCategoryNames()).toEqual(['随笔', '教程']);
+    expect((await provider.getAllCategories(true)).map((item) => item.name)).toEqual([
+      '随笔',
+      '私密',
+      '教程',
+    ]);
+
+    const publicMap = await provider.getCategoriesWithArticle(false);
+    expect(Object.keys(publicMap)).toEqual(['随笔', '教程']);
+    expect(publicMap['随笔']).toHaveLength(1);
+    expect(publicMap['教程']).toHaveLength(1);
+    expect(publicMap['私密']).toBeUndefined();
+
+    const adminMap = await provider.getCategoriesWithArticle(true);
+    expect(Object.keys(adminMap)).toEqual(['随笔', '私密', '教程']);
+    expect(adminMap['私密']).toHaveLength(1);
+  });
+
+  it('imports a hidden flag from backup and does not invent one for older rows', async () => {
+    const model = createMemoryCategoryModel([
+      { id: 1, name: '随笔', type: 'category', private: false, hidden: false },
+    ]);
+    const provider = new CategoryProvider(model as any, {} as any, {} as any);
+
+    await provider.importCategories([
+      { id: 1, name: '随笔', hidden: true },
+      { id: 2, name: '专栏', hidden: true },
+    ]);
+
+    expect(model.docs.find((item) => item.name === '随笔').hidden).toBe(true);
+    expect(model.docs.find((item) => item.name === '专栏')).toMatchObject({
+      name: '专栏',
+      hidden: true,
+    });
   });
 });

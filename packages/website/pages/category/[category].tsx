@@ -67,9 +67,19 @@ export async function getStaticPaths() {
 }
 export async function getStaticProps({
   params,
-}: any): Promise<{ props: CategoryPagesProps; revalidate?: number }> {
+}: any): Promise<
+  | { props: CategoryPagesProps; revalidate?: number }
+  | { notFound: true; revalidate?: number }
+> {
+  const result = await getCategoryPagesProps(params.category);
+  if ("notFound" in result) {
+    return {
+      notFound: true,
+      ...revalidate,
+    };
+  }
   return {
-    props: await getCategoryPagesProps(params.category),
+    props: result,
     ...revalidate,
   };
 }
