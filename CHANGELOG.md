@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 后台「自定义路径名」标明对应 Hugo 的 `/post/:slug`：tooltip / 占位提示从 Hugo 迁移时填旧 slug 以保留 SEO。导入 Markdown 时，Front Matter 优先读 `pathname`，再读 Hugo 的 `slug`，再读单段或 `/post/<slug>` 的 `url`，最后仍读 hexo `abbrlink`。没有全局固定链接模板，仍是按篇文章设置。[#487](https://github.com/Mereithhh/vanblog/issues/487)
 - 后台从 Markdown 导入文章时，确认表单也有与新建文章相同的「自定义路径名」。Front Matter 若有 `pathname` 或 hexo-addlink 的 `abbrlink`，会预填该路径（`abbrlink: cb933e30` → `/post/cb933e30`），仍可改。[#383](https://github.com/Mereithhh/vanblog/issues/383)
 - 可通过环境变量 `VAN_BLOG_SERVER_HOST`（或配置项 `server.host`）指定 Nest API 监听网卡。默认留空，与升级前一样监听所有接口；本机 Nginx / Caddy 反代时可设为 `127.0.0.1`，只接受回环连接。官方镜像内置 Caddy 仍反代 `127.0.0.1:3000`。宿主机映射的 80/443 需改编排端口绑定，见反代文档。[#488](https://github.com/Mereithhh/vanblog/issues/488)
 - 前台文章（以及同一套 ByteMD 的后台预览）会渲染 Markdown 里嵌入的常见 HTML：`<u>`、`<font>`、`<center>`、带 `style` 的标签、`<iframe>` 等。`<script>`、事件属性（`onclick` / `onerror`）和 `javascript:` 链接会被消毒去掉；整站脚本仍走定制化，不在文章正文执行。[#490](https://github.com/Mereithhh/vanblog/issues/490)
@@ -78,6 +79,7 @@
 
 ### ✏️ Documentation | 文档
 
+- FAQ / 文章 / 迁移 / SEO：说明如何用「自定义路径名 / slug」（`pathname`）对应 Hugo `post = "/post/:slug"`，默认是数字 id，以及导入时 Front Matter 的 `slug` / 简单 `url` 映射。没有站点级 permalink 引擎。[#487](https://github.com/Mereithhh/vanblog/issues/487)
 - FAQ / 反代：后台发布后前台仍显示旧文章时，先查 Nginx / 宝塔 `proxy_cache` 或 CDN 是否在缓存 HTML；示例增加 `proxy_no_cache` / `proxy_cache_bypass`，宝塔可注释 `proxy.conf` 里的 `proxy_cache`。源站后台/API 已发 no-store，前台 HTML 仍可能被代理缓存。[#469](https://github.com/Mereithhh/vanblog/issues/469)
 - 文章导入与迁移助手：Front Matter 增加 `pathname` / hexo `abbrlink` → 自定义路径名的说明。[#383](https://github.com/Mereithhh/vanblog/issues/383)
 - 环境变量 / 反代 / 部署 FAQ：说明 `VAN_BLOG_SERVER_HOST=127.0.0.1` 以及 Docker 编排把 80/443 绑到 `127.0.0.1` 的用法（同机反代时避免把源站暴露到公网）。[#488](https://github.com/Mereithhh/vanblog/issues/488)

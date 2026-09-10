@@ -46,15 +46,26 @@ order: 1
 
   默认为登录者本人，下拉框内的选择范围包括 _所有的协作者的昵称_ 以及后台站点设置中的 _作者名称_。
 
-- 自定义路径名
+- 自定义路径名 / slug
 
-  文章发布后的路径将为 `/post/[自定义路径名]`，如果未设置则使用文章 id 作为路径名。数字 ID 地址（`/post/<id>`）始终可用。后台保存后，两种地址都会触发静态页面更新。
+  文章发布后的路径将为 `/post/[自定义路径名]`。**未设置时默认使用数字 id**（例如 `/post/123`）。数字 ID 地址始终可用。后台保存后，两种地址都会触发静态页面更新。
+
+  这就是 VanBlog 对应 Hugo `permalinks.post = "/post/:slug"` 的做法：**没有**站点级固定链接模板，按篇文章填写即可。从 Hugo 迁移时，把旧文章的 slug 填到这里，旧的 `/post/<slug>` 才能继续打开，搜索引擎收录也不会丢。导入 Markdown 时，Front Matter 优先读 `pathname`，再读 Hugo 的 `slug`，再读形如 `/post/my-slug` 的 `url`（Hexo 的 `abbrlink` 仍可用）。
+
+  可在这些地方设置：
+
+  - 新建文章
+  - 导入 Markdown 的确认表单
+  - 发布草稿
+  - 文章表格「操作 → 修改信息」，或编辑器右上角「修改信息」
 
   ::: tip
 
-  如果将自定义路径名设置成 `如何部署VanBlog`，发布后即可通过 `/post/如何部署VanBlog` 来访问。
+  如果将自定义路径名设置成 `如何部署VanBlog`（或 Hugo 旧 slug `how-to-deploy`），发布后即可通过 `/post/如何部署VanBlog`（或 `/post/how-to-deploy`）来访问。
 
   :::
+
+  从 Hugo 迁过来的完整说明见 [从 Hugo 迁移固定链接](../faq/usage.md#从-hugo-迁移固定链接)。
 
 - 置顶优先级：数字，留空或者为 0 表示不顶置。
 
@@ -105,8 +116,10 @@ order: 1
 | hidden     | 是否隐藏文章            | 默认不隐藏                                        |
 | password   | 是否加密/密码           | 如果有，则文章自动为加密，且该字段为密码          |
 | top        | 置顶优先级              | 默认为 0                                          |
-| pathname   | 自定义路径名            | 与新建文章相同；发布后地址为 `/post/[自定义路径名]` |
-| abbrlink   | 自定义路径名            | hexo-abbrlink / hexo-addlink。若未写 `pathname`，用此值预填，便于把 `archives/cb933e30.html` 迁成 `/post/cb933e30` |
+| pathname   | 自定义路径名            | 与新建文章相同；发布后地址为 `/post/[自定义路径名]`。优先于 `slug` / `url` / `abbrlink` |
+| slug       | 自定义路径名            | Hugo 的 slug。未写 `pathname` 时用此值预填，对应 `permalinks.post = "/post/:slug"` |
+| url        | 自定义路径名            | 仅识别单段路径或 `/post/<slug>`，不会解析 `/:year/:month/:title` 一类模板 |
+| abbrlink   | 自定义路径名            | hexo-abbrlink / hexo-addlink。若未写 `pathname` / `slug` / `url`，用此值预填，便于把 `archives/cb933e30.html` 迁成 `/post/cb933e30` |
 
 选择文件后，会弹出确认窗口（含自定义路径名，可改预填值），您可以在这里继续编辑或修改信息：
 
