@@ -41,7 +41,10 @@ test.describe('public PageNav jump-to-page (#229)', () => {
 
   test('jump to a far middle page updates the URL', async ({ page }) => {
     const far = caseRoot(page, 'far');
-    await expect(far.getByRole('link', { name: '1' })).toHaveAttribute('aria-current', 'page');
+    await expect(far.getByRole('link', { name: '1', exact: true })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
     await jumpFill(far, '90');
     await far.getByRole('button', { name: GO }).click();
     await expect(page).toHaveURL(/\/page\/90$/);
@@ -78,10 +81,21 @@ test.describe('public PageNav jump-to-page (#229)', () => {
 
     await expect(first.locator(JUMP_INPUT)).toBeVisible();
     await expect(first.getByRole('button', { name: GO })).toBeVisible();
-    await expect(first.getByRole('link', { name: '1' })).toHaveAttribute('aria-current', 'page');
-    await expect(middle.getByRole('link', { name: '2' })).toHaveAttribute('aria-current', 'page');
-    await expect(last.getByRole('link', { name: '3' })).toHaveAttribute('aria-current', 'page');
-    await expect(middle.getByRole('link', { name: '1' })).not.toHaveAttribute('aria-current');
+    await expect(first.getByRole('link', { name: '1', exact: true })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
+    await expect(middle.getByRole('link', { name: '2', exact: true })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
+    await expect(last.getByRole('link', { name: '3', exact: true })).toHaveAttribute(
+      'aria-current',
+      'page'
+    );
+    await expect(middle.getByRole('link', { name: '1', exact: true })).not.toHaveAttribute(
+      'aria-current'
+    );
   });
 
   test('edges still disable prev/next after a rejected jump (#331)', async ({ page }) => {
