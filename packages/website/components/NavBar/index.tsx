@@ -152,7 +152,7 @@ export default function (props: {
                 return <Item key={m.id} item={m} currentPath={asPath} />;
               })}
             </ul>
-            <div className="flex nav-action">
+            <div className="flex nav-action ml-auto">
               <button
                 type="button"
                 onClick={() => {

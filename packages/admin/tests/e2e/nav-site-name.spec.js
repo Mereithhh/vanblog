@@ -66,6 +66,13 @@ test.describe('mobile header site name is viewport-centered (#262)', () => {
     await expect(search).toBeVisible();
     await expect(menu).toBeEnabled();
     await expect(search).toBeEnabled();
+
+    const menuBox = await menu.boundingBox();
+    const searchBox = await search.boundingBox();
+    expect(menuBox).toBeTruthy();
+    expect(searchBox).toBeTruthy();
+    expect(menuBox.x).toBeLessThan(MOBILE.width / 3);
+    expect(searchBox.x + searchBox.width).toBeGreaterThan((MOBILE.width * 2) / 3);
   });
 });
 

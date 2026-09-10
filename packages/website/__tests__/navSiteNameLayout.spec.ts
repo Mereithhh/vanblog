@@ -65,6 +65,7 @@ describe("mobile site name markup and CSS (#262)", () => {
     expect(nav).toMatch(
       new RegExp(`${NAV_SITE_NAME_ATTR}=\\{NAV_SITE_NAME_DESKTOP\\}`)
     );
+    expect(nav).toMatch(/nav-action ml-auto/);
     expect(nav).not.toMatch(/translateX\(30px\)/);
     expect(nav).not.toMatch(
       /md:hidden\s+flex-grow text-center\s+flex items-center justify-center/
