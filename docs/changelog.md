@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✨ Features | 新功能
 
+- 后台从 Markdown 导入文章时，确认表单也有与新建文章相同的「自定义路径名」。Front Matter 若有 `pathname` 或 hexo-addlink 的 `abbrlink`，会预填该路径（`abbrlink: cb933e30` → `/post/cb933e30`），仍可改。[#383](https://github.com/Mereithhh/vanblog/issues/383)
 - 可通过环境变量 `VAN_BLOG_SERVER_HOST`（或配置项 `server.host`）指定 Nest API 监听网卡。默认留空，与升级前一样监听所有接口；本机 Nginx / Caddy 反代时可设为 `127.0.0.1`，只接受回环连接。官方镜像内置 Caddy 仍反代 `127.0.0.1:3000`。宿主机映射的 80/443 需改编排端口绑定，见反代文档。[#488](https://github.com/Mereithhh/vanblog/issues/488)
 - 前台文章（以及同一套 ByteMD 的后台预览）会渲染 Markdown 里嵌入的常见 HTML：`<u>`、`<font>`、`<center>`、带 `style` 的标签、`<iframe>` 等。`<script>`、事件属性（`onclick` / `onerror`）和 `javascript:` 链接会被消毒去掉；整站脚本仍走定制化，不在文章正文执行。[#490](https://github.com/Mereithhh/vanblog/issues/490)
 - 后台「自定义页面」新建提示、帮助和文件编辑器标明：只托管静态资源、入口是根目录 `index.html`、SPA 需要相对路径；路径必须是单级（如 `/uptime` → `/c/uptime/`）。[#337](https://github.com/Mereithhh/vanblog/issues/337)
@@ -83,6 +84,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- 文章导入与迁移助手：Front Matter 增加 `pathname` / hexo `abbrlink` → 自定义路径名的说明。[#383](https://github.com/Mereithhh/vanblog/issues/383)
 - 环境变量 / 反代 / 部署 FAQ：说明 `VAN_BLOG_SERVER_HOST=127.0.0.1` 以及 Docker 编排把 80/443 绑到 `127.0.0.1` 的用法（同机反代时避免把源站暴露到公网）。[#488](https://github.com/Mereithhh/vanblog/issues/488)
 - 编辑器 / 文章 / FAQ：说明可以在 Markdown 正文里写常见 HTML，以及哪些标签会被消毒去掉。[#490](https://github.com/Mereithhh/vanblog/issues/490)
 - 自定义页面文档 / FAQ：说明只托管静态 HTML/CSS/JS、`/c/<name>/` 的入口是根目录 `index.html`、SPA 需要相对 `base`/`homepage`（uptime-status 一类 zip 的 `/static/...` 会白屏），以及一键部署后如何用反代或独立容器旁挂其他站点。[#337](https://github.com/Mereithhh/vanblog/issues/337)

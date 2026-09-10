@@ -1,4 +1,5 @@
 import { getAllCategories } from '@/services/van-blog/api';
+import { pathnameFromFrontMatter } from '@/services/van-blog/importPathname';
 import { message, Modal } from 'antd';
 import fm from 'front-matter';
 
@@ -73,6 +74,10 @@ export const parseMarkdownFile = async (file, allowNotExistCategory) => {
     content: body,
     updatedAt,
   };
+  const pathname = pathnameFromFrontMatter(attributes);
+  if (pathname) {
+    vals.pathname = pathname;
+  }
   return vals;
 };
 
