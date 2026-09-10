@@ -100,6 +100,8 @@
 
 ### ✏️ Documentation | 文档
 
+- 搜索：说明输入框为 `type="search"`、Safari 关闭自动纠正，以及清除按钮悬停只变颜色和透明度。`docs/features/search.md` [#173](https://github.com/Mereithhh/vanblog/issues/173)
+- FAQ：新增「搜索框清除按钮动画很怪」，说明 `type="search"`、Safari 输入属性和清除按钮动效。`docs/faq/usage.md` [#173](https://github.com/Mereithhh/vanblog/issues/173)
 - 定制化 / 社交媒体：后台文案与文档对齐为「定制化」「社交媒体」（不再写「客制化」「联系方式」）。`docs/advanced/customizing.md`、`docs/faq/usage.md`、`docs/features/social.md` [#197](https://github.com/Mereithhh/vanblog/issues/197)
 - 分类 / 标签：后台改名按钮、弹窗标题和确认文案统一为「重命名」（不再写「修改分类」「批量改名」）。`docs/features/tag.md`、`docs/faq/usage.md` [#194](https://github.com/Mereithhh/vanblog/issues/194)
 - 文章 / 标签：说明前台文章页底部标签链接前有标签图标。[#178](https://github.com/Mereithhh/vanblog/issues/178)
