@@ -18,6 +18,16 @@ import { addWaterMarkToIMG } from 'src/utils/watermark';
 import { checkTrue } from 'src/utils/checkTrue';
 import { compressExt, compressImg, resolveCompressFormat } from 'src/utils/imgCompress';
 import { normalizeCustomPageRel } from 'src/utils/customPagePath';
+import {
+  applyImageUrlMap,
+  classifyImageUrl,
+  collectSiteHosts,
+  emptyTransferResult,
+  extractImageRefs,
+  filenameFromRemote,
+  looksLikeImage,
+  TransferRemoteResult,
+} from 'src/utils/transferRemoteImages';
 @Injectable()
 export class StaticProvider {
   constructor(
@@ -130,18 +140,99 @@ export class StaticProvider {
     }
   }
   async fetchImg(link: string): Promise<Buffer | null> {
-    try {
+    const fetched = await this.fetchRemoteImage(link);
+    return fetched?.buffer || null;
+  }
+
+  async fetchRemoteImage(
+    link: string,
+  ): Promise<{ buffer: Buffer; contentType?: string } | null> {
+    const headers = {
+      'User-Agent': 'Mozilla/5.0 (compatible; VanBlog/1.0; +https://vanblog.mereith.com)',
+      Accept: 'image/avif,image/webp,image/apng,image/*,*/*;q=0.8',
+    };
+    const tryGet = async (url: string) => {
       const res = await axios({
         method: 'GET',
-        url: encodeURI(link),
+        url,
         responseType: 'arraybuffer',
+        timeout: 15000,
+        maxRedirects: 5,
+        headers,
       });
-
-      return res.data;
+      const contentType = String(res.headers?.['content-type'] || '');
+      return {
+        buffer: Buffer.isBuffer(res.data) ? res.data : Buffer.from(res.data),
+        contentType,
+      };
+    };
+    try {
+      return await tryGet(link);
     } catch (err) {
-      console.log(err);
-      return null;
+      try {
+        return await tryGet(encodeURI(link));
+      } catch (retryErr) {
+        console.log(retryErr);
+        return null;
+      }
     }
+  }
+
+  async transferRemoteImages(
+    content: string,
+    opts: { siteHosts?: string[]; siteBaseUrl?: string } = {},
+  ): Promise<TransferRemoteResult> {
+    const source = content || '';
+    if (!source.trim()) {
+      return emptyTransferResult(source);
+    }
+    const stored = await this.getAll('img', 'public');
+    const knownRealPaths = (stored || []).map((item) => item.realPath).filter(Boolean);
+    const siteHosts = collectSiteHosts(opts.siteBaseUrl, opts.siteHosts);
+    const refs = extractImageRefs(source);
+    const uniqueUrls = [...new Set(refs.map((ref) => ref.url).filter(Boolean))];
+    const transferred: TransferRemoteResult['transferred'] = [];
+    const skipped: TransferRemoteResult['skipped'] = [];
+    const failed: TransferRemoteResult['failed'] = [];
+    const urlMap = new Map<string, string>();
+
+    for (const url of uniqueUrls) {
+      const classified = classifyImageUrl(url, { siteHosts, knownRealPaths });
+      if (classified.kind === 'skip') {
+        skipped.push({ url, reason: classified.reason || 'skip' });
+        continue;
+      }
+      try {
+        const fetched = await this.fetchRemoteImage(url);
+        if (!fetched || !looksLikeImage(fetched.buffer, fetched.contentType)) {
+          failed.push({ url, reason: 'download-failed' });
+          continue;
+        }
+        const originalname = filenameFromRemote(url, fetched.contentType);
+        const uploaded = await this.upload(
+          { originalname, buffer: fetched.buffer },
+          'img',
+          false,
+          undefined,
+          { withWaterMark: true },
+        );
+        if (!uploaded?.src) {
+          failed.push({ url, reason: 'upload-failed' });
+          continue;
+        }
+        urlMap.set(url, uploaded.src);
+        transferred.push({ from: url, to: uploaded.src });
+      } catch (err) {
+        failed.push({ url, reason: 'error' });
+      }
+    }
+
+    return {
+      content: applyImageUrlMap(source, urlMap),
+      transferred,
+      skipped,
+      failed,
+    };
   }
   async getImgInfoByLink(link: string) {
     const buffer = await this.fetchImg(link);

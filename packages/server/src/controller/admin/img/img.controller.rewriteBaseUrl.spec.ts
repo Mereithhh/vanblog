@@ -21,6 +21,7 @@ describe('ImgController.rewriteBaseUrl (#475)', () => {
       articleProvider as any,
       draftProvider as any,
       isrProvider as any,
+      {} as any,
     );
     return { controller, articleProvider, draftProvider, isrProvider };
   }
