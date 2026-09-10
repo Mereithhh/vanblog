@@ -3,7 +3,7 @@ import { StaticType, StoragePath } from 'src/types/setting.dto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { config } from 'src/config';
-import { imageSize } from 'image-size';
+import { fallbackTypeFromName, safeImageSize } from 'src/utils/imageMeta';
 import { formatBytes } from 'src/utils/size';
 import { PicGo } from 'picgo';
 import { ImgMeta } from 'src/types/img';
@@ -53,7 +53,7 @@ export class PicgoProvider {
     }
   }
   async saveFile(fileName: string, buffer: Buffer, type: StaticType) {
-    const result = imageSize(buffer);
+    const result = safeImageSize(buffer, fallbackTypeFromName(fileName));
     const byteLength = buffer.byteLength;
 
     const meta: ImgMeta = { ...result, size: formatBytes(byteLength) };

@@ -27,9 +27,10 @@ function createProvider(staticSetting: any) {
     getStaticSetting: async () => staticSetting,
   };
   const localProvider = {
-    saveFile: jest.fn(async (fileName: string, buffer: Buffer) => ({
+    saveFile: jest.fn(async (fileName: string, buffer: Buffer, type: string) => ({
       realPath: `/static/img/${fileName}`,
       meta: { type: fileName.split('.').pop(), width: 1, height: 1, size: '1 B' },
+      type,
     })),
   };
   const provider = new StaticProvider(
@@ -72,10 +73,10 @@ describe('StaticProvider upload compress format (#423)', () => {
     });
     const res = await provider.upload(pngFile, 'img');
     expect(mockedCompressImg).toHaveBeenCalledWith(pngFile.buffer, 'avif');
-    const [fileName, buffer, type] = localProvider.saveFile.mock.calls[0];
-    expect(fileName).toMatch(/\.shot\.avif$/);
-    expect(buffer.equals(Buffer.from('AVIF-ENCODED'))).toBe(true);
-    expect(type).toBe('img');
+    const call = localProvider.saveFile.mock.calls[0];
+    expect(call[0]).toMatch(/\.shot\.avif$/);
+    expect(call[1].equals(Buffer.from('AVIF-ENCODED'))).toBe(true);
+    expect(call[2]).toBe('img');
     expect(res.src).toMatch(/\.avif$/);
     expect(saved[0].fileType).toBe('avif');
   });

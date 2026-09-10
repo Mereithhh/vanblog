@@ -3,7 +3,7 @@ import { StaticType, StoragePath } from 'src/types/setting.dto';
 import * as fs from 'fs';
 import * as path from 'path';
 import { config } from 'src/config';
-import { imageSize } from 'image-size';
+import { fallbackTypeFromName, safeImageSize } from 'src/utils/imageMeta';
 import { formatBytes } from 'src/utils/size';
 import { ImgMeta } from 'src/types/img';
 import { isProd } from 'src/utils/isProd';
@@ -69,7 +69,7 @@ export class LocalProvider {
         realPath = `/${fileName}`;
       }
     }
-    const result = imageSize(buffer);
+    const result = safeImageSize(buffer, fallbackTypeFromName(fileName));
     const byteLength = buffer.byteLength;
 
     fs.writeFileSync(srcPath, buffer);

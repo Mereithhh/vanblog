@@ -45,7 +45,7 @@ describe('SettingProvider static compressFormat (#423)', () => {
     const model = createMemorySettingModel();
     const provider = new SettingProvider(model as any, { initDriver: jest.fn() } as any, {} as any);
 
-    await provider.updateStaticSetting({ compressFormat: 'AVIF' });
+    await provider.updateStaticSetting({ compressFormat: 'AVIF' as any });
     expect((await provider.getStaticSetting()).compressFormat).toBe('avif');
 
     await provider.updateStaticSetting({ compressFormat: 'webp' });

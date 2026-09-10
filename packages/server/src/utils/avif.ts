@@ -4,8 +4,9 @@ import path from 'path';
 
 export const AVIF_QUALITY = 50;
 
-export type SharpAvif = (input: Buffer) => {
+export type SharpEncoder = (input: Buffer) => {
   avif: (opts: { quality: number }) => { toBuffer: () => Promise<Buffer> };
+  webp: (opts: { quality: number }) => { toBuffer: () => Promise<Buffer> };
 };
 
 /**
@@ -23,12 +24,12 @@ export function sharpAvifCandidates(): string[] {
   ];
 }
 
-export function tryLoadSharp(): SharpAvif | null {
+export function tryLoadSharp(): SharpEncoder | null {
   for (const id of sharpAvifCandidates()) {
     try {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const mod = require(id);
-      const sharp = (mod && (mod.default || mod)) as SharpAvif;
+      const sharp = (mod && (mod.default || mod)) as SharpEncoder;
       if (typeof sharp === 'function') {
         return sharp;
       }
