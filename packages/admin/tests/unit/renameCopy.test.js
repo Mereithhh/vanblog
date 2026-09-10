@@ -17,7 +17,8 @@ const usageFaq = readFileSync(path.join(repoRoot, 'docs/faq/usage.md'), 'utf8');
 
 describe('admin rename copy (#194)', () => {
   it('uses 重命名 for category trigger, modal title, and confirm', () => {
-    assert.match(categorySrc, /trigger=\{<a key=\{'editC' \+ record\.name\}>重命名<\/a>\}/);
+    assert.match(categorySrc, /data-category-rename=\{String\(record\.name\)\}/);
+    assert.match(categorySrc, />重命名<\/a>/);
     assert.match(categorySrc, /title=\{`重命名分类 "\$\{record\.name\}"`\}/);
     assert.match(categorySrc, /确定重命名分类 "\$\{record\.name\}" 吗？/);
     assert.doesNotMatch(categorySrc, /修改分类 "/);
@@ -26,7 +27,8 @@ describe('admin rename copy (#194)', () => {
   });
 
   it('uses 重命名 for tag trigger, modal title, and confirm', () => {
-    assert.match(tagSrc, /trigger=\{<a key=\{'editC' \+ record\.name\}>重命名<\/a>\}/);
+    assert.match(tagSrc, /data-tag-rename=\{String\(record\.name\)\}/);
+    assert.match(tagSrc, />重命名<\/a>/);
     assert.match(tagSrc, /title=\{`重命名标签 "\$\{record\.name\}"`\}/);
     assert.match(tagSrc, /确定重命名标签 "\$\{record\.name\}" 为 "\$\{values\.newName\}" 吗？/);
     assert.doesNotMatch(tagSrc, /批量改名/);

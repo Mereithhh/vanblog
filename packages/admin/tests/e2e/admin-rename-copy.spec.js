@@ -67,8 +67,12 @@ async function mockRenameApis(page, store) {
   });
 }
 
-function renameLinkInRow(page, name) {
-  return page.locator('tr', { hasText: name }).getByRole('link', { name: '重命名', exact: true });
+function categoryRenameLink(page, name) {
+  return page.locator(`.ant-table-tbody [data-category-rename="${name}"]`);
+}
+
+function tagRenameLink(page, name) {
+  return page.locator(`.ant-table-tbody [data-tag-rename="${name}"]`);
 }
 
 test.describe('admin rename copy (#194)', () => {
@@ -81,13 +85,14 @@ test.describe('admin rename copy (#194)', () => {
     await expect(page.getByText('分类管理').first()).toBeVisible({ timeout: 30_000 });
     await expect(page.getByText('随笔', { exact: true }).first()).toBeVisible();
 
-    await expect(renameLinkInRow(page, '随笔')).toBeVisible();
-    await expect(renameLinkInRow(page, '教程')).toBeVisible();
+    await expect(categoryRenameLink(page, '随笔')).toBeVisible();
+    await expect(categoryRenameLink(page, '教程')).toBeVisible();
+    await expect(categoryRenameLink(page, '随笔')).toHaveText('重命名');
     await expect(page.getByRole('link', { name: '批量改名' })).toHaveCount(0);
     await expect(page.getByRole('link', { name: '修改', exact: true })).toHaveCount(0);
     await expect(page.getByText('修改分类')).toHaveCount(0);
 
-    await renameLinkInRow(page, '随笔').click();
+    await categoryRenameLink(page, '随笔').click();
     const categoryModal = page.locator('.ant-modal').filter({ hasText: '重命名分类 "随笔"' });
     await expect(categoryModal).toBeVisible();
     await expect(categoryModal.locator('.ant-modal-title')).toHaveText('重命名分类 "随笔"');
@@ -99,12 +104,13 @@ test.describe('admin rename copy (#194)', () => {
     await expect(page.getByText('标签管理').first()).toBeVisible({ timeout: 30_000 });
     await expect(page.getByText('随笔标签', { exact: true }).first()).toBeVisible();
 
-    await expect(renameLinkInRow(page, '随笔标签')).toBeVisible();
-    await expect(renameLinkInRow(page, '教程标签')).toBeVisible();
+    await expect(tagRenameLink(page, '随笔标签')).toBeVisible();
+    await expect(tagRenameLink(page, '教程标签')).toBeVisible();
+    await expect(tagRenameLink(page, '随笔标签')).toHaveText('重命名');
     await expect(page.getByRole('link', { name: '批量改名' })).toHaveCount(0);
     await expect(page.getByText('批量修改标签')).toHaveCount(0);
 
-    await renameLinkInRow(page, '随笔标签').click();
+    await tagRenameLink(page, '随笔标签').click();
     const tagModal = page.locator('.ant-modal').filter({ hasText: '重命名标签 "随笔标签"' });
     await expect(tagModal).toBeVisible();
     await expect(tagModal.locator('.ant-modal-title')).toHaveText('重命名标签 "随笔标签"');

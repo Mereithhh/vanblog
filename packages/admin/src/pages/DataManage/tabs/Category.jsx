@@ -128,7 +128,7 @@ function createColumns({ onMove, rows }) {
   {
     title: '操作',
     valueType: 'option',
-    width: 200,
+    width: 240,
     render: (text, record, _, action) => [
       <a
         key="viewCategory"
@@ -141,7 +141,7 @@ function createColumns({ onMove, rows }) {
       <ModalForm
         key={`editCateoryC%{${record.name}}`}
         title={`重命名分类 "${record.name}"`}
-        trigger={<a key={'editC' + record.name}>重命名</a>}
+        trigger={<a key={'editC' + record.name} data-category-rename={String(record.name)}>重命名</a>}
         autoFocusFirstInput
         initialValues={{
           password: record.password,

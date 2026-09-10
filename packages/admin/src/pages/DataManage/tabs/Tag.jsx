@@ -23,7 +23,7 @@ const columns = [
   {
     title: '操作',
     valueType: 'option',
-    width: 200,
+    width: 240,
     render: (text, record, _, action) => [
       <a
         key="viewTag"
@@ -36,7 +36,7 @@ const columns = [
       <ModalForm
         key={`editCateoryC%{${record.name}}`}
         title={`重命名标签 "${record.name}"`}
-        trigger={<a key={'editC' + record.name}>重命名</a>}
+        trigger={<a key={'editC' + record.name} data-tag-rename={String(record.name)}>重命名</a>}
         autoFocusFirstInput
         submitTimeout={3000}
         onFinish={async (values) => {
