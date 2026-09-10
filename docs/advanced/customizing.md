@@ -66,7 +66,7 @@ VanBlog 没有单独的 Umami 开关。把官方跟踪脚本放到定制化里�
 ></script>
 ```
 
-自建 Umami 时把 `src` 换成你的脚本地址。保存前确认 **站点配置 / 布局设置** 里「是否开启客制化功能」为开启。
+自建 Umami 时把 `src` 换成你的脚本地址。保存前确认 **站点配置 / 布局设置** 里「是否开启定制化功能」为开启。
 
 也可以把同样的标签放到 **自定义 HTML (body)**。**自定义 Script** 只能写 JavaScript（不是 HTML），需要自己 `createElement('script')` 再设置 `data-website-id`。
 

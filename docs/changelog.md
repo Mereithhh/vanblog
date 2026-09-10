@@ -31,13 +31,14 @@ redirectFrom: /ref/changelog.html
 - 后台「站点配置 / 高级设置」将「Google Analysis ID」改为「Google Analytics 测量 ID」，占位与 tooltip 标明 GA4 的 `G-XXXXXXXXX`（旧版 `UA-` 也可），并提示大陆访问 Google 可能导致控制台「尚未收到数据」。前台注入 gtag 前会去掉首尾空白，若误粘贴整段脚本或 URL 则抽出 `G-` / `UA-` ID。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - 后台「系统设置 / 评论设置」SMTP 表单标明博主邮箱（通知收件人）、发件地址（From）和 SMTP 授权码/应用专用密码的用途，便于换成自定义域名邮箱；仍走内嵌 Waline，不另建邮件系统。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 后台新建 / 修改 / 导入文章和草稿时，标签输入框支持一次粘贴或输入多个标签：用英文/中文逗号、分号或换行分隔。空格不会拆开，以便「machine learning」这类多词标签保持完整。[#489](https://github.com/Mereithhh/vanblog/issues/489)
-- 后台「数据管理 / 联系方式」支持自定义联系方式：除 GitHub / 邮箱 / 微信 / Bilibili / Gitee 外，可添加 Telegram、Twitter/X 等任意链接，填写显示名称、URL，以及可选的图标 URL。内置类型仍每种一条，自定义可以有多条；已有站点的旧数据不用改。[#394](https://github.com/Mereithhh/vanblog/issues/394)
+- 后台「数据管理 / 社交媒体」支持自定义社交媒体：除 GitHub / 邮箱 / 微信 / Bilibili / Gitee 外，可添加 Telegram、Twitter/X 等任意链接，填写显示名称、URL，以及可选的图标 URL。内置类型仍每种一条，自定义可以有多条；已有站点的旧数据不用改。[#394](https://github.com/Mereithhh/vanblog/issues/394)
 - 后台「站点配置 / 布局设置」可改友链页介绍、友链页底部 Markdown（申领要求 / 本站信息）以及关于页标题。留空仍用升级前的硬编码中文；底部可用 `{{siteName}}`、`{{description}}`、`{{url}}`、`{{logo}}`。关于页正文仍在文章管理「编辑关于」里改。[#373](https://github.com/Mereithhh/vanblog/issues/373)
 - 前台分类列表把原来的 `+` 改成 `>` 箭头（展开后旋转成 V），点分类名称、篇数或箭头都能展开 / 收起。布局设置增加「分类页默认展开全部分类」（默认仍全部收起）；页上还有「全部展开 / 全部收起」。单篇分类页、标签页和时间线不受这项默认值影响。[#260](https://github.com/Mereithhh/vanblog/issues/260)
 - 后台「站点配置 / 布局设置」增加「每页文章数」：前台首页和 `/page/n` 分页按该数字展示文章。默认仍是 5 篇（与升级前硬编码一致），可在 1–50 之间调整；超出范围会夹紧，避免一次拉太多文章。[#346](https://github.com/Mereithhh/vanblog/issues/346)
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 后台文案将「客制化」改为「定制化」、「联系方式」改为「社交媒体」，与文档用语一致。系统设置选项卡、布局设置开关/提示、定制化保存确认，以及数据管理选项卡、社交媒体表格标题和自定义条目校验文案均已同步。路由 key（`customizing` / `socials`）和字段名不变。[#197](https://github.com/Mereithhh/vanblog/issues/197)
 - 前台文章页和文章列表的阅读数、评论数在数据加载完成前显示 `...`，不再先闪 `0`；加载完成后显示真实数字（包括确实为 0）。[#230](https://github.com/Mereithhh/vanblog/issues/230)
 - 手机端顶栏网站名改为相对整个页面宽度居中，不再只在汉堡菜单右侧的剩余栏里居中（短站名时错位更明显）。电脑端左侧网站名 / logo 布局不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 前台分页在第一页时「上一页」、最后一页时「下一页」不再可点：仍显示但禁用（无链接、无悬停高亮），不能翻出范围。页码链接、当前页选中样式和「每页文章数」不变。[#331](https://github.com/Mereithhh/vanblog/issues/331)
@@ -103,6 +104,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- 定制化 / 社交媒体：后台文案与文档对齐为「定制化」「社交媒体」（不再写「客制化」「联系方式」）。`docs/advanced/customizing.md`、`docs/faq/usage.md`、`docs/features/social.md` [#197](https://github.com/Mereithhh/vanblog/issues/197)
 - 文章 / 标签：说明前台文章页底部标签链接前有标签图标。[#178](https://github.com/Mereithhh/vanblog/issues/178)
 - 文章 / FAQ：说明前台时间线按年再按月归档，只有有文章的月份会显示。`docs/features/article.md`、`docs/faq/usage.md` [#302](https://github.com/Mereithhh/vanblog/issues/302)
 - 文章 / FAQ / SEO：说明可选题头图的设置位置、上传或填写 URL、前台展示以及 `og:image` / `twitter:image` 分享预览。导入 Front Matter 可读 `cover` / `image`。[#288](https://github.com/Mereithhh/vanblog/issues/288)
@@ -128,7 +130,7 @@ redirectFrom: /ref/changelog.html
 - FAQ / 访客统计 / 站点配置：说明 Google Analytics 测量 ID 填 `G-XXXXXXXXX`、后台路径，以及「尚未收到数据」常见原因（大陆访问 Google API、需等待或看实时）。Umami 等第三方统计通过定制化「自定义 HTML (head)」插入，不做单独集成。[#350](https://github.com/Mereithhh/vanblog/issues/350)
 - FAQ / 评论：说明如何在「系统设置 / 评论设置」更换 Waline 通知邮箱、使用自定义域名邮箱（SMTP + 博主邮箱 + 发件地址）。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 文章 / 草稿 / 标签：标签输入框支持粘贴逗号、分号或换行分隔的多个标签；空格不会拆开多词标签。[#489](https://github.com/Mereithhh/vanblog/issues/489)
-- 社交媒体：可在联系方式里添加自定义条目（显示名称 + 链接 + 可选图标），不再仅限内置的几种。[#394](https://github.com/Mereithhh/vanblog/issues/394)
+- 社交媒体：可在「数据管理 / 社交媒体」里添加自定义条目（显示名称 + 链接 + 可选图标），不再仅限内置的几种。[#394](https://github.com/Mereithhh/vanblog/issues/394)
 - FAQ / 友情链接 / 关于 / 站点配置：布局设置可改友链页介绍与底部 Markdown、关于页标题；关于正文仍走「编辑关于」。[#373](https://github.com/Mereithhh/vanblog/issues/373)
 - FAQ / 站点配置：可在布局设置里改前台「每页文章数」（默认 5，范围 1–50）。[#346](https://github.com/Mereithhh/vanblog/issues/346)
 - FAQ：域名变更后如何改写文章图片链接，以及如何正确设置网站 Url / 静态访问地址。[#475](https://github.com/Mereithhh/vanblog/issues/475)

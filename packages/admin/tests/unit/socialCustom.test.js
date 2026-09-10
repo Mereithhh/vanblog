@@ -15,7 +15,7 @@ describe('admin custom social editor (#394)', () => {
     assert.match(socialSrc, /显示名称/);
     assert.match(socialSrc, /dataIndex: 'icon'/);
     assert.match(socialSrc, /图标 URL/);
-    assert.match(socialSrc, /自定义联系方式需要填写显示名称/);
+    assert.match(socialSrc, /自定义社交媒体需要填写显示名称/);
     assert.match(socialSrc, /CUSTOM_SOCIAL_TYPE = 'custom'/);
   });
 

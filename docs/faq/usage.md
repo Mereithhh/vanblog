@@ -102,7 +102,7 @@ Hugo 里常用 `permalinks.post = "/post/:slug"`。VanBlog **没有**全局固�
 1. 新数据流默认报表可能要等几小时到一天。先看 Analytics 的 **实时** 报表，并用能访问 Google 的网络打开自己的站点。
 1. 广告拦截扩展会拦 gtag。本地 `next dev` 也不会注入这段脚本，请用 Docker / 生产前台验证。
 
-需要国内可访问的统计时，不必等 VanBlog 做内置 Umami：到 **站点管理 / 系统设置 / 定制化** 的「自定义 HTML (head)」粘贴 Umami 官方脚本即可，见 [定制化](../advanced/customizing.md#接入-umami-等第三方统计)。布局设置里「是否开启客制化功能」需保持开启。
+需要国内可访问的统计时，不必等 VanBlog 做内置 Umami：到 **站点管理 / 系统设置 / 定制化** 的「自定义 HTML (head)」粘贴 Umami 官方脚本即可，见 [定制化](../advanced/customizing.md#接入-umami-等第三方统计)。布局设置里「是否开启定制化功能」需保持开启。
 
 相关：[访客统计](../features/visitor.md#进阶分析)、[站点配置](../reference/config.md)。
 

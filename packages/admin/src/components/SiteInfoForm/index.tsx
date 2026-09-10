@@ -324,13 +324,13 @@ export default function (props: {
           />
           <ProFormSelect
             name={'enableCustomizing'}
-            label="是否开启客制化功能"
+            label="是否开启定制化功能"
             placeholder={'开启'}
             valueEnum={{
               true: '开启',
               false: '关闭',
             }}
-            tooltip={'默认开启，关闭后即使通过客制化面板，自定义了 CSS、Script、HTML 也不会生效。'}
+            tooltip={'默认开启，关闭后即使通过定制化面板，自定义了 CSS、Script、HTML 也不会生效。'}
           />
           <ProFormSelect
             name={'showRSS'}
