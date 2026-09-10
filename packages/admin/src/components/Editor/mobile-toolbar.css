@@ -1,0 +1,75 @@
+/*
+ * #504 — curated tools for ByteMD tab mode (container < 800px).
+ * Keep the sticky toolbar from #298 reachable; scroll the tool row
+ * instead of growing the page sideways. Do not restyle the desktop
+ * split toolbar (no mobile row is mounted there).
+ */
+.vanblog-mobile-toolbar {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  vertical-align: top;
+  margin-left: 4px;
+}
+
+.vanblog-mobile-toolbar .vanblog-mobile-tool {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  margin: 0 2px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+.vanblog-mobile-toolbar .vanblog-mobile-tool svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.vanblog-mobile-toolbar .vanblog-mobile-tool:hover,
+.vanblog-mobile-toolbar .vanblog-mobile-tool:focus-visible {
+  background-color: #e1e4e8;
+}
+
+.vanblog-mobile-toolbar .vanblog-mobile-heading {
+  max-width: 72px;
+  height: 28px;
+  margin: 0 4px 0 2px;
+  border: 1px solid #e1e4e8;
+  border-radius: 4px;
+  background: #fff;
+  color: inherit;
+  font-size: 12px;
+}
+
+.dark .vanblog-mobile-toolbar .vanblog-mobile-heading {
+  background: rgb(41, 43, 43);
+  border-color: #444;
+}
+
+.dark .vanblog-mobile-toolbar .vanblog-mobile-tool:hover,
+.dark .vanblog-mobile-toolbar .vanblog-mobile-tool:focus-visible {
+  background-color: #3a3d3d;
+}
+
+.editor-shell .bytemd-toolbar:has(.vanblog-mobile-toolbar) {
+  overflow-x: auto;
+  overflow-y: hidden;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+}
+
+.editor-shell .bytemd-toolbar:has(.vanblog-mobile-toolbar) .bytemd-toolbar-left,
+.editor-shell .bytemd-toolbar:has(.vanblog-mobile-toolbar) .bytemd-toolbar-right {
+  float: none;
+  display: inline-flex;
+  align-items: center;
+  vertical-align: middle;
+}
