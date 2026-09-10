@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import PostCard from "../../components/PostCard";
 import Toc from "../../components/Toc";
 import { Article } from "../../types/article";
+import { articleShareImageMeta } from "../../utils/articleCover";
 import { getArticlePath } from "../../utils/getArticlePath";
 import { LayoutProps } from "../../utils/getLayoutProps";
 import { getPostPagesProps } from "../../utils/getPageProps";
@@ -30,6 +31,7 @@ export interface PostPagesProps {
     pathname?: string;
   };
   showSubMenu: "true" | "false";
+  siteUrl: string;
 }
 const PostPages = (props: PostPagesProps) => {
   const [content, setContent] = useState(props?.article?.content || "");
@@ -55,6 +57,14 @@ const PostPages = (props: PostPagesProps) => {
           name="keywords"
           content={getArticlesKeyWord([props.article]).join(",")}
         ></meta>
+        {articleShareImageMeta(props.article.cover, props.siteUrl).map(
+          (tag, index) =>
+            "property" in tag ? (
+              <meta key={`og-${index}`} property={tag.property} content={tag.content} />
+            ) : (
+              <meta key={`tw-${index}`} name={tag.name} content={tag.content} />
+            )
+        )}
       </Head>
       <PostCard
         showEditButton={props.layoutProps.showEditButton === "true"}
@@ -81,6 +91,7 @@ const PostPages = (props: PostPagesProps) => {
         private={props.article.private}
         author={props.author}
         tags={props.article.tags}
+        cover={props.article.cover}
         pre={props.pre}
         next={props.next}
         enableComment={props.layoutProps.enableComment}

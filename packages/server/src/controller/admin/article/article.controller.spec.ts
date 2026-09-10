@@ -89,3 +89,33 @@ describe('ArticleController.create pathname (#383)', () => {
     expect(result).toEqual({ statusCode: 200, data: { id: 42, pathname: 'cb933e30' } });
   });
 });
+
+describe('ArticleController.create/update cover (#288)', () => {
+  it('forwards optional cover on create and update', async () => {
+    const articleProvider = {
+      create: jest.fn().mockResolvedValue({ id: 288, cover: '/static/img/hero.webp' }),
+      getById: jest.fn().mockResolvedValue({ id: 288, pathname: 'cover-test' }),
+      updateById: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
+    };
+    const isrProvider = { activeAll: jest.fn() };
+    const pipelineProvider = { dispatchEvent: jest.fn().mockResolvedValue([]) };
+    const controller = new ArticleController(
+      articleProvider as any,
+      isrProvider as any,
+      pipelineProvider as any,
+    );
+
+    await controller.create({ user: { nickname: 'admin' } }, {
+      title: '题头图',
+      category: '测试',
+      cover: '/static/img/hero.webp',
+    } as any);
+    expect(articleProvider.create).toHaveBeenCalledWith(
+      expect.objectContaining({ cover: '/static/img/hero.webp' }),
+    );
+
+    await controller.update(288 as any, { cover: '' } as any);
+    expect(articleProvider.updateById).toHaveBeenCalledWith(288, expect.objectContaining({ cover: '' }));
+  });
+});
+

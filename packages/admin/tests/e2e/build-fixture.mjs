@@ -73,6 +73,11 @@ await bundle(path.join(fixtures, 'page-nav-app.tsx'), path.join(outdir, 'page-na
   `--alias:next/router=${path.join(fixtures, 'next-router.ts')}`,
   '--jsx=automatic',
 ]);
+await bundle(path.join(fixtures, 'article-cover-app.tsx'), path.join(outdir, 'article-cover.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  '--jsx=automatic',
+]);
 await esbuild.build({
   entryPoints: [path.join(fixtures, 'nav-bar-app.tsx')],
   outfile: path.join(outdir, 'nav-bar.js'),
@@ -111,6 +116,7 @@ await cp(
 );
 await cp(path.join(fixtures, 'social-card.html'), path.join(outdir, 'social-card.html'));
 await cp(path.join(fixtures, 'page-nav.html'), path.join(outdir, 'page-nav.html'));
+await cp(path.join(fixtures, 'article-cover.html'), path.join(outdir, 'article-cover.html'));
 await cp(path.join(fixtures, 'nav-bar.html'), path.join(outdir, 'nav-bar.html'));
 await cp(
   path.resolve(adminRoot, '../website/components/NavBar/siteNameLayout.css'),

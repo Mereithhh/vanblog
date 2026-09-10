@@ -48,6 +48,7 @@ export class ArticleProvider {
     author: 1,
     copyright: 1,
     pathname: 1,
+    cover: 1,
   };
 
   adminView = {
@@ -69,6 +70,7 @@ export class ArticleProvider {
     author: 1,
     copyright: 1,
     pathname: 1,
+    cover: 1,
   };
 
   listView = {
@@ -88,6 +90,7 @@ export class ArticleProvider {
     author: 1,
     copyright: 1,
     pathname: 1,
+    cover: 1,
   };
 
   toPublic(oldArticles: Article[]) {

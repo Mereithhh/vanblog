@@ -63,7 +63,7 @@ module.exports = {
   projects: [
     {
       name: 'admin-app',
-      testMatch: /admin-editor-.*\.spec\.js|admin-login-expired\.spec\.js|admin-import-pathname\.spec\.js|admin-article-hidden\.spec\.js|custom-page-info\.spec\.js|custom-page-upload\.spec\.js|admin-log-audit\.spec\.js|admin-cache-headers\.spec\.js/,
+      testMatch: /admin-editor-.*\.spec\.js|admin-login-expired\.spec\.js|admin-import-pathname\.spec\.js|admin-article-hidden\.spec\.js|admin-article-cover\.spec\.js|custom-page-info\.spec\.js|custom-page-upload\.spec\.js|admin-log-audit\.spec\.js|admin-cache-headers\.spec\.js/,
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${adminPort}`,
@@ -72,7 +72,7 @@ module.exports = {
     },
     {
       name: 'bytemd-fixture',
-      testMatch: /mermaid-editor\.spec\.js|toc-heading\.spec\.js|toc-drawer\.spec\.js|footnote-nav\.spec\.js|markdown-link\.spec\.js|code-block-lines\.spec\.js|social-card\.spec\.js|page-nav-edges\.spec\.js|page-nav-jump\.spec\.js|nav-site-name\.spec\.js/,
+      testMatch: /mermaid-editor\.spec\.js|toc-heading\.spec\.js|toc-drawer\.spec\.js|footnote-nav\.spec\.js|markdown-link\.spec\.js|code-block-lines\.spec\.js|social-card\.spec\.js|page-nav-edges\.spec\.js|page-nav-jump\.spec\.js|nav-site-name\.spec\.js|article-cover\.spec\.js/,
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${fixturePort}`,

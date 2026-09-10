@@ -178,6 +178,7 @@ export async function getPostPagesProps(
     ...payProps,
     author,
     showSubMenu: layoutProps.showSubMenu,
+    siteUrl: data.meta.siteInfo?.baseUrl || "",
   };
 }
 export async function getPagePagesProps(

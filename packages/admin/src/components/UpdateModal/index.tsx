@@ -5,6 +5,7 @@ import moment from 'moment';
 import { useEffect } from 'react';
 import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
+import CoverImageField from '../CoverImageField';
 import PathnameField from '../PathnameField';
 import TagSelectField from '../TagSelectField';
 
@@ -181,6 +182,7 @@ export default function (props: {
             tooltip="设置后会替换掉文章页底部默认的版权声明文字，留空则根据系统设置中的相关选项进行展示"
             placeholder="设置后会替换掉文章底部默认的版权"
           />
+          <CoverImageField fieldProps={{ onKeyDown: stopMenuKeydown }} />
         </>
       )}
       </div>
