@@ -5,6 +5,7 @@ export const defaultStaticSetting: StaticSetting = {
   picgoConfig: null,
   enableWaterMark: false,
   enableWebp: true,
+  compressFormat: 'webp',
   waterMarkText: null,
   picgoPlugins: null,
 };
@@ -38,6 +39,7 @@ export interface MenuSetting {
 
 export type StorageType = 'picgo' | 'local';
 export type StaticType = 'img' | 'customPage';
+export type CompressFormat = 'webp' | 'avif';
 export interface LoginSetting {
   enableMaxLoginRetry: boolean;
   maxRetryTimes: number;
@@ -100,4 +102,6 @@ export class StaticSetting {
   enableWaterMark: boolean;
   waterMarkText: string;
   enableWebp: boolean;
+  /** Output format when enableWebp is on. Default webp. */
+  compressFormat?: CompressFormat;
 }

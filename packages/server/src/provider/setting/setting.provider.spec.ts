@@ -24,6 +24,43 @@ function createMemorySettingModel(initial: any[] = []) {
   };
 }
 
+describe('SettingProvider static compressFormat (#423)', () => {
+  it('defaults missing compressFormat to webp and persists avif', async () => {
+    const model = createMemorySettingModel();
+    const picgoProvider = { initDriver: jest.fn() };
+    const provider = new SettingProvider(model as any, picgoProvider as any, {} as any);
+
+    const created = await provider.getStaticSetting();
+    expect(created.compressFormat).toBe('webp');
+    expect(created.enableWebp).toBe(true);
+
+    await provider.updateStaticSetting({ compressFormat: 'avif' });
+    const saved = await provider.getStaticSetting();
+    expect(saved.compressFormat).toBe('avif');
+    expect(model.docs[0].value.compressFormat).toBe('avif');
+    expect(picgoProvider.initDriver).toHaveBeenCalled();
+  });
+
+  it('round-trips webp after avif and rejects invalid format values', async () => {
+    const model = createMemorySettingModel();
+    const provider = new SettingProvider(model as any, { initDriver: jest.fn() } as any, {} as any);
+
+    await provider.updateStaticSetting({ compressFormat: 'AVIF' as any });
+    expect((await provider.getStaticSetting()).compressFormat).toBe('avif');
+
+    await provider.updateStaticSetting({ compressFormat: 'webp' });
+    expect((await provider.getStaticSetting()).compressFormat).toBe('webp');
+
+    await expect(provider.updateStaticSetting({ compressFormat: 'jpeg' } as any)).rejects.toThrow(
+      /webp 或 avif/,
+    );
+    expect((await provider.getStaticSetting()).compressFormat).toBe('webp');
+    await expect(provider.updateStaticSetting({ compressFormat: 'heic' } as any)).rejects.toThrow(
+      /webp 或 avif/,
+    );
+  });
+});
+
 describe('SettingProvider waline forceLoginComment', () => {
   it('persists string "true" from the admin select as boolean true', async () => {
     const model = createMemorySettingModel();

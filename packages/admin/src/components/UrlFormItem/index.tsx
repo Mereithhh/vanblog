@@ -83,7 +83,7 @@ export default function (props: {
                   }
                 }}
                 url={dest}
-                accept=".png,.jpg,.jpeg,.webp,.jiff,.gif"
+                accept=".png,.jpg,.jpeg,.webp,.avif,.jiff,.gif"
               />
             </div>
           </div>

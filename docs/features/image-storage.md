@@ -76,9 +76,11 @@ VanBlog 使用 `picgo-core` 配置文件，和桌面版的 `picgo` 的配置文�
 
 ### 自动压缩
 
-无论使用何种图床，VanBlog 都支持上传图片自动压缩为 webp 格式。在编辑器或图片管理中上传图片时，VanBlog 会在收到图片信息的时候，先进行压缩，再保存到对应图床。
+无论使用何种图床，VanBlog 都支持上传图片自动压缩。默认输出 **WebP**；也可以在后台选 **AVIF**（通常更小，现代浏览器已广泛支持）。在编辑器或图片管理中上传图片时，VanBlog 会在收到图片信息的时候，先进行压缩，再保存到对应图床。只影响**新上传**，不会改写已经存好的历史文件。
 
-这个功能默认是开启的，想手动关闭请在后台 `站点管理/系统设置/图床设置` 中，关闭 `自动压缩` 即可。
+这个功能默认是开启的（WebP）。想关闭或改成 AVIF，请在后台 `站点管理/系统设置/图床设置` 中调整 `自动压缩` 和旁边的 `压缩格式`。
+
+**运行时依赖：** WebP 仍用 Alpine 镜像里的 `libwebp-tools`（`cwebp`）。AVIF 优先用 [sharp](https://sharp.pixelplumbing.com/) `0.32.6`（与前台相同；官方 all-in-one 镜像里前台 standalone 自带 musl 预编译）。服务端若在 Alpine 上加载不到可用的 sharp（服务端构建阶段是 Debian），会回退到 `avifenc`（`apk` 包 `libavif-apps`，已写入官方 Dockerfile）。压缩失败时会保留原图，与原先 WebP 失败时的行为一致。
 
 ![自动压缩设置](https://pic.mereith.com/img/6f00ddb9f4051d05aa030cdf6ce3404f.clipboard-2023-04-14.png)
 
