@@ -56,7 +56,7 @@ const App = () => (
     <aside className="toc-e2e-toc" data-toc>
       <MarkdownTocBar content={content} headingOffset={0} />
     </aside>
-    <TocDrawer content={content} />
+    <TocDrawer content={content} headingOffset={0} />
   </div>
 );
 

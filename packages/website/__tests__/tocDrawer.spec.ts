@@ -104,6 +104,7 @@ describe("mobile TOC drawer markup", () => {
     expect(postCard).toMatch(/showToc && <TocDrawer content=\{calContent\} \/>/);
     expect(drawer).toMatch(/shouldShowMobileTocFab\(props\.content\)/);
     expect(drawer).toMatch(/<MarkdownTocBar/);
+    expect(drawer).toMatch(/headingOffset=\{props\.headingOffset \?\? 56\}/);
     expect(drawer).toMatch(/onNavigate=\{\(\) =>/);
     expect(tocBar).toMatch(/onNavigate\?: \(item: NavItem\) => void/);
     expect(tocCore).toMatch(/props\.onNavigate\?\.\(each\)/);
@@ -112,11 +113,15 @@ describe("mobile TOC drawer markup", () => {
   it("uses a native FAB above back-to-top and a right-side dialog", () => {
     expect(drawer).toContain(`aria-label={TOC_DRAWER_OPEN_LABEL}`);
     expect(drawer).toContain(`type="button"`);
-    expect(drawer).toContain(TOC_DRAWER_FAB_ATTR);
-    expect(drawer).toContain(TOC_DRAWER_PANEL_ATTR);
-    expect(drawer).toContain(TOC_DRAWER_OVERLAY_ATTR);
-    expect(drawer).toContain(TOC_DRAWER_ROOT_CLASS);
+    expect(drawer).toContain("data-toc-fab");
+    expect(drawer).toContain("data-toc-drawer");
+    expect(drawer).toContain("data-toc-drawer-overlay");
+    expect(drawer).toContain("TOC_DRAWER_ROOT_CLASS");
     expect(drawer).toContain("lg:hidden");
+    expect(TOC_DRAWER_FAB_ATTR).toBe("data-toc-fab");
+    expect(TOC_DRAWER_PANEL_ATTR).toBe("data-toc-drawer");
+    expect(TOC_DRAWER_OVERLAY_ATTR).toBe("data-toc-drawer-overlay");
+    expect(TOC_DRAWER_ROOT_CLASS).toBe("toc-drawer-root");
     expect(drawer).toContain('role="dialog"');
     expect(drawer).toContain(`aria-label={TOC_DRAWER_TITLE}`);
     expect(TOC_DRAWER_OPEN_LABEL).toBe("打开目录");

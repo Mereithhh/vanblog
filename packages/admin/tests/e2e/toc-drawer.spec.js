@@ -1,6 +1,4 @@
-const { test, expect, devices } = require('@playwright/test');
-
-const mobile = devices['iPhone 12'];
+const { test, expect } = require('@playwright/test');
 
 async function headingMetrics(page, dataId) {
   return page.evaluate((id) => {
@@ -22,8 +20,7 @@ async function headingMetrics(page, dataId) {
 
 test.describe('mobile article TOC drawer (#451)', () => {
   test.use({
-    ...mobile,
-    viewport: mobile.viewport,
+    viewport: { width: 390, height: 844 },
     isMobile: true,
     hasTouch: true,
   });

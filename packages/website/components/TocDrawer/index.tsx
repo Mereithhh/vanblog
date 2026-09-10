@@ -4,18 +4,18 @@ import {
   reduceTocDrawerOpen,
   shouldShowMobileTocFab,
   TOC_DRAWER_CLOSE_LABEL,
-  TOC_DRAWER_FAB_ATTR,
   TOC_DRAWER_FAB_CLASS,
   TOC_DRAWER_OPEN_LABEL,
-  TOC_DRAWER_OVERLAY_ATTR,
-  TOC_DRAWER_PANEL_ATTR,
   TOC_DRAWER_PANEL_CLASS,
   TOC_DRAWER_PANEL_ID,
   TOC_DRAWER_ROOT_CLASS,
   TOC_DRAWER_TITLE,
 } from "./model";
 
-export default function TocDrawer(props: { content: string }) {
+export default function TocDrawer(props: {
+  content: string;
+  headingOffset?: number;
+}) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -26,11 +26,8 @@ export default function TocDrawer(props: { content: string }) {
       }
     };
     document.addEventListener("keydown", onKey);
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = previousOverflow || "auto";
     };
   }, [open]);
 
@@ -42,7 +39,7 @@ export default function TocDrawer(props: { content: string }) {
     <div className={`${TOC_DRAWER_ROOT_CLASS} lg:hidden`}>
       <button
         type="button"
-        {...{ [TOC_DRAWER_FAB_ATTR]: "" }}
+        data-toc-fab
         className={`${TOC_DRAWER_FAB_CLASS} dark:nav-shadow-dark text-gray-600 rounded-xl transform transition-all dark:bg-dark hover:scale-110 fill-dark dark:text-dark`}
         aria-label={TOC_DRAWER_OPEN_LABEL}
         aria-expanded={open}
@@ -64,7 +61,7 @@ export default function TocDrawer(props: { content: string }) {
       {open ? (
         <>
           <div
-            {...{ [TOC_DRAWER_OVERLAY_ATTR]: "" }}
+            data-toc-drawer-overlay
             className="toc-drawer-overlay"
             onClick={() =>
               setOpen((current) => reduceTocDrawerOpen(current, "overlay"))
@@ -72,7 +69,7 @@ export default function TocDrawer(props: { content: string }) {
           />
           <aside
             id={TOC_DRAWER_PANEL_ID}
-            {...{ [TOC_DRAWER_PANEL_ATTR]: "" }}
+            data-toc-drawer
             className={`${TOC_DRAWER_PANEL_CLASS} toc-mobile bg-white dark:bg-dark dark:nav-shadow-dark`}
             role="dialog"
             aria-modal="true"
@@ -91,7 +88,7 @@ export default function TocDrawer(props: { content: string }) {
             </button>
             <MarkdownTocBar
               content={props.content}
-              headingOffset={56}
+              headingOffset={props.headingOffset ?? 56}
               mobile
               onNavigate={() =>
                 setOpen((current) => reduceTocDrawerOpen(current, "select"))
