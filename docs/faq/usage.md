@@ -113,6 +113,12 @@ Hugo 里常用 `permalinks.post = "/post/:slug"`。VanBlog **没有**全局固�
 
 主题切换本身见 [黑暗模式与响应式](../advanced/darkmode.md)。
 
+## 汇编代码块没有高亮
+
+文章里写 ` ```asm `（或 `nasm` / `x86asm`）时，以前几乎没有关键字、寄存器、注释颜色：ByteMD 用的 highlight.js common 集不含汇编。现已补上 Intel/NASM（`asm` / `assembly` / `nasm` / `x86asm` / `intel` / `x86`）和 ARM（`arm` / `armasm`），前台和后台预览同一套。请升级到包含该增强的版本（[#294](https://github.com/Mereithhh/vanblog/issues/294)）。
+
+语法标签见 [编辑器](../features/editor.md#代码高亮)。围栏行号见 [前台代码块没有行号](#前台代码块没有行号)。夜间对比度见 [前台代码块对比度不足](#前台代码块对比度不足)。
+
 ## 前台分页方向键和无障碍
 
 首页或 `/page/n` 底部分页以前：方向键无效；`•••` 是可点的跳页链接；禁用的上一页/下一页仍是 `<a>`。已修复（[#175](https://github.com/Mereithhh/vanblog/issues/175) 的 Pagination issues）：焦点在分页内时，← / → 会在可聚焦的页码和上一页/下一页之间移动焦点（两端不循环，省略号和禁用按钮会跳过）；省略号改为装饰性文字，不再带链接；禁用控件不可聚焦，并有 `aria-label`。当前页仍带 `aria-current="page"`。跳转到指定页输入框见 [前台分页跳转到指定页](#前台分页跳转到指定页)。第一页 / 最后一页时上一页 / 下一页不可点见 [最后一页还能点下一页](#最后一页还能点下一页)。

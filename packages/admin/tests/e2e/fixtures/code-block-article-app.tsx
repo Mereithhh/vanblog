@@ -1,13 +1,13 @@
 import { render } from 'react-dom';
 import { Viewer } from '@bytemd/react';
 import gfm from '@bytemd/plugin-gfm';
-import highlight from '@bytemd/plugin-highlight-ssr';
+import { highlightSsr } from '../../../../website/components/Markdown/highlightSsr';
 import { customCodeBlock } from '../../../../website/components/Markdown/codeBlock';
 import { sanitizeMarkdownSchema } from '../../../../website/utils/markdownSanitize';
 import article from './code-block-article.md';
 
 const content = String(article);
-const plugins = [gfm(), highlight(), customCodeBlock()];
+const plugins = [gfm(), highlightSsr(), customCodeBlock()];
 
 const App = () => (
   <>

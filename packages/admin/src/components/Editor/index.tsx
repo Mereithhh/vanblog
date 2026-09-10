@@ -1,8 +1,8 @@
 // import breaks from '@bytemd/plugin-breaks';
 import frontmatter from '@bytemd/plugin-frontmatter';
 import gfm from '@bytemd/plugin-gfm';
-import highlight from '@bytemd/plugin-highlight-ssr';
 import math from '@bytemd/plugin-math-ssr';
+import { highlightSsr } from './highlightSsr';
 import mediumZoom from '@bytemd/plugin-medium-zoom';
 import { Editor } from '@bytemd/react';
 import { Spin } from 'antd';
@@ -93,7 +93,7 @@ export default function EditorComponent(props: {
     return withSafeViewerEffects([
       customContainer(),
       gfm({ locale: cn }),
-      highlight(),
+      highlightSsr(),
       frontmatter(),
       math({ locale: cn }),
       mediumZoom(),

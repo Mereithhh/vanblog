@@ -538,6 +538,9 @@ importers:
       headroom.js:
         specifier: ^0.12.0
         version: 0.12.0
+      highlight.js:
+        specifier: ^11.9.0
+        version: 11.9.0
       js-base64:
         specifier: ^3.7.5
         version: 3.7.5

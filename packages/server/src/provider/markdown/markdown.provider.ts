@@ -3,6 +3,14 @@ import MarkdownIt from 'markdown-it';
 import hljs from 'highlight.js';
 import taskLists from 'markdown-it-task-lists';
 import mk from 'markdown-it-katex';
+
+// x86asm ships without aliases in highlight.js 11; users write ```asm / ```nasm.
+if (hljs.getLanguage('x86asm')) {
+  hljs.registerAliases(['asm', 'assembly', 'nasm', 'intel', 'x86'], {
+    languageName: 'x86asm',
+  });
+}
+
 @Injectable()
 export class MarkdownProvider {
   logger = new Logger(MarkdownProvider.name);

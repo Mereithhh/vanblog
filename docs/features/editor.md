@@ -30,6 +30,10 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
   :::
 
+- 代码高亮
+
+  围栏代码块用 highlight.js（ByteMD `plugin-highlight-ssr`），前台和后台预览同一套。除常见语言外，汇编可用 `asm`、`assembly`、`nasm`、`x86asm`、`intel`、`x86`（Intel / NASM 风格）以及 `arm` / `armasm`。`asm` 会按 Intel/NASM 上色。RSS 正文也会识别 `asm`。
+
 - Mermaid 图表
 
   文章里的 mermaid 代码块会在预览区和前台渲染为图表。站点（或后台预览）为暗色时，图表使用 mermaid 暗色主题，避免浅色流程图贴在深色底上看不清。后台分栏预览时，左侧改字不会再因为 mermaid 重绘而抛异常；带 `style` / `#rrggbb` 颜色或中文标签的流程图也可以继续输入，光标、选区和按键不受影响。普通围栏代码块（非 mermaid）会显示行号，与前台一致。
