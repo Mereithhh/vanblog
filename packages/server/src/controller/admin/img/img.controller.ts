@@ -18,6 +18,7 @@ import { StaticProvider } from 'src/provider/static/static.provider';
 import { ArticleProvider } from 'src/provider/article/article.provider';
 import { DraftProvider } from 'src/provider/draft/draft.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
+import { MetaProvider } from 'src/provider/meta/meta.provider';
 import { config } from 'src/config';
 import { checkTrue } from 'src/utils/checkTrue';
 import { ApiToken } from 'src/provider/swagger/token';
@@ -33,6 +34,7 @@ export class ImgController {
     private readonly articleProvider: ArticleProvider,
     private readonly draftProvider: DraftProvider,
     private readonly isrProvider: ISRProvider,
+    private readonly metaProvider: MetaProvider,
   ) {}
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
@@ -76,6 +78,24 @@ export class ImgController {
       };
     }
     const res = await this.staticProvider.scanLinksOfArticles();
+    return {
+      statusCode: 200,
+      data: res,
+    };
+  }
+  @Post('transfer-remote')
+  async transferRemote(@Body() body: { content?: string; siteHost?: string }) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
+    const siteInfo = await this.metaProvider.getSiteInfo();
+    const res = await this.staticProvider.transferRemoteImages(body?.content || '', {
+      siteBaseUrl: siteInfo?.baseUrl,
+      siteHosts: body?.siteHost ? [body.siteHost] : [],
+    });
     return {
       statusCode: 200,
       data: res,

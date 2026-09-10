@@ -112,6 +112,12 @@ export async function rewriteArticleBaseUrl(body) {
     data: body,
   });
 }
+export async function transferRemoteImages(body) {
+  return request('/api/admin/img/transfer-remote', {
+    method: 'POST',
+    data: body,
+  });
+}
 export async function exportAllImgs() {
   return request('/api/admin/img/export', {
     method: 'POST',

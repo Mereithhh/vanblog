@@ -49,6 +49,12 @@ VanBlog 后台内置了 [bytemd](https://github.com/bytedance/bytemd)（掘金�
 
   另外图床支持添加水印，可以在上传的时候自动添加文字水印。请参考：[分类管理](./tag.md#分类管理)
 
+- 外链图片转存
+
+  从 CSDN 等站点粘贴过来的 Markdown 常常带着别人的图床地址。工具栏的「外链图片转存」会扫描当前正文里的远程 `![...](http...)` 和 HTML `<img src>`，经现有图床上传管线下载到本站（本地或已配置的 OSS / picgo），再把链接改成新地址。需要你点一下才会改，保存文章时不会偷偷重写。
+
+  相对路径、`data:` 图片，以及已经指向本站 `/static` 或图床记录里的地址会跳过。某张下载失败时保留原来的 URL，并提示失败列表。若后台开了「图片自动压缩」，转存也会按当前的 WebP / AVIF 设置处理。见 [图床](./image-storage.md#外链图片转存)。
+
   ![上传图片](https://pic.mereith.com/img/0a54a1e4fe8ac47cea8fa7aea89964ca.clipboard-2022-08-29.png)
 
 - 标题锚点 / 前台目录
