@@ -31,6 +31,8 @@ import { LinkTarget } from './plugins/linkTarget';
 import { mermaidForEditor } from './plugins/mermaidSafety';
 import { withSafeViewerEffects } from './plugins/previewSafety';
 import { tocViewportGuard } from './plugins/tocViewport';
+import { mobileToolbarPlugin } from './plugins/mobileToolbar';
+import './mobile-toolbar.css';
 
 // Keep extra tags / strip list aligned with website/utils/markdownSanitize.ts (#490).
 const sanitize = (schema) => {
@@ -56,6 +58,22 @@ const sanitize = (schema) => {
   );
   return schema;
 };
+
+async function uploadEditorImages(files: File[], setLoading: (loading: boolean) => void) {
+  setLoading(true);
+  const res: { url: string }[] = [];
+  try {
+    for (const each of files) {
+      const url = await uploadImg(each);
+      if (url) {
+        res.push({ url: encodeURI(url) });
+      }
+    }
+    return res;
+  } finally {
+    setLoading(false);
+  }
+}
 
 export default function EditorComponent(props: {
   value: string;
@@ -86,6 +104,10 @@ export default function EditorComponent(props: {
       Heading(),
       customCodeBlock(),
       LinkTarget(),
+      // Keep mode="auto" (tab under 800px). Expand that toolbar; do not dump desktop icons.
+      mobileToolbarPlugin({
+        uploadImages: (files) => uploadEditorImages(files, setLoading),
+      }),
     ]);
   }, [themeClass]);
 
@@ -97,20 +119,10 @@ export default function EditorComponent(props: {
           plugins={plugins}
           onChange={props.onChange}
           locale={cn}
+          mode="auto"
           remarkRehype={{ allowDangerousHtml: true }}
           sanitize={sanitize}
-          uploadImages={async (files: File[]) => {
-            setLoading(true);
-            const res = [];
-            for (const each of files) {
-              const url = await uploadImg(each);
-              if (url) {
-                res.push({ url: encodeURI(url) });
-              }
-            }
-            setLoading(false);
-            return res;
-          }}
+          uploadImages={(files: File[]) => uploadEditorImages(files, setLoading)}
         />
       </Spin>
     </div>
