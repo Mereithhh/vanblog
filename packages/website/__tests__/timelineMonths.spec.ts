@@ -1,6 +1,9 @@
+import React, { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "fs";
 import path from "path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import TimelineArchives from "../components/TimelineArchives";
 import {
   describeTimelineArchives,
   formatTimelineMonthLabel,
@@ -8,6 +11,13 @@ import {
   parseTimelineDate,
   timelineMonthKey,
 } from "../utils/timelineMonths";
+
+vi.mock("next/link", () => ({
+  default: (props: { href: string; children?: React.ReactNode }) =>
+    createElement("a", { href: props.href }, props.children),
+}));
+
+(globalThis as { React?: typeof React }).React = React;
 
 const websiteRoot = path.join(__dirname, "..");
 const readSrc = (rel: string) =>
@@ -108,6 +118,45 @@ describe("groupTimelineByYearAndMonth (#302)", () => {
     expect(groupTimelineByYearAndMonth({})).toEqual([]);
     expect(groupTimelineByYearAndMonth(undefined)).toEqual([]);
     expect(groupTimelineByYearAndMonth(null)).toEqual([]);
+  });
+});
+
+describe("TimelineArchives markup (#302)", () => {
+  it("renders month sections when articles span multiple months", () => {
+    const yearGroups = groupTimelineByYearAndMonth(multiMonthArticles) as any;
+    const html = renderToStaticMarkup(
+      createElement(TimelineArchives, {
+        yearGroups,
+        openArticleLinksInNewWindow: false,
+      })
+    );
+    expect(html).toContain('data-timeline-year="2024"');
+    expect(html).toContain('data-timeline-year="2023"');
+    expect(html).toContain('data-timeline-month="2024-12"');
+    expect(html).toContain('data-timeline-month="2024-03"');
+    expect(html).toContain('data-timeline-month="2023-08"');
+    expect(html).toContain("12月");
+    expect(html).toContain("3月");
+    expect(html).toContain("8月");
+    expect(html).toContain("十二月下旬");
+    expect(html).toContain("三月");
+    expect(html).toContain("八月");
+    expect(html).not.toContain('data-timeline-month="2024-01"');
+    expect(html).not.toContain('data-timeline-month="2024-02"');
+    expect(html).not.toContain('data-timeline-month="2024-11"');
+    expect(html).not.toContain(">1月<");
+    expect(html).not.toContain(">2月<");
+    expect(html).not.toContain(">11月<");
+  });
+
+  it("does not invent month sections for empty input", () => {
+    const html = renderToStaticMarkup(
+      createElement(TimelineArchives, {
+        yearGroups: [],
+        openArticleLinksInNewWindow: false,
+      })
+    );
+    expect(html).toBe("");
   });
 });
 

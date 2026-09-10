@@ -93,6 +93,7 @@
 
 ### ✏️ Documentation | 文档
 
+- 文章 / FAQ：说明前台时间线按年再按月归档，只有有文章的月份会显示。`docs/features/article.md`、`docs/faq/usage.md` [#302](https://github.com/Mereithhh/vanblog/issues/302)
 - 文章 / FAQ / SEO：说明可选题头图的设置位置、上传或填写 URL、前台展示以及 `og:image` / `twitter:image` 分享预览。导入 Front Matter 可读 `cover` / `image`。[#288](https://github.com/Mereithhh/vanblog/issues/288)
 - 编辑器 / FAQ：说明汇编围栏可用的语言标签（`asm`、`nasm`、`x86asm`、`arm` 等），前台和后台预览同一套 highlight.js。[#294](https://github.com/Mereithhh/vanblog/issues/294)
 - 编辑器 / FAQ：说明「软换行」偏好（默认关，开启后 Enter / 粘贴自动补两个空格），以及为什么单独回车不换行。[#311](https://github.com/Mereithhh/vanblog/issues/311)
