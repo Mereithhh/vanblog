@@ -4,6 +4,28 @@ import { encodeQuerystring } from "../../utils/encode";
 import { getTarget } from "../Link/tools";
 import { getArticlePath } from "../../utils/getArticlePath";
 
+export const ARTICLE_TAG_ATTR = "data-article-tag";
+export const TAG_ICON_ATTR = "data-tag-icon";
+
+const TAG_ICON_SIZE = 16;
+
+/** Decorative price-tag glyph shown before each article-bottom tag label. */
+export function ArticleTagIcon() {
+  return (
+    <svg
+      data-tag-icon
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      width={TAG_ICON_SIZE}
+      height={TAG_ICON_SIZE}
+      fill="currentColor"
+      className="mr-0.5 flex-shrink-0 fill-current"
+    >
+      <path d="M21.41 11.58l-9-9A1.99 1.99 0 0010.99 2H4a2 2 0 00-2 2v7c0 .55.22 1.05.59 1.42l9 9a2 2 0 002.83 0l7-7a2 2 0 00-.01-2.84zM5.5 7C4.67 7 4 6.33 4 5.5S4.67 4 5.5 4 7 4.67 7 5.5 6.33 7 5.5 7z" />
+    </svg>
+  );
+}
+
 export function PostBottom(props: {
   type: "overview" | "article" | "about";
   lock: boolean;
@@ -27,8 +49,12 @@ export function PostBottom(props: {
               <Link
                 href={`/tag/${encodeQuerystring(tag)}`}
                 target={getTarget(props.openArticleLinksInNewWindow)}
+                data-article-tag={tag}
               >
-                <div className=" border-b border-white hover:border-gray-500 dark:border-dark dark:hover:border-gray-300 dark:hover:text-gray-300">{`${tag}`}</div>
+                <div className="inline-flex items-center border-b border-white hover:border-gray-500 dark:border-dark dark:hover:border-gray-300 dark:hover:text-gray-300">
+                  <ArticleTagIcon />
+                  {tag}
+                </div>
               </Link>
             </div>
           ))}
