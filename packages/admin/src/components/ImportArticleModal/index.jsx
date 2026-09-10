@@ -11,6 +11,7 @@ import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import { Button, Form, Upload } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
+import PathnameField from '../PathnameField';
 import TagSelectField from '../TagSelectField';
 export default function (props) {
   const { onFinish } = props;
@@ -90,14 +91,7 @@ export default function (props) {
           label="置顶优先级"
           placeholder="留空或0表示不置顶，其余数字越大表示优先级越高"
         />
-        <ProFormText
-          width="md"
-          id="pathname"
-          name="pathname"
-          label="自定义路径名"
-          tooltip="文章发布后的路径将为 /post/[自定义路径名]，如果未设置则使用文章 id 作为路径名"
-          placeholder="留空或为空则使用 id 作为路径名"
-        />
+        <PathnameField />
         <TagSelectField name="tags" />
         <ProFormSelect
           width="md"
