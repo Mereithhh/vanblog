@@ -1,11 +1,11 @@
 const { test, expect } = require('@playwright/test');
 
-async function lineSnapshot(page, root) {
-  return page.evaluate((sel) => {
+async function lineSnapshot(page, root, wrapperSelector = '.code-block-wrapper.line-numbers') {
+  return page.evaluate(({ sel, wrapperSel }) => {
     const scope = document.querySelector(sel);
     if (!scope) return null;
-    const wrapper = scope.querySelector('.code-block-wrapper.line-numbers');
-    const lines = [...scope.querySelectorAll('.code-block-wrapper .code-line')];
+    const wrapper = scope.querySelector(wrapperSel);
+    const lines = wrapper ? [...wrapper.querySelectorAll('.code-line')] : [];
     const mermaid = scope.querySelector('code.language-mermaid, .bytemd-mermaid');
     return {
       wrapper: Boolean(wrapper),
@@ -26,6 +26,28 @@ async function lineSnapshot(page, root) {
       mermaidHasLine: Boolean(
         mermaid && mermaid.querySelector('.code-line, .code-line-number'),
       ),
+    };
+  }, { sel: root, wrapperSel: wrapperSelector });
+}
+
+async function asmTokenSnapshot(page, root) {
+  return page.evaluate((sel) => {
+    const scope = document.querySelector(sel);
+    if (!scope) return null;
+    const code = scope.querySelector('code.language-asm, code.hljs.language-asm');
+    if (!code) return { found: false };
+    const tokens = [...code.querySelectorAll('[class*="hljs-"]')].map((el) => ({
+      text: el.textContent,
+      cls: el.getAttribute('class') || '',
+      color: getComputedStyle(el).color,
+    }));
+    return {
+      found: true,
+      classes: code.getAttribute('class') || '',
+      keywords: tokens.filter((t) => t.cls.includes('hljs-keyword')).map((t) => t.text),
+      builtIns: tokens.filter((t) => t.cls.includes('hljs-built_in')).map((t) => t.text),
+      comments: tokens.filter((t) => t.cls.includes('hljs-comment')).map((t) => t.text),
+      colors: [...new Set(tokens.map((t) => t.color).filter(Boolean))],
     };
   }, root);
 }
@@ -54,6 +76,20 @@ test.describe('public renderer code-block line numbers (#404)', () => {
       expect(snap.contents.join('\n')).toContain('const answer = 42;');
       expect(snap.contents.join('\n')).toContain('const again = 7;');
       expect(snap.mermaidHasLine).toBe(false);
+    }
+  });
+
+  test('public ```asm fences expose highlight.js token classes', async ({ page }) => {
+    const light = await asmTokenSnapshot(page, '[data-code-light]');
+    const dark = await asmTokenSnapshot(page, '[data-code-dark]');
+    for (const snap of [light, dark]) {
+      expect(snap.found).toBe(true);
+      expect(snap.classes).toMatch(/hljs/);
+      expect(snap.classes).toMatch(/language-asm/);
+      expect(snap.keywords).toEqual(expect.arrayContaining(['mov', 'xor', 'int']));
+      expect(snap.builtIns).toEqual(expect.arrayContaining(['eax', 'ebx']));
+      expect(snap.comments.some((c) => c.includes('sys_exit'))).toBe(true);
+      expect(snap.colors.length).toBeGreaterThan(1);
     }
   });
 });

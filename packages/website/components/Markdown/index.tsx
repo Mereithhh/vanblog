@@ -1,7 +1,7 @@
 import { Viewer } from "@bytemd/react"
 import gfm from '@bytemd/plugin-gfm';
-import highlight from '@bytemd/plugin-highlight-ssr';
 import math from '@bytemd/plugin-math-ssr';
+import { highlightSsr } from "./highlightSsr";
 import { customContainer } from './customContainer';
 import "katex/dist/katex.min.css";
 import rawHTML from "./rawHTML";
@@ -23,7 +23,7 @@ export default function ({ content }: { content: string }) {
     () => [
       rawHTML(),
       gfm(),
-      highlight(),
+      highlightSsr(),
       math(),
       mermaidForViewer({ theme }),
       customContainer(),

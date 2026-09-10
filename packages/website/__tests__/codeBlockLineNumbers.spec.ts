@@ -3,7 +3,7 @@ import path from "path";
 import { describe, expect, it } from "vitest";
 import { getProcessor } from "bytemd";
 import gfm from "@bytemd/plugin-gfm";
-import highlight from "@bytemd/plugin-highlight-ssr";
+import { highlightSsr } from "../components/Markdown/highlightSsr";
 import {
   CODE_BLOCK_LINE_NUMBERS_CLASS,
   CODE_LINE_CLASS,
@@ -30,7 +30,7 @@ const FENCED_MERMAID = "```mermaid\ngraph TD\n  A-->B\n```\n";
 function renderPublicCode(markdown: string, withHighlight = true) {
   return getProcessor({
     plugins: withHighlight
-      ? [gfm(), highlight(), customCodeBlock()]
+      ? [gfm(), highlightSsr(), customCodeBlock()]
       : [gfm(), customCodeBlock()],
     remarkRehype: { allowDangerousHtml: true },
     sanitize: sanitizeMarkdownSchema,
