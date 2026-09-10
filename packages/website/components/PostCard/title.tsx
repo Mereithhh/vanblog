@@ -5,6 +5,7 @@ import { encodeQuerystring } from "../../utils/encode";
 import PostViewer from "../PostViewer";
 import { getTarget } from "../Link/tools";
 import { checkLogin } from "../../utils/auth";
+import { COUNT_LOADING_PLACEHOLDER } from "../../utils/countPlaceholder";
 
 export function Title(props: {
   type: "article" | "about" | "overview";
@@ -172,7 +173,7 @@ export function SubTitle(props: {
             </svg>
           </span>
           <span className="waline-comment-count" data-path={dataPath}>
-            0
+            {COUNT_LOADING_PLACEHOLDER}
           </span>
         </span>
       )}

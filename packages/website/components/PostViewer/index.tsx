@@ -1,37 +1,26 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getArticleViewer } from "../../api/getArticleViewer";
+import {
+  formatCountDisplay,
+  resolveArticleViewer,
+} from "../../utils/countPlaceholder";
 
 export default function (props: {
   shouldAddViewer: boolean;
   id: number | string;
 }) {
-  const [viewer, setViewer] = useState(0);
+  const [viewer, setViewer] = useState<number | null>(null);
   const { current } = useRef({ hasInit: false });
   const fetchViewer = useCallback(async () => {
     const res = await getArticleViewer(props.id);
-    if (!res) {
-      if (localStorage?.getItem("noViewer") === "true") {
-        setViewer(0)
-        return;
-      }
-      if (props.shouldAddViewer) {
-        setViewer(1);
-      } else {
-        setViewer(0);
-      }
-    }
-    if (res && res.viewer) {
-      if (localStorage?.getItem("noViewer") === "true") {
-        setViewer(res.viewer);
-        return;
-      }
-      if (props.shouldAddViewer) {
-        setViewer(res.viewer + 1);
-      } else {
-        setViewer(res.viewer);
-      }
-    }
-  }, [setViewer, props]);
+    const noViewer = localStorage?.getItem("noViewer") === "true";
+    setViewer(
+      resolveArticleViewer(res, {
+        shouldAddViewer: props.shouldAddViewer,
+        noViewer,
+      })
+    );
+  }, [props.id, props.shouldAddViewer]);
   useEffect(() => {
     if (!current.hasInit) {
       current.hasInit = true;
@@ -39,5 +28,9 @@ export default function (props: {
     }
   }, [fetchViewer, current]);
 
-  return <span>{viewer}</span>;
+  return (
+    <span data-article-viewer aria-busy={viewer === null}>
+      {formatCountDisplay(viewer)}
+    </span>
+  );
 }

@@ -84,6 +84,12 @@ await bundle(path.join(fixtures, 'category-expand-app.tsx'), path.join(outdir, '
   `--alias:next/link=${path.join(fixtures, 'next-link.tsx')}`,
   '--jsx=automatic',
 ]);
+await bundle(path.join(fixtures, 'article-counts-app.tsx'), path.join(outdir, 'article-counts.js'), [
+  `--alias:react=${react}`,
+  `--alias:react-dom=${reactDom}`,
+  `--alias:next/link=${path.join(fixtures, 'next-link.tsx')}`,
+  '--jsx=automatic',
+]);
 await esbuild.build({
   entryPoints: [path.join(fixtures, 'nav-bar-app.tsx')],
   outfile: path.join(outdir, 'nav-bar.js'),
@@ -124,6 +130,7 @@ await cp(path.join(fixtures, 'social-card.html'), path.join(outdir, 'social-card
 await cp(path.join(fixtures, 'page-nav.html'), path.join(outdir, 'page-nav.html'));
 await cp(path.join(fixtures, 'article-cover.html'), path.join(outdir, 'article-cover.html'));
 await cp(path.join(fixtures, 'category-expand.html'), path.join(outdir, 'category-expand.html'));
+await cp(path.join(fixtures, 'article-counts.html'), path.join(outdir, 'article-counts.html'));
 await cp(path.join(fixtures, 'cover.png'), path.join(outdir, 'cover.png'));
 await cp(path.join(fixtures, 'nav-bar.html'), path.join(outdir, 'nav-bar.html'));
 await cp(
