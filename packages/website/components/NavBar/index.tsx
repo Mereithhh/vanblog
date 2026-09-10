@@ -15,6 +15,7 @@ import {
   HEADER_ACTION_LABELS,
   ICON_ACTION_BUTTON_CLASS,
 } from "./a11y";
+import { SEARCH_ICON_STROKE_WIDTH } from "../SearchCard/a11y";
 import { describeNavLink, withNavCurrentClass } from "./active";
 import {
   NAV_BAR_ROW_CLASS,
@@ -170,6 +171,11 @@ export default function (props: {
                     p-id="2305"
                     width="20"
                     height="20"
+                    fill="currentColor"
+                    stroke="currentColor"
+                    strokeWidth={SEARCH_ICON_STROKE_WIDTH}
+                    strokeLinejoin="round"
+                    className="dark:text-dark fill-gray-600"
                     aria-hidden="true"
                   >
                     <path

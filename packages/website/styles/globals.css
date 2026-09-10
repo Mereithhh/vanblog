@@ -119,6 +119,13 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
   }
 }
+/* Hide native WebKit clear on type=search; the dialog already has an accessible clear (#173). */
+.search-dialog-input::-webkit-search-cancel-button,
+.search-dialog-input::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
 .svg-gray {
   color: rgb(30, 30, 30);
 }

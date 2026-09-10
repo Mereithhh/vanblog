@@ -10,8 +10,12 @@ import {
   SEARCH_RESULT_ATTR,
   SEARCH_RESULT_SELECTOR,
   SEARCH_RESULTS_LABEL,
+  SEARCH_CLEAR_BUTTON_CLASS,
+  SEARCH_ICON_STROKE_WIDTH,
+  SEARCH_INPUT_CLASS,
   describeSearchClearControl,
   describeSearchDialog,
+  describeSearchInputAttrs,
   describeSearchOpenFocusContract,
   focusSearchDialogInput,
   handleSearchDialogKeyDown,
@@ -51,6 +55,22 @@ describe("search dialog a11y model", () => {
     expect(searchClearIsKeyboardActivatable("Enter")).toBe(true);
     expect(searchClearIsKeyboardActivatable(" ")).toBe(true);
     expect(searchClearIsKeyboardActivatable("Escape")).toBe(false);
+    expect(SEARCH_CLEAR_BUTTON_CLASS).toMatch(/hover:opacity-100/);
+    expect(SEARCH_CLEAR_BUTTON_CLASS).toMatch(/transition-opacity/);
+    expect(SEARCH_CLEAR_BUTTON_CLASS).not.toMatch(/hover:scale/);
+    expect(SEARCH_CLEAR_BUTTON_CLASS).not.toMatch(/transform/);
+  });
+
+  it("describes a native search field with Safari-friendly input attrs", () => {
+    expect(describeSearchInputAttrs()).toEqual({
+      type: "search",
+      inputMode: "search",
+      enterKeyHint: "search",
+      autoComplete: "off",
+      spellCheck: false,
+      autoCapitalize: "off",
+      autoCorrect: "off",
+    });
   });
 });
 
@@ -61,6 +81,7 @@ describe("search dialog open / escape / shortcut", () => {
       revealOverlayBeforeFocus: true,
       delayedFocusIsFallbackOnly: true,
       readOnlyFocusTrick: false,
+      type: "search",
       inputMode: "search",
     });
   });
@@ -430,7 +451,11 @@ describe("search dialog markup", () => {
     expect(card).toMatch(/openSearchFromUserGesture/);
     expect(card).toMatch(/openFromUserGesture/);
     expect(card).toMatch(/useImperativeHandle/);
+    expect(card).toMatch(/type="search"/);
     expect(card).toMatch(/inputMode="search"/);
+    expect(card).toMatch(/spellCheck=\{false\}/);
+    expect(card).toMatch(/autoCapitalize="off"/);
+    expect(card).toMatch(/autoCorrect="off"/);
     expect(card).not.toMatch(/readOnly|readonly/);
     expect(nav).toMatch(/searchCardRef\.current\?\.openFromUserGesture\(\)/);
     expect(nav).not.toMatch(
@@ -441,9 +466,27 @@ describe("search dialog markup", () => {
   it("makes the clear control a native button, not a click-only div", () => {
     expect(card).toMatch(/<button[\s\S]*type="button"[\s\S]*SEARCH_CLEAR_LABEL/);
     expect(card).toMatch(/aria-label=\{SEARCH_CLEAR_LABEL\}/);
+    expect(card).toMatch(/className=\{SEARCH_CLEAR_BUTTON_CLASS\}/);
+    expect(card).not.toMatch(/hover:scale-125/);
     expect(card).not.toMatch(
       /<div\s+className="transition-all transform hover:scale-125 text-gray-600 dark:text-dark"/
     );
+  });
+
+  it("hides the native WebKit search cancel in favor of the accessible clear", () => {
+    const globals = readSrc("styles/globals.css");
+    expect(card).toMatch(/SEARCH_INPUT_CLASS/);
+    expect(SEARCH_INPUT_CLASS).toBe("search-dialog-input");
+    expect(globals).toMatch(
+      /\.search-dialog-input::-webkit-search-cancel-button/
+    );
+  });
+
+  it("gives the dialog and navbar magnifiers a heavier stroke than a hairline ring", () => {
+    expect(SEARCH_ICON_STROKE_WIDTH).toBeGreaterThanOrEqual(48);
+    expect(card).toMatch(/strokeWidth=\{SEARCH_ICON_STROKE_WIDTH\}/);
+    expect(nav).toMatch(/strokeWidth=\{SEARCH_ICON_STROKE_WIDTH\}/);
+    expect(nav).toMatch(/fill="currentColor"/);
   });
 
   it("keeps ArticleList result links and marks them for arrow navigation", () => {
