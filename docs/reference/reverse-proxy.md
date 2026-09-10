@@ -80,17 +80,24 @@ example.com {
 
 :::
 
+::: tip Caddy 与缓存
+
+Caddy 的 `reverse_proxy` **默认不缓存** HTML，一般不会出现「后台发了、前台还是旧文章」。若另外装了 cache 插件，或前面还有 Cloudflare 等 CDN，请不要缓存前台 HTML；改完后清一下边缘缓存。Nginx / 宝塔见下文。[#469](https://github.com/Mereithhh/vanblog/issues/469)
+
+:::
+
 ### Ngnix
 
 如果你还是想想用 Ngnix 的话，那好吧。安利一个 Ngnix 配置在线生成工具： [https://nginxconfig.io/](https://nginxconfig.io/)
 
 ::: warning 注意
 
-- 宝塔面板用 Ngnix 反代，如果出现问题，可以去升级一下 Ngnix 版本，有可能会解决问题。
+- 宝塔面板用 Ngnix 反代，后台发布后前台仍是旧文章时，先关 `proxy_cache`（见下文），不要只靠缩短缓存或重装 Nginx。
 - location 下面的配置块只保留下面提供配置的那几行就可以了，不要加奇奇怪怪的语句和请求头（看不懂请忽略）
 - **必须转发 `Host`**（`proxy_set_header Host $host;`）。否则内嵌 Waline 评论登录 / 管理后台的 OAuth 回调会写成 `localhost` 或容器监听地址（如 `0.0.0.0`），而不是站点域名。见 [部署常见问题](../faq/deploy.md#反代后-waline-登录跳到-localhost)。
 - 建议同时转发 `X-Forwarded-For`。若站点在 Cloudflare（或同类 CDN）后面，请把来访请求的 `CF-Connecting-IP` 原样转给 VanBlog，不要改写成边缘节点 IP。Nginx 默认会透传该头；登录日志会优先读它。
 - 若 CDN 使用「缓存全部」，请为 `/admin*` 和 `/api/admin*` 设置绕过缓存。VanBlog 源站已对这两类路径发送 `Cache-Control: private, no-store` 以及 `CDN-Cache-Control` / `Cloudflare-CDN-Cache-Control: no-store`，避免后台 HTML/JSON 被边缘存储；页面规则仍建议保留。见 [部署常见问题](../faq/deploy.md#cloudflare-缓存了后台或后台-api)。
+- 外层 Nginx / 宝塔若开启了 `proxy_cache`（宝塔常在 `/www/server/nginx/conf/proxy.conf` 里写 `proxy_cache cache_one;`），会把**前台 HTML** 缓存很久。后台发布、更新或迁移后，公网站点可能仍是旧文章。官方示例已加上 `proxy_no_cache 1;` 与 `proxy_cache_bypass 1;`。源站后台/API 已发 no-store，**前台 HTML 不会强制 no-store**，代理和 CDN 仍可能缓存整页。见 [后台发布后前台不刷新仍显示旧文章](#后台发布后前台不刷新仍显示旧文章)（[#469](https://github.com/Mereithhh/vanblog/issues/469)）。
 
 :::
 
@@ -120,6 +127,9 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Upgrade $http_upgrade;
+    # 绕过 proxy_cache（宝塔 proxy.conf 可能全局开启），避免前台 HTML 发不出去
+    proxy_no_cache 1;
+    proxy_cache_bypass 1;
   }
 }
 ```
@@ -151,8 +161,53 @@ server {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     proxy_set_header X-Forwarded-Proto $scheme;
     proxy_set_header Upgrade $http_upgrade;
+    # 绕过 proxy_cache（宝塔 proxy.conf 可能全局开启），避免前台 HTML 发不出去
+    proxy_no_cache 1;
+    proxy_cache_bypass 1;
   }
 }
 ```
 
 :::
+
+## 后台发布后前台不刷新仍显示旧文章
+
+后台发布或更新文章后，公网首页 / 文章页不刷新、仍显示旧内容；整站迁移后也可能这样。先排除 VanBlog 自己的增量渲染：到 **站点管理 / 系统设置 / 高级设置** 手动触发一次静态页面更新，并确认**直连容器映射端口**能看到新内容。说明见 [静态页面更新策略](../advanced/isr.md)。
+
+若只有走 Nginx / 宝塔反代（或 Cloudflare 等 CDN）时是旧页，就是外层在缓存 HTML（[#469](https://github.com/Mereithhh/vanblog/issues/469)）。社区方案来自 [RubyXun](https://github.com/RubyXun) / [lateautumn233](https://github.com/lateautumn233)，相关讨论见 [#332](https://github.com/Mereithhh/vanblog/issues/332)。
+
+源站已对 `/admin` 和 `/api/admin/*` 发送 `Cache-Control: private, no-store`（以及 CDN / Cloudflare 的 `no-store`），见 [#140](https://github.com/Mereithhh/vanblog/issues/140)。**前台文章 HTML 不会强制 no-store**，Nginx / 宝塔 / CDN 仍可能把整页存下来。
+
+### Nginx
+
+在反代 `location` 里加上（官方 Http / Https 示例已包含）：
+
+```nginx
+location / {
+  proxy_pass http://127.0.0.1:<PORT>;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_no_cache 1;
+  proxy_cache_bypass 1;
+}
+```
+
+`proxy_no_cache 1;` 与 `proxy_cache_bypass 1;` 会绕过本层以及上层 `proxy_cache`（例如宝塔全局配置）。不要依赖缩短缓存时间来「差不多及时」。
+
+### 宝塔
+
+宝塔常在 `/www/server/nginx/conf/proxy.conf` 里写 `proxy_cache cache_one;`，对所有反代生效。可以：
+
+1. 在站点反代的 `location` 里加上面两行；和 / 或
+2. 把 `proxy.conf` 里的 `proxy_cache cache_one;` 注释掉（`# proxy_cache cache_one;`），再重载 Nginx。
+
+改完后清一下浏览器缓存。图形化部署步骤里的缓存说明见 [宝塔面板](../guide/get-started.md#调整-nginx-缓存)。
+
+### Cloudflare / CDN
+
+不要对 HTML 开「缓存全部」。改完后到 CDN 控制台清一次边缘缓存。后台路径绕过见 [部署常见问题](../faq/deploy.md#cloudflare-缓存了后台或后台-api)。
+
+只用内置 Caddy、没有再套一层反代或 CDN 时，一般不必改这些。部署侧说明见 [部署常见问题](../faq/deploy.md#后台发布后前台不刷新仍显示旧文章)，使用侧见 [使用常见问题](../faq/usage.md#后台发布后前台不刷新仍显示旧文章)。

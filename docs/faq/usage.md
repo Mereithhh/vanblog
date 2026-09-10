@@ -60,6 +60,8 @@ order: 2
 
 在 Cloudflare 用「缓存全部」覆盖 `/*`、再用 `/admin*` 绕过时，后台 HTML 或 `/api/admin/*` 仍可能被边缘缓存（页面规则 `/admin*` **匹配不到** `/api/admin`）（[#140](https://github.com/Mereithhh/vanblog/issues/140)）。源站现已对 `/admin` 和 `/api/admin/*` 发送 `private, no-store` 以及 CDN / Cloudflare 的 `no-store`。请升级后仍为 `/admin*` 与 `/api/admin*` 保留绕过规则，并清一次 CDN 缓存。详见 [部署常见问题](./deploy.md#cloudflare-缓存了后台或后台-api) 与 [反代](../reference/reverse-proxy.md)。
 
+「缓存全部」也会把**前台 HTML** 存进边缘：后台发布后公网站点仍显示旧文章。源站不会对文章页强制 no-store。见 [后台发布后前台不刷新仍显示旧文章](#后台发布后前台不刷新仍显示旧文章)。
+
 ## 前台夜间模式流程图看不清
 
 夜间模式阅读文章时，mermaid / 流程图以前按 mermaid 默认浅色主题渲染，浅色节点和发灰的线条贴在深色正文底上，对比很差。已修复（[#404](https://github.com/Mereithhh/vanblog/issues/404)）：站点或后台预览为暗色时 mermaid 使用 `theme: 'dark'`，并提高文字/描边对比度；白天模式仍是原来的浅色图表。请升级到包含该修复的版本。
@@ -236,11 +238,23 @@ Markdown 里写了 `<u>下划线</u>`、`<font color="red">` 或 `<center>` 后�
 
 整机迁移更稳妥的方式仍是复制 Docker 持久化目录，见 [备份与迁移](../guide/backup.md)。
 
+## 后台发布后前台不刷新仍显示旧文章
+
+后台发布或更新文章后，公网首页 / 文章页不刷新、仍显示旧内容；整站迁移后也可能这样。先排除 VanBlog 自己的增量渲染：到 **站点管理 / 系统设置 / 高级设置** 手动触发一次静态页面更新，并确认直连容器映射端口能看到新内容。数字 ID 地址不更新见下一节。
+
+若只有走 Nginx / 宝塔反代（或 Cloudflare 等 CDN）时是旧页，就是外层在缓存 HTML（[#469](https://github.com/Mereithhh/vanblog/issues/469)）。社区方案来自 [RubyXun](https://github.com/RubyXun) / [lateautumn233](https://github.com/lateautumn233)，相关 [#332](https://github.com/Mereithhh/vanblog/issues/332)：
+
+- Nginx `location` 加 `proxy_no_cache 1;` 与 `proxy_cache_bypass 1;`
+- 宝塔还可在 `/www/server/nginx/conf/proxy.conf` 把 `proxy_cache cache_one;` 注释掉
+- CDN 不要对 HTML 开「缓存全部」，改完后清边缘缓存
+
+源站已对后台和 `/api/admin/*` 发送 no-store，**前台 HTML 仍可能被代理/CDN 缓存**。完整片段见 [部署常见问题](./deploy.md#后台发布后前台不刷新仍显示旧文章) 与 [反代](../reference/reverse-proxy.md#后台发布后前台不刷新仍显示旧文章)。
+
 ## 后台改文章后，数字 ID 的前台地址不更新
 
 文章设置了自定义路径时，`/post/自定义路径` 会更新，但 `/post/数字ID`（搜索结果常跳到这里）可能仍是旧内容。这是按需 ISR 只刷新了自定义路径页导致的，已修复（[#356](https://github.com/Mereithhh/vanblog/issues/356)）。请升级到包含该修复的版本。
 
-临时办法：在「系统设置 / 高级设置」里手动触发静态页面更新。
+临时办法：在「系统设置 / 高级设置」里手动触发静态页面更新。若直连已是新内容、走反代仍是旧页，见 [上一节](#后台发布后前台不刷新仍显示旧文章)。
 
 ## 后台编辑器填写信息时方向键无法移动光标
 

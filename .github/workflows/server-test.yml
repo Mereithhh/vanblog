@@ -28,7 +28,7 @@ jobs:
       - name: Run vanblog.sh download fallback tests
         run: bash scripts/tests/vanblog-download-fallback.test.sh
 
-      - name: Run reverse-proxy nginx Host header docs tests
+      - name: Run reverse-proxy nginx Host header and cache-bypass docs tests
         run: bash scripts/tests/reverse-proxy-host-header.test.sh
 
       - name: Setup pnpm

@@ -86,9 +86,17 @@ services:
 
 ### 调整 nginx 缓存
 
-根据群友反应，宝塔的 nginx 配置反代后经常会出现缓存问题，具体表现为在后台修改后，内容不能及时反映到前台页面上。
+宝塔用 nginx 反代后，后台发布或更新文章，前台可能仍显示旧内容。这是 `proxy_cache` 在缓存 HTML，缩短缓存时间不够可靠。
 
-这时需要设置手动在宝塔 nginx 设置一个较短的缓存时间即可（比如1分钟），不然默认的缓存时间会很长。
+请在站点反代的 `location` 里加上：
+
+```nginx
+proxy_set_header Host $host;
+proxy_no_cache 1;
+proxy_cache_bypass 1;
+```
+
+并检查 `/www/server/nginx/conf/proxy.conf`：把 `proxy_cache cache_one;` 注释掉（`# proxy_cache cache_one;`），再重载 Nginx。完整说明见 [后台发布后前台不刷新仍显示旧文章](../faq/deploy.md#后台发布后前台不刷新仍显示旧文章)（[#469](https://github.com/Mereithhh/vanblog/issues/469)）。
 
 如果宝塔已有项目较少，还是推荐使用 [nginx-proxy-manager](https://nginxproxymanager.com/) 进行反代管理会更方便。
 

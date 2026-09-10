@@ -63,6 +63,8 @@ location / {
   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
   proxy_set_header X-Forwarded-Proto $scheme;
   proxy_set_header Upgrade $http_upgrade;
+  proxy_no_cache 1;
+  proxy_cache_bypass 1;
 }
 ```
 
@@ -95,6 +97,35 @@ Cloudflare（或同类 CDN）如果用「缓存全部」覆盖 `/*`，即使另�
 - `Cloudflare-CDN-Cache-Control: no-store`
 
 前台文章 HTML 和 `/_next/static` 不会被改成 no-store。仍建议在 Cloudflare 为 `/admin*` 与 `/api/admin*` 设置「绕过缓存」。改完后到 Cloudflare 清一下该路径的缓存。
+
+若「缓存全部」也缓存了前台 HTML，后台发布后公网站点会一直显示旧文章，见下一节。
+
+## 后台发布后前台不刷新仍显示旧文章
+
+后台发布或更新文章后，公网首页 / 文章页不刷新、仍显示旧内容；整站迁移后也可能这样。先到 **站点管理 / 系统设置 / 高级设置** 手动触发一次静态页面更新，并确认**直连容器映射端口**能看到新内容。说明见 [静态页面更新策略](../advanced/isr.md)。
+
+若只有走 Nginx / 宝塔反代（或 Cloudflare 等 CDN）时是旧页，就是外层在缓存 HTML（[#469](https://github.com/Mereithhh/vanblog/issues/469)）。社区方案来自 [RubyXun](https://github.com/RubyXun) / [lateautumn233](https://github.com/lateautumn233)，相关讨论见 [#332](https://github.com/Mereithhh/vanblog/issues/332)。
+
+源站已对 `/admin` 和 `/api/admin/*` 发送 `private, no-store`（见上一节）。**前台 HTML 不会强制 no-store**，代理和 CDN 仍可能把整页存下来。
+
+Nginx `location` 里加上：
+
+```nginx
+location / {
+  proxy_pass http://127.0.0.1:<PORT>;
+  proxy_set_header Host $host;
+  proxy_set_header X-Real-IP $remote_addr;
+  proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+  proxy_set_header X-Forwarded-Proto $scheme;
+  proxy_set_header Upgrade $http_upgrade;
+  proxy_no_cache 1;
+  proxy_cache_bypass 1;
+}
+```
+
+宝塔常在 `/www/server/nginx/conf/proxy.conf` 里写 `proxy_cache cache_one;`，对所有反代生效。可以在站点反代配置里加上面两行，和 / 或把 `proxy.conf` 里的 `proxy_cache cache_one;` 注释掉（`# proxy_cache cache_one;`），再重载 Nginx。
+
+Cloudflare 等 CDN 不要对 HTML 开「缓存全部」；改完后清边缘缓存。完整说明见 [反代](../reference/reverse-proxy.md#后台发布后前台不刷新仍显示旧文章)，使用侧见 [使用常见问题](./usage.md#后台发布后前台不刷新仍显示旧文章)。
 
 ## 一键脚本下载编排文件失败
 
@@ -194,16 +225,10 @@ curl -sSL https://get.daocloud.io/docker | sh
 
 ## 宝塔 nginx 反代后前台显示错误
 
-使用宝塔内置的 nginx 反代后可能会出现一些问题：比如文章不更新等。
+使用宝塔内置 nginx 反代后，常见表现是后台改了文章、前台仍是旧页。这多半是宝塔 `/www/server/nginx/conf/proxy.conf` 里的 `proxy_cache` 在缓存 HTML，而不是必须重装 Nginx。请按 [后台发布后前台不刷新仍显示旧文章](#后台发布后前台不刷新仍显示旧文章) 关闭或绕过代理缓存（[#469](https://github.com/Mereithhh/vanblog/issues/469)）。
 
-之前有朋友也和我反馈了类似的问题。经过排查是因为宝塔 nginx 本身的问题，他卸载了宝塔自带的 nginx ，然后手动安装了新版 nginx（通过系统的包管理器）后，解决了此问题。
-
-::: note
-
-宝塔 nginx 本身会在配置文件外自动添加一些配置，或者是有一些专门为了宝塔面板做的定制化改造，导致了这个问题。
-
-:::
+个别环境升级 Nginx 也能缓解，但优先检查缓存配置。宝塔会在配置文件外自动加一些语句，其中就包括全局 `proxy_cache`。
 
 ## https 反代前台点击按钮跳转后页面不更新
 
-参考其他人的经验，用 宝塔 + Nginx 可能会出现这个问题，这时可以尝试升级一下 Nginx 版本应该能得到解决。
+同上，先按 [后台发布后前台不刷新仍显示旧文章](#后台发布后前台不刷新仍显示旧文章) 检查 Nginx / 宝塔 / CDN 是否在缓存前台 HTML。升级 Nginx 可以作为补充手段。
