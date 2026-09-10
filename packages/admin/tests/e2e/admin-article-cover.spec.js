@@ -88,7 +88,7 @@ async function openCoverForm(page, store) {
 
   const dialog = page.locator('.ant-modal-content').filter({ hasText: '修改信息' });
   await expect(dialog).toBeVisible();
-  await expect(dialog.getByText('题头图')).toBeVisible();
+  await expect(dialog.getByText('题头图', { exact: true })).toBeVisible();
   return dialog;
 }
 
