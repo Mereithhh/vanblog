@@ -6,10 +6,6 @@ jest.mock('axios');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 function createController() {
   const metaProvider = {
     getAll: jest.fn().mockResolvedValue({
@@ -53,15 +49,22 @@ describe('MetaController.getAllMeta', () => {
   });
 
   it('old await-on-request-path would stall for the remote delay', async () => {
-    const remoteDelayMs = 400;
-    mockedAxios.get.mockImplementation(() =>
-      delay(remoteDelayMs).then(() => ({
-        data: { data: { version: '0.99.0' } },
-      })),
-    );
+    let resolveRemote!: (value: unknown) => void;
+    const remote = new Promise((resolve) => {
+      resolveRemote = resolve;
+    });
+    mockedAxios.get.mockImplementation(() => remote as Promise<any>);
 
-    const started = Date.now();
-    await axios.get('https://api.mereith.com/vanblog/version');
-    expect(Date.now() - started).toBeGreaterThanOrEqual(remoteDelayMs);
+    let oldPathSettled = false;
+    const oldPath = axios.get('https://api.mereith.com/vanblog/version').then(() => {
+      oldPathSettled = true;
+    });
+
+    await Promise.resolve();
+    expect(oldPathSettled).toBe(false);
+
+    resolveRemote({ data: { data: { version: '0.99.0' } } });
+    await oldPath;
+    expect(oldPathSettled).toBe(true);
   });
 });
