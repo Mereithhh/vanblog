@@ -104,6 +104,18 @@ describe('PublicController.getBuildMeta articlesPerPage (#346)', () => {
   });
 });
 
+describe('PublicController.getBuildMeta siteInfo (#207)', () => {
+  it('always returns siteInfo as an object even when the meta document omits it', async () => {
+    const { controller, metaProvider } = createController({});
+    metaProvider.getAll.mockResolvedValue({ _doc: {} });
+    const result = await controller.getBuildMeta();
+    expect(result.statusCode).toBe(200);
+    expect(result.data.meta.siteInfo).toEqual(expect.any(Object));
+    expect(result.data.meta.siteInfo).not.toBeNull();
+    expect(result.data.meta.siteInfo.articlesPerPage).toBe(DEFAULT_ARTICLES_PER_PAGE);
+  });
+});
+
 describe('PublicController.getBuildMeta page copy (#373)', () => {
   it('exposes stored friend-link and about copy on public siteInfo', async () => {
     const { controller } = createController({

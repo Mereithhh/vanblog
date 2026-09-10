@@ -63,11 +63,12 @@ export interface HeadTag {
 }
 
 export function getLayoutProps(data: PublicMetaProp): LayoutProps {
+  // Public meta always includes siteInfo as an object; fields may be sparse.
   const siteInfo = data.meta.siteInfo;
   const showSubMenu =
-    Boolean(data.meta.categories.length) && siteInfo?.showSubMenu == "true";
+    Boolean(data.meta.categories.length) && siteInfo.showSubMenu == "true";
   let headerLeftContent: "siteLogo" | "siteName" = "siteName";
-  if (data.meta.siteInfo.siteLogo && siteInfo.headerLeftContent == "siteLogo") {
+  if (siteInfo.siteLogo && siteInfo.headerLeftContent == "siteLogo") {
     headerLeftContent = "siteLogo";
   }
   let showAdminButton: "true" | "false" = "true";
@@ -75,7 +76,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showAdminButton = "false";
   }
   let showFriends: "true" | "false" = "true";
-  if (siteInfo?.showFriends == "false") {
+  if (siteInfo.showFriends == "false") {
     showFriends = "false";
   }
   const customSetting: any = { enableCustomizing: "true" };
@@ -96,39 +97,36 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   }
   let showDonateButton = "true";
   let showCopyRight = "true";
-  if (siteInfo?.showCopyRight == "false") {
+  if (siteInfo.showCopyRight == "false") {
     showCopyRight = "false";
   }
-  if (siteInfo?.showDonateButton == "false") {
+  if (siteInfo.showDonateButton == "false") {
     showDonateButton = "false";
   }
   let showRSS: "true" | "false" = "true";
-  if (data.meta.siteInfo?.showRSS && data.meta.siteInfo?.showRSS == "false") {
+  if (siteInfo.showRSS && siteInfo.showRSS == "false") {
     showRSS = "false";
   }
   let showExpirationReminder: "true" | "false" = "true";
   if (
-    data.meta.siteInfo?.showExpirationReminder &&
-    data.meta.siteInfo?.showExpirationReminder == "false"
+    siteInfo.showExpirationReminder &&
+    siteInfo.showExpirationReminder == "false"
   ) {
     showExpirationReminder = "false";
   }
   let showEditButton: "true" | "false" = "true";
-  if (
-    data.meta.siteInfo?.showEditButton &&
-    data.meta.siteInfo?.showEditButton == "false"
-  ) {
+  if (siteInfo.showEditButton && siteInfo.showEditButton == "false") {
     showEditButton = "false";
   }
   let openArticleLinksInNewWindow: "true" | "false" = "false";
   if (
-    data.meta.siteInfo?.openArticleLinksInNewWindow &&
-    data.meta.siteInfo?.openArticleLinksInNewWindow == "true"
+    siteInfo.openArticleLinksInNewWindow &&
+    siteInfo.openArticleLinksInNewWindow == "true"
   ) {
     openArticleLinksInNewWindow = "true";
   }
   const defaultExpandAllCategories: "true" | "false" = isDefaultExpandAllCategories(
-    data.meta.siteInfo?.defaultExpandAllCategories
+    siteInfo.defaultExpandAllCategories
   )
     ? "true"
     : "false";
@@ -136,56 +134,56 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   return {
     showFriends,
     version: data?.version || "dev",
-    subMenuOffset: siteInfo?.subMenuOffset || 0,
+    subMenuOffset: siteInfo.subMenuOffset || 0,
     showAdminButton,
     headerLeftContent,
     copyrightAggreement: siteInfo.copyrightAggreement || "BY-NC-SA",
-    ipcHref: siteInfo?.beianUrl || "",
-    ipcNumber: siteInfo?.beianNumber || "",
-    gaBeianNumber: siteInfo?.gaBeianNumber || "",
-    gaBeianLogoUrl: siteInfo?.gaBeianLogoUrl || "",
-    gaBeianUrl: siteInfo?.gaBeianUrl || "",
-    since: siteInfo?.since || dayjs().toISOString(),
-    logo: siteInfo?.siteLogo || "",
+    ipcHref: siteInfo.beianUrl || "",
+    ipcNumber: siteInfo.beianNumber || "",
+    gaBeianNumber: siteInfo.gaBeianNumber || "",
+    gaBeianLogoUrl: siteInfo.gaBeianLogoUrl || "",
+    gaBeianUrl: siteInfo.gaBeianUrl || "",
+    since: siteInfo.since || dayjs().toISOString(),
+    logo: siteInfo.siteLogo || "",
     favicon: siteInfo.favicon,
     siteName: siteInfo.siteName,
     siteDesc: siteInfo.siteDesc,
-    baiduAnalysisID: siteInfo?.baiduAnalysisId || "",
-    gaAnalysisID: normalizeGaAnalysisId(siteInfo?.gaAnalysisId),
-    logoDark: siteInfo?.siteLogoDark || "",
+    baiduAnalysisID: siteInfo.baiduAnalysisId || "",
+    gaAnalysisID: normalizeGaAnalysisId(siteInfo.gaAnalysisId),
+    logoDark: siteInfo.siteLogoDark || "",
     showExpirationReminder: showExpirationReminder,
-    description: siteInfo?.siteDesc || "",
+    description: siteInfo.siteDesc || "",
     menus: data?.menus || defaultMenu,
     categories: data.meta.categories,
     showSubMenu: showSubMenu ? "true" : "false",
-    enableComment: siteInfo?.enableComment || "true",
-    defaultTheme: siteInfo?.defaultTheme || "auto",
+    enableComment: siteInfo.enableComment || "true",
+    defaultTheme: siteInfo.defaultTheme || "auto",
     openArticleLinksInNewWindow,
     defaultExpandAllCategories,
     showCopyRight,
     showDonateButton,
     showRSS,
     showEditButton,
-    articlesPerPage: sanitizeArticlesPerPage(siteInfo?.articlesPerPage),
+    articlesPerPage: sanitizeArticlesPerPage(siteInfo.articlesPerPage),
     friendLinkIntro: resolvePageCopy(
-      siteInfo?.friendLinkIntro,
+      siteInfo.friendLinkIntro,
       DEFAULT_FRIEND_LINK_INTRO
     ),
     friendLinkApplyContent: resolvePageCopy(
-      siteInfo?.friendLinkApplyContent,
+      siteInfo.friendLinkApplyContent,
       DEFAULT_FRIEND_LINK_APPLY_CONTENT
     ),
-    aboutTitle: resolvePageCopy(siteInfo?.aboutTitle, DEFAULT_ABOUT_TITLE),
+    aboutTitle: resolvePageCopy(siteInfo.aboutTitle, DEFAULT_ABOUT_TITLE),
     ...customSetting,
   };
 }
 
 export function getAuthorCardProps(data: PublicMetaProp): AuthorCardProps {
+  const siteInfo = data.meta.siteInfo;
   const showSubMenu =
-    Boolean(data.meta.categories.length) &&
-    data.meta.siteInfo?.showSubMenu == "true";
+    Boolean(data.meta.categories.length) && siteInfo.showSubMenu == "true";
   let showRSS: "true" | "false" = "true";
-  if (data.meta.siteInfo?.showRSS && data.meta.siteInfo?.showRSS == "false") {
+  if (siteInfo.showRSS && siteInfo.showRSS == "false") {
     showRSS = "false";
   }
   return {
@@ -193,10 +191,10 @@ export function getAuthorCardProps(data: PublicMetaProp): AuthorCardProps {
     tagNum: data.tags.length,
     catelogNum: data.meta.categories.length,
     socials: data.meta.socials,
-    author: data.meta.siteInfo.author,
-    desc: data.meta.siteInfo.authorDesc,
-    logo: data.meta.siteInfo.authorLogo,
-    logoDark: data.meta.siteInfo.authorLogoDark || "",
+    author: siteInfo.author,
+    desc: siteInfo.authorDesc,
+    logo: siteInfo.authorLogo,
+    logoDark: siteInfo.authorLogoDark || "",
     showSubMenu: showSubMenu ? "true" : "false",
     showRSS,
   };
