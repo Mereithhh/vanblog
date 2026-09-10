@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Put, Query, UseGuards } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateCategoryDto, UpdateCategoryDto } from 'src/types/category.dto';
+import { CreateCategoryDto, ReorderCategoriesDto, UpdateCategoryDto } from 'src/types/category.dto';
 import { AdminGuard } from 'src/provider/auth/auth.guard';
 import { CategoryProvider } from 'src/provider/category/category.provider';
 import { ISRProvider } from 'src/provider/isr/isr.provider';
@@ -63,6 +63,22 @@ export class CategoryController {
     }
     const data = await this.categoryProvider.deleteOne(name);
     this.isrProvider.activeAll('删除分类触发增量渲染！');
+    return {
+      statusCode: 200,
+      data,
+    };
+  }
+
+  @Put('/all/order')
+  async reorderCategories(@Body() body: ReorderCategoriesDto) {
+    if (config.demo && config.demo == 'true') {
+      return {
+        statusCode: 401,
+        message: '演示站禁止修改此项！',
+      };
+    }
+    const data = await this.categoryProvider.reorderCategories(body?.names);
+    this.isrProvider.activeAll('调整分类顺序触发增量渲染！');
     return {
       statusCode: 200,
       data,

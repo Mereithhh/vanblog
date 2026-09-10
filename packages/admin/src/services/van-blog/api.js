@@ -285,6 +285,12 @@ export async function updateCategory(name, value) {
     data: value,
   });
 }
+export async function reorderCategories(names) {
+  return request('/api/admin/category/all/order', {
+    method: 'PUT',
+    data: { names },
+  });
+}
 export async function updateTag(name, value) {
   return request(`/api/admin/tag/${name}?value=${value}`, {
     method: 'PUT',

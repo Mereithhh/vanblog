@@ -153,4 +153,20 @@ describe('PublicController category hide (#359)', () => {
     expect(result.data['私密']).toBeUndefined();
     expect(result.data['随笔']).toHaveLength(1);
   });
+
+  it('preserves custom public category order on /meta and /category', async () => {
+    const { controller, categoryProvider } = createController({ siteName: 'demo' });
+    categoryProvider.getPublicCategoryNames.mockResolvedValue(['深度学习', 'Linux运维', 'Python']);
+    categoryProvider.getCategoriesWithArticle.mockResolvedValue({
+      深度学习: [{ id: 1, title: 'DL' }],
+      Linux运维: [{ id: 2, title: 'Ops' }],
+      Python: [{ id: 3, title: 'Py' }],
+    });
+
+    const meta = await controller.getBuildMeta();
+    expect(meta.data.meta.categories).toEqual(['深度学习', 'Linux运维', 'Python']);
+
+    const listed = await controller.getArticlesByCategory();
+    expect(Object.keys(listed.data)).toEqual(['深度学习', 'Linux运维', 'Python']);
+  });
 });

@@ -21,6 +21,9 @@ export class Category extends Document {
   @Prop({ default: false, index: true })
   hidden: boolean;
 
+  @Prop({ default: 0, index: true })
+  order: number;
+
   @Prop()
   password: string;
 

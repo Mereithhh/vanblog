@@ -2,6 +2,7 @@ import {
   createCategory,
   deleteCategory,
   getAllCategories,
+  reorderCategories,
   updateCategory,
 } from '@/services/van-blog/api';
 import { encodeQuerystring } from '@/services/van-blog/encode';
@@ -9,6 +10,44 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, message, Modal, Switch } from 'antd';
 import { useRef, useState } from 'react';
+
+function isDemoHost() {
+  return location.hostname == 'blog-demo.mereith.com';
+}
+
+function showDemoBlocked() {
+  Modal.info({
+    title: '演示站禁止修改信息！',
+    content: '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
+  });
+}
+
+function OrderButtons({ record, index, total, onMove }) {
+  return (
+    <span data-category-order={String(record.name)}>
+      <Button
+        type="link"
+        size="small"
+        disabled={index <= 0}
+        aria-label={`上移分类 ${record.name}`}
+        data-category-move-up={String(record.name)}
+        onClick={() => onMove(record.name, -1)}
+      >
+        上移
+      </Button>
+      <Button
+        type="link"
+        size="small"
+        disabled={index < 0 || index >= total - 1}
+        aria-label={`下移分类 ${record.name}`}
+        data-category-move-down={String(record.name)}
+        onClick={() => onMove(record.name, 1)}
+      >
+        下移
+      </Button>
+    </span>
+  );
+}
 
 function HiddenSwitch({ record, action }) {
   const [loading, setLoading] = useState(false);
@@ -22,11 +61,8 @@ function HiddenSwitch({ record, action }) {
         unCheckedChildren="否"
         aria-label={`是否隐藏 ${record.name}`}
         onChange={async (checked) => {
-          if (location.hostname == 'blog-demo.mereith.com') {
-            Modal.info({
-              title: '演示站禁止修改信息！',
-              content: '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
-            });
+          if (isDemoHost()) {
+            showDemoBlocked();
             return;
           }
           setLoading(true);
@@ -43,11 +79,25 @@ function HiddenSwitch({ record, action }) {
   );
 }
 
-const columns = [
+function createColumns({ onMove, rows }) {
+  return [
   {
     dataIndex: 'name',
     title: '题目',
     search: false,
+  },
+  {
+    title: '排序',
+    tooltip:
+      '上移 / 下移可调整分类在前台导航、分类列表和分类页中的显示顺序。隐藏分类仍参与后台排序，但不会出现在前台。',
+    search: false,
+    width: 140,
+    render: (_, record) => {
+      const index = rows.findIndex((item) => item.name === record.name);
+      return (
+        <OrderButtons record={record} index={index} total={rows.length} onMove={onMove} />
+      );
+    },
   },
   {
     title: '是否隐藏',
@@ -176,21 +226,45 @@ const columns = [
     ],
   },
 ];
+}
+
 export default function () {
+  const actionRef = useRef();
+  const [rows, setRows] = useState([]);
   const fetchData = async () => {
     const { data: res } = await getAllCategories(true);
-    return res.map((item) => ({
+    const data = res.map((item) => ({
       key: item.id,
       ...item,
     }));
+    setRows(data);
+    return data;
   };
-  const actionRef = useRef();
+  const moveCategory = async (name, delta) => {
+    if (isDemoHost()) {
+      showDemoBlocked();
+      return;
+    }
+    const index = rows.findIndex((item) => item.name === name);
+    const next = index + delta;
+    if (index < 0 || next < 0 || next >= rows.length) {
+      return;
+    }
+    const names = rows.map((item) => item.name);
+    const swapped = names[index];
+    names[index] = names[next];
+    names[next] = swapped;
+    await reorderCategories(names);
+    message.success('已调整分类顺序');
+    actionRef?.current?.reload();
+  };
   return (
     <>
       <ProTable
         rowKey="name"
-        columns={columns}
+        columns={createColumns({ onMove: moveCategory, rows })}
         search={false}
+        pagination={false}
         dateFormatter="string"
         // headerTitle="分类"
         actionRef={actionRef}

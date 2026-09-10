@@ -317,3 +317,117 @@ describe('CategoryProvider hidden flag (#359)', () => {
     });
   });
 });
+
+describe('CategoryProvider custom order (#152)', () => {
+  it('persists a reorder and projects that order to admin and public lists', async () => {
+    const articleProvider = {
+      getAll: jest.fn(async () => [
+        { id: 1, title: '深度学习文', category: '深度学习', hidden: false },
+        { id: 2, title: 'Linux文', category: 'Linux运维', hidden: false },
+        { id: 3, title: 'Python文', category: 'Python', hidden: false },
+        { id: 4, title: '隐藏文', category: '隐藏机密', hidden: false },
+      ]),
+    };
+    const model = createMemoryCategoryModel([
+      { id: 1, name: '深度学习', type: 'category', private: false, hidden: false },
+      { id: 2, name: 'Linux运维', type: 'category', private: false, hidden: false },
+      { id: 3, name: 'Python', type: 'category', private: false, hidden: false },
+      { id: 4, name: '隐藏机密', type: 'category', private: false, hidden: true },
+    ]);
+    const provider = new CategoryProvider(model as any, articleProvider as any, {} as any);
+
+    await provider.reorderCategories(['深度学习', 'Linux运维', 'Python', '隐藏机密']);
+    expect(model.docs.map((item) => [item.name, item.order])).toEqual([
+      ['深度学习', 0],
+      ['Linux运维', 1],
+      ['Python', 2],
+      ['隐藏机密', 3],
+    ]);
+
+    await provider.reorderCategories(['Linux运维', '深度学习', 'Python', '隐藏机密']);
+    expect(model.docs.map((item) => [item.name, item.order])).toEqual([
+      ['深度学习', 1],
+      ['Linux运维', 0],
+      ['Python', 2],
+      ['隐藏机密', 3],
+    ]);
+
+    expect(await provider.getAllCategories()).toEqual([
+      'Linux运维',
+      '深度学习',
+      'Python',
+      '隐藏机密',
+    ]);
+    expect(await provider.getPublicCategoryNames()).toEqual(['Linux运维', '深度学习', 'Python']);
+    expect(await provider.getAllCategories(false, false)).toEqual([
+      'Linux运维',
+      '深度学习',
+      'Python',
+    ]);
+    expect((await provider.getAllCategories(true)).map((item) => item.name)).toEqual([
+      'Linux运维',
+      '深度学习',
+      'Python',
+      '隐藏机密',
+    ]);
+
+    const publicMap = await provider.getCategoriesWithArticle(false);
+    expect(Object.keys(publicMap)).toEqual(['Linux运维', '深度学习', 'Python']);
+    expect(publicMap['隐藏机密']).toBeUndefined();
+
+    const adminMap = await provider.getCategoriesWithArticle(true);
+    expect(Object.keys(adminMap)).toEqual(['Linux运维', '深度学习', 'Python', '隐藏机密']);
+  });
+
+  it('appends new categories after the current max order', async () => {
+    const model = createMemoryCategoryModel([
+      { id: 1, name: '深度学习', type: 'category', private: false, order: 0 },
+      { id: 2, name: 'Linux运维', type: 'category', private: false, order: 1 },
+    ]);
+    const provider = new CategoryProvider(model as any, {} as any, {} as any);
+
+    await provider.addOne('单片机');
+    expect(model.docs.find((item) => item.name === '单片机').order).toBe(2);
+    expect(await provider.getAllCategories()).toEqual(['深度学习', 'Linux运维', '单片机']);
+  });
+
+  it('keeps legacy id order when no explicit order is stored', async () => {
+    const model = createMemoryCategoryModel([
+      { id: 3, name: 'Python', type: 'category', private: false },
+      { id: 1, name: '深度学习', type: 'category', private: false },
+      { id: 2, name: 'Linux运维', type: 'category', private: false },
+    ]);
+    const provider = new CategoryProvider(model as any, {} as any, {} as any);
+
+    expect(await provider.getPublicCategoryNames()).toEqual(['深度学习', 'Linux运维', 'Python']);
+  });
+
+  it('imports order from backup and does not invent one for older rows', async () => {
+    const model = createMemoryCategoryModel([
+      { id: 1, name: '随笔', type: 'category', private: false, hidden: false },
+    ]);
+    const provider = new CategoryProvider(model as any, {} as any, {} as any);
+
+    await provider.importCategories([
+      { id: 1, name: '随笔', order: 5 },
+      { id: 2, name: '专栏', order: 1 },
+      { id: 3, name: '旧分类' },
+    ]);
+
+    expect(model.docs.find((item) => item.name === '随笔').order).toBe(5);
+    expect(model.docs.find((item) => item.name === '专栏')).toMatchObject({
+      name: '专栏',
+      order: 1,
+    });
+    expect(model.docs.find((item) => item.name === '旧分类').order).toBe(6);
+  });
+
+  it('rejects an empty reorder payload', async () => {
+    const stack = createRenameStack({
+      categories: [{ id: 1, name: '随笔', type: 'category', private: false }],
+    });
+    await expect(stack.categoryProvider.reorderCategories([])).rejects.toBeInstanceOf(
+      NotAcceptableException,
+    );
+  });
+});

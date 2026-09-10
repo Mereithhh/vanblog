@@ -91,3 +91,12 @@ describe("public category hide (#359)", () => {
     expect(nav).toMatch(/props\.categories\.map/);
   });
 });
+
+describe("public category order (#152)", () => {
+  it("keeps the server-provided custom display order", () => {
+    const visible = listedPublicCategories(["深度学习", "Linux运维", "Python"]);
+    expect(visible).toEqual(["深度学习", "Linux运维", "Python"]);
+    const layout = getLayoutProps(metaOf(["深度学习", "Linux运维", "Python"]));
+    expect(layout.categories).toEqual(["深度学习", "Linux运维", "Python"]);
+  });
+});
