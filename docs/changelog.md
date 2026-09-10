@@ -37,6 +37,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台文章页和文章列表的阅读数、评论数在数据加载完成前显示 `...`，不再先闪 `0`；加载完成后显示真实数字（包括确实为 0）。[#230](https://github.com/Mereithhh/vanblog/issues/230)
 - 手机端顶栏网站名改为相对整个页面宽度居中，不再只在汉堡菜单右侧的剩余栏里居中（短站名时错位更明显）。电脑端左侧网站名 / logo 布局不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 前台分页在第一页时「上一页」、最后一页时「下一页」不再可点：仍显示但禁用（无链接、无悬停高亮），不能翻出范围。页码链接、当前页选中样式和「每页文章数」不变。[#331](https://github.com/Mereithhh/vanblog/issues/331)
 - 加密文章密码框提示误写成「文章已解锁」，现改为「文章已加密，请输入密码后查看：」。Related to [#414](https://github.com/Mereithhh/vanblog/pull/414)
