@@ -37,7 +37,7 @@ export function extractImageRefs(content: string): ImageRef[] {
     const url = (match[1] || match[2] || match[3] || '').trim();
     refs.push({ url, raw: match[0], index: match.index });
   }
-  return refs;
+  return refs.sort((a, b) => a.index - b.index);
 }
 
 export function collectSiteHosts(siteBaseUrl?: string, extraHosts?: Array<string | undefined>): string[] {

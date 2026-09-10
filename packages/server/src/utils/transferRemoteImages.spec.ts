@@ -25,10 +25,10 @@ describe('extractImageRefs (#434)', () => {
       'https://img-blog.csdnimg.cn/a.png',
       '/static/img/keep.webp',
       'https://blog.example.com/static/img/mine.webp',
-      'https://example.com/d.png',
       'https://cdn.csdn.net/c.jpg',
       'data:image/png;base64,abc',
       './pic.png',
+      'https://example.com/d.png',
     ]);
     expect(urls).not.toContain('https://csdn.net/page.png');
   });
