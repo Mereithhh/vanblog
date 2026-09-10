@@ -132,6 +132,7 @@ export interface MetaProps {
     showExpirationReminder: "true" | "false";
     showEditButton: "true" | "false";
     articlesPerPage?: number;
+    defaultExpandAllCategories?: "true" | "false";
     friendLinkIntro?: string;
     friendLinkApplyContent?: string;
     aboutTitle?: string;
@@ -197,6 +198,7 @@ const defaultMeta: MetaProps = {
     openArticleLinksInNewWindow: "false",
     showEditButton: "false",
     articlesPerPage: 5,
+    defaultExpandAllCategories: "false",
   },
 };
 

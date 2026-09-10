@@ -226,7 +226,8 @@ describe("timeline page wires year and month sections", () => {
     expect(category).not.toMatch(/TimelineArchives/);
     expect(tag).not.toMatch(/groupTimelineByYearAndMonth/);
     expect(tag).not.toMatch(/TimelineArchives/);
-    expect(category).toMatch(/Object\.keys\(props\.sortedArticles\)/);
+    expect(category).toMatch(/CategoryList/);
+    expect(category).toMatch(/sortedArticles=\{props\.sortedArticles\}/);
     expect(tag).toMatch(/Object\.keys\(props\.sortedArticles\)/);
   });
 });

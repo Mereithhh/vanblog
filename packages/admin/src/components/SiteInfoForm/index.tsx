@@ -343,6 +343,18 @@ export default function (props: {
             tooltip={'默认显示，关闭后所有位置会隐藏 RSS 按钮。'}
           />
           <ProFormSelect
+            name={'defaultExpandAllCategories'}
+            label="分类页默认展开全部分类"
+            placeholder={'默认收起'}
+            valueEnum={{
+              true: '默认展开',
+              false: '默认收起',
+            }}
+            tooltip={
+              '默认收起，和升级前一样。开启后打开前台分类列表时全部分类都是展开的。单篇分类页、标签页和时间线不受影响。访客仍可点分类行或「全部展开 / 全部收起」临时切换。'
+            }
+          />
+          <ProFormSelect
             name={'openArticleLinksInNewWindow'}
             label="前台点击链接时的默认行为"
             placeholder={'在当前页面跳转'}

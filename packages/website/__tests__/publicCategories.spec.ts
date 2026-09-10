@@ -87,7 +87,8 @@ describe("public category hide (#359)", () => {
     expect(pageProps).toMatch(/notFound:\s*true/);
     expect(categoryPage).toMatch(/notFound:\s*true/);
     expect(categoryPage).toMatch(/data\.meta\.categories\.map/);
-    expect(categoryList).toMatch(/Object\.keys\(props\.sortedArticles\)/);
+    expect(categoryList).toMatch(/CategoryList/);
+    expect(categoryList).toMatch(/sortedArticles=\{props\.sortedArticles\}/);
     expect(nav).toMatch(/props\.categories\.map/);
   });
 });
