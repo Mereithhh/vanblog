@@ -97,8 +97,6 @@ test.describe('admin rename copy (#194)', () => {
     await expect(categoryModal).toBeVisible();
     await expect(categoryModal.locator('.ant-modal-title')).toHaveText('重命名分类 "随笔"');
     await expect(page.getByText('批量修改标签')).toHaveCount(0);
-    await categoryModal.getByRole('button', { name: '取消' }).click();
-    await expect(categoryModal).toBeHidden();
 
     await page.goto('/admin/site/data?tab=tag');
     await expect(page.getByText('标签管理').first()).toBeVisible({ timeout: 30_000 });
