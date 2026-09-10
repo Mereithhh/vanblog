@@ -18,6 +18,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 加密文章密码框提示误写成「文章已解锁」，现改为「文章已加密，请输入密码后查看：」。Related to [#414](https://github.com/Mereithhh/vanblog/pull/414)
 - 多文件自定义页面访问带查询参数的目录（如 `/c/uptime/?x=1`）不再把 `?x=1` 当成文件名；缺失的 `index.html` 返回 404 而不是 `sendFile` 失败。[#337](https://github.com/Mereithhh/vanblog/issues/337)
 - 后台编辑很长的 Markdown 时，用右侧目录跳到靠后的标题后，顶部工具栏（加粗、标题、上传等功能键）会整行消失。现把编辑器锁在视口高度内，工具栏 sticky 在编辑区顶部，目录跳转也不再把页面/外层容器滚走。[#298](https://github.com/Mereithhh/vanblog/issues/298)
 - 换域名后文章/草稿里写成绝对地址的图片（如 `https://旧域名/static/...`）不会跟着 DNS 或「网站 Url」一起改。后台「图床设置」增加旧地址 → 新地址改写，只替换以此前缀开头的链接，并统计更新篇数；相对路径和未填写的第三方图床不动。[#475](https://github.com/Mereithhh/vanblog/issues/475)
