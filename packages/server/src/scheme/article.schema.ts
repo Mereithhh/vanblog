@@ -50,6 +50,9 @@ export class Article extends Document {
   @Prop()
   copyright?: string;
 
+  @Prop({ default: '' })
+  cover?: string;
+
   @Prop()
   lastVisitedTime: Date;
 

@@ -11,4 +11,5 @@ export interface Article {
   author?: string;
   copyright?: string;
   pathname?: string;
+  cover?: string;
 }

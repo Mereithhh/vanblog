@@ -26,6 +26,7 @@ VanBlog 没有 Hugo 那种站点级 `permalinks` 模板。按篇文章设置「�
 - 网站描述会作为 description 属性
 - 会有 robots 的 meta 标签
 - 文章页面和首页/列表页会有 keywords，具体是由当前页面文章的分类和标签经过去重后生成的
+- 文章设置了[题头图](../features/article.md)时，文章页会带上 `og:image`、`twitter:image` 和 `twitter:card=summary_large_image`，方便飞书 / 知乎等抓取分享预览。相对路径会拼上站点「网站 Url」。没有题头图时不加这些标签。
 
 ## a 标签
 

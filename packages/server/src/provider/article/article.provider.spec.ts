@@ -154,3 +154,31 @@ describe('ArticleProvider.getByOption pagination (#400)', () => {
     }
   });
 });
+
+describe('ArticleProvider cover (#288)', () => {
+  it('includes cover in public, admin, and list projections', () => {
+    const provider = createProvider(createMemoryArticleModel());
+    expect(provider.publicView.cover).toBe(1);
+    expect(provider.adminView.cover).toBe(1);
+    expect(provider.listView.cover).toBe(1);
+  });
+
+  it('saves and clears cover via updateById', async () => {
+    const model = createMemoryArticleModel([
+      {
+        id: 7,
+        title: '文章',
+        content: '正文',
+        pathname: 'hello-post',
+        deleted: false,
+      },
+    ]);
+    const provider = createProvider(model);
+
+    await provider.updateById(7, { cover: '/static/img/hero.webp' });
+    expect(model.docs[0].cover).toBe('/static/img/hero.webp');
+
+    await provider.updateById(7, { cover: '' });
+    expect(model.docs[0].cover).toBe('');
+  });
+});

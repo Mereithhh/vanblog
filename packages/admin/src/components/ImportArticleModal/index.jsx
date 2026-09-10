@@ -11,6 +11,7 @@ import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import { Button, Form, Upload } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
+import CoverImageField from '../CoverImageField';
 import PathnameField from '../PathnameField';
 import TagSelectField from '../TagSelectField';
 export default function (props) {
@@ -168,6 +169,7 @@ export default function (props) {
             ];
           }}
         />
+        <CoverImageField />
         <ProFormTextArea
           name="content"
           label="内容"

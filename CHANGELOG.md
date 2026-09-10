@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 文章增加可选题头图：后台新建 /「修改信息」可上传或填写封面 URL，前台文章页顶部显示；留空则不占版面。设置后文章页带上 `og:image` / `twitter:image`，方便分享到飞书、知乎等。导入 Markdown 时 Front Matter 的 `cover` / `image` 会预填。[#288](https://github.com/Mereithhh/vanblog/issues/288)
 - 前台文章（以及同一套 ByteMD 的后台预览）围栏代码块支持汇编高亮：`asm` / `assembly` / `nasm` / `x86asm` / `intel` / `x86` 走 Intel/NASM（highlight.js `x86asm`），`arm` / `armasm` 走 ARM。原先 common 语言集不含汇编，这些围栏几乎没有关键字/寄存器/注释颜色。RSS 用的 markdown-it 也会把 `asm` 当成 `x86asm`。[#294](https://github.com/Mereithhh/vanblog/issues/294)
 - 后台文章编辑器「偏好设置」增加「软换行」：默认关闭，保持标准 Markdown（单独回车仍是同一段）。开启后，按 Enter 或粘贴多行时会自动补行末两个空格，写成 CommonMark 软换行；预览和前台仍按标准渲染。设置存在当前浏览器 LocalStorage，打开或保存已有文章时不会整篇改写历史正文。[#311](https://github.com/Mereithhh/vanblog/issues/311)
 - 前台首页和 `/page/n` 分页增加跳转到指定页：多页时在现有页码旁显示「跳转」输入框，回车或点「前往」按现有路由跳到 `/`（第 1 页）或 `/page/n`。只接受 1..总页数的整数，空值、非整数或超出范围不跳转。总页数跟随「每页文章数」。页码链接、当前页 `aria-current="page"` 以及第一页 / 最后一页禁用的上一页 / 下一页不变。[#229](https://github.com/Mereithhh/vanblog/issues/229)
@@ -90,6 +91,7 @@
 
 ### ✏️ Documentation | 文档
 
+- 文章 / FAQ / SEO：说明可选题头图的设置位置、上传或填写 URL、前台展示以及 `og:image` / `twitter:image` 分享预览。导入 Front Matter 可读 `cover` / `image`。[#288](https://github.com/Mereithhh/vanblog/issues/288)
 - 编辑器 / FAQ：说明汇编围栏可用的语言标签（`asm`、`nasm`、`x86asm`、`arm` 等），前台和后台预览同一套 highlight.js。[#294](https://github.com/Mereithhh/vanblog/issues/294)
 - 编辑器 / FAQ：说明「软换行」偏好（默认关，开启后 Enter / 粘贴自动补两个空格），以及为什么单独回车不换行。[#311](https://github.com/Mereithhh/vanblog/issues/311)
 - FAQ / 站点配置：说明前台分页可输入页码跳转，非法或超出范围不跳转；总页数跟随「每页文章数」。`docs/faq/usage.md`、`docs/features/config.md` [#229](https://github.com/Mereithhh/vanblog/issues/229)

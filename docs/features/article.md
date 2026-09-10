@@ -91,6 +91,10 @@ order: 1
 
   ![文章详情](https://pic.mereith.com/img/fad60a38e0d6819bfe6089108fe4142a.clipboard-2022-08-16.png)
 
+- 题头图 / 封面
+
+  可选。在新建文章或「修改信息」里填写图片 URL，或点「上传图片」走现有图床。设置后，文章页顶部会显示这张图，分享到飞书 / 知乎等应用时也会作为 `og:image` / `twitter:image` 预览图。留空则不显示，已有文章的版式不变。导入 Markdown 时，Front Matter 的 `cover`（或 `image`）会预填到该字段。
+
 - 是否隐藏
 
   选择隐藏后，前台将不会显示该文章的所有信息，该文章也不会计入总字数、标签、分类数量统计或者出现在时间线界面。但后台将正常显示该文章，并可以取消隐藏状态。
@@ -122,6 +126,8 @@ order: 1
 | slug       | 自定义路径名            | Hugo 的 slug。未写 `pathname` 时用此值预填，对应 `permalinks.post = "/post/:slug"` |
 | url        | 自定义路径名            | 仅识别单段路径或 `/post/<slug>`，不会解析 `/:year/:month/:title` 一类模板 |
 | abbrlink   | 自定义路径名            | hexo-abbrlink / hexo-addlink。若未写 `pathname` / `slug` / `url`，用此值预填，便于把 `archives/cb933e30.html` 迁成 `/post/cb933e30` |
+| cover      | 题头图                  | 可选。文章页顶部封面，同时作为分享预览图。未写 `cover` 时也会读 `image` |
+| image      | 题头图                  | 未写 `cover` 时用此值预填 |
 
 选择文件后，会弹出确认窗口（含自定义路径名，可改预填值），您可以在这里继续编辑或修改信息：
 

@@ -74,6 +74,10 @@ export const parseMarkdownFile = async (file, allowNotExistCategory) => {
     content: body,
     updatedAt,
   };
+  const cover = attributes?.cover || attributes?.image;
+  if (typeof cover === 'string' && cover.trim()) {
+    vals.cover = cover.trim();
+  }
   const pathname = pathnameFromFrontMatter(attributes);
   if (pathname) {
     vals.pathname = pathname;
@@ -92,6 +96,7 @@ export const parseObjToMarkdown = (obj) => {
     'createdAt',
     'hidden',
     'password',
+    'cover',
   ]) {
     if (Object.keys(obj).includes(key)) {
       if (['updatedAt', 'createdAt'].includes(key)) {

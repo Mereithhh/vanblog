@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import AlertCard from "../AlertCard";
+import ArticleCover from "../ArticleCover";
 import CopyRight from "../CopyRight";
 import Reward from "../Reward";
 import TopPinIcon from "../TopPinIcon";
@@ -41,6 +42,7 @@ export default function (props: {
   customCopyRight: string | null;
   showExpirationReminder: boolean;
   showEditButton: boolean;
+  cover?: string | null;
 }) {
   const [lock, setLock] = useState(props.type != "overview" && props.private);
   const { content, setContent } = props;
@@ -87,6 +89,9 @@ export default function (props: {
         id="post-card"
         className="overflow-hidden post-card bg-white card-shadow py-4 px-1 sm:px-3 md:py-6 md:px-5 dark:bg-dark  dark:nav-shadow-dark"
       >
+        {props.type == "article" && (
+          <ArticleCover src={props.cover} alt={props.title} />
+        )}
         {props.top != 0 && <TopPinIcon></TopPinIcon>}
         <Title
           type={props.type}
