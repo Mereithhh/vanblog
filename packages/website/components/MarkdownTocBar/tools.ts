@@ -16,13 +16,14 @@ export { normalizeHeadingText };
 
 export const washMarkdownContent = (source: string) => {
   if (!source) return "";
+  // Closing fences are the sequence ``` — a character class of backticks
+  // only means "not a backtick" and cannot match a fence.
   return (
     source
       .replace(/```([\s\S]*?)```[\s]*/g, "")
       .replace(/`#/g, "")
       .replace(/^[^#]+\n/g, "")
       .replace(/(?:[^\n#]+)#+\s([^#\n]+)\n*/g, "") // 匹配行内出现 # 号的情况
-      .replace(/```[^`\n]*\n+[^```]+```\n+/g, "")
       .replace(/`([^`\n]+)`/g, "$1")
       .replace(/\*\*?([^*\n]+)\*\*?/g, "$1")
       .replace(/__?([^_\n]+)__?/g, "$1")
