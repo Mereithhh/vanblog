@@ -16,6 +16,7 @@ import { SettingProvider } from './provider/setting/setting.provider';
 import { WebsiteProvider } from './provider/website/website.provider';
 import { initJwt } from './utils/initJwt';
 import { DEFAULT_SERVER_PORT, getListenTarget } from './utils/listenHost';
+import { applyStaticAssetHeaders } from './utils/imgCompress';
 
 async function bootstrap() {
   const jwtSecret = await initJwt();
@@ -26,6 +27,7 @@ async function bootstrap() {
 
   app.useStaticAssets(globalConfig.staticPath, {
     prefix: '/static/',
+    setHeaders: applyStaticAssetHeaders,
   });
 
   // 查看文件夹是否存在 并创建.

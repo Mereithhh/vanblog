@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 后台「图床设置」在原有「图片自动压缩」旁增加压缩格式：默认仍是 WebP，可选 AVIF（通常更小）。只影响新上传，不改写历史文件。AVIF 优先用 sharp 0.32.6；官方 Alpine 镜像若加载不到 musl sharp，则使用 `libavif-apps` 的 `avifenc`。[#423](https://github.com/Mereithhh/vanblog/issues/423)
 - 手机阅读文章时，有目录的文章会在「返回顶部」上方出现目录按钮，点开后从右侧滑出同一份文章目录，点标题会跳转并收起抽屉。电脑端右侧目录不变；没有标题的文章不显示该按钮。[#451](https://github.com/Mereithhh/vanblog/issues/451)
 - 后台「自定义路径名」标明对应 Hugo 的 `/post/:slug`：tooltip / 占位提示从 Hugo 迁移时填旧 slug 以保留 SEO。导入 Markdown 时，Front Matter 优先读 `pathname`，再读 Hugo 的 `slug`，再读单段或 `/post/<slug>` 的 `url`，最后仍读 hexo `abbrlink`。没有全局固定链接模板，仍是按篇文章设置。[#487](https://github.com/Mereithhh/vanblog/issues/487)
 - 后台从 Markdown 导入文章时，确认表单也有与新建文章相同的「自定义路径名」。Front Matter 若有 `pathname` 或 hexo-addlink 的 `abbrlink`，会预填该路径（`abbrlink: cb933e30` → `/post/cb933e30`），仍可改。[#383](https://github.com/Mereithhh/vanblog/issues/383)

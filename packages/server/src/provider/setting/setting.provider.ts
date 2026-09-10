@@ -19,6 +19,7 @@ import { defaultMenu, MenuItem } from 'src/types/menu.dto';
 import { MetaProvider } from '../meta/meta.provider';
 import { parseHtmlToHeadTagArr } from 'src/utils/htmlParser';
 import { isForceLoginCommentEnabled } from 'src/utils/walineLogin';
+import { parseCompressFormat, resolveCompressFormat } from 'src/utils/imgCompress';
 @Injectable()
 export class SettingProvider {
   logger = new Logger(SettingProvider.name);
@@ -33,7 +34,12 @@ export class SettingProvider {
       value: StaticSetting;
     };
     if (res) {
-      return res?.value || defaultStaticSetting;
+      const value = res?.value || defaultStaticSetting;
+      return {
+        ...defaultStaticSetting,
+        ...value,
+        compressFormat: resolveCompressFormat(value.compressFormat),
+      };
     } else {
       await this.settingModel.create({
         type: 'static',
@@ -233,6 +239,9 @@ export class SettingProvider {
   }
   async updateStaticSetting(dto: Partial<StaticSetting>) {
     const oldValue = await this.getStaticSetting();
+    if (Object.prototype.hasOwnProperty.call(dto, 'compressFormat')) {
+      dto.compressFormat = parseCompressFormat(dto.compressFormat);
+    }
     const newValue = { ...oldValue, ...dto };
     if (!oldValue) {
       return await this.settingModel.create({

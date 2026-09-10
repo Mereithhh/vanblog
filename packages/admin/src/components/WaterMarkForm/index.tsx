@@ -18,9 +18,13 @@ export default function (props: {}) {
             return {
               enableWaterMark: false,
               enableWebp: true,
+              compressFormat: 'webp',
             };
           }
-          return data;
+          return {
+            ...data,
+            compressFormat: data.compressFormat || 'webp',
+          };
         }}
         syncToInitialValues={true}
         onFinish={async (data) => {
@@ -72,7 +76,27 @@ export default function (props: {}) {
           rules={[{ required: true, message: '这是必填项' }]}
           required
           placeholder={'是否开启图片自动压缩'}
-          tooltip="开启之后上传图片将压缩至 webp 格式以提高加载速度，无论哪种存储策略都生效。"
+          tooltip="开启之后上传图片将压缩为所选格式以提高加载速度，无论哪种存储策略都生效。只影响新上传，不会改写已有文件。"
+        />
+        <ProFormSelect
+          name="compressFormat"
+          label="压缩格式"
+          request={async () => {
+            return [
+              {
+                label: 'WebP（默认）',
+                value: 'webp',
+              },
+              {
+                label: 'AVIF',
+                value: 'avif',
+              },
+            ];
+          }}
+          rules={[{ required: true, message: '这是必填项' }]}
+          required
+          placeholder={'选择压缩输出格式'}
+          tooltip="仅在开启自动压缩时生效。AVIF 通常比 WebP 更小；现代浏览器已广泛支持。编码优先用 sharp（与前台相同的 0.32.6）；官方 Alpine 镜像若无法加载 musl sharp，则使用 libavif-apps 的 avifenc。"
         />
         <ProFormSelect
           fieldProps={{

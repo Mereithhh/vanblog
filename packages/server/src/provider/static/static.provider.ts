@@ -16,7 +16,7 @@ import axios from 'axios';
 import { UploadConfig } from 'src/types/upload';
 import { addWaterMarkToIMG } from 'src/utils/watermark';
 import { checkTrue } from 'src/utils/checkTrue';
-import { compressImgToWebp } from 'src/utils/webp';
+import { compressExt, compressImg, resolveCompressFormat } from 'src/utils/imgCompress';
 import { normalizeCustomPageRel } from 'src/utils/customPagePath';
 @Injectable()
 export class StaticProvider {
@@ -52,6 +52,7 @@ export class StaticProvider {
     let currentSign = encryptFileMD5(buf);
     const staticConfigInDB = await this.settingProvider.getStaticSetting();
     let compressSuccess = true;
+    const compressFormat = resolveCompressFormat(staticConfigInDB?.compressFormat);
     if (type == 'img') {
       try {
         // 用加过水印的 buf 做计算，看看是不是有文件的。
@@ -72,7 +73,7 @@ export class StaticProvider {
 
       if (checkTrue(staticConfigInDB.enableWebp)) {
         try {
-          buf = await compressImgToWebp(buf);
+          buf = await compressImg(buf, compressFormat);
           currentSign = encryptFileMD5(buf);
         } catch (err) {
           // console.log(err);
@@ -96,11 +97,15 @@ export class StaticProvider {
       fileName = normalizeCustomPageRel(customPathname, file.originalname);
     }
     if (type == 'img' && checkTrue(staticConfigInDB.enableWebp) && compressSuccess) {
-      fileName = currentSign + '.' + pureFileName + '.webp';
+      fileName = currentSign + '.' + pureFileName + '.' + compressExt(compressFormat);
     }
+    const storedType =
+      type == 'img' && checkTrue(staticConfigInDB.enableWebp) && compressSuccess
+        ? compressExt(compressFormat)
+        : fileType;
     const realPath = await this.saveFile(
-      fileType,
-      isFavicon ? `favicon.${fileType}` : fileName,
+      storedType,
+      isFavicon ? `favicon.${storedType}` : fileName,
       buf,
       type,
       currentSign,

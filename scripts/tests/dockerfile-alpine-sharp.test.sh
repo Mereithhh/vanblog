@@ -115,6 +115,8 @@ RUNNER_STAGE="$(awk '
   keep { print }
 ' "${DOCKERFILE}")"
 assert_contains_in "${RUNNER_STAGE}" "libc6-compat" "runner installs libc6-compat for sharp/next native binaries"
+assert_contains_in "${RUNNER_STAGE}" "libavif-apps" "runner installs libavif-apps (avifenc) for AVIF fallback"
+assert_contains_in "${RUNNER_STAGE}" "libwebp-tools" "runner still installs libwebp-tools (cwebp)"
 assert_contains_in "${RUNNER_STAGE}" "COPY --from=WEBSITE_BUILDER" "runner still copies website from WEBSITE_BUILDER"
 
 echo
