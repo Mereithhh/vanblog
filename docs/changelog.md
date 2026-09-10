@@ -10,6 +10,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✨ Features | 新功能
 
+- 前台文章页底部的标签链接前增加标签图标，避免被当成普通文字链接。图标跟随现有灰色文字、悬停下划线和夜间模式颜色；加密未解锁时仍不展示标签。首页列表卡片本来就不显示这行标签，行为不变。[#178](https://github.com/Mereithhh/vanblog/issues/178)
 - 前台时间线（归档）在年份之下按月分组：跨月的文章落到对应「N月」分组，没有文章的月份不会出现空分组。分类页和标签页仍按原来的方式分组。[#302](https://github.com/Mereithhh/vanblog/issues/302)
 - 文章增加可选题头图：后台新建 /「修改信息」可上传或填写封面 URL，前台文章页顶部显示；留空则不占版面。设置后文章页带上 `og:image` / `twitter:image`，方便分享到飞书、知乎等。导入 Markdown 时 Front Matter 的 `cover` / `image` 会预填。[#288](https://github.com/Mereithhh/vanblog/issues/288)
 - 前台文章（以及同一套 ByteMD 的后台预览）围栏代码块支持汇编高亮：`asm` / `assembly` / `nasm` / `x86asm` / `intel` / `x86` 走 Intel/NASM（highlight.js `x86asm`），`arm` / `armasm` 走 ARM。原先 common 语言集不含汇编，这些围栏几乎没有关键字/寄存器/注释颜色。RSS 用的 markdown-it 也会把 `asm` 当成 `x86asm`。[#294](https://github.com/Mereithhh/vanblog/issues/294)
@@ -102,6 +103,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- 文章 / 标签：说明前台文章页底部标签链接前有标签图标。[#178](https://github.com/Mereithhh/vanblog/issues/178)
 - 文章 / FAQ：说明前台时间线按年再按月归档，只有有文章的月份会显示。`docs/features/article.md`、`docs/faq/usage.md` [#302](https://github.com/Mereithhh/vanblog/issues/302)
 - 文章 / FAQ / SEO：说明可选题头图的设置位置、上传或填写 URL、前台展示以及 `og:image` / `twitter:image` 分享预览。导入 Front Matter 可读 `cover` / `image`。[#288](https://github.com/Mereithhh/vanblog/issues/288)
 - 编辑器 / FAQ：说明汇编围栏可用的语言标签（`asm`、`nasm`、`x86asm`、`arm` 等），前台和后台预览同一套 highlight.js。[#294](https://github.com/Mereithhh/vanblog/issues/294)
