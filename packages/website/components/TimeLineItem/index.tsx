@@ -7,16 +7,18 @@ export default function (props: {
   articles: Article[];
   defaultOpen?: boolean;
   showYear?: boolean;
+  compact?: boolean;
   openArticleLinksInNewWindow: boolean;
 }) {
   const [visible, setVisible] = useState(Boolean(props.defaultOpen));
   const calMaxHeight = props.articles.length * 50;
+  const dateClass = props.compact
+    ? "text-lg md:text-xl font-bold dark:text-dark"
+    : "text-xl md:text-2xl font-bold dark:text-dark";
   return (
     <div className="mb-4 overflow-hidden">
       <div className="flex items-center mb-4 z-50 ">
-        <div className="text-xl md:text-2xl font-bold dark:text-dark">
-          {props.date}
-        </div>
+        <div className={dateClass}>{props.date}</div>
 
         <div className="ml-2 text-sm md:text-base text-gray-400 font-normal dark:text-dark-400">{`${props.articles.length}篇`}</div>
         <div

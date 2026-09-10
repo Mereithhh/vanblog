@@ -1,14 +1,16 @@
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
 import Layout from "../components/Layout";
-import TimeLineItem from "../components/TimeLineItem";
+import TimelineArchives from "../components/TimelineArchives";
 import { Article } from "../types/article";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getTimeLinePageProps } from "../utils/getPageProps";
+import { TimelineYearGroup } from "../utils/timelineMonths";
 import { revalidate } from "../utils/loadConfig";
 export interface TimeLinePageProps {
   layoutProps: LayoutProps;
   authorCardProps: AuthorCardProps;
   sortedArticles: Record<string, Article[]>;
+  yearGroups: TimelineYearGroup<Article>[];
   wordTotal: number;
 }
 const TimeLine = (props: TimeLinePageProps) => {
@@ -25,23 +27,12 @@ const TimeLine = (props: TimeLinePageProps) => {
           </div>
           <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light dark:text-dark">{`${props.authorCardProps.catelogNum} 分类 × ${props.authorCardProps.postNum} 文章 × ${props.authorCardProps.tagNum} 标签 × ${props.wordTotal} 字`}</div>
         </div>
-        <div className="flex flex-col mt-2">
-          {Object.keys(props.sortedArticles)
-            .sort((a, b) => parseInt(b) - parseInt(a))
-            .map((eachDate: string) => {
-              return (
-                <TimeLineItem
-                  openArticleLinksInNewWindow={
-                    props.layoutProps.openArticleLinksInNewWindow == "true"
-                  }
-                  defaultOpen={true}
-                  key={`timeline-dateitem-${eachDate}`}
-                  date={eachDate}
-                  articles={props.sortedArticles[eachDate]}
-                ></TimeLineItem>
-              );
-            })}
-        </div>
+        <TimelineArchives
+          yearGroups={props.yearGroups}
+          openArticleLinksInNewWindow={
+            props.layoutProps.openArticleLinksInNewWindow == "true"
+          }
+        />
       </div>
     </Layout>
   );
