@@ -48,7 +48,7 @@ const AboutPage = (props: AboutPageProps) => {
 
   return (
     <Layout
-      title="关于我"
+      title={props.layoutProps.aboutTitle}
       option={props.layoutProps}
       sideBar={<AuthorCard option={props.authorCardProps} />}
     >
@@ -61,7 +61,7 @@ const AboutPage = (props: AboutPageProps) => {
         id={0}
         key={"about"}
         private={false}
-        title={"关于我"}
+        title={props.layoutProps.aboutTitle}
         updatedAt={new Date(props.about.updatedAt)}
         createdAt={new Date(props.about.updatedAt)}
         pay={props.pay}

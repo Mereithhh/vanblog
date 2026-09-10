@@ -101,3 +101,27 @@ describe('PublicController.getBuildMeta articlesPerPage (#346)', () => {
     expect((await huge.controller.getBuildMeta()).data.meta.siteInfo.articlesPerPage).toBe(50);
   });
 });
+
+describe('PublicController.getBuildMeta page copy (#373)', () => {
+  it('exposes stored friend-link and about copy on public siteInfo', async () => {
+    const { controller } = createController({
+      siteName: 'demo',
+      friendLinkIntro: '这些是朋友们的站点：',
+      friendLinkApplyContent: '请发邮件。{{siteName}}',
+      aboutTitle: 'About',
+    });
+    const result = await controller.getBuildMeta();
+    expect(result.statusCode).toBe(200);
+    expect(result.data.meta.siteInfo.friendLinkIntro).toBe('这些是朋友们的站点：');
+    expect(result.data.meta.siteInfo.friendLinkApplyContent).toBe('请发邮件。{{siteName}}');
+    expect(result.data.meta.siteInfo.aboutTitle).toBe('About');
+  });
+
+  it('omits custom copy when unset so the front can fall back to defaults', async () => {
+    const { controller } = createController({ siteName: 'demo' });
+    const siteInfo = (await controller.getBuildMeta()).data.meta.siteInfo;
+    expect(siteInfo.friendLinkIntro).toBeUndefined();
+    expect(siteInfo.friendLinkApplyContent).toBeUndefined();
+    expect(siteInfo.aboutTitle).toBeUndefined();
+  });
+});

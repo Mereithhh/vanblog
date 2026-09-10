@@ -13,6 +13,7 @@
 - 后台「系统设置 / 评论设置」SMTP 表单标明博主邮箱（通知收件人）、发件地址（From）和 SMTP 授权码/应用专用密码的用途，便于换成自定义域名邮箱；仍走内嵌 Waline，不另建邮件系统。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 后台新建 / 修改 / 导入文章和草稿时，标签输入框支持一次粘贴或输入多个标签：用英文/中文逗号、分号或换行分隔。空格不会拆开，以便「machine learning」这类多词标签保持完整。[#489](https://github.com/Mereithhh/vanblog/issues/489)
 - 后台「数据管理 / 联系方式」支持自定义联系方式：除 GitHub / 邮箱 / 微信 / Bilibili / Gitee 外，可添加 Telegram、Twitter/X 等任意链接，填写显示名称、URL，以及可选的图标 URL。内置类型仍每种一条，自定义可以有多条；已有站点的旧数据不用改。[#394](https://github.com/Mereithhh/vanblog/issues/394)
+- 后台「站点配置 / 布局设置」可改友链页介绍、友链页底部 Markdown（申领要求 / 本站信息）以及关于页标题。留空仍用升级前的硬编码中文；底部可用 `{{siteName}}`、`{{description}}`、`{{url}}`、`{{logo}}`。关于页正文仍在文章管理「编辑关于」里改。[#373](https://github.com/Mereithhh/vanblog/issues/373)
 - 后台「站点配置 / 布局设置」增加「每页文章数」：前台首页和 `/page/n` 分页按该数字展示文章。默认仍是 5 篇（与升级前硬编码一致），可在 1–50 之间调整；超出范围会夹紧，避免一次拉太多文章。[#346](https://github.com/Mereithhh/vanblog/issues/346)
 
 ### 🐛 Bug Fixes | Bug 修复
@@ -89,6 +90,7 @@
 - FAQ / 评论：说明如何在「系统设置 / 评论设置」更换 Waline 通知邮箱、使用自定义域名邮箱（SMTP + 博主邮箱 + 发件地址）。[#342](https://github.com/Mereithhh/vanblog/issues/342)
 - 文章 / 草稿 / 标签：标签输入框支持粘贴逗号、分号或换行分隔的多个标签；空格不会拆开多词标签。[#489](https://github.com/Mereithhh/vanblog/issues/489)
 - 社交媒体：可在联系方式里添加自定义条目（显示名称 + 链接 + 可选图标），不再仅限内置的几种。[#394](https://github.com/Mereithhh/vanblog/issues/394)
+- FAQ / 友情链接 / 关于 / 站点配置：布局设置可改友链页介绍与底部 Markdown、关于页标题；关于正文仍走「编辑关于」。[#373](https://github.com/Mereithhh/vanblog/issues/373)
 - FAQ / 站点配置：可在布局设置里改前台「每页文章数」（默认 5，范围 1–50）。[#346](https://github.com/Mereithhh/vanblog/issues/346)
 - FAQ：域名变更后如何改写文章图片链接，以及如何正确设置网站 Url / 静态访问地址。[#475](https://github.com/Mereithhh/vanblog/issues/475)
 - HTTPS 文档「自动重定向」段两句粘连已拆开：初始化后到 `站点管理/系统设置/HTTPS` 确认证书，再按需开启重定向。

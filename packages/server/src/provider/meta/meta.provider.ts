@@ -20,6 +20,7 @@ import { ArticleProvider } from '../article/article.provider';
 import dayjs from 'dayjs';
 import { isTrue } from 'src/utils/isTrue';
 import { sanitizeArticlesPerPage } from 'src/utils/articlesPerPage';
+import { sanitizePageCopy } from 'src/utils/pageCopy';
 import { ViewerProvider } from '../viewer/viewer.provider';
 @Injectable()
 export class MetaProvider {
@@ -148,6 +149,9 @@ export class MetaProvider {
     return {
       ...siteInfo,
       articlesPerPage: sanitizeArticlesPerPage(siteInfo.articlesPerPage),
+      friendLinkIntro: sanitizePageCopy(siteInfo.friendLinkIntro, ''),
+      friendLinkApplyContent: sanitizePageCopy(siteInfo.friendLinkApplyContent, ''),
+      aboutTitle: sanitizePageCopy(siteInfo.aboutTitle, ''),
     };
   }
 
@@ -181,8 +185,17 @@ export class MetaProvider {
     // @ts-ignore eslint-disable-next-line @typescript-eslint/ban-ts-comment
     const { name, password, ...updateDto } = updateSiteInfoDto;
     const oldSiteInfo = await this.getSiteInfo();
-    const nextSiteInfo = { ...oldSiteInfo, ...updateDto };
+    const nextSiteInfo = { ...oldSiteInfo, ...updateDto } as any;
     nextSiteInfo.articlesPerPage = sanitizeArticlesPerPage(nextSiteInfo.articlesPerPage);
+    nextSiteInfo.friendLinkIntro = sanitizePageCopy(
+      (updateDto as any).friendLinkIntro,
+      oldSiteInfo?.friendLinkIntro,
+    );
+    nextSiteInfo.friendLinkApplyContent = sanitizePageCopy(
+      (updateDto as any).friendLinkApplyContent,
+      oldSiteInfo?.friendLinkApplyContent,
+    );
+    nextSiteInfo.aboutTitle = sanitizePageCopy((updateDto as any).aboutTitle, oldSiteInfo?.aboutTitle);
     return this.metaModel.updateOne({}, { siteInfo: nextSiteInfo });
   }
 

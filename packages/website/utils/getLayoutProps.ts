@@ -4,6 +4,12 @@ import { AuthorCardProps } from "../components/AuthorCard";
 import { checkLogin } from "./auth";
 import { sanitizeArticlesPerPage } from "./articlesPerPage";
 import { normalizeGaAnalysisId } from "../components/gaAnalysis/load";
+import {
+  DEFAULT_ABOUT_TITLE,
+  DEFAULT_FRIEND_LINK_APPLY_CONTENT,
+  DEFAULT_FRIEND_LINK_INTRO,
+  resolvePageCopy,
+} from "./pageCopy";
 export interface LayoutProps {
   description: string;
   ipcNumber: string;
@@ -39,6 +45,9 @@ export interface LayoutProps {
   showEditButton: "true" | "false";
   subMenuOffset: number;
   articlesPerPage: number;
+  friendLinkIntro: string;
+  friendLinkApplyContent: string;
+  aboutTitle: string;
   customCss?: string;
   customScript?: string;
   customHtml?: string;
@@ -150,6 +159,15 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     showRSS,
     showEditButton,
     articlesPerPage: sanitizeArticlesPerPage(siteInfo?.articlesPerPage),
+    friendLinkIntro: resolvePageCopy(
+      siteInfo?.friendLinkIntro,
+      DEFAULT_FRIEND_LINK_INTRO
+    ),
+    friendLinkApplyContent: resolvePageCopy(
+      siteInfo?.friendLinkApplyContent,
+      DEFAULT_FRIEND_LINK_APPLY_CONTENT
+    ),
+    aboutTitle: resolvePageCopy(siteInfo?.aboutTitle, DEFAULT_ABOUT_TITLE),
     ...customSetting,
   };
 }
