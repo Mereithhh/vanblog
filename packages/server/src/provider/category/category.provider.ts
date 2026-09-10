@@ -7,6 +7,7 @@ import { CategoryDocument } from 'src/scheme/category.schema';
 import { sleep } from 'src/utils/sleep';
 import { UpdateCategoryDto } from 'src/types/category.dto';
 import { BackupCategory } from 'src/utils/backupCategories';
+import { applyCategoryNameOrder, nextCategoryOrder, sortCategoriesByOrder } from 'src/utils/categoryOrder';
 
 @Injectable()
 export class CategoryProvider {
@@ -58,8 +59,9 @@ export class CategoryProvider {
       return [];
     }
     const list = includeHidden ? d : d.filter((item) => !this.isHiddenCategory(item));
-    if (all) return list;
-    else return list.map((item) => item.name);
+    const sorted = sortCategoriesByOrder(list);
+    if (all) return sorted;
+    else return sorted.map((item) => item.name);
   }
 
   async getArticlesByCategory(name: string, includeHidden: boolean) {
@@ -89,6 +91,9 @@ export class CategoryProvider {
         if (item.hidden !== undefined) {
           patch.hidden = item.hidden;
         }
+        if (item.order !== undefined) {
+          patch.order = item.order;
+        }
         if (item.type !== undefined) {
           patch.type = item.type;
         }
@@ -106,6 +111,7 @@ export class CategoryProvider {
       } else {
         id = await this.getNewId();
       }
+      const existing = await this.categoryModal.find({});
       await this.categoryModal.create({
         id,
         name: item.name,
@@ -113,6 +119,7 @@ export class CategoryProvider {
         private: item.private || false,
         password: item.password || '',
         hidden: item.hidden || false,
+        order: typeof item.order === 'number' ? item.order : nextCategoryOrder(existing),
       });
     }
   }
@@ -124,12 +131,14 @@ export class CategoryProvider {
     if (existData) {
       throw new NotAcceptableException('分类名重复，无法创建！');
     } else {
+      const existing = await this.categoryModal.find({});
       await this.categoryModal.create({
         id: await this.getNewId(),
         name,
         type: 'category',
         private: false,
         hidden: false,
+        order: nextCategoryOrder(existing),
       });
     }
   }
@@ -159,9 +168,30 @@ export class CategoryProvider {
     });
   }
 
+  async reorderCategories(names: string[]) {
+    if (!Array.isArray(names) || !names.length) {
+      throw new NotAcceptableException('无有效排序信息！');
+    }
+    const docs = await this.categoryModal.find({});
+    if (!docs || !docs.length) {
+      throw new NotAcceptableException('无分类可排序！');
+    }
+    const updates = applyCategoryNameOrder(docs, names);
+    if (!updates.length) {
+      throw new NotAcceptableException('无有效排序信息！');
+    }
+    for (const item of updates) {
+      await this.categoryModal.updateOne({ name: item.name }, { order: item.order });
+    }
+    return updates;
+  }
+
   async updateCategoryByName(name: string, dto: UpdateCategoryDto) {
     if (Object.keys(dto).length == 0) {
       throw new NotAcceptableException('无有效信息，无法修改！');
+    }
+    if (dto.order !== undefined && (typeof dto.order !== 'number' || !Number.isFinite(dto.order))) {
+      throw new NotAcceptableException('排序值无效！');
     }
     if (dto.name && name != dto.name) {
       const existData = await this.categoryModal.findOne({

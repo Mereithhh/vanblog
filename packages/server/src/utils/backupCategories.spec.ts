@@ -5,14 +5,22 @@ describe('collectCategoriesFromBackup', () => {
     const categories = collectCategoriesFromBackup({
       categories: [
         { id: 1, name: '随笔', type: 'category', private: false, password: '' },
-        { id: 2, name: '教程', type: 'category', private: true, password: 'secret', hidden: true },
+        { id: 2, name: '教程', type: 'category', private: true, password: 'secret', hidden: true, order: 1 },
       ],
       articles: [{ category: '随笔' }],
     });
 
     expect(categories).toEqual([
       { id: 1, name: '随笔', type: 'category', private: false, password: '' },
-      { id: 2, name: '教程', type: 'category', private: true, password: 'secret', hidden: true },
+      {
+        id: 2,
+        name: '教程',
+        type: 'category',
+        private: true,
+        password: 'secret',
+        hidden: true,
+        order: 1,
+      },
     ]);
   });
 
@@ -63,6 +71,7 @@ describe('toExportCategory', () => {
         private: true,
         password: 'pw',
         hidden: true,
+        order: 2,
       }),
     ).toEqual({
       id: 3,
@@ -71,6 +80,31 @@ describe('toExportCategory', () => {
       private: true,
       password: 'pw',
       hidden: true,
+      order: 2,
+    });
+  });
+
+  it('keeps order when present and omits it for older rows', () => {
+    expect(
+      collectCategoriesFromBackup({
+        categories: [
+          { name: '深度学习', order: 0 },
+          { name: 'Linux运维', order: 1 },
+          { name: '旧分类' },
+        ],
+      }),
+    ).toEqual([
+      { name: '深度学习', order: 0 },
+      { name: 'Linux运维', order: 1 },
+      { name: '旧分类' },
+    ]);
+    expect(toExportCategory({ id: 1, name: '随笔', type: 'category' })).toEqual({
+      id: 1,
+      name: '随笔',
+      type: 'category',
+      private: false,
+      password: '',
+      hidden: false,
     });
   });
 });

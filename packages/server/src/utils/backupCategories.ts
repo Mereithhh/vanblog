@@ -5,6 +5,7 @@ export type BackupCategory = {
   private?: boolean;
   password?: string;
   hidden?: boolean;
+  order?: number;
 };
 
 export type BackupCategorySource = {
@@ -33,14 +34,19 @@ function addCategory(byName: Map<string, BackupCategory>, raw: any) {
     return;
   }
   const prev: BackupCategory = byName.get(name) || { name };
-  byName.set(name, {
+  const next: BackupCategory = {
     name,
     id: raw.id ?? prev.id,
     type: raw.type ?? prev.type,
     private: raw.private ?? prev.private,
     password: raw.password ?? prev.password,
     hidden: raw.hidden ?? prev.hidden,
-  });
+  };
+  const order = typeof raw.order === 'number' ? raw.order : prev.order;
+  if (typeof order === 'number') {
+    next.order = order;
+  }
+  byName.set(name, next);
 }
 
 /**
@@ -58,7 +64,7 @@ export function collectCategoriesFromBackup(data: BackupCategorySource = {}): Ba
 }
 
 export function toExportCategory(doc: any): BackupCategory {
-  return {
+  const exported: BackupCategory = {
     id: doc?.id,
     name: doc?.name,
     type: doc?.type || 'category',
@@ -66,4 +72,8 @@ export function toExportCategory(doc: any): BackupCategory {
     password: doc?.password || '',
     hidden: Boolean(doc?.hidden),
   };
+  if (typeof doc?.order === 'number') {
+    exported.order = doc.order;
+  }
+  return exported;
 }
