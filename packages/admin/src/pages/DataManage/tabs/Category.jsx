@@ -128,7 +128,7 @@ function createColumns({ onMove, rows }) {
   {
     title: '操作',
     valueType: 'option',
-    width: 200,
+    width: 240,
     render: (text, record, _, action) => [
       <a
         key="viewCategory"
@@ -140,8 +140,8 @@ function createColumns({ onMove, rows }) {
       </a>,
       <ModalForm
         key={`editCateoryC%{${record.name}}`}
-        title={`修改分类 "${record.name}"`}
-        trigger={<a key={'editC' + record.name}>修改</a>}
+        title={`重命名分类 "${record.name}"`}
+        trigger={<a key={'editC' + record.name} data-category-rename={String(record.name)}>重命名</a>}
         autoFocusFirstInput
         initialValues={{
           password: record.password,
@@ -160,7 +160,7 @@ function createColumns({ onMove, rows }) {
           }
 
           Modal.confirm({
-            content: `确定修改分类 "${record.name}" 吗？改动将立即生效!`,
+            content: `确定重命名分类 "${record.name}" 吗？改动将立即生效!`,
             onOk: async () => {
               await updateCategory(record.name, values);
               message.success('提交成功');

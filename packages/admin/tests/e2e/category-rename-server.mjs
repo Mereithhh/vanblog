@@ -213,7 +213,7 @@ const server = createServer(async (req, res) => {
        <form id="rename-form">
          <label>原名称 <input id="old-category-name" name="oldName" /></label>
          <label>新名称 <input id="rename-category-name" name="name" /></label>
-         <button id="rename-category-btn" type="submit">修改分类</button>
+         <button id="rename-category-btn" type="submit">重命名分类</button>
        </form>
        <p id="category-status"></p>
        <script>
