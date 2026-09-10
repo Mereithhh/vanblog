@@ -32,6 +32,7 @@ export default function (props: {
   items: NavItem[];
   headingOffset: number;
   mobile?: boolean;
+  onNavigate?: (item: NavItem) => void;
 }) {
   const { items } = props;
   const [currIndex, setCurrIndex] = useState(-1);
@@ -140,6 +141,7 @@ export default function (props: {
   const jumpToItem = (each: NavItem) => {
     updateHash(each.text);
     void scrollToNavHeading(each, items, props.headingOffset);
+    props.onNavigate?.(each);
   };
 
   const res = [];
