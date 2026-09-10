@@ -7,7 +7,7 @@ import { getArticlePath } from "../../utils/getArticlePath";
 export const ARTICLE_TAG_ATTR = "data-article-tag";
 export const TAG_ICON_ATTR = "data-tag-icon";
 
-const TAG_ICON_SIZE = 14;
+const TAG_ICON_SIZE = 16;
 
 /** Decorative price-tag glyph shown before each article-bottom tag label. */
 export function ArticleTagIcon() {

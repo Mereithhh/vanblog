@@ -90,6 +90,7 @@ describe("article-bottom tag icon (#178)", () => {
     expect(icon).toContain("aria-hidden");
     expect(icon).toContain("fill-current");
     expect(icon).toContain('fill="currentColor"');
+    expect(icon).toMatch(/width="16"/);
     expect(icon).toMatch(/<svg[\s\S]*<path/);
   });
 

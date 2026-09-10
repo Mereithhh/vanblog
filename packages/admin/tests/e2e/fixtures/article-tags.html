@@ -10,6 +10,10 @@
         margin: 24px;
         color: #374151;
       }
+      a {
+        color: inherit;
+        text-decoration: inherit;
+      }
       .mt-4 {
         margin-top: 1rem;
       }
@@ -62,8 +66,10 @@
       .border-dashed {
         border-bottom-style: dashed;
       }
-      .hover\:border-gray-500:hover,
-      a:hover .hover\:border-gray-500 {
+      .hover\:border-gray-500:hover {
+        border-bottom-color: #6b7280;
+      }
+      a:hover .inline-flex {
         border-bottom-color: #6b7280;
       }
       .fill-current {
@@ -85,8 +91,7 @@
         background: #111827;
         color: #d1d5db;
       }
-      .dark .dark\:text-dark,
-      .dark\:text-dark {
+      .dark .dark\:text-dark {
         color: #d1d5db;
       }
     </style>
