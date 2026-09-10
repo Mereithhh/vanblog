@@ -10,6 +10,7 @@ import { PostBottom } from "./bottom";
 import { SubTitle, Title } from "./title";
 import { getTarget } from "../Link/tools";
 import TocMobile from "../TocMobile";
+import TocDrawer from "../TocDrawer";
 import { hasToc } from "../../utils/hasToc";
 import Markdown from "../Markdown";
 import { articleOverviewMarkdown } from "../../utils/articleExcerpt";
@@ -121,6 +122,7 @@ export default function (props: {
           ) : (
             <>
               {showToc && <TocMobile content={calContent} />}
+              {showToc && <TocDrawer content={calContent} />}
               <Markdown content={calContent}></Markdown>
             </>
           )}

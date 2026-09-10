@@ -3,10 +3,13 @@ import { visit } from 'unist-util-visit';
 import { Viewer } from '@bytemd/react';
 import { Heading } from '../../../../website/components/Markdown/heading';
 import MarkdownTocBar from '../../../../website/components/MarkdownTocBar';
+import TocDrawer from '../../../../website/components/TocDrawer';
 import { getEl, parseNavStructure } from '../../../../website/components/MarkdownTocBar/tools';
 import article from './toc-article.md';
 
-const content = String(article);
+const params = new URLSearchParams(window.location.search);
+const emptyToc = params.get('empty') === '1';
+const content = emptyToc ? 'plain paragraph without any headings' : String(article);
 const items = parseNavStructure(content);
 
 // Same sanitize hook as the public article Viewer so heading id/data-id survive.
@@ -53,6 +56,7 @@ const App = () => (
     <aside className="toc-e2e-toc" data-toc>
       <MarkdownTocBar content={content} headingOffset={0} />
     </aside>
+    <TocDrawer content={content} headingOffset={0} />
   </div>
 );
 
