@@ -7,13 +7,55 @@ import {
 import { encodeQuerystring } from '@/services/van-blog/encode';
 import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
-import { Button, message, Modal } from 'antd';
-import { useRef } from 'react';
+import { Button, message, Modal, Switch } from 'antd';
+import { useRef, useState } from 'react';
+
+function HiddenSwitch({ record, action }) {
+  const [loading, setLoading] = useState(false);
+  return (
+    <span data-category-hidden-toggle={String(record.name)}>
+      <Switch
+        size="small"
+        loading={loading}
+        checked={Boolean(record.hidden)}
+        checkedChildren="是"
+        unCheckedChildren="否"
+        aria-label={`是否隐藏 ${record.name}`}
+        onChange={async (checked) => {
+          if (location.hostname == 'blog-demo.mereith.com') {
+            Modal.info({
+              title: '演示站禁止修改信息！',
+              content: '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
+            });
+            return;
+          }
+          setLoading(true);
+          try {
+            await updateCategory(record.name, { hidden: checked });
+            message.success(checked ? '已设为隐藏' : '已取消隐藏');
+            action?.reload();
+          } finally {
+            setLoading(false);
+          }
+        }}
+      />
+    </span>
+  );
+}
+
 const columns = [
   {
     dataIndex: 'name',
     title: '题目',
     search: false,
+  },
+  {
+    title: '是否隐藏',
+    tooltip:
+      '隐藏后，前台分类列表、导航分类子菜单、分类页和 sitemap 不再展示该分类。后台仍可见。该分类下的文章仍按各自的隐藏/加密规则展示，不会因为分类隐藏而被加密。',
+    dataIndex: 'hidden',
+    search: false,
+    render: (_, record, __, action) => <HiddenSwitch record={record} action={action} />,
   },
   {
     title: '加密',
@@ -54,6 +96,7 @@ const columns = [
         initialValues={{
           password: record.password,
           private: record.private,
+          hidden: Boolean(record.hidden),
         }}
         submitTimeout={3000}
         onFinish={async (values) => {
@@ -80,6 +123,18 @@ const columns = [
         }}
       >
         <ProFormText width="md" name="name" label="分类名" placeholder="请输入新的分类名称" />
+        <ProFormSelect
+          width="md"
+          name="hidden"
+          label="是否隐藏"
+          placeholder="是否隐藏"
+          request={async () => {
+            return [
+              { label: '否', value: false },
+              { label: '是', value: true },
+            ];
+          }}
+        />
         <ProFormSelect
           width="md"
           name="private"

@@ -8,6 +8,8 @@ function createController(siteInfo: Record<string, unknown> = {}) {
   };
   const categoryProvider = {
     getAllCategories: jest.fn().mockResolvedValue(['life']),
+    getPublicCategoryNames: jest.fn().mockResolvedValue(['life']),
+    getCategoriesWithArticle: jest.fn().mockResolvedValue({ life: [] }),
   };
   const tagProvider = {
     getAllTags: jest.fn().mockResolvedValue(['tag']),
@@ -37,7 +39,7 @@ function createController(siteInfo: Record<string, unknown> = {}) {
     settingProvider as any,
     {} as any,
   );
-  return { controller, articleProvider, metaProvider };
+  return { controller, articleProvider, metaProvider, categoryProvider };
 }
 
 describe('PublicController article list page size (#346)', () => {
@@ -123,5 +125,32 @@ describe('PublicController.getBuildMeta page copy (#373)', () => {
     expect(siteInfo.friendLinkIntro).toBeUndefined();
     expect(siteInfo.friendLinkApplyContent).toBeUndefined();
     expect(siteInfo.aboutTitle).toBeUndefined();
+  });
+});
+
+describe('PublicController category hide (#359)', () => {
+  it('uses public category names for /meta so hidden categories stay out of nav', async () => {
+    const { controller, categoryProvider } = createController({ siteName: 'demo' });
+    categoryProvider.getPublicCategoryNames.mockResolvedValue(['随笔', '教程']);
+
+    const result = await controller.getBuildMeta();
+    expect(categoryProvider.getPublicCategoryNames).toHaveBeenCalled();
+    expect(categoryProvider.getAllCategories).not.toHaveBeenCalled();
+    expect(result.data.meta.categories).toEqual(['随笔', '教程']);
+    expect(result.data.meta.categories).not.toContain('私密');
+  });
+
+  it('lists only public categories on /category and keeps visible ones', async () => {
+    const { controller, categoryProvider } = createController();
+    categoryProvider.getCategoriesWithArticle.mockResolvedValue({
+      随笔: [{ id: 1, title: '随笔文' }],
+      教程: [{ id: 2, title: '教程文' }],
+    });
+
+    const result = await controller.getArticlesByCategory();
+    expect(categoryProvider.getCategoriesWithArticle).toHaveBeenCalledWith(false);
+    expect(Object.keys(result.data)).toEqual(['随笔', '教程']);
+    expect(result.data['私密']).toBeUndefined();
+    expect(result.data['随笔']).toHaveLength(1);
   });
 });

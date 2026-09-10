@@ -5,14 +5,14 @@ describe('collectCategoriesFromBackup', () => {
     const categories = collectCategoriesFromBackup({
       categories: [
         { id: 1, name: '随笔', type: 'category', private: false, password: '' },
-        { id: 2, name: '教程', type: 'category', private: true, password: 'secret' },
+        { id: 2, name: '教程', type: 'category', private: true, password: 'secret', hidden: true },
       ],
       articles: [{ category: '随笔' }],
     });
 
     expect(categories).toEqual([
       { id: 1, name: '随笔', type: 'category', private: false, password: '' },
-      { id: 2, name: '教程', type: 'category', private: true, password: 'secret' },
+      { id: 2, name: '教程', type: 'category', private: true, password: 'secret', hidden: true },
     ]);
   });
 
@@ -62,6 +62,7 @@ describe('toExportCategory', () => {
         type: 'category',
         private: true,
         password: 'pw',
+        hidden: true,
       }),
     ).toEqual({
       id: 3,
@@ -69,6 +70,7 @@ describe('toExportCategory', () => {
       type: 'category',
       private: true,
       password: 'pw',
+      hidden: true,
     });
   });
 });

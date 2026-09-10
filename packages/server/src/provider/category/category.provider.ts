@@ -18,7 +18,7 @@ export class CategoryProvider {
   ) {}
   async getCategoriesWithArticle(includeHidden: boolean) {
     const allArticles = await this.articleProvider.getAll('list', includeHidden);
-    const categories = await this.getAllCategories();
+    const categories = await this.getAllCategories(false, includeHidden);
     const data = {};
     categories.forEach((c) => {
       data[c] = [];
@@ -44,13 +44,22 @@ export class CategoryProvider {
     return res;
   }
 
-  async getAllCategories(all?: boolean) {
+  isHiddenCategory(doc: { hidden?: boolean } | null | undefined) {
+    return Boolean(doc?.hidden);
+  }
+
+  async getPublicCategoryNames() {
+    return this.getAllCategories(false, false);
+  }
+
+  async getAllCategories(all?: boolean, includeHidden = true) {
     const d = await this.categoryModal.find({});
     if (!d || !d.length) {
       return [];
     }
-    if (all) return d;
-    else return d.map((item) => item.name);
+    const list = includeHidden ? d : d.filter((item) => !this.isHiddenCategory(item));
+    if (all) return list;
+    else return list.map((item) => item.name);
   }
 
   async getArticlesByCategory(name: string, includeHidden: boolean) {
@@ -77,6 +86,9 @@ export class CategoryProvider {
         if (item.password !== undefined) {
           patch.password = item.password;
         }
+        if (item.hidden !== undefined) {
+          patch.hidden = item.hidden;
+        }
         if (item.type !== undefined) {
           patch.type = item.type;
         }
@@ -100,6 +112,7 @@ export class CategoryProvider {
         type: item.type || 'category',
         private: item.private || false,
         password: item.password || '',
+        hidden: item.hidden || false,
       });
     }
   }
@@ -116,6 +129,7 @@ export class CategoryProvider {
         name,
         type: 'category',
         private: false,
+        hidden: false,
       });
     }
   }

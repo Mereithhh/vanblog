@@ -18,6 +18,9 @@ export class Category extends Document {
   @Prop({ default: false, index: true })
   private: boolean;
 
+  @Prop({ default: false, index: true })
+  hidden: boolean;
+
   @Prop()
   password: string;
 

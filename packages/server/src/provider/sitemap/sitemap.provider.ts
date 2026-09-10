@@ -60,7 +60,7 @@ export class SiteMapProvider {
     });
   }
   async getCategoryUrls() {
-    const categories = await this.categoryProvider.getAllCategories();
+    const categories = await this.categoryProvider.getPublicCategoryNames();
     return categories.map((c) => {
       return `/category/${encodeQuerystring(c)}`;
     });

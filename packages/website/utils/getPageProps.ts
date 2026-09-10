@@ -18,6 +18,7 @@ import {
   getArticlesByTimeLine,
 } from "../api/getArticles";
 import { LinkPageProps } from "../pages/link";
+import { isListedPublicCategory } from "./publicCategories";
 
 export async function getIndexPageProps(): Promise<IndexPageProps> {
   const data = await getPublicMeta();
@@ -202,8 +203,11 @@ export async function getPagePagesProps(
 }
 export async function getCategoryPagesProps(
   curCategory: string
-): Promise<CategoryPagesProps> {
+): Promise<CategoryPagesProps | { notFound: true }> {
   const data = await getPublicMeta();
+  if (!isListedPublicCategory(curCategory, data.meta.categories)) {
+    return { notFound: true };
+  }
   const authorCardProps = getAuthorCardProps(data);
   const layoutProps = getLayoutProps(data);
   const {
