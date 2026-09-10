@@ -29,6 +29,23 @@ async function readPref() {
   return JSON.parse(window.localStorage.getItem('vanblog-admin-editorConfig') || '{}');
 }
 
+async function saveSoftLineBreaksPref(page, label) {
+  await page.getByRole('button', { name: '操作' }).click();
+  await page.getByText('偏好设置').click();
+  const dialog = page.locator('.ant-modal-content').filter({ hasText: '编辑器偏好设置' });
+  await expect(dialog).toBeVisible();
+
+  const item = dialog.locator('.ant-form-item').filter({ hasText: '软换行' });
+  await expect(item).toBeVisible();
+  await item.locator('.ant-select-selector').click();
+  await page
+    .locator('.ant-select-dropdown:visible .ant-select-item-option-content')
+    .filter({ hasText: new RegExp(`^${label}$`) })
+    .click();
+  await dialog.getByRole('button', { name: /确\s*[定认]/ }).click();
+  await expect(dialog).toBeHidden();
+}
+
 test.describe('admin editor soft line breaks (#311)', () => {
   test('disabled default keeps standard Markdown (no auto trailing spaces)', async ({ page }) => {
     const editor = await openEditor(page);
@@ -39,27 +56,28 @@ test.describe('admin editor soft line breaks (#311)', () => {
     expect(await readEditorValue(page)).not.toContain('SOFT_OFF_A  \n');
   });
 
+  test('enabled preference pads Enter with trailing spaces', async ({ page }) => {
+    const editor = await openEditor(page, {
+      afterSave: 'stay',
+      useLocalCache: 'close',
+      softLineBreaks: 'open',
+    });
+    await editor.click({ position: { x: 24, y: 24 } });
+    await typeSoftBreakSample(page, 'SOFT_ON_A', 'SOFT_ON_B');
+    await expect.poll(async () => readEditorValue(page)).toContain('SOFT_ON_A  \nSOFT_ON_B');
+  });
+
   test('toggle persists and Enter completes trailing spaces when enabled', async ({ page }) => {
     const editor = await openEditor(page);
-    await editor.click({ position: { x: 24, y: 24 } });
-
-    await page.getByRole('button', { name: '操作' }).click();
-    await page.getByText('偏好设置').click();
-    const dialog = page.locator('.ant-modal-content').filter({ hasText: '编辑器偏好设置' });
-    await expect(dialog).toBeVisible();
-    await expect(dialog.locator('#softLineBreaks')).toBeVisible();
-
-    await dialog.locator('#softLineBreaks').click();
-    await page.locator('.ant-select-dropdown:visible').getByText('开启', { exact: true }).click();
-    await dialog.getByRole('button', { name: /确\s*[定认]/ }).click();
-    await expect(dialog).toBeHidden();
+    await saveSoftLineBreaksPref(page, '开启');
 
     await expect
       .poll(async () => page.evaluate(readPref))
       .toMatchObject({ softLineBreaks: 'open' });
 
-    await typeSoftBreakSample(page, 'SOFT_ON_A', 'SOFT_ON_B');
-    await expect.poll(async () => readEditorValue(page)).toContain('SOFT_ON_A  \nSOFT_ON_B');
+    await editor.click({ position: { x: 24, y: 24 } });
+    await typeSoftBreakSample(page, 'SOFT_TOGGLE_A', 'SOFT_TOGGLE_B');
+    await expect.poll(async () => readEditorValue(page)).toContain('SOFT_TOGGLE_A  \nSOFT_TOGGLE_B');
 
     await page.reload();
     await mockAdminApis(page);
