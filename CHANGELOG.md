@@ -83,6 +83,7 @@
 
 ### ✏️ Documentation | 文档
 
+- 图床 / 贡献：说明自动压缩可选 WebP 或 AVIF（只影响新上传），以及官方 Alpine 镜像上 sharp / `libavif-apps`（`avifenc`）依赖。[#423](https://github.com/Mereithhh/vanblog/issues/423)
 - 编辑器 / FAQ：说明手机上可通过「返回顶部」上方的按钮打开右侧目录抽屉，电脑端目录不变。[#451](https://github.com/Mereithhh/vanblog/issues/451)
 - FAQ / 文章 / 迁移 / SEO：说明如何用「自定义路径名 / slug」（`pathname`）对应 Hugo `post = "/post/:slug"`，默认是数字 id，以及导入时 Front Matter 的 `slug` / 简单 `url` 映射。没有站点级 permalink 引擎。[#487](https://github.com/Mereithhh/vanblog/issues/487)
 - FAQ / 反代：后台发布后前台仍显示旧文章时，先查 Nginx / 宝塔 `proxy_cache` 或 CDN 是否在缓存 HTML；示例增加 `proxy_no_cache` / `proxy_cache_bypass`，宝塔可注释 `proxy.conf` 里的 `proxy_cache`。源站后台/API 已发 no-store，前台 HTML 仍可能被代理缓存。[#469](https://github.com/Mereithhh/vanblog/issues/469)
