@@ -130,7 +130,7 @@ describe('public 总字数 matches published editor counts (e2e #293)', () => {
 
     const controller = new PublicController(
       articleProvider,
-      { getAllCategories: async () => [] } as any,
+      { getAllCategories: async () => [], getPublicCategoryNames: async () => [] } as any,
       { getAllTags: async () => [] } as any,
       metaProvider,
       {} as any,
