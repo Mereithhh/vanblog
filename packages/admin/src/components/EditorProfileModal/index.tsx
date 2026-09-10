@@ -9,7 +9,12 @@ export default function (props: { setValue: any; value: any; trigger: any }) {
       width={450}
       autoFocusFirstInput
       submitTimeout={3000}
-      initialValues={value || {}}
+      initialValues={{
+        afterSave: 'stay',
+        useLocalCache: 'close',
+        softLineBreaks: 'close',
+        ...(value || {}),
+      }}
       onFinish={async (vals) => {
         setValue({ ...value, ...vals });
         message.success('保存成功！');
@@ -54,6 +59,28 @@ export default function (props: { setValue: any; value: any; trigger: any }) {
         label="本地缓存"
         tooltip="默认关闭，开启后将在本地缓存编辑器内容，当本地内容比服务器内容更新时间更近时，将使用本地内容展示在编辑器中。"
         placeholder="是否开启本地缓存"
+        request={async () => {
+          return [
+            {
+              label: '开启',
+              value: 'open',
+            },
+            {
+              label: '关闭',
+              value: 'close',
+            },
+          ];
+        }}
+      />
+
+      <ProFormSelect
+        width="md"
+        required
+        id="softLineBreaks"
+        name="softLineBreaks"
+        label="软换行"
+        tooltip="默认关闭，保持标准 Markdown：单独回车仍是同一段，需行末两个空格或空行才换行。开启后，按 Enter 或粘贴多行时会自动补两个空格写成软换行；已有文章不会在打开或保存时被改写。"
+        placeholder="是否自动补行末空格"
         request={async () => {
           return [
             {

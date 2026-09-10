@@ -39,7 +39,7 @@ export default function () {
   const [loading, setLoading] = useState(true);
   const [updateModalVisible, setUpdateModalVisible] = useState(false);
   const [editorConfig, setEditorConfig] = useCacheState(
-    { afterSave: 'stay', useLocalCache: 'close' },
+    { afterSave: 'stay', useLocalCache: 'close', softLineBreaks: 'close' },
     'editorConfig',
   );
   const type = history.location.query?.type || 'article';
@@ -519,6 +519,7 @@ export default function () {
           loading={loading}
           setLoading={setLoading}
           value={value}
+          softLineBreaks={editorConfig?.softLineBreaks || 'close'}
           onChange={(val) => {
             setValue(val);
             if (editorConfig?.useLocalCache && editorConfig?.useLocalCache == 'open') {

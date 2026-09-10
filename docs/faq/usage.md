@@ -351,6 +351,12 @@ VanBlog 自 `v0.42.0` 已舍弃 `VAN_BLOG_ALLOW_DOMAINS` 环境变量，如果�
 
 请参考 [启动配置](../reference/env.md#环境变量)
 
+## 按一次回车为什么不换行
+
+后台文章编辑器默认跟标准 Markdown / CommonMark 一致：单独按 Enter 仍是同一段，要在行末加两个空格（或再空一行）才会软换行。这是为了和前台渲染、从标准 Markdown 迁过来的文章对齐。
+
+如果写长文或粘贴多行时不想手打空格，打开编辑器右上角 **操作 → 偏好设置**，把「软换行」设为开启。之后按 Enter 或粘贴多行正文会自动补两个空格，源码仍是标准软换行，预览和前台行为一致。默认关闭；已发布的文章不会在打开或保存时被整篇改写。设置存在当前浏览器的 LocalStorage 里。见 [编辑器 · 偏好设置](../features/editor.md#偏好设置) 与 [#311](https://github.com/Mereithhh/vanblog/issues/311)。
+
 ## 在编辑器复制后格式错乱
 
 默认粘贴的格式可能带有一些额外信息，你可以鼠标右键选择复制为纯文本，或者使用快捷键 <kbd>Ctrl</kbd> + <kbd>Shift</kbd> + <kbd>V</kbd>。

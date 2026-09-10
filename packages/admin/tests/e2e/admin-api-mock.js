@@ -270,12 +270,14 @@ async function mockAdminApis(page) {
   });
 }
 
-async function loginAsAdmin(page) {
-  await page.addInitScript(() => {
+async function loginAsAdmin(page, extras = {}) {
+  await page.addInitScript((opts) => {
     window.localStorage.setItem('token', 'e2e-admin-token');
-    window.localStorage.setItem('editorConfig', JSON.stringify({ afterSave: 'stay', useLocalCache: 'close' }));
     window.localStorage.setItem('theme', 'light');
-  });
+    if (opts && opts.editorConfig) {
+      window.localStorage.setItem('vanblog-admin-editorConfig', JSON.stringify(opts.editorConfig));
+    }
+  }, extras);
 }
 
 module.exports = {

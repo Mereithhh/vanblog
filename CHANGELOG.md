@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 后台文章编辑器「偏好设置」增加「软换行」：默认关闭，保持标准 Markdown（单独回车仍是同一段）。开启后，按 Enter 或粘贴多行时会自动补行末两个空格，写成 CommonMark 软换行；预览和前台仍按标准渲染。设置存在当前浏览器 LocalStorage，打开或保存已有文章时不会整篇改写历史正文。[#311](https://github.com/Mereithhh/vanblog/issues/311)
 - 前台首页和 `/page/n` 分页增加跳转到指定页：多页时在现有页码旁显示「跳转」输入框，回车或点「前往」按现有路由跳到 `/`（第 1 页）或 `/page/n`。只接受 1..总页数的整数，空值、非整数或超出范围不跳转。总页数跟随「每页文章数」。页码链接、当前页 `aria-current="page"` 以及第一页 / 最后一页禁用的上一页 / 下一页不变。[#229](https://github.com/Mereithhh/vanblog/issues/229)
 - 后台文章管理一级表格增加「是否隐藏」列，可直接开关隐藏状态，不必打开「修改信息」或编辑器。仍走现有更新文章接口。[#268](https://github.com/Mereithhh/vanblog/issues/268)
 - 手机上后台文章编辑器不再只剩「编辑 / 预览」切换：窄屏（ByteMD tab 模式，编辑器宽度 < 800px）工具栏会补上一组常用按钮（标题、加粗 / 斜体、链接、图片上传、列表、代码、引用）。电脑端分栏工具栏不变，也不会把表情、Mermaid、高亮块等整排桌面按钮塞到手机上。[#504](https://github.com/Mereithhh/vanblog/issues/504)
@@ -88,6 +89,7 @@
 
 ### ✏️ Documentation | 文档
 
+- 编辑器 / FAQ：说明「软换行」偏好（默认关，开启后 Enter / 粘贴自动补两个空格），以及为什么单独回车不换行。[#311](https://github.com/Mereithhh/vanblog/issues/311)
 - FAQ / 站点配置：说明前台分页可输入页码跳转，非法或超出范围不跳转；总页数跟随「每页文章数」。`docs/faq/usage.md`、`docs/features/config.md` [#229](https://github.com/Mereithhh/vanblog/issues/229)
 - FAQ / 站点配置：说明手机端顶栏网站名相对整页宽度居中，电脑端左侧网站名 / logo 不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 文章 / FAQ：说明可在文章管理一级表格直接开关「是否隐藏」。`docs/features/article.md`、`docs/faq/usage.md` [#268](https://github.com/Mereithhh/vanblog/issues/268)
