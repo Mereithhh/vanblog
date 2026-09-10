@@ -41,6 +41,8 @@ export class SiteInfo {
   showEditButton?: 'true' | 'false';
   /** Front home /page/n list size. Default 5, clamped to 1–50. */
   articlesPerPage?: number;
+  /** Public /category list: expand every category on first load. Default collapsed. */
+  defaultExpandAllCategories?: 'true' | 'false';
   /** Friend-link page intro above the cards. Empty/unset keeps the previous hardcoded line. */
   friendLinkIntro?: string;
   /** Friend-link page markdown below the cards. Empty/unset keeps the previous hardcoded apply text. */

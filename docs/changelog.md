@@ -32,6 +32,7 @@ redirectFrom: /ref/changelog.html
 - 后台新建 / 修改 / 导入文章和草稿时，标签输入框支持一次粘贴或输入多个标签：用英文/中文逗号、分号或换行分隔。空格不会拆开，以便「machine learning」这类多词标签保持完整。[#489](https://github.com/Mereithhh/vanblog/issues/489)
 - 后台「数据管理 / 联系方式」支持自定义联系方式：除 GitHub / 邮箱 / 微信 / Bilibili / Gitee 外，可添加 Telegram、Twitter/X 等任意链接，填写显示名称、URL，以及可选的图标 URL。内置类型仍每种一条，自定义可以有多条；已有站点的旧数据不用改。[#394](https://github.com/Mereithhh/vanblog/issues/394)
 - 后台「站点配置 / 布局设置」可改友链页介绍、友链页底部 Markdown（申领要求 / 本站信息）以及关于页标题。留空仍用升级前的硬编码中文；底部可用 `{{siteName}}`、`{{description}}`、`{{url}}`、`{{logo}}`。关于页正文仍在文章管理「编辑关于」里改。[#373](https://github.com/Mereithhh/vanblog/issues/373)
+- 前台分类列表把原来的 `+` 改成 `>` 箭头（展开后旋转成 V），点分类名称、篇数或箭头都能展开 / 收起。布局设置增加「分类页默认展开全部分类」（默认仍全部收起）；页上还有「全部展开 / 全部收起」。单篇分类页、标签页和时间线不受这项默认值影响。[#260](https://github.com/Mereithhh/vanblog/issues/260)
 - 后台「站点配置 / 布局设置」增加「每页文章数」：前台首页和 `/page/n` 分页按该数字展示文章。默认仍是 5 篇（与升级前硬编码一致），可在 1–50 之间调整；超出范围会夹紧，避免一次拉太多文章。[#346](https://github.com/Mereithhh/vanblog/issues/346)
 
 ### 🐛 Bug Fixes | Bug 修复
@@ -107,6 +108,7 @@ redirectFrom: /ref/changelog.html
 - FAQ / 站点配置：说明前台分页可输入页码跳转，非法或超出范围不跳转；总页数跟随「每页文章数」。`docs/faq/usage.md`、`docs/features/config.md` [#229](https://github.com/Mereithhh/vanblog/issues/229)
 - FAQ / 站点配置：说明手机端顶栏网站名相对整页宽度居中，电脑端左侧网站名 / logo 不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 分类 / FAQ / 隐藏文章：说明可在分类管理开关「是否隐藏」，前台不再展示该分类入口；文章仍按各自规则。`docs/features/tag.md`、`docs/faq/usage.md`、`docs/advanced/hide.md` [#359](https://github.com/Mereithhh/vanblog/issues/359)
+- 分类 / FAQ / 站点配置：说明前台分类列表用 `>` / V 箭头展开、可点整行，以及布局设置「分类页默认展开全部分类」和页上「全部展开 / 全部收起」。`docs/features/tag.md`、`docs/faq/usage.md`、`docs/reference/config.md` [#260](https://github.com/Mereithhh/vanblog/issues/260)
 - 分类 / FAQ：说明可在分类管理用「上移 / 下移」调整前台分类显示顺序，已有文章的分类也能改序。`docs/features/tag.md`、`docs/faq/usage.md`、`docs/reference/config.md` [#152](https://github.com/Mereithhh/vanblog/issues/152)
 - 文章 / FAQ：说明可在文章管理一级表格直接开关「是否隐藏」。`docs/features/article.md`、`docs/faq/usage.md` [#268](https://github.com/Mereithhh/vanblog/issues/268)
 - FAQ / 黑暗模式：说明前台分页在第一页 / 最后一页会禁用上一页 / 下一页（仍显示、不可跳转）。`docs/faq/usage.md`、`docs/advanced/darkmode.md` [#331](https://github.com/Mereithhh/vanblog/issues/331)

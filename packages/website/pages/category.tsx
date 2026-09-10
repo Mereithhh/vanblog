@@ -1,7 +1,8 @@
 import AuthorCard, { AuthorCardProps } from "../components/AuthorCard";
+import CategoryList from "../components/CategoryList";
 import Layout from "../components/Layout";
-import TimeLineItem from "../components/TimeLineItem";
 import { Article } from "../types/article";
+import { isDefaultExpandAllCategories } from "../utils/categoryExpand";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getCategoryPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
@@ -26,22 +27,15 @@ const CategoryPage = (props: CategoryPageProps) => {
           </div>
           <div className="text-center text-gray-600 text-sm mt-2 mb-4 font-light dark:text-dark">{`${props.authorCardProps.catelogNum} 分类 × ${props.authorCardProps.postNum} 文章 × ${props.authorCardProps.tagNum} 标签 × ${props.wordTotal} 字`}</div>
         </div>
-        <div className="flex flex-col mt-2">
-          {Object.keys(props.sortedArticles).map((key: string) => {
-            return (
-              <TimeLineItem
-                openArticleLinksInNewWindow={
-                  props.layoutProps.openArticleLinksInNewWindow == "true"
-                }
-                defaultOpen={false}
-                key={key}
-                date={key}
-                articles={props.sortedArticles[key]}
-                showYear={true}
-              ></TimeLineItem>
-            );
-          })}
-        </div>
+        <CategoryList
+          sortedArticles={props.sortedArticles}
+          defaultExpandAll={isDefaultExpandAllCategories(
+            props.layoutProps.defaultExpandAllCategories
+          )}
+          openArticleLinksInNewWindow={
+            props.layoutProps.openArticleLinksInNewWindow == "true"
+          }
+        />
       </div>
     </Layout>
   );

@@ -3,6 +3,7 @@ import dayjs from "dayjs";
 import { AuthorCardProps } from "../components/AuthorCard";
 import { checkLogin } from "./auth";
 import { sanitizeArticlesPerPage } from "./articlesPerPage";
+import { isDefaultExpandAllCategories } from "./categoryExpand";
 import { normalizeGaAnalysisId } from "../components/gaAnalysis/load";
 import {
   DEFAULT_ABOUT_TITLE,
@@ -45,6 +46,7 @@ export interface LayoutProps {
   showEditButton: "true" | "false";
   subMenuOffset: number;
   articlesPerPage: number;
+  defaultExpandAllCategories: "true" | "false";
   friendLinkIntro: string;
   friendLinkApplyContent: string;
   aboutTitle: string;
@@ -125,6 +127,11 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
   ) {
     openArticleLinksInNewWindow = "true";
   }
+  const defaultExpandAllCategories: "true" | "false" = isDefaultExpandAllCategories(
+    data.meta.siteInfo?.defaultExpandAllCategories
+  )
+    ? "true"
+    : "false";
 
   return {
     showFriends,
@@ -154,6 +161,7 @@ export function getLayoutProps(data: PublicMetaProp): LayoutProps {
     enableComment: siteInfo?.enableComment || "true",
     defaultTheme: siteInfo?.defaultTheme || "auto",
     openArticleLinksInNewWindow,
+    defaultExpandAllCategories,
     showCopyRight,
     showDonateButton,
     showRSS,
