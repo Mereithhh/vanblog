@@ -4,6 +4,7 @@ import {
   pageNavControlClass,
   pageNavCurrentCls,
   pageNavDefaultCls,
+  pageNavDisabledCls,
   pageNavNumberClass,
 } from "../components/PageNav/classes";
 
@@ -185,5 +186,18 @@ describe("page nav light-mode classes used by render.tsx", () => {
     expect(pageNavControlClass(true)).toContain("opacity-40");
     expect(pageNavControlClass(false)).not.toContain("opacity-40");
     expect(pageNavNumberClass(true)).toContain("bg-gray-700");
+  });
+
+  it("visually disables edge prev/next without hover (#331)", () => {
+    expect(pageNavControlClass(true)).toBe(
+      `inline-flex justify-center items-center transition-all ${pageNavDisabledCls}`
+    );
+    expect(pageNavControlClass(true)).toContain("cursor-not-allowed");
+    expect(pageNavControlClass(true)).toContain("opacity-40");
+    expect(pageNavControlClass(true)).not.toMatch(/hover:/);
+    expect(pageNavDisabledCls).not.toMatch(/hover:/);
+    expect(pageNavControlClass(false)).toMatch(/hover:bg-gray-200/);
+    expect(pageNavControlClass(false)).not.toContain("cursor-not-allowed");
+    expect(pageNavControlClass(false)).not.toContain("opacity-40");
   });
 });

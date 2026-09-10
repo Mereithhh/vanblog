@@ -19,6 +19,14 @@ export const pageNavCurrentCls =
 
 export const pageNavEllipsisCls = `${pageNavCommonCls} text-gray-600 dark:pg-text-dark`;
 
+/**
+ * First/last-page prev/next: keep the chip visible (do not remove it) but
+ * drop hover so it cannot look clickable. Same light/dark fills as the
+ * default chip, without `hover:bg-*`.
+ */
+export const pageNavDisabledCls =
+  "bg-white text-gray-600 opacity-40 cursor-not-allowed select-none dark:bg-dark-1 dark:pg-text-dark";
+
 export function pageNavNumberClass(isCurrent: boolean): string {
   return `${pageNavCommonCls} ${
     isCurrent ? pageNavCurrentCls : pageNavDefaultCls
@@ -27,7 +35,7 @@ export function pageNavNumberClass(isCurrent: boolean): string {
 
 export function pageNavControlClass(disabled = false): string {
   if (disabled) {
-    return `${pageNavCommonCls} ${pageNavDefaultCls} opacity-40 cursor-default`;
+    return `${pageNavCommonCls} ${pageNavDisabledCls}`;
   }
   return `${pageNavCommonCls} ${pageNavDefaultCls}`;
 }

@@ -28,6 +28,7 @@ redirectFrom: /ref/changelog.html
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 前台分页在第一页时「上一页」、最后一页时「下一页」不再可点：仍显示但禁用（无链接、无悬停高亮），不能翻出范围。页码链接、当前页选中样式和「每页文章数」不变。[#331](https://github.com/Mereithhh/vanblog/issues/331)
 - 加密文章密码框提示误写成「文章已解锁」，现改为「文章已加密，请输入密码后查看：」。Related to [#414](https://github.com/Mereithhh/vanblog/pull/414)
 - 多文件自定义页面访问带查询参数的目录（如 `/c/uptime/?x=1`）不再把 `?x=1` 当成文件名；缺失的 `index.html` 返回 404 而不是 `sendFile` 失败。[#337](https://github.com/Mereithhh/vanblog/issues/337)
 - 后台编辑很长的 Markdown 时，用右侧目录跳到靠后的标题后，顶部工具栏（加粗、标题、上传等功能键）会整行消失。现把编辑器锁在视口高度内，工具栏 sticky 在编辑区顶部，目录跳转也不再把页面/外层容器滚走。[#298](https://github.com/Mereithhh/vanblog/issues/298)
@@ -91,6 +92,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- FAQ / 黑暗模式：说明前台分页在第一页 / 最后一页会禁用上一页 / 下一页（仍显示、不可跳转）。`docs/faq/usage.md`、`docs/advanced/darkmode.md` [#331](https://github.com/Mereithhh/vanblog/issues/331)
 - 编辑器 / FAQ：说明手机后台编辑可用精简工具栏（标题、加粗、链接、图片、列表、代码、引用），电脑端工具栏不变。[#504](https://github.com/Mereithhh/vanblog/issues/504)
 - 编辑器 / 图床 / FAQ：说明后台工具栏「外链图片转存」会把当前文章里的远程图下载到本站图床并改写链接；相对路径、本站 `/static` 和已入库地址会跳过，失败的链接保持原样。不会在保存时静默改写。[#434](https://github.com/Mereithhh/vanblog/issues/434)
 - 图床 / 贡献：说明自动压缩可选 WebP 或 AVIF（只影响新上传），以及官方 Alpine 镜像上 sharp / `libavif-apps`（`avifenc`）依赖。[#423](https://github.com/Mereithhh/vanblog/issues/423)
