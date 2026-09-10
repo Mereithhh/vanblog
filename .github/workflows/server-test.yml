@@ -47,7 +47,7 @@ jobs:
 
       - name: Run server unit tests
         working-directory: packages/server
-        run: pnpm test -- --testPathPattern="backupCategories|categoryOrder|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|meta.provider|linkName|customPage.provider|customPagePath|walineLogin|waline.provider|walineExtra|setting.provider|cdnUrl|website.provider|walineMongo|numericId|pagination|article.controller|article.provider|draft.provider|watermark|wordCount|deleteFolder|webp|imgCompress|avif|imageMeta|static.provider.compress|static.provider.transferRemote|log.controller|provider/log/utils|cacheControl|caddy.provider|rewriteBaseUrl|img.controller|articlesPerPage|pageCopy|public.controller|sitemap.provider|utils/social|listenHost|transferRemoteImages|markdown.provider" --passWithNoTests=false
+        run: pnpm test -- --testPathPattern="backupCategories|categoryOrder|category.provider|backup.controller|articlePublicPaths|isr.provider|getVersion|meta.controller|meta.provider|linkName|customPage.provider|customPagePath|walineLogin|waline.provider|walineExtra|setting.provider|cdnUrl|website.provider|walineMongo|numericId|pagination|article.controller|article.provider|draft.provider|watermark|wordCount|deleteFolder|webp|imgCompress|avif|imageMeta|static.provider.compress|static.provider.transferRemote|log.controller|log.provider|provider/log/utils|cacheControl|caddy.provider|rewriteBaseUrl|img.controller|articlesPerPage|pageCopy|public.controller|sitemap.provider|utils/social|listenHost|transferRemoteImages|markdown.provider" --passWithNoTests=false
 
       - name: Run website unit tests
         run: pnpm --filter @vanblog/theme-default exec vitest run

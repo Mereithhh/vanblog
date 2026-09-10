@@ -91,12 +91,11 @@ export class LogProvider {
         );
       });
     };
-    let { data, total } = (await readFunc(eventType)) as {
+    const { data, total } = (await readFunc(eventType)) as {
       data: any[];
       total: number;
     };
-    total = total;
-    data = data.reverse();
+    data.reverse();
     // 看一下 res 的数量够不够
     if (data.length <= skip) {
       return { data: [], total };
