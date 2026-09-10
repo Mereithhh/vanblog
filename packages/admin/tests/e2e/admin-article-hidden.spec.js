@@ -102,7 +102,7 @@ test.describe('admin article list hidden column (#268)', () => {
     const store = { articles: seedArticles(), updates: [] };
     await openArticleAdmin(page, store);
 
-    await expect(page.getByRole('columnheader', { name: '是否隐藏' })).toBeVisible();
+    await expect(page.locator('.ant-table-thead').getByText('是否隐藏', { exact: true })).toBeVisible();
 
     const visibleToggle = hiddenSwitch(page, 268);
     const hiddenToggle = hiddenSwitch(page, 269);
