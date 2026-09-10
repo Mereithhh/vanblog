@@ -10,7 +10,7 @@
 - 前台文章（以及同一套 ByteMD 的后台预览）围栏代码块支持汇编高亮：`asm` / `assembly` / `nasm` / `x86asm` / `intel` / `x86` 走 Intel/NASM（highlight.js `x86asm`），`arm` / `armasm` 走 ARM。原先 common 语言集不含汇编，这些围栏几乎没有关键字/寄存器/注释颜色。RSS 用的 markdown-it 也会把 `asm` 当成 `x86asm`。[#294](https://github.com/Mereithhh/vanblog/issues/294)
 - 后台文章编辑器「偏好设置」增加「软换行」：默认关闭，保持标准 Markdown（单独回车仍是同一段）。开启后，按 Enter 或粘贴多行时会自动补行末两个空格，写成 CommonMark 软换行；预览和前台仍按标准渲染。设置存在当前浏览器 LocalStorage，打开或保存已有文章时不会整篇改写历史正文。[#311](https://github.com/Mereithhh/vanblog/issues/311)
 - 前台首页和 `/page/n` 分页增加跳转到指定页：多页时在现有页码旁显示「跳转」输入框，回车或点「前往」按现有路由跳到 `/`（第 1 页）或 `/page/n`。只接受 1..总页数的整数，空值、非整数或超出范围不跳转。总页数跟随「每页文章数」。页码链接、当前页 `aria-current="page"` 以及第一页 / 最后一页禁用的上一页 / 下一页不变。[#229](https://github.com/Mereithhh/vanblog/issues/229)
-- 后台分类管理增加「是否隐藏」：可开关隐藏状态（也可在「修改」里改）。隐藏后前台分类列表、导航、分类页和 sitemap 不再展示该分类；后台仍可见。该分类下的文章仍按各自的隐藏 / 加密规则，不会因此被额外加密。[#359](https://github.com/Mereithhh/vanblog/issues/359)
+- 后台分类管理增加「是否隐藏」：可开关隐藏状态（也可在「重命名」弹窗里改）。隐藏后前台分类列表、导航、分类页和 sitemap 不再展示该分类；后台仍可见。该分类下的文章仍按各自的隐藏 / 加密规则，不会因此被额外加密。[#359](https://github.com/Mereithhh/vanblog/issues/359)
 - 后台分类管理增加「上移 / 下移」：可自定义分类显示顺序，前台导航分类子菜单、分类列表和分类页按该顺序展示。已有文章的分类也能改序，不必删除再建。隐藏分类仍只出现在后台，可见分类之间保持相对顺序。[#152](https://github.com/Mereithhh/vanblog/issues/152)
 - 后台文章管理一级表格增加「是否隐藏」列，可直接开关隐藏状态，不必打开「修改信息」或编辑器。仍走现有更新文章接口。[#268](https://github.com/Mereithhh/vanblog/issues/268)
 - 手机上后台文章编辑器不再只剩「编辑 / 预览」切换：窄屏（ByteMD tab 模式，编辑器宽度 < 800px）工具栏会补上一组常用按钮（标题、加粗 / 斜体、链接、图片上传、列表、代码、引用）。电脑端分栏工具栏不变，也不会把表情、Mermaid、高亮块等整排桌面按钮塞到手机上。[#504](https://github.com/Mereithhh/vanblog/issues/504)
@@ -33,6 +33,7 @@
 ### 🐛 Bug Fixes | Bug 修复
 
 - 后台文案将「客制化」改为「定制化」、「联系方式」改为「社交媒体」，与文档用语一致。系统设置选项卡、布局设置开关/提示、定制化保存确认，以及数据管理选项卡、社交媒体表格标题和自定义条目校验文案均已同步。路由 key（`customizing` / `socials`）和字段名不变。[#197](https://github.com/Mereithhh/vanblog/issues/197)
+- 后台分类管理和标签管理的改名用语统一为「重命名」（不再写「修改分类」「批量改名」）。弹窗标题、确认文案和文档同步；接口、路由和改名逻辑不变。[#194](https://github.com/Mereithhh/vanblog/issues/194)
 - 前台文章页和文章列表的阅读数、评论数在数据加载完成前显示 `...`，不再先闪 `0`；加载完成后显示真实数字（包括确实为 0）。[#230](https://github.com/Mereithhh/vanblog/issues/230)
 - 手机端顶栏网站名改为相对整个页面宽度居中，不再只在汉堡菜单右侧的剩余栏里居中（短站名时错位更明显）。电脑端左侧网站名 / logo 布局不变。[#262](https://github.com/Mereithhh/vanblog/issues/262)
 - 前台分页在第一页时「上一页」、最后一页时「下一页」不再可点：仍显示但禁用（无链接、无悬停高亮），不能翻出范围。页码链接、当前页选中样式和「每页文章数」不变。[#331](https://github.com/Mereithhh/vanblog/issues/331)
@@ -99,6 +100,7 @@
 ### ✏️ Documentation | 文档
 
 - 定制化 / 社交媒体：后台文案与文档对齐为「定制化」「社交媒体」（不再写「客制化」「联系方式」）。`docs/advanced/customizing.md`、`docs/faq/usage.md`、`docs/features/social.md` [#197](https://github.com/Mereithhh/vanblog/issues/197)
+- 分类 / 标签：后台改名按钮、弹窗标题和确认文案统一为「重命名」（不再写「修改分类」「批量改名」）。`docs/features/tag.md`、`docs/faq/usage.md` [#194](https://github.com/Mereithhh/vanblog/issues/194)
 - 文章 / 标签：说明前台文章页底部标签链接前有标签图标。[#178](https://github.com/Mereithhh/vanblog/issues/178)
 - 文章 / FAQ：说明前台时间线按年再按月归档，只有有文章的月份会显示。`docs/features/article.md`、`docs/faq/usage.md` [#302](https://github.com/Mereithhh/vanblog/issues/302)
 - 文章 / FAQ / SEO：说明可选题头图的设置位置、上传或填写 URL、前台展示以及 `og:image` / `twitter:image` 分享预览。导入 Front Matter 可读 `cover` / `image`。[#288](https://github.com/Mereithhh/vanblog/issues/288)

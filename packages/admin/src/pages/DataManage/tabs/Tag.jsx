@@ -35,13 +35,13 @@ const columns = [
       </a>,
       <ModalForm
         key={`editCateoryC%{${record.name}}`}
-        title={`批量修改标签 "${record.name}"`}
-        trigger={<a key={'editC' + record.name}>批量改名</a>}
+        title={`重命名标签 "${record.name}"`}
+        trigger={<a key={'editC' + record.name}>重命名</a>}
         autoFocusFirstInput
         submitTimeout={3000}
         onFinish={async (values) => {
           Modal.confirm({
-            content: `确定修改标签 "${record.name}" 为 "${values.newName}" 吗？所有文章的该标签都将被更新为新名称!`,
+            content: `确定重命名标签 "${record.name}" 为 "${values.newName}" 吗？所有文章的该标签都将被更新为新名称!`,
             onOk: async () => {
               await updateTag(record.name, values.newName);
               message.success('更新成功！所有文章该标签都将变为新名称！');

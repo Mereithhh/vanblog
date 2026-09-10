@@ -40,6 +40,8 @@ test.describe('category rename cascades to articles and drafts', () => {
     await expect(page.locator('[data-draft-category="AAA"]')).toHaveText('AAA');
 
     await page.goto('/admin/category');
+    await expect(page.locator('#rename-category-btn')).toHaveText('重命名分类');
+    await expect(page.getByText('修改分类')).toHaveCount(0);
     await page.locator('#old-category-name').fill('AAA');
     await page.locator('#rename-category-name').fill('BBB');
     await page.locator('#rename-category-btn').click();

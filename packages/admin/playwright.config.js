@@ -63,7 +63,7 @@ module.exports = {
   projects: [
     {
       name: 'admin-app',
-      testMatch: /admin-editor-.*\.spec\.js|admin-login-expired\.spec\.js|admin-import-pathname\.spec\.js|admin-article-hidden\.spec\.js|admin-article-cover\.spec\.js|admin-category-hidden\.spec\.js|admin-category-order\.spec\.js|custom-page-info\.spec\.js|custom-page-upload\.spec\.js|admin-log-audit\.spec\.js|admin-cache-headers\.spec\.js/,
+      testMatch: /admin-editor-.*\.spec\.js|admin-login-expired\.spec\.js|admin-import-pathname\.spec\.js|admin-article-hidden\.spec\.js|admin-article-cover\.spec\.js|admin-category-hidden\.spec\.js|admin-category-order\.spec\.js|admin-rename-copy\.spec\.js|custom-page-info\.spec\.js|custom-page-upload\.spec\.js|admin-log-audit\.spec\.js|admin-cache-headers\.spec\.js/,
       use: {
         ...devices['Desktop Chrome'],
         baseURL: `http://127.0.0.1:${adminPort}`,
