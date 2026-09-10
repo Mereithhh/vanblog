@@ -84,6 +84,7 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- FAQ / 反代：后台发布后前台仍显示旧文章时，先查 Nginx / 宝塔 `proxy_cache` 或 CDN 是否在缓存 HTML；示例增加 `proxy_no_cache` / `proxy_cache_bypass`，宝塔可注释 `proxy.conf` 里的 `proxy_cache`。源站后台/API 已发 no-store，前台 HTML 仍可能被代理缓存。[#469](https://github.com/Mereithhh/vanblog/issues/469)
 - 文章导入与迁移助手：Front Matter 增加 `pathname` / hexo `abbrlink` → 自定义路径名的说明。[#383](https://github.com/Mereithhh/vanblog/issues/383)
 - 环境变量 / 反代 / 部署 FAQ：说明 `VAN_BLOG_SERVER_HOST=127.0.0.1` 以及 Docker 编排把 80/443 绑到 `127.0.0.1` 的用法（同机反代时避免把源站暴露到公网）。[#488](https://github.com/Mereithhh/vanblog/issues/488)
 - 编辑器 / 文章 / FAQ：说明可以在 Markdown 正文里写常见 HTML，以及哪些标签会被消毒去掉。[#490](https://github.com/Mereithhh/vanblog/issues/490)
