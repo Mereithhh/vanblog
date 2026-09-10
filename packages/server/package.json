@@ -31,6 +31,7 @@
     "test:cdn-url-e2e": "jest --config ./test/jest-cdn-url-e2e.json",
     "test:word-count-e2e": "jest --config ./test/jest-word-count-e2e.json",
     "test:friend-link-e2e": "jest --config ./test/jest-friend-link-e2e.json",
+    "test:page-copy-e2e": "jest --config ./test/jest-page-copy-e2e.json",
     "test:admin-cache-e2e": "jest --config ./test/jest-admin-cache-e2e.json"
   },
   "dependencies": {

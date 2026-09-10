@@ -137,6 +137,59 @@ describe('MetaProvider articlesPerPage (#346)', () => {
   });
 });
 
+describe('MetaProvider page copy (#373)', () => {
+  it('reads stored friend-link / about copy and treats missing as empty (front falls back)', async () => {
+    const missing = createProvider();
+    missing.model.state.siteInfo = { siteName: 'demo' };
+    expect((await missing.provider.getSiteInfo()).friendLinkIntro).toBe('');
+    expect((await missing.provider.getSiteInfo()).friendLinkApplyContent).toBe('');
+    expect((await missing.provider.getSiteInfo()).aboutTitle).toBe('');
+
+    const { provider, model } = createProvider();
+    model.state.siteInfo = {
+      siteName: 'demo',
+      friendLinkIntro: '这些是朋友们的站点：',
+      friendLinkApplyContent: '请发邮件。{{siteName}}',
+      aboutTitle: 'About',
+    };
+    const site = await provider.getSiteInfo();
+    expect(site.friendLinkIntro).toBe('这些是朋友们的站点：');
+    expect(site.friendLinkApplyContent).toBe('请发邮件。{{siteName}}');
+    expect(site.aboutTitle).toBe('About');
+  });
+
+  it('persists custom copy and keeps previous values when a field is omitted', async () => {
+    const { provider, model } = createProvider();
+    await provider.updateSiteInfo({
+      siteName: 'demo',
+      friendLinkIntro: '欢迎交换友链',
+      friendLinkApplyContent: '**规则**\n请先加本站',
+      aboutTitle: '关于本站',
+    } as any);
+    expect(model.state.siteInfo.friendLinkIntro).toBe('欢迎交换友链');
+    expect(model.state.siteInfo.friendLinkApplyContent).toBe('**规则**\n请先加本站');
+    expect(model.state.siteInfo.aboutTitle).toBe('关于本站');
+
+    await provider.updateSiteInfo({ siteName: 'demo2' } as any);
+    expect(model.state.siteInfo.friendLinkIntro).toBe('欢迎交换友链');
+    expect(model.state.siteInfo.friendLinkApplyContent).toBe('**规则**\n请先加本站');
+    expect(model.state.siteInfo.aboutTitle).toBe('关于本站');
+    expect(model.state.siteInfo.siteName).toBe('demo2');
+  });
+
+  it('stores empty copy so the front can fall back, and ignores non-string payloads', async () => {
+    const { provider, model } = createProvider();
+    await provider.updateSiteInfo({
+      siteName: 'demo',
+      friendLinkIntro: '自定义介绍',
+      aboutTitle: 'About',
+    } as any);
+    await provider.updateSiteInfo({ friendLinkIntro: '', aboutTitle: 12 } as any);
+    expect(model.state.siteInfo.friendLinkIntro).toBe('');
+    expect(model.state.siteInfo.aboutTitle).toBe('About');
+  });
+});
+
 describe('MetaProvider custom socials (#394)', () => {
   it('keeps builtin types unique and still overwrites by type', async () => {
     const { provider } = createProvider();

@@ -8,6 +8,7 @@ import WaLine from "../components/WaLine";
 import { LayoutProps } from "../utils/getLayoutProps";
 import { getLinkPageProps } from "../utils/getPageProps";
 import { revalidate } from "../utils/loadConfig";
+import { renderFriendLinkApplyContent } from "../utils/pageCopy";
 
 export interface LinkPageProps {
   layoutProps: LayoutProps;
@@ -30,20 +31,16 @@ const LinkPage = (props: LinkPageProps) => {
     }
     return logo;
   }, [props, url]);
-  const requireContent = `
-**[申领要求]**
-- [x] 请先添加本站为友链后再申请友链，并通过留言或邮件告知
-- [x] 不和剽窃、侵权、无诚信的网站交换，优先和具有原创作品的全站 HTTPS 站点交换
-- [x] 原则上要求您的博客主页被百度或者 Google 等搜索引擎收录
-- [x] 由于访问安全性问题，请**务必**提供 HTTPS 链接的头像地址（或留言时备注暂无以便本站主动保存）
-- [x] 不接受视频站、资源站等非博客类站点交换，原则上只与技术/日志类博客交换友链
-
-**[本站信息]**
-> 名称： ${props.layoutProps.siteName}<br/>
-> 简介： ${props.layoutProps.description}<br/>
-> 网址： [${url}](${url})<br/>
-> 头像： [${logo}](${logo})
-`;
+  const requireContent = useMemo(
+    () =>
+      renderFriendLinkApplyContent(props.layoutProps.friendLinkApplyContent, {
+        siteName: props.layoutProps.siteName,
+        description: props.layoutProps.description,
+        url,
+        logo,
+      }),
+    [props.layoutProps, url, logo]
+  );
   return (
     <Layout
       option={props.layoutProps}
@@ -57,7 +54,7 @@ const LinkPage = (props: LinkPageProps) => {
           </div>
         </div>
         <div className="flex flex-col mt-6 mb-2">
-          <p className="mb-6 ">以下是本站的友情链接，排名不分先后：</p>
+          <p className="mb-6 ">{props.layoutProps.friendLinkIntro}</p>
           <div className="grid gap-2 sm:gap-4 grid-cols-2 lg:grid-cols-3">
             {props.links.map((link) => (
               <LinkCard link={link} key={`${link.url}${link.name}`} />

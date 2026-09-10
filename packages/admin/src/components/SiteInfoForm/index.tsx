@@ -4,6 +4,7 @@ import {
   ProFormDigit,
   ProFormSelect,
   ProFormText,
+  ProFormTextArea,
 } from '@ant-design/pro-components';
 import UrlFormItem from '../UrlFormItem';
 
@@ -372,6 +373,34 @@ export default function (props: {
               false: '隐藏',
             }}
             tooltip={'默认开启，关闭后登录后台时，前台将不再显示编辑按钮。'}
+          />
+          <ProFormText
+            name={'friendLinkIntro'}
+            label="友链页介绍文案"
+            placeholder={'以下是本站的友情链接，排名不分先后：'}
+            tooltip={'友链列表上方的介绍。留空则使用升级前的默认文案。'}
+          />
+          <ProFormTextArea
+            name={'friendLinkApplyContent'}
+            label="友链页底部文案"
+            placeholder={'留空则使用默认的申领要求与本站信息'}
+            tooltip={
+              '友链列表下方的 Markdown。留空保持升级前的申领要求。可用占位符 {{siteName}}、{{description}}、{{url}}、{{logo}} 插入本站信息。'
+            }
+            fieldProps={{
+              autoSize: {
+                minRows: 8,
+                maxRows: 20,
+              },
+            }}
+          />
+          <ProFormText
+            name={'aboutTitle'}
+            label="关于页标题"
+            placeholder={'关于我'}
+            tooltip={
+              '前台关于页标题。留空则为「关于我」。关于页正文仍在文章管理里点「编辑关于」修改，不是这段设置。'
+            }
           />
         </>
       )}

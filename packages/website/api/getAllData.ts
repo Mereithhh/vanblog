@@ -132,6 +132,9 @@ export interface MetaProps {
     showExpirationReminder: "true" | "false";
     showEditButton: "true" | "false";
     articlesPerPage?: number;
+    friendLinkIntro?: string;
+    friendLinkApplyContent?: string;
+    aboutTitle?: string;
   };
 }
 export interface PublicMetaProp {
