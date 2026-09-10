@@ -1,11 +1,52 @@
 import ColumnsToolBar from '@/components/ColumnsToolBar';
 import UpdateModal from '@/components/UpdateModal';
-import { deleteArticle, getAllCategories, getArticleById, getTags } from '@/services/van-blog/api';
+import {
+  deleteArticle,
+  getAllCategories,
+  getArticleById,
+  getTags,
+  updateArticle,
+} from '@/services/van-blog/api';
 import { getPathname } from '@/services/van-blog/getPathname';
 import { parseObjToMarkdown } from '@/services/van-blog/parseMarkdownFile';
-import { message, Modal, Space, Tag } from 'antd';
+import { message, Modal, Space, Switch, Tag } from 'antd';
+import { useState } from 'react';
 import { history } from 'umi';
 import { genActiveObj } from '../../services/van-blog/activeColTools';
+
+function HiddenSwitch({ record, action }) {
+  const [loading, setLoading] = useState(false);
+  return (
+    <span data-article-hidden-toggle={String(record.id)}>
+      <Switch
+        size="small"
+        loading={loading}
+        checked={Boolean(record.hidden)}
+        checkedChildren="是"
+        unCheckedChildren="否"
+        aria-label={`是否隐藏 ${record.title}`}
+        onChange={async (checked) => {
+          if (location.hostname == 'blog-demo.mereith.com') {
+            Modal.info({
+              title: '演示站禁止修改信息！',
+              content: '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
+            });
+            return;
+          }
+          setLoading(true);
+          try {
+            await updateArticle(record.id, { hidden: checked });
+            message.success(checked ? '已设为隐藏' : '已取消隐藏');
+            action?.reload();
+          } finally {
+            setLoading(false);
+          }
+        }}
+      />
+    </span>
+  );
+}
+
 export const columns = [
   {
     dataIndex: 'id',
@@ -99,6 +140,15 @@ export const columns = [
     sorter: true,
     width: 80,
     hideInSearch: true,
+  },
+  {
+    title: '是否隐藏',
+    key: 'hidden',
+    dataIndex: 'hidden',
+    width: 100,
+    hideInSearch: true,
+    tooltip: '隐藏后前台不展示，也不计入总字数 / 时间线等。可在此直接开关，不必打开修改信息。',
+    render: (_, record, __, action) => <HiddenSwitch record={record} action={action} />,
   },
   {
     title: '创建时间',
@@ -229,6 +279,7 @@ export const columns = [
 ];
 export const articleKeys = [
   'category',
+  'hidden',
   'id',
   'option',
   'showTime',
@@ -237,6 +288,6 @@ export const articleKeys = [
   'top',
   'viewer',
 ];
-export const articleKeysSmall = ['category', 'id', 'option', 'title'];
+export const articleKeysSmall = ['category', 'hidden', 'id', 'option', 'title'];
 export const articleObjAll = genActiveObj(articleKeys, articleKeys);
 export const articleObjSmall = genActiveObj(articleKeysSmall, articleKeys);

@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 后台文章管理一级表格增加「是否隐藏」列，可直接开关隐藏状态，不必打开「修改信息」或编辑器。仍走现有更新文章接口。[#268](https://github.com/Mereithhh/vanblog/issues/268)
 - 手机上后台文章编辑器不再只剩「编辑 / 预览」切换：窄屏（ByteMD tab 模式，编辑器宽度 < 800px）工具栏会补上一组常用按钮（标题、加粗 / 斜体、链接、图片上传、列表、代码、引用）。电脑端分栏工具栏不变，也不会把表情、Mermaid、高亮块等整排桌面按钮塞到手机上。[#504](https://github.com/Mereithhh/vanblog/issues/504)
 - 后台文章编辑器工具栏增加「外链图片转存」：扫描正文里的远程 `![...](http...)` 和 `<img src>`，经现有图床上传管线下载并改写为本站 / 配置图床地址。已是本站 `/static`、已入库图床、相对路径和 `data:` 图片会跳过；失败的链接保持原样并提示。开启自动压缩时仍按 WebP / AVIF 设置处理。不会在保存时静默改写。[#434](https://github.com/Mereithhh/vanblog/issues/434)
 - 后台「图床设置」在原有「图片自动压缩」旁增加压缩格式：默认仍是 WebP，可选 AVIF（通常更小）。只影响新上传，不改写历史文件。AVIF 优先用 sharp 0.32.6；官方 Alpine 镜像若加载不到 musl sharp，则使用 `libavif-apps` 的 `avifenc`。[#423](https://github.com/Mereithhh/vanblog/issues/423)
@@ -86,6 +87,7 @@
 
 ### ✏️ Documentation | 文档
 
+- 文章 / FAQ：说明可在文章管理一级表格直接开关「是否隐藏」。`docs/features/article.md`、`docs/faq/usage.md` [#268](https://github.com/Mereithhh/vanblog/issues/268)
 - FAQ / 黑暗模式：说明前台分页在第一页 / 最后一页会禁用上一页 / 下一页（仍显示、不可跳转）。`docs/faq/usage.md`、`docs/advanced/darkmode.md` [#331](https://github.com/Mereithhh/vanblog/issues/331)
 - 编辑器 / FAQ：说明手机后台编辑可用精简工具栏（标题、加粗、链接、图片、列表、代码、引用），电脑端工具栏不变。[#504](https://github.com/Mereithhh/vanblog/issues/504)
 - 编辑器 / 图床 / FAQ：说明后台工具栏「外链图片转存」会把当前文章里的远程图下载到本站图床并改写链接；相对路径、本站 `/static` 和已入库地址会跳过，失败的链接保持原样。不会在保存时静默改写。[#434](https://github.com/Mereithhh/vanblog/issues/434)
