@@ -84,6 +84,7 @@
 
 ### ✏️ Documentation | 文档
 
+- 编辑器 / 图床 / FAQ：说明后台工具栏「外链图片转存」会把当前文章里的远程图下载到本站图床并改写链接；相对路径、本站 `/static` 和已入库地址会跳过，失败的链接保持原样。不会在保存时静默改写。[#434](https://github.com/Mereithhh/vanblog/issues/434)
 - 图床 / 贡献：说明自动压缩可选 WebP 或 AVIF（只影响新上传），以及官方 Alpine 镜像上 sharp / `libavif-apps`（`avifenc`）依赖。[#423](https://github.com/Mereithhh/vanblog/issues/423)
 - 编辑器 / FAQ：说明手机上可通过「返回顶部」上方的按钮打开右侧目录抽屉，电脑端目录不变。[#451](https://github.com/Mereithhh/vanblog/issues/451)
 - FAQ / 文章 / 迁移 / SEO：说明如何用「自定义路径名 / slug」（`pathname`）对应 Hugo `post = "/post/:slug"`，默认是数字 id，以及导入时 Front Matter 的 `slug` / 简单 `url` 映射。没有站点级 permalink 引擎。[#487](https://github.com/Mereithhh/vanblog/issues/487)
