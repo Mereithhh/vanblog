@@ -8,7 +8,7 @@ import { Editor } from '@bytemd/react';
 import { Spin } from 'antd';
 import 'bytemd/dist/index.css';
 import 'katex/dist/katex.css';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import '../../style/github-markdown.css';
 import '../../style/code-light.css';
 import '../../style/code-dark.css';
@@ -32,6 +32,7 @@ import { mermaidForEditor } from './plugins/mermaidSafety';
 import { withSafeViewerEffects } from './plugins/previewSafety';
 import { tocViewportGuard } from './plugins/tocViewport';
 import { mobileToolbarPlugin } from './plugins/mobileToolbar';
+import { softLineBreaksPlugin } from './plugins/softLineBreaks';
 import './mobile-toolbar.css';
 
 // Keep extra tags / strip list aligned with website/utils/markdownSanitize.ts (#490).
@@ -80,11 +81,14 @@ export default function EditorComponent(props: {
   onChange: (string: string) => void;
   loading: boolean;
   setLoading: (l: boolean) => void;
+  softLineBreaks?: string | boolean;
 }) {
   const { loading, setLoading } = props;
   const { initialState } = useModel('@@initialState');
   const navTheme = initialState.settings.navTheme;
   const themeClass = navTheme.toLowerCase().includes('dark') ? 'dark' : 'light';
+  const softLineBreaksRef = useRef(props.softLineBreaks);
+  softLineBreaksRef.current = props.softLineBreaks;
   const plugins = useMemo(() => {
     return withSafeViewerEffects([
       customContainer(),
@@ -107,6 +111,10 @@ export default function EditorComponent(props: {
       // Keep mode="auto" (tab under 800px). Expand that toolbar; do not dump desktop icons.
       mobileToolbarPlugin({
         uploadImages: (files) => uploadEditorImages(files, setLoading),
+      }),
+      // Enter / paste can complete trailing spaces. Preview stays CommonMark (#311).
+      softLineBreaksPlugin({
+        getEnabled: () => softLineBreaksRef.current === true || softLineBreaksRef.current === 'open',
       }),
     ]);
   }, [themeClass]);
