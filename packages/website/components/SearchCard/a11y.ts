@@ -9,6 +9,23 @@ export const SEARCH_INPUT_LABEL = "搜索内容";
 export const SEARCH_CLEAR_LABEL = "清除搜索";
 export const SEARCH_RESULTS_LABEL = "搜索结果";
 
+/** Class on the dialog `<input type="search">` so native WebKit clear is hidden. */
+export const SEARCH_INPUT_CLASS = "search-dialog-input";
+
+/**
+ * Clear control hover: opacity/color only.
+ * `hover:scale-125` was the jarring animation in #173.
+ * Includes the same transparent-button reset as other header icon actions.
+ */
+export const SEARCH_CLEAR_BUTTON_CLASS =
+  "bg-transparent border-0 p-0 appearance-none flex items-center justify-center cursor-pointer text-gray-600 dark:text-dark opacity-70 hover:opacity-100 hover:text-gray-900 dark:hover:text-dark-hover transition-opacity transition-colors";
+
+/**
+ * Extra stroke on the filled magnifier so it reads closer to neighboring
+ * header icons (hamburger / theme) instead of a hairline ring (#173).
+ */
+export const SEARCH_ICON_STROKE_WIDTH = 64;
+
 /** Marks the search field so open/arrow-up can restore focus. */
 export const SEARCH_DIALOG_INPUT_ATTR = "data-search-input";
 export const SEARCH_DIALOG_INPUT_SELECTOR = `[${SEARCH_DIALOG_INPUT_ATTR}]`;
@@ -148,6 +165,19 @@ export function focusSearchDialogInput(dialog: {
   return true;
 }
 
+/** Native search field + Safari attrs from #173 (no autocomplete suggestions). */
+export function describeSearchInputAttrs() {
+  return {
+    type: "search" as const,
+    inputMode: "search" as const,
+    enterKeyHint: "search" as const,
+    autoComplete: "off" as const,
+    spellCheck: false as const,
+    autoCapitalize: "off" as const,
+    autoCorrect: "off" as const,
+  };
+}
+
 /**
  * iOS Safari only raises the software keyboard if `focus()` runs in the
  * same user-gesture turn as the tap. `useEffect` / `transitionend` are
@@ -161,6 +191,7 @@ export function describeSearchOpenFocusContract() {
     revealOverlayBeforeFocus: true,
     delayedFocusIsFallbackOnly: true,
     readOnlyFocusTrick: false,
+    type: "search" as const,
     inputMode: "search" as const,
   };
 }

@@ -12,9 +12,12 @@ import { useDebounce } from "react-use";
 import ArticleList from "../ArticleList";
 import KeyCard from "../KeyCard";
 import {
+  SEARCH_CLEAR_BUTTON_CLASS,
   SEARCH_CLEAR_LABEL,
   SEARCH_DIALOG_INPUT_ATTR,
   SEARCH_DIALOG_LABEL,
+  SEARCH_ICON_STROKE_WIDTH,
+  SEARCH_INPUT_CLASS,
   SEARCH_INPUT_LABEL,
   SEARCH_RESULT_ATTR,
   SEARCH_RESULTS_LABEL,
@@ -24,7 +27,6 @@ import {
   handleSearchShortcutKeyDown,
   openSearchFromUserGesture,
 } from "./a11y";
-import { ICON_ACTION_BUTTON_CLASS } from "../NavBar/a11y";
 
 export type SearchCardHandle = {
   openFromUserGesture: () => boolean;
@@ -217,6 +219,9 @@ const SearchCard = forwardRef<
             width="24"
             height="24"
             fill="currentColor"
+            stroke="currentColor"
+            strokeWidth={SEARCH_ICON_STROKE_WIDTH}
+            strokeLinejoin="round"
             aria-hidden="true"
           >
             <path
@@ -231,9 +236,13 @@ const SearchCard = forwardRef<
           <input
             ref={inputRef}
             value={search}
+            type="search"
             inputMode="search"
             enterKeyHint="search"
             autoComplete="off"
+            spellCheck={false}
+            autoCapitalize="off"
+            autoCorrect="off"
             aria-label={SEARCH_INPUT_LABEL}
             {...{ [SEARCH_DIALOG_INPUT_ATTR]: "" }}
             onChange={(ev) => {
@@ -244,7 +253,7 @@ const SearchCard = forwardRef<
               }
             }}
             placeholder={SEARCH_INPUT_LABEL}
-            className="w-full ml-2 text-base "
+            className={`w-full ml-2 text-base ${SEARCH_INPUT_CLASS}`}
             style={{
               height: 32,
               appearance: "none",
@@ -258,7 +267,7 @@ const SearchCard = forwardRef<
             type="button"
             aria-label={SEARCH_CLEAR_LABEL}
             tabIndex={showClear ? 0 : -1}
-            className={`${ICON_ACTION_BUTTON_CLASS} transition-all transform hover:scale-125 text-gray-600 dark:text-dark`}
+            className={SEARCH_CLEAR_BUTTON_CLASS}
             style={{
               visibility: showClear ? "visible" : "hidden",
             }}

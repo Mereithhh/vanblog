@@ -20,7 +20,8 @@ VanBlog 会通过你输入的关键词模糊匹配文章的内容、题目、标
 
 - 按下 <kbd>Esc</kbd> 可关闭搜索卡片
 - 打开后焦点进入搜索框（含 iPhone Safari 点图标打开）；<kbd>Tab</kbd> / <kbd>Shift</kbd>+<kbd>Tab</kbd> 只在弹层内循环
-- <kbd>↑</kbd> / <kbd>↓</kbd> 在结果间移动，<kbd>Enter</kbd> 打开当前结果；清除按钮可用 <kbd>Enter</kbd> / 空格
+- 输入框为 `type="search"`，移动端键盘显示「搜索」；Safari 关闭自动纠正，以免干扰关键词
+- <kbd>↑</kbd> / <kbd>↓</kbd> 在结果间移动，<kbd>Enter</kbd> 打开当前结果；清除按钮可用 <kbd>Enter</kbd> / 空格，悬停只变颜色和透明度、不再放大
 - 不支持拼音搜索
 
 :::
