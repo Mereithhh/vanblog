@@ -107,6 +107,8 @@ redirectFrom: /ref/changelog.html
 
 ### ✏️ Documentation | 文档
 
+- `docs/guide/update.md`：说明一键脚本菜单 6 / `./vanblog.sh update` 会先自更新脚本再用新脚本更新 VanBlog；只刷新脚本用菜单 20 / `update_script`。[#190](https://github.com/Mereithhh/vanblog/issues/190)
+- `docs/faq/update.md`（FAQ「一键脚本更新显示成功但仍是旧版本」）：说明选 6 / `update` 会先自更新脚本再停容器拉取启动；只更新脚本仍用选项 20。[#190](https://github.com/Mereithhh/vanblog/issues/190)
 - `docs/features/search.md`：说明搜索输入框为 `type="search"`、Safari 关闭自动纠正，以及清除按钮悬停只变颜色和透明度。[#173](https://github.com/Mereithhh/vanblog/issues/173)
 - `docs/faq/usage.md`（FAQ「搜索框清除按钮动画很怪」）：说明 `type="search"`、Safari 输入属性和清除按钮动效。[#173](https://github.com/Mereithhh/vanblog/issues/173)
 - 定制化 / 社交媒体：后台文案与文档对齐为「定制化」「社交媒体」（不再写「客制化」「联系方式」）。`docs/advanced/customizing.md`、`docs/faq/usage.md`、`docs/features/social.md` [#197](https://github.com/Mereithhh/vanblog/issues/197)
