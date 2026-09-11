@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 一键脚本「更新」（菜单 6 / `./vanblog.sh update`）会先把管理脚本更新到最新，再用新脚本继续更新 VanBlog；只刷新脚本仍用菜单 20 / `./vanblog.sh update_script`。自更新后带 `VANBLOG_SKIP_SCRIPT_UPDATE=1` / `--after-self-update`，避免反复下载执行。[#190](https://github.com/Mereithhh/vanblog/issues/190)
 - 前台文章页底部的标签链接前增加标签图标，避免被当成普通文字链接。图标跟随现有灰色文字、悬停下划线和夜间模式颜色；加密未解锁时仍不展示标签。首页列表卡片本来就不显示这行标签，行为不变。[#178](https://github.com/Mereithhh/vanblog/issues/178)
 - 前台时间线（归档）在年份之下按月分组：跨月的文章落到对应「N月」分组，没有文章的月份不会出现空分组。分类页和标签页仍按原来的方式分组。[#302](https://github.com/Mereithhh/vanblog/issues/302)
 - 文章增加可选题头图：后台新建 /「修改信息」可上传或填写封面 URL，前台文章页顶部显示；留空则不占版面。设置后文章页带上 `og:image` / `twitter:image`，方便分享到飞书、知乎等。导入 Markdown 时 Front Matter 的 `cover` / `image` 会预填。[#288](https://github.com/Mereithhh/vanblog/issues/288)
