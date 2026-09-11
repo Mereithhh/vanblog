@@ -7,10 +7,10 @@
 #   Github: https://github.com/mereithhh/van-blog
 #========================================================
 
-VANBLOG_BASE_PATH="/var/vanblog"
-VANBLOG_DATA_PATH="${VANBLOG_BASE_PATH}/data"
+VANBLOG_BASE_PATH="${VANBLOG_BASE_PATH:-/var/vanblog}"
+VANBLOG_DATA_PATH="${VANBLOG_DATA_PATH:-${VANBLOG_BASE_PATH}/data}"
 VANBLOG_DATA_PATH_RAW="\/var\/vanblog\/data"
-VANBLOG_SCRIPT_VERSION="v0.3.6"
+VANBLOG_SCRIPT_VERSION="v0.3.7"
 
 # Ordered fallbacks: docs host (historical default), then GitHub raw, then jsDelivr.
 COMPOSE_URL="https://vanblog.mereith.com/docker-compose-template.yml"
@@ -274,6 +274,86 @@ download_script() {
   download_with_fallback "${dest}" is_valid_vanblog_script "${urls[@]}"
 }
 
+get_script_version() {
+  local file="$1"
+  if [[ ! -f "${file}" ]]; then
+    return 1
+  fi
+  grep "VANBLOG_SCRIPT_VERSION" "${file}" | head -n 1 | awk -F "=" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g'
+}
+
+vanblog_script_path() {
+  if [[ -n "${VANBLOG_SCRIPT_PATH:-}" ]]; then
+    printf '%s' "${VANBLOG_SCRIPT_PATH}"
+    return 0
+  fi
+  local src="${BASH_SOURCE[0]:-$0}"
+  if [[ -f "${src}" ]]; then
+    printf '%s' "${src}"
+    return 0
+  fi
+  printf '%s' "./vanblog.sh"
+}
+
+should_skip_script_self_update() {
+  [[ "${VANBLOG_SKIP_SCRIPT_UPDATE:-}" == "1" ]]
+}
+
+# exec wrapper so tests can assert argv without replacing the test shell.
+vanblog_reexec() {
+  exec env "$@"
+}
+
+# Menu 6 / `update`: download the newest installer first. If it differs, replace
+# and exec the new script to continue the VanBlog update. Guarded by
+# VANBLOG_SKIP_SCRIPT_UPDATE=1 / --after-self-update so a fresh script does not
+# download+exec again. Download failure does not block the service update.
+maybe_self_update_then_reexec() {
+  local skip_menu="${1:-0}"
+
+  if should_skip_script_self_update; then
+    return 0
+  fi
+
+  echo -e "> 先更新管理脚本"
+
+  if ! download_script /tmp/vanblog.sh; then
+    echo -e "${yellow}脚本获取失败，将使用当前脚本继续更新 VanBlog${plain}"
+    return 0
+  fi
+
+  local new_version dest
+  dest="$(vanblog_script_path)"
+  new_version="$(get_script_version /tmp/vanblog.sh)"
+  if [[ -z "${new_version}" ]]; then
+    echo -e "${yellow}无法解析新脚本版本，将使用当前脚本继续更新 VanBlog${plain}"
+    rm -f /tmp/vanblog.sh
+    return 0
+  fi
+  echo -e "当前最新版本为: ${new_version}"
+
+  if [[ "${VANBLOG_SCRIPT_VERSION}" == "${new_version}" ]] && cmp -s /tmp/vanblog.sh "${dest}" 2>/dev/null; then
+    echo -e "脚本已是最新，继续更新 VanBlog"
+    rm -f /tmp/vanblog.sh
+    return 0
+  fi
+
+  if ! mv -f /tmp/vanblog.sh "${dest}"; then
+    echo -e "${yellow}无法替换当前脚本，将使用当前脚本继续更新 VanBlog${plain}"
+    rm -f /tmp/vanblog.sh
+    return 0
+  fi
+  chmod a+x "${dest}"
+  echo -e "${green}脚本已更新为 ${new_version}，使用新脚本继续更新 VanBlog${plain}"
+
+  if [[ "${skip_menu}" == "1" ]]; then
+    vanblog_reexec VANBLOG_SKIP_SCRIPT_UPDATE=1 VANBLOG_AFTER_SELF_UPDATE=1 "${dest}" update --after-self-update
+  else
+    vanblog_reexec VANBLOG_SKIP_SCRIPT_UPDATE=1 VANBLOG_AFTER_SELF_UPDATE=1 "${dest}" update --after-self-update --menu
+  fi
+  exit 0
+}
+
 update_script() {
   echo -e "> 更新脚本"
 
@@ -281,7 +361,7 @@ update_script() {
     echo -e "${red}脚本获取失败，请检查本机能否连接文档站、GitHub 或 jsDelivr${plain}"
     return 1
   fi
-  new_version=$(cat /tmp/vanblog.sh | grep "VANBLOG_SCRIPT_VERSION" | head -n 1 | awk -F "=" '{print $2}' | sed 's/\"//g;s/,//g;s/ //g')
+  new_version=$(get_script_version /tmp/vanblog.sh)
   if [ ! -n "$new_version" ]; then
     echo -e "脚本获取失败，已下载的文件无法解析版本号"
     return 1
@@ -475,9 +555,22 @@ restart() {
 }
 update() {
   local skip_menu=0
+  local arg
   if [[ $# -gt 0 ]]; then
     skip_menu=1
   fi
+  for arg in "$@"; do
+    case "${arg}" in
+    --after-self-update)
+      export VANBLOG_SKIP_SCRIPT_UPDATE=1
+      ;;
+    --menu)
+      skip_menu=0
+      ;;
+    esac
+  done
+
+  maybe_self_update_then_reexec "${skip_menu}"
 
   echo -e "> 更新服务"
 
@@ -1005,7 +1098,7 @@ show_usage() {
   echo "./vanblog.sh start                      - 启动 VanBlog"
   echo "./vanblog.sh stop                       - 停止 VanBlog"
   echo "./vanblog.sh restart                    - 重启 VanBlog"
-  echo "./vanblog.sh update                     - 更新 VanBlog"
+  echo "./vanblog.sh update                     - 先更新此脚本，再更新 VanBlog"
   echo "./vanblog.sh log                        - 查看 VanBlog 日志"
   echo "./vanblog.sh uninstall                  - 卸载 VanBlog"
   echo "./vanblog.sh reset_https                - 重置 https 设置"
@@ -1091,7 +1184,9 @@ if [[ "${VANBLOG_SKIP_MAIN:-}" == "1" ]]; then
   return 0 2>/dev/null || exit 0
 fi
 
-pre_check
+if [[ "${VANBLOG_SKIP_PRE_CHECK:-}" != "1" && "${VANBLOG_AFTER_SELF_UPDATE:-}" != "1" ]]; then
+  pre_check
+fi
 
 if [[ $# > 0 ]]; then
   case $1 in
@@ -1111,7 +1206,8 @@ if [[ $# > 0 ]]; then
     restart 0
     ;;
   "update")
-    update 0
+    shift
+    update 0 "$@"
     exit $?
     ;;
   "log")
