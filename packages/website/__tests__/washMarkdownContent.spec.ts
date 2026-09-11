@@ -53,6 +53,7 @@ describe("washMarkdownContent fence stripping (#203)", () => {
     expect(washed).not.toContain("const x = 1");
     expect(washed).toContain("# Real");
     expect(washed).toContain("## After");
+    expect(washed).toBe("# Real\n\n## After\n");
   });
 
   it("strips fences whose body contains inline backticks", () => {
@@ -61,6 +62,7 @@ describe("washMarkdownContent fence stripping (#203)", () => {
     expect(washed).not.toContain("use `code`");
     expect(washed).toContain("# Title");
     expect(washed).toContain("## Still here");
+    expect(washed).toBe("# Title\n\n## Still here\n");
   });
 
   it("strips multiple fenced blocks including language tags", () => {
@@ -82,6 +84,96 @@ describe("washMarkdownContent fence stripping (#203)", () => {
     expect(washed).not.toContain("# two");
     expect(washed).not.toContain("print(1)");
     expect(washed).toContain("# Keep");
+    expect(washed).toBe("# Keep\n");
+  });
+});
+
+describe("washMarkdownContent pipeline (#208)", () => {
+  it("returns empty string for empty input and a lone newline after trim for whitespace-only", () => {
+    expect(washMarkdownContent("")).toBe("");
+    expect(washMarkdownContent("   ")).toBe("\n");
+    expect(washMarkdownContent("\n")).toBe("\n");
+  });
+
+  it("drops the whole preamble before the first # (not only the first line)", () => {
+    expect(
+      washMarkdownContent(["hello", "world", "# Title", ""].join("\n"))
+    ).toBe("# Title\n");
+    expect(
+      washMarkdownContent(
+        ["intro paragraph", "", "# Real", "", "body", ""].join("\n")
+      )
+    ).toBe("# Real\n\nbody\n");
+  });
+
+  it("turns a document with no # into a trailing newline", () => {
+    expect(washMarkdownContent("just a paragraph\nwith two lines\n")).toBe(
+      "\n"
+    );
+  });
+
+  it("unwraps inline code ticks in heading text", () => {
+    expect(washMarkdownContent("# Title with `code`\n")).toBe(
+      "# Title with code\n"
+    );
+  });
+
+  it("strips a backtick-hash pair so inline `#id` code does not look like a heading", () => {
+    const markdown = [
+      "# Real",
+      "",
+      "see `#not-heading` here",
+      "",
+      "## After",
+      "",
+    ].join("\n");
+    expect(washMarkdownContent(markdown)).toBe(
+      "# Real\n\nsee not-heading` here\n\n## After\n"
+    );
+  });
+
+  it("drops mid-line # spans that are not ATX headings", () => {
+    expect(
+      washMarkdownContent(
+        "# Title\n\nA sentence with # not-a-heading word\n\n## Next\n"
+      )
+    ).toBe("# Title\n\n## Next\n");
+    expect(
+      washMarkdownContent(
+        ["# Real", "", "foo ## bar baz", "", "## After", ""].join("\n")
+      )
+    ).toBe("# Real\n\n## After\n");
+  });
+
+  it("unwraps bold/italic asterisk and underscore markers", () => {
+    expect(
+      washMarkdownContent(
+        ["# **Bold**", "", "## *Italic* Title", "", "### Mix **a** and *b*", ""].join(
+          "\n"
+        )
+      )
+    ).toBe("# Bold\n\n## Italic Title\n\n### Mix a and b\n");
+    expect(
+      washMarkdownContent(["# __Bold__", "", "## _Italic_ Title", ""].join("\n"))
+    ).toBe("# Bold\n\n## Italic Title\n");
+    expect(washMarkdownContent("# **Title** with `code` and _em_\n")).toBe(
+      "# Title with code and em\n"
+    );
+    expect(washMarkdownContent("# **_both_**\n")).toBe("# both\n");
+    expect(washMarkdownContent("# *open\n")).toBe("# *open\n");
+  });
+
+  it("treats indented ATX as an inline-hash line (spaces before #)", () => {
+    expect(
+      washMarkdownContent(
+        ["lead", "", "  ## Nested", "", "body", ""].join("\n")
+      )
+    ).toBe("body\n");
+    expect(washMarkdownContent("  # Title  \n  ")).toBe("\n");
+  });
+
+  it("keeps a heading that already starts at column 0 and ends with a newline", () => {
+    expect(washMarkdownContent("# Only\n")).toBe("# Only\n");
   });
 });
 
