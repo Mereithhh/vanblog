@@ -4,6 +4,7 @@
 
 ### ✨ Features | 新功能
 
+- 一键脚本「更新」（菜单 6 / `./vanblog.sh update`）会先把管理脚本更新到最新，再用新脚本继续更新 VanBlog；只刷新脚本仍用菜单 20 / `./vanblog.sh update_script`。自更新后带 `VANBLOG_SKIP_SCRIPT_UPDATE=1` / `--after-self-update`，避免反复下载执行。[#190](https://github.com/Mereithhh/vanblog/issues/190)
 - 前台文章页底部的标签链接前增加标签图标，避免被当成普通文字链接。图标跟随现有灰色文字、悬停下划线和夜间模式颜色；加密未解锁时仍不展示标签。首页列表卡片本来就不显示这行标签，行为不变。[#178](https://github.com/Mereithhh/vanblog/issues/178)
 - 前台时间线（归档）在年份之下按月分组：跨月的文章落到对应「N月」分组，没有文章的月份不会出现空分组。分类页和标签页仍按原来的方式分组。[#302](https://github.com/Mereithhh/vanblog/issues/302)
 - 文章增加可选题头图：后台新建 /「修改信息」可上传或填写封面 URL，前台文章页顶部显示；留空则不占版面。设置后文章页带上 `og:image` / `twitter:image`，方便分享到飞书、知乎等。导入 Markdown 时 Front Matter 的 `cover` / `image` 会预填。[#288](https://github.com/Mereithhh/vanblog/issues/288)
@@ -100,6 +101,8 @@
 
 ### ✏️ Documentation | 文档
 
+- `docs/guide/update.md`：说明一键脚本菜单 6 / `./vanblog.sh update` 会先自更新脚本再用新脚本更新 VanBlog；只刷新脚本用菜单 20 / `update_script`。[#190](https://github.com/Mereithhh/vanblog/issues/190)
+- `docs/faq/update.md`（FAQ「一键脚本更新显示成功但仍是旧版本」）：说明选 6 / `update` 会先自更新脚本再停容器拉取启动；只更新脚本仍用选项 20。[#190](https://github.com/Mereithhh/vanblog/issues/190)
 - `docs/features/search.md`：说明搜索输入框为 `type="search"`、Safari 关闭自动纠正，以及清除按钮悬停只变颜色和透明度。[#173](https://github.com/Mereithhh/vanblog/issues/173)
 - `docs/faq/usage.md`（FAQ「搜索框清除按钮动画很怪」）：说明 `type="search"`、Safari 输入属性和清除按钮动效。[#173](https://github.com/Mereithhh/vanblog/issues/173)
 - 定制化 / 社交媒体：后台文案与文档对齐为「定制化」「社交媒体」（不再写「客制化」「联系方式」）。`docs/advanced/customizing.md`、`docs/faq/usage.md`、`docs/features/social.md` [#197](https://github.com/Mereithhh/vanblog/issues/197)
