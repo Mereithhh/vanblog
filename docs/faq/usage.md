@@ -226,6 +226,14 @@ iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页�
 
 保存后会重启内嵌 Waline。最简单是 SMTP 用户名、发件地址、博主邮箱都填同一个域名邮箱。逐步说明见 [评论 · 更换通知邮箱](../features/comment.md#更换通知邮箱)，Waline 官方见 [评论通知](https://waline.js.org/guide/features/notification.html)。
 
+## 评论管理点击 GitHub 图标提示拒绝访问
+
+后台「站点管理 / 评论管理」把 Waline 管理页嵌在 iframe 里。点 GitHub 图标时，OAuth 在框架内跳到 GitHub，GitHub 拒绝被嵌入，浏览器提示「拒绝访问」（[#121](https://github.com/Mereithhh/vanblog/issues/121)）。
+
+第三方 OAuth 必须在顶层窗口完成：点该页右上角「在新窗口打开」，在新标签里打开 `/ui/` 再登录。
+
+GitHub 登录还要给内嵌 Waline 配环境变量 `GITHUB_ID` 和 `GITHUB_SECRET`（OAuth App 的 Client ID / Client Secret）。写在 **系统设置 / 评论设置 / 自定义环境变量**，或写在运行 VanBlog 的环境里。回调地址填 `https://你的域名/oauth/github`。详见 [评论 · 管理后台与 GitHub 登录](../features/comment.md#管理后台与-github-登录)。
+
 ## 评论登录跳到 localhost
 
 外层 Nginx 反代后，Waline 评论登录或管理后台 OAuth 可能跳到 `localhost` / `0.0.0.0` 而不是站点域名（[#396](https://github.com/Mereithhh/vanblog/issues/396)）。反代需要转发 `Host`：`proxy_set_header Host $host;`。完整示例见 [反代](../reference/reverse-proxy.md)，说明见 [部署常见问题](./deploy.md#反代后-waline-登录跳到-localhost)。内置 Caddy、没有再套一层反代时一般不用改。
