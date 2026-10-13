@@ -18,10 +18,14 @@ order: -3
 
 @tab 脚本
 
-你可以直接运行安装脚本来升级 VanBlog，启动后请输入 6 并回车。
+你可以直接运行安装脚本来升级 VanBlog。启动后请输入 **6** 并回车，或直接执行 `./vanblog.sh update`。
+
+选 6 / `update` 会先把 `vanblog.sh` 更新到最新，再用新脚本继续拉取并重启 VanBlog。只想刷新脚本、不更新服务时，用菜单 **20. 更新此脚本**（或 `./vanblog.sh update_script`）。
 
 ```bash
 ./vanblog.sh
+# 或
+./vanblog.sh update
 ```
 
 ![脚本一键升级](https://pic.mereith.com/img/fbbf5dde011f9dec13cdb25ad741765f.clipboard-2022-09-20.png)

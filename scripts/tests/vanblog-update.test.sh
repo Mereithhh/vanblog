@@ -312,8 +312,115 @@ source_script() {
 }
 
 run_update() {
+  # Existing compose-path cases skip installer self-update (menu 6 still uses this flag after one exec).
+  UPDATE_OUT="$(VANBLOG_SKIP_SCRIPT_UPDATE=1 update 0 2>&1)"
+  UPDATE_RC=$?
+}
+
+install_script_download_mocks() {
+  local bindir="$1"
+  cat >"${bindir}/wget" <<'EOF'
+#!/usr/bin/env bash
+set -u
+LOG="${VANBLOG_TEST_LOG}"
+PAYLOAD="${VANBLOG_TEST_SCRIPT_PAYLOAD}"
+COUNTER="${VANBLOG_TEST_DOWNLOAD_COUNT}"
+FAIL_ALL="${VANBLOG_TEST_DOWNLOAD_FAIL:-0}"
+BUMP="${VANBLOG_TEST_SCRIPT_BUMP:-0}"
+
+dest=""
+url=""
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+  -O | -o)
+    dest="${2-}"
+    shift 2
+    ;;
+  -t | -T | --timeout | --tries | --connect-timeout | --retry | --max-time)
+    shift 2
+    ;;
+  --no-check-certificate | -q | -s | -S | -L | -f)
+    shift
+    ;;
+  -*)
+    shift
+    ;;
+  *)
+    url="$1"
+    shift
+    ;;
+  esac
+done
+
+echo "wget ${url} dest=${dest}" >>"${LOG}"
+
+count=0
+if [[ -f "${COUNTER}" ]]; then
+  count="$(cat "${COUNTER}")"
+fi
+count=$((count + 1))
+echo "${count}" >"${COUNTER}"
+
+if [[ "${FAIL_ALL}" == "1" ]]; then
+  : >"${dest}"
+  exit 1
+fi
+
+if [[ "${count}" -ge 3 ]]; then
+  echo "INFINITE_SCRIPT_UPDATE_LOOP" >>"${LOG}"
+  : >"${dest}"
+  exit 1
+fi
+
+if [[ -z "${url}" || -z "${dest}" || ! -f "${PAYLOAD}" ]]; then
+  exit 1
+fi
+
+mkdir -p "$(dirname "${dest}")"
+if [[ "${BUMP}" == "1" ]]; then
+  sed "s/^VANBLOG_SCRIPT_VERSION=.*/VANBLOG_SCRIPT_VERSION=\"v99.0.${count}\"/" "${PAYLOAD}" >"${dest}"
+  echo "# download-count=${count}" >>"${dest}"
+else
+  cat "${PAYLOAD}" >"${dest}"
+fi
+exit 0
+EOF
+
+  cat >"${bindir}/curl" <<'EOF'
+#!/usr/bin/env bash
+set -u
+echo "curl-should-not-run $*" >>"${VANBLOG_TEST_LOG}"
+exit 1
+EOF
+  chmod +x "${bindir}/wget" "${bindir}/curl"
+}
+
+setup_self_update_case() {
+  setup_case
+  VANBLOG_TEST_DOWNLOAD_COUNT="${TEST_DIR}/download.count"
+  VANBLOG_TEST_SCRIPT_PAYLOAD="${TEST_DIR}/script-payload.sh"
+  VANBLOG_SCRIPT_PATH="${TEST_DIR}/vanblog.sh"
+  : >"${VANBLOG_TEST_DOWNLOAD_COUNT}"
+  echo 0 >"${VANBLOG_TEST_DOWNLOAD_COUNT}"
+  cp "${SCRIPT}" "${VANBLOG_SCRIPT_PATH}"
+  cp "${SCRIPT}" "${VANBLOG_TEST_SCRIPT_PAYLOAD}"
+  install_script_download_mocks "${TEST_DIR}/bin"
+  export VANBLOG_TEST_DOWNLOAD_COUNT VANBLOG_TEST_SCRIPT_PAYLOAD VANBLOG_SCRIPT_PATH
+  export VANBLOG_TEST_DOWNLOAD_FAIL=0
+  export VANBLOG_TEST_SCRIPT_BUMP=0
+}
+
+run_update_with_self_update() {
   UPDATE_OUT="$(update 0 2>&1)"
   UPDATE_RC=$?
+}
+
+download_count() {
+  if [[ -f "${VANBLOG_TEST_DOWNLOAD_COUNT}" ]]; then
+    cat "${VANBLOG_TEST_DOWNLOAD_COUNT}"
+  else
+    echo 0
+  fi
 }
 
 echo "== vanblog.sh update tests =="
@@ -441,6 +548,150 @@ assert_eq "${UPDATE_RC}" "0" "in-use old image still allows successful update"
 assert_contains "${UPDATE_OUT}" "VanBlog 更新并重启成功" "in-use old image still prints success after move"
 assert_contains "${UPDATE_OUT}" "旧镜像仍被容器使用，跳过删除" "skips rmi when old image still used"
 assert_file_not_contains "${VANBLOG_TEST_LOG}" "rmi sha-old" "does not rmi image still in use"
+
+# --- skip flag: no script download, service update still succeeds ---
+setup_self_update_case
+source_script
+VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+export VANBLOG_SKIP_SCRIPT_UPDATE=1
+run_update_with_self_update
+unset VANBLOG_SKIP_SCRIPT_UPDATE
+assert_eq "${UPDATE_RC}" "0" "skip-flag path exits 0"
+assert_contains "${UPDATE_OUT}" "VanBlog 更新并重启成功" "skip-flag path prints success"
+assert_not_contains "${UPDATE_OUT}" "先更新管理脚本" "skip-flag path does not self-update"
+assert_eq "$(download_count)" "0" "skip-flag path does not download installer"
+assert_file_contains "${VANBLOG_TEST_LOG}" "pulled vanblog" "skip-flag path still pulls vanblog"
+assert_file_not_contains "${VANBLOG_TEST_LOG}" "wget " "skip-flag path never calls wget"
+
+# --- same version: self-update runs before compose pull, no re-exec ---
+setup_self_update_case
+source_script
+VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+unset VANBLOG_SKIP_SCRIPT_UPDATE || true
+run_update_with_self_update
+assert_eq "${UPDATE_RC}" "0" "same-version self-update then service update exits 0"
+assert_contains "${UPDATE_OUT}" "先更新管理脚本" "same-version path tries self-update first"
+assert_contains "${UPDATE_OUT}" "脚本已是最新" "same-version path skips replace"
+assert_contains "${UPDATE_OUT}" "VanBlog 更新并重启成功" "same-version path still updates service"
+assert_eq "$(download_count)" "1" "same-version path downloads installer once"
+assert_file_contains "${VANBLOG_TEST_LOG}" "wget " "same-version path downloads before compose"
+down_n="$(grep -n 'docker-compose down' "${VANBLOG_TEST_LOG}" | head -n1 | cut -d: -f1)"
+wget_n="$(grep -n '^wget ' "${VANBLOG_TEST_LOG}" | head -n1 | cut -d: -f1)"
+pull_n="$(grep -n 'pulled vanblog' "${VANBLOG_TEST_LOG}" | head -n1 | cut -d: -f1)"
+self_before_pull=0
+if [[ -n "${wget_n}" && -n "${down_n}" && -n "${pull_n}" && "${wget_n}" -lt "${down_n}" && "${down_n}" -lt "${pull_n}" ]]; then
+  self_before_pull=1
+fi
+assert_eq "${self_before_pull}" "1" "self-update download happens before compose down/pull"
+
+# --- download failure: warn and still update the service ---
+setup_self_update_case
+source_script
+VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+export VANBLOG_TEST_DOWNLOAD_FAIL=1
+run_update_with_self_update
+export VANBLOG_TEST_DOWNLOAD_FAIL=0
+assert_eq "${UPDATE_RC}" "0" "script download failure still updates service"
+assert_contains "${UPDATE_OUT}" "先更新管理脚本" "download-failure path still attempts self-update"
+assert_contains "${UPDATE_OUT}" "将使用当前脚本继续更新 VanBlog" "download-failure path continues"
+assert_contains "${UPDATE_OUT}" "VanBlog 更新并重启成功" "download-failure path prints service success"
+assert_file_contains "${VANBLOG_TEST_LOG}" "pulled vanblog" "download-failure path still pulls"
+
+# --- newer script: re-exec with skip flags before compose pull ---
+setup_self_update_case
+source_script
+VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+export VANBLOG_TEST_SCRIPT_BUMP=1
+vanblog_reexec() {
+  printf 'reexec' >>"${VANBLOG_TEST_LOG}"
+  local a
+  for a in "$@"; do
+    printf ' %s' "${a}" >>"${VANBLOG_TEST_LOG}"
+  done
+  printf '\n' >>"${VANBLOG_TEST_LOG}"
+  exit 99
+}
+run_update_with_self_update
+export VANBLOG_TEST_SCRIPT_BUMP=0
+assert_eq "${UPDATE_RC}" "99" "newer-script path re-execs instead of pulling in this process"
+assert_contains "${UPDATE_OUT}" "先更新管理脚本" "newer-script path prints self-update"
+assert_contains "${UPDATE_OUT}" "使用新脚本继续更新 VanBlog" "newer-script path announces re-exec"
+assert_not_contains "${UPDATE_OUT}" "VanBlog 更新并重启成功" "newer-script path does not finish service update before re-exec"
+assert_file_contains "${VANBLOG_TEST_LOG}" "reexec VANBLOG_SKIP_SCRIPT_UPDATE=1 VANBLOG_AFTER_SELF_UPDATE=1" "re-exec sets skip env"
+assert_file_contains "${VANBLOG_TEST_LOG}" " update --after-self-update" "re-exec continues as update --after-self-update"
+assert_file_not_contains "${VANBLOG_TEST_LOG}" "pulled vanblog" "newer-script path does not pull before re-exec"
+assert_file_contains "${TEST_DIR}/vanblog.sh" 'VANBLOG_SCRIPT_VERSION="v99.0.1"' "newer-script path replaces local installer"
+
+# --- menu mode re-exec keeps --menu so the new script can return to the menu ---
+setup_self_update_case
+source_script
+VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+export VANBLOG_TEST_SCRIPT_BUMP=1
+vanblog_reexec() {
+  echo "reexec $*" >>"${VANBLOG_TEST_LOG}"
+  exit 77
+}
+UPDATE_OUT="$(update 2>&1)"
+UPDATE_RC=$?
+export VANBLOG_TEST_SCRIPT_BUMP=0
+assert_eq "${UPDATE_RC}" "77" "menu-mode newer script re-execs"
+assert_file_contains "${VANBLOG_TEST_LOG}" " update --after-self-update --menu" "menu-mode re-exec passes --menu"
+assert_file_not_contains "${VANBLOG_TEST_LOG}" "pulled vanblog" "menu-mode re-exec happens before pull"
+
+# --- real exec: no infinite loop, then service update succeeds ---
+setup_self_update_case
+export VANBLOG_TEST_SCRIPT_BUMP=1
+export VANBLOG_SKIP_PRE_CHECK=1
+export VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+unset VANBLOG_SKIP_MAIN VANBLOG_SKIP_SCRIPT_UPDATE VANBLOG_AFTER_SELF_UPDATE
+chmod +x "${VANBLOG_SCRIPT_PATH}"
+UPDATE_OUT="$(
+  "${VANBLOG_SCRIPT_PATH}" update 2>&1
+)"
+UPDATE_RC=$?
+unset VANBLOG_SKIP_PRE_CHECK
+export VANBLOG_TEST_SCRIPT_BUMP=0
+assert_eq "${UPDATE_RC}" "0" "exec self-update path exits 0"
+assert_contains "${UPDATE_OUT}" "先更新管理脚本" "exec path self-updates first"
+assert_contains "${UPDATE_OUT}" "使用新脚本继续更新 VanBlog" "exec path announces new script"
+assert_contains "${UPDATE_OUT}" "VanBlog 更新并重启成功" "exec path updates service after re-exec"
+assert_eq "$(download_count)" "1" "exec path downloads installer only once"
+assert_file_not_contains "${VANBLOG_TEST_LOG}" "INFINITE_SCRIPT_UPDATE_LOOP" "exec path does not loop self-update"
+assert_file_contains "${VANBLOG_TEST_LOG}" "pulled vanblog" "exec path pulls after self-update"
+wget_n="$(grep -n '^wget ' "${VANBLOG_TEST_LOG}" | head -n1 | cut -d: -f1)"
+pull_n="$(grep -n 'pulled vanblog' "${VANBLOG_TEST_LOG}" | head -n1 | cut -d: -f1)"
+exec_order=0
+if [[ -n "${wget_n}" && -n "${pull_n}" && "${wget_n}" -lt "${pull_n}" ]]; then
+  exec_order=1
+fi
+assert_eq "${exec_order}" "1" "exec path downloads script before compose pull"
+
+# --- update_script (menu 20) still only refreshes the script and re-enters the menu ---
+setup_self_update_case
+source_script
+VANBLOG_BASE_PATH="${TEST_DIR}/vanblog"
+cat >"${VANBLOG_TEST_SCRIPT_PAYLOAD}" <<'EOF'
+#!/bin/bash
+VANBLOG_SCRIPT_VERSION="v0.3.7"
+echo "menu-only-reexec argv:$*"
+echo "skip=${VANBLOG_SKIP_SCRIPT_UPDATE-}"
+exit 0
+EOF
+UPDATE_SCRIPT_OUT="$(
+  cd "${TEST_DIR}" || exit 1
+  sleep() { :; }
+  clear() { :; }
+  update_script
+  echo "update_script-should-not-return"
+)"
+UPDATE_SCRIPT_RC=$?
+assert_eq "${UPDATE_SCRIPT_RC}" "0" "update_script standalone path exits 0"
+assert_contains "${UPDATE_SCRIPT_OUT}" "更新脚本" "update_script prints script-only header"
+assert_contains "${UPDATE_SCRIPT_OUT}" "menu-only-reexec argv:" "update_script execs menu (no update argv)"
+assert_not_contains "${UPDATE_SCRIPT_OUT}" "update_script-should-not-return" "update_script execs and does not return"
+assert_not_contains "${UPDATE_SCRIPT_OUT}" "先更新管理脚本" "update_script does not use service self-update path"
+assert_file_not_contains "${VANBLOG_TEST_LOG}" "pulled vanblog" "update_script does not pull vanblog"
+assert_file_not_contains "${VANBLOG_TEST_LOG}" "docker-compose down" "update_script does not stop containers"
 
 echo
 echo "passed=${PASS} failed=${FAIL}"
