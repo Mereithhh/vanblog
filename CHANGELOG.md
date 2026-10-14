@@ -33,6 +33,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 评论管理页用 iframe 嵌入 Waline 后台时，点击 GitHub 图标会在框架内跳转，GitHub 拒绝被嵌入并提示拒绝访问。页头增加「在新窗口打开」，在顶层窗口打开 `/ui/` 完成第三方登录。GitHub 登录还需配置 Waline 环境变量 `GITHUB_ID` / `GITHUB_SECRET`。[#121](https://github.com/Mereithhh/vanblog/issues/121)
 - 前台搜索输入框改为 `type="search"`（移动端键盘显示「搜索」），并加上 Safari 需要的 `spellcheck` / `autocapitalize` / `autocorrect` 关闭，避免自动纠正干扰关键词。清除按钮悬停不再突然放大，改为透明度和颜色过渡，仍是带「清除搜索」名称的真正按钮。顶栏和弹层里的搜索图标描边略加粗，接近旁边的菜单/主题图标。打开弹层时仍会锁住页面滚动。不含全屏移动端弹层和自动补全。[#173](https://github.com/Mereithhh/vanblog/issues/173)
 - 后台文案将「客制化」改为「定制化」、「联系方式」改为「社交媒体」，与文档用语一致。系统设置选项卡、布局设置开关/提示、定制化保存确认，以及数据管理选项卡、社交媒体表格标题和自定义条目校验文案均已同步。路由 key（`customizing` / `socials`）和字段名不变。[#197](https://github.com/Mereithhh/vanblog/issues/197)
 - 后台分类管理和标签管理的改名用语统一为「重命名」（不再写「修改分类」「批量改名」）。弹窗标题、确认文案和文档同步；接口、路由和改名逻辑不变。[#194](https://github.com/Mereithhh/vanblog/issues/194)
@@ -101,6 +102,7 @@
 
 ### ✏️ Documentation | 文档
 
+- `docs/features/comment.md`、`docs/faq/usage.md`：说明第三方 OAuth（GitHub）必须在顶层窗口登录，以及需要 Waline 环境变量 `GITHUB_ID` / `GITHUB_SECRET`。[#121](https://github.com/Mereithhh/vanblog/issues/121)
 - `docs/guide/update.md`：说明一键脚本菜单 6 / `./vanblog.sh update` 会先自更新脚本再用新脚本更新 VanBlog；只刷新脚本用菜单 20 / `update_script`。[#190](https://github.com/Mereithhh/vanblog/issues/190)
 - `docs/faq/update.md`（FAQ「一键脚本更新显示成功但仍是旧版本」）：说明选 6 / `update` 会先自更新脚本再停容器拉取启动；只更新脚本仍用选项 20。[#190](https://github.com/Mereithhh/vanblog/issues/190)
 - `docs/features/search.md`：说明搜索输入框为 `type="search"`、Safari 关闭自动纠正，以及清除按钮悬停只变颜色和透明度。[#173](https://github.com/Mereithhh/vanblog/issues/173)

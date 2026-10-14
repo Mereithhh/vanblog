@@ -8,6 +8,30 @@ VanBlog 内嵌了 [Waline 评论系统](https://waline.js.org/)，你不需要�
 
 评论系统默认开启，在后台 `站点管理/系统设置/站点配置/高级设置` 中可以控制评论系统的开关。
 
+## 管理后台与 GitHub 登录
+
+后台「站点管理 / 评论管理」用 iframe 嵌入 Waline 管理页（站点根路径 `/ui/`）。
+
+在这个内嵌页面里点击 GitHub 图标时，第三方 OAuth 会在 iframe 内部跳转到 GitHub。GitHub 拒绝被嵌入，浏览器会提示「拒绝访问」或无法连接（[#121](https://github.com/Mereithhh/vanblog/issues/121)）。
+
+第三方 OAuth 登录（GitHub 等）必须在**顶层窗口**完成：点评论管理页右上角的「在新窗口打开」。它会新开标签打开 `/ui/`（`target="_blank"`、`rel="noopener"`），再在该页登录。
+
+GitHub 登录还需要给内嵌 Waline 配置环境变量：
+
+- `GITHUB_ID`：GitHub OAuth App 的 Client ID
+- `GITHUB_SECRET`：GitHub OAuth App 的 Client Secret
+
+可以写在后台 **站点管理 / 系统设置 / 评论设置** 的「自定义环境变量」（JSON 对象，保存后会重启内嵌 Waline）：
+
+```json
+{
+  "GITHUB_ID": "your_client_id",
+  "GITHUB_SECRET": "your_client_secret"
+}
+```
+
+也可以写在运行 VanBlog 的环境里（例如 docker-compose 的 `environment`）。内嵌 Waline 进程会继承这些变量。说明见 [Waline 服务端环境变量](https://waline.js.org/reference/server/env.html)。GitHub OAuth App 的回调地址填站点上的 `/oauth/github`（VanBlog 已把 `/oauth` 反代到内嵌 Waline）。未配置这两个变量时，即使在新窗口打开，GitHub 登录也不会成功。
+
 ![评论系统开关](https://pic.mereith.com/img/4ab797b4096a953d9d27ebf6a4a2b0dc.clipboard-2022-08-25.png)
 
 ## 配置
@@ -163,10 +187,11 @@ VanBlog 内嵌的评论系统支持在有新评论时发送 `webhook`，配置�
 - 布尔值请写 `false` / `true`，不要写成字符串 `"false"`（虽然现在会自动转换）。
 - 可以带 `//` 行注释；必须是一个 JSON **对象**。
 - `LOGIN` 仍由「是否强制登录后评论」开关控制，自定义变量里的 `LOGIN` 不会覆盖该开关。
+- GitHub 登录的 `GITHUB_ID` / `GITHUB_SECRET` 也写在这里（或进程环境变量）。登录必须在顶层窗口完成，见 [管理后台与 GitHub 登录](#管理后台与-github-登录)。
 
 ## 原理
 
-在后端的 server 中内嵌了控制 `waline.js` 启动停止的服务，后台页面中暂时使用 `iframe` 内嵌 Waline 管理页面，后续会考虑陆续替换成自己的评论实现。
+在后端的 server 中内嵌了控制 `waline.js` 启动停止的服务，后台页面中暂时使用 `iframe` 内嵌 Waline 管理页面，后续会考虑陆续替换成自己的评论实现。GitHub 等第三方登录不能留在这个 iframe 里（会被拒绝嵌入），请用页头「在新窗口打开」进入顶层的 `/ui/`。
 
 ![评论管理](https://pic.mereith.com/img/dd7792a91f5a3b945ee2b261b06f666a.clipboard-2022-08-25.png)
 
