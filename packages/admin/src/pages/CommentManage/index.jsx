@@ -36,7 +36,7 @@ export default function () {
           <p>
             GitHub 登录还需要给内嵌 Waline 配置环境变量 <code>GITHUB_ID</code> 与{' '}
             <code>GITHUB_SECRET</code>（GitHub OAuth App 的 Client ID / Client
-            Secret）。可写在「系统设置 → 评论设置 → 自定义环境变量」，或设在运行 VanBlog
+            Secret）。可写在「站点管理 / 系统设置 / 评论设置」的「自定义环境变量」，或设在运行 VanBlog
             的环境里，内嵌 Waline 会读到这两个变量。
           </p>
           <p>

@@ -21,7 +21,7 @@ GitHub 登录还需要给内嵌 Waline 配置环境变量：
 - `GITHUB_ID`：GitHub OAuth App 的 Client ID
 - `GITHUB_SECRET`：GitHub OAuth App 的 Client Secret
 
-可以写在后台 **站点管理 / 系统设置 / 评论设置** 最下方的「自定义环境变量」（JSON 对象，保存后会重启内嵌 Waline）：
+可以写在后台 **站点管理 / 系统设置 / 评论设置** 的「自定义环境变量」（JSON 对象，保存后会重启内嵌 Waline）：
 
 ```json
 {

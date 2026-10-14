@@ -232,7 +232,7 @@ iPhone Safari（曾在 iPhone 11 Pro 上报告）点顶栏搜索图标后，页�
 
 第三方 OAuth 必须在顶层窗口完成：点该页右上角「在新窗口打开」，在新标签里打开 `/ui/` 再登录。
 
-GitHub 登录还要给内嵌 Waline 配环境变量 `GITHUB_ID` 和 `GITHUB_SECRET`（OAuth App 的 Client ID / Client Secret）。写在 **系统设置 / 评论设置 / 自定义环境变量**，或写在运行 VanBlog 的环境里。回调地址填 `https://你的域名/oauth/github`。详见 [评论 · 管理后台与 GitHub 登录](../features/comment.md#管理后台与-github-登录)。
+GitHub 登录还要给内嵌 Waline 配环境变量 `GITHUB_ID` 和 `GITHUB_SECRET`（OAuth App 的 Client ID / Client Secret）。写在 **站点管理 / 系统设置 / 评论设置** 的「自定义环境变量」，或写在运行 VanBlog 的环境里。回调地址填 `https://你的域名/oauth/github`。详见 [评论 · 管理后台与 GitHub 登录](../features/comment.md#管理后台与-github-登录)。
 
 ## 评论登录跳到 localhost
 
