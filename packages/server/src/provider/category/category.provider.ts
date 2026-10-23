@@ -8,6 +8,7 @@ import { sleep } from 'src/utils/sleep';
 import { UpdateCategoryDto } from 'src/types/category.dto';
 import { BackupCategory } from 'src/utils/backupCategories';
 import { applyCategoryNameOrder, nextCategoryOrder, sortCategoriesByOrder } from 'src/utils/categoryOrder';
+import { assertArticleHasPassword } from 'src/utils/articleAccess';
 
 @Injectable()
 export class CategoryProvider {
@@ -190,6 +191,8 @@ export class CategoryProvider {
     if (Object.keys(dto).length == 0) {
       throw new NotAcceptableException('无有效信息，无法修改！');
     }
+    const existing = await this.categoryModal.findOne({ name });
+    assertArticleHasPassword(dto, existing);
     if (dto.order !== undefined && (typeof dto.order !== 'number' || !Number.isFinite(dto.order))) {
       throw new NotAcceptableException('排序值无效！');
     }

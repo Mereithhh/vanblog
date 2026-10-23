@@ -18,6 +18,7 @@ import {
   rewriteBaseUrlInDocuments,
   RewriteBaseUrlCount,
 } from 'src/utils/rewriteBaseUrl';
+import { assertArticleHasPassword } from 'src/utils/articleAccess';
 export type DraftView = 'admin' | 'public' | 'list';
 @Injectable()
 export class DraftProvider {
@@ -202,6 +203,7 @@ export class DraftProvider {
     if (!draft.content.includes('<!-- more -->')) {
       throw new ForbiddenException('未包含 more 标记，请修改后再发布！');
     }
+    assertArticleHasPassword(options || {}, null);
     const createArticleDto: CreateArticleDto = {
       title: draft.title,
       content: draft.content,

@@ -38,14 +38,7 @@ export class RssProvider {
     this.logger.log(info + '重新生成 RSS 订阅');
     try {
       let articles = await this.articleProvider.getAll('public', false, false);
-      articles = articles.map((a: any) => {
-        const article = a?._doc || a;
-        if (article.private) {
-          return { ...article, content: '此文章已加密' };
-        } else {
-          return article;
-        }
-      });
+      articles = await this.articleProvider.redactLockedPublicContent(articles);
       const meta = await this.metaProvider.getAll();
       const walineSetting = await this.settingProvider.getWalineSetting();
       let email = process.env.EMAIL;

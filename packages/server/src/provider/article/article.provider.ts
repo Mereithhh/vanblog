@@ -16,6 +16,14 @@ import { MetaProvider } from '../meta/meta.provider';
 import { VisitProvider } from '../visit/visit.provider';
 import { sleep } from 'src/utils/sleep';
 import { CategoryDocument } from 'src/scheme/category.schema';
+import {
+  decideArticleUnlock,
+  hiddenArticleBlocked,
+  isArticleProtected,
+  matchesLockedArticleMetadata,
+  presentPublicArticle,
+  withoutArticleSecrets,
+} from 'src/utils/articleAccess';
 
 export type ArticleView = 'admin' | 'public' | 'list';
 
@@ -665,27 +673,11 @@ export class ArticleProvider {
       const tmpArticles: any[] = [];
       for (const a of articles) {
         //@ts-ignore
-        const isPrivateInArticle = a?._doc?.private || a?.private;
         const category = await this.categoryModal.findOne({
           //@ts-ignore
           name: a?._doc?.category || a?.category,
         });
-        const isPrivateInCategory = category?.private || false;
-        const isPrivate = isPrivateInArticle || isPrivateInCategory;
-        if (isPrivate) {
-          tmpArticles.push({
-            //@ts-ignore
-            ...(a?._doc || a),
-            content: undefined,
-            password: undefined,
-            private: true,
-          });
-        } else {
-          tmpArticles.push({
-            //@ts-ignore
-            ...(a?._doc || a),
-          });
-        }
+        tmpArticles.push(presentPublicArticle(a, category));
       }
       articles = tmpArticles;
     }
@@ -777,28 +769,35 @@ export class ArticleProvider {
   }
   async getByIdWithPassword(id: number | string, password: string): Promise<any> {
     const article: any = await this.getByIdOrPathname(id, 'admin');
-    if (!password) {
-      return null;
-    }
-    if (!article) {
+    if (!password || !article) {
       return null;
     }
     const category =
       (await this.categoryModal.findOne({
         name: article.category,
-      })) || ({} as any);
-
-    const categoryPassword = category.private ? category.password : undefined;
-    const targetPassword = categoryPassword ? categoryPassword : article.password;
-    if (!targetPassword || targetPassword == '') {
-      return { ...(article?._doc || article), password: undefined };
-    } else {
-      if (targetPassword == password) {
-        return { ...(article?._doc || article), password: undefined };
-      } else {
-        return null;
-      }
+      })) || null;
+    let allowOpenHiddenPostByUrl: unknown;
+    if (article.hidden) {
+      const siteInfo = await this.metaProvider.getSiteInfo();
+      allowOpenHiddenPostByUrl = siteInfo?.allowOpenHiddenPostByUrl;
     }
+    const decision = decideArticleUnlock({
+      article,
+      category,
+      submittedPassword: password,
+      allowOpenHiddenPostByUrl,
+    });
+    if (decision === 'hidden') {
+      throw new NotFoundException('该文章是隐藏文章！');
+    }
+    if (decision !== 'allow') {
+      return null;
+    }
+    const unlocked = withoutArticleSecrets(article, false);
+    if (isArticleProtected(article, category)) {
+      unlocked.private = true;
+    }
+    return unlocked;
   }
   async getByIdOrPathnameWithPreNext(id: string | number, view: ArticleView) {
     const curArticle = await this.getByIdOrPathname(id, view);
@@ -808,31 +807,23 @@ export class ArticleProvider {
 
     if (curArticle.hidden) {
       const siteInfo = await this.metaProvider.getSiteInfo();
-      if (!siteInfo?.allowOpenHiddenPostByUrl || siteInfo?.allowOpenHiddenPostByUrl == 'false') {
+      if (hiddenArticleBlocked(siteInfo?.allowOpenHiddenPostByUrl)) {
         throw new NotFoundException('该文章是隐藏文章！');
       }
     }
-    if (curArticle.private) {
-      curArticle.content = undefined;
-    } else {
-      // 检查分类是不是加密了
-      const category = await this.categoryModal.findOne({
-        name: curArticle.category,
-      });
-      if (category && category.private) {
-        curArticle.private = true;
-        curArticle.content = undefined;
-      }
-    }
-    const res: any = { article: curArticle };
+    const category = await this.categoryModal.findOne({
+      name: curArticle.category,
+    });
+    const article = presentPublicArticle(curArticle, category);
+    const res: any = { article };
     // 找它的前一个和后一个。
     const preArticle = await this.getPreArticleByArticle(curArticle, 'list');
     const nextArticle = await this.getNextArticleByArticle(curArticle, 'list');
     if (preArticle) {
-      res.pre = preArticle;
+      res.pre = withoutArticleSecrets(preArticle, true);
     }
     if (nextArticle) {
-      res.next = nextArticle;
+      res.next = withoutArticleSecrets(nextArticle, true);
     }
     return res;
   }
@@ -984,7 +975,49 @@ export class ArticleProvider {
         resData.push(e);
       }
     }
-    return resData;
+    // Public search must not confirm that a locked body contains the query,
+    // and must not return article content or passwords.
+    const categories = await this.categoriesByName(resData.map((item) => item.category));
+    const visible = [];
+    for (const item of resData) {
+      const plain = item?._doc || item;
+      const category = categories.get(plain.category);
+      if (isArticleProtected(plain, category) && !matchesLockedArticleMetadata(plain, str)) {
+        continue;
+      }
+      visible.push(withoutArticleSecrets(item, true));
+    }
+    return visible;
+  }
+
+  private async categoriesByName(names: Array<string | undefined>) {
+    const unique = Array.from(new Set(names.filter((name): name is string => !!name)));
+    const map = new Map<string, any>();
+    if (!unique.length || !this.categoryModal?.find) {
+      return map;
+    }
+    const found = await this.categoryModal.find({ name: { $in: unique } });
+    const list = Array.isArray(found) ? found : [];
+    for (const item of list) {
+      if (item?.name) {
+        map.set(item.name, item);
+      }
+    }
+    return map;
+  }
+
+  /** RSS and other unauthenticated feeds: locked bodies become a placeholder. */
+  async redactLockedPublicContent(articles: any[]): Promise<any[]> {
+    const plains = (articles || []).map((item) => ({ ...(item?._doc || item) }));
+    const categories = await this.categoriesByName(plains.map((item) => item.category));
+    return plains.map((plain) => {
+      delete plain.password;
+      const category = categories.get(plain.category);
+      if (isArticleProtected(plain, category)) {
+        return { ...plain, content: '此文章已加密', private: true };
+      }
+      return plain;
+    });
   }
 
   async findAll(): Promise<Article[]> {

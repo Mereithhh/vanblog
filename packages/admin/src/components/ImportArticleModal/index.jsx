@@ -8,7 +8,8 @@ import {
   ProFormTextArea,
 } from '@ant-design/pro-components';
 import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
-import { Button, Form, Upload } from 'antd';
+import { Button, Form, message, Upload } from 'antd';
+import { privatePasswordError, privatePasswordFieldRules } from '@/utils/privatePassword';
 import moment from 'moment';
 import { useState } from 'react';
 import CoverImageField from '../CoverImageField';
@@ -59,6 +60,11 @@ export default function (props) {
         }}
         submitTimeout={3000}
         onFinish={async (values) => {
+          const passwordError = privatePasswordError(values.private, values.password);
+          if (passwordError) {
+            message.error(passwordError);
+            return false;
+          }
           const washedValues = {};
           for (const [k, v] of Object.entries(values)) {
             washedValues[k.replace('C', '')] = v;
@@ -149,6 +155,7 @@ export default function (props) {
           autocomplete="new-password"
           placeholder="请输入密码"
           dependencies={['private']}
+          rules={privatePasswordFieldRules('private')}
         />
         <ProFormSelect
           width="md"

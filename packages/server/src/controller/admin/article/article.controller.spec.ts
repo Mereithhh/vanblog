@@ -1,3 +1,4 @@
+import { BadRequestException } from '@nestjs/common';
 import { ArticleController } from './article.controller';
 
 function createController() {
@@ -116,6 +117,99 @@ describe('ArticleController.create/update cover (#288)', () => {
 
     await controller.update(288 as any, { cover: '' } as any);
     expect(articleProvider.updateById).toHaveBeenCalledWith(288, expect.objectContaining({ cover: '' }));
+  });
+});
+
+describe('ArticleController private password', () => {
+  function build(articleProvider: any, pipelineProvider?: any) {
+    return new ArticleController(
+      articleProvider,
+      { activeAll: jest.fn() } as any,
+      pipelineProvider || ({ dispatchEvent: jest.fn().mockResolvedValue([]) } as any),
+    );
+  }
+
+  it('rejects creating a private article without a password', async () => {
+    const articleProvider = { create: jest.fn() };
+    const controller = build(articleProvider);
+    await expect(
+      controller.create({ user: { nickname: 'admin' } }, {
+        title: '秘密',
+        category: '随笔',
+        private: true,
+        password: '  ',
+      } as any),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(articleProvider.create).not.toHaveBeenCalled();
+  });
+
+  it('creates a private article when the password is set', async () => {
+    const articleProvider = { create: jest.fn().mockResolvedValue({ id: 9 }) };
+    const controller = build(articleProvider);
+    await controller.create({ user: { nickname: 'admin' } }, {
+      title: '秘密',
+      category: '随笔',
+      private: true,
+      password: 'pw',
+    } as any);
+    expect(articleProvider.create).toHaveBeenCalledWith(
+      expect.objectContaining({ private: true, password: 'pw' }),
+    );
+  });
+
+  it('rejects a pipeline result that turns on private and clears the password', async () => {
+    const articleProvider = { create: jest.fn() };
+    const pipelineProvider = {
+      dispatchEvent: jest.fn().mockResolvedValue([
+        { output: { title: '秘密', category: '随笔', private: true, password: '' } },
+      ]),
+    };
+    const controller = build(articleProvider, pipelineProvider);
+    await expect(
+      controller.create({ user: {} }, { title: '秘密', category: '随笔', password: 'pw' } as any),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(articleProvider.create).not.toHaveBeenCalled();
+  });
+
+  it('rejects making an article private when no password is stored', async () => {
+    const articleProvider = {
+      getById: jest.fn().mockResolvedValue({ id: 1, private: false, password: '', pathname: 'a' }),
+      updateById: jest.fn(),
+    };
+    const controller = build(articleProvider);
+    await expect(controller.update(1 as any, { private: true } as any)).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
+    expect(articleProvider.updateById).not.toHaveBeenCalled();
+  });
+
+  it('allows a content-only save of a legacy private article that has no password', async () => {
+    const articleProvider = {
+      getById: jest.fn().mockResolvedValue({ id: 1, private: true, password: '', pathname: 'a' }),
+      updateById: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
+    };
+    const controller = build(articleProvider);
+    await controller.update(1 as any, { content: 'still editing' } as any);
+    expect(articleProvider.updateById).toHaveBeenCalledWith(
+      1,
+      expect.objectContaining({ content: 'still editing' }),
+    );
+  });
+
+  it('allows private when a password is already stored and rejects clearing it', async () => {
+    const articleProvider = {
+      getById: jest.fn().mockResolvedValue({ id: 1, private: true, password: 'pw', pathname: 'a' }),
+      updateById: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
+    };
+    const controller = build(articleProvider);
+    await controller.update(1 as any, { private: true } as any);
+    expect(articleProvider.updateById).toHaveBeenCalled();
+
+    articleProvider.updateById.mockClear();
+    await expect(controller.update(1 as any, { password: '' } as any)).rejects.toBeInstanceOf(
+      BadRequestException,
+    );
+    expect(articleProvider.updateById).not.toHaveBeenCalled();
   });
 });
 

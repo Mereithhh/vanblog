@@ -1,10 +1,13 @@
 import { PublicController } from './public.controller';
+import { ArticleProvider } from 'src/provider/article/article.provider';
 import { DEFAULT_ARTICLES_PER_PAGE } from 'src/utils/articlesPerPage';
 
 function createController(siteInfo: Record<string, unknown> = {}) {
   const articleProvider = {
     getByOption: jest.fn().mockResolvedValue({ articles: [{ id: 1 }], total: 12 }),
     getTotalNum: jest.fn().mockResolvedValue(12),
+    searchByString: jest.fn().mockResolvedValue([]),
+    toSearchResult: ArticleProvider.prototype.toSearchResult,
   };
   const categoryProvider = {
     getAllCategories: jest.fn().mockResolvedValue(['life']),
@@ -137,6 +140,30 @@ describe('PublicController.getBuildMeta page copy (#373)', () => {
     expect(siteInfo.friendLinkIntro).toBeUndefined();
     expect(siteInfo.friendLinkApplyContent).toBeUndefined();
     expect(siteInfo.aboutTitle).toBeUndefined();
+  });
+});
+
+describe('PublicController search does not return article bodies', () => {
+  it('omits content and password even if the provider row still has them', async () => {
+    const { controller, articleProvider } = createController();
+    articleProvider.searchByString.mockResolvedValue([
+      {
+        title: 't',
+        id: 1,
+        content: 'FULL-SECRET-BODY',
+        password: 'pw-secret',
+        category: 'c',
+        tags: ['a'],
+        updatedAt: 1,
+        createdAt: 1,
+      },
+    ]);
+    const result = await controller.searchArticle('secret');
+    const encoded = JSON.stringify(result);
+    expect(encoded).not.toContain('FULL-SECRET-BODY');
+    expect(encoded).not.toContain('pw-secret');
+    expect(result.data.data[0].title).toBe('t');
+    expect(articleProvider.searchByString).toHaveBeenCalledWith('secret', false);
   });
 });
 
