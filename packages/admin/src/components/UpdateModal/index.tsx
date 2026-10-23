@@ -8,6 +8,7 @@ import AuthorField from '../AuthorField';
 import CoverImageField from '../CoverImageField';
 import PathnameField from '../PathnameField';
 import TagSelectField from '../TagSelectField';
+import { privatePasswordError, privatePasswordFieldRules } from '@/utils/privatePassword';
 
 export default function (props: {
   currObj: any;
@@ -52,6 +53,11 @@ export default function (props: {
           return;
         }
         if (!currObj || !currObj.id) {
+          return false;
+        }
+        const passwordError = privatePasswordError(values.private, values.password);
+        if (passwordError) {
+          message.error(passwordError);
           return false;
         }
         setLoading(true);
@@ -154,6 +160,7 @@ export default function (props: {
             name="password"
             placeholder="请输入密码"
             dependencies={['private']}
+            rules={privatePasswordFieldRules('private')}
           />
           <ProFormSelect
             width="md"

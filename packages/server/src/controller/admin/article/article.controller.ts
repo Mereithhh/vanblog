@@ -20,6 +20,7 @@ import { ISRProvider } from 'src/provider/isr/isr.provider';
 import { PipelineProvider } from 'src/provider/pipeline/pipeline.provider';
 import { ApiToken } from 'src/provider/swagger/token';
 import { sanitizePagination } from 'src/utils/pagination';
+import { assertArticleHasPassword } from 'src/utils/articleAccess';
 @ApiTags('article')
 @ApiToken
 @UseGuards(...AdminGuard)
@@ -93,7 +94,8 @@ export class ArticleController {
         updateDto = lastOuput;
       }
     }
-    const before = await this.articleProvider.getById(id, 'list');
+    const before = await this.articleProvider.getById(id, 'admin');
+    assertArticleHasPassword(updateDto, before);
     const data = await this.articleProvider.updateById(id, updateDto);
     this.isrProvider.activeAll('更新文章触发增量渲染！', undefined, {
       postId: id,
@@ -127,6 +129,7 @@ export class ArticleController {
         createDto = lastOuput;
       }
     }
+    assertArticleHasPassword(createDto, null);
     const data = await this.articleProvider.create(createDto);
     this.isrProvider.activeAll('创建文章触发增量渲染！', undefined, {
       postId: data.id,

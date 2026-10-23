@@ -5,7 +5,8 @@ import {
   ProFormSelect,
   ProFormText,
 } from '@ant-design/pro-components';
-import { Button, Modal } from 'antd';
+import { Button, message, Modal } from 'antd';
+import { privatePasswordError, privatePasswordFieldRules } from '@/utils/privatePassword';
 import moment from 'moment';
 import { stopMenuKeydown } from '@/services/van-blog/editableKeyboard';
 import AuthorField from '../AuthorField';
@@ -36,6 +37,11 @@ export default function (props) {
             content: '本来是可以的，但有个人在演示站首页放黄色信息，所以关了这个权限了。',
           });
           return;
+        }
+        const passwordError = privatePasswordError(values.privateC, values.passwordC);
+        if (passwordError) {
+          message.error(passwordError);
+          return false;
         }
         const washedValues = {};
         for (const [k, v] of Object.entries(values)) {
@@ -129,7 +135,8 @@ export default function (props) {
         name="passwordC"
         autocomplete="new-password"
         placeholder="请输入密码"
-        dependencies={['private']}
+        dependencies={['privateC']}
+        rules={privatePasswordFieldRules('privateC')}
       />
       <ProFormSelect
         width="md"

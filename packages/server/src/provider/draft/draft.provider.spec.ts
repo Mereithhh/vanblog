@@ -37,14 +37,17 @@ function createMemoryDraftModel(initial: any[] = []) {
     findOne: jest.fn((query: any) => ({
       exec: async () => findMatching(query),
     })),
-    updateOne: jest.fn(async (query: any, patch: any) => {
+    updateOne: jest.fn((query: any, patch: any) => {
       assertQueryId(query?.id);
       const target = findMatching(query);
-      if (!target) {
-        return { modifiedCount: 0 };
+      const result = { modifiedCount: 0 };
+      if (target) {
+        Object.assign(target, patch);
+        result.modifiedCount = 1;
       }
-      Object.assign(target, patch);
-      return { modifiedCount: 1 };
+      const pending: any = Promise.resolve(result);
+      pending.exec = async () => result;
+      return pending;
     }),
   };
 }
@@ -89,5 +92,37 @@ describe('DraftProvider getById/updateById (#427)', () => {
     expect(model.findOne).not.toHaveBeenCalled();
     expect(model.updateOne).not.toHaveBeenCalled();
     expect(model.docs[0].content).toBe(original.content);
+  });
+});
+
+describe('DraftProvider.publish private password', () => {
+  const draft = {
+    id: 3,
+    title: '待发布',
+    content: '<!-- more -->\nsecret body',
+    deleted: false,
+    tags: ['a'],
+    category: '随笔',
+  };
+
+  it('refuses to publish a private article without a password', async () => {
+    const model = createMemoryDraftModel([{ ...draft }]);
+    const articleProvider = { create: jest.fn() };
+    const provider = new DraftProvider(model as any, articleProvider as any);
+    await expect(
+      provider.publish(3, { private: true, password: '' } as any),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(articleProvider.create).not.toHaveBeenCalled();
+    expect(model.docs[0].deleted).toBe(false);
+  });
+
+  it('publishes when the private flag has a password', async () => {
+    const model = createMemoryDraftModel([{ ...draft }]);
+    const articleProvider = { create: jest.fn().mockResolvedValue({ id: 8 }) };
+    const provider = new DraftProvider(model as any, articleProvider as any);
+    await provider.publish(3, { private: true, password: 'pw' } as any);
+    expect(articleProvider.create).toHaveBeenCalledWith(
+      expect.objectContaining({ private: true, password: 'pw', title: '待发布' }),
+    );
   });
 });

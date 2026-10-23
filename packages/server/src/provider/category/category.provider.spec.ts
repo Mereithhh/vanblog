@@ -1,4 +1,4 @@
-import { NotAcceptableException } from '@nestjs/common';
+import { BadRequestException, NotAcceptableException } from '@nestjs/common';
 import { ArticleProvider } from '../article/article.provider';
 import { DraftProvider } from '../draft/draft.provider';
 import { CategoryProvider } from './category.provider';
@@ -239,6 +239,50 @@ describe('CategoryProvider.updateCategoryByName (#324)', () => {
     ).rejects.toBeInstanceOf(NotAcceptableException);
     expect(stack.articleModel.docs[0].category).toBe('AAA');
     expect(stack.categoryModel.docs.map((item) => item.name)).toEqual(['AAA', 'BBB']);
+  });
+});
+
+describe('CategoryProvider private password', () => {
+  it('rejects marking a category private without a password', async () => {
+    const stack = createRenameStack({
+      categories: [{ id: 1, name: '随笔', type: 'category', private: false, password: '' }],
+    });
+    await expect(
+      stack.categoryProvider.updateCategoryByName('随笔', { private: true, password: '  ' }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(stack.categoryModel.docs[0].private).toBe(false);
+  });
+
+  it('stores a private category when the password is set', async () => {
+    const stack = createRenameStack({
+      categories: [{ id: 1, name: '随笔', type: 'category', private: false, password: '' }],
+    });
+    await stack.categoryProvider.updateCategoryByName('随笔', { private: true, password: 'pw' });
+    expect(stack.categoryModel.docs[0]).toMatchObject({ private: true, password: 'pw' });
+  });
+
+  it('rejects clearing the password while the category stays private', async () => {
+    const stack = createRenameStack({
+      categories: [{ id: 1, name: '私密', type: 'category', private: true, password: 'pw' }],
+    });
+    await expect(
+      stack.categoryProvider.updateCategoryByName('私密', { password: '' }),
+    ).rejects.toBeInstanceOf(BadRequestException);
+    expect(stack.categoryModel.docs[0].password).toBe('pw');
+  });
+
+  it('still lets a legacy empty-password private category change unrelated fields', async () => {
+    const stack = createRenameStack({
+      categories: [
+        { id: 1, name: '私密', type: 'category', private: true, password: '', hidden: false },
+      ],
+    });
+    await stack.categoryProvider.updateCategoryByName('私密', { hidden: true });
+    expect(stack.categoryModel.docs[0]).toMatchObject({
+      hidden: true,
+      private: true,
+      password: '',
+    });
   });
 });
 

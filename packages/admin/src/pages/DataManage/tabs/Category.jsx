@@ -10,6 +10,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import { ModalForm, ProFormSelect, ProFormText, ProTable } from '@ant-design/pro-components';
 import { Button, message, Modal, Switch } from 'antd';
 import { useRef, useState } from 'react';
+import { privatePasswordError, privatePasswordFieldRules } from '@/utils/privatePassword';
 
 function isDemoHost() {
   return location.hostname == 'blog-demo.mereith.com';
@@ -154,8 +155,9 @@ function createColumns({ onMove, rows }) {
             message.error('无有效信息！请至少填写一个选项！');
             return false;
           }
-          if (values.private && !values.password) {
-            message.error('如若加密，请填写密码！');
+          const passwordError = privatePasswordError(values.private, values.password);
+          if (passwordError) {
+            message.error(passwordError);
             return false;
           }
 
@@ -202,6 +204,8 @@ function createColumns({ onMove, rows }) {
           name="password"
           label="密码"
           placeholder="请输入加密密码"
+          dependencies={['private']}
+          rules={privatePasswordFieldRules('private')}
         />
       </ModalForm>,
 
