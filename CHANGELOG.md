@@ -33,6 +33,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
+- 官方 all-in-one 镜像的后台构建不再在 `pnpm build` 阶段失败。mermaid 10.6.1 的 mindmap（`mermaid.core`）会 `import "cytoscape/dist/cytoscape.umd.js"`。该阶段只复制 `packages/admin` 后执行 `pnpm i`，不使用仓库 lockfile，因此 `cytoscape@^3.23.0` 会装到 3.33 及以上。从 cytoscape 3.33.0 起，这个子路径只在 `require` 条件导出，webpack 5 报 `Package path ./dist/cytoscape.umd.js is not exported`。现将 cytoscape 固定为 3.27.0（与 lockfile 中已解析的版本一致，UMD 文件仍可被 ESM import）。编辑器仍优先加载 mermaid 的 UMD 包，思维导图和 mermaidSafety 不变。PR 流水线会跑后台生产构建。
 - 评论管理页用 iframe 嵌入 Waline 后台时，点击 GitHub 图标会在框架内跳转，GitHub 拒绝被嵌入并提示拒绝访问。页头增加「在新窗口打开」，在顶层窗口打开 `/ui/` 完成第三方登录。GitHub 登录还需配置 Waline 环境变量 `GITHUB_ID` / `GITHUB_SECRET`。[#121](https://github.com/Mereithhh/vanblog/issues/121)
 - 前台搜索输入框改为 `type="search"`（移动端键盘显示「搜索」），并加上 Safari 需要的 `spellcheck` / `autocapitalize` / `autocorrect` 关闭，避免自动纠正干扰关键词。清除按钮悬停不再突然放大，改为透明度和颜色过渡，仍是带「清除搜索」名称的真正按钮。顶栏和弹层里的搜索图标描边略加粗，接近旁边的菜单/主题图标。打开弹层时仍会锁住页面滚动。不含全屏移动端弹层和自动补全。[#173](https://github.com/Mereithhh/vanblog/issues/173)
 - 后台文案将「客制化」改为「定制化」、「联系方式」改为「社交媒体」，与文档用语一致。系统设置选项卡、布局设置开关/提示、定制化保存确认，以及数据管理选项卡、社交媒体表格标题和自定义条目校验文案均已同步。路由 key（`customizing` / `socials`）和字段名不变。[#197](https://github.com/Mereithhh/vanblog/issues/197)

@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  cytoscape: 3.27.0
+
 importers:
 
   .:
@@ -13200,7 +13203,7 @@ packages:
   /cytoscape-cose-bilkent@4.1.0(cytoscape@3.27.0):
     resolution: {integrity: sha512-wgQlVIUJF13Quxiv5e1gstZ08rnZj2XaLHGoFMYXz7SkNfCDOOteKBE6SYRfA9WxxI/iBc3ajfDoc6hb/MRAHQ==}
     peerDependencies:
-      cytoscape: ^3.2.0
+      cytoscape: 3.27.0
     dependencies:
       cose-base: 1.0.3
       cytoscape: 3.27.0
@@ -13209,7 +13212,7 @@ packages:
   /cytoscape-fcose@2.2.0(cytoscape@3.27.0):
     resolution: {integrity: sha512-ki1/VuRIHFCzxWNrsshHYPs6L7TvLu3DL+TyIGEsRcvVERmxokbf5Gdk7mFxZnTdiGtnA4cfSmjZJMviqSuZrQ==}
     peerDependencies:
-      cytoscape: ^3.2.0
+      cytoscape: 3.27.0
     dependencies:
       cose-base: 2.2.0
       cytoscape: 3.27.0
