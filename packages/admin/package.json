@@ -125,5 +125,10 @@
   },
   "engines": {
     "node": "^18.0.0 || >= 20.0.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "cytoscape": "3.27.0"
+    }
   }
 }

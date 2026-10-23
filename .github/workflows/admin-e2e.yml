@@ -27,6 +27,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Build admin production bundle
+        run: pnpm build:admin
+
       - name: Run admin editor unit tests
         working-directory: packages/admin
         run: node --test tests/unit/*.test.js
