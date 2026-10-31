@@ -1,6 +1,11 @@
 # Changelog
 
-## [Unreleased]
+## [0.55.0](https://github.com/Mereithhh/vanblog/compare/v0.54.0...v0.55.0) (2026-10-31)
+
+### 🔒 安全修复 | Security
+
+- `POST /api/public/article/:id`、RSS 和搜索可能泄露加密文章或隐藏文章的正文，已在 [#613](https://github.com/Mereithhh/vanblog/pull/613) 修复。公开报告：<https://hackmd.io/@hieuPenguinnn/vanblog-public-article-password-content-disclosure>。请所有用户升级到 v0.55.0，并确认每篇加密文章和每个加密分类都设置了非空密码。
+- `POST /api/public/article/:id`, RSS, and search could leak the bodies of encrypted or hidden articles. Fixed in [#613](https://github.com/Mereithhh/vanblog/pull/613). Public report: <https://hackmd.io/@hieuPenguinnn/vanblog-public-article-password-content-disclosure>. All users should upgrade to v0.55.0 and make sure every encrypted article or encrypted category has a non-empty password.
 
 ### ✨ Features | 新功能
 
