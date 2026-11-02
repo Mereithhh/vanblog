@@ -1,6 +1,11 @@
 # Changelog
 
-## [Unreleased]
+## [0.55.0](https://github.com/Mereithhh/vanblog/compare/v0.54.0...v0.55.0) (2026-10-31)
+
+### 🔒 安全修复 | Security
+
+- `POST /api/public/article/:id`、RSS 和搜索可能泄露加密文章或隐藏文章的正文，已在 [#613](https://github.com/Mereithhh/vanblog/pull/613) 修复。公开报告：<https://hackmd.io/@hieuPenguinnn/vanblog-public-article-password-content-disclosure>。请所有用户升级到 v0.55.0，并确认每篇加密文章和每个加密分类都设置了非空密码。
+- `POST /api/public/article/:id`, RSS, and search could leak the bodies of encrypted or hidden articles. Fixed in [#613](https://github.com/Mereithhh/vanblog/pull/613). Public report: <https://hackmd.io/@hieuPenguinnn/vanblog-public-article-password-content-disclosure>. All users should upgrade to v0.55.0 and make sure every encrypted article or encrypted category has a non-empty password.
 
 ### ✨ Features | 新功能
 
@@ -33,7 +38,7 @@
 
 ### 🐛 Bug Fixes | Bug 修复
 
-- 未登录即可调用的 `POST /api/public/article/:id` 在加密文章（或其所在加密分类）没有有效密码时，任意非空密码都会返回全文；该接口也不检查「隐藏」，从而绕过「是否允许通过 URL 打开隐藏文章」。现改为：没有有效密码的加密文章不能通过该接口解锁，正确密码仍可解锁；隐藏文章与直接打开文章使用同一开关。公开列表、上一篇/下一篇和搜索不再带出锁定正文，分类加密的文章也不会进入 RSS 全文。后台新建、修改信息、导入、发布草稿以及分类加密在勾选加密时必须填写密码，服务端同样拒绝空密码。已有的「加密但密码为空」旧数据保持锁定，直到补上密码。
+- 未登录即可调用的 `POST /api/public/article/:id` 在加密文章（或其所在加密分类）没有有效密码时，任意非空密码都会返回全文；该接口也不检查「隐藏」，从而绕过「是否允许通过 URL 打开隐藏的文章」。现改为：没有有效密码的加密文章不能通过该接口解锁，正确密码仍可解锁；隐藏文章与直接打开文章使用同一开关。公开列表、上一篇/下一篇和搜索不再带出锁定正文，分类加密的文章也不会进入 RSS 全文。后台新建、修改信息、导入、发布草稿以及分类加密在勾选加密时必须填写密码，服务端同样拒绝空密码。已有的「加密但密码为空」旧数据保持锁定，直到补上密码。
 - 官方 all-in-one 镜像的后台构建不再在 `pnpm build` 阶段失败。mermaid 10.6.1 的 mindmap（`mermaid.core`）会 `import "cytoscape/dist/cytoscape.umd.js"`。该阶段只复制 `packages/admin` 后执行 `pnpm i`，不使用仓库 lockfile，因此 `cytoscape@^3.23.0` 会装到 3.33 及以上。从 cytoscape 3.33.0 起，这个子路径只在 `require` 条件导出，webpack 5 报 `Package path ./dist/cytoscape.umd.js is not exported`。现将 cytoscape 固定为 3.27.0（与 lockfile 中已解析的版本一致，UMD 文件仍可被 ESM import）。编辑器仍优先加载 mermaid 的 UMD 包，思维导图和 mermaidSafety 不变。PR 流水线会跑后台生产构建。
 - 评论管理页用 iframe 嵌入 Waline 后台时，点击 GitHub 图标会在框架内跳转，GitHub 拒绝被嵌入并提示拒绝访问。页头增加「在新窗口打开」，在顶层窗口打开 `/ui/` 完成第三方登录。GitHub 登录还需配置 Waline 环境变量 `GITHUB_ID` / `GITHUB_SECRET`。[#121](https://github.com/Mereithhh/vanblog/issues/121)
 - 前台搜索输入框改为 `type="search"`（移动端键盘显示「搜索」），并加上 Safari 需要的 `spellcheck` / `autocapitalize` / `autocorrect` 关闭，避免自动纠正干扰关键词。清除按钮悬停不再突然放大，改为透明度和颜色过渡，仍是带「清除搜索」名称的真正按钮。顶栏和弹层里的搜索图标描边略加粗，接近旁边的菜单/主题图标。打开弹层时仍会锁住页面滚动。不含全屏移动端弹层和自动补全。[#173](https://github.com/Mereithhh/vanblog/issues/173)
