@@ -20,6 +20,7 @@ import {
 import { LinkPageProps } from "../pages/link";
 import { isListedPublicCategory } from "./publicCategories";
 import { groupTimelineByYearAndMonth } from "./timelineMonths";
+import { Article } from "../types/article";
 
 export async function getIndexPageProps(): Promise<IndexPageProps> {
   const data = await getPublicMeta();
@@ -42,7 +43,8 @@ export async function getTimeLinePageProps(): Promise<TimeLinePageProps> {
   const data = await getPublicMeta();
   const layoutProps = getLayoutProps(data);
   const authorCardProps = getAuthorCardProps(data);
-  const sortedArticles = (await getArticlesByTimeLine()) || {};
+  const sortedArticles: Record<string, Article[]> =
+    (await getArticlesByTimeLine()) || {};
   const yearGroups = groupTimelineByYearAndMonth(sortedArticles);
   const wordTotal = data.totalWordCount;
   return {

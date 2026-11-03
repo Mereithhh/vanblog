@@ -1,5 +1,5 @@
 import mermaidPlugin from "@bytemd/plugin-mermaid";
-import type { BytemdPlugin } from "bytemd";
+import type { BytemdPlugin, BytemdViewerContext } from "bytemd";
 import {
   applyMermaidThemeToTree,
   detectPaintIsDark,
@@ -8,16 +8,24 @@ import {
   watchMermaidContainers,
 } from "../../utils/mermaidTheme";
 
-export function mermaidForViewer(options?: { theme?: string }): BytemdPlugin {
-  const official = mermaidPlugin();
+type MermaidPluginFactory = (
+  options?: Parameters<typeof mermaidPlugin>[0],
+) => BytemdPlugin;
+
+export function mermaidForViewer(
+  options?: { theme?: string },
+  createPlugin: MermaidPluginFactory = mermaidPlugin,
+): BytemdPlugin {
+  const official = createPlugin();
   return {
     ...official,
-    viewerEffect({ markdownBody }) {
+    viewerEffect(ctx: BytemdViewerContext) {
+      const { markdownBody } = ctx;
       const isDark =
         detectPaintIsDark(markdownBody) || isDarkPaintTheme(options?.theme);
-      const themed = mermaidPlugin(mermaidInitConfig(isDark));
+      const themed = createPlugin(mermaidInitConfig(isDark));
       applyMermaidThemeToTree(markdownBody, isDark);
-      const cleanup = themed.viewerEffect?.({ markdownBody });
+      const cleanup = themed.viewerEffect?.(ctx);
       const stopWatch = watchMermaidContainers(markdownBody, isDark);
       return () => {
         if (typeof cleanup === "function") {

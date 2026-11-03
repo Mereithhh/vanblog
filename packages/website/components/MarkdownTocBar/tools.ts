@@ -182,10 +182,12 @@ const trimArrZero = (arr: any) => {
   }
   return arr.slice(start, end + 1);
 };
-export const getEl = (item: NavItem, all: NavItem[]) => {
+export const getEl = (item: NavItem, all: NavItem[]): HTMLElement | undefined => {
   const tagName = `h${item.level}`;
   const target = normalizeHeadingText(item.text);
-  const els = Array.from(document.querySelectorAll(`${tagName}[data-id]`)).filter(
+  const els = Array.from(
+    document.querySelectorAll<HTMLElement>(`${tagName}[data-id]`)
+  ).filter(
     (el) => normalizeHeadingText(el.getAttribute("data-id")) === target
   );
   if (els.length > 1) {
