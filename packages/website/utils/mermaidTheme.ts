@@ -127,10 +127,10 @@ export function watchMermaidContainers(
   isDark: boolean
 ): () => void {
   applyMermaidThemeToTree(root, isDark);
-  if (typeof MutationObserver === "undefined") {
+  if (typeof MutationObserver === "undefined" || !(root instanceof Node)) {
     return () => undefined;
   }
   const obs = new MutationObserver(() => applyMermaidThemeToTree(root, isDark));
-  obs.observe(root as Node, { childList: true, subtree: true });
+  obs.observe(root, { childList: true, subtree: true });
   return () => obs.disconnect();
 }

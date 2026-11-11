@@ -122,6 +122,11 @@ type FocusableEl = {
   contains?: (node: unknown) => boolean;
 };
 
+/** Identity check. Event targets and focusable test doubles share no static type. */
+function isSameNode(left: unknown, right: unknown): boolean {
+  return left === right;
+}
+
 /**
  * DOM handler used by the public PageNav. Exported so tests can drive the
  * same ArrowLeft / ArrowRight behavior without a browser.
@@ -144,7 +149,7 @@ export function handlePageNavKeyDown(event: {
   const active = event.target;
   const current = items.findIndex(
     (el) =>
-      el === active ||
+      isSameNode(el, active) ||
       (typeof el.contains === "function" && el.contains(active))
   );
   if (current < 0) {

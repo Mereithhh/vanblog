@@ -58,7 +58,12 @@ export function parseTimelineDate(
   if (createdAt == null || createdAt === "") {
     return null;
   }
-  const date = createdAt instanceof Date ? createdAt : new Date(createdAt);
+  const date =
+    createdAt instanceof Date
+      ? createdAt
+      : typeof createdAt === "string" || typeof createdAt === "number"
+        ? new Date(createdAt)
+        : null;
   if (Number.isNaN(date.getTime())) {
     return null;
   }

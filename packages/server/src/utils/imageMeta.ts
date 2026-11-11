@@ -12,6 +12,8 @@ export function fallbackTypeFromName(fileName?: string): string | undefined {
 /**
  * image-size@1.0.2 does not understand AVIF. After AVIF encode, still
  * record type/size so saveFile does not throw.
+ * This helper only fills metadata. It must not decide whether an upload is stored:
+ * a short GIF signature is reported as a 1x1 gif.
  */
 export function safeImageSize(buffer: Buffer, fallbackType?: string) {
   try {

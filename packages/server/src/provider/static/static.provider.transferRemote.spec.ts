@@ -1,15 +1,24 @@
 import { StaticProvider } from './static.provider';
 import * as imgCompress from 'src/utils/imgCompress';
 
+const PNG_1X1 = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+  'base64',
+);
+
 jest.mock('src/utils/imgCompress', () => {
   const actual = jest.requireActual('src/utils/imgCompress');
   return {
     ...actual,
     compressImg: jest.fn(async (_buf: Buffer, format: string) => {
       if (format === 'avif') {
-        return Buffer.from('AVIF-ENCODED');
+        return Buffer.concat([
+          Buffer.from([0, 0, 0, 0x18]),
+          Buffer.from('ftypavif'),
+          Buffer.from('avif'),
+        ]);
       }
-      return Buffer.from('WEBP-ENCODED');
+      return Buffer.concat([Buffer.from('RIFF'), Buffer.from([0, 0, 0, 0]), Buffer.from('WEBP')]);
     }),
   };
 });
@@ -52,7 +61,7 @@ function createProvider(staticSetting: any, stored: Array<{ realPath: string }> 
   return { provider, localProvider, saved };
 }
 
-const remotePng = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a]);
+const remotePng = PNG_1X1;
 
 describe('StaticProvider.transferRemoteImages (#434)', () => {
   beforeEach(() => {

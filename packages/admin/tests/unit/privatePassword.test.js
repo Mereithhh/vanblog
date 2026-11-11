@@ -70,6 +70,10 @@ describe('admin private password requirement', () => {
     const tagDocs = readFileSync(path.join(repoRoot, 'docs/features/tag.md'), 'utf8');
     assert.match(articleDocs, /必须填写密码/);
     assert.match(hideDocs, /POST \/api\/public\/article\/:id/);
-    assert.match(tagDocs, /分类已加密但密码为空/);
+    assert.match(tagDocs, /勾选加密时必须填写密码/);
+    assert.match(
+      tagDocs,
+      /分类已加密但分类密码为空时，以文章自己的密码为准；文章也没有密码则前台、RSS 和密码接口都不会放出正文/,
+    );
   });
 });

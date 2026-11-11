@@ -14,6 +14,7 @@ import { rmDir } from 'src/utils/deleteFolder';
 import { readDirs } from 'src/utils/readFileList';
 import { checkOrCreateFile } from 'src/utils/checkFile';
 import { normalizeCustomPageRel, resolveCustomPageAbs } from 'src/utils/customPagePath';
+import { resolveSafeImagePath } from 'src/utils/staticServe';
 @Injectable()
 export class LocalProvider {
   async saveFile(fileName: string, buffer: Buffer, type: StaticType, toRootPath?: boolean) {
@@ -61,15 +62,18 @@ export class LocalProvider {
 
   async saveImg(fileName: string, buffer: Buffer, type: StaticType, toRootPath?: boolean) {
     const storagePath = StoragePath[type] || StoragePath['img'];
-    const srcPath = path.join(config.staticPath, storagePath, fileName);
-    let realPath = `/static/${type}/${fileName}`;
+    const dir = path.join(config.staticPath, storagePath);
+    checkOrCreate(dir);
+    const srcPath = resolveSafeImagePath(dir, fileName);
+    const safeName = path.basename(srcPath);
+    let realPath = `/static/${type}/${safeName}`;
 
     if (isProd()) {
       if (toRootPath) {
-        realPath = `/${fileName}`;
+        realPath = `/${safeName}`;
       }
     }
-    const result = safeImageSize(buffer, fallbackTypeFromName(fileName));
+    const result = safeImageSize(buffer, fallbackTypeFromName(safeName));
     const byteLength = buffer.byteLength;
 
     fs.writeFileSync(srcPath, buffer);

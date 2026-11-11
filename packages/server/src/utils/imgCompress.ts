@@ -1,6 +1,7 @@
 import { BadRequestException } from '@nestjs/common';
 import { compressImgToWebp, CWEBP_QUALITY } from './webp';
 import { compressImgToAvif, tryLoadSharp } from './avif';
+import { applyStaticFileHeaders } from './staticServe';
 
 export const COMPRESS_FORMATS = ['webp', 'avif'] as const;
 export type CompressFormat = (typeof COMPRESS_FORMATS)[number];
@@ -62,11 +63,7 @@ export function applyStaticAssetHeaders(
   res: { setHeader(name: string, value: string): void },
   filePath: string,
 ) {
-  const ext = filePath.includes('.') ? filePath.slice(filePath.lastIndexOf('.') + 1) : '';
-  const type = contentTypeForExt(ext);
-  if (type) {
-    res.setHeader('Content-Type', type);
-  }
+  applyStaticFileHeaders(res, filePath);
 }
 
 export async function compressImg(

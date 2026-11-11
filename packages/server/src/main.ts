@@ -17,6 +17,7 @@ import { WebsiteProvider } from './provider/website/website.provider';
 import { initJwt } from './utils/initJwt';
 import { DEFAULT_SERVER_PORT, getListenTarget } from './utils/listenHost';
 import { applyStaticAssetHeaders } from './utils/imgCompress';
+import { guardUploadStatic } from './utils/staticServe';
 
 async function bootstrap() {
   const jwtSecret = await initJwt();
@@ -25,6 +26,7 @@ async function bootstrap() {
 
   app.use(json({ limit: '50mb' }));
 
+  app.use(guardUploadStatic);
   app.useStaticAssets(globalConfig.staticPath, {
     prefix: '/static/',
     setHeaders: applyStaticAssetHeaders,
