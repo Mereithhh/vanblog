@@ -1,5 +1,11 @@
 import { StaticProvider } from './static.provider';
 import * as imgCompress from 'src/utils/imgCompress';
+import { isAvifBuffer } from 'src/utils/avif';
+
+const PNG_1X1 = Buffer.from(
+  'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z8BQDwAEhQGAhKmMIQAAAABJRU5ErkJggg==',
+  'base64',
+);
 
 jest.mock('src/utils/imgCompress', () => {
   const actual = jest.requireActual('src/utils/imgCompress');
@@ -7,9 +13,13 @@ jest.mock('src/utils/imgCompress', () => {
     ...actual,
     compressImg: jest.fn(async (_buf: Buffer, format: string) => {
       if (format === 'avif') {
-        return Buffer.from('AVIF-ENCODED');
+        return Buffer.concat([
+          Buffer.from([0, 0, 0, 0x18]),
+          Buffer.from('ftypavif'),
+          Buffer.from('avif'),
+        ]);
       }
-      return Buffer.from('WEBP-ENCODED');
+      return Buffer.concat([Buffer.from('RIFF'), Buffer.from([0, 0, 0, 0]), Buffer.from('WEBP')]);
     }),
   };
 });
@@ -49,7 +59,7 @@ function createProvider(staticSetting: any) {
 
 const pngFile = {
   originalname: 'shot.png',
-  buffer: Buffer.from('fake-png'),
+  buffer: PNG_1X1,
 };
 
 describe('StaticProvider upload compress format (#423)', () => {
@@ -75,7 +85,7 @@ describe('StaticProvider upload compress format (#423)', () => {
     expect(mockedCompressImg).toHaveBeenCalledWith(pngFile.buffer, 'avif');
     const call = localProvider.saveFile.mock.calls[0];
     expect(call[0]).toMatch(/\.shot\.avif$/);
-    expect(call[1].equals(Buffer.from('AVIF-ENCODED'))).toBe(true);
+    expect(isAvifBuffer(call[1])).toBe(true);
     expect(call[2]).toBe('img');
     expect(res.src).toMatch(/\.avif$/);
     expect(saved[0].fileType).toBe('avif');
@@ -89,5 +99,13 @@ describe('StaticProvider upload compress format (#423)', () => {
     await provider.upload(pngFile, 'img');
     expect(mockedCompressImg).not.toHaveBeenCalled();
     expect(localProvider.saveFile.mock.calls[0][0]).toMatch(/\.shot\.png$/);
+    expect(localProvider.saveFile.mock.calls[0][1].equals(PNG_1X1)).toBe(true);
+  });
+
+  it('does not keep the original bytes when compression fails', async () => {
+    mockedCompressImg.mockRejectedValueOnce(new Error('encode failed'));
+    const { provider, localProvider } = createProvider({ enableWebp: true });
+    await expect(provider.upload(pngFile, 'img')).rejects.toThrow(/图片处理失败/);
+    expect(localProvider.saveFile).not.toHaveBeenCalled();
   });
 });

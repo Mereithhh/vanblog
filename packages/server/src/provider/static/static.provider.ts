@@ -1,4 +1,10 @@
-import { HttpException, HttpStatus, Injectable, NotImplementedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  NotImplementedException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { SearchStaticOption, StaticType, StorageType } from 'src/types/setting.dto';
@@ -28,6 +34,8 @@ import {
   looksLikeImage,
   TransferRemoteResult,
 } from 'src/utils/transferRemoteImages';
+import { STORED_IMAGE_EXTENSIONS } from 'src/utils/staticServe';
+import { assertCompressedOutput, decodeUploadedImage, sanitizeImageBaseName } from 'src/utils/uploadedImage';
 @Injectable()
 export class StaticProvider {
   constructor(
@@ -55,67 +63,79 @@ export class StaticProvider {
     customPathname?: string,
     updateConfig?: UploadConfig,
   ) {
+    if (!file || !Buffer.isBuffer(file.buffer)) {
+      throw new BadRequestException('未收到上传文件');
+    }
     const { buffer } = file;
-    const arr = file.originalname.split('.');
-    const fileType = arr[arr.length - 1];
     let buf = buffer;
     let currentSign = encryptFileMD5(buf);
     const staticConfigInDB = await this.settingProvider.getStaticSetting();
-    let compressSuccess = true;
     const compressFormat = resolveCompressFormat(staticConfigInDB?.compressFormat);
+    let storedExt = '';
     if (type == 'img') {
-      try {
-        // 用加过水印的 buf 做计算，看看是不是有文件的。
-        if (updateConfig && updateConfig.withWaterMark && fileType != 'gif') {
-          // 双保险，只有这里开启水印并且设置中也开启了才有效。
-          const waterMarkConfigInDB = staticConfigInDB;
-          if (waterMarkConfigInDB && checkTrue(waterMarkConfigInDB?.enableWaterMark)) {
-            const waterMarkText = updateConfig.waterMarkText || waterMarkConfigInDB.waterMarkText;
-            if (waterMarkText && waterMarkText.trim() !== '') {
-              buf = await addWaterMarkToIMG(buffer, waterMarkText);
+      let decoded = await decodeUploadedImage(buf);
+      if (updateConfig && updateConfig.withWaterMark && decoded.format !== 'gif') {
+        // 双保险，只有这里开启水印并且设置中也开启了才有效。
+        const waterMarkConfigInDB = staticConfigInDB;
+        if (waterMarkConfigInDB && checkTrue(waterMarkConfigInDB?.enableWaterMark)) {
+          const waterMarkText = updateConfig.waterMarkText || waterMarkConfigInDB.waterMarkText;
+          if (waterMarkText && waterMarkText.trim() !== '') {
+            try {
+              const marked = await addWaterMarkToIMG(buf, waterMarkText);
+              decoded = await decodeUploadedImage(marked);
+              buf = marked;
               currentSign = encryptFileMD5(buf);
+            } catch (err) {
+              if (err instanceof BadRequestException) {
+                throw err;
+              }
             }
           }
         }
-      } catch (err) {
-        // console.log(err);
       }
 
-      if (checkTrue(staticConfigInDB.enableWebp)) {
+      if (checkTrue(staticConfigInDB?.enableWebp)) {
         try {
           buf = await compressImg(buf, compressFormat);
+          assertCompressedOutput(buf, compressFormat);
           currentSign = encryptFileMD5(buf);
         } catch (err) {
-          // console.log(err);
-          compressSuccess = false;
+          if (err instanceof BadRequestException) {
+            throw err;
+          }
+          throw new BadRequestException('图片处理失败');
         }
+        storedExt = compressExt(compressFormat);
+      } else {
+        storedExt = decoded.ext;
       }
 
       const hasFile = await this.getOneBySign(currentSign);
 
-      if (hasFile) {
-        return {
-          src: hasFile.realPath,
-          isNew: false,
-        };
+      if (hasFile?.realPath) {
+        const existing = String(hasFile.realPath);
+        const ext = existing.split('?')[0].split('#')[0].split('.').pop()?.toLowerCase() || '';
+        const localUnsafe = existing.startsWith('/static/') && !STORED_IMAGE_EXTENSIONS.has(ext);
+        if (!localUnsafe) {
+          return {
+            src: existing,
+            isNew: false,
+          };
+        }
       }
     }
 
-    const pureFileName = arr.slice(0, arr.length - 1).join('.');
-    let fileName = currentSign + '.' + file.originalname;
+    let fileName = '';
     if (type == 'customPage') {
       fileName = normalizeCustomPageRel(customPathname, file.originalname);
-    }
-    if (type == 'img' && checkTrue(staticConfigInDB.enableWebp) && compressSuccess) {
-      fileName = currentSign + '.' + pureFileName + '.' + compressExt(compressFormat);
+    } else if (type == 'img') {
+      fileName = `${currentSign}.${sanitizeImageBaseName(file.originalname)}.${storedExt}`;
     }
     const storedType =
-      type == 'img' && checkTrue(staticConfigInDB.enableWebp) && compressSuccess
-        ? compressExt(compressFormat)
-        : fileType;
+      type == 'img' ? storedExt : String(file.originalname || '').split('.').pop() || '';
     const realPath = await this.saveFile(
       storedType,
-      isFavicon ? `favicon.${storedType}` : fileName,
+      isFavicon ? `favicon.${storedExt}` : fileName,
       buf,
       type,
       currentSign,

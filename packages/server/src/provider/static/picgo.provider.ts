@@ -4,6 +4,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { config } from 'src/config';
 import { fallbackTypeFromName, safeImageSize } from 'src/utils/imageMeta';
+import { resolveSafeImagePath } from 'src/utils/staticServe';
+import { checkOrCreate } from 'src/utils/checkFolder';
 import { formatBytes } from 'src/utils/size';
 import { PicGo } from 'picgo';
 import { ImgMeta } from 'src/types/img';
@@ -57,8 +59,9 @@ export class PicgoProvider {
     const byteLength = buffer.byteLength;
 
     const meta: ImgMeta = { ...result, size: formatBytes(byteLength) };
-    // 搞一个临时的
-    const srcPath = path.join(config.staticPath, 'tmp', fileName);
+    const tmpDir = path.join(config.staticPath, 'tmp');
+    checkOrCreate(tmpDir);
+    const srcPath = resolveSafeImagePath(tmpDir, fileName);
     fs.writeFileSync(srcPath, buffer);
     let realPath = undefined;
     try {

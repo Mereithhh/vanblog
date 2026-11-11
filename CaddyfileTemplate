@@ -58,7 +58,18 @@
     uri replace /favicon /static/img/favicon
 		reverse_proxy 127.0.0.1:3000
 	}
+	handle /static/img/* {
+		header X-Content-Type-Options nosniff
+		header Content-Security-Policy "default-src 'none'; script-src 'none'; sandbox"
+		reverse_proxy 127.0.0.1:3000
+	}
+	handle /static/tmp/* {
+		header X-Content-Type-Options nosniff
+		header Content-Security-Policy "default-src 'none'; script-src 'none'; sandbox"
+		reverse_proxy 127.0.0.1:3000
+	}
 	handle /static/* {
+		header X-Content-Type-Options nosniff
 		reverse_proxy 127.0.0.1:3000
 	}
 	handle /c/* {
